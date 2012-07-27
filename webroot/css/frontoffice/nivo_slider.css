@@ -1,0 +1,22 @@
+.nivoSlider{position:relative}
+.nivoSlider img{position:absolute;top:0;left:0}
+.nivoSlider a.nivo-imageLink{position:absolute;top:0;left:0;width:100%;height:100%;border:0;padding:0;margin:0;z-index:60;display:none}
+.nivo-slice{display:block;position:absolute;z-index:50;height:100%}
+.nivo-caption{position:absolute;left:0;top:0;background:#000;opacity:.8;width:31%;height:100%;z-index:89}
+.nivo-caption p{padding:10px 10px;margin:0;color:#fff;text-shadow:none}
+.nivo-caption p b,.nivo-caption p strong{color:#fff}
+.nivo-caption h3{font:26px/ 30px 'customFont',Arial,sans-serif;color:#fff;text-shadow:none;padding:35px 10px 0}
+.nivo-caption a{display:inline!important}
+.nivo-caption a:hover{color:#fff}
+.nivo-html-caption{display:none}
+.nivo-directionNav a{position:absolute;top:45%;z-index:99;cursor:pointer}
+.nivo-prevNav{left:0}
+.nivo-nextNav{right:0}
+.nivo-controlNav{bottom:-25px;left:50%;position:absolute}
+.nivo-controlNav a{position:relative;z-index:99;text-indent:-9999px;cursor:pointer;float:left;height:19px;margin-right:1px;text-indent:-9999px;width:21px;background:url(../../img/frontoffice/slider_dots.png) no-repeat 0 -125px transparent}
+.nivo-controlNav a.active,.nivo-controlNav a:hover{background:url(../../img/frontoffice/slider_dots.png) no-repeat 0 0 transparent}
+.slider_cover_tl{width:100%;height:4px;display:block;position:absolute;top:0;left:0;z-index:501;background:url(../../img/frontoffice/slider_topleft.png) no-repeat top left transparent}
+.slider_cover_tr{width:4px;height:100%;display:block;position:absolute;top:0;right:0;z-index:502;background:url(../../img/frontoffice/slider_topright.png) no-repeat top right transparent}
+.slider_cover_br{width:100%;height:4px;display:block;position:absolute;bottom:0;right:0;z-index:500;background:url(../../img/frontoffice/slider_bottomright.png) no-repeat bottom right transparent}
+.slider_cover_bl{width:4px;height:100%;display:block;position:absolute;bottom:0;left:0;z-index:500;background:url(../../img/frontoffice/slider_bottomleft.png) no-repeat bottom left transparent}
+#slider{position:relative;display:none}

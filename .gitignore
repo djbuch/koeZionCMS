@@ -1,5 +1,7 @@
+.settings/
+.buildpath
+.project
+configs/files/*
 tmp/*
-config/database.php
-app/tmp/*
-app/config/database.php
-!empty
+webroot/files/*
+webroot/upload/*

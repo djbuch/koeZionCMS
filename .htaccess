@@ -1,0 +1,15 @@
+# Activation de la réécriture d'url
+# On demande de tout rediriger vers le dossier webroot
+# (.#) ==> 
+#			* : 0 ou plusieurs fois
+#			. : n'importe quel caractère
+# $1 -> récupère la chaine matchée
+# [L] dernière règle à utiliser
+# Normalement uniquement avec ce fichier il y a une boucle infinie car dans /webroot/... ça matche avec la règle
+# Il faut donc mettre en place un autre htaccess dans le dossier webroot
+SetEnv PHP_VER 5
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+	RewriteRule ^$ webroot/  [L]
+	RewriteRule (.*) webroot/$1 [L]
+</IfModule>

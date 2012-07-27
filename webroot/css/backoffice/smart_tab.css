@@ -1,0 +1,7 @@
+#right .box .content .smarttabs{position:relative;border-bottom:10px solid #e5e5e5}
+#right .box .content .smarttabs.nobottom{border-bottom:0}
+#right .box .content .smarttabs div{position:relative;overflow:show}
+#right .box .content .smarttabs ul.anchor{display:inline-block;background:url(../../img/backoffice/tabs.gif) repeat-x left top;margin:0;padding:0;list-style:none;width:100%;height:31px}
+#right .box .content .smarttabs ul.anchor li{float:left;background:0;border-right:1px solid #e5e5e5;padding:0}
+#right .box .content .smarttabs ul.anchor li a{float:left;padding:1px 11px 0 11px;font:12px/28px 'MyriadProRegular',Arial;color:#989898;text-decoration:none;outline:0}
+#right .box .content .smarttabs ul.anchor li a.sel{background:#fff;color:#1c1c1c;font-weight:bold;text-decoration:none}

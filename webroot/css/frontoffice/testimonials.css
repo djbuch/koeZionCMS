@@ -1,0 +1,7 @@
+.inner_main .widget ul.testimonials{overflow:visible;position:relative;background:0;display:block;margin:12px 0 0 7px}
+.inner_main .sidebar_mirror .widget ul.testimonials{margin:12px 7px 0 0}
+.inner_main .widget ul.testimonials li{background:0;display:none}
+.inner_main .widget ul.testimonials li p{padding-left:26px;font-size:13px;line-height:18px;margin:6px 0 0;text-shadow:1px 1px #fff;color:#444}
+.inner_main .sidebar_mirror .widget ul.testimonials li p{padding-right:26px;padding-left:0}
+.inner_main .widget ul.testimonials li p img{padding:0;margin-right:5px}
+.inner_main .widget ul.testimonials li p span{font-size:14px;line-height:18px;float:right;padding:8px 0 2px}

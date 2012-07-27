@@ -1,0 +1,10 @@
+.checklist,.checklistalmost,.radiolist,.radiolistalmost{list-style:none;margin:0;padding:20px}
+#right .box .content .checklist p,#right .box .content .checklistalmost p,#right .box .content .radiolist p,#right .box .content .radiolistalmost p{float:left;margin-right:10px;background:url(../../img/backoffice/prettyradio/checkboxbg.gif) no-repeat 0 0;width:105px;height:150px;position:relative;font:normal 11px/1.3 "Lucida Grande","Lucida","Arial",Sans-serif}
+#right .box .content .checklist p.selected,#right .box .content .checklistalmost p.selected,#right .box .content .radiolist p.selected,#right .box .content .radiolistalmost p.selected{background-position:-105px 0}
+#right .box .content .checklist p.selected .checkbox-select,#right .box .content .radiolist p.selected .radio-select{display:none}
+.checkbox-select,.radio-select{display:block;float:left;position:absolute;top:118px;left:10px;width:85px;height:23px;background:url(../../img/backoffice/prettyradio/select.gif) no-repeat 0 0;text-indent:-9999px}
+.checklist p input,.checklistalmost p input,.radiolist p input,.radiolistalmost p input{display:none}
+a.checkbox-deselect,a.radio-deselect{display:none;color:white;font-weight:bold;text-decoration:none;position:absolute;top:120px;right:10px}
+.checklist p.selected a.checkbox-deselect,.radiolist p.selected a.radio-deselect{display:block}
+.checklist p span,.checklistalmost p span,.radiolist p span,.radiolistalmost p span{display:block;text-align:center;padding:8px}
+.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}

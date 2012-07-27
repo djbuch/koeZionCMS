@@ -1,0 +1,7 @@
+ --- Searching for 'PHP' --- 
+Searching File E:\wamp\www\TMP\PHP_CLASSES\textsearchreplace-2009-11-22/tmp/TextSearch.class.txt : Found in 1 places
+Searching File E:\wamp\www\TMP\PHP_CLASSES\textsearchreplace-2009-11-22/tmp/TextSearch.class.txt : Found in 1 places. Replaced by 'phpResource'
+Searching File E:\wamp\www\TMP\PHP_CLASSES\textsearchreplace-2009-11-22/tmp/usage.html : Found in 1 places
+Searching File E:\wamp\www\TMP\PHP_CLASSES\textsearchreplace-2009-11-22/tmp/usage.html : Found in 1 places. Replaced by 'phpResource'
+
+------ Total 2 Matches Found -----

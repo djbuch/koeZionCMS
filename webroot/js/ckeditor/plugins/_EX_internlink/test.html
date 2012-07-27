@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+  <script type="text/javascript">
+    // Cette partie est nécessaire pour pouvoir utiliser les fonctions de fck à l'intérieur de notre popup 
+    var oEditor = window.parent.InnerDialogLoaded();
+    var FCKConfig = oEditor.FCKConfig;
+    var dialog = window.parent;
+    document.write('<script src="' + FCKConfig.BasePath + 'dialog/common/fck_dialog_common.js" type="text/javascript"><\/script>');
+    dialog.SetOkButton(true); // Par défaut, seul le bouton annuler est affiché, on rajoute le bouton ok	
+ 
+    // Maintenant on fait bien ce qu'on veux, ici j'ai décidé de récupérer en AJAX, une liste en JSON de toutes mes pages et d'alimenter ma selectbox avec
+    var options = '';
+    for (var i = 0; i < 10; i++) {
+      options += '<option value="' + i + '">' + i + '</option>';
+    }
+    $("select#intern-link").html(options);
+ 
+    // Puis on surdéfinit une fonction Ok qui est appelé par fck quand on appuye sur le bouton ... ok
+    function Ok()
+    {
+      // Maintenant on utilise fck pour rajouter du contenu à notre RTE. Ici je rajoute simplement les valeurs de mes 2 champs définis dans mon HTML ci-dessous
+      oEditor.FCK.InsertHtml( '<a href="'+ jQuery('#intern-link').val() +'" class="extern">'+ jQuery('#intern-label').val() +'</a>' );
+      return true; // Il faut renvoyer true pour fermer la popup
+    }
+</script>
+</head>
+<body>
+	<div id="add-intern-link">		
+		<p>
+			<label for="intern-link">Lien interne</label>
+			<select id="intern-link" name="intern-link">
+			</select>						
+		</p>
+		<p>
+			<label for="intern-label">Label</label>
+			<input type="text" id="intern-label" name="intern-label" />						
+		</p>
+	</div>
+</body>
+</html>

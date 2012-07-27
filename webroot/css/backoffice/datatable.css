@@ -1,0 +1,31 @@
+table{width:100%}
+table,td,tr,th{padding:0;margin:0;border-collapse:collapse}
+table thead tr th,table tfoot tr th{color:#1c1c1c}
+table thead{background:url(../../img/backoffice/back-title.gif) repeat-x right top;border-right:0}
+table thead tr th{border:1px solid #e5e5e5;border-bottom:0;padding:8px 8px 10px;line-height:1.0em}
+table thead tr th.header{border:1px solid #e5e5e5;background-color:transparent}
+table tbody td{border:1px solid #e5e5e5;border-top:0;padding:7px 8px;line-height:1.0em}
+table td.txtcenter{text-align:center}
+table td.xxs{width:25px}
+table td.xxs2{width:35px}
+table td.xs{width:50px}
+table td.s{width:75px}
+table td.m{width:93px}
+table td.txtright{text-align:right}
+table tbody tr.even td{background-color:#fbfbfb}
+table thead tr th.sorting{background:url(../../img/backoffice/table-sort.gif) no-repeat right 9px}
+table thead tr th.sorting_asc{background:url(../../img/backoffice/table-sort.gif) no-repeat right -19px}
+table thead tr th.sorting_desc{background:url(../../img/backoffice/table-sort.gif) no-repeat right -51px}
+table.all td:first-child,table.pagesort td:first-child,table.sortsearch td:first-child,table.sorting td:first-child{width:13px}
+table.all td:first-child+td+td+td+td+td,table.pagesort td:first-child+td+td+td+td+td,table.sortsearch td:first-child+td+td+td+td+td,table.sorting td:first-child+td+td+td+td+td{padding:0;text-align:center;line-height:0;width:65px}
+.dataTables_wrapper{display:block}
+.dataTables_wrapper div{float:right;width:70%}
+.dataTables_wrapper label{float:none;padding:0;margin:0;width:auto;height:auto}
+.dataTables_wrapper .dataTables_length{float:right;display:inline-block;margin:0 0 0 2px;width:60px}
+.dataTables_wrapper .dataTables_length .ui-selectmenu{float:right;display:inline-block;position:relative;background:url(../../img/backoffice/table.gif) no-repeat right -115px transparent;border:0;padding:6px 21px 0 1px;margin:8px 0 0 0;color:#807f7f;font-weight:bold;font:11px/1.0em Arial;text-align:center;text-decoration:none;width:33px;height:17px}
+.ui-selectmenu-menu.entries{margin:5px 0 0 4px;width:46px}
+.dataTables_wrapper .dataTables_length .ui-selectmenu-status{font:11px/1.0em Arial}
+.ui-selectmenu-menu.entries li a{padding:6px;font:11px/1.0em Arial;text-decoration:none}
+.dataTables_wrapper .dataTables_filter{position:absolute;top:-36px;right:34px}
+.dataTables_wrapper .dataTables_filter input{float:right;display:inline-block;border:1px solid #e5e5e5;margin:8px 0 0;padding:3px 19px 3px 4px;font:11px/15px Arial;color:#848484;width:100px;height:15px}
+table tbody tr th{border:1px solid #e5e5e5;border-bottom:0;padding:8px 8px 10px;line-height:1.0em;background-color:#e5e5e5}
