@@ -1,10 +1,7 @@
 .settings/
 .buildpath
 .project
-configs/files/*.ini
-!configs/files/posts.ini
-!configs/files/routes.ini
-!configs/files/sessions.ini
+configs/files/*
 tmp/*
 webroot/files/*
 webroot/upload/*
