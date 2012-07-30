@@ -16,6 +16,15 @@ Liens
 * [Documentation](http://www.koezion-cms.com/documentation-42.html)
 * [Contact] (http://www.koezion-cms.com/contact-44.html)
 
+Exigences
+------------
+
+KoéZionCMS est développé en PHP/MySql
+
+Les versions supportées sont : 
+* 5.3.8 et supérieures pour PHP
+* 5.5.16 et supérieures pour MySql
+
 Installation
 -----------
 
