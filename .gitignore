@@ -1,12 +1,21 @@
+#ECLIPSE
 .settings/
 .buildpath
 .project
+
+#CONFIGS FOLDER
 configs/files/*.ini
 !configs/files/posts.ini
 !configs/files/routes.ini
 !configs/files/sessions.ini
+
+#TMP FOLDER
 tmp/*
+
+#WEBROOT FOLDER
 webroot/files/*
 webroot/upload/*
+
+#ALL FOLDERS
 !empty
 !.htaccess
