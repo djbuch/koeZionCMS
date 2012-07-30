@@ -11,6 +11,9 @@ configs/files/*.ini
 
 #TMP FOLDER
 tmp/*
+tmp/*/*
+tmp/*/*/*
+tmp/*/*/*/*
 
 #WEBROOT FOLDER
 webroot/files/*
