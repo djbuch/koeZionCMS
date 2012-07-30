@@ -21,6 +21,8 @@ webroot/files/*
 webroot/upload/*
 
 #ALL FOLDERS
+#Ne pas supprimer les fichier empty et .htaccess
 !empty
 !.htaccess
+#Ignorer les fichier qui commencent par un _
 _*.*
