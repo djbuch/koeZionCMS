@@ -10,10 +10,11 @@ configs/files/*.ini
 !configs/files/sessions.ini
 
 #TMP FOLDER
-tmp/*
-tmp/*/*
-tmp/*/*/*
-tmp/*/*/*/*
+tmp/cache/variables/*/*.cache
+tmp/logs/*.log
+tmp/update/db/*.txt
+tmp/update/db/*.sql
+tmp/update/localization/*.txt
 
 #WEBROOT FOLDER
 webroot/files/*
