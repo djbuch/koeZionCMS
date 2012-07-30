@@ -8,3 +8,5 @@ configs/files/*.ini
 tmp/*
 webroot/files/*
 webroot/upload/*
+!empty
+!.htaccess
