@@ -42,7 +42,7 @@ if(isset($_POST) && !empty($_POST)) {
 				<?php				
 				if(!$process_mail) {
 						
-					//Si le check de connexion à la bdd n'a pas fonctionné
+					//Echec envoi de mail
 					if(isset($cfgSmtp) && !$process_mail) { ?><div class="system error">Impossible de paramétrer le serveur SMTP avec les informations communiquées, veuillez recommencer.</div><?php } 
 					require_once(INSTALL_INCLUDE.DS.'smtp_form.php');
 				} else { 

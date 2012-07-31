@@ -7,7 +7,9 @@ else { $step = $_GET['step']; }
 
 $stepTitle = array(
 	'folders' => '- Configuration des dossiers ',	
-	'database' => '- Configuration de la base de données ',	
+	'database_params' => '- Configuration de la base de données ',	
+	'database_tables' => '- Import des tables ',	
+	'database_datas' => '- Import des données ',	
 	'website' => '- Configuration du site Internet ',	
 	'smtp' => '- Configuration du serveur SMTP ',	
 	'final' => '- Récapitulatif '		
@@ -33,7 +35,7 @@ $stepTitle = array(
 			<div id="left">
 				<ul>
 					<li <?php echo $step == 'folders' ? 'class="active"' : ''; ?>><a>DOSSIERS</a></li>
-					<li <?php echo $step == 'database' ? 'class="active"' : ''; ?>><a>BASE DE DONNEES</a></li>
+					<li <?php echo in_array($step, array('database_params', 'database_tables', 'database_datas')) ? 'class="active"' : ''; ?>><a>BASE DE DONNEES</a></li>
 					<li <?php echo $step == 'website' ? 'class="active"' : ''; ?>><a>SITE INTERNET</a></li>
 					<li <?php echo $step == 'smtp' ? 'class="active"' : ''; ?>><a>SERVEUR SMTP</a></li>
 					<li <?php echo $step == 'final' ? 'class="active"' : ''; ?>><a>RECAP</a></li>

@@ -26,7 +26,7 @@
 				if(!empty($img)) {
 					
 					$httpHost = $_SERVER["HTTP_HOST"];
-					if($httpHost == 'localhost' || $httpHost == '127.0.0.1') { $img = '/www.koezion.com'.$img; }
+					//if($httpHost == 'localhost' || $httpHost == '127.0.0.1') { $img = '/www.koezion.com'.$img; }
 					?><img src="<?php echo $img; ?>" alt="" <?php echo $title; ?> style="width: 918px;" /><?php
 				}
 				echo "\n";			

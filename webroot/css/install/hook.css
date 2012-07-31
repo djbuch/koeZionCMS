@@ -9,6 +9,7 @@
 #right .content.nopadding>.system.succes{margin:20px}
 #right .content.nopadding>.system.error{margin:20px}
 #right .content.nopadding>.system.warning{margin:20px}
+#right .content.nopadding>.system.info{margin:20px}
 .styled-select select{background:transparent;width:400px;padding:5px;border:1px solid #ccc;height:30px}
 .styled-select{width:368px;height:30px;overflow:hidden;background:url(../../img/install/down_arrow_select.jpg) no-repeat right}
 #ethernatable{border-spacing:0;background:transparent;border-collapse:collapse;margin:20px}

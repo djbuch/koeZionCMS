@@ -12,9 +12,9 @@ KoéZionCMS est une plate-forme Open Source vous permettant de créer un site we
 Liens
 -------
 
-* [Site officiel] (http://www.koezion-cms.com)
-* [Documentation](http://www.koezion-cms.com/documentation-42.html)
-* [Contact] (http://www.koezion-cms.com/contact-44.html)
+* [Site officiel][1]
+* [Documentation][2]
+* [Contact][3]
 
 Exigences
 ------------
@@ -28,4 +28,10 @@ Les versions supportées sont :
 Installation
 -----------
 
-1. Rendez-vous sur le hub de [KoéZionCMS] (https://github.com/koeZionCMS/koeZionCMS)
+1. Rendez-vous sur le hub de [KoéZionCMS][4]
+
+
+[1]: http://www.koezion-cms.com
+[2]: http://www.koezion-cms.com/documentation-42.html
+[3]: http://www.koezion-cms.com/contact-44.html
+[4]: https://github.com/koeZionCMS/koeZionCMS

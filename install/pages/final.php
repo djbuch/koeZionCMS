@@ -17,9 +17,13 @@
 					<i>Pensez à le changer par un mot de passe que vous seul pourrez retrouver</i>
 					
 				</div>
+				<div class="system info">
+					<b>Astuce</b><br />
+					Pendant le temps du paramétrage des différentes options de votre site Internet nous vous conseillons d'activer l'option permettant de sécuriser votre site Internet, ceci afin éviter que vos pages ne soient référencées durant la création de votre site Internet. 
+				</div>
 				<div class="system error">
 					<b>ATTENTION</b><br />
-					Veillez à supprimer le dossier install qui se trouve à la racine de votre serveur d'hébergement
+					Veillez à supprimer le dossier install qui se trouve à la racine de votre dossier d'hébergement sur votre serveur
 				</div>
 				<?php require_once(ROOT.DS.'core'.DS.'Koezion'.DS.'router.php'); ?>						
 				<div class="row" style="overflow: hidden;">

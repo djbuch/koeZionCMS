@@ -76,7 +76,7 @@ $folders = array(
 					$httpHost = $_SERVER["HTTP_HOST"];
 					if($httpHost == 'localhost' || $httpHost == '127.0.0.1') { $section = 'localhost'; } else { $section = 'online'; }
 					?>
-					<form action="index.php?step=database" method="post">
+					<form action="index.php?step=database_params" method="post">
 						<input type="hidden" name="section" value="<?php echo $section; ?>" />
 						<div class="row" style="text-align: right; padding-right: 0; padding-bottom: 0;"><button class="medium grey" type="submit"><span>Configurer la base de données</span></button></div>
 					</form>

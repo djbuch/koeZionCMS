@@ -1,4 +1,4 @@
-<form action="index.php?step=database" method="post">
+<form action="index.php?step=database_params" method="post">
 	<input type="hidden" value="1" name="valid_database_form" />
 	<input type="hidden" value="<?php echo isset($datas['section']) ? $datas['section'] : $section ?>" name="section" />
 	<div class="row">
@@ -41,6 +41,7 @@
 		}
 		?>
 	</div>
+	<?php /* ?>
 	<div class="row">
 		<label>Table prefix</label>
 		<div class="rowright"><input type="text" value="<?php echo isset($datas['prefix']) ? $datas['prefix'] : '' ?>" name="prefix" /></div>
@@ -51,5 +52,6 @@
 		}
 		?>
 	</div>
+	<?php */ ?>
 	<div class="row" style="text-align: right;"><button class="medium grey" type="submit"><span>Configurer la base de données</span></button></div>
 </form>

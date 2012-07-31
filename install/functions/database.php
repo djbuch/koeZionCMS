@@ -12,6 +12,7 @@
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 16/03/2012 by FI
+ * @version 0.2 - 31/07/2012 by FI - Suppression de la création de la base de données car fonctionnement aléatoire selon les hébergeurs
  */	
 	function check_connexion($host, $login, $password, $database) {
 		
@@ -19,20 +20,20 @@
 		if($dbconnection) { //Si la connexion s'est correctement déroulée
 		
 			//Vérification de l'existence de la bdd
-			$result = mysql_query("SHOW DATABASES", $dbconnection);
-			while($ligne = mysql_fetch_row($result)) { //Parcours des BDD
+			//$result = mysql_query("SHOW DATABASES", $dbconnection);
+			//while($ligne = mysql_fetch_row($result)) { //Parcours des BDD
 		
-				$exists = false; //Par défaut elle n'existe pas
-				if($ligne[0] == $database) { $exists = true; } //Si on la trouve dans la liste on change le booleen
+				//$exists = false; //Par défaut elle n'existe pas
+				//if($ligne[0] == $database) { $exists = true; } //Si on la trouve dans la liste on change le booleen
 		
 				//Si elle n'existe pas on va la créer
-				if(!$exists) { @mysql_query("CREATE DATABASE ".$database, $dbconnection); }
+				//if(!$exists) { @mysql_query("CREATE DATABASE ".$database, $dbconnection); }
 		
 				$db = mysql_select_db($database);
 				$bBddConnect = $dbconnection && $db; //Booléen qui va contrôler que la connexion et la sélection de la base se sont bien déroulées
 				if(!$bBddConnect) { $dbconnection = false; } //Si tout ne s'est pas correctement déroulé on initialise le booléen à faux
 				return $dbconnection; //On retourne le booléen
-			}
+			//}
 		} else { return false; }
 	}
 
@@ -45,18 +46,20 @@
  * @param	varchar	$db_name		Nom de la base de données
  * @param	varchar	$db_username	Login de connexion à la base de données
  * @param	varchar	$db_password	Mot de passe de connexion à la base de données
+ * @param	varchar	$file			Fichier à importer
  * @param	integer	$start			
  * @param	integer	$foffset		
  * @param	integer	$totalqueries	
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 16/03/2012 by FI
+ * @version 0.2 - 31/07/2012 by FI - Rajout du nom du fichier à importer
  * @see http://www.ozerov.de/bigdump/
  */		
-	function init_db($db_host, $db_name, $db_username, $db_password, $start, $foffset, $totalqueries) {
+	function init_db($db_host, $db_name, $db_username, $db_password, $file, $start, $foffset, $totalqueries) {
 				
-		$filename           = INSTALL_FILES.DS.'database.sql';  			//Chemin vers le fichier d'initialisation
-		$linespersession    = 50000;   								//Nombre de lignes maximum à importer
+		$filename           = INSTALL_FILES.DS.$file.'.sql';  	//Chemin vers le fichier d'initialisation
+		$linespersession    = 50000;   							//Nombre de lignes maximum à importer
 		
 		//Allowed comment markers: lines starting with these strings will be ignored by BigDump
 		$comment[]='#';                       // Standard comment lines are dropped by default

@@ -283,10 +283,11 @@ class PostsController extends AppController {
  * @access 	private
  * @author 	koéZionCMS
  * @version 0.1 - 11/07/2012 by FI
+ * @version 0.2 - 31/07/2012 by FI - Modification du test $datas['send_mail'] rajout de isset
  */	
 	function _check_send_mail($datas) {
 
-		if($datas['send_mail']) {
+		if(isset($datas['send_mail'])) {
 		
 			$session = Session::read('Backoffice');
 			

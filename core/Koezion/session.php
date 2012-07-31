@@ -9,20 +9,22 @@ class Session {
  * Cette fonction permet l'initialisation de la variable de session
  *
  * @version 0.1 - 20/04/2012
+ * @version 0.2 - 31/07/2012 - Suppression de la récupération des données de la variable de session par un fichier
  */
 	function init() {	
 		
-		require_once(LIBS.DS.'config_magik.php'); 									//Import de la librairie de gestion des fichiers de configuration
-		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'sessions.ini', true, false); 	//Création d'une instance
-		$sessionsConfigs = $cfg->keys_values();										//Récupération des configurations
-		$sessionName = $sessionsConfigs['name'];									//Récupération du nom de la variable de session
-		//$sessionTtl = $sessionsConfigs['time_to_live'];							//Récupération de la durée de vie de la session
+		//require_once(LIBS.DS.'config_magik.php'); 									//Import de la librairie de gestion des fichiers de configuration
+		//$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'sessions.ini', true, false); 	//Création d'une instance
+		//$sessionsConfigs = $cfg->keys_values();										//Récupération des configurations
+		$sessionName = "KOEZION";														//Récupération du nom de la variable de session
+		//$sessionName = $sessionsConfigs['name'];										//Récupération du nom de la variable de session
+		//$sessionTtl = $sessionsConfigs['time_to_live'];								//Récupération de la durée de vie de la session
 		
-		ini_set('session.use_trans_sid', 0);										//Evite de passe l'id de la session dans l'url
-		//session_save_path(TMP.DS.'sessions');										//Chemin de stockage des variables de session
-		//session_set_cookie_params($sessionTtl);									//Durée de vie de la session
-		session_name($sessionName); 												//On affecte le nom
-		session_start(); 															//On démarre la session
+		ini_set('session.use_trans_sid', 0);											//Evite de passe l'id de la session dans l'url
+		//session_save_path(TMP.DS.'sessions');											//Chemin de stockage des variables de session
+		//session_set_cookie_params($sessionTtl);										//Durée de vie de la session
+		session_name($sessionName); 													//On affecte le nom
+		session_start(); 																//On démarre la session
 	}	
 	
 /**
