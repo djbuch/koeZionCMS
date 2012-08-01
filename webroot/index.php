@@ -17,25 +17,7 @@
  * @link        http://www.koezion-cms.com
  * @version		0.1
  */
-
-/**
- * dirname --> permet de récupérer le dossier d'un chemin
- * __FILE__ --> constante de PHP qui contient l'url du fichier 
- */
 //$debut = microtime(true);
-
-/////////////////////////////
-//   GESTION DES ERREURS   //
-//http://www.ficgs.com/Comment-montrer-les-erreur-PHP-f1805.html
-//ini_set( 'magic_quotes_gpc', 0 );
-$logFile = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.'logs'.DIRECTORY_SEPARATOR.'error.log'; //Chemin du fichier de logs
-ini_set('display_errors', 1); //Affichage des erreurs
-ini_set('error_reporting', E_ALL); //On report toutes les erreurs ou error_reporting(E_ALL);
-ini_set('log_errors', 1); //Log des erreurs
-ini_set('error_log', $logFile); //Définition du chemin du fichier de logs
-//echo phpinfo();
-///////////////////////////// 
-
 define('GENERATOR_META', 'koeZion CMS 2.0');
 define('GENERATOR_LINK', '<p id="powered_by" style="position:absolute;width:80px;bottom:5px;right:5px;font-size:8px;margin-bottom:0;height:15px"><a href="http://www.koezion-cms.com" title="koéZion - CMS opensource" style="background:url(./img/frontoffice/mini_logo.gif) no-repeat top right transparent;width:80px;height:15px;text-indent:-9999px;display:block">propulsé par koéZionCMS</a></p>');
 

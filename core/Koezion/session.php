@@ -13,16 +13,8 @@ class Session {
  */
 	function init() {	
 		
-		//require_once(LIBS.DS.'config_magik.php'); 									//Import de la librairie de gestion des fichiers de configuration
-		//$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'sessions.ini', true, false); 	//Création d'une instance
-		//$sessionsConfigs = $cfg->keys_values();										//Récupération des configurations
-		$sessionName = "KOEZION";														//Récupération du nom de la variable de session
-		//$sessionName = $sessionsConfigs['name'];										//Récupération du nom de la variable de session
-		//$sessionTtl = $sessionsConfigs['time_to_live'];								//Récupération de la durée de vie de la session
-		
+		$sessionName = "KOEZION";														//Récupération du nom de la variable de session		
 		ini_set('session.use_trans_sid', 0);											//Evite de passe l'id de la session dans l'url
-		//session_save_path(TMP.DS.'sessions');											//Chemin de stockage des variables de session
-		//session_set_cookie_params($sessionTtl);										//Durée de vie de la session
 		session_name($sessionName); 													//On affecte le nom
 		session_start(); 																//On démarre la session
 	}	

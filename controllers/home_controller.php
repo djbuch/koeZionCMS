@@ -38,7 +38,7 @@ class HomeController extends AppController {
  * @version 0.2 - 12/03/2012 by FI - Modification de la récupération des types d'articles 
  */	
 	function index() {		
-
+		
 		//////////////////////////////////
 		//   RECUPERATION DES SLIDERS   //
 		$this->loadModel('Slider');

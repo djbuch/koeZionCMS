@@ -1,4 +1,16 @@
 <?php
+//GESTION DES ERREURS --> http://www.ficgs.com/Comment-montrer-les-erreur-PHP-f1805.html
+//ini_set( 'magic_quotes_gpc', 0 );
+$logFile = TMP.DS.'logs'.DS.'error.log'; //Chemin du fichier de logs
+$httpHost = $_SERVER["HTTP_HOST"];
+if($httpHost == 'localhost' || $httpHost == '127.0.0.1') { $displayErrors = 1; } else { $displayErrors = 0; }
+ini_set('display_errors', $displayErrors); //Affichage des erreurs
+ini_set('error_reporting', E_ALL); //On report toutes les erreurs ou error_reporting(E_ALL);
+ini_set('log_errors', 1); //Log des erreurs
+ini_set('error_log', $logFile); //Définition du chemin du fichier de logs
+//echo phpinfo();
+/////////////////////////////
+
 require_once KOEZION.DS.'session.php'; //On charge le composant permettant la gestion des sessions
 Session::init(); //On l'initialise
 
