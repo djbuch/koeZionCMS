@@ -62,7 +62,6 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `content` text COLLATE utf8_unicode_ci NOT NULL,
   `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `prefix` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `page_title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `page_description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `page_keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
