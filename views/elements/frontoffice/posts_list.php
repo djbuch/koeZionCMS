@@ -40,7 +40,7 @@
 				
 				echo '| '._('dans').' '.'<a href="'.$postBaseRoute.'">'.$categoryName.'</a>';	
 				
-				if(isset($v['code']) && !empty($v['code'])) { echo '| '.str_replace('[ARTICLE_ID]', $v['id'], $v['code']); }
+				//if(isset($v['code']) && !empty($v['code'])) { echo '| '.str_replace('[ARTICLE_ID]', $v['id'], $v['code']); }
 				?>
 			</p>
 			<div class="hr"></div>

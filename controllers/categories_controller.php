@@ -268,7 +268,7 @@ class CategoriesController extends AppController {
 				//Construction des paramètres de la requête
 				$postsQuery = array(
 					'conditions' => $postsConditions,
-					'fields' => array('id', 'name', 'short_content', 'slug', 'code', 'display_link', 'modified_by', 'modified, prefix', 'category_id'),
+					'fields' => array('id', 'name', 'short_content', 'slug', 'display_link', 'modified_by', 'modified, prefix', 'category_id'),
 					'limit' => $this->pager['limit'].', '.$this->pager['elementsPerPage'],
 					'order' => 'modified DESC'
 				);

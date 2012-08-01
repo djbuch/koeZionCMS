@@ -8,7 +8,7 @@ $keywords_for_layout = $post['page_keywords'];
 <div class="container_omega">
 	<?php 
 	echo $post['content']; 	
-	if(isset($post['code']) && !empty($post['code'])) { ?><p class="information"><?php echo str_replace('[ARTICLE_ID]', $post['id'], $post['code']); ?></p><?php } 
+	/*if(isset($post['code']) && !empty($post['code'])) { ?><p class="information"><?php echo str_replace('[ARTICLE_ID]', $post['id'], $post['code']); ?></p><?php }*/ 
 	?>	
 	<div class="clearfix"></div>
 	<?php 
