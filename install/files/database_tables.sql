@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `img_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `img_path` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `display_link` int(11) NOT NULL,
-  `display_comments` int(11) NOT NULL,
+  `display_form` int(11) NOT NULL,
   `display_home_page` int(11) NOT NULL,
   `order_by` int(11) NOT NULL,
   `message_mail` text COLLATE utf8_unicode_ci NOT NULL,

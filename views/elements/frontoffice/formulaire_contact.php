@@ -1,6 +1,7 @@
-<?php 
+<?php
 if(isset($message)) { echo $message; }
-$formOptions = array('id' => 'FormContact', 'action' => Router::url('categories/view/id:'.$category['id'].'/slug:'.$category['slug']), 'method' => 'post');
+//$formOptions = array('id' => 'FormContact', 'action' => Router::url('categories/view/id:'.$category['id'].'/slug:'.$category['slug']), 'method' => 'post');
+$formOptions = array('id' => 'FormContact', 'action' => Router::url($this->controller->request->url, '').'#form_contact', 'method' => 'post');
 echo $helpers['Form']->create($formOptions);
 $commonOptions = array('label' => false, 'div' => false, 'displayError' => false);
 ?>

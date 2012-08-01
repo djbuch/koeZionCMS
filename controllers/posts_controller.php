@@ -30,12 +30,13 @@ class PostsController extends AppController {
  * @version 0.1 - 03/01/2012 by FI 
  * @version 0.2 - 28/02/2012 by FI - Mise en place du fil d'ariane pour les articles 
  * @version 0.3 - 09/03/2012 by FI - Mise en place du préfixe pour les url des articles 
+ * @version 0.4 - 01/80/2012 by FI - Récupération des commentaires uniquement si l'option est cochée, rajout du formulaire de contact dans l'affichage
  */	
 	function view($id, $slug, $prefix) {
 		
 		//Conditions de recherche
 		$conditions = array(
-			'fields' => array('id', 'name', 'short_content', 'content', 'page_title', 'page_description', 'page_keywords', 'slug', 'code', 'display_comments', 'category_id', 'prefix'),
+			'fields' => array('id', 'name', 'short_content', 'content', 'page_title', 'page_description', 'page_keywords', 'slug', 'code', 'display_form', 'category_id', 'prefix'),
 			'conditions' => array('online' => 1, 'id' => $id)
         );
 		$datas['post'] = $this->Post->findFirst($conditions); //On récupère le premier élément
@@ -57,16 +58,14 @@ class PostsController extends AppController {
 			'name' => $datas['post']['name'],
 			'prefix' => $datas['post']['prefix']
 		);
-		//////////////////////////////////////
-		
+		//////////////////////////////////////		
 		
 		//////////////////////////////////////////
 		//   GESTION DU DEPOT DE COMMENTAIRES   //
-		if($this->request->data) {
+		if(isset($this->request->data['formulaire_commentaires'])) {
 			
 			$this->loadModel('PostsComment'); //Chargement du modèle
-			if($this->PostsComment->validates($this->request->data)) { //Si elles sont valides
-		
+			if($this->PostsComment->validates($this->request->data)) { //Si elles sont valides		
 				
 				///////////////////////
 				//   ENVOI DE MAIL   //
@@ -92,18 +91,54 @@ class PostsController extends AppController {
 			$this->unloadModel('PostsComment'); //Déchargement du modèle
 		}
 		//////////////////////////////////////////
+				
+		//////////////////////////////////////////
+		//   GESTION DU FORMULAIRE DE CONTACT   //
+		if(isset($this->request->data['formulaire_contact'])) { //Si le formulaire de contact est posté
 		
+			$this->loadModel('Contact');
+			if($this->Contact->validates($this->request->data)) { //Si elles sont valides
+		
+				///////////////////////
+				//   ENVOI DE MAIL   //
+				$mailDatas = array(
+					'subject' => '::Contact::',
+					'to' => $this->request->data['email'],
+					'element' => 'frontoffice/email/contact'
+				);
+				$this->components['Email']->send($mailDatas, $this); //On fait appel au composant email
+				///////////////////////
+		
+				$this->Contact->save($this->request->data); //On procède à la sauvegarde des données
+				$message = '<p class="confirmation">Votre demande a bien été prise en compte</p>';
+				$this->set('message', $message);
+				$this->request->data = false;
+		
+			} else {
+		
+				//Gestion des erreurs
+				$message = '<p class="error">Merci de corriger vos informations';
+				foreach($this->Contact->errors as $k => $v) { $message .= '<br />'.$v; }
+				$message .= '</p>';
+				$this->set('message', $message);
+			}
+		}
+		//////////////////////////////////////////
+				
 		///////////////////////////////////////////////////
 		//   RECUPERATION DES 20 DERNIERS COMMENTAIRES   //
-		$this->loadModel('PostsComment'); //Chargement du modèle
-		$postsCommentsConditions = array('online' => 1, 'post_id' => $id); //Uniquement les éléments actifs
-		$datas['postsComments'] = $this->PostsComment->find(array(
-				'fields' => array('name', 'message'),
-				'conditions' => $postsCommentsConditions,
-				'order' => 'id DESC',
-				'limit' => '0, 20'
-		));
-		$this->unloadModel('PostsComment'); //Déchargement du modèle
+		if($datas['post']['display_form'] == 1) {
+			
+			$this->loadModel('PostsComment'); //Chargement du modèle
+			$postsCommentsConditions = array('online' => 1, 'post_id' => $id); //Uniquement les éléments actifs
+			$datas['postsComments'] = $this->PostsComment->find(array(
+					'fields' => array('name', 'message'),
+					'conditions' => $postsCommentsConditions,
+					'order' => 'id DESC',
+					'limit' => '0, 20'
+			));
+			$this->unloadModel('PostsComment'); //Déchargement du modèle
+		}
 		////////////////////////////////////////////////////
 		
 		$this->set($datas); //On fait passer les données à la vue
@@ -319,9 +354,7 @@ class PostsController extends AppController {
 				}
 			}
 		}		
-	}
-	
-	
+	}	
 	
 	function backoffice_migration() {
 		

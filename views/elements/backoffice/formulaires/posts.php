@@ -69,8 +69,13 @@
 		<div class="content nopadding">
 			<?php 
 			//echo $helpers['Form']->input('code', "Code article", array('tooltip' => "Indiquez ici la référence de l'article (Utilisez le code [ARTICLE_ID] pour afficher l'identifiant de la base de données)"));
+			
+			$typeFormsList = array(0 => "Aucun formulaire", 1 => "Formulaire commentaires", 2 => "Formulaire de contact");
+			echo $helpers['Form']->input('display_form', "Formulaire à afficher", array('type' => 'select', 'datas' => $typeFormsList, 'tooltip' => "Indiquez le formulaire à afficher à la suite de l'article"));
 			echo $helpers['Form']->input('display_link', "Afficher un lien sous forme de bouton à la suite de l'article", array('type' => 'checkbox', 'tooltip' => "En cochant cette case vous afficherez automatiquement le lien pour se rendre sur le détail de l'article, par défaut le titre de l'article sera également cliquable"));
-			echo $helpers['Form']->input('display_comments', 'Possibilité pour les Internautes de laisser un commentaire', array('type' => 'checkbox', 'tooltip' => "En cochant cette case vous laisserez la possibilité aux Internautes de pouvoir déposer des commentaires sur l'article"));
+			
+			
+			//echo $helpers['Form']->input('display_form', 'Possibilité pour les Internautes de laisser un commentaire', array('type' => 'checkbox', 'tooltip' => "En cochant cette case vous laisserez la possibilité aux Internautes de pouvoir déposer des commentaires sur l'article"));
 			echo $helpers['Form']->input('display_home_page', "Afficher cet article sur la la page d'accueil", array('type' => 'checkbox', 'tooltip' => "En cochant cette case vous afficherez cet article sur la page d'accueil du site"));
 			?>
 		</div>
