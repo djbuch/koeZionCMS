@@ -359,20 +359,18 @@ class AppController extends Controller {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 31/05/2012 by FI
+ * @version 0.2 - 01/08/2012 by FI - Modification de la requête on passe par un query au lieu d'un save
  */
     function backoffice_ajax_order_by() {
     	
-    	$this->auto_render = false; //Pas de vue    	
-    	$modelName =  $this->params['modelName']; //On récupère la valeur du modèle    	
-    	$datas = $this->request->data;
+    	$this->auto_render = false; //On ne fait pas de rendu de la vue
+    	$modelName =  $this->params['modelName']; //Récupération du nom du modèle
+    	$modelTable =  $this->$modelName->table; //Récupération du nom de la table
+    	$datas = $this->request->data; //Récupération des données
     	
-    	pr($datas);
-    	
-    	foreach($datas['ligne'] as $position => $id) {
-
-    		$datasToSave = array('id' => $id, 'order_by' => $position);
-    		$this->$modelName->save($datasToSave);
-    	}    	
+    	$sql = ""; //Requête sql qui sera exécutée
+    	foreach($datas['ligne'] as $position => $id) { $sql .= "UPDATE ".$modelTable." SET order_by = ".$position." WHERE id = ".$id."; "."\n"; } //Construction de la requête
+    	$this->$modelName->query($sql); //Exécution de la requête
     }   
      
 
