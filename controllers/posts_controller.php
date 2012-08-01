@@ -36,7 +36,7 @@ class PostsController extends AppController {
 		
 		//Conditions de recherche
 		$conditions = array(
-			'fields' => array('id', 'name', 'short_content', 'content', 'page_title', 'page_description', 'page_keywords', 'slug', 'code', 'display_form', 'category_id', 'prefix'),
+			'fields' => array('id', 'name', 'short_content', 'content', 'page_title', 'page_description', 'page_keywords', 'slug', 'display_form', 'category_id', 'prefix'),
 			'conditions' => array('online' => 1, 'id' => $id)
         );
 		$datas['post'] = $this->Post->findFirst($conditions); //On récupère le premier élément
