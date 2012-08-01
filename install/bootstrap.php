@@ -28,20 +28,21 @@ define('INSTALL_FILES', ROOT.DS.'install'.DS.'files'); 			//Chemin vers les fich
 define('INSTALL_FUNCTIONS', ROOT.DS.'install'.DS.'functions'); 	//Chemin vers les fichiers contenants les fonctions
 define('INSTALL_INCLUDE', ROOT.DS.'install'.DS.'include'); 		//Chemin vers les fichiers include de configuration
 define('INSTALL_VALIDATE', ROOT.DS.'install'.DS.'validate'); 	//Chemin vers les fichiers de validation
-
-
+	
 /////////////////////////////////////////////////////////
 //   MISE EN PLACE DU CHEMIN RELATIF VERS LE WEBROOT   //
 //http://www.siteduzero.com/forum-83-692076-p1-base-url.html
 //define('BASE_URL', dirname(dirname($_SERVER['SCRIPT_NAME']))); //Chemin relatif vers le coeur de l'application --> OLD
-
+//Ne marche plus si le site est dans plus d'un sous dossier
+//24/07/2012 --> Correctif : maintenant tout fonctionne même si plus d'un sous dossier, correction de la génération de la variable $baseUrl
 $baseUrl = '';
 $scriptPath = preg_split("#[\\\\/]#", dirname(__FILE__), -1, PREG_SPLIT_NO_EMPTY);
 $urlPath = preg_split("#[\\\\/]#", $_SERVER['REQUEST_URI'], -1, PREG_SPLIT_NO_EMPTY);
-if(isset($urlPath[0])) {
 
-	$key = array_search($urlPath[0], $scriptPath);
-	if(false !== $key) $baseUrl = "/".$urlPath[0];
+foreach($urlPath as $k => $v) {
+	
+	$key = array_search($v, $scriptPath);
+	if($key !== false && $v != "install") $baseUrl .= "/".$v;
 }
 define('BASE_URL', $baseUrl); //Chemin relatif vers le coeur de l'application
 /////////////////////////////////////////////////////////
