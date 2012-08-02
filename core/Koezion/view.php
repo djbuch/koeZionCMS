@@ -104,9 +104,8 @@ class View extends Object {
     public function element($element, $vars = null) {
         
     	if(isset($vars) && !empty($vars)) { 
-    		foreach($vars as $k => $v) { 
-    			$this->vars[$k] = $v; 
-    		} 
+    		
+    		foreach($vars as $k => $v) { $this->vars[$k] = $v; } 
     	}    	
     	extract($this->vars);    
     	$element = ELEMENTS.DS.str_replace('/', DS, $element); //On transforme les / par ceux utilisés sur le système

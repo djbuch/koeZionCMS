@@ -4,8 +4,8 @@
 		<li><a href="#header"><?php echo _("header"); ?></a></li>
 		<li><a href="#tpl"><?php echo _("Template"); ?></a></li>
 		<li><a href="#txt"><?php echo _("Textes"); ?></a></li>
+		<li><a href="#emails"><?php echo _("Emails"); ?></a></li>
 		<li><a href="#seo"><?php echo _("SEO"); ?></a></li>
-		<?php /* ?><li><a href="#wait"><?php echo _("Page d'attente"); ?></a></li><?php */ ?>
 		<li><a href="#foot"><?php echo _("Footer"); ?></a></li>
 		<li><a href="#options"><?php echo _("Options"); ?></a></li>
 	</ul>
@@ -13,7 +13,7 @@
 		<div class="content nopadding">
 			<?php 
 			echo $helpers['Form']->input('name', '<i>(*)</i> Titre', array('tooltip' => "Indiquez le titre du site Internet"));
-			echo $helpers['Form']->input('url', '<i>(*)</i> Url', array('tooltip' => "Indiquez l'url complète du site Internet (avec http://)"));
+			echo $helpers['Form']->input('url', '<i>(*)</i> Url', array('tooltip' => "Indiquez l'url complète du site Internet (avec http:// et sans le / à la fin)"));
 			echo $helpers['Form']->input('online', 'En ligne', array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour diffuser cette couleur"));
 			?>
 		</div>
@@ -43,6 +43,15 @@
 			?>
 		</div>
 	</div>
+	<div id="emails">
+		<div class="content nopadding">
+			<?php 
+			echo $helpers['Form']->input('txt_mail_contact', 'Contenu email contact', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge', 'tooltip' => "Indiquez le texte qui sera envoyé par email"));
+			echo $helpers['Form']->input('txt_mail_comments', 'Contenu email commentaires', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge', 'tooltip' => "Indiquez le texte qui sera envoyé par email"));
+			echo $helpers['Form']->input('txt_mail_newsletter', 'Contenu email newsletter', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge', 'tooltip' => "Indiquez le texte qui sera envoyé par email"));
+			?>
+		</div>
+	</div>
 	<div id="seo">
 		<div class="content nopadding">
 			<?php 
@@ -52,16 +61,6 @@
 			?>
 		</div>
 	</div>
-	<?php /* ?>
-	<div id="wait">
-		<div class="content nopadding">
-			<?php 
-			echo $helpers['Form']->input('wait_activ', "Activer la page d'attente", array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour activer la page d'attente"));
-			echo $helpers['Form']->input('wait_txt', "Texte page d'attente", array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge', 'tooltip' => "Saisissez ici le texte qui sera affiché sur la page d'attente"));	
-			?>
-		</div>
-	</div>
-	<?php */ ?>
 	<div id="foot">
 		<div class="content nopadding">
 			<?php 
@@ -77,11 +76,9 @@
 			<?php 
 			$positionList = array('header' => "Dans le header", 'menu' => "Dans le menu");
 			echo $helpers['Form']->input('search_engine_position', 'Position du moteur de recherche', array('type' => 'select', 'datas' => $positionList));
-			echo $helpers['Form']->input('ga_code', 'Code Google Analytics', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge'));
-			
+			echo $helpers['Form']->input('ga_code', 'Code Google Analytics', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge'));			
 			$txtSecure = 'Sécuriser le site. <i>Seuls les utilisateurs enregistrés pourront se connecter. Pour rajouter un utilisateurs utilisez la page suivante : <a href="'.Router::url('backoffice/users/index').'">'.$helpers['Html']->img('backoffice/icon-profile.png', array('alt' => _("Gestion utilisateurs")))._("Utilisateurs").'</a></i>';
-			echo $helpers['Form']->input('secure_activ', $txtSecure, array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour activer la sécurité sur le site"));
-			
+			echo $helpers['Form']->input('secure_activ', $txtSecure, array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour activer la sécurité sur le site"));			
 			$txtLog = "Logger les utilisateurs. <i>Attention cette option ne fonctionne que dans le cas de sites sécurisés. La mise en place de cette option peut ralentir l'affichage des pages</i>";
 			echo $helpers['Form']->input('log_users_activ', $txtLog, array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour activer le log des utilisateurs"));
 			?>

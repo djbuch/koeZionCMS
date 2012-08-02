@@ -39,6 +39,7 @@ class CategoriesController extends AppController {
  * @version 1.1 - 22/05/2012 by FI - Mise en place de la gestion des filtres des articles
  * @version 1.2 - 05/06/2012 by FI - Modification de la gestion de la sécurité de la page
  * @version 1.3 - 16/07/2012 by FI - Rajout de la requête pour la récupération des produits
+ * @version 1.4 - 02/08/2012 by FI - Passage de la gestion du formulaire de contact dans une fonction pour le mutualiser avec d'autres contrôleurs
  */	
 	function view($id, $slug) {
 	
@@ -193,38 +194,7 @@ class CategoriesController extends AppController {
 			
 		} else {
 			
-			//////////////////////////////////////////
-			//   GESTION DU FORMULAIRE DE CONTACT   //
-			if(isset($this->request->data['formulaire_contact'])) { //Si le formulaire de contact est posté
-			
-				$this->loadModel('Contact');
-				if($this->Contact->validates($this->request->data)) { //Si elles sont valides
-			
-					///////////////////////
-					//   ENVOI DE MAIL   //
-					$mailDatas = array(
-						'subject' => '::Contact::',
-						'to' => $this->request->data['email'],
-						'element' => 'frontoffice/email/contact'
-					);
-					$this->components['Email']->send($mailDatas, $this); //On fait appel au composant email
-					///////////////////////
-			
-					$this->Contact->save($this->request->data); //On procède à la sauvegarde des données
-					$message = '<p class="confirmation">Votre demande a bien été prise en compte</p>';
-					$this->set('message', $message);
-					$this->request->data = false;
-			
-				} else {
-			
-					//Gestion des erreurs
-					$message = '<p class="error">Merci de corriger vos informations';
-					foreach($this->Contact->errors as $k => $v) { $message .= '<br />'.$v; }
-					$message .= '</p>';
-					$this->set('message', $message);
-				}
-			}
-			//////////////////////////////////////////	
+			$this->_send_mail_contact(); //Gestion du formulaire de contact	
 			
 			$datas['is_full_page'] = 1; //Par défaut on affichera le détail de la catégorie en pleine page
 			
@@ -270,7 +240,7 @@ class CategoriesController extends AppController {
 					'conditions' => $postsConditions,
 					'fields' => array('id', 'name', 'short_content', 'slug', 'display_link', 'modified_by', 'modified, prefix', 'category_id'),
 					'limit' => $this->pager['limit'].', '.$this->pager['elementsPerPage'],
-					'order' => 'modified DESC'
+					'order' => 'order_by ASC, modified DESC'
 				);
 				
 				$postsQuery['moreConditions'] = ''; //Par défaut pas de conditions de recherche complémentaire

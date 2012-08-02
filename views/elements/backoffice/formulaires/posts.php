@@ -83,7 +83,7 @@
 			<div class="content nopadding">
 				<?php 
 				echo $helpers['Form']->input('send_mail', "Envoyer un email pour informer les utilisateurs de l'ajout (ou de la modification)", array('type' => 'checkbox', 'tooltip' => "En cochant cette case un email sera automatiquement envoyer à l'ensemble des utilisateurs référencés dans le système"));
-				echo $helpers['Form']->input('message_mail', 'Contenu du mail', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge', 'tooltip' => "Saisissez ici le contenu de votre email"));
+				echo $helpers['Form']->input('message_mail', 'Contenu email newsletter', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge', 'tooltip' => "Indiquez le texte qui sera envoyé par email"));
 				?>
 			</div>
 		</div>

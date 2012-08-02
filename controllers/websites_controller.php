@@ -38,6 +38,7 @@ class WebsitesController extends AppController {
 			$this->_init_category();
 			$this->_edit_session();
 			$this->_update_template($this->Website->id, $this->request->data['template_id']);
+			$this->_update_txt_mails($id, $this->request->data);
 			$this->redirect('backoffice/websites/index');
 		}	
 	}	
@@ -58,9 +59,10 @@ class WebsitesController extends AppController {
 		
 		$parentEdit = parent::backoffice_edit($id, false); //On fait appel à la fonction d'édition parente		
 		if($parentEdit) {
-				
+			
 			$this->_edit_session();			
 			$this->_update_template($id, $this->request->data['template_id']);
+			$this->_update_txt_mails($id, $this->request->data);
 			$this->redirect('backoffice/websites/index');
 		}
 	}	
@@ -251,6 +253,8 @@ class WebsitesController extends AppController {
 /**
  * Cette fonction permet la mise à jour du template utilisé par le site Internet
  *
+ * @param 	integer $websiteId 	Identifiant du site
+ * @param 	integer $templateId Identifiant du template utilisé
  * @access 	private
  * @author 	koéZionCMS
  * @version 0.1 - 07/06/2012 by FI
@@ -261,6 +265,35 @@ class WebsitesController extends AppController {
 		$templateLayout = $templateDatas['layout'];
 		$templateCode = $templateDatas['code'];		
 		$datas = array('id' => $websiteId, 'tpl_layout' => $templateLayout, 'tpl_code' => $templateCode);
+		$this->Website->save($datas);
+	}
+
+/**
+ * Cette fonction permet la mise à jour des textes qui seront insérés dans les emails
+ *
+ * @param 	integer $websiteId 	Identifiant du site
+ * @param 	array 	$datas 		Données postées
+ * @access 	private
+ * @author 	koéZionCMS
+ * @version 0.1 - 02/08/2012 by FI
+ */	
+	function _update_txt_mails($websiteId, $datas) {
+			
+		$txtMails = $this->components['Text']->format_for_mailing(
+			array(
+				'txt_mail_contact' => $datas['txt_mail_contact'],
+				'txt_mail_comments' => $datas['txt_mail_comments'],
+				'txt_mail_newsletter' => $datas['txt_mail_newsletter'],				
+			),
+			$datas['url']
+		); //On fait appel au composant Text pour formater les textes des mails
+		
+		$datas = array(
+			'id' => $websiteId, 
+			'txt_mail_contact' => $txtMails['txt_mail_contact'], 
+			'txt_mail_comments' => $txtMails['txt_mail_comments'], 
+			'txt_mail_newsletter' => $txtMails['txt_mail_newsletter']
+		);
 		$this->Website->save($datas);
 	}
 }

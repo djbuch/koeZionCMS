@@ -88,6 +88,7 @@ class Email {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 06/02/2012 by FI
+ * @version 0.2 - 02/08/2012 by FI - Customisation des messages
  */
 	function send($datas, $controller) {
 		
@@ -102,11 +103,7 @@ class Email {
 	
 				foreach($datas['vars'] as $k => $v) { $view->vars[$k] = $v; }
 			}
-			
-			//Extraction des données postées
-			//foreach($controller->request->data as $k => $v) { $this->datas[$k] = $v; }
-			//extract($this->datas);
-			
+						
 			ob_start(); //On démarre le rendu
 			$view->element($datas['element'], $controller->request->data); //On récupère l'élément à envoyer
 			$content_for_layout = ob_get_clean(); //On récupère le rendu

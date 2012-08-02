@@ -12,7 +12,7 @@ configs/files/*.ini
 #TMP FOLDER
 tmp/cache/variables/*/*.cache
 tmp/logs/*.log
-tmp/update/db/*.txt
+#tmp/update/db/*.txt
 tmp/update/db/*.sql
 tmp/update/localization/*.txt
 

@@ -58,72 +58,10 @@ class PostsController extends AppController {
 			'name' => $datas['post']['name'],
 			'prefix' => $datas['post']['prefix']
 		);
-		//////////////////////////////////////		
-		
-		//////////////////////////////////////////
-		//   GESTION DU DEPOT DE COMMENTAIRES   //
-		if(isset($this->request->data['formulaire_commentaires'])) {
-			
-			$this->loadModel('PostsComment'); //Chargement du modèle
-			if($this->PostsComment->validates($this->request->data)) { //Si elles sont valides		
+		//////////////////////////////////////
 				
-				///////////////////////
-				//   ENVOI DE MAIL   //
-				$mailDatas = array(
-					'subject' => '::Commentaire::',
-					'to' => $this->request->data['email'],
-					'element' => 'frontoffice/email/commentaire'
-				);
-				$this->components['Email']->send($mailDatas, $this); //On fait appel au composant email
-				///////////////////////				
-				
-				$this->PostsComment->save($this->request->data);
-				$message = '<p class="confirmation">Votre commentaire a bien été prise en compte, il sera diffusé après validation par notre modérateur</p>';
-				$this->set('message', $message);
-				$this->request->data = false;
-			} else {
-		
-				$message = '<p class="error">Merci de corriger vos informations';
-				foreach($this->PostsComment->errors as $k => $v) { $message .= '<br />'.$v; }
-				$message .= '</p>';
-				$this->set('message', $message);
-			}
-			$this->unloadModel('PostsComment'); //Déchargement du modèle
-		}
-		//////////////////////////////////////////
-				
-		//////////////////////////////////////////
-		//   GESTION DU FORMULAIRE DE CONTACT   //
-		if(isset($this->request->data['formulaire_contact'])) { //Si le formulaire de contact est posté
-		
-			$this->loadModel('Contact');
-			if($this->Contact->validates($this->request->data)) { //Si elles sont valides
-		
-				///////////////////////
-				//   ENVOI DE MAIL   //
-				$mailDatas = array(
-					'subject' => '::Contact::',
-					'to' => $this->request->data['email'],
-					'element' => 'frontoffice/email/contact'
-				);
-				$this->components['Email']->send($mailDatas, $this); //On fait appel au composant email
-				///////////////////////
-		
-				$this->Contact->save($this->request->data); //On procède à la sauvegarde des données
-				$message = '<p class="confirmation">Votre demande a bien été prise en compte</p>';
-				$this->set('message', $message);
-				$this->request->data = false;
-		
-			} else {
-		
-				//Gestion des erreurs
-				$message = '<p class="error">Merci de corriger vos informations';
-				foreach($this->Contact->errors as $k => $v) { $message .= '<br />'.$v; }
-				$message .= '</p>';
-				$this->set('message', $message);
-			}
-		}
-		//////////////////////////////////////////
+		$this->_send_mail_comments(); //Gestion du formulaire de commentaires	
+		$this->_send_mail_contact(); //Gestion du formulaire de contact	
 				
 		///////////////////////////////////////////////////
 		//   RECUPERATION DES 20 DERNIERS COMMENTAIRES   //
@@ -147,7 +85,7 @@ class PostsController extends AppController {
 //////////////////////////////////////////////////////////////////////////////////////////	
 //										BACKOFFICE										//
 //////////////////////////////////////////////////////////////////////////////////////////
-	
+
 /**
  * Cette fonction permet l'ajout d'un élément
  *
@@ -319,6 +257,7 @@ class PostsController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 11/07/2012 by FI
  * @version 0.2 - 31/07/2012 by FI - Modification du test $datas['send_mail'] rajout de isset
+ * @version 0.3 - 02/08/2012 by FI - Customisation du message envoyé
  */	
 	function _check_send_mail($datas) {
 
@@ -343,14 +282,26 @@ class PostsController extends AppController {
 	
 				foreach($users as $k => $v) {
 					
-					$emailC = new Email();
-					$mailDatas = array(
-						'subject' => '::Mise à jour article::',
-						'to' => $v['email'],
-						'element' => 'frontoffice/email/mise_a_jour_article'
-					);
-					$emailC->send($mailDatas, $this); //On fait appel au composant email
-					unset($emailC);
+					if(!empty($v['email'])) {
+						
+						$currentWebsite = Session::read('Backoffice.Websites.current'); //Récupération du site courant
+						$urlWebsite = Session::read('Backoffice.Websites.details.'.$currentWebsite.'.url'); //Récupération du site courant 						
+						
+						$txtMails = $this->components['Text']->format_for_mailing(
+							array('message_mail' => $datas['message_mail']),
+							$urlWebsite
+						); //On fait appel au composant Text pour formater les textes des mails
+						
+						$emailC = new Email();
+						$mailDatas = array(
+							'subject' => '::Mise à jour article::',
+							'to' => $v['email'],
+							'element' => 'frontoffice/email/mise_a_jour_article',
+							'vars' => array('messageContent' => $txtMails['message_mail'])
+						);
+						$emailC->send($mailDatas, $this); //On fait appel au composant email
+						unset($emailC);
+					}
 				}
 			}
 		}		

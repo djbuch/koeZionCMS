@@ -32,13 +32,18 @@ class ContactsController extends AppController {
 		if($this->request->data) { //Si des données sont postées
 			
 			if($this->Contact->validates($this->request->data)) { //Si elles sont valides
+    	
+    			//Récupération du contenu à envoyer dans le mail
+    			$vars = $this->get('vars');
+    			$messageContent = $vars['websiteParams']['txt_mail_newsletter'];
 			
 				///////////////////////
 				//   ENVOI DE MAIL   //
 				$mailDatas = array(
 					'subject' => '::Newsletter::',
 					'to' => $this->request->data['email'],
-					'element' => 'frontoffice/email/newsletter'
+					'element' => 'frontoffice/email/newsletter',
+					'vars' => array('messageContent' => $messageContent)
 				);
 				$this->components['Email']->send($mailDatas, $this); //On fait appel au composant email
 				///////////////////////

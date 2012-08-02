@@ -89,6 +89,44 @@ class Text {
 		);	
 	}
 	
+/**
+ * Cette fonction va retourner des chaines de caractères dont les liens auront étés transformés en url absolues
+ *
+ * @param 	array  		$datas 		Tableau à convertir
+ * @param 	varchar  	$url2Use 	Url à remplacer dans les liens
+ * @return 	array	Tableau converti
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 02/08/2012 by FI
+ */		
+	function format_for_mailing($datas, $url2Use) {
+		
+		require_once(LIBS.DS.'simple_html_dom.php'); //Chargement de la librairie
+		
+		//Modification des données
+		foreach($datas as $field => $data) {
+		
+			$html = str_get_html($data);
+		
+			//Modification des liens vers les images
+			foreach($html->find('img') as $k => $v) {
+		
+				$scr = $v->src;
+				if(!substr_count($scr, $url2Use)) { $v->src = $url2Use.$v->src; }
+			}
+		
+			//Modification des liens
+			foreach($html->find('a') as $k => $v) {
+		
+				$href = $v->href;
+				if(!substr_count($href, "http://")) { $v->href = $url2Use.$v->href; }
+			}
+			$datas[$field] = $html->outertext;
+		}		
+		
+		return $datas;
+	}
+	
 	
 //////////////////////////////////////////////////////////////////////////////////////////
 //								FONCTIONS PRIVEES										//
