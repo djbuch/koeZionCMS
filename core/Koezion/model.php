@@ -12,6 +12,7 @@ class Model extends Object {
 	public $primaryKey = 'id';  //Valeur par défaut de la clé primaire
 	public $id; //Variable qui va contenir la valeur de la clé primaire après isert ou update
 	public $errors = array(); //Par défaut pas d'erreurs
+	public $trace_sql = false; //Permet d'afficher la requête exécutée cf fonction find
     
 /**
  * Constructeur de la classe
@@ -202,6 +203,8 @@ class Model extends Object {
 		//////////////////////
 		//   CHAMPS LIMIT   //
 		if(isset($req['limit'])) { $sql .= ' LIMIT '.$req['limit']; }
+		
+		if($this->trace_sql) { pr($sql); }		
 		
 		$pre = $this->db->prepare($sql);
 		$pre->execute();

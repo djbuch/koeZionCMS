@@ -35,7 +35,8 @@ class ExportsController extends AppController {
 		$this->loadModel('Contact');
 		$datas['contacts'] = $this->Contact->find(array(
 			'conditions' => array('online' => 1),
-			'fields' => array('name', 'email')
+			'fields' => array('id', 'name', 'phone', 'email', 'created'),
+			'order' => 'created DESC, name ASC'
 		));				
 		$this->set($datas);
 	}	

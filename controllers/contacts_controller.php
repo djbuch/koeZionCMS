@@ -86,6 +86,6 @@ class ContactsController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 09/03/2012 by FI
  */
-	function backoffice_index() { parent::backoffice_index(false, array('id', 'name', 'email', 'online')); }	
+	function backoffice_index() { parent::backoffice_index(false, array('id', 'name', 'email', 'online', 'created'), 'created DESC, name ASC'); }	
 			
 }

@@ -86,6 +86,28 @@ class PostsController extends AppController {
 //										BACKOFFICE										//
 //////////////////////////////////////////////////////////////////////////////////////////
 
+	function backoffice_index() {
+		
+		//////////////////////////////////////////////////////
+		//   RECUPERATION DES CONFIGURATIONS DES ARTICLES   //
+		require_once(LIBS.DS.'config_magik.php'); 										//Import de la librairie de gestion des fichiers de configuration des posts
+		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'posts.ini', false, false); 		//Création d'une instance
+		$postsConfigs = $cfg->keys_values();											//Récupération des configurations
+		
+		if($postsConfigs['order'] == 'modified') { $order = 'category_id ASC, modified DESC'; }
+		else if($postsConfigs['order'] == 'order_by') { $order = 'category_id ASC, order_by ASC'; }
+		
+		$this->set('postsOrder', $postsConfigs['order']);
+		
+		$datas = parent::backoffice_index(true, null, $order);		
+		
+		$posts = array();
+		foreach($datas['posts'] as $k => $v) { $posts[$v['category_id']][] = $v; }
+		$datas['posts'] = $posts;
+		$this->set($datas);
+		
+	}
+	
 /**
  * Cette fonction permet l'ajout d'un élément
  *

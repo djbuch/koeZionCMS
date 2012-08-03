@@ -196,8 +196,7 @@ class CategoriesController extends AppController {
 			
 			$this->_send_mail_contact(); //Gestion du formulaire de contact	
 			
-			$datas['is_full_page'] = 1; //Par défaut on affichera le détail de la catégorie en pleine page
-			
+			$datas['is_full_page'] = 1; //Par défaut on affichera le détail de la catégorie en pleine page			
 			
 			//////////////////////////////////
 			//   RECUPERATION DES ENFANTS   //
@@ -229,6 +228,13 @@ class CategoriesController extends AppController {
 			
 			if($nbPosts > 0) {
 				
+				//////////////////////////////////////////////////////
+				//   RECUPERATION DES CONFIGURATIONS DES ARTICLES   //
+				require_once(LIBS.DS.'config_magik.php'); 										//Import de la librairie de gestion des fichiers de configuration des posts
+				$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'posts.ini', false, false); 		//Création d'une instance
+				$postsConfigs = $cfg->keys_values();											//Récupération des configurations
+				//////////////////////////////////////////////////////
+				
 				$datas['displayPosts'] = true;
 				
 				//Récupération des types d'articles
@@ -239,9 +245,11 @@ class CategoriesController extends AppController {
 				$postsQuery = array(
 					'conditions' => $postsConditions,
 					'fields' => array('id', 'name', 'short_content', 'slug', 'display_link', 'modified_by', 'modified, prefix', 'category_id'),
-					'limit' => $this->pager['limit'].', '.$this->pager['elementsPerPage'],
-					'order' => 'order_by ASC, modified DESC'
-				);
+					'limit' => $this->pager['limit'].', '.$this->pager['elementsPerPage']
+				);				
+				
+				if($postsConfigs['order'] == 'modified') { $postsQuery['order'] = 'modified DESC'; }
+				else if($postsConfigs['order'] == 'order_by') { $postsQuery['order'] = 'order_by ASC'; }		
 				
 				$postsQuery['moreConditions'] = ''; //Par défaut pas de conditions de recherche complémentaire
 						
@@ -249,7 +257,7 @@ class CategoriesController extends AppController {
 				
 				//////////////////////////////////////////////////////////////////////////
 				///  GESTION DES EVENTUELS PARAMETRES PASSES EN GET PAR L'UTILISATEUR   //			
-				$filterPosts = $this->_filter_posts($datas['postsTypes']);
+				$filterPosts = $this->_filter_posts($datas['postsTypes'], $postsConfigs['search']);
 				if(isset($filterPosts['moreConditions'])) { 
 					
 					$postsQuery['moreConditions'] = $filterPosts['moreConditions']; 
@@ -258,9 +266,9 @@ class CategoriesController extends AppController {
 				
 				$datas = am($datas, $filterPosts);			
 				//////////////////////////////////////////////////////////////////////////
-							
+				
 				$datas['posts'] = $this->Post->find($postsQuery); //Récupération des articles
-							
+				
 				//On va compter le nombre d'élement de la catégorie
 				//On compte deux fois le nombre de post une fois en totalité une fois en rajoutant si il est renseigné le type d'article
 				//Car si on ne faisait pas cela on avait toujours la zone d'affichage des catégories qui s'affichaient lorsqu'on affichait les frères
@@ -270,8 +278,7 @@ class CategoriesController extends AppController {
 				$this->pager['totalElements'] = $this->Post->findCount($postsConditions, $postsQuery['moreConditions']); //On va compter le nombre d'élement
 				$this->pager['totalPages'] = ceil($this->pager['totalElements'] / $this->pager['elementsPerPage']); //On va compter le nombre de page
 		
-				if($this->pager['totalElements'] > 0 || count($datas['postsTypes']) > 0) { $datas['is_full_page'] = 0; } //Si on doit afficher les articles alors il faut la colonne de droite
-			
+				if($this->pager['totalElements'] > 0 || count($datas['postsTypes']) > 0) { $datas['is_full_page'] = 0; } //Si on doit afficher les articles alors il faut la colonne de droite			
 			}
 					
 			$this->set($datas); //On fait passer les données à la vue
@@ -517,27 +524,23 @@ class CategoriesController extends AppController {
 /**
  * Cette fonction permet de récupérer les articles à afficher sur le frontoffice (Dans les contrôleurs Categories et Posts)
  *
- * @param 	integer $websiteId Identifiant du site Internet
- * @return 	array 	Liste des catégories
+ * @param 	array 	$postsTypes Liste des types de posts
+ * @param 	varchar $searchType Type de recherche
+ * @return 	array 	Configuration de la recherche
  * @access 	private
  * @author 	koéZionCMS
  * @version 0.1 - 03/05/2012 by FI
- */   
-    
-    function _filter_posts($postsTypes) {
+ */       
+    function _filter_posts($postsTypes, $searchType) {
     	
     	$return = array();
     	
     	//Si l'internaute à cliqué sur un type d'article (ou plusieurs)
     	if(isset($this->request->data['typepost']) && !empty($this->request->data['typepost'])) {
     	
-    		require_once(LIBS.DS.'config_magik.php'); 							//Import de la librairie de gestion des fichiers de configuration des posts
-    		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'posts.ini', false, false); 		//Création d'une instance
-    		$postsConfigs = $cfg->keys_values();											//Récupération des configurations
-    	
     		/////////////////////////////////////////////
     		//   MISE EN PLACE DE LA REQUETE STRICTE   //
-    		if($postsConfigs['search'] == 'stricte') {
+    		if($searchType == 'stricte') {
     	
     			$this->loadModel('PostsPostsType');
     			$typePost = explode(',', $this->request->data['typepost']); //Récupération des types de post passés en GET
@@ -572,7 +575,7 @@ class CategoriesController extends AppController {
     	
     			///////////////////////////////////////////
     			//   MISE EN PLACE DE LA REQUETE LARGE   //
-    		} else if($postsConfigs['search'] == 'large') {
+    		} else if($searchType == 'large') {
     	
     			//Construction de la requête de recherche
     			$return['moreConditions'] = 'Post.id IN (SELECT post_id FROM posts_posts_types WHERE posts_type_id';

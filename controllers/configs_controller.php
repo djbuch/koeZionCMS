@@ -81,16 +81,7 @@ class ConfigsController extends AppController {
  * @version 0.2 - 18/04/2012 by FI - Passage des traitements dans une fonction privée pour mutualiser
  */
 	function backoffice_posts_liste() { $this->_proceed_datas_ini(CONFIGS.DS.'files'.DS.'posts.ini', 'backoffice/configs/posts_liste'); }	
-	
-/**
- * Cette fonction va permettre l'affichage des configurations des variables de sessions
- *
- * @access 	public
- * @author 	koéZionCMS
- * @version 0.1 - 23/04/2012 by FI
- */
-	function backoffice_sessions_liste() { $this->_proceed_datas_ini(CONFIGS.DS.'files'.DS.'sessions.ini', 'backoffice/configs/sessions_liste'); }	
-	
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //										FONCTIONS PRIVEES										//
 //////////////////////////////////////////////////////////////////////////////////////////////////	

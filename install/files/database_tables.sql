@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS `contacts` (
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `message` text COLLATE utf8_unicode_ci NOT NULL,
   `online` int(11) NOT NULL,
+  `created` datetime DEFAULT NULL,
   `website_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

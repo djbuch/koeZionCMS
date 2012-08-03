@@ -152,7 +152,8 @@ class AppController extends Controller {
  * Cette fonction permet l'affichage de la liste des éléments
  * 
  * @param 	boolean $return 	Indique si il faut ou non retourner les données récupérées
- * @param 	boolean $fields 	Indique les champs à récupérer dans la requête
+ * @param 	array 	$fields 	Indique les champs à récupérer dans la requête
+ * @param 	varchar $order 		Tri des résultats
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 17/01/2012 by FI
