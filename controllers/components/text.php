@@ -108,20 +108,23 @@ class Text {
 		
 			$html = str_get_html($data);
 		
-			//Modification des liens vers les images
-			foreach($html->find('img') as $k => $v) {
-		
-				$scr = $v->src;
-				if(!substr_count($scr, $url2Use)) { $v->src = $url2Use.$v->src; }
+			if(!empty($html)) {
+			
+				//Modification des liens vers les images
+				foreach($html->find('img') as $k => $v) {
+			
+					$scr = $v->src;
+					if(!substr_count($scr, $url2Use)) { $v->src = $url2Use.$v->src; }
+				}
+			
+				//Modification des liens
+				foreach($html->find('a') as $k => $v) {
+			
+					$href = $v->href;
+					if(!substr_count($href, "http://")) { $v->href = $url2Use.$v->href; }
+				}
+				$datas[$field] = $html->outertext;
 			}
-		
-			//Modification des liens
-			foreach($html->find('a') as $k => $v) {
-		
-				$href = $v->href;
-				if(!substr_count($href, "http://")) { $v->href = $url2Use.$v->href; }
-			}
-			$datas[$field] = $html->outertext;
 		}		
 		
 		return $datas;
