@@ -22,7 +22,7 @@
 		<div class="content nopadding">
 			<?php 
 			echo $helpers['Form']->input('tpl_logo', 'Logo', array('type' => 'textarea', 'toolbar' => 'image', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge', 'tooltip' => "Sélectionnez votre logo à l'aide de l'explorateur de fichier"));
-			echo $helpers['Form']->input('tpl_header', 'Header', array('type' => 'textarea', 'toolbar' => 'image', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge', 'tooltip' => "Sélectionnez l'image du header à l'aide de l'explorateur de fichier"));
+			//echo $helpers['Form']->input('tpl_header', 'Header', array('type' => 'textarea', 'toolbar' => 'image', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge', 'tooltip' => "Sélectionnez l'image du header à l'aide de l'explorateur de fichier"));
 			?>
 		</div>
 	</div>
