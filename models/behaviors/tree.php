@@ -482,16 +482,17 @@ class Tree extends Model {
  * @param 	boolean $withParent Indique si il faut également retourner le parent dans la liste
  * @param 	boolean $reverse 	Indique si il faut renvoyer le tableau en ordre inverse
  * @param 	varchar $level 		Indique le niveau des enfants à retourner
+ * @param 	array 	$conditions Conditions de recherches supplémentaires
  * @return 	array Liste de tous les enfants du noeud parent
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 01/01/2012 by FI
  * @version 0.2 - 28/02/2012 by FI - Rajout du niveau à retourner
  */    
-    function getChildren($id, $withParent = false, $reverse = true, $level = null){
+    function getChildren($id, $withParent = false, $reverse = true, $level = null, $conditions = array()){
 		
 		$id = (int)$id; //On force le type de l'identifiant
-        $tree = $this->getTree(); //Récupération de l'arbre
+        $tree = $this->getTree($conditions); //Récupération de l'arbre
         
 		if(!isset($tree[$id])) { return array(); } //Si l'identifiant n'existe pas on retourne une valeur vide
         

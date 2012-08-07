@@ -57,7 +57,8 @@ class Dispatcher {
 				)
 			)
 		) {
-			$this->error('missing_action', 'Le controller '.$this->request->controller." n'a pas de méthode ".$action);
+			//$this->error('missing_action', 'Le controller '.$this->request->controller." n'a pas de méthode ".$action);
+			$this->error('missing_action');
 			die();
 		}
 		
@@ -104,7 +105,8 @@ class Dispatcher {
 	
 		if(!file_exists($file_path)) {
 			
-			$this->error('missing_controller', "Le controller ".$this->request->controller." n'existe pas"." ".serialize($this->request));	
+			//$this->error('missing_controller', "Le controller ".$this->request->controller." n'existe pas"." ".serialize($this->request));	
+			$this->error('missing_controller');	
 			die();		
 		} //On va tester l'existence de ce fichier
 		require $file_path; //Inclusion de ce fichier si il existe
@@ -125,8 +127,9 @@ class Dispatcher {
  * @version 0.2 - 02/03/2012 by FI - Modification de la gestion de l'affichage des erreurs
  * @todo A reprendre quand plus de temps
  */	
-	function error($action, $message) {
+	function error($message) {
         
-		header("Location: ".Router::url('/errors/'.$action.'/'.$message));
+		//header("Location: ".Router::url('/errors/'.$action.'/'.$message));
+		header("Location: ".Router::url('e404'));
 	}
 }

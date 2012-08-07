@@ -459,6 +459,12 @@ CKEDITOR.addTemplates(
 				image:'breakline.gif',
 				description:'',
 				html:'<div class="clearfix"></div>'
+			},
+			{
+				title:'Image zoomée',
+				image:'image_zoom.gif',
+				description:'Image 264/111px',
+				html:'<a class="zoomer" href="/" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>'
 			}
 		]
 	}

@@ -42,7 +42,8 @@ class PostsController extends AppController {
 		$datas['post'] = $this->Post->findFirst($conditions); //On récupère le premier élément
         
         //Si il est vide on affiche la page d'erreur
-		if(empty($datas['post'])) { $this->e404('Elément introuvable'); }
+		//if(empty($datas['post'])) { $this->e404('Elément introuvable'); }
+		if(empty($datas['post'])) { $this->redirect('home/e404'); }
 
 		//Si le slug ou le prefix sont différents de ceux en base de données on va renvoyer sur la bonne page		
 		if($slug != $datas['post']['slug'] || $prefix != $datas['post']['prefix']) { $this->redirect("posts/view/id:".$id."/slug:".$datas['post']['slug']."/prefix:".$datas['post']['prefix'], 301); }

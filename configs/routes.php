@@ -36,6 +36,7 @@ Router::prefix($routesConfigs['backoffice_prefix'], 'backoffice'); //Définition
 ////////////////////////////
 //   REGLES FRONTOFFICE   //
 Router::connect('', 'home/index'); 																				//Page d'accueil du site
+Router::connect('e404', 'home/e404'); 																			//Erreur 404
 Router::connect('newsletter', 'contacts/newsletter'); 															//Inscription à la newsletter
 Router::connect('sitemaps', 'sitemaps/index'); 																	//Affichage de la sitemap
 Router::connect('robots', 'sitemaps/robots'); 																	//Affichage du fichier robots.txt

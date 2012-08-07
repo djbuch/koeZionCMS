@@ -78,6 +78,13 @@ class HomeController extends AppController {
 		$this->set($datas); //On fait passer les données à la vue
 	}
 	
+/**
+ * Cette fonction permet l'affichage des erreurs 404
+ *
+ * @version 0.1 - 07/08/2012
+ */
+	function e404() { header("HTTP/1.0 404 Not Found"); }
+	
 //////////////////////////////////////////////////////////////////////////////////////////
 //										BACKOFFICE										//
 //////////////////////////////////////////////////////////////////////////////////////////	

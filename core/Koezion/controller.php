@@ -156,7 +156,8 @@ class Controller extends Object {
 			
 			$file_path = ROOT.DS.'models'.DS.$file_name; //Chemin vers le fichier à charger
 			
-			if(!file_exists($file_path)) { $this->e404("Aucun model"); }
+			//if(!file_exists($file_path)) { $this->e404("Aucun model"); }
+			if(!file_exists($file_path)) { $this->redirect('home/e404'); }
 			
 			require_once($file_path); //Inclusion du fichier
 			$this->$name = new $name(); //Création d'un objet Model de type $name que l'on va instancier dans la classe
@@ -188,13 +189,13 @@ class Controller extends Object {
  * @param varchar $message
  * @version 0.1 - 23/12/2011
  */
-	function e404($message) {
+	/*function e404($message) {
 
 		header("HTTP/1.0 404 Not Found"); //Header 404
 		$this->set('message', $message); //On envoi le message
-		$this->render('/errors/e404'); //On fait le rendu de la vue
+		$this->render('/home/e404'); //On fait le rendu de la vue
 		die(); //On stope l'exécution
-	}
+	}*/
 
 /**
  * Cette fonction permet de faire une redirection de page

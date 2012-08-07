@@ -77,7 +77,8 @@ class CategoriesController extends AppController {
 		////////////////////////////////////////////////////////////////////////////////////
 		//   GESTION DES EVENTUELLES ERREURS DANS LE RETOUR DE LA REQUETE OU DANS L'URL   //
 		//Si le tableau de retour de la bdd est vide on va afficher une erreur 404 car aucun élément ne correspond
-		if(empty($datas['category'])) { $this->e404('Page introuvable'); }
+		//if(empty($datas['category'])) { $this->e404('Page introuvable'); }
+		if(empty($datas['category'])) { $this->redirect('home/e404'); }
 
 		//Si l'url est différente de celle en base de données on va renvoyer sur la bonne page
 		if($slug != $datas['category']['slug']) { $this->redirect("categories/view/id:$id/slug:".$datas['category']['slug'], 301); }
@@ -202,7 +203,7 @@ class CategoriesController extends AppController {
 			//   RECUPERATION DES ENFANTS   //
 			if($datas['category']['display_children']) { //Si on doit récupérer les enfants
 			
-				$datas['children'] = $this->Category->getChildren($datas['category']['id'], false, false, $datas['category']['level']+1); //On récupère les enfants de la catégorie parente
+				$datas['children'] = $this->Category->getChildren($datas['category']['id'], false, false, $datas['category']['level']+1, array('conditions' => array('online' => 1))); //On récupère les enfants de la catégorie parente
 				$datas['is_full_page'] = 0; //Si on doit afficher les catégories filles alors il faut la colonne de droite
 			}
 			
@@ -210,7 +211,7 @@ class CategoriesController extends AppController {
 			//   RECUPERATION DES FRERES   //
 			if($datas['category']['display_brothers']) { //Si on doit récupérer les frères
 			
-				$brothers = $this->Category->getChildren($datas['category']['parent_id'], false, false, $datas['category']['level']); //On récupère les enfants de la catégorie parente
+				$brothers = $this->Category->getChildren($datas['category']['parent_id'], false, false, $datas['category']['level'], array('conditions' => array('online' => 1))); //On récupère les enfants de la catégorie parente
 				
 				//Cas particulier pour les catégories "frères" le titre de la colonne de droite peut varier en fonction des besoins
 				//On va donc parcourir le résultat et réorganiser le tout
