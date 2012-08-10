@@ -1,1 +1,13 @@
-Version 1.0 du 07/08/2012
+================================================================================
+Version : 	09/08/2012
+Author : 	FI
+
+--> Rajout de fullUrl dans la classe request
+--> Rajout dans les mails de l'url de la page par laquelle le formulaire est posté
+--> Modification des templates de ckEditor pour rajouter <div class="clearfix">&nbsp;</div> lors de l'ajout des portfolios
+
+================================================================================
+Version : 	07/08/2012
+Author : 	FI
+
+--> Initialisation de ce fichier

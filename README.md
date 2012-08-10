@@ -29,7 +29,10 @@ Installation
 -----------
 
 1. Rendez-vous sur le hub de [KoéZionCMS][4]
-
+2. Téléchargez les fichiers sources de l'application
+3. Lancez l'application (par exemple si les sources sont sur votre localhost dans un dossier koezion lancez http://localhost/koezion)
+4. La procédure d'installation se lancera automatiquement
+5. Suivez pas à pas les différentes étapes
 
 [1]: http://www.koezion-cms.com
 [2]: http://www.koezion-cms.com/documentation-42.html

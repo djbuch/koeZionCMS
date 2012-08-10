@@ -268,7 +268,8 @@ CKEDITOR.addTemplates(
 							'<h3>Vivamus non tellus</h3>' +
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula. Cras arcu tortor, euismod id lacinia quis, ultricies sagittis urna. Etiam feugiat porttitor ullamcorper.</p>' +
 							'<p><a href="/">Lorem ipsum</a></p>' +
-						'</div>'
+						'</div>' +
+						'<div class="clearfix">&nbsp;</div>'
 			},
 			{
 				title:'Portfolio 1 colonne (pleine page)',
@@ -280,7 +281,8 @@ CKEDITOR.addTemplates(
 							'<h3>Vivamus non tellus</h3>' +
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula. Cras arcu tortor, euismod id lacinia quis, ultricies sagittis urna. Etiam feugiat porttitor ullamcorper.</p>' +
 							'<p><a href="/">Lorem ipsum</a></p>' +
-						'</div>'
+						'</div>' +
+						'<div class="clearfix">&nbsp;</div>'
 			},
 			{
 				title:'Portfolio 2 colonnes (avec colonne droite)',
@@ -298,7 +300,8 @@ CKEDITOR.addTemplates(
 							'<h3>Vivamus non tellus ligula.</h3>' +
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula. Cras arcu tortor, euismod id lacinia quis, ultricies sagittis urna. Etiam feugiat porttitor ullamcorper.</p>' +
 							'<p><a href="/">Lorem ipsum</a></p>' +
-						'</div>'
+						'</div>' +
+						'<div class="clearfix">&nbsp;</div>'
 			},
 			{
 				title:'Portfolio 2 colonnes (pleine page)',
@@ -316,7 +319,8 @@ CKEDITOR.addTemplates(
 							'<h3>Vivamus non tellus ligula.</h3>' +
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula. Cras arcu tortor, euismod id lacinia quis, ultricies sagittis urna. Etiam feugiat porttitor ullamcorper.</p>' +
 							'<p><a href="/">Lorem ipsum</a></p>' +
-						'</div>'
+						'</div>' +
+						'<div class="clearfix">&nbsp;</div>'
 			},
 			{
 				title:'Portfolio 3 colonnes (pleine page)',
@@ -340,7 +344,8 @@ CKEDITOR.addTemplates(
 							'<h3>Donec eget</h3>' + 
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula. Cras arcu tortor, euismod id lacinia quis, ultricies sagittis urna. Etiam feugiat porttitor ullamcorper.</p>' + 
 							'<p><a href="/">Lorem ipsum</a></p>' + 
-						'</div>'
+						'</div>' +
+						'<div class="clearfix">&nbsp;</div>'
 			},
 			{
 				title:'Portfolio 4 colonnes (pleine page)',
@@ -370,7 +375,8 @@ CKEDITOR.addTemplates(
 							'<h3>Aenean pulvinar</h3>' +
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula.</p>' +
 							'<p><a href="/">Lorem ipsum</a></p>' +
-						'</div>'
+						'</div>' +
+						'<div class="clearfix">&nbsp;</div>'
 			},
 			{
 				title:'Images articles 2 colonnes (Pleine page)',
@@ -386,7 +392,8 @@ CKEDITOR.addTemplates(
 							'<a class="zoomer" href="/"><img alt="" class="border_magic" src="" style="width: 276px; height: 148px;" /></a>' +
 							'<h3>Lorem Ipsum</h3>' +
 							'<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>' +
-						'</div>'
+						'</div>' +
+						'<div class="clearfix">&nbsp;</div>'
 			},
 			{
 				title:'Tableau',

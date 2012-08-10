@@ -4,7 +4,7 @@
 		<li>
 			<a><?php echo _("CONTENUS"); ?></a>
 			<ul>
-				<li><a href="<?php echo Router::url('backoffice/categories/index'); ?>"><?php echo _("Catégorie"); ?></a></li>
+				<li><a href="<?php echo Router::url('backoffice/categories/index'); ?>"><?php echo _("Catégories"); ?></a></li>
 				<li><a href="<?php echo Router::url('backoffice/sliders/index'); ?>"><?php echo _("Sliders"); ?></a></li>
 				<li><a href="<?php echo Router::url('backoffice/focus/index'); ?>"><?php echo _("Focus"); ?></a></li>
 			</ul>			

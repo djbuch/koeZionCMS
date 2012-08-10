@@ -9,6 +9,7 @@
 class Request {
     
 	public $url; //Url appellée par l'utilisateur
+	public $fullUrl; //Url appellée par l'utilisateur (avec http://...)
     public $currentPage = 1; //Page à afficher
     public $prefix = false; //Par défaut on considère qu'il n'y a pas de prefixe
     public $data = false; //Permet de récupérer l'ensemble des données postés par l'utilisateur
@@ -17,10 +18,13 @@ class Request {
     
 /**
  * Constructeur de la classe
+ * 
+ * 09/08/2012 --> Rajout de full URL
  */    
 	public function __construct() {
-		
+				
 		$this->url = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/'; //Affectation de l'url
+		$this->fullUrl = 'http://'.$_SERVER["HTTP_HOST"].Router::url($this->url); //Affectation de l'url complète
 				
 		//Gestion de la pagination
 		if(isset($_GET['page'])) {

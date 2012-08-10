@@ -556,7 +556,10 @@ class AppController extends Controller {
 					'subject' => '::Contact::',
 					'to' => $this->request->data['email'],
 					'element' => 'frontoffice/email/contact',
-					'vars' => array('messageContent' => $messageContent)
+					'vars' => array(
+						'formUrl' => $this->request->fullUrl,
+						'messageContent' => $messageContent
+					)
 				);
 				$this->components['Email']->send($mailDatas, $this); //On fait appel au composant email
 				///////////////////////
@@ -607,7 +610,10 @@ class AppController extends Controller {
 	    			'subject' => '::Commentaire::',
 	    			'to' => $this->request->data['email'],
 	    			'element' => 'frontoffice/email/commentaire',
-					'vars' => array('messageContent' => $messageContent)
+					'vars' => array(
+						'formUrl' => $this->request->fullUrl,						
+						'messageContent' => $messageContent
+					)
     			);
     			$this->components['Email']->send($mailDatas, $this); //On fait appel au composant email
     			///////////////////////
