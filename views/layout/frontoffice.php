@@ -24,7 +24,8 @@
 			$websiteParams['tpl_layout'].'/footer',
 			$websiteParams['tpl_layout'].'/colors/'.trim($websiteParams['tpl_code']).'/default',
 			$websiteParams['tpl_layout'].'/colors/'.trim($websiteParams['tpl_code']).'/body',
-			//$websiteParams['tpl_layout'].'/prettify'
+			$websiteParams['tpl_layout'].'/syntaxhighlighter/shCore',
+			$websiteParams['tpl_layout'].'/syntaxhighlighter/shCoreDefault'
 		);		
 		
 		//On va vérifier si un dossier header est présent dans le dossier upload/images/header
@@ -44,19 +45,23 @@
 			$websiteParams['tpl_layout'].'/jquery-1.5.1.min',
 			$websiteParams['tpl_layout'].'/menu',
 			$websiteParams['tpl_layout'].'/input',
-			//$websiteParams['tpl_layout'].'/prettify',
 			$websiteParams['tpl_layout'].'/plugins',
 			$websiteParams['tpl_layout'].'/script',
 			$websiteParams['tpl_layout'].'/images_zoom',
 			$websiteParams['tpl_layout'].'/pricing_table',
+			$websiteParams['tpl_layout'].'/syntaxhighlighter/shCore',
+			$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushXml',
 		);
 		echo $helpers['Html']->js($js);
 				
 		echo $helpers['Html']->analytics($websiteParams['ga_code']);
 		?>
+		
+		<script type="text/javascript">
+     		SyntaxHighlighter.all()
+		</script>
 	</head>
 
-	<?php /* ?><body onload="prettyPrint()"><?php */ ?>	
 	<body>
 		<div id="container">
 			<?php $this->element('frontoffice/header'); ?>

@@ -16,6 +16,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	
 	CKEDITOR.config.templates_replaceContent = false; //Indique lors de la sélection de templates si il faut remplacer le contenu actuel
 	CKEDITOR.config.extraPlugins = 'internpage'; //Mise en place d'un plugin supplémentaire
+	//CKEDITOR.config.extraPlugins = 'geshi'; //Ajout du plugin Geshi
+	CKEDITOR.config.extraPlugins = 'syntaxhighlight';
 	
 	//Définition de la barre de menu
 	CKEDITOR.config.toolbar_App =
@@ -27,7 +29,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	    { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
 	    { name: 'paragraph',   items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ] },
 	    { name: 'links',       items : [ 'Link','Unlink','Anchor' ] },
-	    { name: 'insert',      items : [ 'Image','Flash','Table','HorizontalRule','SpecialChar' ] },
+	    { name: 'insert',      items : [ 'Image','Flash','Table','HorizontalRule','SpecialChar','Code' ] },
 	    '/',
 	    { name: 'styles',      items : [ 'Styles','Format','Font','FontSize' ] },
 	    { name: 'colors',      items : [ 'TextColor','BGColor' ] },

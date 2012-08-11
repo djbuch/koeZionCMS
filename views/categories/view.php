@@ -8,7 +8,7 @@ $keywords_for_layout = $category['page_keywords'];
 	<?php 
 	if($is_full_page) { 
 		
-		echo $category['content'];
+		echo $category['content'];		
 		if($category['display_contact_form']) { $this->element('frontoffice/formulaire_contact'); }
 	} 
 	else { 

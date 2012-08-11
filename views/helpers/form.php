@@ -355,6 +355,7 @@ class Form {
 			//   INPUT DE TYPE TEXTAREA   //
 			case 'textarea': 
 				
+				if(isset($options['wysiswyg']) && $options['wysiswyg']) { $value = str_replace('&', '&amp;', $value); } //Hack pour l'affichage de code source dans l'éditeur				
 				$inputReturn .= '<textarea id="'.$inputIdText.'" name="'.$inputNameText.'"'.$attributes.'>'.$value.'</textarea>'; 
 				if(isset($options['wysiswyg']) && $options['wysiswyg']) { 
 					
