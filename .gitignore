@@ -26,3 +26,4 @@ webroot/upload/*
 !.htaccess
 #Ignorer les fichier qui commencent par un _
 _*.*
+_*/

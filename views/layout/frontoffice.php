@@ -50,6 +50,11 @@
 			$websiteParams['tpl_layout'].'/images_zoom',
 			$websiteParams['tpl_layout'].'/pricing_table',
 			$websiteParams['tpl_layout'].'/syntaxhighlighter/shCore',
+			$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushCss',
+			$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushJScript',
+			$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushPhp',
+			$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushPlain',
+			$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushSql',
 			$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushXml',
 		);
 		echo $helpers['Html']->js($js);
