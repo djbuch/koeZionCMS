@@ -1,4 +1,11 @@
 ================================================================================
+Version : 	20/08/2012
+Author : 	FI
+
+--> Rajout modèle de page et correction css en fonction
+--> Rajout ajout massif catégories
+
+================================================================================
 Version : 	14/08/2012
 Author : 	FI
 

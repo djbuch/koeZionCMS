@@ -1,6 +1,6 @@
 <div class="gs_4 omega sidebar">
 
-	<?php if(isset($children) && count($children) > 1) { ?>
+	<?php if(isset($children) && count($children) > 0) { ?>
 	<div class="widget">				
 		<?php if(isset($category['title_children'])) { ?><h2 class="widgettitle"><?php echo $category['title_children']; ?></h2><?php } ?>
 		<ul class="nobordertop">

@@ -456,6 +456,60 @@ CKEDITOR.addTemplates(
 						'</table>'
 			},
 			{
+				title:'Tableau simple',
+				image:'tableau_simple.gif',
+				description:'',
+				html:'' +
+						'<table cellspacing="0" cellpadding="0" id="ethernatable" class="simple">' +
+							'<tbody>' +
+								'<tr>' +
+									'<th class="tablecol">' +
+										'<h6>Examples</h6>' +
+									'</th>' +
+									'<th class="tablecol">' +
+										'<h6>Of</h6>' +
+									'</th>' +
+									'<th class="tablecol">' +
+										'<h6>Columns</h6>' +
+									'</th>' +
+									'<th class="tablecol">' +
+										'<h6>Titles</h6>' +
+									'</th>' +
+								'</tr>' +
+								'<tr>' +
+									'<td class="odd">&mdash;</td>' +
+									'<td class="even">78</td>' +
+									'<td class="odd">874</td>' +
+									'<td class="even">6765</td>' +
+								'</tr>' +
+								'<tr>' +
+									'<td class="odd">322</td>' +
+									'<td class="even">21</td>' +
+									'<td class="odd">4342</td>' +
+									'<td class="even">43421</td>' +
+								'</tr>' +
+								'<tr>' +
+									'<td class="odd">12</td>' +
+									'<td class="even">64563</td>' +
+									'<td class="odd">8773</td>' +
+									'<td class="even">24</td>' +
+								'</tr>' +
+								'<tr>' +
+									'<td class="odd">242</td>' +
+									'<td class="even">&mdash;</td>' +
+									'<td class="odd">165</td>' +
+									'<td class="even">&mdash;</td>' +
+								'</tr>' +
+								'<tr>' +
+									'<td class="odd last">231</td>' +
+									'<td class="even last">4622</td>' +
+									'<td class="odd last">&mdash;</td>' +
+									'<td class="even last">8684</td>' +
+								'</tr>' +
+							'</tbody>' +
+						'</table>'
+			},
+			{
 				title:'Saut de ligne',
 				image:'breakline.gif',
 				description:'',

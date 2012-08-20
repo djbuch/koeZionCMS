@@ -343,6 +343,37 @@ class CategoriesController extends AppController {
 		
 		$categoriesList = $this->Category->getTreeList(); //On récupère les catégories
 		$this->set('categoriesList', $categoriesList); //On les envois à la vue
+	}	
+	
+/**
+ * Cette fonction permet l'ajout en masse d'un élément
+ *
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 17/01/2012 by FI
+ */	
+	function backoffice_massive_add() {
+		
+		set_time_limit(0);
+		if($this->request->data) { //Si des données sont postées
+						
+			$nameList = explode("\n", $this->request->data['name_list']);
+			unset($this->request->data['name_list']);			
+			foreach($nameList as $k => $v) {
+				
+				$this->request->data['name'] = $v;
+				$parentAdd = parent::backoffice_add(false); //On fait appel à la fonction d'ajout parente
+			}			
+			
+			if($parentAdd) {
+			
+				delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'categories'.DS); //On vide le dossier qui contient les fichiers en cache
+				$this->redirect('backoffice/categories/index');
+			} //On retourne sur la page de listing
+		}
+		
+		$categoriesList = $this->Category->getTreeList(); //On récupère les catégories
+		$this->set('categoriesList', $categoriesList); //On les envois à la vue
 	}
 	
 /**
