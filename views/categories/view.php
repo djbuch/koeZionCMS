@@ -8,15 +8,17 @@ $keywords_for_layout = $category['page_keywords'];
 	<?php 
 	if($is_full_page) { 
 		
-		echo $category['content'];		
+		echo $this->vars['components']['Text']->format_content_text($category['content']);
+		//echo $category['content'];		
 		if($category['display_contact_form']) { $this->element('frontoffice/formulaire_contact'); }
 	} 
 	else { 
 		?>		
 		<div class="gs_8">
 			<div class="gs_8 omega">
-				<?php 
-				echo $category['content']; 
+				<?php		
+				echo $this->vars['components']['Text']->format_content_text($category['content']);
+				//echo $category['content'];
 				if($category['display_contact_form']) { $this->element('frontoffice/formulaire_contact'); }
 				?>
 			</div>		

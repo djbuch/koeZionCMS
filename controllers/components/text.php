@@ -130,6 +130,21 @@ class Text {
 		return $datas;
 	}
 	
+/**
+ * Cette fonction va retourner le texte en remplaçant certains caractères par d'autres
+ *
+ * @param 	varchar $content 	Texte source
+ * @return 	varchar Texte modifié
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 21/08/2012 by FI
+ */		
+	function format_content_text($content) {
+		
+		$content = str_replace('&brvbar;', '&#92;', $content);		
+		return $content;
+	}
+	
 	
 //////////////////////////////////////////////////////////////////////////////////////////
 //								FONCTIONS PRIVEES										//
