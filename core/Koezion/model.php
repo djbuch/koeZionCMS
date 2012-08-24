@@ -13,6 +13,7 @@ class Model extends Object {
 	public $id; //Variable qui va contenir la valeur de la clé primaire après isert ou update
 	public $errors = array(); //Par défaut pas d'erreurs
 	public $trace_sql = false; //Permet d'afficher la requête exécutée cf fonction find
+	public $schema = array(); //Shéma de la table
     
 /**
  * Constructeur de la classe
@@ -22,6 +23,7 @@ class Model extends Object {
  * @version 0.1 - 28/12/2011 by FI
  * @version 0.2 - 02/03/2012 by FI - Modification de la récupération de la configuration de la base  de données, on passe maintenant par un fichier .ini
  * @version 0.3 - 11/04/2012 by FI - Modification de la récupération du .ini seulement deux configurations possibles localhost et online
+ * @version 0.4 - 24/08/2012 by FI - Rajout du shéma de la table comme variable de classe
  */
 	public function __construct() {
 
@@ -48,7 +50,8 @@ class Model extends Object {
 		//On test qu'une connexion ne soit pas déjà active
 		if(isset(Model::$connections[$this->conf])) {
 			   
-			$this->db = Model::$connections[$this->conf];
+			$this->db = Model::$connections[$this->conf];			
+			$this->shema = $this->shema();
 			return true;             
 		}
         
@@ -69,14 +72,26 @@ class Model extends Object {
             
 			Model::$connections[$this->conf] = $pdo; //On affecte l'objet à la classe
 			$this->db = $pdo;
-			$this->database = $conf['database'];
+			$this->database = $conf['database'];			
+			$this->shema = $this->shema();
+			
 		} catch(PDOException $e) { //Erreur
     
 			//Test du mode debug
 			if(Configure::read('debug') >= 1) {
-				die("La base de données n'est pas disponible merci de rééssayer plus tard ".$e->getMessage());
+				
+				$message = '<pre style="background-color: #EBEBEB; border: 1px dashed black; padding: 10px;">';
+				$message .= "La base de donn&eacute;es n'est pas disponible merci de r&eacute;&eacute;ssayer plus tard ".$e->getMessage();
+				$message .= '</pre>';				
+				die($message);
+				
 			} else {
-				die("La base de données n'est pas disponible merci de rééssayer plus tard");
+								
+				$message = '<pre style="background-color: #EBEBEB; border: 1px dashed black; padding: 10px;">';
+				$message .= "La base de donn&eacute;es n'est pas disponible merci de r&eacute;&eacute;ssayer plus tard ";
+				$message .= '</pre>';				
+				die($message);
+				
 			}
 		}
 	}
@@ -94,11 +109,11 @@ class Model extends Object {
  */	
 	public function query($sql, $return = false) {
 				
-		$pre = $this->db->prepare($sql); //On prépare la requête
-		$result = $pre->execute(); //On l'exécute
+		$preparedQuery = $this->db->prepare($sql); //On prépare la requête
+		$result = $preparedQuery->execute(); //On l'exécute
 		if($result) { //Si l'exécution s'est correctement déroulée
 			
-			if($return) { return $pre->fetchAll(PDO::FETCH_ASSOC); } //On retourne le résultat si demandé
+			if($return) { return $preparedQuery->fetchAll(PDO::FETCH_ASSOC); } //On retourne le résultat si demandé
 			else { return true; } //On retourne vrai sinon
 		} else { return false; } //Si la requête ne s'est pas bien déroulée on retourne faux
 	}	
@@ -122,7 +137,7 @@ class Model extends Object {
  */    
 	public function find($req = array(), $type = PDO::FETCH_ASSOC) {
 		
-		$shema = $this->shema();
+		$shema = $this->shema;
 		$sql = 'SELECT '; //Requete sql
         
 		///////////////////////
@@ -206,9 +221,9 @@ class Model extends Object {
 		
 		if($this->trace_sql) { pr($sql); }		
 		
-		$pre = $this->db->prepare($sql);
-		$pre->execute();
-        return $pre->fetchAll($type);        
+		$preparedQuery = $this->db->prepare($sql);
+		$preparedQuery->execute();
+        return $preparedQuery->fetchAll($type);        
     }
     
 /**
@@ -325,80 +340,47 @@ class Model extends Object {
  * @version 0.3 - 06/03/2012 by FI - Mise en place de la gestion automatique des champs created_by et modified_by permettant de stocker l'identifiant de l'utilisateur ayant créé l'enregistrement
  * @version 0.4 - 18/05/2012 by FI - Mise en place d'un booléen permettant de forcer l'insert même si le champ id est présent (utilisé pour la modification des catégories)
  * @version 0.5 - 14/06/2012 by FI - Modification du test sur created, created_by, etc... car le in_array ne devait pas se faire sur $datas directement mais sur array_keys($datas)
+ * @version 1.0 - 24/08/2012 by FI - Changement radical de la gestion des INSERT ou UPDATE afin d'utiliser pleinement la fonctionnalité des requêtes préparées
+ * 									 on a divisé le process en 2 on récupère d'un coté les infos de la requête et de l'autre les données à sauvegarder avec des fonctions privées
+ * 
  * @todo mettre en place des try catch pour vérifier que la requete c'est bien exécutée 
  */	
 	public function save($datas, $forceInsert = false) {
 					
-		$shema = $this->shema();
-		$datasShema = array_keys($datas);
-		
-		$key = $this->primaryKey; //Récupération de la clé primaire
-		
-		$fieldsToSaveToSave = array(); //Tableau des champs à sauvegarder
-		$datasToSave = array(); //Tableau utilisé lors de la préparation de la requête
-		
-		//Permet de connaitre le type de requete a effectuer pour deux choses
-		// --> Savoir qu'elle requete lancer UPDATE OU INSERT
-		// --> Savoir comment renvoyer l'id
-		//Dans ce cas on est sur de l'update				
-		if(isset($datas[$key]) && !empty($datas[$key]) && !$forceInsert) { 
-			
-			$action = 'update'; //Définition de l'action
-			$returnid = $datas[$key]; //Récupération de la valeur de la clée
-			$datasToSave[":$key"] = $returnid; //On insère dans les données préparées la valeur de la clée lors de l'update
-			
-		//Dans ce cas on est sur de l'insert			
-		} else { 
-			
-			$action = 'insert'; //Définition de l'action
-			if(!in_array('created', $datasShema) && in_array('created', $shema)) { $datas['created'] = date('Y-m-d H:i:s'); } //On procède à la mise à jour du champ created si il existe			
-			if(!in_array('created_by', $datasShema) && in_array('created_by', $shema)) { $datas['created_by'] = Session::read('Backoffice.User.id'); } //On procède à la mise à jour du champ created_by si il existe			
-		}
-		
-		if(!in_array('modified', $datasShema) && in_array('modified', $shema)) { $datas['modified'] = date('Y-m-d H:i:s'); } //On procède à la mise à jour du champ modified si il existe
-		if(!in_array('modified_by', $datasShema) && in_array('modified_by', $shema)) { $datas['modified_by'] = Session::read('Backoffice.User.id'); } //On procède à la mise à jour du champ modified_by si il existe
-		if(in_array('password', $datasShema)) { $datas['password'] = sha1($datas['password']); } //On procède à la mise à jour du champ password si il existe				
-		if(!in_array('website_id', $datasShema) && in_array('website_id', $shema) && get_class($this) != 'UsersGroupsWebsite') { $datas['website_id'] = CURRENT_WEBSITE_ID; } //On procède à la mise à jour du champ password si il existe
-
-		if(in_array('slug', $shema) && (!in_array('slug', $datasShema) || empty($datas['slug']))) { $datas['slug'] = strtolower(Inflector::slug($datas['name'], '-')); } //On procède à la mise à jour du champ slug si celui ci n'est pas rempli ou non présent dans le formulaire mais présent dans la table
-		if(in_array('page_title', $shema) && (!in_array('page_title', $datasShema) || empty($datas['page_title']))) { $datas['page_title'] = $datas['name']; } //On procède à la mise à jour du champ page_title si celui ci n'est pas rempli ou non présent dans le formulaire mais présent dans la table
-				
-		if(isset($datas[$key]) && !$forceInsert) unset($datas[$key]); //Il faut supprimer du tableau des données la clé primaire si celle ci est définie
-				
-		//On fait le parcours des données
-		foreach($datas as $k => $v) {
-
-			if(isset($this->files_to_upload) && isset($this->files_to_upload[$k])) continue; //On supprime si il y en a les champs d'upload
-			
-			//On récupère le shéma de la table pour être sur de n'ajouter à la requête que des champs présent dans la table pour éviter les erreurs
-			if(in_array($k, $shema)) {
-						
-				$fieldsToSave[] = "$k=:$k";
-				$datasToSave[":$k"] = $v;
-			}
-		}
-		
-		//On va tester l'existence de cette clé dans le tableau des datas
-		if($action == 'update') { $sql = 'UPDATE '.$this->table.' SET '.implode(',', $fieldsToSave).' WHERE '.$key.'=:'.$key.';'; } 
-		else { $sql = 'INSERT INTO '.$this->table.' SET '.implode(',', $fieldsToSave).';'; }
-		
-		//Il faut maintenant envoyer à PDO un tableau de valeurs du type array(:INDEX => VALEUR)
-		//Il nous manque donc les : par rapport au tableau $datas
-				
-		$pre = $this->db->prepare($sql);
-		$pre->execute($datasToSave);
+		$preparedInfos = $this->_prepare_save_query(array_keys($datas), $forceInsert); //Récupération des données de la préparation de la requête
+		$datasToSave = $this->_prepare_save_datas($datas, $preparedInfos['moreDatasToSave'], $forceInsert); //Récupération des données à sauvegarder
+		$preparedInfos['preparedQuery']->execute($datasToSave); //Exécution de la requête
 		
 		//Affectation de la valeur de la clé primaire à la variable de classe
-		if($action == 'insert') { $this->id = $this->db->lastInsertId(); }
-		else { $this->id = $returnid; }
+		if($preparedInfos['action'] == 'insert') { $this->id = $this->db->lastInsertId(); }
+		else { $this->id = $datas['id']; }
 		
-		if(isset($this->files_to_upload)) { $this->upload_files($datas, $this->id); } //Sauvegarde éventuelle des images
-		if(isset($this->fields_to_index)) { $this->make_search_index($datas, $this->id); } //On génère le fichier d'index de recherche
+		//if(isset($this->files_to_upload)) { $this->upload_files($datas, $this->id); } //Sauvegarde éventuelle des images
+		//if(isset($this->fields_to_index)) { $this->make_search_index($datas, $this->id); } //On génère le fichier d'index de recherche
 	}
-	
-	function saveAll($datas) {
+
+/**
+ * Fonction chargée d'éffectuer la sauvegarde d'une liste de données
+ * 
+ * @param 	array 	$data 			Données à sauvegarder
+ * @param 	boolean $forceInsert 	Booléan permettant même si le champ id est présent dans le tableau de forcer l'insert
+ * @access	public
+ * @author	koéZionCMS
+ * @version 0.1 - 24/08/2012 by FI
+ */	
+	function saveAll($datas, $forceInsert = false) {
 		
-		foreach($datas as $k => $v) { $this->save($v); }
+		$preparedInfos = $this->_prepare_save_query(array_keys(current($datas)), $forceInsert);
+		foreach($datas as $k => $v) { 
+			
+			$datasToSave = $this->_prepare_save_datas($v, $preparedInfos['moreDatasToSave'], $forceInsert);
+			$preparedInfos['preparedQuery']->execute($datasToSave);
+			
+			if($preparedInfos['action'] == 'insert') { $this->id = $this->db->lastInsertId();}
+			else { $this->id = $datas['id']; }
+			
+			//if(isset($this->fields_to_index)) { $this->make_search_index($v, $this->id); } //On génère le fichier d'index de recherche
+		}
 	}
 	
 /**
@@ -464,10 +446,11 @@ class Model extends Object {
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 28/12/2011
+ * @deprecated since 24/08/2012 - On passe par ckfinder pour les upload plus simple et plus léger
  */	
 	function upload_files($datas, $id) {
 		
-		require_once(BEHAVIORS.DS.'upload.php');		
+		/*require_once(BEHAVIORS.DS.'upload.php');		
 		foreach($this->files_to_upload as $k => $v) {
 			
 			if(isset($datas[$k])) {
@@ -496,7 +479,7 @@ class Model extends Object {
 					$handle->Clean();
 				}
 			}
-		}		
+		}*/		
 	}
 	
 /**
@@ -606,5 +589,140 @@ class Model extends Object {
 		
 		$searchable->addDocument(); //Ajout du document
 		$searchable->commit(); //Sauvegarde des données		
+	}
+	
+	
+//////////////////////////////////
+//   PREPARATION DES REQUETES   //
+//////////////////////////////////
+	
+/**
+ * Cette fonction permet la génération de la requête préparée
+ * 
+ * @param 	array	$datasShema 	Shéma des champs de la table
+ * @param 	boolean	$forceInsert 	Indique si il faut forcer l'insert
+ * @return	array	Tableau contenant les paramètres de la requête préparée
+ * @access	private
+ * @author	koéZionCMS
+ * @version 0.1 - 24/08/2012 by FI
+ */	
+	function _prepare_save_query($datasShema, $forceInsert = false) {
+					
+		$shema = $this->shema; //Shema de la table		
+		$primaryKey = $this->primaryKey; //Récupération de la clé primaire
+		
+		$fieldsToSaveToSave = array(); //Tableau des champs de la table à sauvegarder
+		$moreDatasToSave = array(); //Tableau des données supplémentaires à sauvegarder (évite de les regénérer à chaque fois)
+		
+		//Permet de connaitre le type de requete à effectuer
+		//Dans ce cas on est sur de l'update				
+		if(in_array($primaryKey, $datasShema) && !$forceInsert) { $action = 'update'; } 
+		else { 
+			
+			$action = 'insert'; //Définition de l'action
+			
+			//Par défaut on va rajouter les champs created et created by lors de l'INSERT
+			if(!in_array('created', $datasShema) && in_array('created', $shema)) { 
+				
+				$datasShema[] = 'created'; 
+				$moreDatasToSave[':created'] = date('Y-m-d H:i:s');
+			}	
+					
+			if(!in_array('created_by', $datasShema) && in_array('created_by', $shema)) { 
+				
+				$datasShema[] = 'created_by'; 
+				$moreDatasToSave[':created_by'] = Session::read('Backoffice.User.id');
+			}			
+		}
+		
+		//Génération des chammps supplémentaires
+		if(!in_array('modified', $datasShema) && in_array('modified', $shema)) { 
+			
+			$datasShema[] = 'modified'; 
+			$moreDatasToSave[':modified'] = date('Y-m-d H:i:s');
+		}
+		if(!in_array('modified_by', $datasShema) && in_array('modified_by', $shema)) { 
+			
+			$datasShema[] = 'modified_by';
+			$moreDatasToSave[':modified_by'] = Session::read('Backoffice.User.id');
+		}						
+		
+		if(!in_array('website_id', $datasShema) && in_array('website_id', $shema) && get_class($this) != 'UsersGroupsWebsite') { 
+			
+			$datasShema[] = 'website_id';
+			$moreDatasToSave[':website_id'] = CURRENT_WEBSITE_ID;
+		}
+		
+		if(in_array('slug', $shema) && (!in_array('slug', $datasShema))) { $datasShema[] = 'slug'; } 
+		if(in_array('page_title', $shema) 	&& (!in_array('page_title', $datasShema))) 	{ $datasShema[] = 'page_title'; } 
+		
+		if(in_array('password', $datasShema)) { $datasShema[] = 'password'; }
+				
+		//On contrôle que la clé primaire ne soit pas dans le tableau si on a demandé de forcer l'ajout
+		if(in_array($primaryKey, $datasShema) && !$forceInsert) {
+			
+			$indexKey = array_search($primaryKey, $datasShema);
+			unset($datasShema[$indexKey]);
+		}
+				
+		//On fait le parcours des données
+		foreach($datasShema as $v) {
+
+			//if(isset($this->files_to_upload) && isset($this->files_to_upload[$k])) continue; //On supprime si il y en a les champs d'upload
+			
+			//On récupère le shéma de la table pour être sur de n'ajouter à la requête que des champs présent dans la table pour éviter les erreurs
+			if(in_array($v, $shema)) { $fieldsToSave[] = "$v=:$v"; }
+		}
+		
+		//On va tester l'existence de cette clé dans le tableau des datas
+		if($action == 'update') { $sql = 'UPDATE '.$this->table.' SET '.implode(',', $fieldsToSave).' WHERE '.$primaryKey.'=:'.$primaryKey.';'; } 
+		else { $sql = 'INSERT INTO '.$this->table.' SET '.implode(',', $fieldsToSave).';'; }
+				
+		return array(
+			'preparedQuery' => $this->db->prepare($sql),
+			'action' => $action,
+			'moreDatasToSave' => $moreDatasToSave,
+			'fieldsToSave' => $fieldsToSave
+		);
+	}
+	
+/**
+ * Cette fonction permet la génération des champs à insérer dans la requête préparée
+ * 
+ * @param 	array	$datas 				Données à sauvegarder
+ * @param 	array	$moreDatasToSave 	Champs supplémentaires à sauvegarder (created par exemple, provient de _prepare_save_query)
+ * @param 	boolean	$forceInsert 		Indique si il faut forcer l'insert
+ * @return	array	Tableau contenant les paramètres des données à sauvegarder
+ * @access	private
+ * @author	koéZionCMS
+ * @version 0.1 - 24/08/2012 by FI
+ */		
+	function _prepare_save_datas($datas, $moreDatasToSave, $forceInsert) {
+		
+		$shema = $this->shema; //Shéma de la table 
+		$datasShema = array_keys($datas); //Shéma des données à sauvegarder
+		$primaryKey = $this->primaryKey; //Récupération de la clé primaire
+				
+		$datasToSave = array(); //Tableau utilisé lors de la préparation de la requête
+		if(isset($datas[$primaryKey]) && !empty($datas[$primaryKey]) && !$forceInsert) { $datasToSave[":$primaryKey"] = $datas[$primaryKey]; }
+		
+		if(in_array('password', $datasShema)) { $datas['password'] = sha1($datas['password']); } //On procède à la mise à jour du champ password si il existe				
+		
+		if(in_array('slug', $shema) && (!in_array('slug', $datasShema) || empty($datas['slug']))) { $datas['slug'] = strtolower(Inflector::slug($datas['name'], '-')); } //On procède à la mise à jour du champ slug si celui ci n'est pas rempli ou non présent dans le formulaire mais présent dans la table
+		if(in_array('page_title', $shema) && (!in_array('page_title', $datasShema) || empty($datas['page_title']))) { $datas['page_title'] = $datas['name']; } //On procède à la mise à jour du champ page_title si celui ci n'est pas rempli ou non présent dans le formulaire mais présent dans la table
+				
+		if(isset($datas[$primaryKey]) && !$forceInsert) unset($datas[$primaryKey]); //Il faut supprimer du tableau des données la clé primaire si celle ci est définie
+				
+		//On fait le parcours des données
+		foreach($datas as $k => $v) {
+
+			//On récupère le shéma de la table pour être sur de n'ajouter à la requête que des champs présent dans la table pour éviter les erreurs
+			if(in_array($k, $shema)) {
+						
+				$datasToSave[":$k"] = $v;
+			}
+		}
+		
+		return array_merge($datasToSave, $moreDatasToSave);		
 	}
 }

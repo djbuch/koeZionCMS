@@ -12,7 +12,7 @@ class Config extends Model {
  * @author 	koéZionCMS
  * @version 0.1 - 18/04/2012 by FI
  */	
-	var $initConfigs = array(
+	/*var $initConfigs = array(
 		array('name' => 'txt_page_newsletter', 'code' => 'NEWSLETTER'),
 		array('name' => 'code_google_analytics', 'code' => 'GA'),
 		array('name' => 'seo_page_title', 'code' => 'SEO'),
@@ -25,7 +25,7 @@ class Config extends Model {
 		array('name' => 'footer_colonne_droite', 'code' => 'FOOTER'),
 		array('name' => 'footer_bottom', 'code' => 'FOOTER'),
 		array('name' => 'txt_page_wait', 'code' => 'WAIT')
-	);
+	);*/
 	
 /**
  * Cette fonction va permettre lors de l'ajout d'un langue d'insérer les données de configurations
@@ -35,12 +35,12 @@ class Config extends Model {
  * @author 	koéZionCMS
  * @version 0.1 - 18/04/2012 by FI
  */	
-	function init_configs_for_locales($locale) {
+	/*function init_configs_for_locales($locale) {
 				
 		foreach($this->initConfigs as $config) {
 
 			$config['locale'] = $locale;
 			$this->save($config);
 		}		
-	}
+	}*/
 }

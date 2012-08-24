@@ -1,4 +1,15 @@
 ================================================================================
+Version : 	24/08/2012
+Author : 	FI
+
+--> Modification des insert et update de pdo
+================================================================================
+Version : 	21/08/2012
+Author : 	FI
+
+--> Mise en place d'un hack pour la gestion de l'affichage de l'antislash dans les textes
+
+================================================================================
 Version : 	20/08/2012
 Author : 	FI
 

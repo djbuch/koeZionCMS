@@ -17,16 +17,6 @@ class Post extends Model {
 			'rule' => array('minLength', 2),
 			'message' => 'Post.name'
 		),
-		/*'slug' => array(
-			'rule1' => array(
-				'rule' => array('minLength', 3),
-				'message' => 'Post.slug.rule1'
-			),
-			'rule2' => array(
-				'rule' => array('custom', '/^([a-zA-Z0-9-]+)$/'),
-				'message' => "Post.slug.rule2"
-			)
-		),*/
 		'prefix' => array(
 			'rule1' => array(
 				'rule' => array('minLength', 3),
@@ -46,12 +36,9 @@ class Post extends Model {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 17/01/2012 by FI
+ * @deprecated since 24/08/2012
  */
-	var $files_to_upload = array(
-		'img' => array(
-			'bdd' => true
-		)	
-	);
+	//var $files_to_upload = array('img' => array('bdd' => true));
 	
 /**
  * Tableau contenant l'ensemble des champs intégrer dans l'index de recherche

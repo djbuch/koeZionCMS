@@ -24,16 +24,6 @@ class Category extends Tree {
 			'rule' => array('minLength', 2),
 			'message' => 'Category.name'
 		),
-		/*'slug' => array(
-			'rule1' => array(
-				'rule' => array('minLength', 3),
-				'message' => 'Category.slug.rule1'
-			),
-			'rule2' => array(
-				'rule' => array('custom', '/^([a-zA-Z0-9-]+)$/'),
-				'message' => "Category.slug.rule2"
-			)
-		),*/
 		'redirect_category_id' => array(
 			'rule' => array('callback', array('check_redirect')),
 			'message' => 'Category.redirect_category_id'

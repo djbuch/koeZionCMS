@@ -41,7 +41,7 @@ class Import {
 		$datasToSave['is_coup_coeur'] 	= utf8_encode($datas[4]);
 		$datasToSave['online'] 			= 1;
 		$datasToSave['category_id'] 	= $categoryId;
-		$datasToSave['slug'] 			= strtolower(Inflector::slug($datasToSave['name'], '-'));
+		//$datasToSave['slug'] 			= strtolower(Inflector::slug($datasToSave['name'], '-'));
 		$datasToSave['prefix'] 			= PRODUCT_PREFIX;		
 		
 		switch($categoryId) {

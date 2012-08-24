@@ -31,6 +31,7 @@ class Slider extends Model {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 17/01/2012 by FI
+ * @deprecated since 24/08/2012
  */
 	//var $files_to_upload = array('img' => array('bdd' => true));
 }
