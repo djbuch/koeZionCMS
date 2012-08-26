@@ -298,10 +298,10 @@ class Model extends Object {
 	public function delete($id) {
 		
 		if(is_array($id)) { $idConditions = " IN (".implode(',', $id).')'; } else { $idConditions = " = ".$id; }		
-		$sql = "DELETE FROM ".$this->table." WHERE ".$this->primaryKey.$idConditions.";";  //Requête de suppression de l'élément		
-			
+		$sql = "DELETE FROM ".$this->table." WHERE ".$this->primaryKey.$idConditions.";";  //Requête de suppression de l'élément			
 		$queryResult = $this->db->query($sql);
-		if(isset($this->fields_to_index)) { $this->delete_search_index($id); } //Suppression de l'index dans la recherche
+		
+		if(isset($this->searches_params)) { $this->delete_search_index($idConditions); } //Suppression de l'index dans la recherche
 		
 		return $queryResult;
 	}
@@ -323,6 +323,9 @@ class Model extends Object {
 		if(!is_numeric($value)) { $value = $this->db->quote($value); } //Equivalement de mysql_real_escape_string
 		$sql = "DELETE FROM {$this->table} WHERE {$this->primaryKey} = {$value}";
 		$this->primaryKey = $oldPrimaryKey;		
+		
+		if(isset($this->searches_params)) { $this->delete_search_index($id); } //Suppression de l'index dans la recherche
+		
 		return $this->db->query($sql);
 	}	
 	
@@ -356,7 +359,7 @@ class Model extends Object {
 		else { $this->id = $datas['id']; }
 		
 		//if(isset($this->files_to_upload)) { $this->upload_files($datas, $this->id); } //Sauvegarde éventuelle des images
-		//if(isset($this->fields_to_index)) { $this->make_search_index($datas, $this->id); } //On génère le fichier d'index de recherche
+		if(isset($this->searches_params)) { $this->make_search_index($datasToSave, $this->id, $preparedInfos['action']); } //On génère le fichier d'index de recherche
 	}
 
 /**
@@ -379,7 +382,7 @@ class Model extends Object {
 			if($preparedInfos['action'] == 'insert') { $this->id = $this->db->lastInsertId();}
 			else { $this->id = $datas['id']; }
 			
-			//if(isset($this->fields_to_index)) { $this->make_search_index($v, $this->id); } //On génère le fichier d'index de recherche
+			//if(isset($this->searches_params)) { $this->make_search_index($datasToSave, $this->id, $preparedInfos['action']); } //On génère le fichier d'index de recherche
 		}
 	}
 	
@@ -499,98 +502,75 @@ class Model extends Object {
 		return $shema;
 	}	
 	
-/////////////////////////////	
-//   MOTEUR DE RECHERCHE   //	
 /////////////////////////////
-			
+//   MOTEUR DE RECHERCHE   //
+/////////////////////////////
+
 /**
  * Cette fonction permet la construction des index de recherche
- * Lors de la mise en place de l'internationnalisation il faudra sauvegarder l'ensemble des données traduites
  *
  * @param 	array 	$data 	Tableau contenant les données à indexer
  * @param 	integer $id 	Identifiant de l'élément à indexer
+ * @param 	varchar $action	Type d'action (INSERT ou UPDATE)
  * @access	public
  * @author	koéZionCMS
- * @version 0.1 - 06/02/2012 by FI
- * @version 0.2 - 12/03/2012 by FI - Rajout du keyword pkdelete pour éviter les confusions d'id lors de la suppression, optimisation de l'index une fois les données ajoutées
- */	
-	function make_search_index($datas, $id) {
-		
-		require_once(BEHAVIORS.DS.'searchable.php'); //Inclusion de la librairie
-		$searchable = new Searchable(); //Création d'un objet Searchable
-		
-		$searchable->deleteEntries($id, get_class($this)); //On va supprimer les éventuelles entrées dans l'index		
-		$this->_make_search_index($datas, $searchable, $id); 
-	}
-	
-/**
- * Cette fonction permet la suppression d'un index dans le moteur de recherche
- *
- * @param 	integer Identifiant de l'élément à supprimer
- * @access	public
- * @author	koéZionCMS
- * @version 0.1 - 12/03/2012 by FI
- */	
-	function delete_search_index($id) {
-		
-		require_once(BEHAVIORS.DS.'searchable.php'); //Inclusion de la librairie
-		$searchable = new Searchable(); //Création d'un objet Searchable		
-		$searchable->deleteEntries($id, get_class($this)); //On va supprimer les éventuelles entrées dans l'index
-	}
-	
-/**
- * Cette fonction permet l'optimisation de l'index de recherche
- *
- * @access	public
- * @author	koéZionCMS
- * @version 0.1 - 12/03/2012 by FI
+ * @version 0.1 - 26/08/2012 by FI
  */
-	function optimize_search_index($id) {
-	
-		require_once(BEHAVIORS.DS.'searchable.php'); //Inclusion de la librairie
-		$searchable = new Searchable(); //Création d'un objet Searchable	
-		$searchable->optimize(); //Optimisation de l'index
-	}
+	function make_search_index($datasToSave, $id, $action) {
+				
+		$searchesParams = $this->searches_params; //Paramètres des champs à indexer
+		$fieldsToIndex = $searchesParams['fields']; //Liste des champs à indexes
+		$urlParams = $searchesParams['url']; //Paramètres de l'url
+		
+		$datasToSaveKeys = array_keys($datasToSave); //Liste des clés des champs du model
+		$searchesDatas = ''; //Données de recherche
+		
+		//On parcours les champs à indexer
+		foreach($fieldsToIndex as $v) {
+			
+			//Si la clé à indexer est dans le tableau des données à sauvegarder on concatène à la chaine	
+			if(in_array(':'.$v, $datasToSaveKeys)) { $searchesDatas .= ' '.$datasToSave[':'.$v]; }
+		}
+		
+		///////////////////////
+		//Génération de l'url//
+		$url = $urlParams['url'];
+		$url = str_replace(':id', $id, $url);
+		foreach($urlParams['params'] as $v) { $url = str_replace(':'.$v, $datasToSave[':'.$v], $url); }
+		$url = Router::url($url);
+		
+		///////////////////////////////////////
+		//Sauvegarde des données de recherche//
+		$searchDatas = array(
+			'model' => get_class($this),
+			'title' => $datasToSave[':page_title'],
+			'description' => $datasToSave[':page_description'],
+			'datas' => strip_tags($searchesDatas),
+			'url' => $url,
+			'model_id' => $id				
+		);		
+		require_once(MODELS.DS.'search.php'); //Chargement du model
+		$search = new Search();
+		
+		//En cas de mise à jour on supprime l'ancienne valeur
+		if($action == "update") { $this->delete_search_index($id); }
+		$search->save($searchDatas);
+		unset($search); //Déchargement du model
+	}	
 	
 /**
- * Cette fonction permet la sauvegarde des index de recherche
- * 
- * @param 	array	$datasToIndex Données à indexer
- * @param 	object	$searchable Comportement Searchable 
- * @param 	integer	$id Identifiant de l'élément à indexer 
- * @access	private
+ * Cette fonction permet la suppression d'un index de recherche
+ *
+ * @param 	integer $id 	Identifiant de l'élément à supprimer
+ * @access	public
  * @author	koéZionCMS
- * @version 0.1 - 16/04/2012 by FI
- */	
-	function _make_search_index($datasToIndex, $searchable, $id) {
-
-		$fieldsToIndex = $this->fields_to_index['fields']; //Récupération des champs à indexer
-		$fieldsToDisplay = $this->fields_to_index['display']; //Récupération des champs à afficher lors de la recherche
-		
-		$searchable->createDocument(); //Création d'un nouveau document
-		
-		$searchable->addField('Keyword', 'pk', $id); //Ajout dans l'index du champ contenant la valeur de la clée primaire
-		$searchable->addField('Keyword', 'pkdelete', get_class($this).$id); //Ajout dans l'index du champ contenant la valeur de la clée primaire concaténée au nom du model
-		$searchable->addField('Keyword', 'model', get_class($this)); //Ajout dans l'index du champ contenant le type de Model
-		
-		//Ajout des champs à indexer
-		foreach($fieldsToIndex as $k => $v) {
-		
-			//Ajout dans l'index du champ contenant l'identifiant de l'élément
-			if(isset($datasToIndex[$v])) { $searchable->addField('UnStored', $v, $datasToIndex[$v]); }
-		}
-		
-		//Ajout des champs à afficher
-		foreach($fieldsToDisplay as $k => $v) {
-		
-			//Ajout dans l'index du champ contenant l'identifiant de l'élément
-			if(isset($datasToIndex[$v])) { $searchable->addField('Text', $k, $datasToIndex[$v]); }
-		}
-		
-		$searchable->addDocument(); //Ajout du document
-		$searchable->commit(); //Sauvegarde des données		
+ * @version 0.1 - 26/08/2012 by FI
+ */
+	function delete_search_index($id) {	
+						
+		$sql = "DELETE From searches WHERE model = '".get_class($this)."' AND model_id ".$id;
+		$this->query($sql);		
 	}
-	
 	
 //////////////////////////////////
 //   PREPARATION DES REQUETES   //

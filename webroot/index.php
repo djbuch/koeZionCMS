@@ -47,7 +47,7 @@ define('CORE', ROOT.DS.'core'); //Chemin vers le coeur de l'application
 	define('LIBS', CORE.DS.'Libs'); //Chemin vers les librairies diverses
 	define('PEAR', CORE.DS.'Pear'); //Chemin vers les librairies de Pear
 	define('SWIFTMAILER', CORE.DS.'SwiftMailer'); //Chemin vers les librairies de SwiftMailer
-	define('ZEND', CORE.DS.'Zend'); //Chemin vers les librairies de Zend
+	//define('ZEND', CORE.DS.'Zend'); //Chemin vers les librairies de Zend
 
 define('LOCALE', ROOT.DS.'locale'); //Chemin vers le dossier des traductions
 

@@ -13,17 +13,15 @@
  * @copyright	KoéZionCMS
  * @link        http://www.koezion-cms.com
  */
-class SearchesController extends AppController {   
-
-	public $auto_load_model = false;
+class SearchsController extends AppController {   
 	
 	function index() {		
 		
 		//Si on a un mot recherché
 		if(isset($this->request->data['q'])) {
 			
-			$q = $this->request->data['q'];
-			$hits = $this->components['Search']->query($q);
+			$q = $this->request->data['q'];			
+			$hits = $this->Search->find(array('conditions' => "datas LIKE '%".$q."%' AND website_id = ".CURRENT_WEBSITE_ID));			
 			$this->set('hits', $hits);
 			
 		} else {

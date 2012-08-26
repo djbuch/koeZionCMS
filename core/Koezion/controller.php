@@ -33,7 +33,6 @@ class Controller extends Object {
 	public $modelName = '';
 	
 	var $components = array(
-		'Search',
 		'Email',
 		'Text',
 		'Import'
@@ -147,7 +146,6 @@ class Controller extends Object {
  */
 	function loadModel($name) {
 
-		
 		//En premier lieu on test si le model n'est pas déjà instancié
 		//et si il ne l'est pas on procède à son intenciation
 		if(!isset($this->$name)) {

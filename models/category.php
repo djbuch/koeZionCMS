@@ -38,14 +38,22 @@ class Category extends Tree {
  * @author 	koéZionCMS
  * @version 0.1 - 27/01/2012 by FI
  */
-	var $fields_to_index = array(
+	/*var $fields_to_index = array(
 		'fields' => array('name', 'slug', 'content', 'page_description', 'page_keywords'),
 		'display' => array(
 			'title' => 'name', 
 			'description' => 'page_description',
 			'slug' => 'slug'
 		)
-	);	
+	);*/
+
+	var $searches_params = array(
+		'fields' => array('name', 'slug', 'content', 'page_title', 'page_description', 'page_keywords'),
+		'url' => array( 
+			'url' => 'categories/view/id::id/slug::slug',
+			'params' => array('slug')
+		)
+	);
 	
 /**
  * Cette fonction permet de contrôler qu'une catégorie ne soit pas son propre parent

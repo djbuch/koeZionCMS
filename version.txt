@@ -1,4 +1,9 @@
 ================================================================================
+Version : 	26/08/2012
+Author : 	FI
+
+--> Suppression du moteur de recherche ZEND_SEARCH_LUCENE qui provoquait des ralentissements et mise en place d'un moteur de recherche base de données
+================================================================================
 Version : 	24/08/2012
 Author : 	FI
 
