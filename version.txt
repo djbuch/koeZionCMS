@@ -1,4 +1,9 @@
 ================================================================================
+Version : 	27/08/2012
+Author : 	FI
+
+--> Mise en place des modifications sur le moteur de recherche au modèle Post
+================================================================================
 Version : 	26/08/2012
 Author : 	FI
 

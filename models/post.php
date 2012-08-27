@@ -48,13 +48,21 @@ class Post extends Model {
  * @author 	koéZionCMS
  * @version 0.1 - 27/01/2012 by FI
  */
-	var $fields_to_index = array(
+	/*var $fields_to_index = array(
 		'fields' => array('name', 'slug', 'prefix', 'short_content', 'content', 'page_description', 'page_keywords'),
 		'display' => array(
 			'title' => 'name',
 			'description' => 'page_description',
 			'slug' => 'slug',
 			'prefix' => 'prefix'
+		)
+	);*/
+		
+	var $searches_params = array(
+		'fields' => array('name', 'slug', 'prefix', 'short_content', 'content', 'page_description', 'page_keywords'),
+		'url' => array(
+			'url' => 'posts/view/id::id/slug::slug/prefix::prefix',
+			'params' => array('slug', 'prefix')
 		)
 	);
 }
