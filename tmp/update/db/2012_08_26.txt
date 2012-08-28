@@ -1,0 +1,29 @@
+DROP TABLE IF EXISTS `searches`;
+
+CREATE TABLE IF NOT EXISTS `searches` (
+  
+	`id` int(10) NOT NULL AUTO_INCREMENT,
+  
+	`model` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  
+	`title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  
+	`description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  
+	`datas` longtext COLLATE utf8_unicode_ci,
+  
+	`url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  
+	`created` datetime DEFAULT NULL,
+  
+	`modified` datetime DEFAULT NULL,
+  
+	`model_id` int(11) NOT NULL,
+  
+	`website_id` int(11) NOT NULL,
+  
+	PRIMARY KEY (`id`),
+  KEY `association_key` (`model`),
+  FULLTEXT KEY `data` (`datas`)
+
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
