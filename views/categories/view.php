@@ -11,6 +11,12 @@ $keywords_for_layout = $category['page_keywords'];
 		echo $this->vars['components']['Text']->format_content_text($category['content']);
 		//echo $category['content'];		
 		if($category['display_contact_form']) { $this->element('frontoffice/formulaire_contact'); }
+		
+		if(isset($displayCatalogues) && $displayCatalogues) {
+		
+			$this->element('frontoffice/catalogues/list');
+			$this->element('frontoffice/pagination');
+		}
 	} 
 	else { 
 		?>		

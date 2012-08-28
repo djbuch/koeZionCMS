@@ -12,3 +12,59 @@ table{border-spacing:0;background:transparent;border-collapse:collapse}
 #ethernatable.simple tr{padding: 3px;}
 #ethernatable.simple td{width: auto;}
 #ethernatable.simple {width: 100%;}
+
+#ethernatable.catalogues{width:100%;margin-bottom: 20px}
+#ethernatable.catalogues tr{border-bottom:1px solid #cfcfcf;border-left:none;border-right:none}
+#ethernatable.catalogues tr.even{background-color:#efefef}
+#ethernatable.catalogues tr.odd{background-color:#f6f6f6}
+
+#ethernatable.catalogues tr.title th{text-align:left;background-color:#df6a85;border:none;-webkit-border-radius:5px 5px 0 0;-moz-border-radius:5px 5px 0 0;border-radius:5px 5px 0 0}
+#ethernatable.catalogues tr.title th h6{text-shadow:none;color:white;font-weight:bold;margin-top:5px;margin-left:10px}
+
+#ethernatable.catalogues tr.fields th{text-align:center;background-color:#e5d9d9}
+#ethernatable.catalogues tr.fields th h6{margin-top:5px}
+#ethernatable.catalogues tr.fields th.image{width:60px}
+#ethernatable.catalogues tr.fields th.reference{width:70px}
+#ethernatable.catalogues tr.fields th.color{width:80px}
+#ethernatable.catalogues tr.fields th.price{width:60px}
+#ethernatable.catalogues tr.fields th.disponibility{width:45px}
+#ethernatable.catalogues tr.fields th.doc{width:30px}
+
+#ethernatable.catalogues tr.fields th.country{width:80px}
+#ethernatable.catalogues tr.fields th.capacity{width:60px}
+
+#ethernatable.catalogues tr.fields th.type{width:80px}
+
+#ethernatable.catalogues tr.fields th.containing{width:80px}
+#ethernatable.catalogues tr.fields th.origin{width:80px}
+
+#ethernatable.catalogues th h6{font-size:15px;margin-top:0;padding-bottom:0}
+
+#ethernatable.catalogues td{vertical-align:middle;width:auto;padding:5px 0 5px 0}
+#ethernatable.catalogues td.center{text-align:center}
+#ethernatable.catalogues td.right{text-align:right}
+
+#ethernatable.catalogues .label{padding:1px 3px 2px;font-size:9.75px;font-weight:bold;color:#fff;text-transform:uppercase;white-space:nowrap;background-color:#bfbfbf;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;text-shadow:none;text-indent:-9999px;display:block;width:10px;margin:auto}
+#ethernatable.catalogues .label.success{background-color:#46a546}
+#ethernatable.catalogues .label.error{background-color:#d00}
+
+#ethernatable.catalogues.coup_coeur{width:45%;margin-bottom: 20px;float:left;height:171px}
+#ethernatable.catalogues.coup_coeur .title{height:30px;border:none}
+#ethernatable.catalogues.coup_coeur tr {border-color:#bc7b91;border-width:2px;}
+#ethernatable.catalogues.coup_coeur td * {float:left}
+#ethernatable.catalogues.coup_coeur td.img {width: 130px;}
+#ethernatable.catalogues.coup_coeur td.img img {margin: 5px;}
+#ethernatable.catalogues.coup_coeur td span {display: block;width: 100%;}
+#ethernatable.catalogues.coup_coeur td .blank {float: right;}
+
+#ethernatable.catalogues.recherche{width:45%;margin-bottom: 20px;float:right;height:171px}
+#ethernatable.catalogues.recherche tr {border-color:#bc7b91;border-width:2px;}
+#ethernatable.catalogues.recherche .title{height:30px;border:none}
+#ethernatable.catalogues.recherche .content{background-color:#eadadb}
+#ethernatable.catalogues.recherche .content table{width: 100%}
+#ethernatable.catalogues.recherche .content table tr{border:none}
+#ethernatable.catalogues.recherche .content table td{padding:5px}
+#ethernatable.catalogues.recherche .content table td.lib{width:25%}
+#ethernatable.catalogues.recherche .content table td input[type=text]{margin:0;float:right;height:20px;line-height:20px;padding:0 5px;background-color:white;width:80%}
+#ethernatable.catalogues.recherche .content table td input.superbutton{margin:0;float:right;height:20px;line-height:20px;padding:0 5px}
+#ethernatable.catalogues.recherche .content table td input.superbutton + input{width:65%;margin-right:13px}
