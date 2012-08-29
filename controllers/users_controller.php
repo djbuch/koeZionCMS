@@ -213,23 +213,25 @@ class UsersController extends AppController {
 				$sql = "DELETE FROM ".$this->User->table." WHERE role = '".$this->request->data['role']."' AND users_group_id = ".$this->request->data['users_group_id'];
 				$this->User->query($sql, false);
 				
+				$datasToSave = array();
 				while(($data = fgetcsv($handle, 1000, ";")) !== FALSE) { //Lecture du fichier
 					
 					$num = count($data); //Nombre de colonnes
 					
 					//Tableau à sauvegarder
-					$datasToSave = array(
+					$datasToSave[] = array(
 						'id' => utf8_encode($data[0]),
-						'second_name' => utf8_encode($data[1]),
-						'name' => utf8_encode($data[2]),
+						'name' => utf8_encode($data[1]),
+						'second_name' => utf8_encode($data[2]),
 						'login' => utf8_encode($data[3]),
 						'password' => utf8_encode($data[4]),
 						'role' => $this->request->data['role'],
 						'users_group_id' => $this->request->data['users_group_id'],
 						'online' => 1
-					);
-					$this->User->save($datasToSave, true);					
+					);										
 				}
+				
+				$this->User->saveAll($datasToSave, true);
 				
 				fclose($handle);
 				Session::setFlash("L'import a bien été effectué"); //Message de confirmation
