@@ -220,8 +220,8 @@ class UsersController extends AppController {
 					//Tableau à sauvegarder
 					$datasToSave = array(
 						'id' => utf8_encode($data[0]),
-						'second_name' => utf8_encode($data[1]),
-						'name' => utf8_encode($data[2]),
+						'name' => utf8_encode($data[1]),
+						'second_name' => utf8_encode($data[2]),
 						'login' => utf8_encode($data[3]),
 						'password' => utf8_encode($data[4]),
 						'role' => $this->request->data['role'],
