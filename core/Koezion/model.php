@@ -382,7 +382,7 @@ class Model extends Object {
 			if($preparedInfos['action'] == 'insert') { $this->id = $this->db->lastInsertId();}
 			else { $this->id = $datas['id']; }
 			
-			//if(isset($this->searches_params)) { $this->make_search_index($datasToSave, $this->id, $preparedInfos['action']); } //On génère le fichier d'index de recherche
+			if(isset($this->searches_params)) { $this->make_search_index($datasToSave, $this->id, $preparedInfos['action']); } //On génère le fichier d'index de recherche
 		}
 	}
 	
