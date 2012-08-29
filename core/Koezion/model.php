@@ -636,7 +636,7 @@ class Model extends Object {
 		if(in_array('slug', $shema) && (!in_array('slug', $datasShema))) { $datasShema[] = 'slug'; } 
 		if(in_array('page_title', $shema) 	&& (!in_array('page_title', $datasShema))) 	{ $datasShema[] = 'page_title'; } 
 		
-		if(in_array('password', $datasShema)) { $datasShema[] = 'password'; }
+		//if(in_array('password', $datasShema)) { $datasShema[] = 'password'; }
 				
 		//On contrôle que la clé primaire ne soit pas dans le tableau si on a demandé de forcer l'ajout
 		if(in_array($primaryKey, $datasShema) && !$forceInsert) {
