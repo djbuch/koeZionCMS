@@ -252,7 +252,73 @@ class Form {
 		return ob_get_clean();
 	}*/
 	
+/**
+ * Enter description here...
+ *
+ * @param unknown_type $input
+ * @return unknown
+ *
+ */
+	function upload_files_products() {
 	
+		ob_start();
+		?>
+		<script type="text/javascript">
+			function BrowseServer(startupPath, functionData) {
+				// You can use the "CKFinder" class to render CKFinder in a page:
+				var finder = new CKFinder();
+			
+				// The path for the installation of CKFinder (default = "/ckfinder/").
+				finder.basePath = '../';
+			
+				//Startup path in a form: "Type:/path/to/directory/"
+				finder.startupPath = startupPath;
+			
+				// Name of a function which is called when a file is selected in CKFinder.
+				finder.selectActionFunction = SetFileField;
+			
+				// Additional data to be passed to the selectActionFunction in a second argument.
+				// We'll use this feature to pass the Id of a field that will be updated.
+				finder.selectActionData = functionData;
+			
+				// Launch CKFinder
+				finder.popup();
+			}
+			
+			// This is a sample function which is called when a file is selected in CKFinder.
+			function SetFileField(fileUrl, data) { document.getElementById( data["selectActionData"] ).value = fileUrl; }
+		</script>
+		<div class="row">	
+			<label>
+				Fiche technique
+				<img original-title="Sélectionnez le fichier à importer" class="tip-w" style="float: left; margin-right: 5px; cursor: pointer;" alt="tooltip" src="<?php echo BASE_URL; ?>/img/backoffice/tooltip.png">	
+			</label>
+			
+			<div class="rowright">			
+				<?php 
+				$id = $this->_set_input_id('doc');
+				echo $this->input('doc', '', array('tooltip' => false, 'div' => false, 'label' => false, 'class' => 'upload_file'));
+				echo $this->input('select_file', '', array('type' => 'button', 'onclick' => "BrowseServer('Files:/', '".$id."');", 'displayError' => false, 'label' => false, 'div' => false, 'tooltip' => false, 'value' => "Sélectionnez le fichier"));
+				?>
+			</div>
+		</div>	
+		<div class="row">	
+			<label>
+				Image
+				<img original-title="Sélectionnez le fichier à importer" class="tip-w" style="float: left; margin-right: 5px; cursor: pointer;" alt="tooltip" src="<?php echo BASE_URL; ?>/img/backoffice/tooltip.png">	
+			</label>
+			
+			<div class="rowright">			
+				<?php 
+				$id = $this->_set_input_id('img');
+				echo $this->input('img', '', array('tooltip' => false, 'div' => false, 'label' => false, 'class' => 'upload_file'));
+				echo $this->input('select_file', '', array('type' => 'button', 'onclick' => "BrowseServer('Images:/', '".$id."');", 'displayError' => false, 'label' => false, 'div' => false, 'tooltip' => false, 'value' => "Sélectionnez le fichier"));
+				?>
+			</div>
+		</div>
+		<?php
+		return ob_get_clean();
+	}
 	
 /**
  * Cette fonction permet la création des champs input
