@@ -7,15 +7,15 @@
 			<th class="image">&nbsp;</th>
 			<th class="reference">
 				<h6>Ref.</h6>
-				<?php $moreParamsUrl = $helpers['Paginator']->gest_more_params(array('orderref')); ?>
-				<a href="<?php echo Router::url('categories/view/id:'.$category['id'].'/slug:'.$category['slug'])."?orderref=asc".$moreParamsUrl; ?>"><?php echo $helpers['Html']->img('frontoffice/arrow_down.gif', array("class" => "order_table_by")); ?></a>
-				<a href="<?php echo Router::url('categories/view/id:'.$category['id'].'/slug:'.$category['slug'])."?orderref=desc".$moreParamsUrl; ?>"><?php echo $helpers['Html']->img('frontoffice/arrow_up.gif', array("class" => "order_table_by")); ?></a>
+				<?php $moreParamsUrl = $helpers['Paginator']->get_more_params(array('order.reference')); ?>
+				<a href="<?php echo Router::url('categories/view/id:'.$category['id'].'/slug:'.$category['slug'])."?order[reference]=asc".$moreParamsUrl; ?>"><?php echo $helpers['Html']->img('frontoffice/arrow_down.gif', array("class" => "order_table_by")); ?></a>
+				<a href="<?php echo Router::url('categories/view/id:'.$category['id'].'/slug:'.$category['slug'])."?order[reference]=desc".$moreParamsUrl; ?>"><?php echo $helpers['Html']->img('frontoffice/arrow_up.gif', array("class" => "order_table_by")); ?></a>
 			</th>
 			<th>
 				<h6>Désignation</h6>
-				<?php $moreParamsUrl = $helpers['Paginator']->gest_more_params(array('ordername')); ?>
-				<a href="<?php echo Router::url('categories/view/id:'.$category['id'].'/slug:'.$category['slug'])."?ordername=asc".$moreParamsUrl; ?>"><?php echo $helpers['Html']->img('frontoffice/arrow_down.gif', array("class" => "order_table_by")); ?></a>
-				<a href="<?php echo Router::url('categories/view/id:'.$category['id'].'/slug:'.$category['slug'])."?ordername=desc".$moreParamsUrl; ?>"><?php echo $helpers['Html']->img('frontoffice/arrow_up.gif', array("class" => "order_table_by")); ?></a>
+				<?php $moreParamsUrl = $helpers['Paginator']->get_more_params(array('order.name')); ?>
+				<a href="<?php echo Router::url('categories/view/id:'.$category['id'].'/slug:'.$category['slug'])."?order[name]=asc".$moreParamsUrl; ?>"><?php echo $helpers['Html']->img('frontoffice/arrow_down.gif', array("class" => "order_table_by")); ?></a>
+				<a href="<?php echo Router::url('categories/view/id:'.$category['id'].'/slug:'.$category['slug'])."?order[name]=desc".$moreParamsUrl; ?>"><?php echo $helpers['Html']->img('frontoffice/arrow_up.gif', array("class" => "order_table_by")); ?></a>
 			</th>
 			<th class="doc">&nbsp</th>
 		</tr>
@@ -47,4 +47,3 @@
 		?>
 	</tbody>
 </table>
-

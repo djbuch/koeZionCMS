@@ -3,6 +3,7 @@ Version : 	29/08/2012
 Author : 	FI
 
 --> Mise en place du module catalogue
+--> Modification de la gestion du tri des colonnes du catalogue
 ================================================================================
 Version : 	27/08/2012
 Author : 	FI

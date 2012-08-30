@@ -293,10 +293,14 @@ class CategoriesController extends AppController {
 				/////////////////////////////////////
 				//   RECUPERATION DES CATALOGUES   //
 
+				pr($_GET);
+				
 				//Définition des tris
 				$defaultOrder = array();				
-				if(isset($_GET['orderref'])) { $defaultOrder[] = 'reference '.$_GET['orderref']; }				
-				if(isset($_GET['ordername'])) { $defaultOrder[] = 'name '.$_GET['ordername']; }
+				if(isset($_GET['order'])) { 
+					
+					foreach($_GET['order'] as $column => $dir) { $defaultOrder[] = $column.' '.$dir; } 
+				}			
 				if(empty($defaultOrder)) { $defaultOrder[] = 'reference'; }
 				
 				//Construction des paramètres de la requête
@@ -737,8 +741,7 @@ class CategoriesController extends AppController {
     	if(!empty($request)) {
     
     		unset($request['rechercher']); //On va en premier lieu supprimer la valeur du bouton rechercher
-    		unset($request['orderref']);
-    		unset($request['ordername']);
+    		unset($request['order']);
     
     		$query = array();
     		foreach($request as $field => $fieldValue) {

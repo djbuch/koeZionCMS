@@ -23,7 +23,7 @@ class Paginator {
 		$pagination = '';
 		
 		//Gestion des éventuels paramètres supplémentaires passés en GET
-		$moreParams = $this->gest_more_params(); //Par défaut pas de paramètres supplémentaires
+		$moreParams = $this->get_more_params(); //Par défaut pas de paramètres supplémentaires
 				
 		//Sinon
 		if($totalPages > 1) {
@@ -140,15 +140,32 @@ class Paginator {
 		return ($pagination);
 	}
 	
-	function gest_more_params($except = array()) {
+	function get_more_params($excepts = array()) {
+				
+		$datas = $_GET;
+		
+		//On va parcourir les exemptions
+		foreach($excepts as $except) {
+			
+			if(Set::check($_GET, $except)) { 
+				
+				$datas = Set::remove($datas, $except);
+				$exceptPath = explode('.', $except);
+				if(count(Set::classicExtract($datas, $exceptPath[0])) == 0) { $datas = Set::remove($datas, $exceptPath[0]); }
+			}	
+		}
 		
 		$moreParams = '';
-		if(count($_GET) > 0) {
+		if(count($datas) > 0) {
 		
 			//Parcours des paramètres passés en GET
-			foreach($_GET as $k => $v) { 
+			foreach($datas as $k => $v) { 
 				
-				if(!in_array($k, $except)) { $moreParams .= '&'.$k.'='.$v; } 
+				if(!is_array($v)) { $moreParams .= '&'.$k.'='.$v; }
+				else {
+					
+					foreach($v as $k1 => $v1) { $moreParams .= '&'.$k.'['.$k1.']='.$v1; }
+				}
 			}
 		}
 		return $moreParams;
