@@ -291,10 +291,7 @@ class CategoriesController extends AppController {
 				$this->pager['elementsPerPage'] = 30;
 				
 				/////////////////////////////////////
-				//   RECUPERATION DES CATALOGUES   //
-
-				pr($_GET);
-				
+				//   RECUPERATION DES CATALOGUES   //				
 				//Définition des tris
 				$defaultOrder = array();				
 				if(isset($_GET['order'])) { 
