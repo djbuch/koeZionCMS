@@ -1,3 +1,23 @@
+DROP TABLE IF EXISTS `catalogues`;
+CREATE TABLE IF NOT EXISTS `catalogues` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `reference` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `prefix` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `price` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `disponibility` int(11) NOT NULL,
+  `is_coup_coeur` int(11) NOT NULL,
+  `online` int(11) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `website_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 DROP TABLE IF EXISTS `categories`;
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -132,6 +152,23 @@ CREATE TABLE IF NOT EXISTS `sliders` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+DROP TABLE IF EXISTS `searches`;
+CREATE TABLE IF NOT EXISTS `searches` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `model` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `datas` longtext COLLATE utf8_unicode_ci,
+  `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  `model_id` int(11) NOT NULL,
+  `website_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `association_key` (`model`),
+  FULLTEXT KEY `data` (`datas`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 DROP TABLE IF EXISTS `templates`;
 CREATE TABLE IF NOT EXISTS `templates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -221,21 +258,4 @@ CREATE TABLE IF NOT EXISTS `websites` (
   `modified_by` int(11) NOT NULL,
   `template_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-DROP TABLE IF EXISTS `searches`;
-CREATE TABLE IF NOT EXISTS `searches` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `model` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `datas` longtext COLLATE utf8_unicode_ci,
-  `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  `model_id` int(11) NOT NULL,
-  `website_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `association_key` (`model`),
-  FULLTEXT KEY `data` (`datas`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
