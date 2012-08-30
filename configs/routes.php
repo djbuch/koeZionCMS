@@ -22,9 +22,6 @@ $routesConfigs = $cfg->keys_values();										//Récupération des configuratio
 //On va créer une constante pour stocker la valeur par défaut du préfixe lors de l'ajout d'un post
 define('POST_PREFIX', $routesConfigs['posts_prefix_singular']);
 
-//On va créer une constante pour stocker la valeur par défaut du préfixe lors de l'ajout d'un post
-define('CATALOGUE_PREFIX', $routesConfigs['catalogues_prefix_singular']);
-
 // Définition des différents préfixes de l'application
 // Ici le préfixe backoffice et identifié par le mot renseigné dans le fichiers de configuration .ini
 

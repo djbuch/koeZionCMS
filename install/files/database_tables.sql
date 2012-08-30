@@ -3,8 +3,6 @@ CREATE TABLE IF NOT EXISTS `catalogues` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `reference` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `prefix` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `price` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `disponibility` int(11) NOT NULL,
   `is_coup_coeur` int(11) NOT NULL,

@@ -1,12 +1,6 @@
 <tbody class="list_elements">
 	<?php foreach($$params['controllerVarName'] as $k => $v): ?>
-		<tr <?php if($displayAll) { echo 'class="sortable" id="ligne_'.$v['id'].'"'; } ?>>
-			<td class="txtcenter xxs2">
-				<?php 
-				if($displayAll) { echo $helpers['Html']->img('backoffice/move.png', array('alt' => _('Déplacer'), 'title' => _('Déplacer'))); }
-				else { echo '&nbsp;'; }
-				?>
-			</td>
+		<tr>
 			<td class="txtcenter xxs"><?php echo $v['id']; ?></td>
 			<td class="txtcenter xs"><a href="<?php echo Router::url('backoffice/'.$params['controllerFileName'].'/statut/'.$v['id']); ?>"><span class="label <?php echo ($v['online'] == 1) ? 'success' : 'error'; ?> chgstatut"><?php echo ($v['online'] == 1) ? '&nbsp;' : '&nbsp;'; ?></span></a></td>
 			<td class="auto_size_td"><a href="<?php echo Router::url('backoffice/'.$params['controllerFileName'].'/edit/'.$v['id']); ?>" class="edit_link"><?php echo $v['name']; ?></a></td>

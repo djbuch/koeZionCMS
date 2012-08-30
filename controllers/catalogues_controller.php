@@ -73,10 +73,10 @@ class CataloguesController extends AppController {
 				
 				//Première étape on va vider la base de données
 				$sql = "
-					DELETE FROM ".$this->Product->table." 
+					DELETE FROM ".$this->Catalogue->table." 
 					WHERE category_id = '".$this->request->data['category_id']."' 
 					AND website_id = ".CURRENT_WEBSITE_ID;
-				$this->Product->query($sql, false);
+				$this->Catalogue->query($sql, false);
 		
 				$datasToSave = array();
 				while(($datas = fgetcsv($handle, 1000, ";")) !== FALSE) { //Lecture du fichier
@@ -85,7 +85,7 @@ class CataloguesController extends AppController {
 				}				
 				fclose($handle);
 				
-				$this->Product->saveAll($datasToSave);
+				$this->Catalogue->saveAll($datasToSave);
 				Session::setFlash("L'import a bien été effectué"); //Message de confirmation
 			}
 		}

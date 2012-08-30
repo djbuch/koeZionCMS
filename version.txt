@@ -4,6 +4,7 @@ Author : 	FI
 
 --> Mise en place du module catalogue
 --> Modification de la gestion du tri des colonnes du catalogue
+--> Finalisation gestion catalogue, imports et rajout de colonne pour l'affichage
 ================================================================================
 Version : 	27/08/2012
 Author : 	FI

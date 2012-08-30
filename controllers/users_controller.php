@@ -225,6 +225,7 @@ class UsersController extends AppController {
 						'second_name' => utf8_encode($data[2]),
 						'login' => utf8_encode($data[3]),
 						'password' => utf8_encode($data[4]),
+						'email' => utf8_encode($data[5]),
 						'role' => $this->request->data['role'],
 						'users_group_id' => $this->request->data['users_group_id'],
 						'online' => 1
