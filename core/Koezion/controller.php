@@ -57,14 +57,11 @@ class Controller extends Object {
 		if($request) { $this->request = $request; }
 		
 		$controllerName = str_replace('Controller', '', get_class($this)); //Nom du contrôleur
-						
-		//Si la variable de chargement automatique du model est à vrai
-		if($this->auto_load_model) {				
-			
-			$modelName = Inflector::singularize($controllerName); //Création du nom du model
-			$this->loadModel($modelName); //Chargement du model
-			$this->params['modelName'] = $modelName; //Affectation du nom du model
-		}
+
+		$modelName = Inflector::singularize($controllerName); //Création du nom du model
+		if($this->auto_load_model) { $this->loadModel($modelName); } //Si la variable de chargement automatique du model est à vrai chargement du model
+		else { $this->$modelName = new ModelStd(); }
+		$this->params['modelName'] = $modelName; //Affectation du nom du model
 		
 		$this->params['controllerName'] = $controllerName; //Affectation du nom de la classe
 		$this->params['controllerFileName'] = Inflector::underscore($controllerName); //Affectation du nom du fichier 

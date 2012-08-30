@@ -18,10 +18,10 @@ table{border-spacing:0;background:transparent;border-collapse:collapse}
 #ethernatable.catalogues tr.even{background-color:#efefef}
 #ethernatable.catalogues tr.odd{background-color:#f6f6f6}
 
-#ethernatable.catalogues tr.title th{text-align:left;background-color:#df6a85;border:none;-webkit-border-radius:5px 5px 0 0;-moz-border-radius:5px 5px 0 0;border-radius:5px 5px 0 0}
+#ethernatable.catalogues tr.title th{text-align:left;border:none;-webkit-border-radius:5px 5px 0 0;-moz-border-radius:5px 5px 0 0;border-radius:5px 5px 0 0}
 #ethernatable.catalogues tr.title th h6{text-shadow:none;color:white;font-weight:bold;margin-top:5px;margin-left:10px}
 
-#ethernatable.catalogues tr.fields th{text-align:center;background-color:#e5d9d9}
+#ethernatable.catalogues tr.fields th{text-align:center;background-color:#d4d4d4}
 #ethernatable.catalogues tr.fields th h6{margin-top:5px}
 #ethernatable.catalogues tr.fields th.image{width:60px}
 #ethernatable.catalogues tr.fields th.reference{width:70px}
@@ -50,7 +50,7 @@ table{border-spacing:0;background:transparent;border-collapse:collapse}
 
 #ethernatable.catalogues.coup_coeur{width:45%;margin-bottom: 20px;float:left;height:171px}
 #ethernatable.catalogues.coup_coeur .title{height:30px;border:none}
-#ethernatable.catalogues.coup_coeur tr {border-color:#bc7b91;border-width:2px;}
+#ethernatable.catalogues.coup_coeur tr {border-width:2px;}
 #ethernatable.catalogues.coup_coeur td * {float:left}
 #ethernatable.catalogues.coup_coeur td.img {width: 130px;}
 #ethernatable.catalogues.coup_coeur td.img img {margin: 5px;}
@@ -58,9 +58,9 @@ table{border-spacing:0;background:transparent;border-collapse:collapse}
 #ethernatable.catalogues.coup_coeur td .blank {float: right;}
 
 #ethernatable.catalogues.recherche{width:45%;margin-bottom: 20px;float:right;height:171px}
-#ethernatable.catalogues.recherche tr {border-color:#bc7b91;border-width:2px;}
+#ethernatable.catalogues.recherche tr {border-width:2px;}
 #ethernatable.catalogues.recherche .title{height:30px;border:none}
-#ethernatable.catalogues.recherche .content{background-color:#eadadb}
+#ethernatable.catalogues.recherche .content{background-color:#EFEFEF}
 #ethernatable.catalogues.recherche .content table{width: 100%}
 #ethernatable.catalogues.recherche .content table tr{border:none}
 #ethernatable.catalogues.recherche .content table td{padding:5px}

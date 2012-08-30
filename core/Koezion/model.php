@@ -706,3 +706,20 @@ class Model extends Object {
 		return array_merge($datasToSave, $moreDatasToSave);		
 	}
 }
+//
+
+/**
+ * Model sans base de données
+ */
+class ModelStd extends Object {
+
+	static $connections = array();
+	public $conf = 'localhost'; //Paramètres de connexion par défaut
+	public $table = false; //Nom de la table
+	public $db; //Variable contenant la connexion à la base de données
+	public $primaryKey = 'id';  //Valeur par défaut de la clé primaire
+	public $id; //Variable qui va contenir la valeur de la clé primaire après isert ou update
+	public $errors = array(); //Par défaut pas d'erreurs
+	public $trace_sql = false; //Permet d'afficher la requête exécutée cf fonction find
+	public $schema = array(); //Shéma de la table
+}

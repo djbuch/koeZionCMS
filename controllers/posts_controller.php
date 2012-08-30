@@ -273,7 +273,7 @@ class PostsController extends AppController {
 	}
 	
 /**
- * Cette fonction permet de vérifier si il faut envoyer un mail aux différents utilisateurs du site (uniquement dans le cas ou celui-ci est sécurisé
+ * Cette fonction permet de vérifier si il faut envoyer un mail aux différents utilisateurs du site (uniquement dans le cas ou celui-ci est sécurisé)
  *
  * @param	array $datas Données de l'article
  * @access 	private

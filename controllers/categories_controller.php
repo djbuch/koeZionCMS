@@ -288,15 +288,22 @@ class CategoriesController extends AppController {
 			} else if($nbCatalogues > 0) {			
 			
 				$datas['displayCatalogues'] = true;
+				$this->pager['elementsPerPage'] = 30;
 				
 				/////////////////////////////////////
-				//   RECUPERATION DES CATALOGUES   //		
+				//   RECUPERATION DES CATALOGUES   //
+
+				//Définition des tris
+				$defaultOrder = array();				
+				if(isset($_GET['orderref'])) { $defaultOrder[] = 'reference '.$_GET['orderref']; }				
+				if(isset($_GET['ordername'])) { $defaultOrder[] = 'name '.$_GET['ordername']; }
+				if(empty($defaultOrder)) { $defaultOrder[] = 'reference'; }
 				
 				//Construction des paramètres de la requête
 				$cataloguesQuery = array(
 					'conditions' => $cataloguesConditions,
 					'limit' => $this->pager['limit'].', '.$this->pager['elementsPerPage'],
-					'order' => 'order_by, name'
+					'order' => implode(',', $defaultOrder)
 				);
 				$cataloguesQuery['moreConditions'] = ''; //Par défaut pas de conditions de recherche complémentaire
 								
@@ -328,7 +335,7 @@ class CategoriesController extends AppController {
 				//Recherche du produit coup de coeur
 				$coupCoeurQuery = array(
 					'conditions' => array('online' => 1, 'category_id' => $id, 'is_coup_coeur' => 1),
-					'order' => 'order_by, name'
+					'order' => 'reference'
 				);
 				$datas['coupCoeur'] = $this->Catalogue->findFirst($coupCoeurQuery);
 			}
@@ -389,6 +396,7 @@ class CategoriesController extends AppController {
 		if($parentAdd) { 
 			
 			delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'categories'.DS); //On vide le dossier qui contient les fichiers en cache
+			$this->_check_send_mail($this->request->data);
 			$this->redirect('backoffice/categories/index'); 
 		} //On retourne sur la page de listing
 		
@@ -444,6 +452,7 @@ class CategoriesController extends AppController {
 			
 			$this->_update_children_statut($id, $this->request->data['online']);	
 			delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'categories'.DS); //On vide le dossier qui contient les fichiers en cache
+			$this->_check_send_mail($this->request->data);
 			$this->redirect('backoffice/categories/index'); //On retourne sur la page de listing 
 		} 
 		
@@ -728,6 +737,8 @@ class CategoriesController extends AppController {
     	if(!empty($request)) {
     
     		unset($request['rechercher']); //On va en premier lieu supprimer la valeur du bouton rechercher
+    		unset($request['orderref']);
+    		unset($request['ordername']);
     
     		$query = array();
     		foreach($request as $field => $fieldValue) {
@@ -740,5 +751,61 @@ class CategoriesController extends AppController {
     		$return['moreConditions'] = implode('AND', $query);
     	}
     	return $return;
-    }    
+    }
+	
+/**
+ * Cette fonction permet de vérifier si il faut envoyer un mail aux différents utilisateurs du site (uniquement dans le cas ou celui-ci est sécurisé)
+ *
+ * @param	array $datas Données de la catégorie
+ * @access 	private
+ * @author 	koéZionCMS
+ * @version 0.1 - 30/08/2012 by FI
+ */	
+	function _check_send_mail($datas) {
+
+		if(isset($datas['send_mail'])) {
+		
+			$session = Session::read('Backoffice');
+			
+			//Récupération des groupes d'utilisateurs du site courant
+			$this->loadModel('UsersGroupsWebsite'); //Chargement du modèle
+			$usersGroupsWebsites = $this->UsersGroupsWebsite->find(array('conditions' => array('website_id' => $session['Websites']['current']))); //Recherche de tous les groupe
+			
+			//On formate les données
+			$usersGroupsWebsitesList = array();
+			foreach($usersGroupsWebsites as $k => $v) { $usersGroupsWebsitesList[] = $v['website_id']; }
+			
+			//On va maintenant récupérer tous les utilisateurs de rôle user ayant ce groupe dans leurs données
+			$this->loadModel('User'); //Chargement du modèle
+			$users = $this->User->find(array('conditions' => 'users_group_id IN ('.implode(',', $usersGroupsWebsitesList).')')); //Recherche de tous les groupe
+			
+			//Envoi des emails
+			if(count($users) > 0) {		
+	
+				foreach($users as $k => $v) {
+					
+					if(!empty($v['email'])) {
+						
+						$currentWebsite = Session::read('Backoffice.Websites.current'); //Récupération du site courant
+						$urlWebsite = Session::read('Backoffice.Websites.details.'.$currentWebsite.'.url'); //Récupération du site courant 						
+						
+						$txtMails = $this->components['Text']->format_for_mailing(
+							array('message_mail' => $datas['message_mail']),
+							$urlWebsite
+						); //On fait appel au composant Text pour formater les textes des mails
+						
+						$emailC = new Email();
+						$mailDatas = array(
+							'subject' => '::Mise à jour catégorie::',
+							'to' => $v['email'],
+							'element' => 'frontoffice/email/mise_a_jour_categorie',
+							'vars' => array('messageContent' => $txtMails['message_mail'])
+						);
+						$emailC->send($mailDatas, $this); //On fait appel au composant email
+						unset($emailC);
+					}
+				}
+			}
+		}		
+	}    
 }

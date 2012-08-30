@@ -10,7 +10,7 @@ $logUsersActiv = $websitesSession['details'][$currentWebsite]['log_users_activ']
 			<td class="txtcenter xxs"><?php echo $v['id']; ?></td>
 			<td class="txtcenter xs"><a href="<?php echo Router::url('backoffice/'.$params['controllerFileName'].'/statut/'.$v['id']); ?>"><span class="label <?php echo ($v['online'] == 1) ? 'success' : 'error'; ?> chgstatut"><?php echo ($v['online'] == 1) ? '&nbsp;' : '&nbsp;'; ?></span></a></td>
 			<td>
-				<a href="<?php echo Router::url('backoffice/'.$params['controllerFileName'].'/edit/'.$v['id']); ?>" class="edit_link"><?php echo $v['name']; ?></a>
+				<a href="<?php echo Router::url('backoffice/'.$params['controllerFileName'].'/edit/'.$v['id']); ?>" class="edit_link"><?php echo $v['name'].' - '.$v['second_name']; ?></a>
 				<?php if($v['role'] == 'user' && $logUsersActiv) { ?>
 					<a href="<?php echo Router::url('backoffice/'.$params['controllerFileName'].'/logs/'.$v['id']); ?>"><img src="<?php echo BASE_URL; ?>/img/backoffice/users_log.png" alt="edit" style="float:right" /></a>
 				<?php } ?>

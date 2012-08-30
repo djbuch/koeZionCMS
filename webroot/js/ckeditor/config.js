@@ -15,9 +15,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		//CKEDITOR.config.entities_processNumerical = false;
 	
 	CKEDITOR.config.templates_replaceContent = false; //Indique lors de la sélection de templates si il faut remplacer le contenu actuel
-	CKEDITOR.config.extraPlugins = 'internpage'; //Mise en place d'un plugin supplémentaire
+	CKEDITOR.config.extraPlugins = 'internpage,syntaxhighlight'; //Mise en place d'un plugin supplémentaire
 	//CKEDITOR.config.extraPlugins = 'geshi'; //Ajout du plugin Geshi
-	CKEDITOR.config.extraPlugins = 'syntaxhighlight';
+	//CKEDITOR.config.extraPlugins[] = 'syntaxhighlight';
 	
 	//Définition de la barre de menu
 	CKEDITOR.config.toolbar_App =

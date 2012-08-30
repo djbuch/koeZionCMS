@@ -5,6 +5,18 @@
 		<li><a href="#seo"><?php echo _("SEO"); ?></a></li>
 		<li><a href="#options"><?php echo _("Options"); ?></a></li>
 		<li><a href="#secure"><?php echo _("Sécuriser la page"); ?></a></li>
+		
+		<?php 
+		//On ne va afficher ce menu que si le site courant est sécurisé
+		$websitesSession = Session::read('Backoffice.Websites'); //Récupération de la variable de session
+		$currentWebsite = $websitesSession['current']; //Récupération du site courant
+		$websiteDetails = $websitesSession['details'][$currentWebsite]; //Récupération du détail du site courant
+		$isSecure = $websiteDetails['secure_activ']; //On va vérifier si celui-ci est sécurisé
+		if($isSecure) {
+			
+			?><li><a href="#emailing"><?php echo _("Emailing"); ?></a></li><?php 
+		}
+		?>
 	</ul>
 	<div id="general">
 		<div class="content nopadding">
@@ -58,4 +70,14 @@
 			?>
 		</div>
 	</div>
+	<?php if($isSecure) { ?>			
+		<div id="emailing">
+			<div class="content nopadding">
+				<?php 
+				echo $helpers['Form']->input('send_mail', "Envoyer un email pour informer les utilisateurs de l'ajout (ou de la modification)", array('type' => 'checkbox', 'tooltip' => "En cochant cette case un email sera automatiquement envoyer à l'ensemble des utilisateurs référencés dans le système"));
+				echo $helpers['Form']->input('message_mail', 'Contenu email newsletter', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge', 'tooltip' => "Indiquez le texte qui sera envoyé par email"));
+				?>
+			</div>
+		</div>
+	<?php } ?>
 </div>

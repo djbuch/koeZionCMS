@@ -2,7 +2,7 @@
 	<div class="box">
 		
 		<div class="title">
-			<h2><?php echo _("Logs utilisateur")." - ".$userName['name'].' <i>('.$userName['id'].')</i>'; ?></h2>
+			<h2><?php echo _("Logs utilisateur")." - ".$userName['name'].' - '.$userName['second_name'].' <i>(IDENTIFIANT : '.$userName['id'].')</i>'; ?></h2>
 			<a class="btn black" href="<?php echo Router::url('backoffice/'.$params['controllerFileName'].'/index'); ?>" style="float: right; margin-top: 3px;"><span><?php echo _("Listing"); ?></span></a>
 		</div>	
 		<div class="content">

@@ -23,13 +23,8 @@ class Paginator {
 		$pagination = '';
 		
 		//Gestion des éventuels paramètres supplémentaires passés en GET
-		$moreParams = ''; //Par défaut pas de paramètres supplémentaires		
-		if(count($_GET) > 0) {
-
-			//Parcours des paramètres passés en GET
-			foreach($_GET as $k => $v) { $moreParams .= '&'.$k.'='.$v; }
-		}
-		
+		$moreParams = $this->gest_more_params(); //Par défaut pas de paramètres supplémentaires
+				
 		//Sinon
 		if($totalPages > 1) {
 			
@@ -143,6 +138,20 @@ class Paginator {
 		}
 		
 		return ($pagination);
+	}
+	
+	function gest_more_params($except = array()) {
+		
+		$moreParams = '';
+		if(count($_GET) > 0) {
+		
+			//Parcours des paramètres passés en GET
+			foreach($_GET as $k => $v) { 
+				
+				if(!in_array($k, $except)) { $moreParams .= '&'.$k.'='.$v; } 
+			}
+		}
+		return $moreParams;
 	}
 }
 ?>

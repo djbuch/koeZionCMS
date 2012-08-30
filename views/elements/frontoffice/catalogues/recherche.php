@@ -12,22 +12,14 @@
 					<table cellpadding="0" cellspacing="0">
 						<tbody>
 							<tr>
-								<td class="lib">Désignation :</td>
-								<td><?php echo $helpers['Form']->input('name', '', array('label' => false, 'div' => false, 'displayError' => false)); ?></td>
+								<td class="lib">Référence :</td>
+								<td><?php echo $helpers['Form']->input('reference', '', array('label' => false, 'div' => false, 'displayError' => false)); ?></td>
 							</tr>
 							<tr>
-								<td class="lib">Région : </td>
-								<td><?php echo $helpers['Form']->input('country', '', array('label' => false, 'div' => false, 'displayError' => false)); ?></td>
-							</tr>
-							<tr>
-								<td class="lib">Couleur : </td>
-								<td><?php echo $helpers['Form']->input('color', '', array('label' => false, 'div' => false, 'displayError' => false)); ?></td>
-							</tr>
-							<tr>
-								<td class="lib">Contenance : </td>
+								<td class="lib">Désignation : </td>
 								<td>
 									<?php echo $helpers['Form']->input('rechercher', _('ok'), array('label' => false, 'div' => false, 'displayError' => false, 'type' => 'submit', "class" => "superbutton", 'value' => _('ok')));  ?>
-									<?php echo $helpers['Form']->input('capacity', '', array('label' => false, 'div' => false, 'displayError' => false)); ?>									
+									<?php echo $helpers['Form']->input('name', '', array('label' => false, 'div' => false, 'displayError' => false)); ?>
 								</td>
 							</tr>
 						</tbody>

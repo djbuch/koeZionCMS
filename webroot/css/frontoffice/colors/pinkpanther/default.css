@@ -10,3 +10,6 @@ a.superbutton:hover,.inner_main input.superbutton:hover,a.superbutton.selected{b
 ::-moz-selection{background:#c884d0;color:#fff;text-shadow:none}
 ::selection{background:#c884d0;color:#fff;text-shadow:none}
 a:link{-webkit-tap-highlight-color:#c884d0}
+#ethernatable.catalogues tr.title th{background-color:#c884d0;}
+#ethernatable.catalogues.coup_coeur tr {border-color:#c884d0;}
+#ethernatable.catalogues.recherche tr {border-color:#c884d0;}

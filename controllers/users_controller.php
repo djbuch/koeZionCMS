@@ -150,7 +150,7 @@ class UsersController extends AppController {
 	
 		//Récupération de l'utilisateur
 		$user = $this->User->findFirst(array('conditions' => array('id' => $id)));
-		return array('id' => $user['id'], 'name' => $user['name']);
+		return array('id' => $user['id'], 'name' => $user['name'], 'second_name' => $user['second_name']);
 	}
 		
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -165,7 +165,7 @@ class UsersController extends AppController {
  * @version 0.1 - 17/01/2012 by FI
  * @version 0.2 - 21/05/2012 by FI - Rajout d'une condition sur la récupération des catégories
  */	
-	function backoffice_index() { parent::backoffice_index(false, array('id', 'name', 'role', 'online')); }
+	function backoffice_index() { parent::backoffice_index(false, array('id', 'name', 'second_name', 'role', 'online')); }
 	
 /**
  * Cette fonction permet l'ajout d'un élément
@@ -204,7 +204,7 @@ class UsersController extends AppController {
 	function backoffice_import() {
 	
 		if($this->request->data) { //Si des données sont postées
-			
+						
 			set_time_limit(0); //Pas de limite de temps d'exécution						
 			$handle = $this->components['Import']->open_file($this->request->data['file']); //On ouvre le fichier			
 			if($handle !== FALSE) { //Pointer vers le fichier csv
