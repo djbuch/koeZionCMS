@@ -7,7 +7,7 @@
 				<li><a href="<?php echo Router::url('backoffice/categories/index'); ?>"><?php echo _("Catégories"); ?></a></li>
 				<li><a href="<?php echo Router::url('backoffice/sliders/index'); ?>"><?php echo _("Sliders"); ?></a></li>
 				<li><a href="<?php echo Router::url('backoffice/focus/index'); ?>"><?php echo _("Focus"); ?></a></li>
-				<li><a href="<?php echo Router::url('backoffice/catalogues/index'); ?>"><?php echo _("Catalogue produits"); ?></a></li>
+				<?php if(in_array('CATAL', Session::read('Backoffice.Plugins'))) { ?><li><a href="<?php echo Router::url('backoffice/catalogues/index'); ?>"><?php echo _("Catalogue produits"); ?></a></li><?php } ?>
 			</ul>			
 		</li>		
 		<li>

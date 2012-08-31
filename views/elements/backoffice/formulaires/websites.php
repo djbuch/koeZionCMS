@@ -81,6 +81,7 @@
 			echo $helpers['Form']->input('secure_activ', $txtSecure, array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour activer la sécurité sur le site"));			
 			$txtLog = "Logger les utilisateurs. <i>Attention cette option ne fonctionne que dans le cas de sites sécurisés. La mise en place de cette option peut ralentir l'affichage des pages</i>";
 			echo $helpers['Form']->input('log_users_activ', $txtLog, array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour activer le log des utilisateurs"));
+			echo $helpers['Form']->input('css_hack', 'Rajout de code css', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge'));
 			?>
 		</div>
 	</div>

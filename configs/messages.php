@@ -48,3 +48,6 @@ $Errorsmessages['User']['name'] = _('La valeur de ce champ est de 2 caractères 
 $Errorsmessages['User']['login'] = _('La valeur de ce champ est de 4 caractères minimum.');
 $Errorsmessages['User']['password'] = _('La valeur de ce champ est de 4 caractères minimum.');
 $Errorsmessages['User']['email'] = _('Vous devez indiquer un email valide.');
+
+$Errorsmessages['Plugin']['name'] = _('La valeur de ce champ est de 2 caractères minimum.');
+$Errorsmessages['Plugin']['code'] = _('La valeur de ce champ est de 5 caractères exactement.');

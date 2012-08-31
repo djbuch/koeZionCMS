@@ -41,6 +41,8 @@
 		
 		echo $helpers['Html']->css($css, true);
 		
+		if(!empty($websiteParams['css_hack'])) { ?><style type="text/css"><?php echo $websiteParams['css_hack']; ?></style><?php }
+		
 		$js = array(
 			$websiteParams['tpl_layout'].'/jquery-1.5.1.min',
 			$websiteParams['tpl_layout'].'/menu',

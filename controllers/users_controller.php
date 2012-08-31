@@ -58,9 +58,14 @@ class UsersController extends AppController {
 						//   ADMINISTRATEUR GENERAL   //
 						if($bddRole == 'admin') {
 							
+							//Plugins activés
+							$this->loadModel('Plugin'); //Chargement du modèle
+							$plugins = $this->Plugin->findList(array('conditions' => array('online' => 1)));
+							
 							$session = array(
 								'User' => $user,
-								'Websites' => $this->_init_websites_datas()
+								'Websites' => $this->_init_websites_datas(),
+								'Plugins' => $plugins
 							);
 							
 							Session::write('Backoffice', $session); //On insère dans la variable de session les données de l'utilisateur						
@@ -78,10 +83,15 @@ class UsersController extends AppController {
 								
 								$usersGroupsWebsitesList = array();
 								foreach($usersGroupsWebsites as $k => $v) { $usersGroupsWebsitesList[] = $v['website_id']; } 								
-																
+								
+								//Plugins activés
+								$this->loadModel('Plugin'); //Chargement du modèle
+								$plugins = $this->Plugin->findList(array('conditions' => array('online' => 1)));
+								
 								$session = array(
 									'User' => $user,
-									'Websites' => $this->_init_websites_datas(array('conditions' => 'id IN ('.implode(',', $usersGroupsWebsitesList).')'))
+									'Websites' => $this->_init_websites_datas(array('conditions' => 'id IN ('.implode(',', $usersGroupsWebsitesList).')')),
+									'Plugins' => $plugins
 								);
 								
 								Session::write('Backoffice', $session); //On insère dans la variable de session les données de l'utilisateur

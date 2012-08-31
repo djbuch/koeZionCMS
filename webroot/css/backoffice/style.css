@@ -28,6 +28,8 @@ img{border:0}
 #right #top-bar ul li a:hover{color:#807f7f;text-decoration:none}
 #right #top-bar ul ul{position:absolute;top:30px;left:0;border-bottom:1px solid #1c1c1c;display:none;z-index:9999;padding:0;margin:0;list-style:none;left:-130px}
 #right #top-bar ul ul.websites{left:0}
+#right #top-bar ul ul.websites li{width:100%;padding:0}
+#right #top-bar ul ul.websites li a{padding:5px 0 5px 10px}
 #right #top-bar ul li:hover ul{display:block}
 #right #top-bar ul li li{display:block;background:#1c1c1c;border:0;border-top:1px solid #444;padding:3px 10px;font:11px/18px Arial;color:#cacaca;width:200px;height:auto}
 #right #top-bar ul li li a,#right #top-bar ul li li a:link,#right #top-bar ul li li a:active,#right #top-bar ul li li a:visited{display:block;color:#cacaca;text-decoration:none}

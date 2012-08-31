@@ -1,4 +1,13 @@
 ================================================================================
+Version : 	31/08/2012
+Author : 	FI
+
+--> Correction css liste déroulante backoffice
+--> Rajout d'une colonne dans la table des sites permettant de rajouter si besoin du css à la volée + modification formulaire ajout et layout frontoffice
+--> Modification de tous les types text pour les passer en longtext
+--> Rajout d'un caractère spécial dans l'éditeur de texte
+--> Création d'un bdd plugins pour désengorger l'affichage du back par défaut les plugins seront désactivés (Catalogue à l'heure actuelle) il suffira de les activer pour y avoir accès
+================================================================================
 Version : 	29/08/2012
 Author : 	FI
 
