@@ -32,6 +32,8 @@ class SitemapsController extends Controller {
  */	
 	function index() {		
 		
+		$datas['websiteParams'] = $this->_get_website_datas();
+		
 		$this->layout = 'sitemaps'; //Définition du layout à utiliser
 		
 		/////////////////////////////////////////////////
@@ -99,6 +101,7 @@ class SitemapsController extends Controller {
  */
 	function robots() {
 		
+		$datas['websiteParams'] = $this->_get_website_datas();
 		$this->layout = 'robots'; //Définition du layout à utiliser
 		
 	}	

@@ -1,4 +1,11 @@
 ================================================================================
+Version : 	04/09/2012
+Author : 	FI
+
+--> Mise en place d'un passage de paramètre en GET pour pouvoir changer de site en local
+--> Suppression automatique du chargement du model export et du model sitemap
+--> Déplacement de la fonction _get_website_datas dans le controleur principal pour la rendre accéssible à tous les controleurs
+================================================================================
 Version : 	31/08/2012
 Author : 	FI
 
