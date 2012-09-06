@@ -10,6 +10,7 @@ $stepTitle = array(
 	'database_params' => '- Configuration de la base de données ',	
 	'database_tables' => '- Import des tables ',	
 	'database_datas' => '- Import des données ',	
+	'database_datas_default' => '- Import des données de démo ',	
 	'website' => '- Configuration du site Internet ',	
 	'smtp' => '- Configuration du serveur SMTP ',	
 	'final' => '- Récapitulatif '		

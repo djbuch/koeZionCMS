@@ -73,6 +73,7 @@ CREATE TABLE IF NOT EXISTS `focus` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+DROP TABLE IF EXISTS `plugins`;
 CREATE TABLE IF NOT EXISTS `plugins` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
@@ -83,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `plugins` (
   `created_by` int(11) NOT NULL,
   `modified_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `posts`;
 CREATE TABLE IF NOT EXISTS `posts` (

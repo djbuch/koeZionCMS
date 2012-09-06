@@ -19,14 +19,14 @@ require_once(INSTALL_FUNCTIONS.DS.'database.php'); //Inclusion des fonctions de 
 $start = 1;
 $foffset = 0;
 $totalqueries = 0;
-$init_db_tables = init_db($conf['host'], $conf['database'], $conf['login'], $conf['password'], "database_datas", $start, $foffset, $totalqueries);
+$init_db_tables = init_db($conf['host'], $conf['database'], $conf['login'], $conf['password'], "database_datas_default", $start, $foffset, $totalqueries);
 ?>
 <div id="right">		
 	<div id="main">				
 		
 		<div class="box">			
 			<div class="title">
-				<h2>IMPORT DES DONNEES DANS LES TABLES</h2>
+				<h2>IMPORT DES DONNEES DE DEMO DANS LES TABLES</h2>
 			</div>
 			<div class="content nopadding">				
 				<?php									
@@ -80,10 +80,6 @@ $init_db_tables = init_db($conf['host'], $conf['database'], $conf['login'], $con
 							<td class="odd" colspan="4"><?php echo $init_db_tables['datas']['pct_bar']; ?></td>
 						</tr>
 					</table>
-					<form action="index.php?step=database_datas_default" method="post">
-						<input type="hidden" name="section" value="<?php echo $section; ?>" />
-						<div class="row" style="text-align: right;"><button class="medium grey" type="submit"><span>Importer des données de démo dans les tables</span></button></div>
-					</form>
 					<form action="index.php?step=website" method="post">
 						<div class="row" style="text-align: right;"><button class="medium grey" type="submit"><span>Configuration du site Internet</span></button></div>
 					</form>

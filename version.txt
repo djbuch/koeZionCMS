@@ -1,4 +1,11 @@
 ================================================================================
+Version : 	06/09/2012
+Author : 	FI
+
+--> Modification css powered_by
+--> Modification des données de base insérées lors de l'installation
+--> Mise en place lors de l'install de données de démo par défaut
+================================================================================
 Version : 	04/09/2012
 Author : 	FI
 

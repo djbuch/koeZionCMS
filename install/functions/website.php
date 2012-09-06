@@ -1,7 +1,8 @@
 <?php 
 function load_lib() {
-	
+			
 	require_once(CAKEPHP.DS.'inflector.php');
+	require_once(KOEZION.DS.'router.php');
 	require_once(KOEZION.DS.'object.php');
 	require_once(KOEZION.DS.'model.php');
 }
@@ -42,7 +43,7 @@ function save_website($datas) {
 	//Etape 2 : sauvegarde du menu racine
 	require_once(MODELS.DS.'category.php');
 	$categoryModel = new Category();
-	unset($categoryModel->fields_to_index);
+	unset($categoryModel->searches_params);
 	
 	////////////////////////////////////////////////////////
 	//   INITIALISATION DE LA CATEGORIE PARENTE DU SITE   //

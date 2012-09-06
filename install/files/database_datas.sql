@@ -2,7 +2,13 @@ INSERT INTO `plugins` (`id`, `name`, `description`, `online`, `created`, `modifi
 (1, 'CATAL', 'Gestion du catalogue produit', 0, '2012-08-31 16:48:23', '2012-08-31 17:00:38', 1, 1);
 
 INSERT INTO `users` (`id`, `name`, `second_name`, `login`, `password`, `email`, `role`, `online`, `users_group_id`) VALUES
-(1, 'Administrateur Général', '', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', '', 'admin', 1, 0);
+(1, 'Administrateur Général', '', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin@admin.com', 'admin', 1, 1);
+
+INSERT INTO `users_groups` (`id`, `name`, `online`, `created`, `modified`, `created_by`, `modified_by`) VALUES
+(1, 'Administrateur Général', 1, '2012-09-06 10:34:08', '2012-09-06 10:34:08', 1, 1);
+
+INSERT INTO `users_groups_websites` (`users_group_id`, `website_id`) VALUES
+(1, 1);
 
 INSERT INTO `templates` (`id`, `name`, `layout`, `code`, `color`, `online`, `created`) VALUES
 (1, 'Bronze', 'frontoffice', 'bronze', '5e4b52', 1, '2012-01-06 03:00:21'),
