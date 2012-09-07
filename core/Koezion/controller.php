@@ -50,6 +50,7 @@ class Controller extends Object {
  * @version 0.1 - 23/12/2011
  * @version 0.2 - 13/04/2012 by FI - Rajout du booléen $beforeFilter afin d'indiquer ou non si il faut lancer la fonction beforeFilter lors de la création de l'objet
  * @version 0.3 - 20/04/2012 by FI - Rajout dans les paramètres du nom de l'action
+ * @version 0.4 - 07/09/2012 by FI - Chargement systématique du model
  */
 	function __construct($request = null, $beforeFilter = true) {
 		
@@ -58,11 +59,13 @@ class Controller extends Object {
 		
 		$controllerName = str_replace('Controller', '', get_class($this)); //Nom du contrôleur
 
-		$modelName = Inflector::singularize($controllerName); //Création du nom du model
-		if($this->auto_load_model) { $this->loadModel($modelName); } //Si la variable de chargement automatique du model est à vrai chargement du model
-		else { $this->$modelName = new ModelStd(); }
-		$this->params['modelName'] = $modelName; //Affectation du nom du model
+		$modelName = Inflector::singularize($controllerName); //Création du nom du model		
 		
+		$this->loadModel($modelName);		
+		//if($this->auto_load_model) { $this->loadModel($modelName); } //Si la variable de chargement automatique du model est à vrai chargement du model
+		//else { $this->$modelName = new ModelStd(); }		
+		
+		$this->params['modelName'] = $modelName; //Affectation du nom du model		
 		$this->params['controllerName'] = $controllerName; //Affectation du nom de la classe
 		$this->params['controllerFileName'] = Inflector::underscore($controllerName); //Affectation du nom du fichier 
 		$this->params['controllerVarName'] = Inflector::variable($controllerName); //Affectation du nom de la variable pour la factorisation de code dans le backoffice  
@@ -249,49 +252,5 @@ class Controller extends Object {
 		if(isset($code)) { header("HTTP/1.0 ".$code." ".$http_codes[$code]); } //Si un code est passé on l'indique dans le header				
 		if(substr_count($url, 'http://')) { header("Location: ".$url); } else { header("Location: ".Router::url($url)); } //On procède à la redirection		
 		die(); //Pour éviter que les fonctions ne continues
-	}    
-	
-//////////////////////////////////////////////////////////////////////////////////////////
-//									FONCTIONS PRIVEES									//
-//////////////////////////////////////////////////////////////////////////////////////////
-    
-/**
- * Cette fonction permet la récupération des données du site courant
- *
- * @return 	array Données du site Internet
- * @access 	private
- * @author 	koéZionCMS
- * @version 0.1 - 02/05/2012 by FI
- * @version 0.2 - 14/06/2012 by FI - Modification de la récupération du site pour la boucle locale - On récupère le premier site de la liste et plus celui avec l'id 1 pour éviter les éventuelles erreurs
- * @version 0.3 - 04/09/2012 by FI - Mise en place d'un passage de paramètre en GET pour pouvoir changer de site en local
- */       
-    function _get_website_datas() {
-    	
-    	$this->loadModel('Website'); //Chargement du modèle
-    	$httpHost = $_SERVER["HTTP_HOST"]; //Récupération de l'url
-    	
-    	if($httpHost == 'localhost' || $httpHost == '127.0.0.1') { 
-    		
-    		//HACK SPECIAL LOCAL POUR CHANGER DE SITE pour permettre la passage de l'identifiant du site en paramètre
-    		if(isset($_GET['hack_current_website_id'])) { Session::write('Frontoffice.hack_current_website_id', $_GET['hack_current_website_id']); }    		
-    		$hackCurrentWebsiteId = Session::read('Frontoffice.hack_current_website_id');
-    		if($hackCurrentWebsiteId) { $websiteId = $hackCurrentWebsiteId; } 
-    		
-    		else {
-    		
-    			$websites = $this->Website->findList(array('order' => 'id ASC'));
-	    		$websiteId = current(array_keys($websites));
-    		}	
-    		
-    		$websiteConditions = array('conditions' => array('id' => $websiteId, 'online' => 1));    	
-    	
-    	} else { $websiteConditions = array('conditions' => "url LIKE '%".$_SERVER['HTTP_HOST']."' AND online = 1"); }
-    	
-    	$website = $this->Website->findFirst($websiteConditions);
-    	define('CURRENT_WEBSITE_ID', $website['id']);
-    	
-    	$this->layout = $website['tpl_layout'];
-    	
-    	return $website;
-    }
+	}
 }

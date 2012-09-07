@@ -24,6 +24,7 @@ class Model extends Object {
  * @version 0.2 - 02/03/2012 by FI - Modification de la récupération de la configuration de la base  de données, on passe maintenant par un fichier .ini
  * @version 0.3 - 11/04/2012 by FI - Modification de la récupération du .ini seulement deux configurations possibles localhost et online
  * @version 0.4 - 24/08/2012 by FI - Rajout du shéma de la table comme variable de classe
+ * @version 0.5 - 07/09/2012 by FI - Rajout de la variable database si la connexion existe déjà
  */
 	public function __construct() {
 
@@ -50,7 +51,8 @@ class Model extends Object {
 		//On test qu'une connexion ne soit pas déjà active
 		if(isset(Model::$connections[$this->conf])) {
 			   
-			$this->db = Model::$connections[$this->conf];			
+			$this->db = Model::$connections[$this->conf];	
+			$this->database = $conf['database'];
 			$this->shema = $this->shema();
 			return true;             
 		}
@@ -72,7 +74,7 @@ class Model extends Object {
             
 			Model::$connections[$this->conf] = $pdo; //On affecte l'objet à la classe
 			$this->db = $pdo;
-			$this->database = $conf['database'];			
+			$this->database = $conf['database'];
 			$this->shema = $this->shema();
 			
 		} catch(PDOException $e) { //Erreur
@@ -492,15 +494,37 @@ class Model extends Object {
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 12/03/2012 by FI
+ * @version 0.2 - 07/09/2012 by FI - Test pour vérifier si la table existe dans le cas de model sans table
  */
-	function shema() {
-	
-		$sql = "SHOW COLUMNS FROM ".$this->table;
+	function shema() {		
+		
 		$shema = array();
-		$result = $this->query($sql, true);
-		foreach($result as $k => $v) { $shema[] = $v['Field']; }
+		if($this->exist_table_in_database($this->database, $this->table) == 1) {	
+			
+			$sql = "SHOW COLUMNS FROM ".$this->table;			
+			$result = $this->query($sql, true);
+			foreach($result as $k => $v) { $shema[] = $v['Field']; }
+		}
+		
 		return $shema;
-	}	
+	}
+	
+/**
+ * Cette fonction permet de tester l'existence d'une table dans la base de données
+ *
+ * @param 	varchar $database 	Nom de la base de données
+ * @param 	varchar $table 		Table à tester
+ * @return 	integer Résultat de la requête
+ * @access	public
+ * @author	koéZionCMS
+ * @version 0.1 - 07/09/2012 by FI
+ */
+	function exist_table_in_database($database, $table) {		
+		
+		$sql = 'SHOW TABLES FROM '.$database." LIKE '".$table."'"; //Requête de récupération de la liste des tables		
+		$result = $this->query($sql, true); //On effectue la requête
+		return count($result);
+	}		
 	
 /////////////////////////////
 //   MOTEUR DE RECHERCHE   //
@@ -706,12 +730,11 @@ class Model extends Object {
 		return array_merge($datasToSave, $moreDatasToSave);		
 	}
 }
-//
 
 /**
  * Model sans base de données
  */
-class ModelStd extends Object {
+/*class ModelStd extends Object {
 
 	static $connections = array();
 	public $conf = 'localhost'; //Paramètres de connexion par défaut
@@ -722,4 +745,4 @@ class ModelStd extends Object {
 	public $errors = array(); //Par défaut pas d'erreurs
 	public $trace_sql = false; //Permet d'afficher la requête exécutée cf fonction find
 	public $schema = array(); //Shéma de la table
-}
+}*/

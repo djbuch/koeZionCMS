@@ -15,7 +15,7 @@
  */
 class ExportsController extends AppController {	
 	
-	public $auto_load_model = false;
+	//public $auto_load_model = false;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //										BACKOFFICE										//

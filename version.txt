@@ -1,4 +1,9 @@
 ================================================================================
+Version : 	07/09/2012
+Author : 	FI
+
+--> Modification de la gestion des models sans tables pour éviter d'avoir à gérer un ModelStd
+================================================================================
 Version : 	06/09/2012
 Author : 	FI
 

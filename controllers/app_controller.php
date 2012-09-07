@@ -539,6 +539,51 @@ class AppController extends Controller {
 //////////////////////////////////////////////////////////////////////////////////////////
 //									FONCTIONS PRIVEES									//
 //////////////////////////////////////////////////////////////////////////////////////////
+	
+/**
+ * Cette fonction permet la récupération des données du site courant
+ *
+ * @return 	array Données du site Internet
+ * @access 	private
+ * @author 	koéZionCMS
+ * @version 0.1 - 02/05/2012 by FI
+ * @version 0.2 - 14/06/2012 by FI - Modification de la récupération du site pour la boucle locale - On récupère le premier site de la liste et plus celui avec l'id 1 pour éviter les éventuelles erreurs
+ * @version 0.3 - 04/09/2012 by FI - Mise en place d'un passage de paramètre en GET pour pouvoir changer de site en local
+ */
+	function _get_website_datas() {
+	
+		$this->loadModel('Website'); //Chargement du modèle
+		$httpHost = $_SERVER["HTTP_HOST"]; //Récupération de l'url
+	
+		if($httpHost == 'localhost' || $httpHost == '127.0.0.1') {
+	
+			//HACK SPECIAL LOCAL POUR CHANGER DE SITE pour permettre la passage de l'identifiant du site en paramètre
+			if(isset($_GET['hack_current_website_id'])) {
+				Session::write('Frontoffice.hack_current_website_id', $_GET['hack_current_website_id']);
+			}
+			$hackCurrentWebsiteId = Session::read('Frontoffice.hack_current_website_id');
+			if($hackCurrentWebsiteId) {
+				$websiteId = $hackCurrentWebsiteId;
+			}
+	
+			else {
+	
+				$websites = $this->Website->findList(array('order' => 'id ASC'));
+				$websiteId = current(array_keys($websites));
+			}
+	
+			$websiteConditions = array('conditions' => array('id' => $websiteId, 'online' => 1));
+	
+		} else { $websiteConditions = array('conditions' => "url LIKE '%".$_SERVER['HTTP_HOST']."' AND online = 1");
+		}
+	
+		$website = $this->Website->findFirst($websiteConditions);
+		define('CURRENT_WEBSITE_ID', $website['id']);
+	
+		$this->layout = $website['tpl_layout'];
+	
+		return $website;
+	}
     
 /**
  * Cette fonction permet de vérifier si le site courant est sécurisé ou pas
