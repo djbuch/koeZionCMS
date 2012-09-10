@@ -3,7 +3,7 @@
  * CKFinder
  * ========
  * http://ckfinder.com
- * Copyright (C) 2007-2011, CKSource - Frederico Knabben. All rights reserved.
+ * Copyright (C) 2007-2012, CKSource - Frederico Knabben. All rights reserved.
  *
  * The software, this file and its contents are subject to the CKFinder
  * License. Please read the license.txt file before using, installing, copying,
@@ -355,5 +355,15 @@ class CKFinder_Connector_Core_ResourceTypeConfig
         }
 
         return true;
+    }
+
+    /**
+     * Generate hash for current resource type
+     *
+     * @access public
+     * @return string 16 digit hash
+     */
+    public function getHash(){
+      return substr(md5($this->getDirectory()), 0, 16);
     }
 }

@@ -1,4 +1,10 @@
 ================================================================================
+Version : 	10/09/2012
+Author : 	FI
+
+--> Mise à jour de la version de ckFinder qui gère, apparement, mieux les sessions
+--> Mise en place d'une fonction d'export permettant de faire un backup de la bdd par CRON
+================================================================================
 Version : 	07/09/2012
 Author : 	FI
 

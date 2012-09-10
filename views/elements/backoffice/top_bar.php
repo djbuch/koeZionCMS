@@ -43,6 +43,7 @@
 					<li><a href="<?php echo Router::url('backoffice/configs/mailer_liste'); ?>"><?php echo _("Envoi de mails"); ?></a></li>			
 					<li><a href="<?php echo Router::url('backoffice/configs/router_liste'); ?>"><?php echo _("Gestion des routes"); ?></a></li>			
 					<li><a href="<?php echo Router::url('backoffice/configs/posts_liste'); ?>"><?php echo _("Articles"); ?></a></li>
+					<li><a href="<?php echo Router::url('backoffice/configs/exports_liste'); ?>"><?php echo _("Exports"); ?></a></li>
 					<li class="nolink center">---------------- <?php echo _("PLUGINS"); ?> ----------------</li>
 					<li><a href="<?php echo Router::url('backoffice/plugins/index'); ?>"><?php echo _("Liste des plugins"); ?></a></li>
 					<?php /* ?><li><a href="<?php echo Router::url('backoffice/configs/sessions_liste'); ?>"><?php echo _("Sessions"); ?></a></li><?php */ ?>	

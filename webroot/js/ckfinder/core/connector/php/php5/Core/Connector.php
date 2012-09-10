@@ -3,7 +3,7 @@
  * CKFinder
  * ========
  * http://ckfinder.com
- * Copyright (C) 2007-2011, CKSource - Frederico Knabben. All rights reserved.
+ * Copyright (C) 2007-2012, CKSource - Frederico Knabben. All rights reserved.
  *
  * The software, this file and its contents are subject to the CKFinder
  * License. Please read the license.txt file before using, installing, copying,
@@ -87,7 +87,7 @@ class CKFinder_Connector_Core_Connector
 
             case 'CopyFiles':
             case 'CreateFolder':
-            case 'DeleteFile':
+            case 'DeleteFiles':
             case 'DeleteFolder':
             case 'GetFiles':
             case 'GetFolders':

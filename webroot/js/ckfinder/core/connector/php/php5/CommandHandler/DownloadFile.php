@@ -3,7 +3,7 @@
  * CKFinder
  * ========
  * http://ckfinder.com
- * Copyright (C) 2007-2011, CKSource - Frederico Knabben. All rights reserved.
+ * Copyright (C) 2007-2012, CKSource - Frederico Knabben. All rights reserved.
  *
  * The software, this file and its contents are subject to the CKFinder
  * License. Please read the license.txt file before using, installing, copying,
@@ -88,7 +88,7 @@ class CKFinder_Connector_CommandHandler_DownloadFile extends CKFinder_Connector_
             header("Content-Disposition: attachment; filename=\"" . $encodedName. "\"");
         }
         header("Content-Length: " . filesize($filePath));
-        CKFinder_Connector_Utils_FileSystem::readfileChunked($filePath);
+        CKFinder_Connector_Utils_FileSystem::sendFile($filePath);
         exit;
     }
 }

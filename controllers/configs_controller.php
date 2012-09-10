@@ -82,7 +82,16 @@ class ConfigsController extends AppController {
  * @version 0.1 - 22/03/2012 by FI
  * @version 0.2 - 18/04/2012 by FI - Passage des traitements dans une fonction privée pour mutualiser
  */
-	function backoffice_posts_liste() { $this->_proceed_datas_ini(CONFIGS.DS.'files'.DS.'posts.ini', 'backoffice/configs/posts_liste'); }	
+	function backoffice_posts_liste() { $this->_proceed_datas_ini(CONFIGS.DS.'files'.DS.'posts.ini', 'backoffice/configs/posts_liste'); }
+	
+/**
+ * Cette fonction va permettre l'affichage des configurations pour l'export
+ *
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 10/09/2012 by FI
+ */
+	function backoffice_exports_liste() { $this->_proceed_datas_ini(CONFIGS.DS.'files'.DS.'exports.ini', 'backoffice/configs/exports_liste'); }		
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //										FONCTIONS PRIVEES										//
@@ -99,7 +108,7 @@ class ConfigsController extends AppController {
  */
 	function _proceed_datas_ini($file, $redirect) {
 	
-		require_once(LIBS.DS.'config_magik.php'); 										//Import de la librairie de gestion des fichiers de configuration
+		require_once(LIBS.DS.'config_magik.php'); 			//Import de la librairie de gestion des fichiers de configuration
 		$cfg = new ConfigMagik($file, true, false); 		//Création d'une instance
 	
 		//Si des données sont postées

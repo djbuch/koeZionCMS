@@ -1,5 +1,5 @@
 <?php
-// Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+// Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
 // For licensing, see LICENSE.html or http://ckfinder.com/license
 
 //  Defines the object for the Hungarian language.
@@ -16,6 +16,7 @@ $GLOBALS['CKFLang'] = array (
 		'105' => 'Érvénytelen fájl kiterjesztés.',
 		'109' => 'Érvénytelen kérés.',
 		'110' => 'Ismeretlen hiba.',
+		'111' => 'It was not possible to complete the request due to resulting file size.',
 		'115' => 'A fálj vagy mappa már létezik ezen a néven.',
 		'116' => 'Mappa nem található. Kérjük frissítsen és próbálja újra.',
 		'117' => 'Fájl nem található. Kérjük frissítsen és próbálja újra.',

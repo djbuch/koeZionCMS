@@ -1,5 +1,5 @@
 <?php
-// Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+// Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
 // For licensing, see LICENSE.html or http://ckfinder.com/license
 
 //  Defines the object for the Chinese-Simplified language.
@@ -16,6 +16,7 @@ $GLOBALS['CKFLang'] = array (
 		'105' => '无效的扩展名.',
 		'109' => '无效请求.',
 		'110' => '未知错误.',
+		'111' => 'It was not possible to complete the request due to resulting file size.',
 		'115' => '存在重名的文件或文件夹.',
 		'116' => '文件夹不存在. 请刷新后再试.',
 		'117' => '文件不存在. 请刷新列表后再试.',

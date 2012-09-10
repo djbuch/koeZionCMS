@@ -1,4 +1,24 @@
 <?php
+
+////////////////////////////////////////////////////////////////////////////////
+//   CHARGEMENT DES ELEMENTS NECESSAIRES AU BON FONCTIONNEMENT DES SESSIONS   //
+define('DS', DIRECTORY_SEPARATOR); //Définition du séparateur dans le cas ou l'on est sur windows ou linux
+
+define('ROOT', dirname(dirname(dirname(dirname(__FILE__)))));
+
+define('CONFIGS', ROOT.DS.'configs'); //Chemin vers le dossier config
+
+define('CORE', ROOT.DS.'core'); //Chemin vers le coeur de l'application
+define('CAKEPHP', CORE.DS.'CakePhp'); //Chemin vers les librairies koeZion
+define('KOEZION', CORE.DS.'Koezion'); //Chemin vers les librairies koeZion
+define('LIBS', CORE.DS.'Libs'); //Chemin vers les librairies diverses
+
+define('TMP', ROOT.DS.'tmp'); //Chemin vers le dossier temporaire
+
+require_once CAKEPHP.DS.'set.php'; //On charge le composant
+require_once KOEZION.DS.'session.php'; //On charge le composant
+Session::init();
+
 /*
  * ### CKFinder : Configuration File - Basic Instructions
  *
@@ -12,36 +32,14 @@
  * advanced features of CKFinder.
  */
 
-////////////////////////////////////////////////////////////////////////////////
-//   CHARGEMENT DES ELEMENTS NECESSAIRES AU BON FONCTIONNEMENT DES SESSIONS   //
-define('DS', DIRECTORY_SEPARATOR); //Définition du séparateur dans le cas ou l'on est sur windows ou linux
-
-define('ROOT', dirname(dirname(dirname(dirname(__FILE__)))));
-
-	define('CONFIGS', ROOT.DS.'configs'); //Chemin vers le dossier config
-	
-	define('CORE', ROOT.DS.'core'); //Chemin vers le coeur de l'application
-		define('CAKEPHP', CORE.DS.'CakePhp'); //Chemin vers les librairies koeZion	
-		define('KOEZION', CORE.DS.'Koezion'); //Chemin vers les librairies koeZion	
-		define('LIBS', CORE.DS.'Libs'); //Chemin vers les librairies diverses	
-		
-	define('TMP', ROOT.DS.'tmp'); //Chemin vers le dossier temporaire	
-
-require_once CAKEPHP.DS.'set.php'; //On charge le composant
-require_once KOEZION.DS.'session.php'; //On charge le composant
-Session::init();
-////////////////////////////////////////////////////////////////////////////////
-	
-//echo '<pre>';print_r(Session::read());echo '</pre>';
-
 /**
  * This function must check the user session to be sure that he/she is
  * authorized to upload and access files in the File Browser.
  *
  * @return boolean
  */
-function CheckAuthentication() {
-	
+function CheckAuthentication()
+{
 	// WARNING : DO NOT simply return "true". By doing so, you are allowing
 	// "anyone" to upload and list the files in your server. You must implement
 	// some kind of session validation here. Even something very simple as...
@@ -50,11 +48,23 @@ function CheckAuthentication() {
 
 	// ... where $_SESSION['IsAuthorized'] is set to "true" as soon as the
 	// user logs in your system. To be able to use session variables don't
-	// forget to add session_start() at the top of this file.	
+	// forget to add session_start() at the top of this file.
 	
-	//return isset($_SESSION['Backoffice']);
-	return Session::check('Backoffice.User.id');
-	//return true; 
+	/*return Session::check('Backoffice.User.id');
+	echo '</pre>';
+	
+	
+	
+	return isset($_SESSION['Backoffice']);*/
+	//return true;
+
+	
+	$session = Session::read('Backoffice.User.id');
+	/*echo '<pre>';
+	 print_r($session);
+	echo '</pre>';*/
+	
+	return isset($session) && !empty($session);
 }
 
 // LicenseKey : Paste your license key here. If left blank, CKFinder will be
@@ -84,8 +94,12 @@ Examples:
 
 ATTENTION: The trailing slash is required.
 */
-$baseUrlTMP = dirname(dirname(dirname(dirname(dirname(dirname($_SERVER['SCRIPT_NAME'])))))).'/upload/'; //Chemin relatif vers le dossier upload
-$baseUrl = str_replace('webroot/', '', $baseUrlTMP); //On supprime le dossier webroot pour qu'il n'apparaisse pas lors de l'ajout des images
+$baseUrl = dirname(dirname(dirname(dirname(dirname(dirname($_SERVER['SCRIPT_NAME'])))))).'/upload/'; //Chemin relatif vers le dossier upload
+//$baseUrl = str_replace('webroot/', '', $baseUrlTMP); //On supprime le dossier webroot pour qu'il n'apparaisse pas lors de l'ajout des images
+
+/*echo '<pre>';
+print_r($baseUrl);
+echo '</pre>';*/
 
 /*
 $baseDir : the path to the local directory (in the server) which points to the
@@ -104,7 +118,7 @@ Examples:
 
 ATTENTION: The trailing slash is required.
 */
-$baseDir = resolveUrl($baseUrlTMP); //Chemin absolu vers le dossier 
+$baseDir = resolveUrl($baseUrl);
 
 /*
  * ### Advanced Settings
@@ -258,6 +272,13 @@ denied, because "php" is on the denied extensions list.
 $config['CheckDoubleExtension'] = true;
 
 /*
+Increases the security on an IIS web server.
+If enabled, CKFinder will disallow creating folders and uploading files whose names contain characters
+that are not safe under an IIS web server.
+*/
+$config['DisallowUnsafeCharacters'] = false;
+
+/*
 If you have iconv enabled (visit http://php.net/iconv for more information),
 you can use this directive to specify the encoding of file names in your
 system. Acceptable values can be found at:
@@ -323,18 +344,24 @@ will be automatically converted to ASCII letters.
 */
 $config['ForceAscii'] = false;
 
+/*
+Send files using X-Sendfile module
+Mod X-Sendfile (or similar) is avalible on Apache2, Nginx, Cherokee, Lighttpd
+
+Enabling X-Sendfile option can potentially cause security issue.
+ - server path to the file may be send to the browser with X-Sendfile header
+ - if server is not configured properly files will be send with 0 length
+
+For more complex configuration options visit our Developer's Guide
+  http://docs.cksource.com/CKFinder_2.x/Developers_Guide/PHP
+*/
+$config['XSendfile'] = false;
+
 
 include_once "plugins/imageresize/plugin.php";
 include_once "plugins/fileeditor/plugin.php";
+include_once "plugins/zip/plugin.php";
 
 $config['plugin_imageresize']['smallThumb'] = '90x90';
 $config['plugin_imageresize']['mediumThumb'] = '120x120';
 $config['plugin_imageresize']['largeThumb'] = '180x180';
-/*$config['plugin_imageresize']['vignette'] = '187x100';
-$config['plugin_imageresize']['vignette_portfolio_4c'] = '187x100';
-$config['plugin_imageresize']['vignette_portfolio_3c'] = '264x111';
-$config['plugin_imageresize']['vignette_portfolio_2c'] = '418x200';
-$config['plugin_imageresize']['vignette_portfolio_1c'] = '649x420';
-$config['plugin_imageresize']['article_2c'] = '276x148';
-$config['plugin_imageresize']['focus'] = '48x48';
-$config['plugin_imageresize']['slider'] = '918x350';*/

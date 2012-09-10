@@ -76,6 +76,8 @@ class AppController extends Controller {
 			$actionName = $this->params['action']; //Action courante
 			if($adminRole == 'website_admin' && isset($this->notAuth[$controllerName]) && in_array($actionName, $this->notAuth[$controllerName])) { $this->redirect('backoffice/home/not_auth'); }
 			
+			define('IS_USER_LOGGED', 'ok');
+			
 			//Récupération de l'identifiant du site courant
 			$currentWebsite = Session::read('Backoffice.Websites.current');
 			define('CURRENT_WEBSITE_ID', $currentWebsite);

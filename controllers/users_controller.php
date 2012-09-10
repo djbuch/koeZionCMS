@@ -67,7 +67,7 @@ class UsersController extends AppController {
 								'Websites' => $this->_init_websites_datas(),
 								'Plugins' => $plugins
 							);
-							
+														
 							Session::write('Backoffice', $session); //On insère dans la variable de session les données de l'utilisateur						
 							$this->redirect('adm'); //On redirige vers la page d'accueil du backoffice													
 						
