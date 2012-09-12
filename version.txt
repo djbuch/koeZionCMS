@@ -1,4 +1,10 @@
 ================================================================================
+Version : 	12/09/2012
+Author : 	FI
+
+--> Mise à jour du fichier sql d'import des données par défaut lors de l'installation
+--> Mise à jour de la procédure d'installation des dossier par défaut dans upload
+================================================================================
 Version : 	10/09/2012
 Author : 	FI
 

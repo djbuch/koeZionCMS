@@ -71,7 +71,20 @@ $folders = array(
 					}					
 				}
 				
-				if($result) {
+				if($result) {					
+					
+					///////////////////////////////////////////////////
+					//   CREATION DES DOSSIERS DANS WEBROOT/UPLOAD   //
+					$foldersToCreate = array(
+							WEBROOT_UPLOAD.DS.'_thumbs',
+							WEBROOT_UPLOAD.DS.'_thumbs'.DS.'Files',
+							WEBROOT_UPLOAD.DS.'_thumbs'.DS.'Flash',
+							WEBROOT_UPLOAD.DS.'_thumbs'.DS.'Images',
+							WEBROOT_UPLOAD.DS.'files',
+							WEBROOT_UPLOAD.DS.'flash',
+							WEBROOT_UPLOAD.DS.'images'
+					);
+					foreach($foldersToCreate as $folder) { mkdir($folder, 0777); }					
 					
 					$httpHost = $_SERVER["HTTP_HOST"];
 					if($httpHost == 'localhost' || $httpHost == '127.0.0.1') { $section = 'localhost'; } else { $section = 'online'; }
