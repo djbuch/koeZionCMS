@@ -563,6 +563,9 @@ class Model extends Object {
 		foreach($urlParams['params'] as $v) { $url = str_replace(':'.$v, $datasToSave[':'.$v], $url); }
 		$url = Router::url($url);
 		
+		//En cas de mise à jour on supprime l'ancienne valeur
+		if($action == "update") { $this->delete_search_index($id); }
+		
 		///////////////////////////////////////
 		//Sauvegarde des données de recherche//
 		$searchDatas = array(
@@ -574,10 +577,7 @@ class Model extends Object {
 			'model_id' => $id				
 		);		
 		require_once(MODELS.DS.'search.php'); //Chargement du model
-		$search = new Search();
-		
-		//En cas de mise à jour on supprime l'ancienne valeur
-		if($action == "update") { $this->delete_search_index($id); }
+		$search = new Search();		
 		$search->save($searchDatas);
 		unset($search); //Déchargement du model
 	}	
@@ -592,7 +592,7 @@ class Model extends Object {
  */
 	function delete_search_index($id) {	
 						
-		$sql = "DELETE From searches WHERE model = '".get_class($this)."' AND model_id ".$id;
+		$sql = "DELETE From searches WHERE model = '".get_class($this)."' AND model_id = ".$id;
 		$this->query($sql);		
 	}
 	
