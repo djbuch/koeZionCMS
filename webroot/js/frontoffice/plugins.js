@@ -467,3 +467,14 @@ $.fn.sameHeights = function(childrenSelector) {
 	});
 	return this;
 };
+
+$.fn.focusWidth = function(childrenSelector) {
+	
+	var nbChilds = $(this).children(childrenSelector).length;
+	if(nbChilds == 3) { $(this).children(childrenSelector).css({'width':265}); }
+	else if(nbChilds == 2) { $(this).children(childrenSelector).css({'width':414}); }
+	else if(nbChilds == 1) { $(this).children(childrenSelector).css({'width':892}); }
+	
+	$(this).children(childrenSelector + ':last-child').css({'marginRight':0, 'paddingRight':0});
+	return this;
+};

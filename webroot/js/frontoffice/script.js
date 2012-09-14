@@ -34,6 +34,9 @@ $(document).ready(function() {
 	$('.focus').sameHeights('.gs_3');	
 	$('.focus .gs_3').css({'position': 'relative'});
 	$('.focus .gs_3 .superbutton').css({'position': 'absolute', 'bottom': 0});
+	
+	$('.focus').focusWidth('.gs_3');
+	
 });
 
 /* Start of functions initialized after full load of page */
