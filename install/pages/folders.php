@@ -7,6 +7,11 @@ $folders = array(
 		'check'			=> 'chmod'
 	),
 	array(
+		'checkFolder' 	=> CONFIGS_FORMS,
+		'txtFolder' 	=> DS.'configs'.DS.'forms',
+		'check'			=> 'chmod'
+	),
+	array(
 		'checkFolder' 	=> TMP,
 		'txtFolder' 	=> DS.'tmp',
 		'check'			=> 'chmod'
@@ -16,11 +21,11 @@ $folders = array(
 		'txtFolder' 	=> DS.'webroot'.DS.'files',
 		'check'			=> 'chmod'			
 	),
-	array(
+	/*array(
 		'checkFolder' 	=> WEBROOT_FILES.DS.'search',
 		'txtFolder' 	=> DS.'webroot'.DS.'files'.DS.'search',
 		'check'			=> 'exist'			
-	),
+	),*/
 	array(
 		'checkFolder' 	=> WEBROOT_UPLOAD,
 		'txtFolder' 	=> DS.'webroot'.DS.'upload',

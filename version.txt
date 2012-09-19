@@ -3,6 +3,7 @@ Version : 	19/09/2012
 Author : 	FI
 
 --> Gestion dynamique des formulaires frontoffice via des fichiers xml
+--> Mise à jour procédure d'installation pour y intégrer les formulaires xml
 ================================================================================
 Version : 	17/09/2012
 Author : 	FI
