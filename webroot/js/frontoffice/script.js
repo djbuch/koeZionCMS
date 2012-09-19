@@ -107,5 +107,6 @@ $(window).load(function(){
         $(this).parent().animate({height: ht});
 	}
 	
+	$('a').filter(function() { return this.hostname && this.hostname !== location.hostname; }).attr("target", "_blank");
 	$(".blank").attr("target", "_blank");
 });

@@ -4,6 +4,7 @@ Author : 	FI
 
 --> Gestion dynamique des formulaires frontoffice via des fichiers xml
 --> Mise à jour procédure d'installation pour y intégrer les formulaires xml
+--> Modification du javascript pour ouvrir les liens externes dans une nouvelle page
 ================================================================================
 Version : 	17/09/2012
 Author : 	FI
