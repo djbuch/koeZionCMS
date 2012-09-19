@@ -10,7 +10,8 @@ $keywords_for_layout = $category['page_keywords'];
 		
 		echo $this->vars['components']['Text']->format_content_text($category['content']);
 		//echo $category['content'];		
-		if($category['display_contact_form']) { $this->element('frontoffice/formulaire_contact'); }
+		//if($category['display_contact_form']) { $this->element('frontoffice/formulaire_contact'); }
+		if($category['display_form']) { $this->element('frontoffice/formulaire', array('formulaire' => $formulaire, 'formInfos' => $formInfos)); }
 		
 		if(isset($displayCatalogues) && $displayCatalogues) {
 		
@@ -25,7 +26,8 @@ $keywords_for_layout = $category['page_keywords'];
 				<?php		
 				echo $this->vars['components']['Text']->format_content_text($category['content']);
 				//echo $category['content'];
-				if($category['display_contact_form']) { $this->element('frontoffice/formulaire_contact'); }
+				//if($category['display_contact_form']) { $this->element('frontoffice/formulaire_contact'); }
+				if($category['display_form']) { $this->element('frontoffice/formulaire', array('formulaire' => $formulaire, 'formInfos' => $formInfos)); }
 				?>
 			</div>		
 			

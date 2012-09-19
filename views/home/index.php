@@ -43,5 +43,5 @@ if(count($posts) > 0) {
 		<?php //$this->element('frontoffice/colonne_droite'); ?>
 	</div>
 	<?php 
-} 
+}
 ?>

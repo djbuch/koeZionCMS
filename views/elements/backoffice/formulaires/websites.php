@@ -30,7 +30,7 @@
 		<div class="content nopadding">
 			<div class="prettyRadiobuttons clearfix">
 				<input type="hidden" id="InputTemplateId0" name="template_id" value="0" />
-				<?php foreach($templatesList as $k => $templateValue) { echo $helpers['Form']->radiobutton('template_id', $templateValue['id'], $templateValue['name'], $templateValue['layout'], $templateValue['code']); } ?>
+				<?php foreach($templatesList as $k => $templateValue) { echo $helpers['Form']->radiobutton_templates('template_id', $templateValue['id'], $templateValue['name'], $templateValue['layout'], $templateValue['code']); } ?>
 			</div>
 		</div>
 	</div>

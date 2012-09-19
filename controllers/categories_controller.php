@@ -64,7 +64,7 @@ class CategoriesController extends AppController {
 				'parent_id', 
 				'redirect_category_id', 
 				'level', 
-				'display_contact_form', 
+				'display_form', 
 				'is_secure', 
 				'txt_secure', 
 				'title_posts_list'
@@ -194,8 +194,6 @@ class CategoriesController extends AppController {
 			$this->render('/categories/not_auth');
 			
 		} else {
-			
-			$this->_send_mail_contact(); //Gestion du formulaire de contact	
 			
 			$datas['is_full_page'] = 1; //Par défaut on affichera le détail de la catégorie en pleine page			
 			
@@ -342,7 +340,22 @@ class CategoriesController extends AppController {
 			}
 					
 			$this->set($datas); //On fait passer les données à la vue
-		}		
+			
+			if(isset($datas['category']['display_form']) && $datas['category']['display_form']) {
+				
+				$this->loadModel('Formulaire');
+				$formulaire = $this->Formulaire->findFirst(array('conditions' => array('id' => $datas['category']['display_form'])));				
+				
+				$formulaireDatas = $this->components['Xmlform']->format_form($formulaire['form_file']);
+				
+				$validate = $formulaireDatas['validate'];
+				$this->set('formInfos', $formulaireDatas['formInfos']);
+				$this->set('formulaire', $formulaireDatas['formulaire']);
+				$this->set('formulaireHtml', $formulaireDatas['formulaireHtml']);
+			
+				$this->_send_mail($validate, $formulaireDatas['formInfos']); //Gestion du formulaire
+			}	
+		}
 	}
 	
 /**
@@ -403,6 +416,10 @@ class CategoriesController extends AppController {
 		
 		$categoriesList = $this->Category->getTreeList(); //On récupère les catégories
 		$this->set('categoriesList', $categoriesList); //On les envois à la vue
+		
+		$this->loadModel('Formulaire');
+		$formulaires = $this->Formulaire->findList(array('conditions' => array('online' => 1)));		
+		$this->set('formulaires', $formulaires); //On les envois à la vue
 	}	
 	
 /**
@@ -434,6 +451,10 @@ class CategoriesController extends AppController {
 		
 		$categoriesList = $this->Category->getTreeList(); //On récupère les catégories
 		$this->set('categoriesList', $categoriesList); //On les envois à la vue
+		
+		$this->loadModel('Formulaire');
+		$formulaires = $this->Formulaire->findList(array('conditions' => array('online' => 1)));		
+		$this->set('formulaires', $formulaires); //On les envois à la vue
 	}
 	
 /**
@@ -459,6 +480,10 @@ class CategoriesController extends AppController {
 		
 		$categoriesList = $this->Category->getTreeList(); //On récupère les catégories
 		$this->set('categoriesList', $categoriesList); //On les envois à la vue
+		
+		$this->loadModel('Formulaire');
+		$formulaires = $this->Formulaire->findList(array('conditions' => array('online' => 1)));		
+		$this->set('formulaires', $formulaires); //On les envois à la vue
 	}
 	
 /**

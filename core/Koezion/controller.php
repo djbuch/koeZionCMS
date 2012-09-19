@@ -35,7 +35,8 @@ class Controller extends Object {
 	var $components = array(
 		'Email',
 		'Text',
-		'Import'
+		'Import',
+		'Xmlform'
 	);
 	
 	var $params = array(); //Liste des paramètres du controlleur (name, modelName) 

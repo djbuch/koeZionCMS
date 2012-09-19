@@ -1,4 +1,19 @@
 ================================================================================
+Version : 	19/09/2012
+Author : 	FI
+
+--> Gestion dynamique des formulaires frontoffice via des fichiers xml
+================================================================================
+Version : 	17/09/2012
+Author : 	FI
+
+--> Correction fonctionnalité permettant la retaille de la longueur des focus avec jQuery
+================================================================================
+Version : 	14/09/2012
+Author : 	FI
+
+--> Mise en place d'une fonctionnalité permettant la retaille de la longueur des focus avec jQuery
+================================================================================
 Version : 	13/09/2012
 Author : 	FI
 

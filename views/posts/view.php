@@ -15,7 +15,22 @@ $keywords_for_layout = $post['page_keywords'];
 	<?php 
 	//Page catégorie avec formulaire de contact
 	//01/08/2012 - On n'affiche les commentaires que si l'Internaute peut en déposer
-	if($post['display_form'] == 1) { $this->element('frontoffice/formulaire_commentaires'); } 
-	else if($post['display_form'] == 2) { $this->element('frontoffice/formulaire_contact'); } 
+	if($post['display_form']) { $this->element('frontoffice/formulaire', array('formulaire' => $formulaire, 'formInfos' => $formInfos)); }
+	//if($post['display_form'] == 1) { $this->element('frontoffice/formulaire_commentaires'); } 
+	//else if($post['display_form'] == 2) { $this->element('frontoffice/formulaire_contact'); } 
+ 		
+	if($postsComments) {
+		
+		?><div class="clearfix"></div><?php
+		foreach($postsComments as $k => $v) {
+			
+			?>
+			<div class="posts_comments">					
+				<p class="post_message"><?php echo $v['message']; ?></p>
+				<p class="post_name">par <?php echo $v['name']; ?></p>
+			</div>
+			<?php 
+		}		
+	}
 	?>
 </div>

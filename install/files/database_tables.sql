@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `title_brothers` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `title_posts_list` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `type` int(11) NOT NULL,
-  `display_contact_form` int(11) NOT NULL,
+  `display_form` int(11) NOT NULL,
   `display_children` int(11) NOT NULL,
   `display_brothers` int(11) NOT NULL,
   `is_secure` int(255) NOT NULL,
@@ -70,6 +70,19 @@ CREATE TABLE IF NOT EXISTS `focus` (
   `online` int(11) NOT NULL,
   `created` datetime DEFAULT NULL,
   `website_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `formulaires`;
+CREATE TABLE IF NOT EXISTS `formulaires` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `form_file` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `online` int(11) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

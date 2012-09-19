@@ -39,16 +39,17 @@ $(document).ready(function() {
     $(paraTag).children('input').remove();
     $(paraTag).append('<input type="button" name="submit" id="submit" value="Send it!" class="superbutton" />');*/
 
-	$('#FormContact').submit(function() {
+	$('#websiteForm').submit(function() {
 		
-		$('#FormContact p').append('<span class="loaderIcon">Patientez...</span>'); //Ajout du loader
+		$('#formulaire p input[type=submit]').remove();
+		$('#formulaire p').append('<span class="loaderIcon">Patientez...</span>'); //Ajout du loader
 		
 		//Récupération des champs
-        var name = $('#InputName').val(); 
-        var email = $('#InputEmail').val();
-        var message = $('#InputMessage').val();
+       // var name = $('#InputName').val(); 
+       // var email = $('#InputEmail').val();
+       // var message = $('#InputMessage').val();
 
-        $.ajax({
+        /*$.ajax({
             type: 'post',
             url: 'envoyer-email.php',
             data: 'name=' + name + '&email=' + email + '&comments=' + comments,
@@ -59,6 +60,6 @@ $(document).ready(function() {
             }
         }); // end ajax*/
         
-        return false;
+        //return false;
     });
 });

@@ -57,7 +57,7 @@
 			$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushPhp',
 			$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushPlain',
 			$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushSql',
-			$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushXml',
+			$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushXml'
 		);
 		echo $helpers['Html']->js($js);
 				

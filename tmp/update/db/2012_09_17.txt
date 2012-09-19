@@ -1,0 +1,13 @@
+ALTER TABLE `categories` CHANGE `display_contact_form` `display_form` INT( 11 ) NOT NULL;
+DROP TABLE IF EXISTS `formulaires`;
+CREATE TABLE IF NOT EXISTS `formulaires` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `form_file` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `online` int(11) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

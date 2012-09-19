@@ -63,7 +63,7 @@
 			'backoffice/default', 						//Fonctions personnalisées
 			'ckeditor/ckeditor', 						//Librairie CKEditor
 			'ckfinder/ckfinder', 						//Librairie CKFinder
-			'backoffice/prettyradio' 						//Librairie CKFinder
+			'backoffice/prettyradio' 					//Librairie CKFinder
 		);
 		echo $helpers['Html']->js($js);
 		?>

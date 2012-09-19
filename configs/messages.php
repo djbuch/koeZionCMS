@@ -10,11 +10,6 @@ $Errorsmessages['Color']['layout'] = _('La valeur de ce champ est de 2 caractèr
 $Errorsmessages['Color']['code'] = _('La valeur de ce champ est de 2 caractères minimum.');
 $Errorsmessages['Color']['color'] = _('La valeur de ce champ est de 6 caractères minimum.');
 
-$Errorsmessages['Contact']['name'] = _('Veuillez saisir votre nom');
-$Errorsmessages['Contact']['phone'] = _('Veuillez saisir votre téléphone');
-$Errorsmessages['Contact']['email'] = _('Vous devez indiquer un email valide.');
-$Errorsmessages['Contact']['message'] = _('Veuillez saisir votre message');
-
 $Errorsmessages['Focus']['name'] = _('La valeur de ce champ est de 2 caractères minimum.');
 
 $Errorsmessages['Locale']['name'] = _('La valeur de ce champ est de 2 caractères minimum.');

@@ -8,6 +8,9 @@ configs/files/*.ini
 !configs/files/posts.ini
 !configs/files/routes.ini
 !configs/files/sessions.ini
+configs/forms/*.xml
+!configs/forms/commentaire.xml
+!configs/forms/contact.xml
 
 #TMP FOLDER
 tmp/cache/variables/*/*.cache

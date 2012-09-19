@@ -37,7 +37,7 @@ class HomeController extends AppController {
  * @version 0.1 - 17/01/2012 by FI 
  * @version 0.2 - 12/03/2012 by FI - Modification de la récupération des types d'articles 
  */	
-	function index() {		
+	function index() {
 		
 		//////////////////////////////////
 		//   RECUPERATION DES SLIDERS   //
@@ -73,7 +73,7 @@ class HomeController extends AppController {
 		$this->loadModel('PostsType');
 		$datas['postsTypes'] = $this->PostsType->get_for_front(); 
 		
-		$datas['breadcrumbs'] = array(); 
+		$datas['breadcrumbs'] = array(); 				
 		
 		$this->set($datas); //On fait passer les données à la vue
 	}

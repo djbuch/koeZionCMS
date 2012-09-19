@@ -30,13 +30,12 @@ $(document).ready(function() {
 	$('div.toggler:not(.open)').hide();
 	$('.toggle').click(function() { $(this).toggleClass("active").next().slideToggle("fast"); });
 	
-	/*Position du bouton des focus*/	
+	/*Position du bouton des focus*/
+	$('.focus').focusWidth('.gs_3');	
+	
 	$('.focus').sameHeights('.gs_3');	
 	$('.focus .gs_3').css({'position': 'relative'});
-	$('.focus .gs_3 .superbutton').css({'position': 'absolute', 'bottom': 0});
-	
-	$('.focus').focusWidth('.gs_3');
-	
+	$('.focus .gs_3 .superbutton').css({'position': 'absolute', 'bottom': 0});	
 });
 
 /* Start of functions initialized after full load of page */

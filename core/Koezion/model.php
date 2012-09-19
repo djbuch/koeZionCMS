@@ -360,7 +360,7 @@ class Model extends Object {
 		if($preparedInfos['action'] == 'insert') { $this->id = $this->db->lastInsertId(); }
 		else { $this->id = $datas['id']; }
 		
-		//if(isset($this->files_to_upload)) { $this->upload_files($datas, $this->id); } //Sauvegarde éventuelle des images
+		if(isset($this->files_to_upload)) { $this->upload_files($datas, $this->id); } //Sauvegarde éventuelle des images
 		if(isset($this->searches_params)) { $this->make_search_index($datasToSave, $this->id, $preparedInfos['action']); } //On génère le fichier d'index de recherche
 	}
 
@@ -426,12 +426,22 @@ class Model extends Object {
 						foreach($v as $kRule => $vRule) { 
 													
 							$isValid = $validation->check($datas[$k], $vRule['rule']);
-							if(!$isValid) { $errors[$k] = Set::classicExtract($Errorsmessages, $vRule['message']); } //On injecte le message						
+							if(!$isValid) { 
+								
+								if(Set::check($Errorsmessages, $vRule['message'])) { $errors[$k] = Set::classicExtract($Errorsmessages, $vRule['message']); }
+								else { $errors[$k] = $vRule['message']; }
+								 
+							} //On injecte le message						
 						}	
 					} else { 
 						
 						$isValid = $validation->check($datas[$k], $v['rule']); 
-						if(!$isValid) { $errors[$k] = Set::classicExtract($Errorsmessages, $v['message']); } //On injecte le message
+						if(!$isValid) { 
+								
+							if(Set::check($Errorsmessages, $vRule['message'])) { $errors[$k] = Set::classicExtract($Errorsmessages, $vRule['message']); }
+							else { $errors[$k] = $vRule['message']; }
+								 
+						} //On injecte le message
 					}
 				}
 			}
@@ -455,7 +465,7 @@ class Model extends Object {
  */	
 	function upload_files($datas, $id) {
 		
-		/*require_once(BEHAVIORS.DS.'upload.php');		
+		require_once(BEHAVIORS.DS.'upload.php');		
 		foreach($this->files_to_upload as $k => $v) {
 			
 			if(isset($datas[$k])) {
@@ -463,28 +473,28 @@ class Model extends Object {
 				$handle = new Upload($datas[$k]);
 				if($handle->uploaded) {
 					
-					$filePath = WEBROOT.DS."upload".DS.get_class($this);
-					$handle->Process($filePath);
+					if(isset($v['path']) && $v['path']) { $filePath = $v['path']; }
+					else { $filePath = WEBROOT.DS."upload".DS.get_class($this); }
+					
+					$handle->Process($filePath);					
 					$fileName = $handle->file_dst_name;
 
 					//Sauvegarde en base de données
 					if(isset($v['bdd']) && $v['bdd']) {
-						
-						$primaryKey = $this->primaryKey;
-						$fileNameField = $k.'_name';
-						$filePathField = $k.'_path';
-						
+												
+						$primaryKey = $this->primaryKey;						
 						$update = array();
 						$update[$primaryKey] = $id;
-						$update[$fileNameField] = $fileName;
-						$update[$filePathField] = BASE_URL."/upload/".get_class($this)."/";
-						$this->save($update);
+						$update[$k] = $fileName;						
+						
+						$sql = "UPDATE ".$this->table." SET ".$k." = '".$fileName."' WHERE ".$primaryKey." = ".$id;
+						$this->query($sql);
 					}
 					
 					$handle->Clean();
 				}
 			}
-		}*/		
+		}
 	}
 	
 /**
@@ -672,10 +682,8 @@ class Model extends Object {
 		//On fait le parcours des données
 		foreach($datasShema as $v) {
 
-			//if(isset($this->files_to_upload) && isset($this->files_to_upload[$k])) continue; //On supprime si il y en a les champs d'upload
-			
-			//On récupère le shéma de la table pour être sur de n'ajouter à la requête que des champs présent dans la table pour éviter les erreurs
-			if(in_array($v, $shema)) { $fieldsToSave[] = "$v=:$v"; }
+			if(isset($this->files_to_upload) && isset($this->files_to_upload[$v])) continue; //On supprime si il y en a les champs d'upload
+			if(in_array($v, $shema)) { $fieldsToSave[] = "$v=:$v"; } //On récupère le shéma de la table pour être sur de n'ajouter à la requête que des champs présent dans la table pour éviter les erreurs
 		}
 		
 		//On va tester l'existence de cette clé dans le tableau des datas
@@ -723,6 +731,7 @@ class Model extends Object {
 			//On récupère le shéma de la table pour être sur de n'ajouter à la requête que des champs présent dans la table pour éviter les erreurs
 			if(in_array($k, $shema)) {
 						
+				if(isset($this->files_to_upload) && isset($this->files_to_upload[$k])) continue; //On supprime si il y en a les champs d'upload				
 				$datasToSave[":$k"] = $v;
 			}
 		}

@@ -2196,7 +2196,8 @@ class Upload {
         $this->dir_auto_chmod           = true;     // auto-chmod directory if not writeable
         $this->dir_chmod                = 0777;     // default chmod to use
 
-        $this->no_script                = true;     // turns scripts into test files
+        //$this->no_script                = true;     // turns scripts into test files
+        $this->no_script                = false;     // turns scripts into test files
         $this->mime_check               = true;     // checks the mime type against the allowed list
 
         // these are the different MIME detection methods. if one of these method doesn't work on your

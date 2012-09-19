@@ -140,8 +140,11 @@ class Validation {
  */	
 	function between($val, $min, $max) {
 		
-		if(is_int($val)) return ($val < $min || $val > $max) ? false : true;
-		else if(is_string($val)) return (strlen($val) < $min || strlen($val) > $max) ? false : true;
+		$val = (int)$val;		
+		return ($val < $min || $val > $max) ? false : true;
+		
+		/*if(is_int($val)) return ($val < $min || $val > $max) ? false : true;
+		else if(is_string($val)) return (strlen($val) < $min || strlen($val) > $max) ? false : true;*/
 	}
 	
 /**
