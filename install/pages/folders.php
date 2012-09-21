@@ -89,7 +89,10 @@ $folders = array(
 							WEBROOT_UPLOAD.DS.'flash',
 							WEBROOT_UPLOAD.DS.'images'
 					);
-					foreach($foldersToCreate as $folder) { mkdir($folder, 0777); }					
+					foreach($foldersToCreate as $folder) { 
+						
+						if(!is_dir($folder)) mkdir($folder, 0777); 
+					}					
 					
 					$httpHost = $_SERVER["HTTP_HOST"];
 					if($httpHost == 'localhost' || $httpHost == '127.0.0.1') { $section = 'localhost'; } else { $section = 'online'; }

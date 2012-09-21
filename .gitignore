@@ -3,6 +3,10 @@
 .buildpath
 .project
 
+#DIVERS
+EXPORT_PDF/
+plugins/
+
 #CONFIGS FOLDER
 configs/files/*.ini
 !configs/files/posts.ini

@@ -434,12 +434,11 @@ class Model extends Object {
 							} //On injecte le message						
 						}	
 					} else { 
-						
 						$isValid = $validation->check($datas[$k], $v['rule']); 
 						if(!$isValid) { 
 								
-							if(Set::check($Errorsmessages, $vRule['message'])) { $errors[$k] = Set::classicExtract($Errorsmessages, $vRule['message']); }
-							else { $errors[$k] = $vRule['message']; }
+							if(Set::check($Errorsmessages, $v['message'])) { $errors[$k] = Set::classicExtract($Errorsmessages, $v['message']); }
+							else { $errors[$k] = $v['message']; }
 								 
 						} //On injecte le message
 					}

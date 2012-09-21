@@ -1,4 +1,11 @@
 ================================================================================
+Version : 	21/09/2012
+Author : 	FI
+
+--> Correction règles de validation
+--> mise à jour données insérée par défaut
+--> correction page installation des dossiers
+================================================================================
 Version : 	19/09/2012
 Author : 	FI
 
