@@ -79,17 +79,6 @@
 		</tasks>	
 	</version>
 	<version>
-		<name>Version du </name>
-		<num></num>
-		<supervisor>KoéZionCMS</supervisor>
-		<tasks>
-			<task author="KoéZionCMS"><task>
-			<task author="KoéZionCMS"><task>
-			<task author="KoéZionCMS"><task>
-			<task author="KoéZionCMS"><task>
-		</tasks>	
-	</version>
-	<version>
 		<name>Version du 06/09/2012</name>
 		<num>06/09/2012</num>
 		<supervisor>KoéZionCMS</supervisor>
@@ -119,17 +108,6 @@
 			<task author="KoéZionCMS">Modification de tous les types text pour les passer en longtext<task>
 			<task author="KoéZionCMS">Rajout d'un caractère spécial dans l'éditeur de texte<task>
 			<task author="KoéZionCMS">Création d'un bdd plugins pour désengorger l'affichage du back par défaut les plugins seront désactivés (Catalogue à l'heure actuelle) il suffira de les activer pour y avoir accès<task>
-		</tasks>	
-	</version>
-	<version>
-		<name>Version du </name>
-		<num></num>
-		<supervisor>KoéZionCMS</supervisor>
-		<tasks>
-			<task author="KoéZionCMS"><task>
-			<task author="KoéZionCMS"><task>
-			<task author="KoéZionCMS"><task>
-			<task author="KoéZionCMS"><task>
 		</tasks>	
 	</version>
 	<version>
