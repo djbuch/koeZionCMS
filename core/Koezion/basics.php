@@ -137,13 +137,13 @@ function debug($var, $die = 0) {
 	
 	
 	function directoryContent($directory) {
-		
+				
 		$files = array();
 		$dir = opendir($directory);
 		
 		while($file = readdir($dir)) {
 			
-			if($file != '.' && $file != '..' && !is_dir($directory.$file)) {
+			if($file != '.' && $file != '..' && $file != 'empty' && !is_dir($directory.$file)) {
 				
 				//$directory.$file
 				$files[] = $file;

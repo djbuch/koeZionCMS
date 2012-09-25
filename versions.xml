@@ -6,6 +6,7 @@
 		<tasks>
 			<task author="KoéZionCMS">Mise en place du système de plugins<task>
 			<task author="KoéZionCMS">Mise en place du plugin pixlr pour ckfinder<task>
+			<task author="KoéZionCMS">Correction bugs d'installation<task>
 		</tasks>	
 	</version>
 	<version>

@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `contacts` (
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `message` longtext COLLATE utf8_unicode_ci NOT NULL,
   `online` int(11) NOT NULL,
-  `created` datetime DEFAULT NULL,
+  `created` datetime NOT NULL,
   `website_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -59,15 +59,18 @@ CREATE TABLE IF NOT EXISTS `focus` (
 DROP TABLE IF EXISTS `plugins`;
 CREATE TABLE IF NOT EXISTS `plugins` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+  `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `author` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `online` int(11) NOT NULL,
+  `installed` int(11) NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   `created_by` int(11) NOT NULL,
   `modified_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `posts`;
 CREATE TABLE IF NOT EXISTS `posts` (
@@ -77,6 +80,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `content` longtext COLLATE utf8_unicode_ci NOT NULL,
   `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `prefix` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `page_title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `page_description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `page_keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -133,19 +137,6 @@ CREATE TABLE IF NOT EXISTS `posts_types` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-DROP TABLE IF EXISTS `sliders`;
-CREATE TABLE IF NOT EXISTS `sliders` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `image` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `content` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `order_by` int(11) NOT NULL,
-  `online` int(11) NOT NULL,
-  `created` datetime DEFAULT NULL,
-  `website_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 DROP TABLE IF EXISTS `searches`;
 CREATE TABLE IF NOT EXISTS `searches` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -159,8 +150,20 @@ CREATE TABLE IF NOT EXISTS `searches` (
   `model_id` int(11) NOT NULL,
   `website_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `association_key` (`model`),
   FULLTEXT KEY `data` (`datas`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `sliders`;
+CREATE TABLE IF NOT EXISTS `sliders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `image` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `content` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `order_by` int(11) NOT NULL,
+  `online` int(11) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `website_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `templates`;
@@ -230,10 +233,10 @@ CREATE TABLE IF NOT EXISTS `websites` (
   `tpl_code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `txt_slogan` longtext COLLATE utf8_unicode_ci NOT NULL,
   `txt_posts` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `txt_newsletter` longtext COLLATE utf8_unicode_ci NOT NULL,  
+  `txt_newsletter` longtext COLLATE utf8_unicode_ci NOT NULL,
   `txt_mail_contact` longtext COLLATE utf8_unicode_ci NOT NULL,
   `txt_mail_comments` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `txt_mail_newsletter` longtext COLLATE utf8_unicode_ci NOT NULL,  
+  `txt_mail_newsletter` longtext COLLATE utf8_unicode_ci NOT NULL,
   `seo_page_title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `seo_page_description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `seo_page_keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -245,6 +248,7 @@ CREATE TABLE IF NOT EXISTS `websites` (
   `footer_social` longtext COLLATE utf8_unicode_ci NOT NULL,
   `footer_droite` longtext COLLATE utf8_unicode_ci NOT NULL,
   `footer_bottom` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `css_hack` longtext COLLATE utf8_unicode_ci NOT NULL,
   `online` int(11) NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,

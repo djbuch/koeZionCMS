@@ -80,10 +80,10 @@ $init_db_tables = init_db($conf['host'], $conf['database'], $conf['login'], $con
 							<td class="odd" colspan="4"><?php echo $init_db_tables['datas']['pct_bar']; ?></td>
 						</tr>
 					</table>
-					<form action="index.php?step=database_datas_default" method="post">
+					<?php /* ?><form action="index.php?step=database_datas_default" method="post">
 						<input type="hidden" name="section" value="<?php echo $section; ?>" />
 						<div class="row" style="text-align: right;"><button class="medium grey" type="submit"><span>Importer des données de démo dans les tables</span></button></div>
-					</form>
+					</form><?php */ ?>
 					<form action="index.php?step=website" method="post">
 						<div class="row" style="text-align: right;"><button class="medium grey" type="submit"><span>Configuration du site Internet</span></button></div>
 					</form>

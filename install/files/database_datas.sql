@@ -1,6 +1,3 @@
-INSERT INTO `plugins` (`id`, `name`, `description`, `online`, `created`, `modified`, `created_by`, `modified_by`) VALUES
-(1, 'CATAL', 'Gestion du catalogue produit', 0, '2012-08-31 16:48:23', '2012-08-31 17:00:38', 1, 1);
-
 INSERT INTO `users` (`id`, `name`, `second_name`, `login`, `password`, `email`, `role`, `online`, `users_group_id`) VALUES
 (1, 'Administrateur Général', '', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin@admin.com', 'admin', 1, 1);
 

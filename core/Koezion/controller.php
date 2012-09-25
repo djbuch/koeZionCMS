@@ -114,21 +114,24 @@ class Controller extends Object {
 					
 		////////////////////////////////////////////////////////////////
 		//GESTION DU CHARGEMENT DES PLUGINS ET DE LEURS INITIALISATION//
-		//On va récupérer la liste des plugins actifs et charger les fichier		
-		foreach($this->plugins as $pluginName => $pluginInfos) {
+		//On va récupérer la liste des plugins actifs et charger les fichier	
+		if(isset($this->plugins)) {
+				
+			foreach($this->plugins as $pluginName => $pluginInfos) {
+						
+				require_once(PLUGINS.DS.$pluginInfos['code'].DS.'controller.php'); //Chargement du fichier			
+				
+				if($prefix == 'backoffice') { 
 					
-			require_once(PLUGINS.DS.$pluginInfos['code'].DS.'controller.php'); //Chargement du fichier			
-			
-			if($prefix == 'backoffice') { 
-				
-				if(method_exists($pluginInfos['class'],'_init_backoffice_datas')) $pluginInfos['class']::_init_backoffice_datas();
-				 
-			} else { 
-				
-				if(method_exists($pluginInfos['class'],'_init_frontoffice_datas')) $pluginInfos['class']::_init_frontoffice_datas();
-				 
+					if(method_exists($pluginInfos['class'],'_init_backoffice_datas')) $pluginInfos['class']::_init_backoffice_datas();
+					 
+				} else { 
+					
+					if(method_exists($pluginInfos['class'],'_init_frontoffice_datas')) $pluginInfos['class']::_init_frontoffice_datas();
+					 
+				}
 			}
-		}		
+		}
 	}
 
 /**
