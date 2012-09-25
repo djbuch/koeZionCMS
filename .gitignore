@@ -5,15 +5,15 @@
 
 #DIVERS
 EXPORT_PDF/
-plugins/*
-plugins/*/*
+#plugins/*
+#plugins/*/*
 
 #CONFIGS FOLDER
 configs/files/*.ini
 !configs/files/posts.ini
 !configs/files/routes.ini
 !configs/files/sessions.ini
-configs/forms/*.xml
+#configs/forms/*.xml
 
 #TMP FOLDER
 tmp/cache/variables/*/*.cache
