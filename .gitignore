@@ -5,8 +5,7 @@
 
 #DIVERS
 EXPORT_PDF/
-#plugins/*
-#plugins/*/*
+plugins/
 
 #CONFIGS FOLDER
 configs/files/*.ini
@@ -17,6 +16,7 @@ configs/files/*.ini
 
 #TMP FOLDER
 tmp/cache/variables/*/*.cache
+tmp/exemples/*
 tmp/logs/*.log
 #tmp/update/db/*.txt
 tmp/update/db/*.sql
