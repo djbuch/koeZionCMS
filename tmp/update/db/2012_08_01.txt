@@ -1,2 +1,0 @@
-ALTER TABLE `posts` CHANGE `display_comments` `display_form` INT( 11 ) NOT NULL;
-ALTER TABLE `posts` DROP `code`;

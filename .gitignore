@@ -13,7 +13,5 @@ configs/files/*.ini
 !configs/files/routes.ini
 configs/forms/*.xml
 plugins/
-tmp/exemple/
-tmp/update/
 webroot/files/*
 webroot/upload/*

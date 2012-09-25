@@ -1,2 +1,0 @@
-ALTER TABLE `plugins` ADD `code` VARCHAR( 255 ) NOT NULL AFTER `id`;
-ALTER TABLE `plugins` ADD `author` VARCHAR( 255 ) NOT NULL AFTER `description` ;
