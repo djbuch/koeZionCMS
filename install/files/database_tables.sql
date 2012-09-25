@@ -1,21 +1,3 @@
-DROP TABLE IF EXISTS `catalogues`;
-CREATE TABLE IF NOT EXISTS `catalogues` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `reference` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `price` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `disponibility` int(11) NOT NULL,
-  `is_coup_coeur` int(11) NOT NULL,
-  `online` int(11) NOT NULL,
-  `created` datetime DEFAULT NULL,
-  `modified` datetime NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `modified_by` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL,
-  `website_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 DROP TABLE IF EXISTS `categories`;
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -34,6 +16,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `display_brothers` int(11) NOT NULL,
   `is_secure` int(255) NOT NULL,
   `txt_secure` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `message_mail` longtext COLLATE utf8_unicode_ci NOT NULL,
   `online` int(11) NOT NULL,
   `lft` int(11) NOT NULL,
   `rgt` int(11) NOT NULL,
@@ -70,19 +53,6 @@ CREATE TABLE IF NOT EXISTS `focus` (
   `online` int(11) NOT NULL,
   `created` datetime DEFAULT NULL,
   `website_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-DROP TABLE IF EXISTS `formulaires`;
-CREATE TABLE IF NOT EXISTS `formulaires` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `form_file` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `online` int(11) NOT NULL,
-  `created` datetime DEFAULT NULL,
-  `modified` datetime NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `modified_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

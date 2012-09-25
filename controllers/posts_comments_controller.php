@@ -44,10 +44,7 @@ class PostsCommentsController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 16/04/2012 by FI
  */
-	function backoffice_index() {
-		
-		parent::backoffice_index(false, array('id', 'name', 'online'));
-	}	
+	function backoffice_index() { parent::backoffice_index(false, array('id', 'name', 'email', 'online', 'created'), 'created DESC, name ASC'); }	
 	
 /**
  * Cette fonction permet l'ajout d'un élément

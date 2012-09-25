@@ -55,23 +55,27 @@ class View extends Object {
 /**
  * Cette fonction permet d'effectuer le rendu d'une page
  *
+ * @param boolean $inViewsFolder Cette variable indique à l'objet View si la vue à rendre se trouve dans le dossier views 
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 13/06/2012 by FI
+ * @version 0.2 - 24/09/2012 by FI - Rajout du boolean $inViewsFolder pour indiquer si le dossier de stockage de la vue est dans views
+ * @todo IMPORTANT essayer de voir pourquoi si on retire le file_exists($view) la fonction export du plugin formulaire ne marche plus!!!
  */    
-    public function render() {
+    public function render($inViewsFolder = true) {
     	
     	if($this->rendered) { return false; } //Si la vue est déjà rendue on retourne faux
     
     	extract($this->vars); //On récupère les variables	
     	
     	//Si on désire rendre une vue particulière celle
-    	if(strpos($this->view, '/') === 0) { $view = VIEWS.$this->view.'.php'; }
+    	if(strpos($this->view, '/') === 0 && $inViewsFolder) { $view = VIEWS.$this->view.'.php'; }
     	
     	//Sinon le comportement par défaut ira chercher les vues dans le dossier views
-    	else { 
+    	else {    		
     		
-    		$view = VIEWS.DS.$this->controller->request->controller.DS.$this->view.'.php';
+    		if($inViewsFolder) { $view = VIEWS.DS.$this->controller->request->controller.DS.$this->view.'.php'; /*pr($this);*/ }
+    		else { $view = $this->view.'.php'; /*pr($this);*/ }
     		
     		//Si la variable existe (Elle n'existe que pour le front)
     		if(isset($this->vars['websiteParams'])) {
@@ -83,9 +87,9 @@ class View extends Object {
     			if(file_exists($alternativeView)) { $view = $alternativeView; }
     		}    		 
     	} 
-    
+    	    	
     	ob_start(); //On va récupérer dans une variable le contenu de la vue pour l'affichage dans la variable layout_for_content
-    	require_once($view); //Chargement de la vue
+    	if(file_exists($view)) require_once($view); //Chargement de la vue
     	$content_for_layout = ob_get_clean(); //On stocke dans cette variable le contenu de la vue
     	require_once VIEWS.DS.'layout'.DS.$this->layout.'.php'; //On fait l'inclusion du layout par défaut et on affiche la variable dedans
     	$this->rendered = true; //On indique que la vue est rendue   	
@@ -94,24 +98,33 @@ class View extends Object {
 /**
  * Cette fonction permet de charger dans une vue une page html
  *
- * @param 	varchar $element 	Elément à charger
- * @param 	array 	$vars 		Variables que l'on souhaite faire passer (en plus) à l'élément
+ * @param 	varchar $element 			Elément à charger
+ * @param 	array 	$vars 				Variables que l'on souhaite faire passer (en plus) à l'élément
+ * @param 	boolean $inElementsFolder 	Cette variable indique à l'objet View si l'élément à inclure à rendre se trouve dans le dossier elements 
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 23/12/2011
  * @version 0.2 - 21/05/2012 by FI - Rajout de la possibilité de passer des variables à la fonction
+ * @version 0.3 - 24/09/2012 by FI - Rajout du boolean $inElementsFolder pour indiquer si le dossier de stockage de la vue est dans views
  */
-    public function element($element, $vars = null) {
+    public function element($element, $vars = null, $inElementsFolder = true) {
         
     	if(isset($vars) && !empty($vars)) { 
     		
     		foreach($vars as $k => $v) { $this->vars[$k] = $v; } 
     	}    	
     	extract($this->vars);    
-    	$element = ELEMENTS.DS.str_replace('/', DS, $element); //On transforme les / par ceux utilisés sur le système
-    	$element .= '.php'; //On rajoute l'extension    
     	
-    	if(!file_exists($element)) { require_once VIEWS.DS.'errors'.DS.'missing_element.php'; } //Si le fichier n'existe pas on affiche un message d'erreur 
+    	$element = str_replace('/', DS, $element);
+    	//if($element[0] != DS) { $element = ELEMENTS.DS.$element; }
+    	//$element .= '.php'; //On rajoute l'extension
+    	
+    	//pr($element);
+    	
+    	if($inElementsFolder) { $element = ELEMENTS.DS.$element.'.php'; }
+    	else { $element = $element.'.php'; }
+    	
+    	if(!file_exists($element)) { require_once ELEMENTS.DS.'backoffice'.DS.'missing_element.php'; } //Si le fichier n'existe pas on affiche un message d'erreur 
     	else { require_once $element; } //Sinon on le charge
     }
     

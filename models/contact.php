@@ -12,7 +12,7 @@ class Contact extends Model {
  * @author 	koéZionCMS
  * @version 0.1 - 04/02/2012 by FI
  */
-	/*var $validate = array(
+	var $validate = array(
 		'name' => array(
 			'rule' => array('notEqualsTo', 'Indiquez votre nom'),
 			'message' => 'Contact.name'				
@@ -29,5 +29,5 @@ class Contact extends Model {
 			'rule' => array('notEqualsTo', 'Indiquez votre message'),
 			'message' => 'Contact.message'
 		),
-	);*/
+	);
 }

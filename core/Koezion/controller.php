@@ -81,6 +81,19 @@ class Controller extends Object {
 			$this->components[$v] = new $v($this); //Et on insère l'objet
 		}
 		
+		///////////////////////
+		//GESTION DES PLUGINS//
+		$this->loadModel('Plugin');
+		$activatePlugins = $this->Plugin->find(array('conditions' => array('online' => 1)));
+		foreach($activatePlugins as $k => $v) {
+			
+			$pluginName = Inflector::camelize($v['code']);
+			$this->plugins[$pluginName] = array(
+				'class' => $pluginName.'Controller',
+				'code' => $v['code']
+			);
+		}
+		
 		if($beforeFilter) { $this->beforeFilter(); } 
 	}
 
@@ -88,13 +101,35 @@ class Controller extends Object {
  * Cette fonction est appelée avant les traitements effectuées dans la fonction
  *
  */
-	function beforeFilter() {}
+	function beforeFilter() {
+	}
 
 /**
  * Cette fonction est appelée avant le rendu de la fonction
  *
  */
-	function beforeRender() {}
+	function beforeRender() {
+		
+		$prefix = isset($this->request->prefix) ? $this->request->prefix : ''; //Récupération du préfixe
+					
+		////////////////////////////////////////////////////////////////
+		//GESTION DU CHARGEMENT DES PLUGINS ET DE LEURS INITIALISATION//
+		//On va récupérer la liste des plugins actifs et charger les fichier		
+		foreach($this->plugins as $pluginName => $pluginInfos) {
+					
+			require_once(PLUGINS.DS.$pluginInfos['code'].DS.'controller.php'); //Chargement du fichier			
+			
+			if($prefix == 'backoffice') { 
+				
+				if(method_exists($pluginInfos['class'],'_init_backoffice_datas')) $pluginInfos['class']::_init_backoffice_datas();
+				 
+			} else { 
+				
+				if(method_exists($pluginInfos['class'],'_init_frontoffice_datas')) $pluginInfos['class']::_init_frontoffice_datas();
+				 
+			}
+		}		
+	}
 
 /**
  * Cette fonction permet l'initialisation d'une ou plusieurs variables dans la vue
@@ -124,19 +159,19 @@ class Controller extends Object {
  * Cette fonction permet de rendre une vue
  * Pour rendre une vue particulière il faut préfixer la variable $view par un /
  *
- * @param varchar $view Nom de la vue à rendre
+ * @param varchar $view 			Nom de la vue à rendre
+ * @param boolean $inViewsFolder	Cette variable indique à l'objet View si la vue à rendre se trouve dans le dossier views 
  * @version 0.1 - 23/12/2011
+ * @version 0.2 - 24/09/2012 by FI - Rajout du boolean $inViewsFolder pour indiquer si le dossier de stockage de la vue est dans views
  */
-	public function render($view) {
+	public function render($view, $inViewsFolder = true) {
 
 		$this->beforeRender();
 
 		$this->set('pager', $this->pager); //Variable de pagination
-		$this->set('params', $this->params); //Variable de paramètres
-		$this->View = new View($view, $this);
-		
-		$this->View->render();
-		
+		$this->set('params', $this->params); //Variable de paramètres		
+		$this->View = new View($view, $this);		
+		$this->View->render($inViewsFolder);		
 	}
 
 /**
@@ -145,26 +180,36 @@ class Controller extends Object {
  * @param varchar $name Nom du model à charger
  * @version 0.1 - 23/12/2011
  */
-	function loadModel($name) {
+	function loadModel($name, $return = false) {
 
 		//En premier lieu on test si le model n'est pas déjà instancié
 		//et si il ne l'est pas on procède à son intenciation
 		if(!isset($this->$name)) {
 				
 			$file_name = Inflector::underscore($name).'.php'; //Nom du fichier à charger
+		
+			$file_path_default = ROOT.DS.'models'.DS.$file_name; //Chemin vers le fichier à charger
 			
-			$file_path = ROOT.DS.'models'.DS.$file_name; //Chemin vers le fichier à charger
-			
-			//if(!file_exists($file_path)) { $this->e404("Aucun model"); }
-			if(!file_exists($file_path)) { $this->redirect('home/e404'); }
-			
-			require_once($file_path); //Inclusion du fichier
-			$this->$name = new $name(); //Création d'un objet Model de type $name que l'on va instancier dans la classe
+			//Pour déterminer le dossier du plugin nous devons transformer le nom du model à charger
+			//Etape 1 : passage au pluriel
+			//Etape 2 : transformation du camelCased en _
+			$pluralizeName = Inflector::pluralize($name);			
+			$underscoreName = Inflector::underscore($pluralizeName);		
+			$file_path_plugin = PLUGINS.DS.$underscoreName.DS.'model.php'; //Chemin vers le fichier plugin à charger
+		
+			if(file_exists($file_path_default)) { $file_path = $file_path_default; } //Si le model par défaut existe
+			else if(file_exists($file_path_plugin)) { $file_path = $file_path_plugin; } //Sinon on teste si il y a un plugin
+			else { 
 				
-			/*if(isset($this->Form)) { //Si le controller utilise des formulaires
-
-				$this->$name->Form = $this->Form; //On fait correspondre le model et le l'objet Form du controller pour la gestion des erreurs
-			}*/
+				$this->redirect('home/e404');
+				die();
+			} //On va tester l'existence de ce fichier
+						
+			//pr($file_path);
+			//pr($this);
+			require_once($file_path); //Inclusion du fichier
+			if($return) { return new $name(); }
+			else { $this->$name = new $name(); } //Création d'un objet Model de type $name que l'on va instancier dans la classe
 		}
 	}
 	

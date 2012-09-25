@@ -1,4 +1,10 @@
 ================================================================================
+Version : 	24/09/2012
+Author : 	FI
+
+--> Mise en place du système de plugins
+--> Mise en place du plugin pixlr pour ckfinder
+================================================================================
 Version : 	21/09/2012
 Author : 	FI
 

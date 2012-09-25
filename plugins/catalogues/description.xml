@@ -1,0 +1,7 @@
+﻿<plugin>
+	<code>catalogues</code>
+	<name>Catalogues</name>
+	<version>1.0</version>
+	<description>Gestion d'un catalogue produit</description>
+	<author>KoéZionCMS</author>
+</plugin>

@@ -224,11 +224,7 @@ class CategoriesController extends AppController {
 			$this->loadModel('Post');
 			$postsConditions = array('online' => 1, 'category_id' => $id);
 			$nbPosts = $this->Post->findCount($postsConditions);
-			
-			$this->loadModel('Catalogue'); //Chargement du model
-			$cataloguesConditions = array('online' => 1, 'category_id' => $id); //Conditions de recherche par défaut
-			$nbCatalogues = $this->Catalogue->findCount($cataloguesConditions);
-			
+						
 			if($nbPosts > 0) {
 				
 				//////////////////////////////////////////////////////
@@ -281,80 +277,13 @@ class CategoriesController extends AppController {
 				$this->pager['totalElements'] = $this->Post->findCount($postsConditions, $postsQuery['moreConditions']); //On va compter le nombre d'élement
 				$this->pager['totalPages'] = ceil($this->pager['totalElements'] / $this->pager['elementsPerPage']); //On va compter le nombre de page
 		
-				if($this->pager['totalElements'] > 0 || count($datas['postsTypes']) > 0) { $datas['is_full_page'] = 0; } //Si on doit afficher les articles alors il faut la colonne de droite
-							
-			} else if($nbCatalogues > 0) {			
-			
-				$datas['displayCatalogues'] = true;
-				$this->pager['elementsPerPage'] = 30;
-				
-				/////////////////////////////////////
-				//   RECUPERATION DES CATALOGUES   //				
-				//Définition des tris
-				$defaultOrder = array();				
-				if(isset($_GET['order'])) { 
-					
-					foreach($_GET['order'] as $column => $dir) { $defaultOrder[] = $column.' '.$dir; } 
-				}			
-				if(empty($defaultOrder)) { $defaultOrder[] = 'reference'; }
-				
-				//Construction des paramètres de la requête
-				$cataloguesQuery = array(
-					'conditions' => $cataloguesConditions,
-					'limit' => $this->pager['limit'].', '.$this->pager['elementsPerPage'],
-					'order' => implode(',', $defaultOrder)
-				);
-				$cataloguesQuery['moreConditions'] = ''; //Par défaut pas de conditions de recherche complémentaire
-								
-				//////////////////////////////////////////////////////////////////////////
-				///  GESTION DES EVENTUELS PARAMETRES PASSES EN GET PAR L'UTILISATEUR   //
-				$filterCatalogues = $this->_filter_catalogues();
-								
-				if(isset($filterCatalogues['moreConditions'])) {
-				
-					$cataloguesQuery['moreConditions'] = $filterCatalogues['moreConditions'];
-					unset($filterCatalogues['moreConditions']);
-				}
-				
-				//$datas = am($datas, $filterPosts);
-				//////////////////////////////////////////////////////////////////////////
-								
-				$datas['catalogues'] = $this->Catalogue->find($cataloguesQuery); //Récupération des articles
-							
-				//On va compter le nombre d'élement de la catégorie
-				//On compte deux fois le nombre de post une fois en totalité une fois en rajoutant si il est renseigné le type d'article
-				//Car si on ne faisait pas cela on avait toujours la zone d'affichage des catégories qui s'affichaient lorsqu'on affichait les frères
-				//même si il n'y avait pas de post
-				$nbCataloguesCategory = $this->Catalogue->findCount($cataloguesConditions);
-				$this->pager['totalElements'] = $this->Catalogue->findCount($cataloguesConditions, $cataloguesQuery['moreConditions']); //On va compter le nombre d'élement
-				$this->pager['totalPages'] = ceil($this->pager['totalElements'] / $this->pager['elementsPerPage']); //On va compter le nombre de page
-		
-				$datas['is_full_page'] = 1;
-				
-				//Recherche du produit coup de coeur
-				$coupCoeurQuery = array(
-					'conditions' => array('online' => 1, 'category_id' => $id, 'is_coup_coeur' => 1),
-					'order' => 'reference'
-				);
-				$datas['coupCoeur'] = $this->Catalogue->findFirst($coupCoeurQuery);
+				if($this->pager['totalElements'] > 0 || count($datas['postsTypes']) > 0) { $datas['is_full_page'] = 0; } //Si on doit afficher les articles alors il faut la colonne de droite				
 			}
 					
 			$this->set($datas); //On fait passer les données à la vue
-			
-			if(isset($datas['category']['display_form']) && $datas['category']['display_form']) {
 				
-				$this->loadModel('Formulaire');
-				$formulaire = $this->Formulaire->findFirst(array('conditions' => array('id' => $datas['category']['display_form'])));				
-				
-				$formulaireDatas = $this->components['Xmlform']->format_form($formulaire['form_file']);
-				
-				$validate = $formulaireDatas['validate'];
-				$this->set('formInfos', $formulaireDatas['formInfos']);
-				$this->set('formulaire', $formulaireDatas['formulaire']);
-				$this->set('formulaireHtml', $formulaireDatas['formulaireHtml']);
-			
-				$this->_send_mail($validate, $formulaireDatas['formInfos']); //Gestion du formulaire
-			}	
+			//On va tester si des données sont postées par un formulaire et que le plugin Formulaires n'est pas installé
+			if(isset($this->request->data['type_formulaire']) && !isset($this->plugins['Formulaires'])) { $this->_send_mail_contact(); }
 		}
 	}
 	
@@ -416,10 +345,6 @@ class CategoriesController extends AppController {
 		
 		$categoriesList = $this->Category->getTreeList(); //On récupère les catégories
 		$this->set('categoriesList', $categoriesList); //On les envois à la vue
-		
-		$this->loadModel('Formulaire');
-		$formulaires = $this->Formulaire->findList(array('conditions' => array('online' => 1)));		
-		$this->set('formulaires', $formulaires); //On les envois à la vue
 	}	
 	
 /**
@@ -451,10 +376,6 @@ class CategoriesController extends AppController {
 		
 		$categoriesList = $this->Category->getTreeList(); //On récupère les catégories
 		$this->set('categoriesList', $categoriesList); //On les envois à la vue
-		
-		$this->loadModel('Formulaire');
-		$formulaires = $this->Formulaire->findList(array('conditions' => array('online' => 1)));		
-		$this->set('formulaires', $formulaires); //On les envois à la vue
 	}
 	
 /**
@@ -480,10 +401,6 @@ class CategoriesController extends AppController {
 		
 		$categoriesList = $this->Category->getTreeList(); //On récupère les catégories
 		$this->set('categoriesList', $categoriesList); //On les envois à la vue
-		
-		$this->loadModel('Formulaire');
-		$formulaires = $this->Formulaire->findList(array('conditions' => array('online' => 1)));		
-		$this->set('formulaires', $formulaires); //On les envois à la vue
 	}
 	
 /**
@@ -741,40 +658,6 @@ class CategoriesController extends AppController {
     		}
     	}
     	
-    	return $return;
-    }
-
-    
-/**
- * Cette fonction permet de récupérer les produits à afficher sur le frontoffice (Dans les contrôleurs Categories)
- *
- * @param 	array	$request Critères de recherche
- * @return 	array 	Liste des catégories
- * @access 	private
- * @author 	koéZionCMS
- * @version 0.1 - 20/07/2012 by FI
- */
-    
-    function _filter_catalogues() {
-    
-    	$return = array(); //Tableau retourné par la fonction
-    	$request = $this->request->data; //Récupération des champs du formulaire
-    
-    	if(!empty($request)) {
-    
-    		unset($request['rechercher']); //On va en premier lieu supprimer la valeur du bouton rechercher
-    		unset($request['order']);
-    
-    		$query = array();
-    		foreach($request as $field => $fieldValue) {
-    
-    			if(!empty($fieldValue)) {
-    				$query[] = " ".$field." LIKE '%".$fieldValue."%' ";
-    			}
-    		}
-    
-    		$return['moreConditions'] = implode('AND', $query);
-    	}
     	return $return;
     }
 	

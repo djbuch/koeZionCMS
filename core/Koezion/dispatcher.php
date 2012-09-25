@@ -99,16 +99,21 @@ class Dispatcher {
  * @return $name Objet correspondant au type de controller souhaité
  */
 	function loadController() {
-	
+		
 		$file_name = strtolower($this->request->controller.'_controller'); //On récupère dans une variable le nom du controller
-		$file_path = ROOT.DS.'controllers'.DS.$file_name.'.php'; //On récupère dans une variable le chemin du controller
+		
+		$file_path_default = ROOT.DS.'controllers'.DS.$file_name.'.php'; //On récupère dans une variable le chemin du controller
+		$file_path_plugin = PLUGINS.DS.$this->request->controller.DS.'controller.php'; //On récupère dans une variable le chemin du controller
 	
-		if(!file_exists($file_path)) {
-			
+		if(file_exists($file_path_default)) { $file_path = $file_path_default; } //Si le controller par défaut existe
+		else if(file_exists($file_path_plugin)) { $file_path = $file_path_plugin; } //Sinon on teste si il y a un plugin
+		else { //Sinon on affiche une erreur
+
 			//$this->error('missing_controller', "Le controller ".$this->request->controller." n'existe pas"." ".serialize($this->request));	
-			$this->error('missing_controller');	
-			die();		
-		} //On va tester l'existence de ce fichier
+			$this->error('missing_controller');
+			die();	
+		}//On va tester l'existence de ce fichier
+		
 		require $file_path; //Inclusion de ce fichier si il existe
 	
 		$controller_name = Inflector::camelize($file_name); //On transforme le nom du fichier pour récupérer le nom du controller

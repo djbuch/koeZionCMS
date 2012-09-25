@@ -1,7 +1,3 @@
-INSERT INTO `formulaires` (`id`, `name`, `form_file`, `online`, `created`, `modified`, `created_by`, `modified_by`) VALUES
-(1, 'Formulaire de contact', 'contact.xml', 1, '2012-09-17 11:24:35', '2012-09-17 11:24:35', 1, 1),
-(2, 'Formulaire commentaire article', 'commentaire.xml', 1, '2012-09-17 11:32:21', '2012-09-17 20:56:13', 1, 1);
-
 INSERT INTO `plugins` (`id`, `name`, `description`, `online`, `created`, `modified`, `created_by`, `modified_by`) VALUES
 (1, 'CATAL', 'Gestion du catalogue produit', 0, '2012-08-31 16:48:23', '2012-08-31 17:00:38', 1, 1);
 

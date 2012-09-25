@@ -32,17 +32,18 @@ if(isset($_POST) && !empty($_POST)) {
 					//Si le check de connexion à la bdd n'a pas fonctionné 
 					require_once(INSTALL_INCLUDE.DS.'website_form.php');					
 				} else { 
-					?>					
-					<div class="system succes">
+					?>		
+					<div class="system succes">Le site Internet est maintenant paramétré.</div>			
+					<?php /* ?><div class="system succes">
 						Le site Internet est maintenant paramétré.<br /><br />
 						Vous pouvez dès à présent passer à l'étape de paramétrage de votre serveur SMTP ou sauter cette étape pour finaliser l'installation.<br /><br />
 						<i>Vous pourrez procéder au paramétrage de votre serveur SMTP depuis l'interface d'administration.</i>	
-					</div>
-					<form action="index.php?step=smtp" method="post">					
+					</div><?php */ ?>
+					<?php /* ?><form action="index.php?step=smtp" method="post">					
 						<div class="row" style="text-align: right;"><button class="medium grey" type="submit"><span>Paramétrer mon serveur SMTP</span></button></div>
-					</form>
+					</form><?php */ ?>
 					<form action="index.php?step=final" method="post">					
-						<div class="row" style="text-align: right;"><button class="medium grey" type="submit"><span>Finaliser de l'installation</span></button></div>
+						<div class="row" style="text-align: right;"><button class="medium grey" type="submit"><span>Finaliser l'installation</span></button></div>
 					</form>	
 					<?php 
 				} 

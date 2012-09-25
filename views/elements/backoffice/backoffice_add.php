@@ -8,10 +8,8 @@ $libellePage = array(
 	'Focus' => _("un focus"),
 	'Contacts' => _("un formulaire Internaute (Contacts/Newsletter)"),
 	'Users' => _("un utilisateur"),
-	'UsersGroups' => _("un groupe d'utilisateurs"),
-	'Colors' => _("une couleur"),		
-	'Websites' => _("un site Internet"),
-	'Products' => _("un produit"),
+	'UsersGroups' => _("un groupe d'utilisateurs"),	
+	'Websites' => _("un site Internet")
 );
 ?>
 <div class="section">

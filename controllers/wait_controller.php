@@ -28,6 +28,8 @@ class WaitController extends Controller {
  */	
 	function beforeFilter() {
 		
+		parent::beforeFilter();
+		
     	$prefix = isset($this->request->prefix) ? $this->request->prefix : ''; //Récupération du préfixe
     	    	
     	//Si on est dans le backoffice

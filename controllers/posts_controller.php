@@ -61,22 +61,6 @@ class PostsController extends AppController {
 		);
 		//////////////////////////////////////
 				
-		//$this->_send_mail_comments(); //Gestion du formulaire de commentaires	
-		//$this->_send_mail_contact(); //Gestion du formulaire de contact	
-			
-		/*if(isset($datas['post']['display_form']) && $datas['post']['display_form']) {
-			
-			$this->loadModel('Formulaire');
-			$formulaire = $this->Formulaire->findFirst(array('conditions' => array('id' => $datas['post']['display_form'])));				
-			
-			$formulaireDatas = $this->components['Xmlform']->format_form($formulaire['form_file']);				
-			$validate = $formulaireDatas['validate'];
-			$datas['formInfos'] = $formulaireDatas['formInfos'];
-			$datas['formulaire'] = $formulaireDatas['formulaire'];
-		
-			$this->_send_mail($validate, $datas['formInfos']); //Gestion du formulaire
-		}*/
-				
 		///////////////////////////////////////////////////
 		//   RECUPERATION DES 20 DERNIERS COMMENTAIRES   //
 		//if($datas['post']['display_form'] == 1) {
@@ -94,20 +78,9 @@ class PostsController extends AppController {
 		////////////////////////////////////////////////////
 		
 		$this->set($datas); //On fait passer les données à la vue	
-			
-		if(isset($datas['post']['display_form']) && $datas['post']['display_form']) {
-			
-			$this->loadModel('Formulaire');
-			$formulaire = $this->Formulaire->findFirst(array('conditions' => array('id' => $datas['post']['display_form'])));				
-			
-			$formulaireDatas = $this->components['Xmlform']->format_form($formulaire['form_file']);				
-			$validate = $formulaireDatas['validate'];
-			$this->set('formInfos', $formulaireDatas['formInfos']);
-			$this->set('formulaire', $formulaireDatas['formulaire']);
-			$this->set('formulaireHtml', $formulaireDatas['formulaireHtml']);
-		
-			$this->_send_mail($validate, $formulaireDatas['formInfos']); //Gestion du formulaire
-		}
+				
+		//On va tester si des données sont postées par un formulaire et que le plugin Formulaires n'est pas installé
+		if(isset($this->request->data['type_formulaire']) && !isset($this->plugins['Formulaires'])) { $this->_send_mail_comments(); }
 	}
 	
 //////////////////////////////////////////////////////////////////////////////////////////	
@@ -159,10 +132,6 @@ class PostsController extends AppController {
 		
 		$this->_init_categories();
 		$this->_init_posts_types();
-		
-		$this->loadModel('Formulaire');
-		$formulaires = $this->Formulaire->findList(array('conditions' => array('online' => 1)));		
-		$this->set('formulaires', $formulaires); //On les envois à la vue
 	}
 	
 /**
@@ -190,10 +159,6 @@ class PostsController extends AppController {
 		$this->_init_categories();
 		$this->_init_posts_types();
 		$this->_get_assoc_datas($id);
-		
-		$this->loadModel('Formulaire');
-		$formulaires = $this->Formulaire->findList(array('conditions' => array('online' => 1)));		
-		$this->set('formulaires', $formulaires); //On les envois à la vue
 	}
 
 /**

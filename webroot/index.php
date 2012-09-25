@@ -56,6 +56,8 @@ define('LOCALE', ROOT.DS.'locale'); //Chemin vers le dossier des traductions
 define('MODELS', ROOT.DS.'models'); //Chemin vers le dossier des modèles
 	define('BEHAVIORS', MODELS.DS.'behaviors'); //Chemin vers le dossier des comportements
 	
+define('PLUGINS', ROOT.DS.'plugins'); //Chemin vers le dossier des plugins	
+	
 define('TMP', ROOT.DS.'tmp'); //Chemin vers le dossier temporaire
 
 define('VIEWS', ROOT.DS.'views'); //Chemin vers le dossier des vues

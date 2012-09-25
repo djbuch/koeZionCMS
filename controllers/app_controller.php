@@ -60,6 +60,8 @@ class AppController extends Controller {
  * @todo améliorer la récupération du menu général pour le moment une mise en cache qui me semble améliorable...
  */	
 	function beforeFilter() {
+		
+		parent::beforeFilter();
 				
     	$prefix = isset($this->request->prefix) ? $this->request->prefix : ''; //Récupération du préfixe
     	    	
@@ -95,9 +97,14 @@ class AppController extends Controller {
 			$nbPostsComments = $this->PostsComment->findCount(array('online' => 0));
 			$this->set('nbPostsComments', $nbPostsComments);
 			
+			//Récupération des plugins
+			$this->loadModel('Plugin');
+			$activatePlugins = $this->Plugin->find(array('conditions' => array('online' => 1)));
+			$this->set('activatePlugins', $activatePlugins);
+			
 		//Si on est dans le frontoffice			
 		} else {
-			
+						
 			//Dans tous les cas sauf si on est sur le formulaire de connexion
 			if($this->params['controllerName'] != 'Users' && ($this->request->action != 'login' || $this->request->action != 'logout')) {
 				
@@ -132,6 +139,8 @@ class AppController extends Controller {
     }
     
     function beforeRender() {
+    	
+    	parent::beforeRender();
     	
     	$prefix = isset($this->request->prefix) ? $this->request->prefix : ''; //Récupération du préfixe
     	
@@ -681,7 +690,7 @@ class AppController extends Controller {
     	}
     	
     	return $menuGeneral;
-    }      
+    }       
     
 /**
  * Cette fonction permet le contrôle et l'envoi des formulaires de contact
@@ -689,96 +698,51 @@ class AppController extends Controller {
  * @access 	private
  * @author 	koéZionCMS
  * @version 0.1 - 02/08/2012 by FI
- * @version 0.2 - 17/09/2012 by FI - Modification de la gestion des règles de validation qui sont dynamiques
  */    
-    function _send_mail($validate = null, $formInfos = null) {
-		    	    	
-    	if(isset($this->request->data) && !empty($this->request->data)) { //Si le formulaire est posté
+    function _send_mail_contact() {
+		
+    	if(isset($this->request->data['type_formulaire']) && $this->request->data['type_formulaire'] == 'contact') { //Si le formulaire de contact est posté  		
     		
-    		//En fonction du type de formulaire on va charger le bon model
-    		switch($this->request->data['type_formulaire']) {
-    			
-    			case 'contact': 	$model = 'Contact'; 	break;    			
-    			case 'commentaire':	$model = 'PostsComment'; break;
-    			default:			$model = 'Contact';		break;
-    		}  		
-    		
-			$this->loadModel($model);
-			if(isset($validate) && !empty($validate)) { $this->$model->validate = $validate; } //Mise en place des règles de validation
-						
-			if($this->$model->validates($this->request->data)) { //Si elles sont valides
-						
-				//En fonction du model chargé on va faire appel à la bonne fonction d'envoi de mail
-				switch($model) {
+			$this->loadModel('Contact');
+			if($this->Contact->validates($this->request->data)) { //Si elles sont valides
+		
+				//Récupération du contenu à envoyer dans le mail
+				$vars = $this->get('vars');
+				$messageContent = $vars['websiteParams']['txt_mail_contact'];
 				
-					case 'Contact': $this->_send_mail_contacts(array('subject' => $formInfos['mail_subject'], 'confirm_message' => $formInfos['success_message'])); break;					
-					case 'PostsComment': $this->_send_mail_comments(array('subject' => $formInfos['mail_subject'], 'confirm_message' => $formInfos['success_message'])); break;
-				}				
+				///////////////////////
+				//   ENVOI DE MAIL   //
+				$mailDatas = array(
+					'subject' => '::Contact::',
+					'to' => $this->request->data['email'],
+					'element' => 'frontoffice/email/contact',
+					'vars' => array(
+						'formUrl' => $this->request->fullUrl,
+						'messageContent' => $messageContent
+					)
+				);
+				$this->components['Email']->send($mailDatas, $this); //On fait appel au composant email
+				///////////////////////
+		
+				////////////////////////////////////////////
+				//   SAUVEGARDE DANS LA BASE DE DONNEES   //
+				$this->Contact->save($this->request->data); 
+				$message = '<p class="confirmation">Votre demande a bien été prise en compte</p>';
+				$this->set('message', $message);
+				$this->request->data = false;
+				////////////////////////////////////////////
 				
 			} else {
 		
 				//Gestion des erreurs
-				$message = '<p class="error">'.$formInfos['error_message'];
-				foreach($this->$model->errors as $k => $v) { $message .= '<br />'.$v; }
+				$message = '<p class="error">Merci de corriger vos informations';
+				foreach($this->Contact->errors as $k => $v) { $message .= '<br />'.$v; }
 				$message .= '</p>';
 				$this->set('message', $message);
 			}
-			
-			$this->unloadModel($model);
+			$this->unloadModel('Contact');
 		}
     }      
-    
-/**
- * Cette fonction permet l'envoi des formulaires de contacts
- *
- * @access 	private
- * @author 	koéZionCMS
- * @version 0.1 - 17/09/2012 by FI
- */      
-    function _send_mail_contacts($params = array('subject' => '::Contact KoéZionCMS::', 'confirm_message' => 'Votre demande a bien été prise en compte')) {
-    	
-    	//Récupération du contenu à envoyer dans le mail
-    	$vars = $this->get('vars');
-    	//$category = $vars['category'];
-    	$messageContent = $vars['websiteParams']['txt_mail_contact'];
-    	
-    	/////////////////////////////////////////////////////
-    	//Création du complément du message envoyé par mail//
-    	$formulaireHtml = $vars['formulaireHtml']; //Tableau de correspondance entre les libellés et les données postées
-    	$donneesPostees = $this->request->data; //Données postées
-    	
-    	$messageComplement = '';
-    	foreach($donneesPostees as $k => $v) {
-    		
-    		if($k == 'type_formulaire') continue;
-    		if(isset($formulaireHtml[$k])) { $messageComplement .= $formulaireHtml[$k]." ".$v."<br />"; }    		
-    	}
-    	/////////////////////////////////////////////////////   	    	
-    	
-    	///////////////////////
-    	//   ENVOI DE MAIL   //
-    	$mailDatas = array(
-    		'subject' => $params['subject'],
-    		'to' => $this->request->data['email'],
-    		'element' => 'frontoffice/email/html',
-    		'vars' => array(
-    			'formUrl' => $this->request->fullUrl,
-    			'messageContent' => $messageContent,
-    			'messageComplement' => $messageComplement
-    		)
-    	);
-    	$this->components['Email']->send($mailDatas, $this); //On fait appel au composant email
-    	///////////////////////
-    	
-    	////////////////////////////////////////////
-    	//   SAUVEGARDE DANS LA BASE DE DONNEES   //
-    	$this->request->data['message'] = $messageComplement; //On met à jour le contenu complet du message
-    	$this->Contact->save($this->request->data);
-    	$message = '<p class="confirmation">'.$params['confirm_message'].'</p>';
-    	$this->set('message', $message);
-    	$this->request->data = false;
-    	////////////////////////////////////////////
-    }     
     
 /**
  * Cette fonction permet le contrôle et l'envoi des formulaires de commentaires
@@ -787,51 +751,49 @@ class AppController extends Controller {
  * @author 	koéZionCMS
  * @version 0.1 - 02/08/2012 by FI
  */      
-    function _send_mail_comments($params = array('subject' => '::Commentaire article KoéZionCMS::', 'confirm_message' => 'Votre commentaire a bien été prise en compte, il sera diffusé après validation par notre modérateur')) {
-	
-    	//Récupération du contenu à envoyer dans le mail
-		$vars = $this->get('vars');
-    	$messageContent = $vars['websiteParams']['txt_mail_comments'];
+    function _send_mail_comments() {
+    	
+    	//////////////////////////////////////////
+    	//   GESTION DU DEPOT DE COMMENTAIRES   //
+    	if(isset($this->request->data['type_formulaire']) && $this->request->data['type_formulaire'] == 'commentaire') {
+    		pr('dans _send_mail_comments de app');
+    		$this->loadModel('PostsComment'); //Chargement du modèle
+    		if($this->PostsComment->validates($this->request->data)) { //Si elles sont valides
+    	
+    			//Récupération du contenu à envoyer dans le mail
+    			$vars = $this->get('vars');
+    			$messageContent = $vars['websiteParams']['txt_mail_comments'];
     			
-    	//On va rajouter l'identifiant de l'article
-    	if(isset($vars['post']['id'])) { $this->request->data['post_id'] = $vars['post']['id']; }
-    	else { $this->request->data['post_id'] = 0; }
+    			///////////////////////
+    			//   ENVOI DE MAIL   //
+    			$mailDatas = array(
+	    			'subject' => '::Commentaire::',
+	    			'to' => $this->request->data['email'],
+	    			'element' => 'frontoffice/email/commentaire',
+					'vars' => array(
+						'formUrl' => $this->request->fullUrl,						
+						'messageContent' => $messageContent
+					)
+    			);
+    			$this->components['Email']->send($mailDatas, $this); //On fait appel au composant email
+    			///////////////////////
+		
+				////////////////////////////////////////////
+				//   SAUVEGARDE DANS LA BASE DE DONNEES   //    	
+    			$this->PostsComment->save($this->request->data);
+    			$message = '<p class="confirmation">Votre commentaire a bien été prise en compte, il sera diffusé après validation par notre modérateur</p>';
+    			$this->set('message', $message);
+    			$this->request->data = false;
+				////////////////////////////////////////////
+    		} else {
     	
-    	
-    	/////////////////////////////////////////////////////
-    	//Création du complément du message envoyé par mail//
-    	$formulaireHtml = $vars['formulaireHtml']; //Tableau de correspondance entre les libellés et les données postées
-    	$donneesPostees = $this->request->data; //Données postées
-    	
-    	$messageComplement = '';
-    	foreach($donneesPostees as $k => $v) {
-    	
-    		if($k == 'type_formulaire') continue;
-    		if(isset($formulaireHtml[$k])) { $messageComplement .= $formulaireHtml[$k]." ".$v."<br />"; }
+    			$message = '<p class="error">Merci de corriger vos informations';
+    			foreach($this->PostsComment->errors as $k => $v) { $message .= '<br />'.$v; }
+    			$message .= '</p>';
+    			$this->set('message', $message);
+    		}
+    		$this->unloadModel('PostsComment'); //Déchargement du modèle
     	}
-    	/////////////////////////////////////////////////////
-    	
-    	///////////////////////
-    	//   ENVOI DE MAIL   //
-    	$mailDatas = array(
-	    	'subject' => $params['subject'],
-	    	'to' => $this->request->data['email'],
-	    	'element' => 'frontoffice/email/html',
-			'vars' => array(
-				'formUrl' => $this->request->fullUrl,						
-				'messageContent' => $messageContent,
-    			'messageComplement' => $messageComplement
-			)
-    	);
-    	$this->components['Email']->send($mailDatas, $this); //On fait appel au composant email
-    	///////////////////////
-    			
-		////////////////////////////////////////////
-		//   SAUVEGARDE DANS LA BASE DE DONNEES   //    	
-    	$this->PostsComment->save($this->request->data);
-    	$message = '<p class="confirmation">'.$params['confirm_message'].'</p>';
-    	$this->set('message', $message);
-    	$this->request->data = false;
-		////////////////////////////////////////////
+    	//////////////////////////////////////////
     }
 }

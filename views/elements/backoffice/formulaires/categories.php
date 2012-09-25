@@ -58,7 +58,8 @@
 			$categoriesList[-1] = "[&nbsp;&nbsp;&nbsp;Page d'accueil&nbsp;&nbsp;&nbsp;]";
 			echo $helpers['Form']->input('redirect_category_id', 'Rediriger vers', array('type' => 'select', 'datas' => $categoriesList, 'tooltip' => "Vous permet de rediriger cette page vers une autre de la liste"));			
 			echo $helpers['Form']->input('title_posts_list', 'Titre bloc article', array('tooltip' => "Indiquez le titre qui sera affiché au dessus de la liste des articles"));			
-			//echo $helpers['Form']->input('display_contact_form', 'Afficher le formulaire de contact', array('type' => 'checkbox', 'tooltip' => "En cliquant sur cette case vous activerez le formulaire de contact sur cette page"));
+			
+			if(!isset($formulaires)) { $formulaires = array (1 => 'Formulaire de contact'); } 
 			echo $helpers['Form']->input('display_form', 'Formulaire', array('type' => 'select', 'datas' => $formulaires, 'tooltip' => "Indiquez le formulaire que vous souhaitez afficher sur la page", 'firstElementList' => "Sélectionnez un formulaire"));
 			?>
 		</div>
