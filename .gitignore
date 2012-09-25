@@ -1,35 +1,18 @@
-#ECLIPSE
-.settings/
 .buildpath
 .project
-
-#DIVERS
-EXPORT_PDF/
-plugins/
-
-#CONFIGS FOLDER
-configs/files/*.ini
-!configs/files/posts.ini
-!configs/files/routes.ini
-!configs/files/sessions.ini
-#configs/forms/*.xml
-
-#TMP FOLDER
-tmp/cache/variables/*/*.cache
-tmp/exemples/*
-tmp/logs/*.log
-#tmp/update/db/*.txt
-tmp/update/db/*.sql
-tmp/update/localization/*.txt
-
-#WEBROOT FOLDER
-webroot/files/*
-webroot/upload/*
-
-#ALL FOLDERS
-#Ne pas supprimer les fichier empty et .htaccess
 !empty
 !.htaccess
-#Ignorer les fichier qui commencent par un _
 _*.*
 _*/
+*.cache
+*.log
+*.ini
+.settings/
+EXPORT_PDF/
+!configs/files/posts.ini
+!configs/files/routes.ini
+configs/forms/*.xml
+plugins/
+tmp/update/
+webroot/files/*
+webroot/upload/*
