@@ -40,10 +40,12 @@ class AppController extends Controller {
 	var $backofficeElementPerPage = 50;	
 	
 	var $notAuth = array(
+		'Websites' => array('index', 'add', 'edit', 'delete'),
+		'Users' => array('index', 'add', 'edit', 'delete'),
+		'UsersGroups' => array('index', 'add', 'edit', 'delete'),
+		'Plugins' => array('index', 'add', 'edit', 'delete'),
 		'Configs' => array('database_liste', 'mailer_liste', 'router_liste', 'posts_liste', 'sessions_liste'),
 		'Exports' => array('database', 'contacts'),
-		'Users' => array('index', 'add', 'edit', 'delete'),
-		'Websites' => array('index', 'add', 'edit', 'delete')
 	);
 	
 //////////////////////////////////////////////////////////////////////////////////////////	

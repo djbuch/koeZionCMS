@@ -31,10 +31,13 @@
 			?>
 		</li>
 		<?php if(Session::user('role') == 'admin') { ?>
-			<li><a href="<?php echo Router::url('backoffice/users/index'); ?>"><?php echo $helpers['Html']->img('backoffice/icon-profile.png', array('alt' => _("Gestion utilisateurs"))); ?> <?php echo _("Utilisateurs"); ?></a></li>
+			<?php /* ?><li><a href="<?php echo Router::url('backoffice/users/index'); ?>"><?php echo $helpers['Html']->img('backoffice/icon-profile.png', array('alt' => _("Gestion utilisateurs"))); ?> <?php echo _("Utilisateurs"); ?></a></li><?php */ ?>
 			<li>
 				<img src="<?php echo BASE_URL; ?>/img/backoffice/icon-settings.png" alt="Settings" /> <?php echo _("Paramètres"); ?>
 				<ul>
+					<li><a href="<?php echo Router::url('backoffice/websites/index'); ?>"><?php echo _("Gestion des sites Internet"); ?></a></li>
+					<li><a href="<?php echo Router::url('backoffice/users/index'); ?>"><?php echo _("Gestion des utilisateurs"); ?></a></li>
+					<li><a href="<?php echo Router::url('backoffice/plugins/index'); ?>"><?php echo _("Gestion des plugins"); ?></a></li>
 					<li class="nolink center">------------ <?php echo _("SAUVEGARDE"); ?> ------------</li>					
 					<li><a href="<?php echo Router::url('backoffice/exports/database', 'sql'); ?>" target="_blank"><?php echo _("Sauvegarde de la base de données"); ?></a></li>			
 					<li><a href="<?php echo Router::url('backoffice/exports/contacts', 'csv'); ?>" target="_blank"><?php echo _("Sauvegarde des contacts"); ?></a></li>
@@ -44,14 +47,12 @@
 					<li><a href="<?php echo Router::url('backoffice/configs/router_liste'); ?>"><?php echo _("Gestion des routes"); ?></a></li>			
 					<li><a href="<?php echo Router::url('backoffice/configs/posts_liste'); ?>"><?php echo _("Articles"); ?></a></li>
 					<li><a href="<?php echo Router::url('backoffice/configs/exports_liste'); ?>"><?php echo _("Exports"); ?></a></li>
-					<li class="nolink center">---------------- <?php echo _("PLUGINS"); ?> ----------------</li>
-					<li><a href="<?php echo Router::url('backoffice/plugins/index'); ?>"><?php echo _("Liste des plugins"); ?></a></li>
 					<?php /* ?><li><a href="<?php echo Router::url('backoffice/configs/sessions_liste'); ?>"><?php echo _("Sessions"); ?></a></li><?php */ ?>	
 				</ul>
 			</li>
-			<li><a href="<?php echo Router::url('backoffice/websites/index'); ?>"><?php echo $helpers['Html']->img('backoffice/icon-websites.png', array('alt' => _("Gestion des Sites Internet"))); ?> <?php echo _("Sites Internet"); ?></a></li>
+			<?php /* ?><li><a href="<?php echo Router::url('backoffice/websites/index'); ?>"><?php echo $helpers['Html']->img('backoffice/icon-websites.png', array('alt' => _("Gestion des Sites Internet"))); ?> <?php echo _("Sites Internet"); ?></a></li><?php */ ?>
 		<?php } ?>			
 		
-		<li><a href="<?php echo Router::url('users/logout'); ?>"><?php echo $helpers['Html']->img('backoffice/icon-logout.png', array('alt' => _("Déconnexion"))); ?> <?php echo _("Déconnexion"); ?></a></li>
+		<li class="logout"><a href="<?php echo Router::url('users/logout'); ?>" title="Logout"><?php echo $helpers['Html']->img('backoffice/logout.png', array('alt' => _("Déconnexion"))); ?></a></li>
 	</ul>
 </div>
