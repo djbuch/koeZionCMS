@@ -6,13 +6,14 @@ _*.*
 _*/
 *.cache
 *.log
-*.ini
 .settings/
 EXPORT_PDF/
+configs/files/*.ini
 !configs/files/posts.ini
 !configs/files/routes.ini
 configs/forms/*.xml
 plugins/
+tmp/exemple/
 tmp/update/
 webroot/files/*
 webroot/upload/*
