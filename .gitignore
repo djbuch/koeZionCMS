@@ -5,7 +5,8 @@
 
 #DIVERS
 EXPORT_PDF/
-plugins/*.*
+plugins/*
+plugins/*/*
 
 #CONFIGS FOLDER
 configs/files/*.ini
