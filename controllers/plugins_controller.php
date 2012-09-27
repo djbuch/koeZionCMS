@@ -63,7 +63,7 @@ class PluginsController extends AppController {
 			else { Session::setFlash("Problème lors de l'installation du plugin", 'error'); }
 		} else if(!$plugin['online']) { Session::setFlash('Le plugin est correctement désactivé'); }
 		
-		$this->redirect('backoffice/plugins/index'); //On retourne sur la page de listing
+		//$this->redirect('backoffice/plugins/index'); //On retourne sur la page de listing
 	}	
 	
 	function _check_plugins() {

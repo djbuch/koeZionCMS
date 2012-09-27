@@ -44,6 +44,10 @@ CKEDITOR.stylesSet.add(
 		{name:'Bullet plus',element:'ul',attributes:{class:'bullet-plus'}},
 		{name:'Bullet minus',element:'ul',attributes:{class:'bullet-minus'}},
 		{name:'Bullet arrow',element:'ul',attributes:{class:'bullet-arrow'}},
+		{name:'PaddingLeft 20',element:'ul',attributes:{style:'padding-left:20px'}},
+		{name:'PaddingLeft 40',element:'ul',attributes:{style:'padding-left:40px'}},
+		{name:'PaddingLeft 60',element:'ul',attributes:{style:'padding-left:60px'}},
+		{name:'PaddingLeft 80',element:'ul',attributes:{style:'padding-left:80px'}},
 		
 		{name:'Selectionné',element:'li',attributes:{class:'selected'}},
 		
@@ -52,6 +56,7 @@ CKEDITOR.stylesSet.add(
 		{name:'Warning',element:'p',attributes:{class:'warning'}},
 		{name:'Informations',element:'p',attributes:{class:'information'}},
 		{name:'Error',element:'p',attributes:{class:'error'}},
+		{name:'Arrow',element:'p',attributes:{class:'arrow'}},
 		
 		{name:'Code une ligne',element:'code'},
 		{name:'Image bordure magique',element:'img',attributes:{class:'border_magic'}}

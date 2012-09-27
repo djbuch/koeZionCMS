@@ -44,7 +44,7 @@ button{width:auto;overflow:visible}
 .clearfix:before,.clearfix:after{content:"\0020";display:block;height:0;visibility:hidden}
 .clearfix:after{clear:both}
 .clearfix{zoom:1}
-p{font:13px/ 19px Trebuchet MS,Arial,Helvetica,sans-serif;letter-spacing:.1px;margin:0 0 1.5em;color:#666;overflow:visible}
+p{font:13px/ 19px Trebuchet MS,Arial,Helvetica,sans-serif;letter-spacing:.1px;margin:0 0 1.5em;/*color:#666*/;overflow:visible}
 h1 span,h2 span,h3 span,h4 span,h5 span,h6 span,h1 strong,h2 strong,h3 strong,h4 strong,h5 strong,h6 strong,.inner_main .widget ul.testimonials li p{font-family:'customFontBold',Arial,sans-serif;font-weight:normal}
 h1,h2,h3,h4,h5,h6,.hotstuff ul li a,.inner_main .widget ul.testimonials li p span{font-family:'customFont',Arial,sans-serif}
 h1{font-size:28px;line-height:30px;text-shadow:1px 1px #fff;color:#444;margin:22px 0 3px}
@@ -74,6 +74,7 @@ p.confirmation{background:url(../../img/frontoffice/confirmation.png) no-repeat 
 p.warning{background:url(../../img/frontoffice/warning.png) no-repeat 15px 9px;color:#5a5a5a;border:1px dotted #e5de73;border-radius:4px;background-color:#fefac8;padding:15px 57px}
 p.information{background:url(../../img/frontoffice/information.png) no-repeat 15px 9px;color:#5a5a5a;border:1px dotted #96dee9;border-radius:4px;background-color:#ddf5f9;padding:15px 57px}
 p.error{background:url(../../img/frontoffice/error.png) no-repeat 15px 9px;color:#5a5a5a;border:1px dotted #e3b7b7;border-radius:4px;background-color:#f4dada;padding:15px 57px}
+p.arrow{background:url(../../img/frontoffice/bullet-arrow.png) no-repeat 0 1px;color:#5a5a5a;padding:0 15px 0 20px;margin-bottom:10px}
 #powered_by a {background:url(../../img/frontoffice/mini_logo.gif) no-repeat top right transparent;}
 #container{width:980px;margin:0 auto;overflow:hidden;display:block;position:relative}
 #container.wait{padding-top:50px}

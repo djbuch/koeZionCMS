@@ -56,11 +56,12 @@ class CategoriesController extends AppController {
 				'page_keywords', 
 				'slug', 
 				'content', 
-				'type', 
+				'type',  
+				'title_colonne_droite',
 				'display_brothers', 
-				'title_brothers', 
+				//'title_brothers', 
 				'display_children', 
-				'title_children', 
+				//'title_children', 
 				'parent_id', 
 				'redirect_category_id', 
 				'level', 
@@ -201,7 +202,12 @@ class CategoriesController extends AppController {
 			//   RECUPERATION DES ENFANTS   //
 			if($datas['category']['display_children']) { //Si on doit récupérer les enfants
 			
-				$datas['children'] = $this->Category->getChildren($datas['category']['id'], false, false, $datas['category']['level']+1, array('conditions' => array('online' => 1))); //On récupère les enfants de la catégorie parente
+				//$datas['children'] = $this->Category->getChildren($datas['category']['id'], false, false, $datas['category']['level']+1, array('conditions' => array('online' => 1))); //On récupère les enfants de la catégorie parente
+				$children = $this->Category->getChildren($datas['category']['id'], false, false, $datas['category']['level']+1, array('conditions' => array('online' => 1))); //On récupère les enfants de la catégorie parente
+				
+				foreach($children as $k => $v) { $datas['children'][$v['title_colonne_droite']][] = $v; }
+				
+				
 				$datas['is_full_page'] = 0; //Si on doit afficher les catégories filles alors il faut la colonne de droite
 			}
 			
@@ -213,7 +219,7 @@ class CategoriesController extends AppController {
 				
 				//Cas particulier pour les catégories "frères" le titre de la colonne de droite peut varier en fonction des besoins
 				//On va donc parcourir le résultat et réorganiser le tout
-				foreach($brothers as $k => $v) { $datas['brothers'][$v['title_brothers']][] = $v; }				
+				foreach($brothers as $k => $v) { $datas['brothers'][$v['title_colonne_droite']][] = $v; }				
 				$datas['is_full_page'] = 0; //Si on doit afficher les catégories "frères" alors il faut la colonne de droite
 			}
 			

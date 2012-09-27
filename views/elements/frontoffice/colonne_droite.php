@@ -1,6 +1,6 @@
 <div class="gs_4 omega sidebar">
 
-	<?php if(isset($children) && count($children) > 0) { ?>
+	<?php /*if(isset($children) && count($children) > 0) { ?>
 	<div class="widget">				
 		<?php if(isset($category['title_children'])) { ?><h2 class="widgettitle"><?php echo $category['title_children']; ?></h2><?php } ?>
 		<ul class="nobordertop">
@@ -13,6 +13,25 @@
 			} 
 			?>
 		</ul>
+	</div>
+	<?php }*/ ?>
+
+	<?php if(isset($children) && count($children) > 0) { ?>
+	<div class="widget">		
+		<?php foreach($children as $columnTitle => $childrenValues) { ?>
+						
+			<?php if(!empty($columnTitle)) { ?><h2 class="widgettitle"><?php echo $columnTitle; ?></h2><?php } ?>
+			<ul class="nobordertop">
+				<?php 
+				foreach($childrenValues as $k => $v) {
+	
+					$classLi = '';
+					if($category['id'] == $v['id']) { $classLi = ' class="selected"'; }
+					?><li<?php echo $classLi; ?>><a href="<?php echo Router::url('categories/view/id:'.$v['id'].'/slug:'.$v['slug']); ?>"><?php echo $v['name']; ?></a></li><?php 
+				} 
+				?>
+			</ul>
+		<?php } ?>
 	</div>
 	<?php } ?>
 

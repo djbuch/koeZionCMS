@@ -1,7 +1,22 @@
 ﻿<versions>
 	<version>
+		<name>Version du 26/09/2012</name>
+		<num>20120926</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Suppression du champ AddThis dans le formulaire websites<task>
+			<task author="KoéZionCMS">Suppression de la zone social dans le layout frontoffice<task>
+			<task author="KoéZionCMS">Rajout d'un style p.arrow dans ckeditor et modification du css<task>
+			<task author="KoéZionCMS">Suppression du composant xmlform<task>
+			<task author="KoéZionCMS">Rajout d'un style dans ckeditor permettant de décaller les listes vers la droite<task>
+			<task author="KoéZionCMS">Changement de la couleur par défaut du texte dans les paragraphes pour uniformiser avec les listes<task>
+			<task author="KoéZionCMS">Modification de la gestion du titre de la colonne de droite pour les catégories (Modification du formulaire d'ajout, de la récupération des données dans le controller et de l'affichage de la colonne de droite<task>
+			<task author="KoéZionCMS">Modification de la base de données des catégories<task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 24/09/2012</name>
-		<num>24/09/2012</num>
+		<num>20120924</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Mise en place du système de plugins<task>
@@ -13,7 +28,7 @@
 	</version>
 	<version>
 		<name>Version du 21/09/2012</name>
-		<num>21/09/2012</num>
+		<num>20120921</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Correction règles de validation<task>
@@ -23,7 +38,7 @@
 	</version>
 	<version>
 		<name>Version du 19/09/2012</name>
-		<num>19/09/2012</num>
+		<num>20120919</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Gestion dynamique des formulaires frontoffice via des fichiers xml<task>
@@ -33,7 +48,7 @@
 	</version>
 	<version>
 		<name>Version du 17/09/2012</name>
-		<num>17/09/2012</num>
+		<num>20120917</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Correction fonctionnalité permettant la retaille de la longueur des focus avec jQuery<task>
@@ -41,7 +56,7 @@
 	</version>
 	<version>
 		<name>Version du 14/09/2012</name>
-		<num>14/09/2012</num>
+		<num>20120914</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Mise en place d'une fonctionnalité permettant la retaille de la longueur des focus avec jQuery<task>
@@ -49,7 +64,7 @@
 	</version>
 	<version>
 		<name>Version du 13/09/2012</name>
-		<num>13/09/2012</num>
+		<num>20120913</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Correction d'un bug lors de la mise à jour des index de recherches<task>
@@ -57,7 +72,7 @@
 	</version>
 	<version>
 		<name>Version du 12/09/2012</name>
-		<num>12/09/2012</num>
+		<num>20120912</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Mise à jour du fichier sql d'import des données par défaut lors de l'installation<task>
@@ -66,7 +81,7 @@
 	</version>
 	<version>
 		<name>Version du 10/09/2012</name>
-		<num>10/09/2012</num>
+		<num>20120910</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Mise à jour de la version de ckFinder qui gère, apparement, mieux les sessions<task>
@@ -75,7 +90,7 @@
 	</version>
 	<version>
 		<name>Version du 07/09/2012</name>
-		<num>07/09/2012</num>
+		<num>20120907</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Modification de la gestion des models sans tables pour éviter d'avoir à gérer un ModelStd<task>
@@ -83,7 +98,7 @@
 	</version>
 	<version>
 		<name>Version du 06/09/2012</name>
-		<num>06/09/2012</num>
+		<num>20120906</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Modification css powered_by<task>
@@ -93,7 +108,7 @@
 	</version>
 	<version>
 		<name>Version du 04/09/2012</name>
-		<num>04/09/2012</num>
+		<num>20120904</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Mise en place d'un passage de paramètre en GET pour pouvoir changer de site en local<task>
@@ -103,7 +118,7 @@
 	</version>
 	<version>
 		<name>Version du 31/08/2012</name>
-		<num>31/08/2012</num>
+		<num>20120831</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Correction css liste déroulante backoffice<task>
@@ -115,7 +130,7 @@
 	</version>
 	<version>
 		<name>Version du 29/08/2012</name>
-		<num>29/08/2012</num>
+		<num>20120829</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Mise en place du module catalogue<task>
@@ -125,7 +140,7 @@
 	</version>
 	<version>
 		<name>Version du 27/08/2012</name>
-		<num>27/08/2012</num>
+		<num>20120827</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Mise en place des modifications sur le moteur de recherche au modèle Post<task>
@@ -133,7 +148,7 @@
 	</version>
 	<version>
 		<name>Version du 26/08/2012</name>
-		<num>26/08/2012</num>
+		<num>20120826</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Suppression du moteur de recherche ZEND_SEARCH_LUCENE qui provoquait des ralentissements et mise en place d'un moteur de recherche base de données<task>
@@ -141,7 +156,7 @@
 	</version>
 	<version>
 		<name>Version du 24/08/2012</name>
-		<num>24/08/2012</num>
+		<num>20120824</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Modification des insert et update de pdo<task>
@@ -149,7 +164,7 @@
 	</version>
 	<version>
 		<name>Version du 21/08/2012</name>
-		<num>21/08/2012</num>
+		<num>20120821</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Mise en place d'un hack pour la gestion de l'affichage de l'antislash dans les textes<task>
@@ -157,7 +172,7 @@
 	</version>
 	<version>
 		<name>Version du 20/08/2012</name>
-		<num>20/08/2012</num>
+		<num>20120820</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Rajout modèle de page et correction css en fonction<task>
@@ -166,7 +181,7 @@
 	</version>
 	<version>
 		<name>Version du 14/08/2012</name>
-		<num>14/08/2012</num>
+		<num>20120814</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Déplacement procédure update versions<task>
@@ -174,7 +189,7 @@
 	</version>
 	<version>
 		<name>Version du 13/08/2012</name>
-		<num>13/08/2012</num>
+		<num>20120813</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Rajout de brush pour syntaxhighlighter<task>
@@ -182,7 +197,7 @@
 	</version>
 	<version>
 		<name>Version du 11/08/2012</name>
-		<num>11/08/2012</num>
+		<num>20120811</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Mise en place de syntaxhighlighter<task>
@@ -190,7 +205,7 @@
 	</version>
 	<version>
 		<name>Version du 09/08/2012</name>
-		<num></num>
+		<num>20120809</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Rajout de fullUrl dans la classe request<task>
@@ -200,7 +215,7 @@
 	</version>
 	<version>
 		<name>Version du 07/08/2012</name>
-		<num>07/08/2012</num>
+		<num>20120807</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Initialisation de ce fichier<task>

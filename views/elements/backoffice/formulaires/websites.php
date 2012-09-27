@@ -65,7 +65,7 @@
 		<div class="content nopadding">
 			<?php 
 			echo $helpers['Form']->input('footer_gauche', 'Colonne de gauche', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge'));
-			echo $helpers['Form']->input('footer_social', 'Code AddThis', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge'));
+			//echo $helpers['Form']->input('footer_social', 'Code AddThis', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge'));
 			echo $helpers['Form']->input('footer_droite', 'Colonne de droite', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge'));
 			echo $helpers['Form']->input('footer_bottom', 'Baseline', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge'));
 			?>

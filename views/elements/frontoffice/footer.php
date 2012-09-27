@@ -19,7 +19,7 @@
 			</p>
 		<?php echo $helpers['Form']->end(); ?>
 		
-		<div class="social"><?php echo $websiteParams['footer_social']; ?></div>
+		<?php /* ?><div class="social"><?php echo $websiteParams['footer_social']; ?></div><?php */ ?>
 	</div>	
 	
 	<div class="gs_3 omega widget"><?php echo $websiteParams['footer_droite']; ?></div>
