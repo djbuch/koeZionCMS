@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 27/09/2012</name>
+		<num>20120927</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Suppression de l'ensemble des .ini du dossier config pour les générer au moment de l'install<task>
+			<task author="KoéZionCMS">Correction d'une erreur liée au appel de classe statique changement de $pluginClass::function() par $pluginClass->function()<task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 26/09/2012</name>
 		<num>20120926</num>
 		<supervisor>KoéZionCMS</supervisor>

@@ -122,11 +122,12 @@ class Controller extends Object {
 				
 				if($prefix == 'backoffice') { 
 					
-					if(method_exists($pluginInfos['class'],'_init_backoffice_datas')) $pluginInfos['class']::_init_backoffice_datas();
+					$pluginClass = new $pluginInfos['class']();
+					if(method_exists($pluginClass, '_init_backoffice_datas')) $pluginClass->_init_backoffice_datas();
 					 
 				} else { 
 					
-					if(method_exists($pluginInfos['class'],'_init_frontoffice_datas')) $pluginInfos['class']::_init_frontoffice_datas();
+					if(method_exists($pluginClass, '_init_frontoffice_datas')) $pluginClass->_init_frontoffice_datas();
 					 
 				}
 			}

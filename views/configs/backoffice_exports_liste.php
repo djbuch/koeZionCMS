@@ -1,6 +1,6 @@
 <div class="section">
 	<div class="box">
-		<div class="title"><h2><?php echo _("Paramètres des articles"); ?></h2></div>
+		<div class="title"><h2><?php echo _("Code de validation pour l'export"); ?></h2></div>
 		<div class="content nopadding">
 			<?php 			
 			echo $helpers['Form']->create(array('id' => 'ConfigExports', 'action' => Router::url('backoffice/configs/exports_liste'), 'method' => 'post')); 

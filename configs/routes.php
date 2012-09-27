@@ -35,15 +35,15 @@ Router::prefix($routesConfigs['backoffice_prefix'], 'backoffice'); //Définition
 
 ////////////////////////////
 //   REGLES FRONTOFFICE   //
-Router::connect('', 'home/index'); 																				//Page d'accueil du site
-Router::connect('e404', 'home/e404'); 																			//Erreur 404
-Router::connect('newsletter', 'contacts/newsletter'); 															//Inscription à la newsletter
-Router::connect('sitemaps', 'home/sitemaps'); 																	//Affichage de la sitemap
+Router::connect('', 'home/index'); 																			//Page d'accueil du site
+Router::connect('e404', 'home/e404'); 																		//Erreur 404
+Router::connect('newsletter', 'contacts/newsletter'); 														//Inscription à la newsletter
+Router::connect('sitemaps', 'home/sitemaps'); 																//Affichage de la sitemap
 Router::connect('robots', 'home/robots'); 																	//Affichage du fichier robots.txt
 Router::connect('recherche', 'searchs/index'); 																//Affichage du résultat de la recherche
-Router::connect(':prefix/:slug-:id', 'posts/view/id:([0-9]+)/slug:([a-z0-9\-]+)/prefix:([a-z0-9\-]+)'); 		//Affichage du détail d'un post
-Router::connect($routesConfigs['posts_prefix_plural'], 'posts/listing');						//Liste de tous les posts
-Router::connect(':slug-:id', 'categories/view/id:([0-9]+)/slug:([a-z0-9\-]+)'); 								//Affichage d'une page catégorie
+Router::connect(':prefix/:slug-:id', 'posts/view/id:([0-9]+)/slug:([a-z0-9\-]+)/prefix:([a-z0-9\-]+)'); 	//Affichage du détail d'un post
+Router::connect($routesConfigs['posts_prefix_plural'], 'posts/listing');									//Liste de tous les posts
+Router::connect(':slug-:id', 'categories/view/id:([0-9]+)/slug:([a-z0-9\-]+)'); 							//Affichage d'une page catégorie
 ////////////////////////////
 
 ///////////////////////////
