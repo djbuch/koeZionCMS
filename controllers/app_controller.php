@@ -106,7 +106,7 @@ class AppController extends Controller {
 			
 		//Si on est dans le frontoffice			
 		} else {
-						
+			
 			//Dans tous les cas sauf si on est sur le formulaire de connexion
 			if($this->params['controllerName'] != 'Users' && ($this->request->action != 'login' || $this->request->action != 'logout')) {
 				

@@ -83,12 +83,13 @@ class Controller extends Object {
 		///////////////////////
 		//GESTION DES PLUGINS//
 		$this->loadModel('Plugin');
-		$activatePlugins = $this->Plugin->find(array('conditions' => array('online' => 1)));
+		$activatePlugins = $this->Plugin->find(array('conditions' => array('online' => 1, 'installed' => 1)));
 		foreach($activatePlugins as $k => $v) {
 			
 			$pluginName = Inflector::camelize($v['code']);
 			$this->plugins[$pluginName] = array(
-				'class' => $pluginName.'Controller',
+				'controllerClass' => $pluginName.'Controller',
+				'pluginClass' => $pluginName.'Plugin',
 				'code' => $v['code']
 			);
 		}
@@ -117,17 +118,17 @@ class Controller extends Object {
 		if(isset($this->plugins)) {
 				
 			foreach($this->plugins as $pluginName => $pluginInfos) {
-						
-				require_once(PLUGINS.DS.$pluginInfos['code'].DS.'controller.php'); //Chargement du fichier			
 				
-				if($prefix == 'backoffice') { 
+				require_once(PLUGINS.DS.$pluginInfos['code'].DS.'plugin.php'); //Chargement du fichier			
+				$pluginClass = new $pluginInfos['pluginClass']();
+				
+				if($prefix == 'backoffice') {					
 					
-					$pluginClass = new $pluginInfos['class']();
-					if(method_exists($pluginClass, '_init_backoffice_datas')) $pluginClass->_init_backoffice_datas();
+					if(method_exists($pluginClass, '_init_backoffice_datas')) $pluginClass->_init_backoffice_datas($this);
 					 
 				} else { 
 					
-					if(method_exists($pluginClass, '_init_frontoffice_datas')) $pluginClass->_init_frontoffice_datas();
+					if(method_exists($pluginClass, '_init_frontoffice_datas')) $pluginClass->_init_frontoffice_datas($this);
 					 
 				}
 			}

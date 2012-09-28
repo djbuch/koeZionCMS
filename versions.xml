@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 28/09/2012</name>
+		<num>20120928</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Correction de la gestion des plugins<task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 27/09/2012</name>
 		<num>20120927</num>
 		<supervisor>KoéZionCMS</supervisor>

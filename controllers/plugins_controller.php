@@ -50,10 +50,11 @@ class PluginsController extends AppController {
 		$plugin = $this->Plugin->findFirst($conditions);
 		
 		if($plugin['online'] && !$plugin['installed']) {
-					
-			$pluginName = Inflector::camelize($plugin['code']).'Controller'; //Génération du nom du plugin
-			require_once(PLUGINS.DS.$plugin['code'].DS.'controller.php'); //Chargement du fichier
-			if($pluginName::install()) { 
+						
+			$pluginName = Inflector::camelize($plugin['code']).'Plugin'; //Génération du nom du plugin
+			require_once(PLUGINS.DS.$plugin['code'].DS.'plugin.php'); //Chargement du fichier
+			$pluginClass = new $pluginName();
+			if($pluginClass->_install($this)) { 
 				
 				//Mise à jour de la table plugin
 				$this->Plugin->save(array('id' => $id, 'installed' => 1));				
@@ -63,7 +64,7 @@ class PluginsController extends AppController {
 			else { Session::setFlash("Problème lors de l'installation du plugin", 'error'); }
 		} else if(!$plugin['online']) { Session::setFlash('Le plugin est correctement désactivé'); }
 		
-		//$this->redirect('backoffice/plugins/index'); //On retourne sur la page de listing
+		$this->redirect('backoffice/plugins/index'); //On retourne sur la page de listing
 	}	
 	
 	function _check_plugins() {
