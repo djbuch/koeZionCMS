@@ -5,6 +5,7 @@
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Correction de la gestion des plugins<task>
+			<task author="KoéZionCMS">Suppression des exports et passage en plugins<task>
 		</tasks>	
 	</version>
 	<version>

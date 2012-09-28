@@ -37,10 +37,7 @@
 				<ul>
 					<li><a href="<?php echo Router::url('backoffice/websites/index'); ?>"><?php echo _("Gestion des sites Internet"); ?></a></li>
 					<li><a href="<?php echo Router::url('backoffice/users/index'); ?>"><?php echo _("Gestion des utilisateurs"); ?></a></li>
-					<li><a href="<?php echo Router::url('backoffice/plugins/index'); ?>"><?php echo _("Gestion des plugins"); ?></a></li>
-					<li class="nolink center">------------ <?php echo _("SAUVEGARDE"); ?> ------------</li>					
-					<li><a href="<?php echo Router::url('backoffice/exports/database', 'sql'); ?>" target="_blank"><?php echo _("Sauvegarde de la base de données"); ?></a></li>			
-					<li><a href="<?php echo Router::url('backoffice/exports/contacts', 'csv'); ?>" target="_blank"><?php echo _("Sauvegarde des contacts"); ?></a></li>
+					<li><a href="<?php echo Router::url('backoffice/plugins/index'); ?>"><?php echo _("Gestion des plugins"); ?></a></li>					
 					<li class="nolink center">---------- <?php echo _("FICHIERS DE CONF"); ?> ----------</li>			
 					<li><a href="<?php echo Router::url('backoffice/configs/database_liste'); ?>"><?php echo _("Base de données"); ?></a></li>			
 					<li><a href="<?php echo Router::url('backoffice/configs/mailer_liste'); ?>"><?php echo _("Envoi de mails"); ?></a></li>			

@@ -1,2 +1,1 @@
 <?php $this->element('backoffice/backoffice_index'); ?>
-<a class="btn blue" href="<?php echo Router::url('backoffice/exports/contacts', 'csv'); ?>" style="float: right; margin-top: 20px;" target="_blank"><span><?php echo ("Télécharger la liste"); ?></span></a>

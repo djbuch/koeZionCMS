@@ -51,17 +51,29 @@ class PluginsController extends AppController {
 		
 		if($plugin['online'] && !$plugin['installed']) {
 						
+			$isInstalled = false; //Par défaut le plugin est considéré comme non installé
+			
 			$pluginName = Inflector::camelize($plugin['code']).'Plugin'; //Génération du nom du plugin
 			require_once(PLUGINS.DS.$plugin['code'].DS.'plugin.php'); //Chargement du fichier
-			$pluginClass = new $pluginName();
-			if($pluginClass->_install($this)) { 
+			$pluginClass = new $pluginName(); //Création d'un objet plugin
+			
+			if(method_exists($pluginClass, '_install')) { //On teste si le plugin possède une méthode d'installation
 				
-				//Mise à jour de la table plugin
-				$this->Plugin->save(array('id' => $id, 'installed' => 1));				
-				Session::setFlash('Le plugin est correctement installé'); 
+				if($pluginClass->_install($this)) { $isInstalled = true; } //Si oui on la lance
+			} 
+			else { $isInstalled = true; } //Si non on considère qu'il est installé
+			
+			//Si le plugin est installé on va le sauvegarder en bdd
+			if($isInstalled) {
 				
-			} //Appel de la fonction d'installation du plugin
-			else { Session::setFlash("Problème lors de l'installation du plugin", 'error'); }
+				$this->Plugin->save(array('id' => $id, 'installed' => 1));
+				Session::setFlash('Le plugin est correctement installé');		
+						
+			} else {				
+				
+				Session::setFlash("Problème lors de l'installation du plugin", 'error');				
+			}		
+			
 		} else if(!$plugin['online']) { Session::setFlash('Le plugin est correctement désactivé'); }
 		
 		$this->redirect('backoffice/plugins/index'); //On retourne sur la page de listing
