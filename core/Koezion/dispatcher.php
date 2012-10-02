@@ -58,7 +58,7 @@ class Dispatcher {
 			)
 		) {
 			//$this->error('missing_action', 'Le controller '.$this->request->controller." n'a pas de méthode ".$action);
-			$this->error('missing_action');
+			$this->error('Le contrôleur '.$this->request->controller." n'a pas de méthode ".$action);			
 			die();
 		}
 		
@@ -143,7 +143,8 @@ class Dispatcher {
  */	
 	function error($message) {
         
-		//pr($message);		
+		//pr($message);
+		Session::write('redirectMessage', $message);
 		header("Location: ".Router::url('e404'));
 		
         /* OLD --> header("Location: ".Router::url('/errors/'.$action.'/'.$message));*/

@@ -8,6 +8,7 @@
 			<task author="KoéZionCMS">Mise en place de la gestion du template par page<task>
 			<task author="KoéZionCMS">Reprise procédure d'install<task>
 			<task author="KoéZionCMS">Suppression crytage des mots de passe dans la table users<task>
+			<task author="KoéZionCMS">Mise en place de message d'informations en local lors de redirections avec la fonction e404<task>
 		</tasks>	
 	</version>
 	<version>

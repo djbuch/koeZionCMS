@@ -81,7 +81,11 @@ class CategoriesController extends AppController {
 		//   GESTION DES EVENTUELLES ERREURS DANS LE RETOUR DE LA REQUETE OU DANS L'URL   //
 		//Si le tableau de retour de la bdd est vide on va afficher une erreur 404 car aucun élément ne correspond
 		//if(empty($datas['category'])) { $this->e404('Page introuvable'); }
-		if(empty($datas['category'])) { $this->redirect('home/e404'); }
+		if(empty($datas['category'])) { 
+			
+			Session::write('redirectMessage', "La catégorie est vide");
+			$this->redirect('home/e404'); 
+		}
 
 		//Si l'url est différente de celle en base de données on va renvoyer sur la bonne page
 		if($slug != $datas['category']['slug']) { $this->redirect("categories/view/id:$id/slug:".$datas['category']['slug'], 301); }

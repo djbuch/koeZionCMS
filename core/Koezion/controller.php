@@ -218,7 +218,8 @@ class Controller extends Object {
 			if(file_exists($file_path_default)) { $file_path = $file_path_default; } //Si le model par défaut existe
 			else if(file_exists($file_path_plugin)) { $file_path = $file_path_plugin; } //Sinon on teste si il y a un plugin
 			else { 				
-				
+								
+				Session::write('redirectMessage', "Impossible de charger le modèle ".$name);
 				$this->redirect('home/e404');
 				die();
 			} //On va tester l'existence de ce fichier
@@ -237,27 +238,12 @@ class Controller extends Object {
 	 * @param varchar $name Nom du model à "décharger"
 	 * @version 0.1 - 25/01/2011
 	 */
-	function unloadModel($name) {
-	
+	function unloadModel($name) {	
 	
 		//En premier lieu on test si le model n'est pas déjà instancié
 		//et si il ne l'est pas on procède à son intenciation
 		if(isset($this->$name)) { unset($this->$name); }
-	}	
-
-/**
- * Cette fonction permet l'affichage des erreurs 404
- *
- * @param varchar $message
- * @version 0.1 - 23/12/2011
- */
-	/*function e404($message) {
-
-		header("HTTP/1.0 404 Not Found"); //Header 404
-		$this->set('message', $message); //On envoi le message
-		$this->render('/home/e404'); //On fait le rendu de la vue
-		die(); //On stope l'exécution
-	}*/
+	}
 
 /**
  * Cette fonction permet de faire une redirection de page
