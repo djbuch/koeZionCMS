@@ -177,9 +177,10 @@ class AppController extends Controller {
     	    	
     	$controllerVarName =  $this->params['controllerVarName']; //On récupère la valeur de la variable du contrôleur
     	$modelName =  $this->params['modelName']; //On récupère la valeur du modèle
+    	$primaryKey = $this->$modelName->primaryKey;
 
     	$tableShema = $this->$modelName->shema();
-    	if(in_array('order_by', $tableShema)) { $orderBy = 'order_by ASC, name ASC'; } else { $orderBy = 'id ASC'; }
+    	if(in_array('order_by', $tableShema)) { $orderBy = 'order_by ASC, name ASC'; } else { $orderBy = $primaryKey.' ASC'; }
     	
     	$findConditions = array('fields' => $fields, 'order' => $orderBy);
     	
@@ -203,12 +204,13 @@ class AppController extends Controller {
 /**
  * Cette fonction permet l'ajout d'un élément
  *
- * @param 	boolean $redirect 	Indique si il faut ou non rediriger après traitement
+ * @param 	boolean $redirect 		Indique si il faut ou non rediriger après traitement
+ * @param 	boolean $forceInsert 	Indique si il faut ou non forcer l'enregistrement si l'id est indiqué
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 17/01/2012 by FI
  */
-    function backoffice_add($redirect = true) {
+    function backoffice_add($redirect = true, $forceInsert = false) {
     
     	$modelName = $this->params['modelName']; //On récupère la valeur du modèle
     	
@@ -216,7 +218,7 @@ class AppController extends Controller {
     		
     		if($this->$modelName->validates($this->request->data)) { //Si elles sont valides
         			
-    			$this->$modelName->save($this->request->data); //On les sauvegarde    			
+    			$this->$modelName->save($this->request->data, $forceInsert); //On les sauvegarde    			
     			    			
     			Session::setFlash('Le contenu a bien été ajouté'); //Message de confirmation
     			if($redirect) {
@@ -245,8 +247,9 @@ class AppController extends Controller {
     function backoffice_edit($id, $redirect = true) {
     	    	
     	$modelName =  $this->params['modelName']; //On récupère la valeur du modèle
+    	$primaryKey = $this->$modelName->primaryKey;
     	
-    	$this->set('id', $id); //On stocke l'identifiant dans une variable
+    	$this->set($primaryKey, $id); //On stocke l'identifiant dans une variable
 
     	//Si des données sont postées
     	if($this->request->data) {
@@ -272,7 +275,7 @@ class AppController extends Controller {
     	//Si aucune donnée n'est postée cela veut dire que c'est le premier passage on va donc récupérer les informations de l'élément
     	} else {
     
-    		$findConditions = array('conditions' => array('id' => $id));
+    		$findConditions = array('conditions' => array($primaryKey => $id));
     		$this->request->data = $this->$modelName->findFirst($findConditions);
     	}
     }
@@ -291,8 +294,9 @@ class AppController extends Controller {
     	
     	$this->auto_render = false;
     	$modelName =  $this->params['modelName']; //On récupère la valeur du modèle
+    	$primaryKey = $this->$modelName->primaryKey;
     	
-    	$findConditions = array('conditions' => array('id' => $id));
+    	$findConditions = array('conditions' => array($primaryKey => $id));
     	$element = $this->$modelName->findFirst($findConditions);
     	
     	if(!isset($element['suppressible']) || (isset($element['suppressible']) && $element['suppressible'])) {
@@ -350,10 +354,11 @@ class AppController extends Controller {
     
     	$this->auto_render = false; //Pas de vue    	
     	$modelName =  $this->params['modelName']; //On récupère la valeur du modèle    	
-    	$element = $this->$modelName->findFirst(array('conditions' => array('id' => $id))); //Récupération de l'élément
+    	$primaryKey = $this->$modelName->primaryKey;
+    	$element = $this->$modelName->findFirst(array('conditions' => array($primaryKey => $id))); //Récupération de l'élément
     	$online = $element['online']; //Récupération de la valeur actuelle du champ online
     	$newOnline = abs($online-1); //On génère la nouvelle valeur du champ online
-    	$sql = 'UPDATE '.$this->$modelName->table.' SET online = '.$newOnline.' WHERE id = '.$id; //On construit la requête à effectuer
+    	$sql = 'UPDATE '.$this->$modelName->table.' SET online = '.$newOnline.' WHERE '.$primaryKey.' = '.$id; //On construit la requête à effectuer
     	$this->$modelName->query($sql); //On lance la requête
     	Session::setFlash('Le statut a bien été modifié'); //Message de confirmation
     	if($redirect) { $this->redirect('backoffice/'.$this->params['controllerFileName'].'/index'); } //On retourne sur la page de listing
@@ -377,12 +382,13 @@ class AppController extends Controller {
     function backoffice_ajax_order_by() {
     	
     	$this->auto_render = false; //On ne fait pas de rendu de la vue
-    	$modelName =  $this->params['modelName']; //Récupération du nom du modèle
+    	$modelName =  $this->params['modelName']; //Récupération du nom du modèle    	
+    	$primaryKey = $this->$modelName->primaryKey;
     	$modelTable =  $this->$modelName->table; //Récupération du nom de la table
     	$datas = $this->request->data; //Récupération des données
     	
     	$sql = ""; //Requête sql qui sera exécutée
-    	foreach($datas['ligne'] as $position => $id) { $sql .= "UPDATE ".$modelTable." SET order_by = ".$position." WHERE id = ".$id."; "."\n"; } //Construction de la requête
+    	foreach($datas['ligne'] as $position => $id) { $sql .= "UPDATE ".$modelTable." SET order_by = ".$position." WHERE ".$primaryKey." = ".$id."; "."\n"; } //Construction de la requête
     	$this->$modelName->query($sql); //Exécution de la requête
     }   
      

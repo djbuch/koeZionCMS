@@ -32,12 +32,12 @@
 		//Si tel est le cas on va récupérer l'ensemble des fichiers présent puis compter qu'il y en ait au moins un
 		//Ensuite on va afficher le css qui gère le fond du header
 		//On ne fera rien par défaut
-		$headerDir = WEBROOT.DS.'upload'.DS.'images'.DS.'header';
+		/*$headerDir = WEBROOT.DS.'upload'.DS.'images'.DS.'header';
 		if(is_dir($headerDir)) { 
 						
 			$headerFiles = directoryContent($headerDir);
 			if(count($headerFiles) > 0) { $css[] = $websiteParams['tpl_layout'].'/hook_header'; } 
-		}
+		}*/
 		
 		echo $helpers['Html']->css($css, true);
 		

@@ -2,13 +2,15 @@
 	<ul>
 		<?php /* ?><li class="active"><a href="<?php echo Router::url('backoffice/home/dashboard'); ?>"><?php echo _("Accueil"); ?></a></li><?php */ ?>		
 		<li>
-			<a><?php echo _("CONTENUS"); ?></a>
+			<a><?php echo _("CATEGORIES"); ?></a>
 			<ul>
 				<li><a href="<?php echo Router::url('backoffice/categories/index'); ?>"><?php echo _("Catégories"); ?></a></li>
-				<li><a href="<?php echo Router::url('backoffice/sliders/index'); ?>"><?php echo _("Sliders"); ?></a></li>
-				<li><a href="<?php echo Router::url('backoffice/focus/index'); ?>"><?php echo _("Focus"); ?></a></li>
+				<li><a href="<?php echo Router::url('backoffice/categories_sliders/index'); ?>"><?php echo _("Sliders Catégories"); ?></a></li>
 			</ul>			
 		</li>		
+		
+		<li><a href="<?php echo Router::url('backoffice/sliders/index'); ?>"><?php echo _("Sliders"); ?></a></li>
+		<li><a href="<?php echo Router::url('backoffice/focus/index'); ?>"><?php echo _("Focus"); ?></a></li>
 		<li>
 			<a><?php echo _("ARTICLES"); ?></a>
 			<ul>
@@ -22,12 +24,18 @@
 			<li>
 				<a><?php echo _("PLUGINS"); ?></a>
 				<ul>
-					<?php foreach($activatePlugins as $k => $v) { ?>
-						<li><a href="<?php echo Router::url('backoffice/'.$v['code'].'/index'); ?>"><?php echo $v['name']; ?></a></li>
-					<?php } ?>
+					<?php 
+					foreach($activatePlugins as $k => $v) {
+
+						if($this->backoffice_index_for_plugin($v['code'], 'backoffice_index')) {
+							
+							?><li><a href="<?php echo Router::url('backoffice/'.$v['code'].'/index'); ?>"><?php echo $v['name']; ?></a></li><?php
+						} 
+					} 
+					?>
 				</ul>			
 			</li>	
 		<?php }  ?>
 	</ul>	
-	<div id="credits">&#169; Copyright 2012 koeZion CMS</div>
+	<div id="credits">&#169; Copyright <?php echo date('Y')?> koéZionCMS</div>
 </div>

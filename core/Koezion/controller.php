@@ -119,17 +119,21 @@ class Controller extends Object {
 				
 			foreach($this->plugins as $pluginName => $pluginInfos) {
 				
-				require_once(PLUGINS.DS.$pluginInfos['code'].DS.'plugin.php'); //Chargement du fichier			
-				$pluginClass = new $pluginInfos['pluginClass']();
-				
-				if($prefix == 'backoffice') {					
+				$pluginFile = PLUGINS.DS.$pluginInfos['code'].DS.'plugin.php';				
+				if(file_exists($pluginFile)) {
 					
-					if(method_exists($pluginClass, '_init_backoffice_datas')) $pluginClass->_init_backoffice_datas($this);
-					 
-				} else { 
+					require_once($pluginFile); //Chargement du fichier			
+					$pluginClass = new $pluginInfos['pluginClass']();
 					
-					if(method_exists($pluginClass, '_init_frontoffice_datas')) $pluginClass->_init_frontoffice_datas($this);
-					 
+					if($prefix == 'backoffice') {					
+						
+						if(method_exists($pluginClass, '_init_backoffice_datas')) $pluginClass->_init_backoffice_datas($this);
+						 
+					} else { 
+						
+						if(method_exists($pluginClass, '_init_frontoffice_datas')) $pluginClass->_init_frontoffice_datas($this);
+						 
+					}
 				}
 			}
 		}
@@ -200,10 +204,20 @@ class Controller extends Object {
 			$pluralizeName = Inflector::pluralize($name);			
 			$underscoreName = Inflector::underscore($pluralizeName);		
 			$file_path_plugin = PLUGINS.DS.$underscoreName.DS.'model.php'; //Chemin vers le fichier plugin à charger
+					
+			//////////////////////////////////////////////
+			//   RECUPERATION DES CONNECTEURS PLUGINS   //
+			$pluginsConnectors = get_plugins_connectors();
+			if(isset($pluginsConnectors[Inflector::pluralize(Inflector::underscore($name))])) {
+					
+				$connectorModel = $pluginsConnectors[Inflector::pluralize(Inflector::underscore($name))];
+				$file_path_plugin = PLUGINS.DS.$connectorModel.DS.'model.php';
+			}
+			//////////////////////////////////////////////
 		
 			if(file_exists($file_path_default)) { $file_path = $file_path_default; } //Si le model par défaut existe
 			else if(file_exists($file_path_plugin)) { $file_path = $file_path_plugin; } //Sinon on teste si il y a un plugin
-			else { 
+			else { 				
 				
 				$this->redirect('home/e404');
 				die();

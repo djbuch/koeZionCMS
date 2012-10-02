@@ -4,6 +4,7 @@
 		<li><a href="#right_column"><?php echo _("Colonne de droite"); ?></a></li>
 		<li><a href="#seo"><?php echo _("SEO"); ?></a></li>
 		<li><a href="#options"><?php echo _("Options"); ?></a></li>
+		<li><a href="#tpl"><?php echo _("Template"); ?></a></li>
 		<li><a href="#secure"><?php echo _("Sécuriser la page"); ?></a></li>
 		
 		<?php 
@@ -64,10 +65,18 @@
 			?>
 		</div>
 	</div>
+	<div id="tpl">
+		<div class="content nopadding">
+			<div class="prettyRadiobuttons clearfix">
+				<input type="hidden" id="InputTemplateId0" name="template_id" value="0" />
+				<?php foreach($templatesList as $k => $templateValue) { echo $helpers['Form']->radiobutton_templates('template_id', $templateValue['id'], $templateValue['name'], $templateValue['layout'], $templateValue['code']); } ?>
+			</div>
+		</div>
+	</div>
 	<div id="secure">
 		<div class="content nopadding">
 			<?php 
-			echo $helpers['Form']->input('is_secure', 'Activer la protection de la page', array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour diffuser cette page"));
+			echo $helpers['Form']->input('is_secure', 'Activer la protection de la page', array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour activer la protection de la page"));
 			echo $helpers['Form']->input('txt_secure', 'Texte page sécurisée', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge', 'tooltip' => "Saisissez ici le texte qui sera affiché si la page est sécurisée"));	
 			?>
 		</div>

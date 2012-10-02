@@ -100,17 +100,26 @@ class Dispatcher {
  */
 	function loadController() {
 		
-		$file_name = strtolower($this->request->controller.'_controller'); //On récupère dans une variable le nom du controller
-		
-		$file_path_default = ROOT.DS.'controllers'.DS.$file_name.'.php'; //On récupère dans une variable le chemin du controller
-		$file_path_plugin = PLUGINS.DS.$this->request->controller.DS.'controller.php'; //On récupère dans une variable le chemin du controller
+		$file_name = strtolower($this->request->controller.'_controller'); //On récupère dans une variable le nom du controller		
+		$file_path_default = CONTROLLERS.DS.$file_name.'.php'; //On récupère dans une variable le chemin du controller
+		$file_path_plugin = PLUGINS.DS.$this->request->controller.DS.'controller.php'; //On récupère dans une variable le chemin du controller pour le plugin
+					
+		//////////////////////////////////////////////
+		//   RECUPERATION DES CONNECTEURS PLUGINS   //
+		$pluginsConnectors = get_plugins_connectors();
+		if(isset($pluginsConnectors[$this->request->controller])) {
+			
+			$connectorController = $pluginsConnectors[$this->request->controller];
+			$file_path_plugin = PLUGINS.DS.$connectorController.DS.'controller.php';
+		}
+		//////////////////////////////////////////////
 	
 		if(file_exists($file_path_default)) { $file_path = $file_path_default; } //Si le controller par défaut existe
 		else if(file_exists($file_path_plugin)) { $file_path = $file_path_plugin; } //Sinon on teste si il y a un plugin
 		else { //Sinon on affiche une erreur
 
 			//$this->error('missing_controller', "Le controller ".$this->request->controller." n'existe pas"." ".serialize($this->request));	
-			$this->error('missing_controller');
+			$this->error('missing_controller - Controller : '.$this->request->controller.' - ControllerName : '.Inflector::camelize($file_name).' - FilePathDefault : '.$file_path_default.' - FilePathPlugin : '.$file_path_plugin);
 			die();	
 		}//On va tester l'existence de ce fichier
 		
@@ -134,7 +143,9 @@ class Dispatcher {
  */	
 	function error($message) {
         
-		//header("Location: ".Router::url('/errors/'.$action.'/'.$message));
+		//pr($message);		
 		header("Location: ".Router::url('e404'));
+		
+        /* OLD --> header("Location: ".Router::url('/errors/'.$action.'/'.$message));*/
 	}
 }

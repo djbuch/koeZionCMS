@@ -9,7 +9,7 @@ _*/
 .settings/
 EXPORT_PDF/
 configs/files/*.ini
-configs/forms/*.xml
+configs/plugins/
 plugins/
 webroot/files/*
 webroot/upload/*

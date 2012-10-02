@@ -71,5 +71,11 @@ $(document).ready(function(){
 	//Autosize sur le td du tableau listing
 	var autoSizeWidth = $('.auto_size_td').width();
 	$('.auto_size_td').css({width: autoSizeWidth + 'px'});
-
+	
+	$("#InputSendMail").click(function() {
+		
+		if($("#InputSendMail:checked").length) { 
+			jAlert("Attention en cochant cette case vous allez envoyer un email à l'ensemble des utilisateurs pour les informer de la modification"); 
+		}
+	});
 });

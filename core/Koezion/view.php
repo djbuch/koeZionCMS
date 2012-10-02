@@ -91,7 +91,10 @@ class View extends Object {
     	ob_start(); //On va récupérer dans une variable le contenu de la vue pour l'affichage dans la variable layout_for_content
     	if(file_exists($view)) require_once($view); //Chargement de la vue
     	$content_for_layout = ob_get_clean(); //On stocke dans cette variable le contenu de la vue
-    	require_once VIEWS.DS.'layout'.DS.$this->layout.'.php'; //On fait l'inclusion du layout par défaut et on affiche la variable dedans
+    	
+    	$alternativeLayoutFolder = substr_count($this->layout, DS) + substr_count($this->layout, '/');    	
+    	if($alternativeLayoutFolder) { require_once $this->layout.'.php'; }
+    	else { require_once VIEWS.DS.'layout'.DS.$this->layout.'.php'; } //On fait l'inclusion du layout par défaut et on affiche la variable dedans
     	$this->rendered = true; //On indique que la vue est rendue   	
     }
     
@@ -149,5 +152,34 @@ class View extends Object {
     	
     	//Appel de la fonction dans le contrôlleur
     	return call_user_func_array(array($c, $action), $parameters);
+    }
+    
+/**
+ * Cette fonction permet de tester l'existence d'une fonction dans un controler depuis une vue
+ * Utilisée surtout pour les plugins
+ *
+ * @param 	varchar $controller Nom du controller à appeler
+ * @param 	varchar $action 	Nom de l'action à effectuer
+ * @return 	boolean Résultat de la fonction
+ * @access	public
+ * @author	koéZionCMS
+ * @version 0.1 - 01/10/2012 by FI
+ */
+    function backoffice_index_for_plugin($controller, $action) {
+    	
+    	$file_name = strtolower(Inflector::underscore($controller).'_controller'); //On récupère dans une variable le nom du controller
+    	
+    	$file_path_default = CONTROLLERS.DS.$file_name.'.php'; //On récupère dans une variable le chemin du controller
+    	$file_path_plugin = PLUGINS.DS.$controller.DS.'controller.php'; //On récupère dans une variable le chemin du controller
+    	
+    	if(file_exists($file_path_default)) { $file_path = $file_path_default; } //Si le controller par défaut existe
+    	else if(file_exists($file_path_plugin)) { $file_path = $file_path_plugin; } //Sinon on teste si il y a un plugin
+    	    	
+    	require_once $file_path; //Inclusion de ce fichier si il existe
+    	$controllerName = Inflector::camelize($file_name); //On transforme le nom du fichier pour récupérer le nom du controller
+    	$c = new $controllerName(null, false); //Création d'une instance du controller souhaité
+    	
+    	if(!isset($c->index_view_for_backoffice)) { return true; }
+    	else { return $c->index_view_for_backoffice; }
     }
 }

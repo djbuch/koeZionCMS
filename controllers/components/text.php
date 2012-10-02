@@ -44,30 +44,43 @@ class Text {
  * @version 0.1 - 06/03/2012 by FI
  */
 	function date_sql_to_human($date) {
-		
-		$splitHeure = explode(' ', $date); //pour enlever les heures dans le cas datetime (sql)	
+				
+		$splitHeure = explode(' ', $date); //pour enlever les heures dans le cas datetime (sql)			
 		$dateTemp = explode('-', $splitHeure[0]); //On récupère la date et on génère un tableau
-		$heureTemp = explode(':', $splitHeure[1]); //On récupère l'heure et on génère un tableau
+		if(isset($splitHeure[1])) { $heureTemp = explode(':', $splitHeure[1]); } //On récupère l'heure et on génère un tableau
 			
 		$day = $dateTemp[2];
 		$month = (int)($dateTemp[1]);
 		//$year = substr($dateTemp[0], -2, 2);
 		$year = $dateTemp[0];
 		
-		return array(
+		$return = array(
 			'txt' => $this->months['short'][$month]." ".$year,
 			'sql' => $dateTemp[0].'-'.$dateTemp[1],
 			'date' => array(
 				'fullNumber' => $day.'.'.$dateTemp[1].'.'.$year,
 			),
 			'time' => array(
-				'h' => $heureTemp[0],	
-				'm' => $heureTemp[1],	
+				'h' => '',
+				'm' => '',
+				's' => '',
+				'hm' => '',
+				'full' => ''
+			)
+		);
+		
+		if(isset($heureTemp)) {
+
+			$return['time'] = array(
+				'h' => $heureTemp[0],
+				'm' => $heureTemp[1],
 				's' => $heureTemp[2],
 				'hm' => $heureTemp[0].':'.$heureTemp[1],
-				'full' => $splitHeure[1]	
-			)			
-		);	
+				'full' => $splitHeure[1]
+			);
+		}
+		
+		return $return;
 	}
 	
 /**

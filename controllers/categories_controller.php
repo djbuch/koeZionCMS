@@ -40,6 +40,7 @@ class CategoriesController extends AppController {
  * @version 1.2 - 05/06/2012 by FI - Modification de la gestion de la sécurité de la page
  * @version 1.3 - 16/07/2012 by FI - Rajout de la requête pour la récupération des produits
  * @version 1.4 - 02/08/2012 by FI - Passage de la gestion du formulaire de contact dans une fonction pour le mutualiser avec d'autres contrôleurs
+ * @version 1.5 - 02/10/2012 by FI - Mise en place d'un slider pour les catégories, Mise en place de la possibilité de changer le template des pages
  */	
 	function view($id, $slug) {
 	
@@ -59,16 +60,17 @@ class CategoriesController extends AppController {
 				'type',  
 				'title_colonne_droite',
 				'display_brothers', 
-				//'title_brothers', 
-				'display_children', 
-				//'title_children', 
+				'display_children',
 				'parent_id', 
 				'redirect_category_id', 
 				'level', 
 				'display_form', 
 				'is_secure', 
 				'txt_secure', 
-				'title_posts_list'
+				'title_posts_list',
+				'tpl_layout',
+				'tpl_code',
+				'template_id'
 			),
 			'conditions' => array('online' => 1, 'id' => $id)
         );
@@ -103,6 +105,19 @@ class CategoriesController extends AppController {
 			$this->redirect($redirectUrl, 301); //On lance la redirection
 		}		
 		////////////////////////////////////////////////////////////
+		
+		/////////////////////////////////////////////////////////////////
+		//   TEST POUR SAVOIR SI UN TEMPLATE PARTICULIER EST DEMANDE   //
+		if($datas['category']['template_id'] > 0) {
+			
+			$controllerVars = $this->get('vars'); //Récupération des données du controller
+			$websiteParams = $controllerVars['websiteParams']; //Récupération des données concernants le site courant
+			$websiteParams['tpl_layout'] = $datas['category']['tpl_layout']; //Mise à jour du layout
+			$websiteParams['tpl_code'] = $datas['category']['tpl_code']; //Mise à jour du code du layout
+			$websiteParams['template_id'] = $datas['category']['template_id']; //Mise à jour de l'identifiant du template
+			$this->set('websiteParams', $websiteParams); //Mise à jour des données du site
+		}		
+		/////////////////////////////////////////////////////////////////
 		
 		$datas['breadcrumbs'] = $this->Category->getPath($id); //Récupération du fil d'ariane
 		
@@ -195,6 +210,16 @@ class CategoriesController extends AppController {
 			$this->render('/categories/not_auth');
 			
 		} else {
+			
+			
+			//////////////////////////////////
+			//   RECUPERATION DES SLIDERS   //
+			$this->loadModel('CategoriesSlider');
+			$datas['sliders'] = $this->CategoriesSlider->find(array(
+				'conditions' => array('online' => 1, 'category_id' => $id),
+				'fields' => array('id', 'name', 'image', 'content'),
+				'order' => 'order_by ASC, name ASC'
+			));
 			
 			$datas['is_full_page'] = 1; //Par défaut on affichera le détail de la catégorie en pleine page			
 			
@@ -338,19 +363,20 @@ class CategoriesController extends AppController {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 17/01/2012 by FI
+ * @version 0.2 - 02/10/2012 by FI - Gestion de la personnalisation des templetes par pages
  */	
 	function backoffice_add() {
+		
+		$this->_init_datas();
 		
 		$parentAdd = parent::backoffice_add(false); //On fait appel à la fonction d'ajout parente
 		if($parentAdd) { 
 			
-			delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'categories'.DS); //On vide le dossier qui contient les fichiers en cache
+			FileAndDir::delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'categories'.DS); //On vide le dossier qui contient les fichiers en cache
+			$this->_update_template($this->Category->id, $this->request->data['template_id']);
 			$this->_check_send_mail($this->request->data);
 			$this->redirect('backoffice/categories/index'); 
 		} //On retourne sur la page de listing
-		
-		$categoriesList = $this->Category->getTreeList(); //On récupère les catégories
-		$this->set('categoriesList', $categoriesList); //On les envois à la vue
 	}	
 	
 /**
@@ -361,6 +387,8 @@ class CategoriesController extends AppController {
  * @version 0.1 - 17/01/2012 by FI
  */	
 	function backoffice_massive_add() {
+		
+		$this->_init_datas();
 		
 		set_time_limit(0);
 		if($this->request->data) { //Si des données sont postées
@@ -375,13 +403,10 @@ class CategoriesController extends AppController {
 			
 			if($parentAdd) {
 			
-				delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'categories'.DS); //On vide le dossier qui contient les fichiers en cache
+				FileAndDir::delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'categories'.DS); //On vide le dossier qui contient les fichiers en cache
 				$this->redirect('backoffice/categories/index');
 			} //On retourne sur la page de listing
 		}
-		
-		$categoriesList = $this->Category->getTreeList(); //On récupère les catégories
-		$this->set('categoriesList', $categoriesList); //On les envois à la vue
 	}
 	
 /**
@@ -392,21 +417,22 @@ class CategoriesController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 17/01/2012 by FI
  * @version 0.2 - 23/03/2012 by FI - Lors de la modification d'une catégorie, si le champ online de celle-ci est égal à 0 on va mettre à jour l'ensemble des champs online des catégories filles
+ * @version 0.2 - 02/10/2012 by FI - Gestion de la personnalisation des templetes par pages
  */	
 	function backoffice_edit($id) {
+		
+		$this->_init_datas();
 			
 		$parentEdit = parent::backoffice_edit($id, false); //On fait appel à la fonction d'édition parente
 			
 		if($parentEdit) { 
 			
 			$this->_update_children_statut($id, $this->request->data['online']);	
-			delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'categories'.DS); //On vide le dossier qui contient les fichiers en cache
+			FileAndDir::delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'categories'.DS); //On vide le dossier qui contient les fichiers en cache
+			$this->_update_template($this->Category->id, $this->request->data['template_id']);
 			$this->_check_send_mail($this->request->data);
 			$this->redirect('backoffice/categories/index'); //On retourne sur la page de listing 
 		} 
-		
-		$categoriesList = $this->Category->getTreeList(); //On récupère les catégories
-		$this->set('categoriesList', $categoriesList); //On les envois à la vue
 	}
 	
 /**
@@ -424,7 +450,7 @@ class CategoriesController extends AppController {
 		
 			$vars = $this->get('vars'); //Récupération des données			
 			$this->_update_children_statut($id, $vars['newOnline']);
-			delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'categories'.DS); //On vide le dossier qui contient les fichiers en cache
+			FileAndDir::delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'categories'.DS); //On vide le dossier qui contient les fichiers en cache
 			$this->redirect('backoffice/categories/index'); //On retourne sur la page de listing
 		}		
 	}	
@@ -443,7 +469,7 @@ class CategoriesController extends AppController {
 		$parentDelete = parent::backoffice_delete($id, false); //On fait appel à la fonction d'édition parente
 		if($parentDelete) {			
 			
-			delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'categories'.DS); //On vide le dossier qui contient les fichiers en cache			
+			FileAndDir::delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'categories'.DS); //On vide le dossier qui contient les fichiers en cache			
 			if($redirect) { $this->redirect('backoffice/categories/index'); } //On retourne sur la page de listing
 			else { return true; }
 		}
@@ -461,7 +487,7 @@ class CategoriesController extends AppController {
 					
 		$this->auto_render = false; //Pas de rendu
 		$this->Category->move2prev($id); //On fait appel à la fonction présente dans le model
-		delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'categories'.DS); //On vide le dossier qui contient les fichiers en cache
+		FileAndDir::delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'categories'.DS); //On vide le dossier qui contient les fichiers en cache
 		$this->redirect('backoffice/categories/index'); //On redirige vers l'index
 	}
 
@@ -477,7 +503,7 @@ class CategoriesController extends AppController {
 		
 		$this->auto_render = false; //Pas de rendu
 		$this->Category->move2next($id); //On fait appel à la fonction présente dans le model
-		delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'categories'.DS); //On vide le dossier qui contient les fichiers en cache
+		FileAndDir::delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'categories'.DS); //On vide le dossier qui contient les fichiers en cache
 		$this->redirect('backoffice/categories/index'); //On redirige vers l'index
 	}	
 	
@@ -721,5 +747,43 @@ class CategoriesController extends AppController {
 				}
 			}
 		}		
-	}    
+	} 
+	
+/**
+ * Cette fonction permet l'initialisation des données pour les formulaires dans le backoffice
+ *
+ * @access 	private
+ * @author 	koéZionCMS
+ * @version 0.1 - 02/10/2012 by FI
+ */	
+	function _init_datas() {		
+		
+		$categoriesList = $this->Category->getTreeList(); //On récupère les catégories
+		$this->set('categoriesList', $categoriesList); //On les envois à la vue
+		
+		$this->loadModel('Template');
+		$templatesListTMP = $this->Template->find(array('conditions' => array('online' => 1), 'order' => 'name'));
+		$templatesList = array();
+		foreach($templatesListTMP as $k => $v) { $templatesList[$v['id']] = $v; }
+		$this->templatesList = $templatesList;
+		$this->set('templatesList', $templatesList); //On les envois à la vue
+	} 
+
+/**
+ * Cette fonction permet la mise à jour du template utilisé par la catégorie
+ *
+ * @param 	integer $categoryId Identifiant de la catégorie
+ * @param 	integer $templateId Identifiant du template utilisé
+ * @access 	private
+ * @author 	koéZionCMS
+ * @version 0.1 - 02/10/2012 by FI
+ */	
+	function _update_template($categoryId, $templateId) {
+		
+		$templateDatas = $this->templatesList[$templateId];
+		$templateLayout = $templateDatas['layout'];
+		$templateCode = $templateDatas['code'];
+		$query = "UPDATE ".$this->Category->table." SET tpl_layout = '".$templateLayout."', tpl_code = '".$templateCode."' WHERE ".$this->Category->primaryKey." = ".$categoryId;
+		$this->Category->query($query);
+	}  
 }

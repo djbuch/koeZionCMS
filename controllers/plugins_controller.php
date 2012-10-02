@@ -81,10 +81,10 @@ class PluginsController extends AppController {
 	
 	function _check_plugins() {
 		
-		$pluginsDirectoryContent = directoryContent(PLUGINS);
+		$pluginsDirectoryContent = FileAndDir::directoryContent(PLUGINS);
 		foreach($pluginsDirectoryContent as $pluginDirectory) {		
 		
-			$pluginDirectoryContent = directoryContent(PLUGINS.DS.$pluginDirectory);
+			$pluginDirectoryContent = FileAndDir::directoryContent(PLUGINS.DS.$pluginDirectory);
 			if(file_exists(PLUGINS.DS.$pluginDirectory.DS.'description.xml')) {
 		
 				$xParsedXml = simplexml_load_file(PLUGINS.DS.$pluginDirectory.DS.'description.xml');

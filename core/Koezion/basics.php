@@ -135,54 +135,14 @@ function debug($var, $die = 0) {
 		return $data ;
 	}*/
 	
-	
-	function directoryContent($directory) {
-				
-		$files = array();
-		$dir = opendir($directory);
+	function get_plugins_connectors() {
+
+		$pluginsConnectors = array();
+		$pluginsConnectorsPath = CONFIGS.DS.'plugins'.DS.'connectors';
+		if(is_dir($pluginsConnectorsPath)) {
 		
-		while($file = readdir($dir)) {
-			
-			if($file != '.' && $file != '..' && $file != 'empty' && !is_dir($directory.$file)) {
-				
-				//$directory.$file
-				$files[] = $file;
-			}
-		}		
-		closedir($dir);
-		return $files;
-	}	
-	
-	function remove_directory($chemin) {
-			
-		// vérifie si le nom du repertoire contient "/" à la fin
-		// place le pointeur en fin d'url
-		if($chemin[strlen($chemin)-1] != DS) { $chemin .= DS; } // rajoute '/'
-	
-		if(is_dir($chemin)) {
-			$sq = opendir($chemin); // lecture
-			while($f = readdir($sq)) {
-				if($f != '.' && $f != '..') {
-					$fichier = $chemin.$f; // chemin fichier
-					if (is_dir($fichier)) {
-						
-						remove_directory($fichier); // rapel la fonction de manière récursive
-					} else {
-						
-						unlink($fichier);
-					} // sup le fichier
-				}
-			}
-			closedir($sq);
-			rmdir($chemin); // sup le répertoire
+			foreach(FileAndDir::directoryContent($pluginsConnectorsPath) as $pluginsConnectorsFile) { include($pluginsConnectorsPath.DS.$pluginsConnectorsFile); }			
 		}
-		elseif(is_file($chemin)) { 
-			
-			unlink($chemin);  // sup le fichier
-		}
-	}
-	
-	function delete_directory_file($dir) {
 		
-		foreach(directoryContent($dir) as $file) { unlink($dir.$file); } //On supprime le fichier
+		return $pluginsConnectors;
 	}

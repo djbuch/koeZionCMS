@@ -5,6 +5,9 @@ $Errorsmessages['Category']['slug']['rule1'] = _('La valeur de ce champ est de 3
 $Errorsmessages['Category']['slug']['rule2'] = _('Il y a des caractères non autorisés dans ce champ.');
 $Errorsmessages['Category']['redirect_category_id'] = _('Une catégorie ne peut pas être redirigée vers elle même.');
 
+$Errorsmessages['CategoriesSlider']['category_id'] = _('Vous devez indiquer la catégorie.');
+$Errorsmessages['CategoriesSlider']['name'] = _('La valeur de ce champ est de 2 caractères minimum.');
+
 $Errorsmessages['Contact']['name'] = _('Veuillez saisir votre nom');
 $Errorsmessages['Contact']['phone'] = _('Veuillez saisir votre téléphone');
 $Errorsmessages['Contact']['email'] = _('Vous devez indiquer un email valide.');
