@@ -717,7 +717,7 @@ class Model extends Object {
 		$datasToSave = array(); //Tableau utilisé lors de la préparation de la requête
 		if(isset($datas[$primaryKey]) && !empty($datas[$primaryKey]) && !$forceInsert) { $datasToSave[":$primaryKey"] = $datas[$primaryKey]; }
 		
-		if(in_array('password', $datasShema)) { $datas['password'] = sha1($datas['password']); } //On procède à la mise à jour du champ password si il existe				
+		//if(in_array('password', $datasShema)) { $datas['password'] = sha1($datas['password']); } //On procède à la mise à jour du champ password si il existe				
 		
 		if(in_array('slug', $shema) && (!in_array('slug', $datasShema) || empty($datas['slug']))) { $datas['slug'] = strtolower(Inflector::slug($datas['name'], '-')); } //On procède à la mise à jour du champ slug si celui ci n'est pas rempli ou non présent dans le formulaire mais présent dans la table
 		if(in_array('page_title', $shema) && (!in_array('page_title', $datasShema) || empty($datas['page_title']))) { $datas['page_title'] = $datas['name']; } //On procède à la mise à jour du champ page_title si celui ci n'est pas rempli ou non présent dans le formulaire mais présent dans la table

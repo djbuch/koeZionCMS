@@ -53,16 +53,10 @@ function save_website($datas) {
 		'type' => 3,
 		'name' => 'Racine Site '.$websiteModel->id,
 		'slug' => 'racine-site-'.$websiteModel->id,
-		'content' => '',
 		'online' => 1,
 		'display_brothers' => 0,
-		'title_brothers' => '',
-		'page_description' => '',
-		'page_keywords' => '',
 		'redirect_category_id' => 0,
 		'display_contact_form' => 0,
-		'page_password' => '',
-		'txt_secure' => '',
 		'website_id' => $websiteModel->id
 	);
 	$categoryModel->save($categorie);

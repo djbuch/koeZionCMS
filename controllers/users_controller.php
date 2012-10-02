@@ -32,7 +32,7 @@ class UsersController extends AppController {
 		if($this->request->data) {
 			
 			$data = $this->request->data; //Mise en variable des données postées			
-			$data['password'] = sha1($data['password']); //Cryptage du mot de passe
+			//$data['password'] = sha1($data['password']); //Cryptage du mot de passe
 			
 			//Récupération du login et du mot de passe dans des variables
 			$postLogin = $data['login'];

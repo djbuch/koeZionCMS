@@ -1,11 +1,17 @@
 INSERT INTO `users` (`id`, `name`, `second_name`, `login`, `password`, `email`, `role`, `online`, `users_group_id`) VALUES
-(1, 'Administrateur Général', '', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin@admin.com', 'admin', 1, 1);
+(1, 'Superadmin', 				'', 'superadmin', 		'superadmin', 		'superadmin@monsite.com', 		'admin', 			1, 1),
+(2, 'Administrateur du site', 	'', 'administrateur', 	'administrateur', 	'administrateur@monsite.com', 	'website_admin', 	1, 2),
+(3, 'Utilisateur du site', 		'', 'utilisateur', 		'utilisateur', 		'utilisateur@monsite.com', 		'user', 			1, 3);
 
 INSERT INTO `users_groups` (`id`, `name`, `online`, `created`, `modified`, `created_by`, `modified_by`) VALUES
-(1, 'Administrateur Général', 1, '2012-09-06 10:34:08', '2012-09-06 10:34:08', 1, 1);
+(1, 'Super administrateur', 	1, '2012-09-06 10:34:08', '2012-09-06 10:34:08', 1, 1),
+(2, 'Administrateur de site', 	1, '2012-09-06 10:34:08', '2012-09-06 10:34:08', 1, 1),
+(3, 'Utilisateur', 				1, '2012-09-06 10:34:08', '2012-09-06 10:34:08', 1, 1);
 
 INSERT INTO `users_groups_websites` (`users_group_id`, `website_id`) VALUES
-(1, 1);
+(1, 1),
+(2, 1),
+(3, 1);
 
 INSERT INTO `templates` (`id`, `name`, `layout`, `code`, `color`, `online`, `created`) VALUES
 (1, 'Bronze', 'frontoffice', 'bronze', '5e4b52', 1, '2012-01-06 03:00:21'),

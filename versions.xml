@@ -6,6 +6,8 @@
 		<tasks>
 			<task author="KoéZionCMS">Mise en place de la gestion d'un slider par catégories<task>
 			<task author="KoéZionCMS">Mise en place de la gestion du template par page<task>
+			<task author="KoéZionCMS">Reprise procédure d'install<task>
+			<task author="KoéZionCMS">Suppression crytage des mots de passe dans la table users<task>
 		</tasks>	
 	</version>
 	<version>
