@@ -10,10 +10,10 @@
 					Vous venez de terminer l'installation du CMS koéZion<br />					
 				</div>
 				<div class="system warning">
-					<b>Accès administrateur</b><br />
+					<b>Accès au Backoffice</b><br />
 					Pour vous connecter au backoffice utilisez l'adresse www.votrenomdedomaine.com/adm <br />
-					Le login par défaut est <b>admin</b><br />
-					Le mot de passe par défaut est <b>admin</b><br />
+					Le login par défaut est <b>superadmin</b><br />
+					Le mot de passe par défaut est <b>superadmin</b><br />
 					<i>Pensez à le changer par un mot de passe que vous seul pourrez retrouver</i>
 					
 				</div>

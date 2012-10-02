@@ -53,5 +53,5 @@
 		?>
 	</div>
 	<?php */ ?>
-	<div class="row" style="text-align: right;"><button class="medium grey" type="submit"><span>Configurer la base de données</span></button></div>
+	<div class="row" style="text-align: right;"><button class="medium grey" type="submit"><span>Tester la connexion à la base de données</span></button></div>
 </form>

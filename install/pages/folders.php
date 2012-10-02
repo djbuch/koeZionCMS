@@ -16,11 +16,6 @@ $folders = array(
 		'txtFolder' 	=> DS.'webroot'.DS.'files',
 		'check'			=> 'chmod'			
 	),
-	/*array(
-		'checkFolder' 	=> WEBROOT_FILES.DS.'search',
-		'txtFolder' 	=> DS.'webroot'.DS.'files'.DS.'search',
-		'check'			=> 'exist'			
-	),*/
 	array(
 		'checkFolder' 	=> WEBROOT_UPLOAD,
 		'txtFolder' 	=> DS.'webroot'.DS.'upload',
@@ -49,7 +44,7 @@ $folders = array(
 						
 						case 'chmod':
 							
-							if(is_writable($checkFolder)) { ?><div class="system succes">Le dossier <b><?php echo $txtFolder; ?></b> est correctement paramétré.</div><?php } 
+							if(FileAndDir::dwritable($checkFolder)) { ?><div class="system succes">Le dossier <b><?php echo $txtFolder; ?></b> est correctement paramétré.</div><?php } 
 							else { 
 								
 								$result = false;
@@ -63,7 +58,7 @@ $folders = array(
 						
 						case 'exist':
 									
-							if(is_dir($checkFolder)) { 
+							if(FileAndDir::dexists($checkFolder)) { 
 								$result = false;
 								?><div class="system error">Le dossier <b><?php echo $txtFolder; ?></b> doit être supprimé.</div><?php 
 							}
@@ -84,14 +79,11 @@ $folders = array(
 							WEBROOT_UPLOAD.DS.'flash',
 							WEBROOT_UPLOAD.DS.'images'
 					);
-					foreach($foldersToCreate as $folder) { 
-						
-						if(!is_dir($folder)) mkdir($folder, 0777); 
-					}		
-
-					copy(INSTALL_FILES.DS.'posts.ini', CONFIGS_FILES.DS.'posts.ini');
-					copy(INSTALL_FILES.DS.'routes.ini', CONFIGS_FILES.DS.'routes.ini');
-					copy(INSTALL_FILES.DS.'exports.ini', CONFIGS_FILES.DS.'exports.ini');
+					foreach($foldersToCreate as $folder) { FileAndDir::createPath($folder); }
+					
+					FileAndDir::fcopy(INSTALL_FILES.DS.'posts.ini', CONFIGS_FILES.DS.'posts.ini');
+					FileAndDir::fcopy(INSTALL_FILES.DS.'routes.ini', CONFIGS_FILES.DS.'routes.ini');
+					FileAndDir::fcopy(INSTALL_FILES.DS.'exports.ini', CONFIGS_FILES.DS.'exports.ini');
 									
 					$httpHost = $_SERVER["HTTP_HOST"];
 					if($httpHost == 'localhost' || $httpHost == '127.0.0.1') { $section = 'localhost'; } else { $section = 'online'; }

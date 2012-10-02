@@ -51,6 +51,16 @@ class FileAndDir {
 	}
 
 /**
+ * Vérifie l'existence du dossier.
+ * @return  bool Retourne true si le dossier existe, false le cas contraire.
+ */
+	function dwritable($path) {
+		
+		clearstatcache();
+		return is_writable($path);
+	}
+
+/**
  * Modifie les droits d'un fichier.
  * @param int $mod Nouveaux droits du fichier (en octal). Exemple : 0777
  */

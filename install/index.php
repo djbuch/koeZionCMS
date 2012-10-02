@@ -38,7 +38,7 @@ $stepTitle = array(
 					<li <?php echo $step == 'folders' ? 'class="active"' : ''; ?>><a>DOSSIERS</a></li>
 					<li <?php echo in_array($step, array('database_params', 'database_tables', 'database_datas')) ? 'class="active"' : ''; ?>><a>BASE DE DONNEES</a></li>
 					<li <?php echo $step == 'website' ? 'class="active"' : ''; ?>><a>SITE INTERNET</a></li>
-					<li <?php echo $step == 'smtp' ? 'class="active"' : ''; ?>><a>SERVEUR SMTP</a></li>
+					<?php /* ?><li <?php echo $step == 'smtp' ? 'class="active"' : ''; ?>><a>SERVEUR SMTP</a></li><?php */ ?>
 					<li <?php echo $step == 'final' ? 'class="active"' : ''; ?>><a>RECAP</a></li>
 				</ul>
 			</div>
