@@ -53,15 +53,21 @@ class PluginsController extends AppController {
 						
 			$isInstalled = false; //Par défaut le plugin est considéré comme non installé
 			
-			$pluginName = Inflector::camelize($plugin['code']).'Plugin'; //Génération du nom du plugin
-			require_once(PLUGINS.DS.$plugin['code'].DS.'plugin.php'); //Chargement du fichier
-			$pluginClass = new $pluginName(); //Création d'un objet plugin
+			$pluginName = Inflector::camelize($plugin['code']).'Plugin'; //Génération du nom du plugin			
+			$pluginFile = PLUGINS.DS.$plugin['code'].DS.'plugin.php'; //Chemin vers le fichier d'installation du plugin
 			
-			if(method_exists($pluginClass, '_install')) { //On teste si le plugin possède une méthode d'installation
+			if(FileAndDir::fexists($pluginFile)) { //Si le fichier existe
+						
+				require_once($pluginFile); //Chargement du fichier
+				$pluginClass = new $pluginName(); //Création d'un objet plugin
 				
-				if($pluginClass->_install($this)) { $isInstalled = true; } //Si oui on la lance
-			} 
-			else { $isInstalled = true; } //Si non on considère qu'il est installé
+				if(method_exists($pluginClass, '_install')) { //On teste si le plugin possède une méthode d'installation
+					
+					if($pluginClass->_install($this)) { $isInstalled = true; } //Si oui on la lance
+				} 
+				else { $isInstalled = true; } //Si non on considère qu'il est installé
+				
+			} else { $isInstalled = true; } //Si non on considère qu'il est installé
 			
 			//Si le plugin est installé on va le sauvegarder en bdd
 			if($isInstalled) {

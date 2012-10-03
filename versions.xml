@@ -5,6 +5,7 @@
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Modification du htaccess (Conf OVH)<task>
+			<task author="KoéZionCMS">Correction gestion de l'installation d'un plugin<task>
 		</tasks>	
 	</version>
 	<version>
