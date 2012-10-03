@@ -35,23 +35,6 @@ CREATE TABLE IF NOT EXISTS `categories` (
   KEY `type_2` (`type`,`online`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-DROP TABLE IF EXISTS `categories_sliders`;
-CREATE TABLE IF NOT EXISTS `categories_sliders` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `image` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `content` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `order_by` int(11) NOT NULL,
-  `online` int(11) NOT NULL,
-  `created` datetime DEFAULT NULL,
-  `modified` datetime NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `modified_by` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL,
-  `website_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 DROP TABLE IF EXISTS `contacts`;
 CREATE TABLE IF NOT EXISTS `contacts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

@@ -1,6 +1,0 @@
-<?php 	
-echo $helpers['Form']->input('category_id', 'Catégorie', array('type' => 'select', 'datas' => $categoriesList, 'tooltip' => "Indiquez la page parente de cette page (Racine du site par défaut)", 'firstElementList' => "Sélectionnez une catégorie"));
-echo $helpers['Form']->input('name', '<i>(*)</i> Titre', array('tooltip' => "Indiquez le titre du slider"));
-echo $helpers['Form']->input('image', 'Image', array('type' => 'textarea', 'wysiswyg' => true, 'toolbar' => 'image', 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge', 'tooltip' => "Insérez l'image à l'aide du module fournit par l'éditeur de texte, Taille 918/350px, Mode RVB, Résolution 72dpi"));
-echo $helpers['Form']->input('content', 'Contenu', array('type' => 'textarea', 'wysiswyg' => true, 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge', 'tooltip' => "Saisissez ici le descriptif de votre slider, n'hésitez pas à utiliser les modèles de pages pour vous aider"));
-echo $helpers['Form']->input('online', 'En ligne', array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour diffuser ce slider"));

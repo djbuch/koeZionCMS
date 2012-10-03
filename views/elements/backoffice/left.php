@@ -1,14 +1,7 @@
 <div id="left">
 	<ul>
 		<?php /* ?><li class="active"><a href="<?php echo Router::url('backoffice/home/dashboard'); ?>"><?php echo _("Accueil"); ?></a></li><?php */ ?>		
-		<li>
-			<a><?php echo _("CATEGORIES"); ?></a>
-			<ul>
-				<li><a href="<?php echo Router::url('backoffice/categories/index'); ?>"><?php echo _("Catégories"); ?></a></li>
-				<li><a href="<?php echo Router::url('backoffice/categories_sliders/index'); ?>"><?php echo _("Sliders Catégories"); ?></a></li>
-			</ul>			
-		</li>		
-		
+		<li><a href="<?php echo Router::url('backoffice/categories/index'); ?>"><?php echo _("Catégories"); ?></a>		
 		<li><a href="<?php echo Router::url('backoffice/sliders/index'); ?>"><?php echo _("Sliders"); ?></a></li>
 		<li><a href="<?php echo Router::url('backoffice/focus/index'); ?>"><?php echo _("Focus"); ?></a></li>
 		<li>

@@ -6,6 +6,7 @@
 		<tasks>
 			<task author="KoéZionCMS">Modification du htaccess (Conf OVH)<task>
 			<task author="KoéZionCMS">Correction gestion de l'installation d'un plugin<task>
+			<task author="KoéZionCMS">Passage en plugin de sliders catégories<task>
 		</tasks>	
 	</version>
 	<version>

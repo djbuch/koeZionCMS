@@ -214,17 +214,7 @@ class CategoriesController extends AppController {
 			$this->render('/categories/not_auth');
 			
 		} else {
-			
-			
-			//////////////////////////////////
-			//   RECUPERATION DES SLIDERS   //
-			$this->loadModel('CategoriesSlider');
-			$datas['sliders'] = $this->CategoriesSlider->find(array(
-				'conditions' => array('online' => 1, 'category_id' => $id),
-				'fields' => array('id', 'name', 'image', 'content'),
-				'order' => 'order_by ASC, name ASC'
-			));
-			
+						
 			$datas['is_full_page'] = 1; //Par défaut on affichera le détail de la catégorie en pleine page			
 			
 			//////////////////////////////////
