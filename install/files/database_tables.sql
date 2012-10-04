@@ -8,8 +8,6 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `page_description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `page_keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `title_colonne_droite` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `title_children` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `title_brothers` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `title_posts_list` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `type` int(11) NOT NULL,
   `display_form` int(11) NOT NULL,

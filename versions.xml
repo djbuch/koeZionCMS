@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 04/10/2012</name>
+		<num>20121004</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Modification de la gestion des plugins pour qu'ils soient interprétés par défaut dans le but de pouvoir réécrire les fonctionnalités du CMS<task>
+			<task author="KoéZionCMS">Modification de la procédure d'installation<task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 03/10/2012</name>
 		<num>20121003</num>
 		<supervisor>KoéZionCMS</supervisor>

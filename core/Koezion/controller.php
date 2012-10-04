@@ -55,9 +55,10 @@ class Controller extends Object {
 	function __construct($request = null, $beforeFilter = true) {
 		
 		//Si un objet Request est passé en paramètre, on stocke la request dans l'instance de la classe
-		if($request) { $this->request = $request; }
+		if($request) { $this->request = $request; }		
 		
-		$controllerName = str_replace('Controller', '', get_class($this)); //Nom du contrôleur
+		$controllerName = str_replace('PluginController', '', get_class($this)); //Nom du contrôleur
+		$controllerName = str_replace('Controller', '', $controllerName); //Nom du contrôleur
 
 		$modelName = Inflector::singularize($controllerName); //Création du nom du model		
 		
@@ -189,7 +190,7 @@ class Controller extends Object {
  * @version 0.1 - 23/12/2011
  */
 	function loadModel($name, $return = false) {
-
+		
 		//En premier lieu on test si le model n'est pas déjà instancié
 		//et si il ne l'est pas on procède à son intenciation
 		if(!isset($this->$name)) {
@@ -201,10 +202,10 @@ class Controller extends Object {
 			//Pour déterminer le dossier du plugin nous devons transformer le nom du model à charger
 			//Etape 1 : passage au pluriel
 			//Etape 2 : transformation du camelCased en _
-			$pluralizeName = Inflector::pluralize($name);			
+			$pluralizeName = Inflector::pluralize($name);		
 			$underscoreName = Inflector::underscore($pluralizeName);		
 			$file_path_plugin = PLUGINS.DS.$underscoreName.DS.'model.php'; //Chemin vers le fichier plugin à charger
-					
+			
 			//////////////////////////////////////////////
 			//   RECUPERATION DES CONNECTEURS PLUGINS   //
 			$pluginsConnectors = get_plugins_connectors();
@@ -215,11 +216,11 @@ class Controller extends Object {
 			}
 			//////////////////////////////////////////////
 		
-			if(file_exists($file_path_default)) { $file_path = $file_path_default; } //Si le model par défaut existe
-			else if(file_exists($file_path_plugin)) { $file_path = $file_path_plugin; } //Sinon on teste si il y a un plugin
+			if(file_exists($file_path_plugin)) { $file_path = $file_path_plugin; } //Si il y a un plugin on le charge par défaut		
+			else if(file_exists($file_path_default)) { $file_path = $file_path_default; } //Sinon on test si le model par défaut existe 
 			else { 				
-								
-				Session::write('redirectMessage', "Impossible de charger le modèle ".$name);
+						
+				Session::write('redirectMessage', "Impossible de charger le modèle ".$name." dans le fichier controller");
 				$this->redirect('home/e404');
 				die();
 			} //On va tester l'existence de ce fichier

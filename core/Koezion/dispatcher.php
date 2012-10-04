@@ -30,8 +30,7 @@ class Dispatcher {
 	public function __construct() {
         
 		$this->request = new Request(); //Création d'un objet de type Request		
-		$this->dispatch(); //On lance la fonction principale de la classe
-		      
+		$this->dispatch(); //On lance la fonction principale de la classe		      
 	} 
 	
 /**
@@ -57,28 +56,22 @@ class Dispatcher {
 				)
 			)
 		) {
-			//$this->error('missing_action', 'Le controller '.$this->request->controller." n'a pas de méthode ".$action);
-			$this->error('Le contrôleur '.$this->request->controller." n'a pas de méthode ".$action);			
+			
+			$this->error('Le contrôleur '.$this->request->controller." n'a pas de méthode ".$action." dans le fichier dispatcher");			
 			die();
 		}
 		
 		//fonction qui permet d'appeler une fonction
 		//Cette fonction va permettre l'appel dynamique de la fonction (située dans le controller) demandée dans l'url
-		
-		
-		$this->dispatchMethod($controller, $action, $this->request->params);
-		
+				
+		$this->dispatchMethod($controller, $action, $this->request->params);		
 		/*call_user_func_array(
-			array(
-				$controller,
-				$action
-			),
+			array($controller, $action),
 			$this->request->params
 		);*/
 		
 		if($controller->auto_render) { $controller->render($action); } //AUTO RENDER
-	}
-	
+	}	
 	
 	function dispatchMethod($controller, $action, $params = array()) {
 				
@@ -91,8 +84,7 @@ class Dispatcher {
 			case 5: 	$controller->{$action}($params[0], $params[1], $params[2], $params[3], $params[4]); 	break;
 			default: 	call_user_func_array(array($controller, $action), $params); 							break;
 		}
-	}
-	
+	}	
 	
 /**
  * Cette fonction va charger un controller
@@ -100,8 +92,10 @@ class Dispatcher {
  */
 	function loadController() {
 		
-		$file_name = strtolower($this->request->controller.'_controller'); //On récupère dans une variable le nom du controller		
-		$file_path_default = CONTROLLERS.DS.$file_name.'.php'; //On récupère dans une variable le chemin du controller
+		$file_name_default = strtolower($this->request->controller.'_controller'); //On récupère dans une variable le nom du controller		
+		$file_path_default = CONTROLLERS.DS.$file_name_default.'.php'; //On récupère dans une variable le chemin du controller
+		
+		$file_name_plugin = strtolower($this->request->controller.'_plugin_controller'); //On récupère dans une variable le nom du controller
 		$file_path_plugin = PLUGINS.DS.$this->request->controller.DS.'controller.php'; //On récupère dans une variable le chemin du controller pour le plugin
 					
 		//////////////////////////////////////////////
@@ -114,39 +108,35 @@ class Dispatcher {
 		}
 		//////////////////////////////////////////////
 	
-		if(file_exists($file_path_default)) { $file_path = $file_path_default; } //Si le controller par défaut existe
-		else if(file_exists($file_path_plugin)) { $file_path = $file_path_plugin; } //Sinon on teste si il y a un plugin
+		//Par défaut on va contrôler si le plugin existe en premier
+		//Cela permet de pouvroi réécrire les fonctionnalités du CMS		
+		if(file_exists($file_path_plugin)) { 
+			
+			$file_name = $file_name_plugin;
+			$file_path = $file_path_plugin;
+			
+		} else if(file_exists($file_path_default)) { 
+			
+			$file_name = $file_name_default;
+			$file_path = $file_path_default;
+			 
+		} //Sinon on teste si le controller par défaut existe
 		else { //Sinon on affiche une erreur
 
-			//$this->error('missing_controller', "Le controller ".$this->request->controller." n'existe pas"." ".serialize($this->request));	
-			$this->error('missing_controller - Controller : '.$this->request->controller.' - ControllerName : '.Inflector::camelize($file_name).' - FilePathDefault : '.$file_path_default.' - FilePathPlugin : '.$file_path_plugin);
+			$this->error("Le controller ".$this->request->controller." n'existe pas"." dans le fichier dispatcher");
 			die();	
 		}//On va tester l'existence de ce fichier
 		
 		require $file_path; //Inclusion de ce fichier si il existe
 	
-		$controller_name = Inflector::camelize($file_name); //On transforme le nom du fichier pour récupérer le nom du controller
-		$controller =  new $controller_name($this->request); //Création d'une instance du controller souhaité dans lequel on injecte la request
+		$controller_name = Inflector::camelize($file_name); //On transforme le nom du fichier pour récupérer le nom du controller		
+		$controller =  new $controller_name($this->request); //Création d'une instance du controller souhaité dans lequel on injecte la request		
 		return $controller;
 	}	
     
-/**
- * Cette fonction permet l'affichage d'une page
- *
- * @param 	integer $id 	Identifiant de la page à afficher
- * @param 	varchar $slug 	Url de la page
- * @access	public
- * @author	koéZionCMS
- * @version 0.1 - 03/01/2012 by FI
- * @version 0.2 - 02/03/2012 by FI - Modification de la gestion de l'affichage des erreurs
- * @todo A reprendre quand plus de temps
- */	
 	function error($message) {
         
-		//pr($message);
 		Session::write('redirectMessage', $message);
 		header("Location: ".Router::url('e404'));
-		
-        /* OLD --> header("Location: ".Router::url('/errors/'.$action.'/'.$message));*/
 	}
 }

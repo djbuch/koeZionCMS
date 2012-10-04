@@ -54,7 +54,6 @@ function save_website($datas) {
 		'name' => 'Racine Site '.$websiteModel->id,
 		'slug' => 'racine-site-'.$websiteModel->id,
 		'online' => 1,
-		'display_brothers' => 0,
 		'redirect_category_id' => 0,
 		'display_contact_form' => 0,
 		'website_id' => $websiteModel->id
