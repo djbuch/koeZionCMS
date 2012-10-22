@@ -92,7 +92,7 @@ p.arrow{background:url(../../img/frontoffice/bullet-arrow.png) no-repeat 0 1px;c
 .container_alpha{width:892px;padding:15px 32px 18px;overflow:hidden;background:url(../../img/frontoffice/container_alpha.png) repeat-x center bottom transparent;z-index:988;zoom:1}
 .container_alpha_nogradients{width:892px;padding:15px 32px 15px;overflow:hidden;background:0;z-index:988;zoom:1}
 .container_gamma{width:892px;padding:15px 32px 17px;overflow:hidden;background:url(../../img/frontoffice/container_gamma.png) repeat-x center bottom transparent;z-index:988;zoom:1}
-.container_omega{width:892px;padding:32px 32px 15px;overflow:hidden;background:url(../../img/frontoffice/container_omega.png) repeat-x center top transparent;z-index:988;zoom:1}
+.container_omega{width:892px;padding:32px 32px 15px;overflow:hidden;background:url(../../img/frontoffice/container_omega.png) repeat-x center top transparent;z-index:988;zoom:1;min-height:350px}
 .container_omega_plus{width:892px;margin-top:6px;padding:35px 32px 18px;overflow:hidden;background:url(../../img/frontoffice/container_omega_plus.png) repeat-x center top transparent;z-index:988;zoom:1}
 .container_alpha.slider{width:918px;padding:16px 19px 33px}
 .second_block .container_alpha,.second_block .container_alpha_nogradients{padding-top:0}

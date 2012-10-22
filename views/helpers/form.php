@@ -80,6 +80,24 @@ class Form {
 	}
 	
 /**
+ * Cette fonction va créer uniquement le bouton du formulaire
+ *
+ * @return	varchar Chaine de caractères contenant la balise de fin de formulaire
+ * @access	public
+ * @author	koéZionCMS
+ * @version 0.1 - 12/10/2012 by FI
+ */
+	function button($text = "", $more = '', $extraClass = '') {
+		
+		if(empty($text)) { $text = _("Envoyer"); }
+		$html = '<div class="row '.$extraClass.'" style="text-align: right;">';
+		$html .= '<button class="medium grey" type="submit" style="opacity: 1;" '.$more.'><span>'.$text.'</span></button>';
+		$html .= '</div>';	
+		return $html;
+	}	
+	
+	
+/**
  * Cette fonction permet la mise en place des champs input dans les formulaires
  * Elle permet également de gérer l'internationnalisation
  * 
@@ -129,6 +147,7 @@ class Form {
 				if(!isset($toolbar)) { ?>var ck_<?php echo $inputIdText; ?>_editor = CKEDITOR.replace('<?php echo $inputIdText; ?>');<?php } 
 				else if($toolbar == "image") { ?>var ck_<?php echo $inputIdText; ?>_editor = CKEDITOR.replace('<?php echo $inputIdText; ?>', {toolbar:[{name:'document',items:['Source']},{name:'insert',items:['Image']},{name:'links',items:['Link','Unlink']}]});<?php }
 				else if($toolbar == "empty") { ?>var ck_<?php echo $inputIdText; ?>_editor = CKEDITOR.replace('<?php echo $inputIdText; ?>', {toolbar:[{name:'document',items:['Source']}]});<?php }
+				else if($toolbar == "onlyHtml") { ?>var ck_<?php echo $inputIdText; ?>_editor = CKEDITOR.replace('<?php echo $inputIdText; ?>', {toolbar:[{name:'document',items:['Source']},{name:'basicstyles',items:['Bold','Italic','Underline','Strike','Subscript','Superscript','RemoveFormat']},{name:'paragraph',items:['NumberedList','BulletedList','-','Outdent','Indent','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock']},{name:'styles',items:['Font','FontSize']},{name:'colors',items:['TextColor','BGColor']}]});<?php }
 				?>CKFinder.setupCKEditor(ck_<?php echo $inputIdText; ?>_editor, '<?php echo Router::webroot('/js/ckfinder/'); ?>');<?php
 			}
 			?>

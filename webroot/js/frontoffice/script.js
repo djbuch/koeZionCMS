@@ -94,12 +94,12 @@ $(window).load(function(){
 	$('#footer .widget').height(highHeels);
 	
 	/* Cycle the "Hot stuff this week" */
-	$('.hotstuff ul, ul.testimonials').cycle({
+	/*$('.hotstuff ul, ul.testimonials').cycle({
 		fx: 'fade',
 		timeout:       4000,
 		speed:         1000,
 		before: onAfter
-	});
+	});*/
 	function onAfter(curr, next, opts, fwd){
         //get the height of the current slide
         var ht = $(this).height();

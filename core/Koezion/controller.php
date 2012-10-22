@@ -194,6 +194,8 @@ class Controller extends Object {
 		//En premier lieu on test si le model n'est pas déjà instancié
 		//et si il ne l'est pas on procède à son intenciation
 		if(!isset($this->$name)) {
+			
+			$file_path = '';
 				
 			$file_name = Inflector::underscore($name).'.php'; //Nom du fichier à charger
 		
@@ -212,21 +214,20 @@ class Controller extends Object {
 			if(isset($pluginsConnectors[Inflector::pluralize(Inflector::underscore($name))])) {
 					
 				$connectorModel = $pluginsConnectors[Inflector::pluralize(Inflector::underscore($name))];
-				$file_path_plugin = PLUGINS.DS.$connectorModel.DS.'model.php';
+				$file_path_plugin = PLUGINS.DS.$connectorModel.DS.'model.php';				
 			}
-			//////////////////////////////////////////////
-		
-			if(file_exists($file_path_plugin)) { $file_path = $file_path_plugin; } //Si il y a un plugin on le charge par défaut		
-			else if(file_exists($file_path_default)) { $file_path = $file_path_default; } //Sinon on test si le model par défaut existe 
-			else { 				
+			//////////////////////////////////////////////		
 						
+			if(file_exists($file_path_plugin)) { $file_path = $file_path_plugin; } //Si il y a un plugin on le charge par défaut		
+			else if(file_exists($file_path_default)) { $file_path = $file_path_default; } //Sinon on test si le model par défaut existe
+			
+			if(!file_exists($file_path)) { 				
+				
 				Session::write('redirectMessage', "Impossible de charger le modèle ".$name." dans le fichier controller");
 				$this->redirect('home/e404');
 				die();
 			} //On va tester l'existence de ce fichier
-						
-			//pr($file_path);
-			//pr($this);
+			
 			require_once($file_path); //Inclusion du fichier
 			if($return) { return new $name(); }
 			else { $this->$name = new $name(); } //Création d'un objet Model de type $name que l'on va instancier dans la classe

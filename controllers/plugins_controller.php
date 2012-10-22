@@ -88,32 +88,35 @@ class PluginsController extends AppController {
 	function _check_plugins() {
 		
 		$pluginsDirectoryContent = FileAndDir::directoryContent(PLUGINS);
-		foreach($pluginsDirectoryContent as $pluginDirectory) {		
+		foreach($pluginsDirectoryContent as $pluginDirectory) {
+
+			if($pluginDirectory != "_") {
 		
-			$pluginDirectoryContent = FileAndDir::directoryContent(PLUGINS.DS.$pluginDirectory);
-			if(file_exists(PLUGINS.DS.$pluginDirectory.DS.'description.xml')) {
-		
-				$xParsedXml = simplexml_load_file(PLUGINS.DS.$pluginDirectory.DS.'description.xml');
-				$xParsedXml = (array)$xParsedXml;
-		
-				foreach($xParsedXml as $k => $v) {
-					
-					$conditions = array('conditions' => array('code' => $xParsedXml['code']));
-					$plugin = $this->Plugin->find($conditions);
-					
-					if(count($plugin) == 0) {
+				$pluginDirectoryContent = FileAndDir::directoryContent(PLUGINS.DS.$pluginDirectory);
+				if(file_exists(PLUGINS.DS.$pluginDirectory.DS.'description.xml')) {
+			
+					$xParsedXml = simplexml_load_file(PLUGINS.DS.$pluginDirectory.DS.'description.xml');
+					$xParsedXml = (array)$xParsedXml;
+			
+					foreach($xParsedXml as $k => $v) {
 						
-						//Insertion dans la base de données
-						$insertPlugin = array(
-							'code' => $xParsedXml['code'],
-							'name' => $xParsedXml['name'],
-							'description' => $xParsedXml['description'],
-							'author' => $xParsedXml['author'],
-							'online' => 0,
-							'installed' => 0
-						);
-						$this->Plugin->save($insertPlugin);
-					}					
+						$conditions = array('conditions' => array('code' => $xParsedXml['code']));
+						$plugin = $this->Plugin->find($conditions);
+						
+						if(count($plugin) == 0) {
+							
+							//Insertion dans la base de données
+							$insertPlugin = array(
+								'code' => $xParsedXml['code'],
+								'name' => $xParsedXml['name'],
+								'description' => $xParsedXml['description'],
+								'author' => $xParsedXml['author'],
+								'online' => 0,
+								'installed' => 0
+							);
+							$this->Plugin->save($insertPlugin);
+						}					
+					}
 				}
 			}
 		}		

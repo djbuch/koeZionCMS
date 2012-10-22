@@ -1,5 +1,26 @@
 ﻿<versions>
 	<version>
+		<name>Version du 22/10/2012</name>
+		<num>20121022</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Modification de la vue d'affichage des catégories pour y intégrer le plugin Google Maps<task>
+			<task author="KoéZionCMS">Rajout d'un CSS pour gérer la hauteur par défaut du bloc d'affichage frontoffice<task>
+			<task author="KoéZionCMS">Suppression des JS non utiles<task>
+			<task author="KoéZionCMS">Rajout d'un css pour la version mobile (A terminer)<task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 10/10/2012</name>
+		<num>20121010</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Modification du parcours du dossier des plugins<task>
+			<task author="KoéZionCMS">Modification de l'import des modèles dans le contrôleur<task>
+			<task author="KoéZionCMS">Rajout d'une nouvelle barre de menu pour l'éditeur WYSIWYG<task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 04/10/2012</name>
 		<num>20121004</num>
 		<supervisor>KoéZionCMS</supervisor>

@@ -11,5 +11,6 @@ EXPORT_PDF/
 configs/files/*.ini
 configs/plugins/
 plugins/
+tmp/backup_bdd/
 webroot/files/*
 webroot/upload/*

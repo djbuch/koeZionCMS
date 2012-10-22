@@ -1,0 +1,4 @@
+body{font:13px/ 1.231 sans-serif;* font-size:small}
+div.header{width:100%;}
+	div.header h2{width:50%;float:left;height:35px;background-color:#CCCCCC;line-height:35px;text-indent:10px;cursor:pointer;}	
+div.content {float:left;width:100%}
