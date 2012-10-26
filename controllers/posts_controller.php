@@ -87,6 +87,45 @@ class PostsController extends AppController {
 		if(isset($this->request->data['type_formulaire']) && !isset($this->plugins['Formulaires'])) { $this->_send_mail_comments(); }
 	}
 	
+/**
+ * Cette fonction permet la diffusion automatique des articles offline ayant une date de publication renseignée et antérieure (ou égale) à la date du jour
+ * 
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 25/10/2012 by FI
+ */	
+	function update_publication_date() {
+		
+		$this->layout = 'empty'; //Définition du layout à utiliser
+		$datas['type'] = 'xml';
+		$this->set($datas);
+		
+		require_once(LIBS.DS.'config_magik.php');
+		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'exports.ini', true, false);
+		$cfgValues = $cfg->keys_values();
+		
+		if(isset($_GET['export_code']) && !empty($_GET['export_code']) && !empty($cfgValues['export_code']) && ($_GET['export_code'] == $cfgValues['export_code'])) {
+
+			//Conditions de recherche
+			$conditions = array('conditions' => "online = 0 AND publication_date <> '0000-00-00' AND publication_date <= '".date('Y-m-d')."'");
+			$post = $this->Post->find($conditions); //On récupère le premier élément
+			foreach($post as $k => $v) {
+				
+				$v['online'] = 1;
+				$this->Post->save($v);
+			}			
+			
+			$this->set('update_result', 'MISE A JOUR EFFECTUEE');
+			$this->set('update_message', "La mise à jour des dates de publications à été effectuée");
+			
+		} else {
+			
+			$this->set('update_result', 'MISE A JOUR NON EFFECTUEE');
+			$this->set('update_message', "Le code d'export n'a pu être vérifié");
+			
+		}
+	}
+	
 //////////////////////////////////////////////////////////////////////////////////////////	
 //										BACKOFFICE										//
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -122,6 +161,7 @@ class PostsController extends AppController {
  */	
 	function backoffice_add() {
 
+		$this->_transform_date('fr2Sql'); //Transformation de la date FR en date SQL	
 		$parentAdd = parent::backoffice_add(false); //On fait appel à la fonction d'ajout parente
 		
 		if($this->request->data) {
@@ -134,6 +174,7 @@ class PostsController extends AppController {
 			}
 		}
 		
+		$this->_transform_date('sql2Fr'); //Transformation de la date SQL en date FR		
 		$this->_init_categories();
 		$this->_init_posts_types();
 	}
@@ -148,6 +189,7 @@ class PostsController extends AppController {
  */	
 	function backoffice_edit($id = null) {
 				
+		$this->_transform_date('fr2Sql'); //Transformation de la date FR en date SQL
 		$parentEdit = parent::backoffice_edit($id, false); //On fait appel à la fonction d'édition parente
 		
 		if($this->request->data) {
@@ -160,6 +202,7 @@ class PostsController extends AppController {
 			}
 		}
 		
+		$this->_transform_date('sql2Fr'); //Transformation de la date SQL en date FR
 		$this->_init_categories();
 		$this->_init_posts_types();
 		$this->_get_assoc_datas($id);
@@ -332,5 +375,34 @@ class PostsController extends AppController {
 				}
 			}
 		}		
-	}	
+	}
+
+/**
+ * Cette fonction permet de transformer une date FR en date SQL et inversement
+ * 
+ * @param 	varchar $mode Mode de transformation FR --> SQL ou SQL --> FR
+ * @access 	private
+ * @author 	koéZionCMS
+ * @version 0.1 - 25/10/2012 by FI
+ */	
+	function _transform_date($mode) {
+		
+		if($mode == 'fr2Sql') {
+			
+			//Transformation de la date FR en date SQL
+			if(isset($this->request->data['publication_date']) && !empty($this->request->data['publication_date'])) {
+			
+				$dateArray = $this->components['Text']->date_human_to_array($this->request->data['publication_date']);
+				$this->request->data['publication_date'] = $dateArray['a'].'-'.$dateArray['m'].'-'.$dateArray['j'];
+			}
+		} else if($mode == 'sql2Fr') {
+			
+			//Transformation de la date SQL en date FR
+			if(isset($this->request->data['publication_date']) && !empty($this->request->data['publication_date'])) {
+			
+				$dateArray = $this->components['Text']->date_human_to_array($this->request->data['publication_date'], '-', 'i');
+				$this->request->data['publication_date'] = $dateArray[2].'.'.$dateArray[1].'.'.$dateArray[0];
+			}
+		}		
+	}
 }

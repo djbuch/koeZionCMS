@@ -93,6 +93,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `display_home_page` int(11) NOT NULL,
   `order_by` int(11) NOT NULL,
   `message_mail` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `publication_date` date NOT NULL,
   `online` int(11) NOT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime NOT NULL,

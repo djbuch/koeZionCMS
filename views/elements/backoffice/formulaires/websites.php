@@ -40,6 +40,7 @@
 			echo $helpers['Form']->input('txt_slogan', 'Slogan (accueil)', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge', 'tooltip' => "Indiquez le slogan du site"));
 			echo $helpers['Form']->input('txt_posts', 'Articles (accueil)', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge', 'tooltip' => "Indiquez le texte de présentation des articles sur la page d'accueil"));
 			echo $helpers['Form']->input('txt_newsletter', 'Page newsletter', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge', 'tooltip' => "Indiquez le texte de la page newsletter"));
+			echo $helpers['Form']->input('txt_social', 'Texte social', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge', 'tooltip' => ""));
 			?>
 		</div>
 	</div>
@@ -65,7 +66,7 @@
 		<div class="content nopadding">
 			<?php 
 			echo $helpers['Form']->input('footer_gauche', 'Colonne de gauche', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge'));
-			//echo $helpers['Form']->input('footer_social', 'Code AddThis', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge'));
+			echo $helpers['Form']->input('footer_social', 'Texte social', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge', 'tooltip' => "Indiquez ici, par exemple, le texte du module social de Facebook. Attention si vous activez cette zone la zone newsletter sera supprimée."));
 			echo $helpers['Form']->input('footer_droite', 'Colonne de droite', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge'));
 			echo $helpers['Form']->input('footer_bottom', 'Baseline', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge'));
 			?>

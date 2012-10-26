@@ -6,11 +6,12 @@ table thead tr th{border:1px solid #e5e5e5;border-bottom:0;padding:8px 8px 10px;
 table thead tr th.header{border:1px solid #e5e5e5;background-color:transparent}
 table tbody td{border:1px solid #e5e5e5;border-top:0;padding:7px 8px;line-height:1.0em}
 table td.txtcenter{text-align:center}
+table td.l{width:120px}
+table td.m{width:93px}
+table td.s{width:75px}
+table td.xs{width:50px}
 table td.xxs{width:25px}
 table td.xxs2{width:35px}
-table td.xs{width:50px}
-table td.s{width:75px}
-table td.m{width:93px}
 table td.txtright{text-align:right}
 table tbody tr.even td{background-color:#fbfbfb}
 table thead tr th.sorting{background:url(../../img/backoffice/table-sort.gif) no-repeat right 9px}

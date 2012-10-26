@@ -144,10 +144,30 @@ class View extends Object {
  */
     function request($controller, $action, $parameters = array()) {
     	
-    	$fileName = strtolower(Inflector::underscore($controller).'_controller'); //On récupère dans une variable le nom du controller
-    	$filePath = CONTROLLERS.DS.$fileName.'.php'; //On récupère dans une variable le chemin du controller
-    	require_once $filePath; //Inclusion de ce fichier si il existe
-    	$controllerName = Inflector::camelize($fileName); //On transforme le nom du fichier pour récupérer le nom du controller
+    	$fileNameBase = strtolower(Inflector::underscore($controller));
+    	
+    	$file_name_default = strtolower($fileNameBase.'_controller'); //On récupère dans une variable le nom du controller    	
+    	$file_path_default = CONTROLLERS.DS.$file_name_default.'.php'; //On récupère dans une variable le chemin du controller
+    	
+    	$file_name_plugin = strtolower($fileNameBase.'_plugin_controller'); //On récupère dans une variable le nom du controller
+    	$file_path_plugin = PLUGINS.DS.$controller.DS.'controller.php'; //On récupère dans une variable le chemin du controller
+    	    	
+    	//////////////////////////////////////////////
+    	//   RECUPERATION DES CONNECTEURS PLUGINS   //
+    	$pluginsConnectors = get_plugins_connectors();
+    	if(isset($pluginsConnectors[$fileNameBase])) {
+    	
+    		$connectorController = $pluginsConnectors[$fileNameBase];
+    		$file_path_plugin = PLUGINS.DS.$connectorController.DS.'controller.php';
+    	}
+    	//////////////////////////////////////////////    	
+    	if(file_exists($file_path_plugin)) { $file_path = $file_path_plugin; $file_name = $file_name_plugin; } //Sinon on teste si il y a un plugin
+    	else if(file_exists($file_path_default)) { $file_path = $file_path_default; $file_name = $file_name_default; } //Si le controller par défaut existe
+    	    	
+    	//$fileName = strtolower(Inflector::underscore($controller).'_controller'); //On récupère dans une variable le nom du controller
+    	//$filePath = CONTROLLERS.DS.$fileName.'.php'; //On récupère dans une variable le chemin du controller
+    	require_once $file_path; //Inclusion de ce fichier si il existe
+    	$controllerName = Inflector::camelize($file_name); //On transforme le nom du fichier pour récupérer le nom du controller
     	$c = new $controllerName(null, false); //Création d'une instance du controller souhaité
     	
     	//Appel de la fonction dans le contrôlleur
@@ -170,7 +190,7 @@ class View extends Object {
     	$file_name_default = strtolower(Inflector::underscore($controller).'_controller'); //On récupère dans une variable le nom du controller    	
     	$file_path_default = CONTROLLERS.DS.$file_name_default.'.php'; //On récupère dans une variable le chemin du controller
     	
-    	$file_name_plugin = strtolower(Inflector::underscore($controller).'__plugin_controller'); //On récupère dans une variable le nom du controller
+    	$file_name_plugin = strtolower(Inflector::underscore($controller).'_plugin_controller'); //On récupère dans une variable le nom du controller
     	$file_path_plugin = PLUGINS.DS.$controller.DS.'controller.php'; //On récupère dans une variable le chemin du controller
     	
     	if(file_exists($file_path_plugin)) { $file_path = $file_path_plugin; $file_name = $file_name_plugin; } //Sinon on teste si il y a un plugin

@@ -86,20 +86,30 @@ class Text {
 /**
  * Retourne un tableau contenant les données d'une date passées dans un format 'humain'
  *
- * @param 	varchar  	$date 		Datetime à convertir
- * @return 	varchar		Date formatée
+ * @param 	varchar  	$date Datetime à convertir
+ * @return 	array		Tableau contenant les informations sur la date
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 23/07/2012 by FI
+ * @version 0.1 - 25/10/2012 by FI - Rajout d'une option permettant de choisir si on retourne les valeurs dans un tablau avec des index en chiffres ou en lettres
  */
-	function date_human_to_array($date, $separateur = '.') {
+	function date_human_to_array($date, $separateur = '.', $retour = 'c') {
 		
 		$dateTmp = explode($separateur, $date);
-		return array(
-			'j' => $dateTmp[0],	
-			'm' => $dateTmp[1],	
-			'a' => $dateTmp[2]
-		);	
+		
+		if($retour == 'c') {
+			return array(
+				'j' => $dateTmp[0],	
+				'm' => $dateTmp[1],	
+				'a' => $dateTmp[2]
+			);	
+		} else if($retour == 'i') {
+			return array(
+				$dateTmp[0],
+				$dateTmp[1],
+				$dateTmp[2]
+			);
+		}
 	}
 	
 /**

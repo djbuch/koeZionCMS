@@ -1,5 +1,18 @@
 ﻿<versions>
 	<version>
+		<name>Version du 26/10/2012</name>
+		<num>20121026</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Modification de la fonction date_human_to_array dans le composant Text pour modifier le mode de retour des données</task>
+			<task author="KoéZionCMS">Modification des controleurs posts pour la mise en place de la date de publication (Modiciation de la BDD)</task>
+			<task author="KoéZionCMS">Modification de la fonction request dans le controleur vue pour l'intégration des plugins</task>
+			<task author="KoéZionCMS">Rajout d'un élément dans l'affichage du détails des catégories pour la gestion des Google Map</task>
+			<task author="KoéZionCMS">Réactivation du champ footer_social dans le module sites Internet pour la gestion des fans Facebook par exemple</task>
+			<task author="KoéZionCMS"></task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 22/10/2012</name>
 		<num>20121022</num>
 		<supervisor>KoéZionCMS</supervisor>

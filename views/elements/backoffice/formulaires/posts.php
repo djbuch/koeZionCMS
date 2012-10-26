@@ -72,7 +72,11 @@
 			echo $helpers['Form']->input('display_home_page', "Afficher cet article sur la la page d'accueil", array('type' => 'checkbox', 'tooltip' => "En cochant cette case vous afficherez cet article sur la page d'accueil du site"));
 
 			if(!isset($formulaires)) { $formulaires = array (2 => 'Formulaire commentaire article'); } 
-			echo $helpers['Form']->input('display_form', 'Formulaire', array('type' => 'select', 'datas' => $formulaires, 'tooltip' => "Indiquez le formulaire que vous souhaitez afficher sur la page", 'firstElementList' => "Sélectionnez un formulaire"));			
+			echo $helpers['Form']->input('display_form', 'Formulaire', array('type' => 'select', 'datas' => $formulaires, 'tooltip' => "Indiquez le formulaire que vous souhaitez afficher sur la page", 'firstElementList' => "Sélectionnez un formulaire"));
+
+			
+			echo $helpers['Form']->input('publication_date', 'Date de publication', array("class" => "datepicker", "placeholder" => "dd.mm.yy", 'tooltip' => "Indiquez la date à laquelle cet article sera publié"));
+			
 			?>
 		</div>
 	</div>

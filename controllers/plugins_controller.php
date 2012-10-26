@@ -14,9 +14,7 @@
  * @link        http://www.koezion-cms.com
  */
 class PluginsController extends AppController {
-	
-	
-	
+
 /**
  * Cette fonction permet l'affichage de la liste des éléments
  *
