@@ -104,7 +104,7 @@ class PostsController extends AppController {
 		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'exports.ini', true, false);
 		$cfgValues = $cfg->keys_values();
 		
-		if(isset($_GET['export_code']) && !empty($_GET['export_code']) && !empty($cfgValues['export_code']) && ($_GET['export_code'] == $cfgValues['export_code'])) {
+		if(isset($_GET['update_code']) && !empty($_GET['update_code']) && !empty($cfgValues['export_code']) && ($_GET['update_code'] == $cfgValues['export_code'])) {
 
 			//Conditions de recherche
 			$conditions = array('conditions' => "online = 0 AND publication_date <> '0000-00-00' AND publication_date <= '".date('Y-m-d')."'");

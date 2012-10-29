@@ -79,6 +79,35 @@
 			
 			?>
 		</div>
+		<div class="content">
+			<p>Cette option vous permet de définir la date à laquelle sera publié l'article en utilisant une tâche <a href="http://fr.wikipedia.org/wiki/Cron" target="_blank">CRON</a></p>
+			<p>Vous pouvez utiliser des services CRON gratuits comme par exemple <a href="http://www.cronoo.com/" target="_blank">Cronoo</a></p>			
+			<?php 
+			$websiteUrl = Session::read('Backoffice.Websites.details.'.CURRENT_WEBSITE_ID.'.url');
+			
+			require_once(LIBS.DS.'config_magik.php');
+			$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'exports.ini', true, false);
+			$exportCode = $cfg->keys_values();
+			
+			if(empty($exportCode['export_code'])) {
+				
+				?><p>Pour utiliser cette fonctionnalité vous devez en premier lieu <a href="<?php echo Router::url('backoffice/configs/exports_liste'); ?>">paramétrer le code de sécurité</a> utilisé pour pouvoir lancer cette procédure</p><?php 
+			
+			} else { 
+			
+				?>
+				<p>Pour mettre en place la diffusion automatique vous pouvez utiliser l'url suivante <?php echo $websiteUrl; ?>/posts/update_publication_date.xml?update_code=<?php echo $exportCode['export_code']; ?></p>
+				<p>Le type du format de retour est l'XML</p>
+				<p>
+				&lt;export&gt;<br />
+				&nbsp;&nbsp;&nbsp;&nbsp;&lt;result&gt;MISE A JOUR EFFECTUEE&lt;/result&gt;<br />
+				&nbsp;&nbsp;&nbsp;&nbsp;&lt;message&gt;La mise à jour des dates de publications à été effectuée&lt;/message&gt;<br />
+				&lt;/export&gt;
+				</p>
+				<?php 
+			} 
+			?>		
+		</div>		
 	</div>
 	<?php if($isSecure) { ?>			
 		<div id="emailing">

@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 29/10/2012</name>
+		<num>20121029</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Modification de la gestion de la diffusion automatique des articles dans le contrôleur Posts</task>
+			<task author="KoéZionCMS">Modification dans le formulaire d'ajout d'un article du message explicatif pour la diffusion automatique</task>			
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 26/10/2012</name>
 		<num>20121026</num>
 		<supervisor>KoéZionCMS</supervisor>
@@ -9,7 +18,6 @@
 			<task author="KoéZionCMS">Modification de la fonction request dans le controleur vue pour l'intégration des plugins</task>
 			<task author="KoéZionCMS">Rajout d'un élément dans l'affichage du détails des catégories pour la gestion des Google Map</task>
 			<task author="KoéZionCMS">Réactivation du champ footer_social dans le module sites Internet pour la gestion des fans Facebook par exemple</task>
-			<task author="KoéZionCMS"></task>
 		</tasks>	
 	</version>
 	<version>
