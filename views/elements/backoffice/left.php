@@ -30,5 +30,6 @@
 			</li>	
 		<?php }  ?>
 	</ul>	
-	<div id="credits">&#169; Copyright <?php echo date('Y')?> koéZionCMS</div>
+	<?php /* ?><div id="credits">&#169; Copyright <?php echo date('Y')?> koéZionCMS</div><?php */ ?>
+	<div id="credits">&#169; Copyright 2011 koéZionCMS</div>
 </div>
