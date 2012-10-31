@@ -2,7 +2,7 @@
 <div id="footer_top" class="png_bg"></div>
 <div id="footer" class="png_bg">	
 	<?php 
-	if(isset($websiteParams['footer_social'])) { 
+	if(isset($websiteParams['footer_social']) && !empty($websiteParams['footer_social'])) { 
 		
 		?><div class="gs_5 widget" style="width:570px;min-height:258px;"><?php echo $websiteParams['footer_gauche']; ?></div><?php 
 		echo $websiteParams['footer_social']; 

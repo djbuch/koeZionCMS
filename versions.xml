@@ -13,6 +13,7 @@
 			<task author="KoéZionCMS">Correction de l'erreur dans la fonction backoffice_add du contrôleur Websites (Erreur de passage de variable)</task>
 			<task author="KoéZionCMS">Correction dans le contrôleur Categories de la récupération des pages enfants</task>
 			<task author="KoéZionCMS">Correction des éléments formulaires</task>
+			<task author="KoéZionCMS">Correction de l'affichage des informations dans l'élément footer</task>
 		</tasks>	
 	</version>
 	<version>
