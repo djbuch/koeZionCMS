@@ -112,7 +112,7 @@ class CategoriesController extends AppController {
 		
 		/////////////////////////////////////////////////////////////////
 		//   TEST POUR SAVOIR SI UN TEMPLATE PARTICULIER EST DEMANDE   //
-		if($datas['category']['template_id'] > 0) {
+		if($datas['category']['template_id']) {
 			
 			$controllerVars = $this->get('vars'); //Récupération des données du controller
 			$websiteParams = $controllerVars['websiteParams']; //Récupération des données concernants le site courant
@@ -224,7 +224,7 @@ class CategoriesController extends AppController {
 				//$datas['children'] = $this->Category->getChildren($datas['category']['id'], false, false, $datas['category']['level']+1, array('conditions' => array('online' => 1))); //On récupère les enfants de la catégorie parente
 				$children = $this->Category->getChildren($datas['category']['id'], false, false, $datas['category']['level']+1, array('conditions' => array('online' => 1))); //On récupère les enfants de la catégorie parente
 				
-				foreach($children as $k => $v) { $datas['children'][$v['title_colonne_droite']][] = $v; }
+				foreach($children as $k => $v) { $datas['children'][$datas['category']['title_colonne_droite']][] = $v; }
 				
 				
 				$datas['is_full_page'] = 0; //Si on doit afficher les catégories filles alors il faut la colonne de droite
@@ -774,10 +774,13 @@ class CategoriesController extends AppController {
  */	
 	function _update_template($categoryId, $templateId) {
 		
-		$templateDatas = $this->templatesList[$templateId];
-		$templateLayout = $templateDatas['layout'];
-		$templateCode = $templateDatas['code'];
-		$query = "UPDATE ".$this->Category->table." SET tpl_layout = '".$templateLayout."', tpl_code = '".$templateCode."' WHERE ".$this->Category->primaryKey." = ".$categoryId;
-		$this->Category->query($query);
+		if($templateId) {
+			
+			$templateDatas = $this->templatesList[$templateId];
+			$templateLayout = $templateDatas['layout'];
+			$templateCode = $templateDatas['code'];
+			$query = "UPDATE ".$this->Category->table." SET tpl_layout = '".$templateLayout."', tpl_code = '".$templateCode."' WHERE ".$this->Category->primaryKey." = ".$categoryId;
+			$this->Category->query($query);
+		}
 	}  
 }

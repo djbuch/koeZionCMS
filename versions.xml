@@ -11,6 +11,7 @@
 			<task author="KoéZionCMS">Mise à jour de la librairie SWIFTMAILER passage à la version 4.2.2</task>
 			<task author="KoéZionCMS">Modification de la génération de la variable fullUrl de la classe Request</task>
 			<task author="KoéZionCMS">Correction de l'erreur dans la fonction backoffice_add du contrôleur Websites (Erreur de passage de variable)</task>
+			<task author="KoéZionCMS">Correction dans le contrôleur Categories de la récupération des pages enfants</task>
 		</tasks>	
 	</version>
 	<version>
