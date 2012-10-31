@@ -13,10 +13,10 @@ class Session {
  */
 	function init() {	
 		
-		$sessionName = "KOEZION";														//Récupération du nom de la variable de session		
-		ini_set('session.use_trans_sid', 0);											//Evite de passe l'id de la session dans l'url
-		session_name($sessionName); 													//On affecte le nom
-		session_start(); 																//On démarre la session
+		$sessionName = Inflector::variable(Inflector::slug('koeZion '.$_SERVER['HTTP_HOST'])); 	//Récupération du nom de la variable de session																
+		ini_set('session.use_trans_sid', 0);													//Evite de passe l'id de la session dans l'url
+		session_name($sessionName); 															//On affecte le nom
+		session_start(); 																		//On démarre la session
 	}	
 	
 /**

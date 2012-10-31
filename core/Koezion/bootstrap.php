@@ -10,6 +10,7 @@ ini_set('log_errors', 1); //Log des erreurs
 ini_set('error_log', $logFile); //Définition du chemin du fichier de logs
 //echo phpinfo();
 /////////////////////////////
+require_once CAKEPHP.DS.'inflector.php'; //Classe Object permettant le respect de certaines conventions
 
 require_once KOEZION.DS.'session.php'; //On charge le composant permettant la gestion des sessions
 Session::init(); //On l'initialise
@@ -21,7 +22,6 @@ require_once CONFIGS.DS.'configure.php'; //Classe de configuration
 require_once CONFIGS.DS.'routes.php'; //Fichier contenant la liste des réécritures d'url
 require_once CAKEPHP.DS.'string.php'; //Classe Object permettant la manipulation de chaîne de caractères
 require_once CAKEPHP.DS.'set.php'; //Classe Object permettant des manipulations sur les tableaux
-require_once CAKEPHP.DS.'inflector.php'; //Classe Object permettant le respect de certaines conventions
 require_once KOEZION.DS.'validation.php'; //Classe Object permettant la gestion des différentes règles de validation des modèles
 require_once KOEZION.DS.'request.php'; //Chargement de l'objet Request
 require_once KOEZION.DS.'object.php'; //Classe Object
