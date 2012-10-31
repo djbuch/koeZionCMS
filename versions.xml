@@ -12,6 +12,7 @@
 			<task author="KoéZionCMS">Modification de la génération de la variable fullUrl de la classe Request</task>
 			<task author="KoéZionCMS">Correction de l'erreur dans la fonction backoffice_add du contrôleur Websites (Erreur de passage de variable)</task>
 			<task author="KoéZionCMS">Correction dans le contrôleur Categories de la récupération des pages enfants</task>
+			<task author="KoéZionCMS">Correction des éléments formulaires</task>
 		</tasks>	
 	</version>
 	<version>
