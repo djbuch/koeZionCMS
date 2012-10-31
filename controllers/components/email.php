@@ -53,8 +53,6 @@ class Email {
 		
 		$this->bccEmail 		= isset($conf['bcc_email']) ? $conf['bcc_email'] : ''; //Récupération de la copie
 		
-		pr($conf);
-		
 		//Si les paramètres sont bien renseignés 
 		if(
 			!empty($this->smtpHost) && 
@@ -66,8 +64,6 @@ class Email {
 			require_once SWIFTMAILER.DS.'swift_required.php'; //Inclusion de la librairie d'envoi de mails
 			
 			if($conf['smtp_secure']) { $encryption = 'ssl'; } else {  $encryption = null; }
-		
-			pr($encryption);
 			
 			//Définition du transport smtp
 			$transport = Swift_SmtpTransport::newInstance()
