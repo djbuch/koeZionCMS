@@ -4,7 +4,7 @@
 		<li><a href="#header"><?php echo _("header"); ?></a></li>
 		<li><a href="#tpl"><?php echo _("Template"); ?></a></li>
 		<li><a href="#txt"><?php echo _("Textes"); ?></a></li>
-		<li><a href="#emails"><?php echo _("Emails"); ?></a></li>
+		<li><a href="#txtemails"><?php echo _("Textes emails"); ?></a></li>
 		<li><a href="#seo"><?php echo _("SEO"); ?></a></li>
 		<li><a href="#foot"><?php echo _("Footer"); ?></a></li>
 		<li><a href="#options"><?php echo _("Options"); ?></a></li>
@@ -44,7 +44,7 @@
 			?>
 		</div>
 	</div>
-	<div id="emails">
+	<div id="txtemails">
 		<div class="content nopadding">
 			<?php 
 			echo $helpers['Form']->input('txt_mail_contact', 'Contenu email contact', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge', 'tooltip' => "Indiquez le texte qui sera envoyé par email"));

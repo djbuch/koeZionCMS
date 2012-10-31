@@ -38,7 +38,7 @@ class WebsitesController extends AppController {
 			$this->_init_category();
 			$this->_edit_session();
 			$this->_update_template($this->Website->id, $this->request->data['template_id']);
-			$this->_update_txt_mails($id, $this->request->data);
+			$this->_update_txt_mails($this->Website->id, $this->request->data);
 			$this->redirect('backoffice/websites/index');
 		}	
 	}	

@@ -24,7 +24,7 @@ class Request {
 	public function __construct() {
 				
 		$this->url = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/'; //Affectation de l'url
-		$this->fullUrl = 'http://'.$_SERVER["HTTP_HOST"].Router::url($this->url); //Affectation de l'url complète
+		$this->fullUrl = 'http://'.$_SERVER["HTTP_HOST"].Router::url($this->url, ''); //Affectation de l'url complète
 				
 		//Gestion de la pagination
 		if(isset($_GET['page'])) {

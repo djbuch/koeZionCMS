@@ -62,7 +62,13 @@ class ConfigsController extends AppController {
  * @version 0.1 - 02/03/2012 by FI
  * @version 0.2 - 18/04/2012 by FI - Passage des traitements dans une fonction privée pour mutualiser
  */
-	function backoffice_mailer_liste() { $this->_proceed_datas_ini(CONFIGS.DS.'files'.DS.'mailer.ini', 'backoffice/configs/mailer_liste'); }
+	function backoffice_mailer_liste() { 
+		
+		$currentWebsite = Session::read('Backoffice.Websites.current'); //Site courant
+		$websitesList = Session::read('Backoffice.Websites.details'); //Liste des sites
+		$currentWebsiteUrl = $websitesList[$currentWebsite]['url']; //Url du site courant
+		$this->_proceed_datas_ini(CONFIGS.DS.'files'.DS.'mailer.ini', 'backoffice/configs/mailer_liste', CURRENT_WEBSITE_ID, $currentWebsiteUrl); 
+	}
 	
 /**
  * Cette fonction va permettre l'affichage des configurations des routes
@@ -106,20 +112,34 @@ class ConfigsController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 18/04/2012 by FI
  */
-	function _proceed_datas_ini($file, $redirect) {
+	function _proceed_datas_ini($file, $redirect, $section = null, $websiteUrl = null) {
 	
-		require_once(LIBS.DS.'config_magik.php'); 			//Import de la librairie de gestion des fichiers de configuration
-		$cfg = new ConfigMagik($file, true, false); 		//Création d'une instance
+		require_once(LIBS.DS.'config_magik.php'); //Import de la librairie de gestion des fichiers de configuration
+		
+		//Création d'une instance
+		if(isset($section)) { $cfg = new ConfigMagik($file, true, true); }
+		else { $cfg = new ConfigMagik($file, true, false); }
 	
 		//Si des données sont postées
 		if($this->request->data) {
-			//On va parcourir les données postées et mettre à jour le fichier ini
-			foreach($this->request->data as $k => $v) { $cfg->set($k, $v); }
 			
+			if(isset($section)) {
+				
+				foreach($this->request->data as $k => $v) { $cfg->set($k, $v, $section); }
+				$cfg->set('website_url', $websiteUrl, $section); //On va rajouter l'url du site dans les configurations pour information
+				
+			} else {
+
+				//On va parcourir les données postées et mettre à jour le fichier ini
+				foreach($this->request->data as $k => $v) { $cfg->set($k, $v); }
+			}
+
 			Session::setFlash("Fichier de configuration modifié"); //Message de confirmation
 			$this->redirect($redirect); //Redirection			
 		}	
-									
-		$this->request->data = $cfg->keys_values(); //Récupération des configurations
+
+		//Récupération des configurations
+		if(isset($section)) { $this->request->data = $cfg->keys_values($section); }
+		else { $this->request->data = $cfg->keys_values(); }
 	}
 }

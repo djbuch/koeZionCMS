@@ -1,5 +1,19 @@
 ﻿<versions>
 	<version>
+		<name>Version du 31/10/2012</name>
+		<num>20121031</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Modification du contrôleur Configs pour permettre une configuration du serveur SMTP par site</task>
+			<task author="KoéZionCMS">Modification du contrôleur Configs pour permettre l'envoi de mails par SSL avec un test pour savoir si le protocole est activé sur le serveur</task>
+			<task author="KoéZionCMS">Modification du composant Email pour gérer la configuration des envois par site</task>
+			<task author="KoéZionCMS">Modification du composant Email pour gérer la configuration des envois via ssl</task>
+			<task author="KoéZionCMS">Mise à jour de la librairie SWIFTMAILER passage à la version 4.2.2</task>
+			<task author="KoéZionCMS">Modification de la génération de la variable fullUrl de la classe Request</task>
+			<task author="KoéZionCMS">Correction de l'erreur dans la fonction backoffice_add du contrôleur Websites (Erreur de passage de variable)</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 29/10/2012</name>
 		<num>20121029</num>
 		<supervisor>KoéZionCMS</supervisor>

@@ -20,7 +20,7 @@ class Email {
 
 	var $mailer = false;
 	
-	private $smtpHost = '';
+	private $smtpHost = ''; 
 	private $smtpPort = '';
 	private $smtpUserName = '';
 	private $smtpPassword = '';
@@ -37,12 +37,12 @@ class Email {
  * @version 0.2 - 02/03/2012 by FI - Modification de la récupération des configurations, on passe maintenant par un fichier .ini
  * @version 0.3 - 18/04/2012 by FI - Modification de la récupération du .ini il n'y a plus de section
  */
-	function __construct() {
+	function init() {
 		
 		require_once(LIBS.DS.'config_magik.php'); //Import de la librairie de gestion des fichiers de configuration
-		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'mailer.ini', true, false); //Création d'une instance
-		$conf = $cfg->keys_values(); //Récupération des configurations en fonction du nom de domaine
-		
+		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'mailer.ini', true, true); //Création d'une instance
+		$conf = $cfg->keys_values(CURRENT_WEBSITE_ID); //Récupération des configurations en fonction du nom de domaine		
+				
 		$this->smtpHost 		= isset($conf['smtp_host']) ? $conf['smtp_host'] : '';
 		$this->smtpPort 		= isset($conf['smtp_port']) ? $conf['smtp_port'] : '';
 		$this->smtpUserName 	= isset($conf['smtp_user_name']) ? $conf['smtp_user_name'] : '';
@@ -53,6 +53,8 @@ class Email {
 		
 		$this->bccEmail 		= isset($conf['bcc_email']) ? $conf['bcc_email'] : ''; //Récupération de la copie
 		
+		pr($conf);
+		
 		//Si les paramètres sont bien renseignés 
 		if(
 			!empty($this->smtpHost) && 
@@ -62,11 +64,16 @@ class Email {
 		) {
 		
 			require_once SWIFTMAILER.DS.'swift_required.php'; //Inclusion de la librairie d'envoi de mails
+			
+			if($conf['smtp_secure']) { $encryption = 'ssl'; } else {  $encryption = null; }
 		
+			pr($encryption);
+			
 			//Définition du transport smtp
 			$transport = Swift_SmtpTransport::newInstance()
 				->setHost($this->smtpHost) //Host
 				->setPort($this->smtpPort) //Port
+				->setEncryption($encryption)
 				->setUsername($this->smtpUserName) //Username
 				->setPassword($this->smtpPassword); //Mot de passe
 		
@@ -92,10 +99,12 @@ class Email {
  */
 	function send($datas, $controller) {
 		
+		$this->init();
+		
 		$numSent = 0;	
 		
 		if($this->mailer) {
-
+			
 			$view = new View(null, $controller); //Création d'un objet vue pour le rendu
 	
 			//Passage des éventuelles variables
@@ -116,10 +125,8 @@ class Email {
 				->addPart($content_for_layout, 'text/html'); // And optionally an alternative body
 	
 			if(!empty($this->bccEmail)) { $message->setBcc($this->bccEmail); } //Gestion éventuelle de l'envoi en copie cachée
-			
 			$numSent = $this->mailer->send($message); //On envoi le message
 		}
-	
 		return $numSent;
 	}
 	
@@ -131,12 +138,13 @@ class Email {
  * @author 	koéZionCMS
  * @version 0.1 - 06/02/2012 by FI
  */	
-	function send_test() {
+	function send_test($controller) {
 		
+		//$this->init();
 		$numSent = 0;
 		
 		if($this->mailer) {
-		
+			
 			//Création du message
 			$message = Swift_Message::newInstance()
 				->setSubject("PARAMETRAGE SERVEUR SMTP koéZionCMS") //Mise en place du sujet
@@ -147,6 +155,6 @@ class Email {
 			$numSent = $this->mailer->send($message); //On envoi le message
 		}
 		
-		return $numSent;		
+		return $numSent;	
 	}
 }
