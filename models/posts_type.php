@@ -40,6 +40,7 @@ class PostsType extends Model {
  * @author	koéZionCMS
  * @version 0.1 - 12/01/2012 by FI
  * @version 0.2 - 16/05/2012 by FI - Modification de la récupération des données pour n'obtenir que les types de posts de la catégories voulues
+ * @version 0.3 - 06/11/2012 by FI - RE -> Modification de la récupération des données pour n'obtenir que les types de posts de la catégories voulues car la requête ne marchait pas
  */	
 	function get_for_front($categoryId = null) {
 		
@@ -49,11 +50,23 @@ class PostsType extends Model {
 		if(isset($categoryId) && !empty($categoryId)) {
 			
 			$sql = "
-				SELECT PostsType.id, PostsType.name, PostsType.column_title 
-				FROM posts_types AS PostsType, posts_posts_types AS PostsPostsType 
+				SELECT 
+					PostsType.id, 
+					PostsType.name, 
+					PostsType.column_title
+					 
+				FROM 
+					posts_types AS PostsType, 
+					posts_posts_types AS PostsPostsType,
+					posts AS Post 
+					
 				WHERE PostsPostsType.category_id = ".$categoryId." 
 				AND PostsPostsType.posts_type_id = PostsType.id 
 				AND PostsType.online = 1 
+				AND PostsPostsType.post_id = Post.id 
+				AND Post.category_id =  ".$categoryId." 
+				AND Post.online = 1
+				
 				ORDER BY PostsType.column_title, PostsType.order_by, PostsType.name
 			";			
 			$postsTypes = $this->query($sql, true);

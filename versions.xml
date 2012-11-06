@@ -18,6 +18,7 @@
 			<task author="KoéZionCMS">Correction d'une erreur dans le fichier routes pour qu'il gère les textes avec des majuscules</task>
 			<task author="KoéZionCMS">Suppression du lien en bouton dans les résultats de recherche et passage de celui-ci sur le h3</task>
 			<task author="KoéZionCMS">Passage en GET des mots recherchés dans le moteur de recherche et intégration du terme recherché dans le titre de page et dans le contenu</task>
+			<task author="KoéZionCMS">Modification de la requête de récupération des types de posts dans le modèle PostsType</task>
 		</tasks>	
 	</version>
 	<version>
