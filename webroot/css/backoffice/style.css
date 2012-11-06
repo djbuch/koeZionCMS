@@ -19,12 +19,16 @@ img{border:0}
 #right #top-bar{display:block;background:#1c1c1c;height:30px}
 #right #top-bar ul{float:right;margin:0;padding:0;list-style:none;width:auto}
 #right #top-bar ul li{float:left;position:relative;border-left:1px solid #444;padding:8px 10px 8px;font:11px/14px Arial;color:#cacaca;height:14px;cursor:pointer}
+#right #top-bar ul li.browse_website{padding:8px 0 8px 10px;}
+#right #top-bar ul li.browse_website + li.noborder {padding:8px 10px 8px 0;}
 #right #top-bar ul li.logout{padding: 8px 10px}
 #right #top-bar ul li.logout img{padding:0}
+#right #top-bar ul li.noborder{border:none}
 #right #top-bar ul li.nolink{cursor:default}
 #right #top-bar ul li.nolink.center{text-align:center}
 #right #top-bar ul li:first-child{border-left:none}
 #right #top-bar ul li img{float:left;padding:2px 5px 0 0}
+#right #top-bar ul li.browse_website img{padding:0;margin-top:-3px;margin-right: 3px}
 #right #top-bar ul li span{position:relative;background:#e00000;padding:2px 4px 2px;margin:0 0 0 3px;font:11px/1.0em Arial;color:#fff;font-weight:bold}
 #right #top-bar ul li a,#right #top-bar ul li a:link,#right #top-bar ul li a:active,#right #top-bar ul li a:visited{color:#cacaca;text-decoration:none}
 #right #top-bar ul li a:hover{color:#807f7f;text-decoration:none}

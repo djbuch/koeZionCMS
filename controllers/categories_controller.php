@@ -41,41 +41,16 @@ class CategoriesController extends AppController {
  * @version 1.3 - 16/07/2012 by FI - Rajout de la requête pour la récupération des produits
  * @version 1.4 - 02/08/2012 by FI - Passage de la gestion du formulaire de contact dans une fonction pour le mutualiser avec d'autres contrôleurs
  * @version 1.5 - 02/10/2012 by FI - Mise en place d'un slider pour les catégories, Mise en place de la possibilité de changer le template des pages
+ * @version 1.6 - 05/11/2012 by FI - Mise en fonction privée de la récupération de la catégorie ainsi que la récupération des articles associés pour pouvoir l'utiliser dans le flux rss
  */	
-	function view($id, $slug) {
+	public function view($id, $slug) {
 	
 		//Session::delete('Frontoffice.Category');
 	
 		///////////////////////////////////////////////
-		//   RECUPERATION DE LA CATEGORIE DEMANDEE   //
-		$conditions = array(
-			'fields' => array(
-				'id', 
-				'name', 
-				'page_title', 
-				'page_description', 
-				'page_keywords', 
-				'slug', 
-				'content', 
-				'type',  
-				'title_colonne_droite',
-				'display_brothers', 
-				'display_children',
-				'parent_id', 
-				'redirect_category_id', 
-				'level', 
-				'display_form', 
-				'is_secure', 
-				'txt_secure', 
-				'title_posts_list',
-				'tpl_layout',
-				'tpl_code',
-				'template_id'
-			),
-			'conditions' => array('online' => 1, 'id' => $id)
-        );
-		$datas['category'] = $this->Category->findFirst($conditions);		
+		//   RECUPERATION DE LA CATEGORIE DEMANDEE   //	
 		///////////////////////////////////////////////
+		$datas = $this->get_datas_category($id);
 		
 		////////////////////////////////////////////////////////////////////////////////////
 		//   GESTION DES EVENTUELLES ERREURS DANS LE RETOUR DE LA REQUETE OU DANS L'URL   //
@@ -242,11 +217,13 @@ class CategoriesController extends AppController {
 				$datas['is_full_page'] = 0; //Si on doit afficher les catégories "frères" alors il faut la colonne de droite
 			}
 			
-			////////////////////////////////////////////
-			//   GESTION DES ARTICLES ET CATALOGUES   //
+			//////////////////////////////
+			//   GESTION DES ARTICLES   //
+			$datas = $this->_get_posts_category($datas);
 			
+			//A supprimer quand on sera sur que tout fonctionne correctement
 			//On va compter le nombre d'articles de cette catégorie			
-			$this->loadModel('Post');
+			/*$this->loadModel('Post');
 			$postsConditions = array('online' => 1, 'category_id' => $id);
 			$nbPosts = $this->Post->findCount($postsConditions);
 						
@@ -303,7 +280,7 @@ class CategoriesController extends AppController {
 				$this->pager['totalPages'] = ceil($this->pager['totalElements'] / $this->pager['elementsPerPage']); //On va compter le nombre de page
 		
 				if($this->pager['totalElements'] > 0 || count($datas['postsTypes']) > 0) { $datas['is_full_page'] = 0; } //Si on doit afficher les articles alors il faut la colonne de droite				
-			}
+			}*/
 					
 			$this->set($datas); //On fait passer les données à la vue
 				
@@ -320,11 +297,34 @@ class CategoriesController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 24/05/2012 by FI
  */
-	function get_category_link($id) {
+	public function get_category_link($id) {
 	
 		//Récupération de la catégorie
 		$category = $this->Category->findFirst(array('conditions' => array('id' => $id)));
 		return array('id' => $category['id'], 'name' => $category['name'], 'slug' => $category['slug']);
+	}
+	
+/**
+ * Cette fonction est chargée de mettre en place le flux rss pour la catégorie demandée
+ * 
+ * @param 	integer $id 	Identifiant de la page
+ * @param 	varchar $slug 	Url de la page
+ * @access	public
+ * @author	koéZionCMS
+ * @version 0.1 - 05/11/2012 by FI 
+ * @see http://baptiste-wicht.developpez.com/tutoriels/php/rss/ : Pour l'exemple de la structure du fichier ainsi que les différents paramètres possibles
+ * @see http://www.craym.eu/tutoriels/developpement/flux_RSS.html : A lire plus complet que le précédent
+ * @see http://curul2.free.fr/style.php?feed= ; Pour rajouter un css au flux
+ */	
+	public function rss($id, $slug) {
+		
+		$this->layout = 'rss'; //Définition du layout à utiliser		
+		
+		$datas = $this->get_datas_category($id);
+		$datas = $this->_get_posts_category($datas, false);				
+		//$datas['type'] = 'application/rss+xml';
+		
+		$this->set($datas);
 	}
 	
 //////////////////////////////////////////////////////////////////////////////////////////	
@@ -339,7 +339,7 @@ class CategoriesController extends AppController {
  * @version 0.1 - 17/01/2012 by FI
  * @version 0.2 - 21/05/2012 by FI - Rajout d'une condition sur la récupération des catégories
  */	
-	function backoffice_index() {		
+	public function backoffice_index() {		
 			
 		$conditions = array(
 			'conditions' => 'type != 3',
@@ -359,7 +359,7 @@ class CategoriesController extends AppController {
  * @version 0.1 - 17/01/2012 by FI
  * @version 0.2 - 02/10/2012 by FI - Gestion de la personnalisation des templetes par pages
  */	
-	function backoffice_add() {
+	public function backoffice_add() {
 		
 		$this->_init_datas();
 		
@@ -380,7 +380,7 @@ class CategoriesController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 17/01/2012 by FI
  */	
-	function backoffice_massive_add() {
+	public function backoffice_massive_add() {
 		
 		$this->_init_datas();
 		
@@ -413,7 +413,7 @@ class CategoriesController extends AppController {
  * @version 0.2 - 23/03/2012 by FI - Lors de la modification d'une catégorie, si le champ online de celle-ci est égal à 0 on va mettre à jour l'ensemble des champs online des catégories filles
  * @version 0.2 - 02/10/2012 by FI - Gestion de la personnalisation des templetes par pages
  */	
-	function backoffice_edit($id) {
+	public function backoffice_edit($id) {
 		
 		$this->_init_datas();
 			
@@ -437,7 +437,7 @@ class CategoriesController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 23/03/2012 by FI
  */
-	function backoffice_statut($id) {
+	public function backoffice_statut($id) {
 	
 		$parentStatut = parent::backoffice_statut($id, false); //On fait appel à la fonction d'édition parente
 		if($parentStatut) {
@@ -458,7 +458,7 @@ class CategoriesController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 26/05/2012 by FI
  */
-	function backoffice_delete($id, $redirect = true) {
+	public function backoffice_delete($id, $redirect = true) {
 	
 		$parentDelete = parent::backoffice_delete($id, false); //On fait appel à la fonction d'édition parente
 		if($parentDelete) {			
@@ -477,7 +477,7 @@ class CategoriesController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 21/02/2012 by FI
  */	
-	function backoffice_move2prev($id) {
+	public function backoffice_move2prev($id) {
 					
 		$this->auto_render = false; //Pas de rendu
 		$this->Category->move2prev($id); //On fait appel à la fonction présente dans le model
@@ -493,7 +493,7 @@ class CategoriesController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 21/02/2012 by FI
  */	
-	function backoffice_move2next($id) {
+	public function backoffice_move2next($id) {
 		
 		$this->auto_render = false; //Pas de rendu
 		$this->Category->move2next($id); //On fait appel à la fonction présente dans le model
@@ -515,7 +515,7 @@ class CategoriesController extends AppController {
  * @version 0.3 - 14/03/2012 by FI - Rajout de la récupération des rédacteurs et des dates de parution
  * @version 0.4 - 16/05/2012 by FI - Modification de la récupération des catégories suite à la mise en place de la gestion des sites
  */	
-	function backoffice_ajax_get_pages() {
+	public function backoffice_ajax_get_pages() {
 				
 		$this->layout = 'ajax'; //Définition du layout à utiliser
 		
@@ -555,13 +555,13 @@ class CategoriesController extends AppController {
 /**
  * Fonction permettant la mise à jour des statuts des catégories filles de la catégorie passée en paramètre
  * 
- * @param integer $id			Identifiant de la catégorie
- * @param integer $newOnline	Nouvelle valeur du champ online 
- * @access 	public
+ * @param 	integer $id			Identifiant de la catégorie
+ * @param 	integer $newOnline	Nouvelle valeur du champ online 
+ * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 23/03/2012 by FI
  */	
-	function _update_children_statut($id, $newOnline) {
+	protected function _update_children_statut($id, $newOnline) {
 	
 		//On va procéder à la mise à jour des catégories filles uniquement si le champ online est égal à 0
 		if($newOnline == 0) {
@@ -588,11 +588,11 @@ class CategoriesController extends AppController {
  * @param 	array 	$postsTypes Liste des types de posts
  * @param 	varchar $searchType Type de recherche
  * @return 	array 	Configuration de la recherche
- * @access 	private
+ * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 03/05/2012 by FI
  */       
-    function _filter_posts($postsTypes, $searchType) {
+    protected function _filter_posts($postsTypes, $searchType) {
     	
     	$return = array();
     	
@@ -691,11 +691,11 @@ class CategoriesController extends AppController {
  * Cette fonction permet de vérifier si il faut envoyer un mail aux différents utilisateurs du site (uniquement dans le cas ou celui-ci est sécurisé)
  *
  * @param	array $datas Données de la catégorie
- * @access 	private
+ * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 30/08/2012 by FI
  */	
-	function _check_send_mail($datas) {
+	protected function _check_send_mail($datas) {
 
 		if(isset($datas['send_mail'])) {
 		
@@ -746,11 +746,11 @@ class CategoriesController extends AppController {
 /**
  * Cette fonction permet l'initialisation des données pour les formulaires dans le backoffice
  *
- * @access 	private
+ * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 02/10/2012 by FI
  */	
-	function _init_datas() {		
+	protected function _init_datas() {		
 		
 		$categoriesList = $this->Category->getTreeList(); //On récupère les catégories
 		$this->set('categoriesList', $categoriesList); //On les envois à la vue
@@ -768,11 +768,11 @@ class CategoriesController extends AppController {
  *
  * @param 	integer $categoryId Identifiant de la catégorie
  * @param 	integer $templateId Identifiant du template utilisé
- * @access 	private
+ * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 02/10/2012 by FI
  */	
-	function _update_template($categoryId, $templateId) {
+	protected function _update_template($categoryId, $templateId) {
 		
 		if($templateId) {
 			
@@ -782,5 +782,127 @@ class CategoriesController extends AppController {
 			$query = "UPDATE ".$this->Category->table." SET tpl_layout = '".$templateLayout."', tpl_code = '".$templateCode."' WHERE ".$this->Category->primaryKey." = ".$categoryId;
 			$this->Category->query($query);
 		}
-	}  
+	}
+
+/**
+ * Cette fonction permet la récupération des articles liés à la catégorie courante
+ *
+ * @param 	array 	$datas 		Tableau des données à passer à la vue
+ * @param 	boolean $setLimit 	Indique si il faut mettre en place une limite lors de la recherche
+ * @return	array	Tableau de données à passer à la vue 
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 02/10/2012 by FI
+ */		
+	protected function _get_posts_category($datas, $setLimit = true) {
+		
+		//On va compter le nombre d'articles de cette catégorie
+		$this->loadModel('Post');
+		$postsConditions = array('online' => 1, 'category_id' => $datas['category']['id']);
+		$nbPosts = $this->Post->findCount($postsConditions);
+		
+		if($nbPosts > 0) {
+			
+			//On va envoyer les informations nécessaires à la génération du flux RSS
+			$datas['rss_for_layout'] = array(
+				'title' => $datas['category']['page_title'],	
+				'link' => Router::url('categories/rss/id:'.$datas['category']['id'].'/slug:'.$datas['category']['slug'], 'xml', true)
+			);
+		
+			//////////////////////////////////////////////////////
+			//   RECUPERATION DES CONFIGURATIONS DES ARTICLES   //
+			require_once(LIBS.DS.'config_magik.php'); 										//Import de la librairie de gestion des fichiers de configuration des posts
+			$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'posts.ini', false, false); 		//Création d'une instance
+			$postsConfigs = $cfg->keys_values();											//Récupération des configurations
+			//////////////////////////////////////////////////////
+		
+			$datas['displayPosts'] = true;
+		
+			//Récupération des types d'articles
+			$this->loadModel('PostsType');
+			$datas['postsTypes'] = $this->PostsType->get_for_front($datas['category']['id']);
+		
+			//Construction des paramètres de la requête
+			$postsQuery = array(
+				'conditions' => $postsConditions,
+				'fields' => array('id', 'name', 'short_content', 'slug', 'display_link', 'page_description', 'modified_by', 'modified, prefix', 'category_id')
+			);			
+			if($setLimit) { $postsQuery['limit'] = $this->pager['limit'].', '.$this->pager['elementsPerPage']; }
+		
+			if($postsConfigs['order'] == 'modified') { $postsQuery['order'] = 'modified DESC'; }
+			else if($postsConfigs['order'] == 'order_by') { $postsQuery['order'] = 'order_by ASC'; }
+		
+			$postsQuery['moreConditions'] = ''; //Par défaut pas de conditions de recherche complémentaire
+		
+			$datas['libellePage'] = $datas['category']['title_posts_list'];
+		
+			//////////////////////////////////////////////////////////////////////////
+			///  GESTION DES EVENTUELS PARAMETRES PASSES EN GET PAR L'UTILISATEUR   //
+			$filterPosts = $this->_filter_posts($datas['postsTypes'], $postsConfigs['search']);
+			if(isset($filterPosts['moreConditions'])) {
+		
+				$postsQuery['moreConditions'] = $filterPosts['moreConditions'];
+				unset($filterPosts['moreConditions']);
+			}
+		
+			$datas = am($datas, $filterPosts);
+			//////////////////////////////////////////////////////////////////////////
+		
+			$datas['posts'] = $this->Post->find($postsQuery); //Récupération des articles
+		
+			//On va compter le nombre d'élement de la catégorie
+			//On compte deux fois le nombre de post une fois en totalité une fois en rajoutant si il est renseigné le type d'article
+			//Car si on ne faisait pas cela on avait toujours la zone d'affichage des catégories qui s'affichaient lorsqu'on affichait les frères
+			//même si il n'y avait pas de post
+			$nbPostsCategory = $this->Post->findCount($postsConditions);
+		
+			$this->pager['totalElements'] = $this->Post->findCount($postsConditions, $postsQuery['moreConditions']); //On va compter le nombre d'élement
+			$this->pager['totalPages'] = ceil($this->pager['totalElements'] / $this->pager['elementsPerPage']); //On va compter le nombre de page
+		
+			if($this->pager['totalElements'] > 0 || count($datas['postsTypes']) > 0) { $datas['is_full_page'] = 0; } //Si on doit afficher les articles alors il faut la colonne de droite
+		}
+
+		return $datas;
+	}
+
+/**
+ * Cette fonction permet la récupération des données de la catégorie courante
+ *
+ * @param 	integer $id Identifiant de la catégorie
+ * @return	array	Tableau contenant les données de la catégorie 
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 02/10/2012 by FI
+ */	
+	protected function get_datas_category($id) {
+		
+		$conditions = array(
+			'fields' => array(
+				'id',
+				'name',
+				'page_title',
+				'page_description',
+				'page_keywords',
+				'slug',
+				'content',
+				'type',
+				'title_colonne_droite',
+				'display_brothers',
+				'display_children',
+				'parent_id',
+				'redirect_category_id',
+				'level',
+				'display_form',
+				'is_secure',
+				'txt_secure',
+				'title_posts_list',
+				'tpl_layout',
+				'tpl_code',
+				'template_id'
+			),
+			'conditions' => array('online' => 1, 'id' => $id)
+		);
+		$datas['category'] = $this->Category->findFirst($conditions);
+		return $datas;
+	}
 }

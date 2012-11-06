@@ -1,5 +1,26 @@
 ﻿<versions>
 	<version>
+		<name>Version du 06/11/2012</name>
+		<num>20121106</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Dans le contrôleur Categories : Mise en place d'une fonction pour générer un flux RSS, création d'un layout dédié ainsi que de la vue appropriée</task>
+			<task author="KoéZionCMS">Modification des routes pour intégrer l'url des flux RSS</task>
+			<task author="KoéZionCMS">Dans le contrôleur Categories : Mise en fonction privée de la récupération de la catégorie ainsi que la récupération des articles associés pour pouvoir l'utiliser dans le flux RSS</task>
+			<task author="KoéZionCMS">Modification de la fonction url de la classe Router pour intégrer la possibilité de retourner une url complète</task>
+			<task author="KoéZionCMS">Modification du layout frontoffice pour y intégrer l'url du flux RSS</task>
+			<task author="KoéZionCMS">Modification du helper HTML pour reprendre l'insertion des css et des js</task>
+			<task author="KoéZionCMS">Rajout de la fonction convert_lt_gt dans le composant Text</task>
+			<task author="KoéZionCMS">Correction d'un test de retour dans la fonction check de la classe Session</task>
+			<task author="KoéZionCMS">Rajout dans le header du backoffice d'un lien pour se connecter au site en cours afin de voir les modifications (modification de l'élément top_bar et du css)</task>
+			<task author="KoéZionCMS">Modification du formulaire d'ajout d'un article pour passer la date de publication dans le premier onglet</task>
+			<task author="KoéZionCMS">Correction d'une erreur de texte dans la partie newsletter du footer</task>
+			<task author="KoéZionCMS">Correction d'une erreur dans le fichier routes pour qu'il gère les textes avec des majuscules</task>
+			<task author="KoéZionCMS">Suppression du lien en bouton dans les résultats de recherche et passage de celui-ci sur le h3</task>
+			<task author="KoéZionCMS">Passage en GET des mots recherchés dans le moteur de recherche et intégration du terme recherché dans le titre de page et dans le contenu</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 31/10/2012</name>
 		<num>20121031</num>
 		<supervisor>KoéZionCMS</supervisor>

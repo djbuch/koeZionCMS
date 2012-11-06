@@ -26,6 +26,37 @@
 		echo $helpers['Form']->input('online', 'En ligne', array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour diffuser cet article"));
 		?>		
 		</div>
+		<div class="content nopadding">
+			<?php echo $helpers['Form']->input('publication_date', 'Date de publication', array("class" => "datepicker", "placeholder" => "dd.mm.yy", 'tooltip' => "Indiquez la date à laquelle cet article sera publié")); ?>
+			<p style="padding:0 20px 0 20px;margin-bottom:5px">Cette option vous permet de définir la date à laquelle sera publié l'article en utilisant une tâche <a href="http://fr.wikipedia.org/wiki/Cron" target="_blank">CRON</a></p>
+			<p style="padding:0 20px 0 20px;margin-bottom:5px">Vous pouvez utiliser des services CRON gratuits comme par exemple <a href="http://www.cronoo.com/" target="_blank">Cronoo</a></p>			
+			<?php 
+			$websiteUrl = Session::read('Backoffice.Websites.details.'.CURRENT_WEBSITE_ID.'.url');
+			
+			require_once(LIBS.DS.'config_magik.php');
+			$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'exports.ini', true, false);
+			$exportCode = $cfg->keys_values();
+			
+			if(empty($exportCode['export_code'])) {
+				
+				?><p style="padding:0 20px 0 20px;margin-bottom:5px">Pour utiliser cette fonctionnalité vous devez en premier lieu <a href="<?php echo Router::url('backoffice/configs/exports_liste'); ?>">paramétrer le code de sécurité</a> utilisé pour pouvoir lancer cette procédure</p><?php 
+			
+			} else { 
+			
+				?>
+				<p style="padding:0 20px 0 20px;margin-bottom:5px">Pour mettre en place la diffusion automatique vous pouvez utiliser l'url suivante <?php echo $websiteUrl; ?>/posts/update_publication_date.xml?update_code=<?php echo $exportCode['export_code']; ?></p>
+				<p style="padding:0 20px 0 20px;margin-bottom:5px">Le type du format de retour est l'XML</p>
+				<p style="padding:0 20px 0 20px;margin-bottom:5px">
+				&lt;export&gt;<br />
+				&nbsp;&nbsp;&nbsp;&nbsp;&lt;result&gt;MISE A JOUR EFFECTUEE&lt;/result&gt;<br />
+				&nbsp;&nbsp;&nbsp;&nbsp;&lt;message&gt;La mise à jour des dates de publications à été effectuée&lt;/message&gt;<br />
+				&lt;/export&gt;
+				</p>
+				<div class="system warning" style="margin:0 20px 10px 20px">ATTENTION : si vous utilisez une date de publication vous ne devez pas cocher le champ En ligne, la tâche automatisée qui sera effectuée fera automatiquement la mise à jour de ce champ.</div>
+				<?php 
+			} 
+			?>					
+		</div>		
 	</div>
 	<div id="textes">
 		<div class="content nopadding">
@@ -72,41 +103,8 @@
 			echo $helpers['Form']->input('display_home_page', "Afficher cet article sur la la page d'accueil", array('type' => 'checkbox', 'tooltip' => "En cochant cette case vous afficherez cet article sur la page d'accueil du site"));
 
 			if(!isset($formulaires)) { $formulaires = array (2 => 'Formulaire commentaire article'); } 
-			echo $helpers['Form']->input('display_form', 'Formulaire', array('type' => 'select', 'datas' => $formulaires, 'tooltip' => "Indiquez le formulaire que vous souhaitez afficher sur la page", 'firstElementList' => "Sélectionnez un formulaire"));
-
-			
-			echo $helpers['Form']->input('publication_date', 'Date de publication', array("class" => "datepicker", "placeholder" => "dd.mm.yy", 'tooltip' => "Indiquez la date à laquelle cet article sera publié"));
-			
+			echo $helpers['Form']->input('display_form', 'Formulaire', array('type' => 'select', 'datas' => $formulaires, 'tooltip' => "Indiquez le formulaire que vous souhaitez afficher sur la page", 'firstElementList' => "Sélectionnez un formulaire"));					
 			?>
-		</div>
-		<div class="content">
-			<p>Cette option vous permet de définir la date à laquelle sera publié l'article en utilisant une tâche <a href="http://fr.wikipedia.org/wiki/Cron" target="_blank">CRON</a></p>
-			<p>Vous pouvez utiliser des services CRON gratuits comme par exemple <a href="http://www.cronoo.com/" target="_blank">Cronoo</a></p>			
-			<?php 
-			$websiteUrl = Session::read('Backoffice.Websites.details.'.CURRENT_WEBSITE_ID.'.url');
-			
-			require_once(LIBS.DS.'config_magik.php');
-			$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'exports.ini', true, false);
-			$exportCode = $cfg->keys_values();
-			
-			if(empty($exportCode['export_code'])) {
-				
-				?><p>Pour utiliser cette fonctionnalité vous devez en premier lieu <a href="<?php echo Router::url('backoffice/configs/exports_liste'); ?>">paramétrer le code de sécurité</a> utilisé pour pouvoir lancer cette procédure</p><?php 
-			
-			} else { 
-			
-				?>
-				<p>Pour mettre en place la diffusion automatique vous pouvez utiliser l'url suivante <?php echo $websiteUrl; ?>/posts/update_publication_date.xml?update_code=<?php echo $exportCode['export_code']; ?></p>
-				<p>Le type du format de retour est l'XML</p>
-				<p>
-				&lt;export&gt;<br />
-				&nbsp;&nbsp;&nbsp;&nbsp;&lt;result&gt;MISE A JOUR EFFECTUEE&lt;/result&gt;<br />
-				&nbsp;&nbsp;&nbsp;&nbsp;&lt;message&gt;La mise à jour des dates de publications à été effectuée&lt;/message&gt;<br />
-				&lt;/export&gt;
-				</p>
-				<?php 
-			} 
-			?>		
 		</div>		
 	</div>
 	<?php if($isSecure) { ?>			

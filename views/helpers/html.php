@@ -57,10 +57,10 @@ class Html {
 				
 				$cssFile = '/css/'.$v.'.css';
 				$cssPath = Router::webroot($cssFile);
-				$html .= '<link href="'.$cssPath.'" rel="stylesheet" type="text/css" />'."\n";
+				$html .= "\t\t".'<link href="'.$cssPath.'" rel="stylesheet" type="text/css" />'."\n";
 				
 			}
-			
+			$html .= "\n";
 			return $html;
 		/*} else {
 			
@@ -91,7 +91,7 @@ class Html {
 			
 			$jsFile = 'js/'.$v.'.js';
 			$jsPath = Router::webroot($jsFile);
-			$html .= '<script src="'.$jsPath.'" type="text/javascript"></script>'."\n";			
+			$html .= "\t\t".'<script src="'.$jsPath.'" type="text/javascript"></script>'."\n";			
 		}
 		
 		return $html;
@@ -115,7 +115,7 @@ class Html {
 				
 				?>
 				<li>
-					<?php if($v['level'] == 1 && $iParentCategory == $v['id']) { $sCssMenu = 'class="menu_selected_bg"'; } else { $sCssMenu = ''; } ?>
+					<?php if($v['level'] == 1 && $iParentCategory == $v['id']) { $sCssMenu = ' class="menu_selected_bg"'; } else { $sCssMenu = ''; } ?>
 					<a href="<?php echo Router::url('categories/view/id:'.$v['id'].'/slug:'.$v['slug']); ?>"<?php echo $sCssMenu; ?>><?php echo $v['name']; ?></a>
 					<?php if(isset($v['children'])) { $this->generateMenu($v['children'], $breadcrumbs); }; ?>
 				</li>

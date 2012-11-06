@@ -255,8 +255,9 @@ class Controller extends Object {
  * @param unknown_type $code
  * @version 0.1 - 23/12/2011
  * @version 0.2 - 02/05/2012 - Test sur l'url pour savoir si il y a http:// dedans 
+ * @version 0.3 - 06/11/2012 - Rajout de la possibilité de passer des paramètres 
  */
-	function redirect($url, $code = null) {
+	function redirect($url, $code = null, $params = null) {
 		 
 		//Code de redirection possibles
 		$http_codes = array(
@@ -302,7 +303,11 @@ class Controller extends Object {
 		);
 		 
 		if(isset($code)) { header("HTTP/1.0 ".$code." ".$http_codes[$code]); } //Si un code est passé on l'indique dans le header				
-		if(substr_count($url, 'http://')) { header("Location: ".$url); } else { header("Location: ".Router::url($url)); } //On procède à la redirection		
+		if(!substr_count($url, 'http://')) { $url = Router::url($url); }
+
+		if(isset($params)) {$url .= '?'.$params; }
+		header("Location: ".$url);
+		
 		die(); //Pour éviter que les fonctions ne continues
 	}
 }

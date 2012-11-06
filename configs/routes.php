@@ -35,13 +35,15 @@ Router::prefix($routesConfigs['backoffice_prefix'], 'backoffice'); //Définition
 
 ////////////////////////////
 //   REGLES FRONTOFFICE   //
-Router::connect('', 'home/index'); 																			//Page d'accueil du site
-Router::connect('e404', 'home/e404'); 																		//Erreur 404
-Router::connect('newsletter', 'contacts/newsletter'); 														//Inscription à la newsletter
-Router::connect('recherche', 'searchs/index'); 																//Affichage du résultat de la recherche
-Router::connect(':prefix/:slug-:id', 'posts/view/id:([0-9]+)/slug:([a-z0-9\-]+)/prefix:([a-z0-9\-]+)'); 	//Affichage du détail d'un post
-Router::connect($routesConfigs['posts_prefix_plural'], 'posts/listing');									//Liste de tous les posts
-Router::connect(':slug-:id', 'categories/view/id:([0-9]+)/slug:([a-z0-9\-]+)'); 							//Affichage d'une page catégorie
+Router::connect('', 									'home/index'); 																//Page d'accueil du site
+Router::connect('e404', 								'home/e404'); 																//Erreur 404
+Router::connect('newsletter', 							'contacts/newsletter'); 													//Inscription à la newsletter
+Router::connect('rechercher', 							'searchs/rechercher');														//Préparation de l'url pour la recherche
+Router::connect('recherche', 							'searchs/index');															//Résultat de la recherche
+Router::connect('rss/:slug-:id', 						'categories/rss/id:([0-9]+)/slug:([a-zA-Z0-9\-]+)'); 						//Affichage du flux rss d'une page catégorie
+Router::connect(':prefix/:slug-:id', 					'posts/view/id:([0-9]+)/slug:([a-zA-Z0-9\-]+)/prefix:([a-zA-Z0-9\-]+)'); 	//Affichage du détail d'un post
+Router::connect($routesConfigs['posts_prefix_plural'], 	'posts/listing');															//Liste de tous les posts
+Router::connect(':slug-:id', 							'categories/view/id:([0-9]+)/slug:([a-zA-Z0-9\-]+)'); 						//Affichage d'une page catégorie
 ////////////////////////////
 
 ///////////////////////////
@@ -62,7 +64,7 @@ if(is_dir($moreRoutes)) {
 // Pense bête : 
 // 
 // ([0-9]+) --> n'importe quel chiffre entre 0 et 9 répété plusieurs fois (ou non) 
-// ([a-z0-9\-]+) n'importe quel caractères ou chiffres ou tiret répétés plusieurs fois
+// ([a-zA-Z0-9\-]+) n'importe quel caractères ou chiffres ou tiret répétés plusieurs fois
 // + --> 1 ou plusieurs fois alors que * --> 0 ou plusieurs fois
 // 
 // Router::connect('blog/:action', 'posts/:action'); //Règles globales

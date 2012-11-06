@@ -12,7 +12,7 @@
 		<div class="gs_5 widget"><?php echo $websiteParams['footer_gauche']; ?></div>	
 		<div class="gs_4 widget">
 			<h4 class="widgettitle"><?php echo _("Newsletter"); ?></h4>
-			<p><?php echo _("Souscrivre à notre newsletter pour être informé de notre actualité."); ?></p>
+			<p><?php echo _("Souscrivrez à notre newsletter pour être informé de notre actualité."); ?></p>
 			<?php 
 			$formOptions = array('id' => 'FormNewsletterFooter', 'action' => Router::url('contacts/newsletter'), 'method' => 'post');
 			echo $helpers['Form']->create($formOptions);		

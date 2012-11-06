@@ -1,6 +1,6 @@
 <?php
 /**
- * Classe statique permettant le gestion des variables de session
+ * Classe statique permettant la gestion des variables de session
  *
  */
 class Session {
@@ -35,7 +35,7 @@ class Session {
 		
 		if(empty($key)) { return false; } //Si la clée est vide
 		$result = Set::classicExtract($_SESSION, $key); //On procède à l'extraction de la donnée
-		return isset($result); //On retourne le résultat
+		return !empty($result); //On retourne le résultat
 	}
 	
 /**

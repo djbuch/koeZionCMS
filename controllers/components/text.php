@@ -169,6 +169,24 @@ class Text {
 	}
 	
 	
+	
+/**
+ * Cette fonction va convertir les < (inférieur à) en &lt; et les > (supérieur à) en &gt; 
+ *
+ * @param 	varchar $content 	Texte source
+ * @return 	varchar Texte modifié
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 06/11/2012 by FI
+ */
+	function convert_lt_gt($content) {
+	
+		$content = str_replace('<', '&lt;', $content);
+		$content = str_replace('>', '&gt;', $content);
+		return $content;
+	}	
+	
+	
 //////////////////////////////////////////////////////////////////////////////////////////
 //								FONCTIONS PRIVEES										//
 //////////////////////////////////////////////////////////////////////////////////////////	

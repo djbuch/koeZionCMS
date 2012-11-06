@@ -15,6 +15,17 @@
  */
 class SearchsController extends AppController {   
 	
+	function rechercher() {
+	
+		$this->auto_render = false;
+
+		//Si on a un mot recherché
+		if(isset($this->request->data['q'])) { $q = strip_tags($this->request->data['q']); } 
+		else { $q = ''; }
+		
+		$this->redirect('recherche', null, 'q='.$q); //Redirection
+	}
+		
 	function index() {		
 		
 		//Si on a un mot recherché
@@ -23,10 +34,12 @@ class SearchsController extends AppController {
 			$q = $this->request->data['q'];			
 			$hits = $this->Search->find(array('conditions' => "datas LIKE '%".$q."%' AND website_id = ".CURRENT_WEBSITE_ID));			
 			$this->set('hits', $hits);
+			$this->set('q', $q);
 			
 		} else {
 			
 			$this->set('hits', null);
+			$this->set('q', null);
 		}
 	}
 }

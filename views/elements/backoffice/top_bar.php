@@ -10,19 +10,20 @@
 		if($nbPostsComments > 0) { 
 			
 			?><li><a href="<?php echo Router::url('backoffice/posts_comments/index'); ?>"><?php echo $helpers['Html']->img('backoffice/icon-message.png', array('alt' => _("Commentaires Internautes"))); ?> <?php echo _("Commentaires articles"); ?><span><?php echo $nbPostsComments; ?></span></a></li><?php 
-		}		
+		}
+		
+		$websites = Session::read('Backoffice.Websites');
+		$websitesListe = $websites['liste'];
+		$currentWebsite = Session::read('Backoffice.Websites.current');		
 		?>
-		<li>
+		<li class="browse_website"><a href="<?php echo $websites['details'][$currentWebsite]['url']; ?>" target="_blank"><?php echo $helpers['Html']->img('backoffice/website.png', array('alt' => _("Sites Internet"))); ?></a></li>
+		<li class="noborder">
 			<?php			
-			$websites = Session::read('Backoffice.Websites.liste');
-			$currentWebsite = Session::read('Backoffice.Websites.current');
-			
-			echo $helpers['Html']->img('backoffice/browser-globe.png', array('alt' => _("Sites Internet"))); 
-			echo _("Site courant").' : '.$websites[$currentWebsite];
-			if(count($websites) > 1) {
+			echo _("Site courant").' : '.$websitesListe[$currentWebsite];
+			if(count($websitesListe) > 1) {
 				?>
 				<ul class="websites">
-					<?php foreach($websites as $websiteId => $websiteLibelle) { ?>
+					<?php foreach($websitesListe as $websiteId => $websiteLibelle) { ?>
 						<li><a href="<?php echo Router::url('backoffice/websites/change_default/'.$websiteId); ?>"><?php echo _("Utiliser").' '.$websiteLibelle; ?></a></li>			
 					<?php } ?>				
 				</ul>				

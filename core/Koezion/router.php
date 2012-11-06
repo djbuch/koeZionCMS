@@ -150,9 +150,10 @@ class Router {
  *
  * @param varchar 	$url 		Url de la page à atteindre
  * @param mixed 	$extension 	Indique si il faut ou non mettre l'extension html (faux si pas d'url)
+ * @param boolean 	$fullUrl 	Indique si il faut retourner une url complète (avec http et le HOST)
  * @return varchar Url formatée
  */		
-	static function url($url = '', $extension = 'html') {
+	static function url($url = '', $extension = 'html', $fullUrl = false) {
 		
 		trim($url, '/');
 		
@@ -191,7 +192,9 @@ class Router {
 		
 		$url = str_replace('//', '/', '/'.$url);
 		if($url != '/' && !empty($extension)) { $url .= '.'.$extension; } //Cas ou on est pas sur la racine du site
-		return BASE_URL.$url;
+		
+		if($fullUrl) { return 'http://'.$_SERVER['HTTP_HOST'].BASE_URL.$url; }
+		else { return BASE_URL.$url; }
 	}
 	
 /**
