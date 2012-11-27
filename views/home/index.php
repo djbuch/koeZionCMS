@@ -39,7 +39,7 @@ if(count($posts) > 0) {
 	if(isset($websiteParams['txt_posts'])) { ?><div class="container_gamma slogan"><?php echo $websiteParams['txt_posts']; ?></div><?php }	
 	?>
 	<div class="container_omega">	
-		<?php $this->element('frontoffice/posts_list', array('cssZone' => 'gs_12')); ?>
+		<?php $this->element('frontoffice/posts_list', array('cssZone' => 'gs_12', 'displayPosts' => 1)); ?>
 		<?php //$this->element('frontoffice/colonne_droite'); ?>
 	</div>
 	<?php 

@@ -1,5 +1,5 @@
 <?php if(isset($displayPosts) && $displayPosts) { ?>
-	<h2 class="widgettitle"><?php echo $titlePostsList; ?></h2>
+	<?php /* ?><h2 class="widgettitle"><?php echo $titlePostsList; ?></h2><?php */ ?>
 	<div class="hr"></div>
 	
 	<?php if(!isset($cssZone)) { $cssZone = 'gs_8'; } ?>
