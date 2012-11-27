@@ -9,7 +9,8 @@ if(isset($googleMapAPI) && $mapPosition == 'topPage') { $this->element(PLUGINS.D
 ?>
 <div class="container_omega">
 	<?php	
-	if($is_full_page) { 
+	
+	if(count($children) == 0 && count($brothers) == 0 && count($postsTypes) == 0) { 
 		
 		echo $this->vars['components']['Text']->format_content_text($category['content']);
 		if(isset($googleMapAPI) && $mapPosition == 'afterTxt') { $this->element(PLUGINS.DS.'gmaps/views/gmaps/elements/frontoffice/map', null, false); } //Plugin Google Maps
@@ -21,10 +22,13 @@ if(isset($googleMapAPI) && $mapPosition == 'topPage') { $this->element(PLUGINS.D
 		}		
 		
 		if($category['display_form']) { 
-			
-			if(isset($formPlugin)) { $this->element(PLUGINS.DS.'formulaires/views/elements/frontoffice/formulaire', null, false); }
+						
+			if(isset($formPlugin)) { $this->element(PLUGINS.DS.'formulaires/views/formulaires/elements/frontoffice/formulaire', null, false); }
 			else { $this->element('frontoffice/formulaires/formulaire_contact'); } 
 		}	
+		
+		$this->element('frontoffice/posts_list', array('cssZone' => ''));
+		
 	} else { 
 
 		?>		
@@ -36,20 +40,22 @@ if(isset($googleMapAPI) && $mapPosition == 'topPage') { $this->element(PLUGINS.D
 
 				if($category['display_form']) { 
 					
-					if(isset($formPlugin)) { $this->element(PLUGINS.DS.'formulaires/views/elements/frontoffice/formulaire', null, false); } 
+					if(isset($formPlugin)) { $this->element(PLUGINS.DS.'formulaires/views/formulaires/elements/frontoffice/formulaire', null, false); } 
 					else { $this->element('frontoffice/formulaires/formulaire_contact'); } 
 				}
 				?>
 			</div>		
 			
-			<?php if(isset($displayPosts) && $displayPosts) { ?>
+			<?php 
+			$this->element('frontoffice/posts_list');
+			/*if(isset($displayPosts) && $displayPosts) { ?>
 				<h2 class="widgettitle"><?php echo $libellePage; ?></h2>
 				<div class="hr"></div>	
 				<div class="gs_8 omega">
 					<?php $this->element('frontoffice/posts_list'); ?>
 					<?php $this->element('frontoffice/pagination'); ?>
 				</div>		
-			<?php } ?>
+			<?php }*/ ?>
 		</div>		
 		<?php 
 		$this->element('frontoffice/colonne_droite'); 

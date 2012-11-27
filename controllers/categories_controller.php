@@ -190,7 +190,11 @@ class CategoriesController extends AppController {
 			
 		} else {
 						
-			$datas['is_full_page'] = 1; //Par défaut on affichera le détail de la catégorie en pleine page			
+			//$datas['is_full_page'] = 1; //Par défaut on affichera le détail de la catégorie en pleine page
+
+			$datas['children'] = array();
+			$datas['brothers'] = array();
+			$datas['postsTypes'] = array();
 			
 			//////////////////////////////////
 			//   RECUPERATION DES ENFANTS   //
@@ -202,7 +206,7 @@ class CategoriesController extends AppController {
 				foreach($children as $k => $v) { $datas['children'][$datas['category']['title_colonne_droite']][] = $v; }
 				
 				
-				$datas['is_full_page'] = 0; //Si on doit afficher les catégories filles alors il faut la colonne de droite
+				//$datas['is_full_page'] = 0; //Si on doit afficher les catégories filles alors il faut la colonne de droite
 			}
 			
 			/////////////////////////////////
@@ -214,7 +218,7 @@ class CategoriesController extends AppController {
 				//Cas particulier pour les catégories "frères" le titre de la colonne de droite peut varier en fonction des besoins
 				//On va donc parcourir le résultat et réorganiser le tout
 				foreach($brothers as $k => $v) { $datas['brothers'][$v['title_colonne_droite']][] = $v; }				
-				$datas['is_full_page'] = 0; //Si on doit afficher les catégories "frères" alors il faut la colonne de droite
+				//$datas['is_full_page'] = 0; //Si on doit afficher les catégories "frères" alors il faut la colonne de droite
 			}
 			
 			//////////////////////////////
@@ -281,7 +285,7 @@ class CategoriesController extends AppController {
 		
 				if($this->pager['totalElements'] > 0 || count($datas['postsTypes']) > 0) { $datas['is_full_page'] = 0; } //Si on doit afficher les articles alors il faut la colonne de droite				
 			}*/
-					
+			
 			$this->set($datas); //On fait passer les données à la vue
 				
 			//On va tester si des données sont postées par un formulaire et que le plugin Formulaires n'est pas installé
@@ -834,7 +838,7 @@ class CategoriesController extends AppController {
 		
 			$postsQuery['moreConditions'] = ''; //Par défaut pas de conditions de recherche complémentaire
 		
-			$datas['libellePage'] = $datas['category']['title_posts_list'];
+			$datas['titlePostsList'] = $datas['category']['title_posts_list'];
 		
 			//////////////////////////////////////////////////////////////////////////
 			///  GESTION DES EVENTUELS PARAMETRES PASSES EN GET PAR L'UTILISATEUR   //
@@ -859,7 +863,7 @@ class CategoriesController extends AppController {
 			$this->pager['totalElements'] = $this->Post->findCount($postsConditions, $postsQuery['moreConditions']); //On va compter le nombre d'élement
 			$this->pager['totalPages'] = ceil($this->pager['totalElements'] / $this->pager['elementsPerPage']); //On va compter le nombre de page
 		
-			if($this->pager['totalElements'] > 0 || count($datas['postsTypes']) > 0) { $datas['is_full_page'] = 0; } //Si on doit afficher les articles alors il faut la colonne de droite
+			//if($this->pager['totalElements'] > 0 || count($datas['postsTypes']) > 0) { $datas['is_full_page'] = 0; } //Si on doit afficher les articles alors il faut la colonne de droite
 		}
 
 		return $datas;

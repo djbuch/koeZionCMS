@@ -127,8 +127,8 @@ class View extends Object {
     	if($inElementsFolder) { $element = ELEMENTS.DS.$element.'.php'; }
     	else { $element = $element.'.php'; }
     	
-    	if(!file_exists($element)) { require_once ELEMENTS.DS.'backoffice'.DS.'missing_element.php'; } //Si le fichier n'existe pas on affiche un message d'erreur 
-    	else { require_once $element; } //Sinon on le charge
+    	if(!file_exists($element)) { require ELEMENTS.DS.'backoffice'.DS.'missing_element.php'; } //Si le fichier n'existe pas on affiche un message d'erreur 
+    	else { require $element; } //Sinon on le charge
     }
     
 /**

@@ -10,8 +10,12 @@ class Session {
  *
  * @version 0.1 - 20/04/2012
  * @version 0.2 - 31/07/2012 - Suppression de la récupération des données de la variable de session par un fichier
+ * @version 0.3 - 09/11/2012 - Rajout du test pour savoir si les classes Inflector et Set sont chargées
  */
-	function init() {	
+	function init() {
+		
+		if(!class_exists('Inflector')) { require_once(CAKEPHP.DS.'inflector.php'); }
+		if(!class_exists('Set')) { require_once(CAKEPHP.DS.'set.php'); }
 		
 		$sessionName = Inflector::variable(Inflector::slug('koeZion '.$_SERVER['HTTP_HOST'])); 	//Récupération du nom de la variable de session																
 		ini_set('session.use_trans_sid', 0);													//Evite de passe l'id de la session dans l'url

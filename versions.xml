@@ -1,5 +1,25 @@
 ﻿<versions>
 	<version>
+		<name>Version du 12/11/2012</name>
+		<num>20121112</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Rajout de la librairie JqueryUI dans le frontoffice (JS, CSS et images)</task>
+			<task author="KoéZionCMS">Mise à jour de jQuery dans le frontoffice</task>
+			<task author="KoéZionCMS">Mise à jour de jQuery uniform dans le frontoffice pour le skin des input</task>
+			<task author="KoéZionCMS">Rajout d'un template</task>
+			<task author="KoéZionCMS">Modification du fichier configs de ckfinder pour l'ajout de la librairie Inflector</task>
+			<task author="KoéZionCMS">Rajout d'un template pour l'ajout d'image encadrée dans ckEditor</task>
+			<task author="KoéZionCMS">Moficiation du composent email pour qu'il gère l'ajout de fichier à télécharger</task>
+			<task author="KoéZionCMS">Simplification de l'affichage du détail d'une page</task>
+			<task author="KoéZionCMS">Modification de la fonction pr pour rajouter le nom du fichier et le numéro de ligne d'appel</task>
+			<task author="KoéZionCMS">Suppression du composant Import</task>
+			<task author="KoéZionCMS">Modification de la fonction d'upload pour que celle-ci indique au model le nom des fichiers téléchargés</task>
+			<task author="KoéZionCMS">Modification de la classe Session pour effectuer un test sur l'existence des librairies nécessaires à son fonctionnement</task>			
+		</tasks>	
+	</version>
+
+	<version>
 		<name>Version du 06/11/2012</name>
 		<num>20121106</num>
 		<supervisor>KoéZionCMS</supervisor>

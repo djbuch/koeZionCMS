@@ -350,17 +350,18 @@ class Model extends Object {
  * 
  * @todo mettre en place des try catch pour vérifier que la requete c'est bien exécutée 
  */	
-	public function save($datas, $forceInsert = false) {
+	public function save($datas, $forceInsert = false, $escapeUpload = true) {
 					
-		$preparedInfos = $this->_prepare_save_query(array_keys($datas), $forceInsert); //Récupération des données de la préparation de la requête
-		$datasToSave = $this->_prepare_save_datas($datas, $preparedInfos['moreDatasToSave'], $forceInsert); //Récupération des données à sauvegarder
+		$preparedInfos = $this->_prepare_save_query(array_keys($datas), $forceInsert, $escapeUpload); //Récupération des données de la préparation de la requête
+		$datasToSave = $this->_prepare_save_datas($datas, $preparedInfos['moreDatasToSave'], $forceInsert, $escapeUpload); //Récupération des données à sauvegarder
+		
 		$preparedInfos['preparedQuery']->execute($datasToSave); //Exécution de la requête
 		
 		//Affectation de la valeur de la clé primaire à la variable de classe
 		if($preparedInfos['action'] == 'insert') { $this->id = $this->db->lastInsertId(); }
 		else { $this->id = $datas[$this->primaryKey]; }
 		
-		if(isset($this->files_to_upload)) { $this->upload_files($datas, $this->id); } //Sauvegarde éventuelle des images
+		if(isset($this->files_to_upload) && $proceedUpload) { $this->upload_files($datas, $this->id); } //Sauvegarde éventuelle des images
 		if(isset($this->searches_params)) { $this->make_search_index($datasToSave, $this->id, $preparedInfos['action']); } //On génère le fichier d'index de recherche
 	}
 
@@ -373,12 +374,12 @@ class Model extends Object {
  * @author	koéZionCMS
  * @version 0.1 - 24/08/2012 by FI
  */	
-	function saveAll($datas, $forceInsert = false) {
+	function saveAll($datas, $forceInsert = false, $escapeUpload = true) {
 		
-		$preparedInfos = $this->_prepare_save_query(array_keys(current($datas)), $forceInsert);
+		$preparedInfos = $this->_prepare_save_query(array_keys(current($datas)), $forceInsert, $escapeUpload);
 		foreach($datas as $k => $v) { 
 			
-			$datasToSave = $this->_prepare_save_datas($v, $preparedInfos['moreDatasToSave'], $forceInsert);
+			$datasToSave = $this->_prepare_save_datas($v, $preparedInfos['moreDatasToSave'], $forceInsert, $escapeUpload);
 			$preparedInfos['preparedQuery']->execute($datasToSave);
 			
 			if($preparedInfos['action'] == 'insert') { $this->id = $this->db->lastInsertId();}
@@ -477,6 +478,9 @@ class Model extends Object {
 					
 					$handle->Process($filePath);					
 					$fileName = $handle->file_dst_name;
+					
+					//On va stocker dans le model le nom du fichier téléchargé dans le cas ou celui-ci serait changé
+					$this->files_to_upload[$k]['uploaded_name'] = $fileName;
 
 					//Sauvegarde en base de données
 					if(isset($v['bdd']) && $v['bdd']) {
@@ -614,12 +618,13 @@ class Model extends Object {
  * 
  * @param 	array	$datasShema 	Shéma des champs de la table
  * @param 	boolean	$forceInsert 	Indique si il faut forcer l'insert
+ * @param 	boolean	$escapeUpload 	Indique si il faut ou non ne pas tenir compte des champs à uploader
  * @return	array	Tableau contenant les paramètres de la requête préparée
  * @access	private
  * @author	koéZionCMS
  * @version 0.1 - 24/08/2012 by FI
  */	
-	function _prepare_save_query($datasShema, $forceInsert = false) {
+	function _prepare_save_query($datasShema, $forceInsert, $escapeUpload) {
 					
 		$shema = $this->shema; //Shema de la table		
 		$primaryKey = $this->primaryKey; //Récupération de la clé primaire
@@ -681,7 +686,7 @@ class Model extends Object {
 		//On fait le parcours des données
 		foreach($datasShema as $v) {
 
-			if(isset($this->files_to_upload) && isset($this->files_to_upload[$v])) continue; //On supprime si il y en a les champs d'upload
+			if(isset($this->files_to_upload) && isset($this->files_to_upload[$v]) && $escapeUpload) continue; //On supprime si il y en a les champs d'upload
 			if(in_array($v, $shema)) { $fieldsToSave[] = "$v=:$v"; } //On récupère le shéma de la table pour être sur de n'ajouter à la requête que des champs présent dans la table pour éviter les erreurs
 		}
 		
@@ -703,12 +708,13 @@ class Model extends Object {
  * @param 	array	$datas 				Données à sauvegarder
  * @param 	array	$moreDatasToSave 	Champs supplémentaires à sauvegarder (created par exemple, provient de _prepare_save_query)
  * @param 	boolean	$forceInsert 		Indique si il faut forcer l'insert
+ * @param 	boolean	$escapeUpload 		Indique si il faut ou non ne pas tenir compte des champs à uploader
  * @return	array	Tableau contenant les paramètres des données à sauvegarder
  * @access	private
  * @author	koéZionCMS
  * @version 0.1 - 24/08/2012 by FI
  */		
-	function _prepare_save_datas($datas, $moreDatasToSave, $forceInsert) {
+	function _prepare_save_datas($datas, $moreDatasToSave, $forceInsert, $escapeUpload) {
 		
 		$shema = $this->shema; //Shéma de la table 
 		$datasShema = array_keys($datas); //Shéma des données à sauvegarder
@@ -730,7 +736,7 @@ class Model extends Object {
 			//On récupère le shéma de la table pour être sur de n'ajouter à la requête que des champs présent dans la table pour éviter les erreurs
 			if(in_array($k, $shema)) {
 						
-				if(isset($this->files_to_upload) && isset($this->files_to_upload[$k])) continue; //On supprime si il y en a les champs d'upload				
+				if(isset($this->files_to_upload) && isset($this->files_to_upload[$k]) && $escapeUpload) continue; //On supprime si il y en a les champs d'upload				
 				$datasToSave[":$k"] = $v;
 			}
 		}

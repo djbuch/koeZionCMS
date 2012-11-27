@@ -31,7 +31,12 @@ function debug($var, $die = 0) {
 	function pr($var) {
 		
 		if (Configure::read('debug') > 0) {
-			echo '<pre style="background-color: #EBEBEB; border: 1px dashed black; padding: 10px;">';
+			
+			$debug = debug_backtrace();
+			echo '<pre style="background-color: #EBEBEB; border: 1px dashed black; padding: 10px;">';			
+			print_r('[FILE] : '.$debug[0]['file']."\n");
+			print_r('[LINE] : '.$debug[0]['line']."\n\n");
+			print_r('[RESULTAT] : '."\n");
 			print_r($var);
 			echo '</pre>';
 		}

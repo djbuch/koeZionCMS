@@ -62,4 +62,12 @@ $(document).ready(function() {
         
         //return false;
     });
+	
+	//$("input[type=file]").uniform();
+	// FILE INPUT STYLE
+    $("input[type=file]").filestyle({
+        imageheight: 31,
+        imagewidth: 76,
+        width: 150
+    });
 });

@@ -96,7 +96,6 @@ class Email {
 	function send($datas, $controller) {
 		
 		$this->init();
-		
 		$numSent = 0;	
 		
 		if($this->mailer) {
@@ -119,8 +118,22 @@ class Email {
 				->setFrom(array($this->mailSetFromEmail => $this->mailSetFromName)) //Mise en place de l'adresse de l'expéditeur
 				->setTo(array($datas['to'])) //Mise en place de l'adresse du destinataire				
 				->addPart($content_for_layout, 'text/html'); // And optionally an alternative body
+			
+			//Si on a des fichiers joints
+			if(isset($datas['filesToUpload']) && !empty($datas['filesToUpload'])) {
+				
+				set_time_limit(0); //Pas de limite de temps d'exécution
+				foreach($datas['filesToUpload'] as $fieldToUpload => $fieldInfosToUpload) {
+
+					$message->attach(Swift_Attachment::fromPath($fieldInfosToUpload['path'].DS.$fieldInfosToUpload['uploaded_name']));
+				}				
+			}
 	
-			if(!empty($this->bccEmail)) { $message->setBcc($this->bccEmail); } //Gestion éventuelle de l'envoi en copie cachée
+			$bcc = array();
+			if(!empty($this->bccEmail)) { $bcc[] = $this->bccEmail; } //Gestion éventuelle de l'envoi en copie cachée via le fichier de conf			
+			if(isset($datas['bcc']) && !empty($datas['bcc'])) { $bcc[] = $datas['bcc']; } //Gestion éventuelle de l'envoi en copie cachée via le formulaire directement			
+			if(count($bcc)) { $message->setBcc($bcc); }
+			
 			$numSent = $this->mailer->send($message); //On envoi le message
 		}
 		return $numSent;

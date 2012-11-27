@@ -13,6 +13,7 @@
 		echo "\n";
 		$css = array(
 			$websiteParams['tpl_layout'].'/reset',
+			$websiteParams['tpl_layout'].'/jquery-ui-1.9.1.custom',
 			$websiteParams['tpl_layout'].'/style',
 			$websiteParams['tpl_layout'].'/grids',
 			$websiteParams['tpl_layout'].'/hook',
@@ -23,6 +24,7 @@
 			$websiteParams['tpl_layout'].'/prettyphoto',
 			$websiteParams['tpl_layout'].'/table',
 			$websiteParams['tpl_layout'].'/forms',
+			//$websiteParams['tpl_layout'].'/uniform.default',
 			$websiteParams['tpl_layout'].'/pricing',
 			$websiteParams['tpl_layout'].'/footer',
 			$websiteParams['tpl_layout'].'/colors/'.trim($websiteParams['tpl_code']).'/default',
@@ -47,11 +49,15 @@
 		if(!empty($websiteParams['css_hack'])) { ?><style type="text/css"><?php echo $websiteParams['css_hack']; ?></style><?php }
 		
 		$js = array(
-			$websiteParams['tpl_layout'].'/jquery-1.5.1.min',
+			$websiteParams['tpl_layout'].'/jquery-1.8.2',
+			$websiteParams['tpl_layout'].'/jquery-ui-1.9.1.custom.min',
+			'commun/scripts',
 			$websiteParams['tpl_layout'].'/menu',
 			$websiteParams['tpl_layout'].'/input',
 			$websiteParams['tpl_layout'].'/plugins',
 			$websiteParams['tpl_layout'].'/script',
+			//$websiteParams['tpl_layout'].'/jquery.uniform',
+			$websiteParams['tpl_layout'].'/jquery.filestyle.mini',
 			$websiteParams['tpl_layout'].'/images_zoom',
 			$websiteParams['tpl_layout'].'/pricing_table',
 			$websiteParams['tpl_layout'].'/syntaxhighlighter/shCore',

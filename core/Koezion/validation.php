@@ -221,7 +221,59 @@ class Validation {
 								
 			} else { return false; }
 		} else { return false; }
-	}
+	}	
+	
+/**
+ * Cette fonction est chargée de contrôler que le fichier est correctement chargé
+ *
+ * @param 	array 	$val Value to check
+ * @return 	boolean Success
+ * @access 	public
+ * @version 0.1 - 13/11/2012
+ * @see http://stackoverflow.com/questions/3185603/validation-on-a-input-file-in-cakephp pour la base de départ
+ */		
+	function checkUpload($val) {
+		
+		if($val['error'] > 0) { return false; } //Si on a un code erreur
+		if($val['size'] == 0) { return false; } //Si le fichier est vide
+		return true;
+	}	
+	
+/**
+ * Cette fonction est chargée de contrôler le type du fichier chargé (l'extension)
+ *
+ * @param 	array 	$val 			Value to check
+ * @param 	mixed 	$allowedMime 	Types autorisés (par défaut faux pour aucun contrôle de type)
+ * @return 	boolean Success
+ * @access 	public
+ * @version 0.1 - 13/11/2012
+ * @see http://stackoverflow.com/questions/3185603/validation-on-a-input-file-in-cakephp pour la base de départ
+ */	
+	function checkType($val, $allowedMime = false) {
+		
+		if($val['error'] > 0) { return true; } //Si on a un code erreur
+		if($val['size'] == 0) { return true; } //Si le fichier est vide
+		if(!in_array($data['type'], $allowedMime)) { return false; }		
+		return true;
+	}	
+	
+/**
+ * Cette fonction est chargée de contrôler la taille maximale du fichier
+ *
+ * @param 	array 	$val		Value to check
+ * @param 	integer $maxSize 	Taille maximale (par défaut faux pour aucune limite)
+ * @return 	boolean Success
+ * @access 	public
+ * @version 0.1 - 13/11/2012
+ * @see http://stackoverflow.com/questions/3185603/validation-on-a-input-file-in-cakephp pour la base de départ
+ */		
+	function checkSize($val, $maxSize = false) {
+		
+		if($val['error'] > 0) { return true; } //Si on a un code erreur
+		if($val['size'] == 0) { return true; } //Si le fichier est vide
+		if($data['size']/1024 > $maxSize) { return false; }
+		return true;
+	}	
 	
 /*
  * Lazily popualate the IP address patterns used for validations

@@ -34,8 +34,7 @@ class Controller extends Object {
 	
 	var $components = array(
 		'Email',
-		'Text',
-		'Import'
+		'Text'
 	);
 	
 	var $params = array(); //Liste des paramètres du controlleur (name, modelName) 
@@ -195,10 +194,8 @@ class Controller extends Object {
 		//et si il ne l'est pas on procède à son intenciation
 		if(!isset($this->$name)) {
 			
-			$file_path = '';
-				
-			$file_name = Inflector::underscore($name).'.php'; //Nom du fichier à charger
-		
+			$file_path = '';				
+			$file_name = Inflector::underscore($name).'.php'; //Nom du fichier à charger		
 			$file_path_default = ROOT.DS.'models'.DS.$file_name; //Chemin vers le fichier à charger
 			
 			//Pour déterminer le dossier du plugin nous devons transformer le nom du model à charger

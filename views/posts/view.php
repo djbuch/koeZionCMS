@@ -13,7 +13,7 @@ $keywords_for_layout = $post['page_keywords'];
 	if($post['display_form']) { 
 		
 		//$this->element('frontoffice/formulaire', array('formulaire' => $formulaire, 'formInfos' => $formInfos));
-		if(isset($formPlugin)) { $this->element(PLUGINS.DS.'formulaires/views/elements/frontoffice/formulaire', null, false); } 
+		if(isset($formPlugin)) { $this->element(PLUGINS.DS.'formulaires/views/formulaires/elements/frontoffice/formulaire', null, false); } 
 		else { $this->element('frontoffice/formulaires/formulaire_commentaires'); } 
 	}
  		

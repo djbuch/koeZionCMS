@@ -49,4 +49,5 @@ INSERT INTO `templates` (`id`, `name`, `layout`, `code`, `color`, `online`, `cre
 (33, 'Orange People', 'frontoffice', 'orangepeople', 'ca5835', 1, '2012-02-24 16:10:18'),
 (34, 'Neon Blue V2', 'frontoffice', 'neonblue_v2', '15a3d7', 1, '2012-01-06 03:07:58'),
 (35, 'Pink&Dark', 'frontoffice', 'pinkanddark', 'e6436c', 1, '2012-01-06 03:07:58'),
-(36, 'Brown Gimmick', 'frontoffice', 'brownorangegimmick', 'e17e4b', 1, '2012-01-06 03:00:38');
+(36, 'Brown Gimmick', 'frontoffice', 'brownorangegimmick', 'e17e4b', 1, '2012-01-06 03:00:38')
+(37, 'Dark V2', 'frontoffice', 'dark_v2', '292929', 1, '2012-01-06 03:03:44');

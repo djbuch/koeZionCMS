@@ -46,10 +46,16 @@ $(document).ready(function() {
     });
 	
 	// TOOLTIPS
-	$(".tip-n").tipsy({gravity: 'n', html: true});
+	/*$(".tip-n").tipsy({gravity: 'n', html: true});
 	$(".tip-w").tipsy({gravity: 'w', html: true});
 	$(".tip-e").tipsy({gravity: 'e', html: true});
-	$(".tip-s").tipsy({gravity: 's', html: true});
+	$(".tip-s").tipsy({gravity: 's', html: true});*/
+	
+	
+	$(".tip-n").livequery(function() { $(this).tipsy({gravity: 'n', html: true}); });	
+	$(".tip-w").livequery(function() { $(this).tipsy({gravity: 'w', html: true}); });	
+	$(".tip-e").livequery(function() { $(this).tipsy({gravity: 'e', html: true}); });	
+	$(".tip-s").livequery(function() { $(this).tipsy({gravity: 's', html: true}); });
 	
 	// FILE BROWSER
 	/*$('.filebrowser').elfinder({
@@ -81,11 +87,20 @@ $(document).ready(function() {
 	});*/
 	
 	// RADIOBUTTONS & CHECKBOXES
-	$("input[type=radio], input[type=checkbox]").each(function() {
+	/*$("input[type=radio], input[type=checkbox]").each(function() {
         if ($(this).parents("table").length === 0) {
             $(this).customInput();
         }
-    });
+    });*/
+	
+	$("input[type=radio], input[type=checkbox]").livequery(function() { 
+		
+		$(this).each(function() {
+	        if($(this).parents("table").length === 0) {
+	            $(this).customInput();
+	        }
+	    });
+	});
 
 	// TABS
 	//$(".tabs").tabs({});

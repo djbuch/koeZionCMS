@@ -764,7 +764,8 @@ class AppController extends Controller {
     	//////////////////////////////////////////
     	//   GESTION DU DEPOT DE COMMENTAIRES   //
     	if(isset($this->request->data['type_formulaire']) && $this->request->data['type_formulaire'] == 'commentaire') {
-    		pr('dans _send_mail_comments de app');
+    		
+    		//pr('dans _send_mail_comments de app');
     		$this->loadModel('PostsComment'); //Chargement du modèle
     		if($this->PostsComment->validates($this->request->data)) { //Si elles sont valides
     	

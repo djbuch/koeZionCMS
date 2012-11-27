@@ -526,7 +526,37 @@ CKEDITOR.addTemplates(
 				image:'image_zoom.gif',
 				description:'Image 264/111px',
 				html:'<a class="zoomer" href="/" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>'
-			}
+			},
+			{
+				title:'Image encadrée',
+				image:'image_zoom.gif',
+				description:'Image 264/111px',
+				html:'<img class="border_magic" alt="" src="" style="width: 187px; height: 100px; float: left; margin-right: 10px; margin-bottom: 10px;" />'
+			}/*,
+			{
+				title:'Système d\'onglets ',
+				image:'image_zoom.gif',
+				description:'',
+				html:'' + 
+					'<div id="containerTabs">' + 
+			        	'<div id="tabs">' + 
+			          		'<ul>' + 
+			            		'<li><a href="#tab-1"><span>Lorem</span></a></li>' + 
+			            		'<li><a href="#tab-2"><span>Ipsum</span></a></li>' + 
+			            		'<li><a href="#tab-3"><span>Dolor</span></a></li>' + 
+			          		'</ul>' + 
+			          		'<div id="tab-1">' + 
+			            		'<h3>Lille</h3><p>Suspendisse quis magna dapibus orci porta varius sed sit amet purus. Ut eu justo dictum elit malesuada facilisis. Proin ipsum ligula, feugiat sed faucibus a, <a href="http://www.google.fr">google</a> sit amet mauris. In sit amet nisi mauris. Aliquam vestibulum quam et ligula pretium suscipit ullamcorper metus accumsan.</p>' + 
+			          		'</div>' + 
+			          		'<div id="tab-2">' + 
+			           			'<h3>Aliquam vestibulum</h3><p>Aliquam vestibulum quam et ligula pretium suscipit ullamcorper metus accumsan.</p>' + 
+			          		'</div>' + 
+			          		'<div id="tab-3">' + 
+			            		'<h3>Pretium suscipit</h3><ul><li>Lorem</li><li>Ipsum</li><li>Dolor</li><li>Amectus</li></ul>' + 
+			          		'</div>' + 
+			          	'</div>' + 
+					'</div>'
+			}*/
 		]
 	}
 );

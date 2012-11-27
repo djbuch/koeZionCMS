@@ -1,5 +1,5 @@
 <?php if($pager['totalPages'] > 1) { ?>
-<div class="wp-pagenavi">
+<div class="wp-pagenavi" style="float:right">
 	<span class="pages">
 		Page <?php echo $pager['currentPage']; ?> sur <?php echo $pager['totalPages']; ?>		 
 		<?php 

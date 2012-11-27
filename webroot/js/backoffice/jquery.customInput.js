@@ -6,8 +6,6 @@
  * Article: http://www.filamentgroup.com/lab/accessible_custom_designed_checkbox_radio_button_inputs_styled_css_jquery/  
  * Usage example below (see comment "Run the script...").
 --------------------------------------------------------------------*/
-
-
 jQuery.fn.customInput = function(){
 	$(this).each(function(i){	
 		if($(this).is('[type=checkbox],[type=radio]')){
@@ -63,6 +61,3 @@ jQuery.fn.customInput = function(){
 		}
 	});
 };
-
-	
-	

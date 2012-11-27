@@ -39,6 +39,8 @@
 			'backoffice/jquery-1.7.1.min', 				//Librairie JQuery
 			'backoffice/jquery-ui',						//Librairie JQueryUI
 			'backoffice/jquery-ui-select', 				//Pour les listes déroulantes
+			'commun/jquery.livequery', 				
+			'commun/scripts', 							//Pour les listes déroulantes
 			'backoffice/jquery.customInput', 			//Pour les cases à cocher et les boutons radio
 			'backoffice/jquery-ui-spinner', 			//Utilisé pour la mise en place de loader et nécessaire au fonctionnement des alertes personnalisées
 			'backoffice/jquery.alerts', 				//Pour la mise en place des alertes personnalisées

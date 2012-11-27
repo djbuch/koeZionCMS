@@ -25,7 +25,7 @@ class Form {
  * @author 	koéZionCMS
  * @version 0.1 - 20/01/2012 by FI
  */	
-	var $escapeAttributes = array('type', 'displayError', 'label', 'div', 'datas', 'value');
+	var $escapeAttributes = array('type', 'displayError', 'label', 'div', 'datas', 'value', 'divRowBorderTop');
 
 /**
  * Constructeur de la classe 
@@ -148,6 +148,7 @@ class Form {
 				else if($toolbar == "image") { ?>var ck_<?php echo $inputIdText; ?>_editor = CKEDITOR.replace('<?php echo $inputIdText; ?>', {toolbar:[{name:'document',items:['Source']},{name:'insert',items:['Image']},{name:'links',items:['Link','Unlink']}]});<?php }
 				else if($toolbar == "empty") { ?>var ck_<?php echo $inputIdText; ?>_editor = CKEDITOR.replace('<?php echo $inputIdText; ?>', {toolbar:[{name:'document',items:['Source']}]});<?php }
 				else if($toolbar == "onlyHtml") { ?>var ck_<?php echo $inputIdText; ?>_editor = CKEDITOR.replace('<?php echo $inputIdText; ?>', {toolbar:[{name:'document',items:['Source']},{name:'basicstyles',items:['Bold','Italic','Underline','Strike','Subscript','Superscript','RemoveFormat']},{name:'paragraph',items:['NumberedList','BulletedList','-','Outdent','Indent','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock']},{name:'styles',items:['Font','FontSize']},{name:'colors',items:['TextColor','BGColor']}]});<?php }
+				/*else if($toolbar == "onlyHtml") { ?>var ck_<?php echo $inputIdText; ?>_editor = CKEDITOR.replace('<?php echo $inputIdText; ?>', {toolbar:[{name:'document',items:['Source','Templates']},{name:'basicstyles',items:['Bold','Italic','Underline','Strike','Subscript','Superscript','RemoveFormat']},{name:'paragraph',items:['NumberedList','BulletedList','-','Outdent','Indent','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock']},{name:'styles',items:['Font','FontSize']},{name:'colors',items:['TextColor','BGColor']}]});<?php }*/
 				?>CKFinder.setupCKEditor(ck_<?php echo $inputIdText; ?>_editor, '<?php echo Router::webroot('/js/ckfinder/'); ?>');<?php
 			}
 			?>
@@ -511,8 +512,12 @@ class Form {
 			$inputReturn .= '</label>';			
 		}
 				
-		if($options['div']) { return '<div class="row'.$classError.'">'.$labelReturn.'<div class="rowright">'.$inputReturn.'</div>'.'</div>'; }
-		else { return $labelReturn.$inputReturn; }
+		if($options['div']) { 
+			
+			if(isset($options['divRowBorderTop']) && !$options['divRowBorderTop']) { $styleDiv = ' style="border-top:none"'; } else { $styleDiv = ''; }
+			
+			return '<div class="row'.$classError.'"'.$styleDiv.'>'.$labelReturn.'<div class="rowright">'.$inputReturn.'</div>'.'</div>'; 
+		} else { return $labelReturn.$inputReturn; }
 	}	
 	
 /**

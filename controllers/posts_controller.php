@@ -244,11 +244,11 @@ class PostsController extends AppController {
 /**
  * Cette fonction permet l'initialisation de la liste des catégories dans le site
  *
- * @access 	private
+ * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 26/01/2012 by FI
  */	
-	function _init_categories() {
+	protected function _init_categories() {
 
 		$this->loadModel('Category'); //Chargement du modèle des catégories
 		$categoriesList = $this->Category->getTreeList(); //On récupère les catégories
@@ -259,11 +259,11 @@ class PostsController extends AppController {
 /**
  * Cette fonction permet l'initialisation de la liste des types de posts
  *
- * @access 	private
+ * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 26/01/2012 by FI
  */	
-	function _init_posts_types() {
+	protected function _init_posts_types() {
 		
 		$this->loadModel('PostsType'); //Chargement du modèle des types de posts
 		$postsTypes = $this->PostsType->find(array('conditions' => array('online' => 1), 'fields' => array('id', 'name', 'column_title'))); //On récupère les types de posts		
@@ -275,11 +275,11 @@ class PostsController extends AppController {
  * Cette fonction permet l'initialisation des données de l'association entre le post et les types de posts
  *
  * @param	integer $postId Identifiant du post
- * @access 	private
+ * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 26/01/2012 by FI
  */	
-	function _get_assoc_datas($postId) {
+	protected function _get_assoc_datas($postId) {
 
 		$this->loadModel('PostsPostsType'); //Chargement du modèle		
 		$postsPostsTypes = $this->PostsPostsType->find(array('conditions' => array('post_id' => $postId))); //On récupère les données
@@ -294,11 +294,11 @@ class PostsController extends AppController {
  *
  * @param	integer $postId 		Identifiant du post
  * @param	boolean $deleteAssoc 	Si vrai l'association entre l'utilisateur et les sites sera supprimée
- * @access 	private
+ * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 26/01/2012 by FI
  */	
-	function _save_assoc_datas($postId, $deleteAssoc = false) {
+	protected function _save_assoc_datas($postId, $deleteAssoc = false) {
 		
 		$this->loadModel('PostsPostsType'); //Chargement du modèle
 
@@ -323,13 +323,13 @@ class PostsController extends AppController {
  * Cette fonction permet de vérifier si il faut envoyer un mail aux différents utilisateurs du site (uniquement dans le cas ou celui-ci est sécurisé)
  *
  * @param	array $datas Données de l'article
- * @access 	private
+ * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 11/07/2012 by FI
  * @version 0.2 - 31/07/2012 by FI - Modification du test $datas['send_mail'] rajout de isset
  * @version 0.3 - 02/08/2012 by FI - Customisation du message envoyé
  */	
-	function _check_send_mail($datas) {
+	protected function _check_send_mail($datas) {
 
 		if(isset($datas['send_mail'])) {
 		
@@ -381,11 +381,11 @@ class PostsController extends AppController {
  * Cette fonction permet de transformer une date FR en date SQL et inversement
  * 
  * @param 	varchar $mode Mode de transformation FR --> SQL ou SQL --> FR
- * @access 	private
+ * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 25/10/2012 by FI
  */	
-	function _transform_date($mode) {
+	protected function _transform_date($mode) {
 		
 		if($mode == 'fr2Sql') {
 			

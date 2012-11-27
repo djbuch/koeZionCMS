@@ -15,6 +15,7 @@ define('LIBS', CORE.DS.'Libs'); //Chemin vers les librairies diverses
 
 define('TMP', ROOT.DS.'tmp'); //Chemin vers le dossier temporaire
 
+require_once CAKEPHP.DS.'inflector.php'; //On charge le composant
 require_once CAKEPHP.DS.'set.php'; //On charge le composant
 require_once KOEZION.DS.'session.php'; //On charge le composant
 Session::init();
