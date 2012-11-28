@@ -1,5 +1,5 @@
 <?php 
-$formOptions = array('id' => 'websiteForm', 'action' => Router::url($this->controller->request->url, '').'#form_comments', 'method' => 'post');
+$formOptions = array('id' => 'websiteForm', 'action' => Router::url($this->controller->request->url, '').'#formulaire', 'method' => 'post');
 echo $helpers['Form']->create($formOptions);
 $commonOptions = array('label' => false, 'div' => false, 'displayError' => false);
 	?>
@@ -20,10 +20,10 @@ $commonOptions = array('label' => false, 'div' => false, 'displayError' => false
 	<?php 
 echo $helpers['Form']->end();
  		
-	if($postsComments) {
-		
-		?><div class="clearfix"></div><?php
-		foreach($postsComments as $k => $v) {
+/*if($postsComments) {
+	
+	?><div class="clearfix"></div><?php
+	foreach($postsComments as $k => $v) {
 		?>
 		<div class="posts_comments">					
 			<p class="post_message"><?php echo $v['message']; ?></p>
@@ -31,5 +31,5 @@ echo $helpers['Form']->end();
 		</div>
 		<?php 
 	}		
-}
+}*/
 ?>

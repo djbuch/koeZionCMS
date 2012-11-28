@@ -8,6 +8,7 @@ $Errorsmessages['Category']['redirect_category_id'] = _('Une catégorie ne peut 
 $Errorsmessages['Contact']['name'] = _('Veuillez saisir votre nom');
 $Errorsmessages['Contact']['phone'] = _('Veuillez saisir votre téléphone');
 $Errorsmessages['Contact']['email'] = _('Vous devez indiquer un email valide.');
+$Errorsmessages['Contact']['cpostal'] = _('Vous devez indiquer votre code postal.');
 $Errorsmessages['Contact']['message'] = _('Veuillez saisir votre message');
 
 $Errorsmessages['Focus']['name'] = _('La valeur de ce champ est de 2 caractères minimum.');

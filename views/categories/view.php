@@ -19,7 +19,13 @@ if(isset($googleMapAPI) && $mapPosition == 'topPage') { $this->element(PLUGINS.D
 			
 			$this->element(PLUGINS.DS.'catalogues/views/elements/frontoffice/list', null, false);
 			$this->element('frontoffice/pagination');
-		}		
+		}
+
+		if(isset($displayWinesearchers) && $displayWinesearchers) {
+		
+			$this->element(PLUGINS.DS.'winesearchers/views/elements/frontoffice/list', null, false);
+			$this->element('frontoffice/pagination');
+		}
 		
 		if($category['display_form']) { 
 						

@@ -29,6 +29,10 @@ table{border-spacing:0;background:transparent;border-collapse:collapse}
 #ethernatable.catalogues tr.fields th.price{width:60px}
 #ethernatable.catalogues tr.fields th.disponibility{width:45px}
 #ethernatable.catalogues tr.fields th.doc{width:30px}
+#ethernatable.catalogues tr.fields th.doc{width:30px}
+#ethernatable.catalogues tr.fields th.vintage{width:70px}
+#ethernatable.catalogues tr.fields th.unit_size{width:120px}
+#ethernatable.catalogues tr.fields th.link{width:30px}
 
 #ethernatable.catalogues tr.fields th.country{width:80px}
 #ethernatable.catalogues tr.fields th.capacity{width:60px}

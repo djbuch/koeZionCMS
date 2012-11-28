@@ -191,7 +191,7 @@ class Form {
 		<div class="row">	
 			<label>
 				Fichier à importer
-				<img original-title="Sélectionnez le fichier à importer" class="tip-w" style="float: left; margin-right: 5px; cursor: pointer;" alt="tooltip" src="<?php echo BASE_URL; ?>/img/backoffice/tooltip.png">	
+				<img original-title="Sélectionnez le fichier à importer, sélectionnez un fichier vide pour supprimer les données de la catégorie" class="tip-w" style="float: left; margin-right: 5px; cursor: pointer;" alt="tooltip" src="<?php echo BASE_URL; ?>/img/backoffice/tooltip.png">	
 			</label>
 			
 			<div class="rowright">			

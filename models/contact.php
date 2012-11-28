@@ -25,6 +25,10 @@ class Contact extends Model {
 			'rule' => 'email',
 			'message' => 'Contact.email'
 		),
+		'cpostal' => array(
+			'rule' => array('notEqualsTo', 'Indiquez votre code postal'),
+			'message' => 'Contact.cpostal'
+		),
 		'message' => array(
 			'rule' => array('notEqualsTo', 'Indiquez votre message'),
 			'message' => 'Contact.message'
