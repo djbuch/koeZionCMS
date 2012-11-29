@@ -53,6 +53,18 @@
 		<?php } ?>
 	</div>
 	<?php } ?>
+	
+	<?php if(isset($rightButtons) && count($rightButtons) > 0) { ?>
+		<div class="widget right_buttons">
+			<ul>
+			<?php foreach($rightButtons as $order => $rightButtonValues) { ?>
+			
+				<li><?php echo $rightButtonValues['content']; ?></li>
+				
+			<?php } ?>
+			</ul>
+		</div>	
+	<?php } ?>
 
 	<?php 
 	if(isset($postsTypes) && count($postsTypes) > 0) { ?>

@@ -25,17 +25,22 @@
 .inner_main .bottom_sidebar_mask{height:6px;overflow:hidden;background:url(../../img/frontoffice/sidebar_mask.png) no-repeat bottom left transparent}
 .inner_main .bottom_sidebar_mask_mirror{height:6px;overflow:hidden;background:url(../../img/frontoffice/sidebar_mask_mirror.png) no-repeat bottom right transparent}
 .inner_main .widget ul{background:url(../../img/frontoffice/sidebar_lists.png) no-repeat bottom left transparent;overflow:hidden;padding:0 0 3px 0;margin:12px 0 8px 7px}
+.inner_main .widget.right_buttons ul{background:none;}
 .inner_main .widget ul.nobordertop{margin-top:0}
 .inner_main .sidebar_mirror .widget ul{background:url(../../img/frontoffice/sidebar_lists_mirror.png) no-repeat bottom right transparent;margin:12px 7px 8px 0}
 .inner_main .widget ul li{background:url(../../img/frontoffice/sidebar_lists.png) no-repeat top left transparent;overflow:hidden;list-style:none;margin:0;padding:0}
+.inner_main .widget.right_buttons ul li{background:none;width: 249px;padding-left: 20px}
 .inner_main .widget ul li.selected,.inner_main .widget ul li:hover{background:url(../../img/frontoffice/list_selected.png) no-repeat top left transparent}
+.inner_main .widget.right_buttons ul li:hover{background:none}
 .inner_main .sidebar_mirror .widget ul li{background:url(../../img/frontoffice/sidebar_lists_mirror.png) no-repeat top right transparent}
 .inner_main .sidebar_mirror .widget ul li.selected,.inner_main .sidebar_mirror .widget ul li:hover{background:url(../../img/frontoffice/list_selected_mirror.png) no-repeat top right transparent}
 .inner_main .widget ul li a{font:15px/ 21px Arial,sans-serif;display:block;padding:8px 0 7px 50px;text-decoration:none;text-shadow:1px 1px #fff;background:url(../../img/frontoffice/slider_dots.png) no-repeat 22px -116px transparent}
+.inner_main .widget.right_buttons ul li a{font:15px/ 21px Arial,sans-serif;display:block;padding:0;text-decoration:none;text-shadow:none;background:none}
 .inner_main .sidebar_mirror .widget ul li a{padding:8px 50px 7px 0;text-align:right;background:url(../../img/frontoffice/slider_dots.png) no-repeat right -116px transparent}
 .ie7 .inner_main .widget ul li a{padding:8px 0 5px 50px}
 .ie7 .inner_main .sidebar_mirror .widget ul li a{padding:8px 50px 5px 0}
 .inner_main .widget ul li a:hover,.inner_main .widget ul li.selected a{color:#1e1e1e;background:url(../../img/frontoffice/slider_dots.png) no-repeat 22px 9px transparent}
+.inner_main .widget.right_buttons ul li a:hover{background:none}
 .inner_main .widget.widget2 ul li.selected a{color:#1e1e1e;background:url(../../img/frontoffice/slider_dots.png) no-repeat 22px -260px transparent}
 .inner_main .sidebar_mirror .widget ul li a:hover,.inner_main .sidebar_mirror .widget ul li.selected a{color:#1e1e1e;background:url(../../img/frontoffice/slider_dots.png) no-repeat right 9px transparent}
 .inner_main .tweeter_widget ul li{padding:8px 0 8px 25px;font:11px/ 15px Arial,sans-serif}

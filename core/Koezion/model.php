@@ -14,6 +14,7 @@ class Model extends Object {
 	public $errors = array(); //Par défaut pas d'erreurs
 	public $trace_sql = false; //Permet d'afficher la requête exécutée cf fonction find
 	public $schema = array(); //Shéma de la table
+	public $queryExecutionResult = false; //indique si la requete de save s'est bien passée 
     
 /**
  * Constructeur de la classe
@@ -355,11 +356,13 @@ class Model extends Object {
 		$preparedInfos = $this->_prepare_save_query(array_keys($datas), $forceInsert, $escapeUpload); //Récupération des données de la préparation de la requête
 		$datasToSave = $this->_prepare_save_datas($datas, $preparedInfos['moreDatasToSave'], $forceInsert, $escapeUpload); //Récupération des données à sauvegarder
 		
-		$preparedInfos['preparedQuery']->execute($datasToSave); //Exécution de la requête
+		$queryExecutionResult = $preparedInfos['preparedQuery']->execute($datasToSave); //Exécution de la requête
 		
 		//Affectation de la valeur de la clé primaire à la variable de classe
 		if($preparedInfos['action'] == 'insert') { $this->id = $this->db->lastInsertId(); }
 		else { $this->id = $datas[$this->primaryKey]; }
+		
+		$this->queryExecutionResult = $queryExecutionResult;
 		
 		if(isset($this->files_to_upload) && $proceedUpload) { $this->upload_files($datas, $this->id); } //Sauvegarde éventuelle des images
 		if(isset($this->searches_params)) { $this->make_search_index($datasToSave, $this->id, $preparedInfos['action']); } //On génère le fichier d'index de recherche
@@ -380,10 +383,12 @@ class Model extends Object {
 		foreach($datas as $k => $v) { 
 			
 			$datasToSave = $this->_prepare_save_datas($v, $preparedInfos['moreDatasToSave'], $forceInsert, $escapeUpload);
-			$preparedInfos['preparedQuery']->execute($datasToSave);
+			$queryExecutionResult = $preparedInfos['preparedQuery']->execute($datasToSave);
 			
 			if($preparedInfos['action'] == 'insert') { $this->id = $this->db->lastInsertId();}
 			else { $this->id = $datas['id']; }
+			
+			$this->queryExecutionResult = $queryExecutionResult;
 			
 			if(isset($this->searches_params)) { $this->make_search_index($datasToSave, $this->id, $preparedInfos['action']); } //On génère le fichier d'index de recherche
 		}

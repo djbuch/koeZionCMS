@@ -225,6 +225,10 @@ class CategoriesController extends AppController {
 			//   GESTION DES ARTICLES   //
 			$datas = $this->_get_posts_category($datas);
 			
+			//////////////////////////////
+			//   GESTION DES BOUTONS   //
+			$datas = $this->_get_right_buttons_category($datas);
+			
 			//A supprimer quand on sera sur que tout fonctionne correctement
 			//On va compter le nombre d'articles de cette catégorie			
 			/*$this->loadModel('Post');
@@ -372,6 +376,7 @@ class CategoriesController extends AppController {
 			
 			FileAndDir::delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'categories'.DS); //On vide le dossier qui contient les fichiers en cache
 			$this->_update_template($this->Category->id, $this->request->data['template_id']);
+			$this->_save_assoc_datas($this->Category->id);
 			$this->_check_send_mail($this->request->data);
 			$this->redirect('backoffice/categories/index'); 
 		} //On retourne sur la page de listing
@@ -428,9 +433,11 @@ class CategoriesController extends AppController {
 			$this->_update_children_statut($id, $this->request->data['online']);	
 			FileAndDir::delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'categories'.DS); //On vide le dossier qui contient les fichiers en cache
 			$this->_update_template($this->Category->id, $this->request->data['template_id']);
+			$this->_save_assoc_datas($id, true);
 			$this->_check_send_mail($this->request->data);
 			$this->redirect('backoffice/categories/index'); //On retourne sur la page de listing 
 		} 
+		$this->_get_assoc_datas($id);
 	}
 	
 /**
@@ -551,6 +558,26 @@ class CategoriesController extends AppController {
 		$this->set('publicationDates', $publicationDates);
 		*/
 	}
+		
+/**
+ * Cette fonction est utilisée lors de l'ajout d'un nouvel attribut
+ *
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 16/12/2012 by FI
+ */
+	public function backoffice_ajax_add_right_button($rightButtonId) {
+	
+		$this->layout = 'ajax'; //Définition du layout à utiliser		
+				
+		//Récupération des informations du bouton
+		$this->loadModel('RightButton'); //Chargement du modèle
+		$rightButton = $this->RightButton->findFirst(array('fields' => array('name'), 'conditions' => array('id' => $rightButtonId))); //On récupère les données
+		$this->unloadModel('RightButton'); //Déchargement du modèle
+		
+		$this->set('rightButtonId', $rightButtonId);
+		$this->set('rightButtonName', $rightButton['name']);
+	}	
 	
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //										FONCTIONS PRIVEES										//
@@ -584,7 +611,58 @@ class CategoriesController extends AppController {
 				$this->Category->query($sql); //On lance la requête
 			}
 		}
+	}
+	
+/**
+ * Cette fonction permet la sauvegarde de l'association entre les catégories et les boutons
+ *
+ * @param	integer $categoryId		Identifiant de la catégorie
+ * @param	boolean $deleteAssoc 	Si vrai l'association entre l'utilisateur et les sites sera supprimée
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 26/01/2012 by FI
+ */	
+	protected function _save_assoc_datas($categoryId, $deleteAssoc = false) {
+		
+		$this->loadModel('CategoriesRightButton'); //Chargement du modèle
+
+		if($deleteAssoc) { $this->CategoriesRightButton->deleteByName('category_id', $categoryId); }
+		
+		$rightButtonId = $this->request->data['right_button_id'];
+		$order = 0;
+		foreach($rightButtonId as $k => $v) {
+		
+			if($v) {
+		
+				$this->CategoriesRightButton->save(array(
+					'category_id' => $categoryId,
+					'right_button_id'	=> $k,
+					'order_by' => $order
+				));
+				
+				$order++;
+			}
+		}
+		$this->unloadModel('CategoriesRightButton'); //Déchargement du modèle
 	}    
+	
+/**
+ * Cette fonction permet l'initialisation des données de l'association entre la catégorie et les boutons
+ *
+ * @param	integer $categoryId Identifiant de la catégorie
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 26/01/2012 by FI
+ */	
+	protected function _get_assoc_datas($categoryId) {
+
+		$this->loadModel('CategoriesRightButton'); //Chargement du modèle		
+		$rightButtons = $this->CategoriesRightButton->find(array('conditions' => array('category_id' => $categoryId), 'order' => 'order_by ASC')); //On récupère les données
+		$this->unloadModel('CategoriesRightButton'); //Déchargement du modèle
+		
+		//On va les rajouter dans la variable $this->request->data
+		foreach($rightButtons as $k => $v) { $this->request->data['right_button_id'][$v['right_button_id']] = 1; }
+	}
     
 /**
  * Cette fonction permet de récupérer les articles à afficher sur le frontoffice (Dans les contrôleurs Categories et Posts)
@@ -765,6 +843,11 @@ class CategoriesController extends AppController {
 		foreach($templatesListTMP as $k => $v) { $templatesList[$v['id']] = $v; }
 		$this->templatesList = $templatesList;
 		$this->set('templatesList', $templatesList); //On les envois à la vue
+		
+		$this->loadModel('RightButton'); //Chargement du modèle des types de posts
+		$rightButton = $this->RightButton->findList(array('conditions' => array('online' => 1))); //On récupère les types de posts
+		$this->unloadModel('RightButton'); //Déchargement du modèle des types de posts
+		$this->set('rightButton', $rightButton); //On les envois à la vue
 	} 
 
 /**
@@ -864,6 +947,41 @@ class CategoriesController extends AppController {
 			$this->pager['totalPages'] = ceil($this->pager['totalElements'] / $this->pager['elementsPerPage']); //On va compter le nombre de page
 		
 			//if($this->pager['totalElements'] > 0 || count($datas['postsTypes']) > 0) { $datas['is_full_page'] = 0; } //Si on doit afficher les articles alors il faut la colonne de droite
+		}
+
+		return $datas;
+	}
+
+/**
+ * Cette fonction permet la récupération des boutons liés à la catégorie courante
+ *
+ * @param 	array 	$datas 		Tableau des données à passer à la vue
+ * @param 	boolean $setLimit 	Indique si il faut mettre en place une limite lors de la recherche
+ * @return	array	Tableau de données à passer à la vue 
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 02/10/2012 by FI
+ */		
+	protected function _get_right_buttons_category($datas, $setLimit = true) {
+		
+		$datas['rightButtons'] = array();
+		
+		//On va compter le nombre d'articles de cette catégorie
+		$this->loadModel('CategoriesRightButton');
+		$this->CategoriesRightButton->primaryKey = 'category_id'; //Pour éviter les erreurs à l'exécution
+		$rightButtonsConditions = array('category_id' => $datas['category']['id']);
+		$nbRightButtons = $this->CategoriesRightButton->findCount($rightButtonsConditions);
+		
+		if($nbRightButtons) {
+
+			$this->loadModel('RightButton');
+			
+			//récupération des données
+			$rightButtonsList = $this->CategoriesRightButton->find(array('conditions' => $rightButtonsConditions, 'order' => 'order_by ASC'));
+			foreach($rightButtonsList as $k => $rightButton) {
+				
+				$datas['rightButtons'][] = $this->RightButton->findFirst(array('conditions' => array('id' => $rightButton['right_button_id'])));
+			}
 		}
 
 		return $datas;

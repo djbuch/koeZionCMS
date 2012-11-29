@@ -33,6 +33,14 @@ CREATE TABLE IF NOT EXISTS `categories` (
   KEY `type_2` (`type`,`online`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+DROP TABLE IF EXISTS `categories_right_buttons`;
+CREATE TABLE IF NOT EXISTS `categories_right_buttons` (
+  `category_id` int(11) NOT NULL,
+  `right_button_id` int(11) NOT NULL,
+  `order_by` int(11) NOT NULL,
+  PRIMARY KEY (`category_id`,`right_button_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 DROP TABLE IF EXISTS `contacts`;
 CREATE TABLE IF NOT EXISTS `contacts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -137,6 +145,20 @@ CREATE TABLE IF NOT EXISTS `posts_types` (
   `online` int(11) NOT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `website_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `right_buttons`;
+CREATE TABLE IF NOT EXISTS `right_buttons` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `content` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `online` int(11) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
   `modified_by` int(11) NOT NULL,
   `website_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)

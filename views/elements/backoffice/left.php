@@ -4,6 +4,7 @@
 		<li><a href="<?php echo Router::url('backoffice/categories/index'); ?>"><?php echo _("Catégories"); ?></a>		
 		<li><a href="<?php echo Router::url('backoffice/sliders/index'); ?>"><?php echo _("Sliders"); ?></a></li>
 		<li><a href="<?php echo Router::url('backoffice/focus/index'); ?>"><?php echo _("Focus"); ?></a></li>
+		<li><a href="<?php echo Router::url('backoffice/right_buttons/index'); ?>"><?php echo _("Boutons colonne droite"); ?></a></li>
 		<li>
 			<a><?php echo _("ARTICLES"); ?></a>
 			<ul>

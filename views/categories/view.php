@@ -4,13 +4,13 @@ $title_for_layout = $category['page_title'];
 $description_for_layout = $category['page_description'];
 $keywords_for_layout = $category['page_keywords'];
 
-if(isset($sliders) && count($sliders) > 0) { $this->element('frontoffice/nivo_slider'); } //Plugin Sliders Catégories
+if(isset($sliders) && count($sliders) > 0) { $this->element('frontoffice/slider'); } //Plugin Sliders Catégories
 if(isset($googleMapAPI) && $mapPosition == 'topPage') { $this->element(PLUGINS.DS.'gmaps/views/gmaps/elements/frontoffice/map', null, false); } //Plugin Google Maps
 ?>
 <div class="container_omega">
 	<?php	
 	
-	if(count($children) == 0 && count($brothers) == 0 && count($postsTypes) == 0) { 
+	if(count($children) == 0 && count($brothers) == 0 && count($postsTypes) == 0 && count($rightButtons) == 0) { 
 		
 		echo $this->vars['components']['Text']->format_content_text($category['content']);
 		if(isset($googleMapAPI) && $mapPosition == 'afterTxt') { $this->element(PLUGINS.DS.'gmaps/views/gmaps/elements/frontoffice/map', null, false); } //Plugin Google Maps

@@ -6,12 +6,12 @@ img{border:0}
 #left h1 a:hover{color:#727272;text-decoration:none}
 #left ul{display:block;margin:0;padding:30px 0 0 0;list-style:none}
 #left ul li{display:block;font:13px/36px 'MyriadProRegular',Arial;color:#848484;text-transform:uppercase}
-#left ul li a,#left ul li a:link,#left ul li a:active,#left ul li a:visited{display:block;background:url(../../img/backoffice/back-menu.png) no-repeat left top;outline:0;padding:0 3px 0 28px;color:#848484;text-decoration:none;height:34px}
+#left ul li a,#left ul li a:link,#left ul li a:active,#left ul li a:visited{display:block;background:url(../../img/backoffice/back-menu.png) no-repeat left top;outline:0;padding:0 3px 0 22px;color:#848484;text-decoration:none;height:34px}
 #left ul li a:hover{background:url(../../img/backoffice/back-menu.png) no-repeat left bottom}
 #left ul li.active a,#left ul li.active a:link,#left ul li.active a:active,#left ul li.active a:visited{background:url(../../img/backoffice/back-menu.png) no-repeat left bottom;color:#000}
-#left ul ul{display:block;background:url(../../img/backoffice/back-right.png) repeat-y right top;border-left:1px solid #e5e5e5;margin:-2px 0 2px 1px;padding:0;list-style:none;width:181px}
-#left ul li li{display:block;background:0;border-bottom:1px solid #e5e5e5;font:11px/1.0em Arial;color:#848484;text-transform:none;width:179px;height:auto}
-#left ul li li a,#left ul li li a:link,#left #left ul li li a:active,#left #left ul li li a:visited{display:block;background:0;padding:9px 3px 9px 10px;color:#848484;text-decoration:none;width:165px;height:auto}
+#left ul ul{display:block;background:url(../../img/backoffice/back-right.png) repeat-y right top;border-left:1px solid #e5e5e5;margin:-2px 0 2px 1px;padding:0;list-style:none;width:189px}
+#left ul li li{display:block;background:0;border-bottom:1px solid #e5e5e5;font:11px/1.0em Arial;color:#848484;text-transform:none;width:186px;height:auto}
+#left ul li li a,#left ul li li a:link,#left #left ul li li a:active,#left #left ul li li a:visited{display:block;background:0;padding:9px 3px 9px 10px;color:#848484;text-decoration:none;width:173px;height:auto}
 #left ul ul li a:hover{background:0;background:#f9f9f9}
 #left ul ul li.active a,#left ul ul li.active a:link,#left ul ul li.active a:active,#left ul ul li.active a:visited{background:none #f9f9f9;color:#000}
 #left #credits{display:block;margin:13px 20px 0 0;padding:0 0 13px 0;font-size:11px;text-align:center;color:#949494}
