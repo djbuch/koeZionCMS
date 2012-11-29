@@ -40,7 +40,7 @@
 			echo $helpers['Form']->input('txt_slogan', 'Slogan (accueil)', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge', 'tooltip' => "Indiquez le slogan du site"));
 			echo $helpers['Form']->input('txt_posts', 'Articles (accueil)', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge', 'tooltip' => "Indiquez le texte de présentation des articles sur la page d'accueil"));
 			echo $helpers['Form']->input('txt_newsletter', 'Page newsletter', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge', 'tooltip' => "Indiquez le texte de la page newsletter"));
-			echo $helpers['Form']->input('txt_social', 'Texte social', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge', 'tooltip' => ""));
+			//echo $helpers['Form']->input('txt_social', 'Texte social', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge', 'tooltip' => ""));
 			?>
 		</div>
 	</div>
