@@ -1,5 +1,16 @@
 ﻿<versions>
 	<version>
+		<name>Version du 03/12/2012</name>
+		<num>20121203</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Reprise complète de l'organisation des dossiers template (views)</task>
+			<task author="KoéZionCMS">Rajout de la gestion du menu en bdd (modules et modules_types</task>
+			<task author="KoéZionCMS">Correction du bug qui permettait de relancer l'install</task>
+			<task author="KoéZionCMS">Modification des fichiers sql de l'install</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 12/11/2012</name>
 		<num>20121112</num>
 		<supervisor>KoéZionCMS</supervisor>
