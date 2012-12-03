@@ -10,7 +10,7 @@ img{border:0}
 #left ul li a:hover{background:url(../../img/backoffice/back-menu.png) no-repeat left bottom}
 #left ul li.active a,#left ul li.active a:link,#left ul li.active a:active,#left ul li.active a:visited{background:url(../../img/backoffice/back-menu.png) no-repeat left bottom;color:#000}
 #left ul ul{display:block;background:url(../../img/backoffice/back-right.png) repeat-y right top;border-left:1px solid #e5e5e5;margin:-2px 0 2px 1px;padding:0;list-style:none;width:189px}
-#left ul li li{display:block;background:0;border-bottom:1px solid #e5e5e5;font:11px/1.0em Arial;color:#848484;text-transform:none;width:186px;height:auto}
+#left ul li li{display:block;background:0;border-bottom:1px solid #e5e5e5;border-top:1px solid #e5e5e5;font:11px/1.0em Arial;color:#848484;text-transform:none;width:186px;height:auto}
 #left ul li li a,#left ul li li a:link,#left #left ul li li a:active,#left #left ul li li a:visited{display:block;background:0;padding:9px 3px 9px 10px;color:#848484;text-decoration:none;width:173px;height:auto}
 #left ul ul li a:hover{background:0;background:#f9f9f9}
 #left ul ul li.active a,#left ul ul li.active a:link,#left ul ul li.active a:active,#left ul ul li.active a:visited{background:none #f9f9f9;color:#000}

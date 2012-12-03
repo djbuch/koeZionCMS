@@ -25,7 +25,7 @@
 					<b>ATTENTION</b><br />
 					Veillez à supprimer le dossier install qui se trouve à la racine de votre dossier d'hébergement sur votre serveur
 				</div>
-				<?php require_once(ROOT.DS.'core'.DS.'Koezion'.DS.'router.php'); ?>						
+				<?php //require_once(ROOT.DS.'core'.DS.'Koezion'.DS.'router.php'); ?>						
 				<div class="row" style="overflow: hidden;">
 					<a href="<?php echo Router::url('/'); ?>" target="_blank"><button class="medium grey" type="submit" style="float: right;"><span>Accéder à la page d'accueil de votre site koéZionCMS</span></button></a>
 					<a href="<?php echo Router::url('/adm'); ?>" target="_blank"><button class="medium grey" type="submit" style="float: right;"><span>Accéder à l'espace d'administration de votre site koéZionCMS</span></button></a>						

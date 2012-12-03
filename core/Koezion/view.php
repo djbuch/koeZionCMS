@@ -71,17 +71,18 @@ class View extends Object {
     	//Si on désire rendre une vue particulière celle
     	if(strpos($this->view, '/') === 0 && $inViewsFolder) { $view = VIEWS.$this->view.'.php'; }
     	
-    	//Sinon le comportement par défaut ira chercher les vues dans le dossier views
+    	//Sinon le comportement par défaut ira chercher les vues dans le dossier views puis dans le dossier du layout correspond
     	else {    		
     		
-    		if($inViewsFolder) { $view = VIEWS.DS.$this->controller->request->controller.DS.$this->view.'.php'; /*pr($this);*/ }
-    		else { $view = $this->view.'.php'; /*pr($this);*/ }
+    		if($inViewsFolder) { $view = VIEWS.DS.$this->controller->request->controller.DS.$this->view.'.php'; } //Cas des vues backoffice
+    		else { $view = $this->view.'.php'; } //Cas de vues particulières
     		
     		//Si la variable existe (Elle n'existe que pour le front)
+    		//Redéfinition du chemin des vues en fonction du template
     		if(isset($this->vars['websiteParams'])) {
     			
     			$templateLayout = $this->vars['websiteParams']['tpl_layout']; //On récupère le layout courant
-    			$alternativeView = VIEWS.DS.$this->controller->request->controller.DS.$templateLayout.DS.$this->view.'.php'; //On génère une variable contenant le chemin vers une vue alternative située dans un dossier portant le nom du layout
+    			$alternativeView = VIEWS.DS.'layout_'.$templateLayout.'_views'.DS.$this->controller->request->controller.DS.$this->view.'.php'; //On génère une variable contenant le chemin vers une vue alternative située dans un dossier portant le nom du layout
     		
 	    		//Si ce fichier n'existe pas on prendra la vue par défaut
     			if(file_exists($alternativeView)) { $view = $alternativeView; }
@@ -92,7 +93,10 @@ class View extends Object {
     	if(file_exists($view)) require_once($view); //Chargement de la vue
     	$content_for_layout = ob_get_clean(); //On stocke dans cette variable le contenu de la vue
     	
-    	$alternativeLayoutFolder = substr_count($this->layout, DS) + substr_count($this->layout, '/');    	
+    	$alternativeLayoutFolder = substr_count($this->layout, DS) + substr_count($this->layout, '/');
+
+    	//pr($alternativeLayoutFolder);
+    	
     	if($alternativeLayoutFolder) { require_once $this->layout.'.php'; }
     	else { require_once VIEWS.DS.'layout'.DS.$this->layout.'.php'; } //On fait l'inclusion du layout par défaut et on affiche la variable dedans
     	$this->rendered = true; //On indique que la vue est rendue   	

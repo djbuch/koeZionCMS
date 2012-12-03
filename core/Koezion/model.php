@@ -655,7 +655,13 @@ class Model extends Object {
 				
 				$datasShema[] = 'created_by'; 
 				$moreDatasToSave[':created_by'] = Session::read('Backoffice.User.id');
-			}			
+			}		
+					
+			if(!in_array('send_newsletter', $datasShema) && in_array('send_newsletter', $shema)) { 
+				
+				$datasShema[] = 'send_newsletter'; 
+				$moreDatasToSave[':send_newsletter'] = 1;
+			}		
 		}
 		
 		//Génération des chammps supplémentaires

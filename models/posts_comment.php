@@ -21,6 +21,10 @@ class PostsComment extends Model {
 			'rule' => 'email',
 			'message' => 'PostsComment.email'
 		),
+		'cpostal' => array(
+			'rule' => array('notEqualsTo', 'Indiquez votre code postal'),
+			'message' => 'PostsComment.cpostal'
+		),
 		'message' => array(
 			'rule' => array('notEqualsTo', 'Indiquez votre message'),
 			'message' => 'PostsComment.message'

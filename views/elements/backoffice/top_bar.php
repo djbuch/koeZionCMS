@@ -36,10 +36,10 @@
 			<li>
 				<img src="<?php echo BASE_URL; ?>/img/backoffice/icon-settings.png" alt="Settings" /> <?php echo _("Paramètres"); ?>
 				<ul>
-					<li><a href="<?php echo Router::url('backoffice/websites/index'); ?>"><?php echo _("Gestion des sites Internet"); ?></a></li>
+					<?php /* ?><li><a href="<?php echo Router::url('backoffice/websites/index'); ?>"><?php echo _("Gestion des sites Internet"); ?></a></li>
 					<li><a href="<?php echo Router::url('backoffice/users/index'); ?>"><?php echo _("Gestion des utilisateurs"); ?></a></li>
 					<li><a href="<?php echo Router::url('backoffice/plugins/index'); ?>"><?php echo _("Gestion des plugins"); ?></a></li>					
-					<li class="nolink center">---------- <?php echo _("FICHIERS DE CONF"); ?> ----------</li>			
+					<li class="nolink center">---------- <?php echo _("FICHIERS DE CONF"); ?> ----------</li><?php */ ?>	
 					<li><a href="<?php echo Router::url('backoffice/configs/database_liste'); ?>"><?php echo _("Base de données"); ?></a></li>			
 					<li><a href="<?php echo Router::url('backoffice/configs/mailer_liste'); ?>"><?php echo _("Envoi de mails"); ?></a></li>			
 					<li><a href="<?php echo Router::url('backoffice/configs/router_liste'); ?>"><?php echo _("Gestion des routes"); ?></a></li>			

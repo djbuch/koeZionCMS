@@ -50,11 +50,13 @@ CREATE TABLE IF NOT EXISTS `contacts` (
   `cpostal` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `message` longtext COLLATE utf8_unicode_ci NOT NULL,
   `message_backoffice` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `send_newsletter` int(11) NOT NULL,
   `online` int(11) NOT NULL,
   `created` datetime NOT NULL,
   `website_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 
 DROP TABLE IF EXISTS `focus`;
 CREATE TABLE IF NOT EXISTS `focus` (
@@ -65,6 +67,30 @@ CREATE TABLE IF NOT EXISTS `focus` (
   `online` int(11) NOT NULL,
   `created` datetime DEFAULT NULL,
   `website_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `modules`;
+CREATE TABLE IF NOT EXISTS `modules` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `controller_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `order_by` int(11) NOT NULL,
+  `online` int(11) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modules_type_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `modules_types`;
+CREATE TABLE IF NOT EXISTS `modules_types` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `order_by` int(11) NOT NULL,
+  `online` int(11) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime NOT NULL,
+  `modified_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -119,7 +145,10 @@ CREATE TABLE IF NOT EXISTS `posts_comments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `cpostal` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `message` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `message_backoffice` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `send_newsletter` int(11) NOT NULL,
   `online` int(11) NOT NULL,
   `created` datetime NOT NULL,
   `post_id` int(11) NOT NULL,

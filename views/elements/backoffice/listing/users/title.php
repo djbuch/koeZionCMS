@@ -1,6 +1,6 @@
 <div class="title">
 	<h2>
-		<?php echo _("Utilisateurs")." - "; ?> 
+		<?php echo _("Liste des utilisateurs")." - "; ?> 
 		<?php echo ($pager['totalElements'] > 0) ? $pager['totalElements'] : 'Aucun'; ?> éléments
 	</h2>
 	

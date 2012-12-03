@@ -102,6 +102,8 @@ class Controller extends Object {
  *
  */
 	function beforeFilter() {
+		
+		$this->_plugins_before_functions('beforeFilter');
 	}
 
 /**
@@ -110,33 +112,7 @@ class Controller extends Object {
  */
 	function beforeRender() {
 		
-		$prefix = isset($this->request->prefix) ? $this->request->prefix : ''; //Récupération du préfixe
-					
-		////////////////////////////////////////////////////////////////
-		//GESTION DU CHARGEMENT DES PLUGINS ET DE LEURS INITIALISATION//
-		//On va récupérer la liste des plugins actifs et charger les fichier	
-		if(isset($this->plugins)) {
-				
-			foreach($this->plugins as $pluginName => $pluginInfos) {
-				
-				$pluginFile = PLUGINS.DS.$pluginInfos['code'].DS.'plugin.php';				
-				if(file_exists($pluginFile)) {
-					
-					require_once($pluginFile); //Chargement du fichier			
-					$pluginClass = new $pluginInfos['pluginClass']();
-					
-					if($prefix == 'backoffice') {					
-						
-						if(method_exists($pluginClass, '_init_backoffice_datas')) $pluginClass->_init_backoffice_datas($this);
-						 
-					} else { 
-						
-						if(method_exists($pluginClass, '_init_frontoffice_datas')) $pluginClass->_init_frontoffice_datas($this);
-						 
-					}
-				}
-			}
-		}
+		$this->_plugins_before_functions('beforeRender');
 	}
 
 /**
@@ -306,5 +282,38 @@ class Controller extends Object {
 		header("Location: ".$url);
 		
 		die(); //Pour éviter que les fonctions ne continues
+	}
+	
+	protected function _plugins_before_functions($beforeFunction) {
+				
+		$prefix = isset($this->request->prefix) ? $this->request->prefix : ''; //Récupération du préfixe
+		
+		////////////////////////////////////////////////////////////////
+		//GESTION DU CHARGEMENT DES PLUGINS ET DE LEURS INITIALISATION//
+		//On va récupérer la liste des plugins actifs et charger les fichier
+		if(isset($this->plugins)) {
+		
+			foreach($this->plugins as $pluginName => $pluginInfos) {
+		
+				$pluginFile = PLUGINS.DS.$pluginInfos['code'].DS.'plugin.php';
+				if(file_exists($pluginFile)) {
+		
+					require_once($pluginFile); //Chargement du fichier
+					$pluginClass = new $pluginInfos['pluginClass']();
+		
+					if($prefix == 'backoffice') {
+						
+						$beforeFunction2Check = $beforeFunction.'_backoffice';
+						if(method_exists($pluginClass, $beforeFunction2Check)) $pluginClass->$beforeFunction2Check($this);
+		
+					} else {
+		
+						$beforeFunction2Check = $beforeFunction.'_frontoffice';
+						if(method_exists($pluginClass, $beforeFunction2Check)) $pluginClass->$beforeFunction2Check($this);
+		
+					}
+				}
+			}
+		}		
 	}
 }

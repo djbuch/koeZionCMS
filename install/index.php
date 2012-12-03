@@ -1,6 +1,13 @@
 <?php 
 require_once('bootstrap.php'); //Fichier chargé de loader les librairies et initialiser les constantes 
 
+//03/12/2012 - Si le site est paramétré on ne refait pas l'install
+if(file_exists(CONFIGS.DS.'files'.DS.'database.ini')) {
+
+	header("Location: ".Router::url('/', ''));
+	die();
+}
+
 //Si on récupère la page à afficher dans l'url, par défaut on charge la page de configuration des dossiers
 if(!isset($_GET['step'])) { $step = 'folders'; }
 else { $step = $_GET['step']; }

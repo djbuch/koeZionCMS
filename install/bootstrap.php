@@ -52,3 +52,4 @@ define('BASE_URL', $baseUrl); //Chemin relatif vers le coeur de l'application
 require_once LIBS.DS.'file_and_dir.php'; //Chargement du Dispatcher
 require_once(ROOT.DS.'configs'.DS.'configure.php');
 require_once(ROOT.DS.'core'.DS.'Koezion'.DS.'basics.php');
+require_once(ROOT.DS.'core'.DS.'Koezion'.DS.'router.php');

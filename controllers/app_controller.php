@@ -88,7 +88,25 @@ class AppController extends Controller {
 			
 			$this->layout = 'backoffice'; //Définition du layout pour le backoffice			
 			$this->pager['elementsPerPage'] = $this->backofficeElementPerPage; //Nombre d'élément par page
+						
+			//Récupération des modules
+			$this->loadModel('ModulesType'); //Chargement du modèle des types de modules
+			$modulesTypes = $this->ModulesType->findList(array('conditions' => array('online' => 1), 'order' => 'order_by ASC')); //On récupère les types de modules
+			//$this->unloadModel('ModulesType'); //Déchargement du modèle des types de modules
 			
+			$leftMenus = array();
+			foreach($modulesTypes as $k => $v) { $leftMenus[$k] = array('libelle' => $v, 'menus' => array()); }			
+			
+			
+			
+			$this->loadModel('Module');
+			$leftMenuTMP = $this->Module->find(array('conditions' => array('online' => 1), 'order' => 'order_by ASC'));
+			foreach($leftMenuTMP as $k => $v) { 
+
+				if(isset($leftMenus[$v['modules_type_id']])) { $leftMenus[$v['modules_type_id']]['menus'][] = $v; } 
+			}
+			$this->set('leftMenus', $leftMenus);
+						
 			//Récupération des formulaires de contacts non validés
 			$this->loadModel('Contact');
 			$nbFormsContacts = $this->Contact->findCount(array('online' => 0));
@@ -354,6 +372,7 @@ class AppController extends Controller {
     
     	$this->auto_render = false; //Pas de vue    	
     	$modelName =  $this->params['modelName']; //On récupère la valeur du modèle    	
+    	pr($modelName);
     	$primaryKey = $this->$modelName->primaryKey;
     	$element = $this->$modelName->findFirst(array('conditions' => array($primaryKey => $id))); //Récupération de l'élément
     	$online = $element['online']; //Récupération de la valeur actuelle du champ online

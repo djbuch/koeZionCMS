@@ -13,6 +13,9 @@ $Errorsmessages['Contact']['message'] = _('Veuillez saisir votre message');
 
 $Errorsmessages['Focus']['name'] = _('La valeur de ce champ est de 2 caractères minimum.');
 
+$Errorsmessages['Module']['name'] = _('La valeur de ce champ est de 2 caractères minimum.');
+$Errorsmessages['Module']['controller_name'] = _('La valeur de ce champ est de 2 caractères minimum.');
+
 $Errorsmessages['Plugin']['name'] = _('La valeur de ce champ est de 2 caractères minimum.');
 $Errorsmessages['Plugin']['code'] = _('La valeur de ce champ est de 5 caractères exactement.');
 
@@ -24,10 +27,13 @@ $Errorsmessages['Post']['prefix']['rule2'] = _('Il y a des caractères non autor
 
 $Errorsmessages['PostsComment']['name'] = _('Veuillez saisir votre nom');
 $Errorsmessages['PostsComment']['email'] = _('Vous devez indiquer un email valide.');
+$Errorsmessages['PostsComment']['cpostal'] = _('Vous devez indiquer votre code postal.');
 $Errorsmessages['PostsComment']['message'] = _('Veuillez saisir votre message');
 
 $Errorsmessages['PostsType']['name'] = _('La valeur de ce champ est de 2 caractères minimum.');
 $Errorsmessages['PostsType']['column_title'] = _('La valeur de ce champ est de 2 caractères minimum.');
+
+$Errorsmessages['RightButton']['name'] = _('La valeur de ce champ est de 2 caractères minimum.');
 
 $Errorsmessages['Slider']['name'] = _('La valeur de ce champ est de 2 caractères minimum.');
 
