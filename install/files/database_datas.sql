@@ -1,5 +1,5 @@
 INSERT INTO `modules` (`id`, `name`, `controller_name`, `order_by`, `online`, `created`, `modules_type_id`) VALUES
-(1, 'Catégories', 'categories', 3, 1, '2012-11-29 22:58:29', 2),
+(1, 'CatÃ©gories', 'categories', 3, 1, '2012-11-29 22:58:29', 2),
 (2, 'Sliders', 'sliders', 4, 1, '2012-11-29 22:58:46', 2),
 (3, 'Focus', 'focus', 5, 1, '2012-11-29 22:59:01', 2),
 (4, 'Boutons colonne de droite', 'right_buttons', 6, 1, '2012-11-29 22:59:29', 2),
@@ -13,8 +13,8 @@ INSERT INTO `modules` (`id`, `name`, `controller_name`, `order_by`, `online`, `c
 
 INSERT INTO `modules_types` (`id`, `name`, `order_by`, `online`, `created`, `modified`, `modified_by`) VALUES
 (2, 'Contenus', 1, 1, '2012-12-01 06:38:44', '2012-12-01 06:38:44', 1),
-(4, 'Actualités / Blog', 2, 1, '2012-12-01 06:39:16', '2012-12-01 06:39:16', 1),
-(5, 'Paramètres', 3, 1, '2012-12-01 06:39:27', '2012-12-01 06:39:27', 1);
+(4, 'ActualitÃ©s / Blog', 2, 1, '2012-12-01 06:39:16', '2012-12-01 06:39:16', 1),
+(5, 'ParamÃ¨tres', 3, 1, '2012-12-01 06:39:27', '2012-12-01 06:39:27', 1);
 
 INSERT INTO `users` (`id`, `name`, `second_name`, `login`, `password`, `email`, `role`, `online`, `users_group_id`) VALUES
 (1, 'Superadmin', 				'', 'superadmin', 		'superadmin', 		'superadmin@monsite.com', 		'admin', 			1, 1),

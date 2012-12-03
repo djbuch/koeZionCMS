@@ -8,6 +8,7 @@
 			<task author="KoéZionCMS">Rajout de la gestion du menu en bdd (modules et modules_types</task>
 			<task author="KoéZionCMS">Correction du bug qui permettait de relancer l'install</task>
 			<task author="KoéZionCMS">Modification des fichiers sql de l'install</task>
+			<task author="KoéZionCMS">Changement encodage fichiers install db</task>
 		</tasks>	
 	</version>
 	<version>
