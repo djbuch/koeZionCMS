@@ -2,7 +2,7 @@
 require_once('bootstrap.php'); //Fichier chargé de loader les librairies et initialiser les constantes 
 
 //03/12/2012 - Si le site est paramétré on ne refait pas l'install
-if(file_exists(ROOT.DS.'installed')) {
+if(file_exists(CONFIGS_FILES.DS.'installed')) {
 
 	header("Location: ".Router::url('/', ''));
 	die();
