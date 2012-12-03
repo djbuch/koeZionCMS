@@ -12,8 +12,9 @@ INSERT INTO `modules` (`id`, `name`, `controller_name`, `order_by`, `online`, `c
 (11, 'Plugins', 'plugins', 2, 1, '2012-11-30 09:27:47', 5);
 
 INSERT INTO `modules_types` (`id`, `name`, `order_by`, `online`, `created`, `modified`, `modified_by`) VALUES
-(2, 'Contenus', 1, 1, '2012-12-01 06:38:44', '2012-12-01 06:38:44', 1),
-(4, 'Actualités / Blog', 2, 1, '2012-12-01 06:39:16', '2012-12-01 06:39:16', 1),
+(6, 'Plugins', 2, 1, '2012-12-03 22:39:48', '2012-12-03 22:39:48', 1),
+(2, 'Contenus', 0, 1, '2012-12-01 06:38:44', '2012-12-01 06:38:44', 1),
+(4, 'Actualités / Blog', 1, 1, '2012-12-01 06:39:16', '2012-12-01 06:39:16', 1),
 (5, 'Paramètres', 3, 1, '2012-12-01 06:39:27', '2012-12-01 06:39:27', 1);
 
 INSERT INTO `users` (`id`, `name`, `second_name`, `login`, `password`, `email`, `role`, `online`, `users_group_id`) VALUES
