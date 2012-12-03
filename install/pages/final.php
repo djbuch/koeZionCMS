@@ -1,3 +1,4 @@
+<?php FileAndDir::fcopy(INSTALL_FILES.DS.'installed', ROOT.DS.'installed'); ?>
 <div id="right">		
 	<div id="main">		
 		<div class="box">
