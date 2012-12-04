@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 04/12/2012</name>
+		<num>20121204</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Modification de la gestion de l'affichage des erreurs</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 03/12/2012</name>
 		<num>20121203</num>
 		<supervisor>KoéZionCMS</supervisor>

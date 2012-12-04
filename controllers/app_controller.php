@@ -372,7 +372,7 @@ class AppController extends Controller {
     
     	$this->auto_render = false; //Pas de vue    	
     	$modelName =  $this->params['modelName']; //On récupère la valeur du modèle    	
-    	pr($modelName);
+    	//pr($modelName);
     	$primaryKey = $this->$modelName->primaryKey;
     	$element = $this->$modelName->findFirst(array('conditions' => array($primaryKey => $id))); //Récupération de l'élément
     	$online = $element['online']; //Récupération de la valeur actuelle du champ online

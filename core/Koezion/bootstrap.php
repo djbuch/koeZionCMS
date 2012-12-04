@@ -3,7 +3,11 @@
 //ini_set( 'magic_quotes_gpc', 0 );
 $logFile = TMP.DS.'logs'.DS.'error.log'; //Chemin du fichier de logs
 $httpHost = $_SERVER["HTTP_HOST"];
-if($httpHost == 'localhost' || $httpHost == '127.0.0.1') { $displayErrors = 1; } else { $displayErrors = 0; }
+if(
+	$httpHost == 'localhost' 
+	|| $httpHost == '127.0.0.1'
+	|| in_array($_SERVER["REMOTE_ADDR"], array("87.240.84.49"))
+) { $displayErrors = 1; } else { $displayErrors = 0; }
 ini_set('display_errors', $displayErrors); //Affichage des erreurs
 ini_set('error_reporting', E_ALL); //On report toutes les erreurs ou error_reporting(E_ALL);
 ini_set('log_errors', 1); //Log des erreurs
