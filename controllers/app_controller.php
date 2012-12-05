@@ -779,10 +779,10 @@ class AppController extends Controller {
  * @version 0.1 - 02/08/2012 by FI
  */      
     function _send_mail_comments() {
-    	
+    	    	
     	//////////////////////////////////////////
     	//   GESTION DU DEPOT DE COMMENTAIRES   //
-    	if(isset($this->request->data['type_formulaire']) && $this->request->data['type_formulaire'] == 'commentaire') {
+    	if(isset($this->request->data['type_formulaire']) && $this->request->data['type_formulaire'] == 'comment') {
     		
     		//pr('dans _send_mail_comments de app');
     		$this->loadModel('PostsComment'); //Chargement du modèle
@@ -807,7 +807,8 @@ class AppController extends Controller {
     			///////////////////////
 		
 				////////////////////////////////////////////
-				//   SAUVEGARDE DANS LA BASE DE DONNEES   //    	
+				//   SAUVEGARDE DANS LA BASE DE DONNEES   //
+    			$this->request->data['post_id'] = $vars['post']['id'];
     			$this->PostsComment->save($this->request->data);
     			$message = '<p class="confirmation">Votre commentaire a bien été prise en compte, il sera diffusé après validation par notre modérateur</p>';
     			$this->set('message', $message);

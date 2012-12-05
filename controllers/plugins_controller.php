@@ -70,15 +70,23 @@ class PluginsController extends AppController {
 			//Si le plugin est installé on va le sauvegarder en bdd
 			if($isInstalled) {
 				
-				$this->Plugin->save(array('id' => $id, 'installed' => 1));
+				$this->Plugin->save(array('id' => $id, 'installed' => 1));				
 				Session::setFlash('Le plugin est correctement installé');		
 						
-			} else {				
-				
-				Session::setFlash("Problème lors de l'installation du plugin", 'error');				
-			}		
+			} else { Session::setFlash("Problème lors de l'installation du plugin", 'error'); }		
 			
-		} else if(!$plugin['online']) { Session::setFlash('Le plugin est correctement désactivé'); }
+		} else if(!$plugin['online']) {
+
+			//Si le plugin est désactivé on désactive également le module
+			 
+		
+			Session::setFlash('Le plugin est correctement désactivé'); 
+		}
+		
+		//On va contrôller la valeur du champ online pour le plugin et remettre à jour la table des modules		
+		if($plugin['online']) { $sqlModule = "UPDATE modules SET online = 1 WHERE plugin_id = ".$id.";"; }
+		else { $sqlModule = "UPDATE modules SET online = 0 WHERE plugin_id = ".$id.";"; }
+		$this->Plugin->query($sqlModule);
 		
 		$this->redirect('backoffice/plugins/index'); //On retourne sur la page de listing
 	}	
@@ -96,6 +104,7 @@ class PluginsController extends AppController {
 					$xParsedXml = simplexml_load_file(PLUGINS.DS.$pluginDirectory.DS.'description.xml');
 					$xParsedXml = (array)$xParsedXml;
 			
+					$this->loadModel('Module'); //On charge le modèle permettant la gestion des modules
 					foreach($xParsedXml as $k => $v) {
 						
 						$conditions = array('conditions' => array('code' => $xParsedXml['code']));
@@ -113,6 +122,16 @@ class PluginsController extends AppController {
 								'installed' => 0
 							);
 							$this->Plugin->save($insertPlugin);
+							
+							//On va également le rajouter dans la gestion des menus
+							$moduleDatas = array(
+								'name' => $xParsedXml['name'],
+								'controller_name' => $xParsedXml['code'],
+								'online' => 0, //Le plugin n'est pas activé donc idem pour le module
+								'modules_type_id' => 6, //Type de module plugin
+								'plugin_id' => $this->Plugin->id
+							);
+							$this->Module->save($moduleDatas);
 						}					
 					}
 				}

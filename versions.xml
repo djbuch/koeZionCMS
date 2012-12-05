@@ -1,5 +1,15 @@
 ﻿<versions>
 	<version>
+		<name>Version du 05/12/2012</name>
+		<num>20121205</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Rajout automatique de l'identifiant du post lors de l'envoi d'un commentaire</task>
+			<task author="KoéZionCMS">Rajout lors de l'installation d'un plugin du menu dans la table des modules</task>
+			<task author="KoéZionCMS">Suppression dans le formulaire commentaire article de l'identifiant du post</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 04/12/2012</name>
 		<num>20121204</num>
 		<supervisor>KoéZionCMS</supervisor>
