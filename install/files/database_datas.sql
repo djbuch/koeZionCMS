@@ -11,6 +11,7 @@ INSERT INTO `modules` (`id`, `name`, `controller_name`, `order_by`, `online`, `c
 (10, 'Liste des utilisateurs', 'users', 1, 1, '2012-11-30 09:27:32', 5),
 (11, 'Plugins', 'plugins', 2, 1, '2012-11-30 09:27:47', 5);
 
+
 INSERT INTO `modules_types` (`id`, `name`, `order_by`, `online`, `created`, `modified`, `modified_by`) VALUES
 (6, 'Plugins', 2, 1, '2012-12-03 22:39:48', '2012-12-03 22:39:48', 1),
 (2, 'Contenus', 0, 1, '2012-12-01 06:38:44', '2012-12-01 06:38:44', 1),
