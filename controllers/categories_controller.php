@@ -628,7 +628,9 @@ class CategoriesController extends AppController {
 
 		if($deleteAssoc) { $this->CategoriesRightButton->deleteByName('category_id', $categoryId); }
 		
-		$rightButtonId = $this->request->data['right_button_id'];
+		if(isset($this->request->data['right_button_id'])) { $rightButtonId = $this->request->data['right_button_id']; }
+		else { $rightButtonId = array(); }
+		
 		$order = 0;
 		foreach($rightButtonId as $k => $v) {
 		
