@@ -589,36 +589,54 @@ class AppController extends Controller {
  * @version 0.3 - 04/09/2012 by FI - Mise en place d'un passage de paramètre en GET pour pouvoir changer de site en local
  */
 	function _get_website_datas() {
-	
-		$this->loadModel('Website'); //Chargement du modèle
-		$httpHost = $_SERVER["HTTP_HOST"]; //Récupération de l'url
-	
-		//HACK SPECIAL LOCAL POUR CHANGER DE SITE pour permettre la passage de l'identifiant du site en paramètre
-		if(isset($_GET['hack_current_website_id'])) { Session::write('Frontoffice.hack_current_website_id', $_GET['hack_current_website_id']); }
-		$hackCurrentWebsiteId = Session::read('Frontoffice.hack_current_website_id');
+    	
 		
-		if($httpHost == 'localhost' || $httpHost == '127.0.0.1') {
-					
-			if($hackCurrentWebsiteId) { $websiteId = $hackCurrentWebsiteId; }	
-			else {
+		$httpHost = $_SERVER["HTTP_HOST"]; //Récupération de l'url
+		
+    	$cacheFolder = TMP.DS.'cache'.DS.'variables'.DS.'websites'.DS;
+    	$cacheSeconds = 60*60*24*30; //1 mois
+    	$cacheName = 'array_Website';
+    	$cacheFile = $cacheFolder.md5($cacheName).'_'.$httpHost.'.cache';
+    	
+    	if(!is_dir($cacheFolder)) { mkdir($cacheFolder, 0777); }
+    	
+    	$cacheFileExists = (@file_exists($cacheFile)) ? @filemtime($cacheFile) : 0;
+    	
+    	if($cacheFileExists > time() - $cacheSeconds) { $website = unserialize(file_get_contents($cacheFile)); }
+    	else {
 	
-				$websites = $this->Website->findList(array('order' => 'id ASC'));
-				$websiteId = current(array_keys($websites));
-			}
-	
-			$websiteConditions = array('conditions' => array('id' => $websiteId, 'online' => 1));
-	
-		} else { 
+			$this->loadModel('Website'); //Chargement du modèle
+		
+			//HACK SPECIAL LOCAL POUR CHANGER DE SITE pour permettre la passage de l'identifiant du site en paramètre
+			if(isset($_GET['hack_current_website_id'])) { Session::write('Frontoffice.hack_current_website_id', $_GET['hack_current_website_id']); }
+			$hackCurrentWebsiteId = Session::read('Frontoffice.hack_current_website_id');
 			
-			if($hackCurrentWebsiteId) { $websiteConditions = array('conditions' => array('id' => $hackCurrentWebsiteId, 'online' => 1)); } 
-			else { $websiteConditions = array('conditions' => "url LIKE '%".$_SERVER['HTTP_HOST']."' AND online = 1"); }
-		}
-	
-		$website = $this->Website->findFirst($websiteConditions);
-		define('CURRENT_WEBSITE_ID', $website['id']);
-	
-		$this->layout = $website['tpl_layout'];
-	
+			if($httpHost == 'localhost' || $httpHost == '127.0.0.1') {
+						
+				if($hackCurrentWebsiteId) { $websiteId = $hackCurrentWebsiteId; }	
+				else {
+		
+					$websites = $this->Website->findList(array('order' => 'id ASC'));
+					$websiteId = current(array_keys($websites));
+				}
+		
+				$websiteConditions = array('conditions' => array('id' => $websiteId, 'online' => 1));
+		
+			} else { 
+				
+				if($hackCurrentWebsiteId) { $websiteConditions = array('conditions' => array('id' => $hackCurrentWebsiteId, 'online' => 1)); } 
+				else { $websiteConditions = array('conditions' => "url LIKE '%".$_SERVER['HTTP_HOST']."' AND online = 1"); }
+			}
+		
+			$website = $this->Website->findFirst($websiteConditions);
+		
+    		$pointeur = fopen($cacheFile, 'w');
+    		fwrite($pointeur, serialize($website));
+    		fclose($pointeur);
+    	}
+    	
+		define('CURRENT_WEBSITE_ID', $website['id']);	
+		$this->layout = $website['tpl_layout'];	
 		return $website;
 	}
     
@@ -696,7 +714,7 @@ class AppController extends Controller {
     function _cache_menu($websiteId) {
     	
     	$cacheFolder = TMP.DS.'cache'.DS.'variables'.DS.'categories'.DS;
-    	$cacheSeconds = 60*60*1; // 12 heures
+    	$cacheSeconds = 60*60*24*30; //1 mois
     	$cacheName = 'array_Category_getTreeRecursive_frontoffice';
     	$cacheFile = $cacheFolder.md5($cacheName).'_WS'.$websiteId.'.cache';
     	
@@ -727,7 +745,7 @@ class AppController extends Controller {
  * @version 0.1 - 02/08/2012 by FI
  */    
     function _send_mail_contact() {
-		
+		    	
     	if(isset($this->request->data['type_formulaire']) && $this->request->data['type_formulaire'] == 'contact') { //Si le formulaire de contact est posté  		
     		
 			$this->loadModel('Contact');
@@ -756,8 +774,21 @@ class AppController extends Controller {
 				$this->Contact->save($this->request->data); 
 				$message = '<p class="confirmation">Votre demande a bien été prise en compte</p>';
 				$this->set('message', $message);
-				$this->request->data = false;
 				////////////////////////////////////////////
+				
+				//Si le plugin mailing est installé on va alors procéder à l'ajout 
+				if(isset($this->plugins['Mailings'])) {
+				
+					$this->loadModel('MailingsEmail');
+					$this->MailingsEmail->save(array(
+						'name' => $this->request->data['name'],
+						'email' => $this->request->data['email'],
+						'etiquette' => $this->request->data['cpostal']	
+					));				
+					$this->unloadModel('MailingsEmail');
+				}
+				
+				$this->request->data = false;
 				
 			} else {
 		
@@ -767,6 +798,7 @@ class AppController extends Controller {
 				$message .= '</p>';
 				$this->set('message', $message);
 			}
+			
 			$this->unloadModel('Contact');
 		}
     }      
@@ -812,8 +844,22 @@ class AppController extends Controller {
     			$this->PostsComment->save($this->request->data);
     			$message = '<p class="confirmation">Votre commentaire a bien été prise en compte, il sera diffusé après validation par notre modérateur</p>';
     			$this->set('message', $message);
-    			$this->request->data = false;
 				////////////////////////////////////////////
+				
+				//Si le plugin mailing est installé on va alors procéder à l'ajout 
+				if(isset($this->plugins['Mailings'])) {
+				
+					$this->loadModel('MailingsEmail');
+					$this->MailingsEmail->save(array(
+						'name' => $this->request->data['name'],
+						'email' => $this->request->data['email'],
+						'etiquette' => $this->request->data['cpostal']	
+					));				
+					$this->unloadModel('MailingsEmail');
+				}				
+				
+				$this->request->data = false;
+				
     		} else {
     	
     			$message = '<p class="error">Merci de corriger vos informations';
@@ -821,6 +867,7 @@ class AppController extends Controller {
     			$message .= '</p>';
     			$this->set('message', $message);
     		}
+    		
     		$this->unloadModel('PostsComment'); //Déchargement du modèle
     	}
     	//////////////////////////////////////////

@@ -81,18 +81,37 @@ class Controller extends Object {
 		}
 		
 		///////////////////////
-		//GESTION DES PLUGINS//
-		$this->loadModel('Plugin');
-		$activatePlugins = $this->Plugin->find(array('conditions' => array('online' => 1, 'installed' => 1)));
-		foreach($activatePlugins as $k => $v) {
+		//GESTION DES PLUGINS//    	
+		$pluginsList = array();
+    	$cacheFolder = TMP.DS.'cache'.DS.'variables'.DS.'plugins'.DS;
+    	$cacheSeconds = 60*60*24*30; //1 mois
+    	$cacheName = 'plugins';
+    	$cacheFile = $cacheFolder.$cacheName.'.cache';
+    	
+    	if(!is_dir($cacheFolder)) { mkdir($cacheFolder, 0777); }
+    	
+    	$cacheFileExists = (@file_exists($cacheFile)) ? @filemtime($cacheFile) : 0;
+    	
+    	if($cacheFileExists > time() - $cacheSeconds) { $pluginsList = unserialize(file_get_contents($cacheFile)); }
+    	else {	
+		
+			$this->loadModel('Plugin');
+			$activatePlugins = $this->Plugin->find(array('conditions' => array('online' => 1, 'installed' => 1)));
+			foreach($activatePlugins as $k => $v) {
+				
+				$pluginName = Inflector::camelize($v['code']);
+				$pluginsList[$pluginName] = array(
+					'controllerClass' => $pluginName.'Controller',
+					'pluginClass' => $pluginName.'Plugin',
+					'code' => $v['code']
+				);
+			}
 			
-			$pluginName = Inflector::camelize($v['code']);
-			$this->plugins[$pluginName] = array(
-				'controllerClass' => $pluginName.'Controller',
-				'pluginClass' => $pluginName.'Plugin',
-				'code' => $v['code']
-			);
-		}
+    		$pointeur = fopen($cacheFile, 'w');
+    		fwrite($pointeur, serialize($pluginsList));
+    		fclose($pointeur);
+    	}    	
+    	$this->plugins = $pluginsList;
 		
 		if($beforeFilter) { $this->beforeFilter(); } 
 	}
@@ -202,8 +221,9 @@ class Controller extends Object {
 			} //On va tester l'existence de ce fichier
 			
 			require_once($file_path); //Inclusion du fichier
-			if($return) { return new $name(); }
-			else { $this->$name = new $name(); } //Création d'un objet Model de type $name que l'on va instancier dans la classe
+			
+			if($return) { return new $name($this->request->fullUrl); }
+			else { $this->$name = new $name($this->request->fullUrl); } //Création d'un objet Model de type $name que l'on va instancier dans la classe
 		}
 	}
 	

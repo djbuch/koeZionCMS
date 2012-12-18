@@ -1,5 +1,5 @@
 #left>ul>li{margin-bottom:10px}
-#wrapper table tbody tr:hover td{background-color:#f2f0f0}
+#wrapper table:not(.cke_editor) tbody tr:hover td{background-color:#f2f0f0}
 #right .box.no_bbottom{border-bottom:0}
 #right .box .title.empty h2{background:0;text-indent:0}
 #right .box.color_template .title.empty h2{width:100%;text-align:center}

@@ -76,7 +76,9 @@
 		<div class="content nopadding">
 			<?php 
 			$positionList = array('header' => "Dans le header", 'menu' => "Dans le menu");
-			echo $helpers['Form']->input('search_engine_position', 'Position du moteur de recherche', array('type' => 'select', 'datas' => $positionList));
+			echo $helpers['Form']->input('search_engine_position', 'Position du moteur de recherche', array('type' => 'select', 'datas' => $positionList));			
+			$sliderTypesList = array(1 => "Slider simple", 2 => "Slider 3D");
+			echo $helpers['Form']->input('slider_type', 'Type de slider', array('type' => 'select', 'datas' => $sliderTypesList));
 			echo $helpers['Form']->input('ga_code', 'Code Google Analytics', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge'));			
 			$txtSecure = 'Sécuriser le site. <i>Seuls les utilisateurs enregistrés pourront se connecter. Pour rajouter un utilisateurs utilisez la page suivante : <a href="'.Router::url('backoffice/users/index').'">'.$helpers['Html']->img('backoffice/icon-profile.png', array('alt' => _("Gestion utilisateurs")))._("Utilisateurs").'</a></i>';
 			echo $helpers['Form']->input('secure_activ', $txtSecure, array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour activer la sécurité sur le site"));			

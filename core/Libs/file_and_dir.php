@@ -204,13 +204,12 @@ class FileAndDir {
 	 * @param   int       $append     Précise si on écrase le fichier ou si on écrit à la fin (0 par défaut : écrase) (facultatif).
 	 * @return  bool                  Retourne true en cas de succès et false en cas d'échec.
 	 */
-	/*public function put($filename, $content, $append = 0 )
-	{
-		FileAndDir::mkpath($filename);
+	public function put($filename, $content, $append = 0 ) {
+		
 
 		try {
-			if ( !file_put_contents( $filename, $content, $append ) )
-			{
+			
+			if ( !file_put_contents( $filename, $content, $append)) {
 				$message = error_get_last();
 				$message = $message['message'];
 				throw new Exception( 'Impossible d\'écrire dans ' . $filename . "\n" . $message );
@@ -221,7 +220,7 @@ class FileAndDir {
 		catch ( Exception $e ) {
 			return false;
 		}
-	}*/
+	}
 
 	/**
 	 * Teste si une URI est bonne et lance une exception dans le cas contraire.

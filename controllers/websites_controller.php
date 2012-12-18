@@ -60,6 +60,7 @@ class WebsitesController extends AppController {
 		$parentEdit = parent::backoffice_edit($id, false); //On fait appel à la fonction d'édition parente		
 		if($parentEdit) {
 			
+			FileAndDir::delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'websites'.DS); //On vide le dossier qui contient les fichiers en cache
 			$this->_edit_session();			
 			$this->_update_template($id, $this->request->data['template_id']);
 			$this->_update_txt_mails($id, $this->request->data);
@@ -80,6 +81,8 @@ class WebsitesController extends AppController {
 	
 		$parentDelete = parent::backoffice_delete($id, false); //On fait appel à la fonction d'édition parente
 		if($parentDelete) {
+			
+			FileAndDir::delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'websites'.DS); //On vide le dossier qui contient les fichiers en cache
 			
 			//Suppression des catégories
 			$this->loadModel('Category');

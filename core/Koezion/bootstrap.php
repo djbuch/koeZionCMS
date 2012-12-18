@@ -1,7 +1,7 @@
 <?php
 //GESTION DES ERREURS --> http://www.ficgs.com/Comment-montrer-les-erreur-PHP-f1805.html
 //ini_set( 'magic_quotes_gpc', 0 );
-$logFile = TMP.DS.'logs'.DS.'error.log'; //Chemin du fichier de logs
+$logFile = TMP.DS.'logs'.DS.'php'.DS.date('Y-m-d').'.log'; //Chemin du fichier de logs
 $httpHost = $_SERVER["HTTP_HOST"];
 if(
 	$httpHost == 'localhost' 

@@ -15,6 +15,7 @@ class Model extends Object {
 	public $trace_sql = false; //Permet d'afficher la requête exécutée cf fonction find
 	public $schema = array(); //Shéma de la table
 	public $queryExecutionResult = false; //indique si la requete de save s'est bien passée 
+	public $refererUrl = ''; //Cette variable va contenir l'url de la page appelante
     
 /**
  * Constructeur de la classe
@@ -26,13 +27,16 @@ class Model extends Object {
  * @version 0.3 - 11/04/2012 by FI - Modification de la récupération du .ini seulement deux configurations possibles localhost et online
  * @version 0.4 - 24/08/2012 by FI - Rajout du shéma de la table comme variable de classe
  * @version 0.5 - 07/09/2012 by FI - Rajout de la variable database si la connexion existe déjà
+ * @version 0.6 - 14/12/2012 by FI - Rajout de la variable $refererUrl dans le constructeur pour les logs bdd
  */
-	public function __construct() {
+	public function __construct($refererUrl = null) {
 
 		//ANCIENNE VERSION DE RECUPERATION DE LA CONFIGURATION DE LA BASE DE DONNEES
 		//if($_SERVER["HTTP_HOST"] != 'localhost') { $this->conf = 'online'; } //On va tester si on est en local ou pas		        		
 		//$conf = Database::$databases[$this->conf]; //Récupération de la configuration de la base de données
 
+		$this->refererUrl = $refererUrl;
+		
 		$httpHost = $_SERVER["HTTP_HOST"];
 		if($httpHost == 'localhost' || $httpHost == '127.0.0.1') { $section = 'localhost'; } else { $section = 'online'; }
 		
@@ -114,6 +118,9 @@ class Model extends Object {
 				
 		$preparedQuery = $this->db->prepare($sql); //On prépare la requête
 		$result = $preparedQuery->execute(); //On l'exécute
+		
+		$this->_trace_sql('function query', $preparedQuery->queryString); //Récupération de la requête
+		
 		if($result) { //Si l'exécution s'est correctement déroulée
 			
 			if($return) { return $preparedQuery->fetchAll(PDO::FETCH_ASSOC); } //On retourne le résultat si demandé
@@ -215,6 +222,10 @@ class Model extends Object {
 		}
 		
 		//////////////////////
+		//   CHAMPS GROUP BY   //
+		if(isset($req['groupBy'])) { $sql .= ' '.$req['groupBy']; }
+		
+		//////////////////////
 		//   CHAMPS ORDER   //
 		if(isset($req['order'])) { $sql .= ' ORDER BY '.$req['order']; }
 		
@@ -222,10 +233,13 @@ class Model extends Object {
 		//   CHAMPS LIMIT   //
 		if(isset($req['limit'])) { $sql .= ' LIMIT '.$req['limit']; }
 		
-		if($this->trace_sql) { pr($sql); }		
+		//if($this->trace_sql) { pr($sql); }
 		
 		$preparedQuery = $this->db->prepare($sql);
 		$preparedQuery->execute();
+		
+		$this->_trace_sql('function find', $preparedQuery->queryString); //Récupération de la requête
+		
         return $preparedQuery->fetchAll($type);        
     }
     
@@ -278,13 +292,17 @@ class Model extends Object {
  * @author	koéZionCMS
  * @version 0.1 - 16/02/2012 by FI
  */	
-	public function findList($conditions = null) {
+	public function findList($conditions = null, $field = 'name', $key = 'id') {
 	
 		$queryResult = $this->find($conditions);		
 		
 		//On formate les résultats
 		$result = array();
-		foreach($queryResult as $k => $v) { $result[$v['id']] = $v['name']; }
+		foreach($queryResult as $k => $v) { 
+			
+			if(empty($key)) { $result[$k] = $v[$field]; }
+			else { $result[$v[$key]] = $v[$field]; }			 
+		}
 		return $result;
 	}
 	
@@ -302,7 +320,8 @@ class Model extends Object {
 		
 		if(is_array($id)) { $idConditions = " IN (".implode(',', $id).')'; } else { $idConditions = " = ".$id; }		
 		$sql = "DELETE FROM ".$this->table." WHERE ".$this->primaryKey.$idConditions.";";  //Requête de suppression de l'élément			
-		$queryResult = $this->db->query($sql);
+		//$queryResult = $this->db->query($sql);
+		$queryResult = $this->query($sql);
 		
 		if(isset($this->searches_params)) { $this->delete_search_index($idConditions); } //Suppression de l'index dans la recherche
 		
@@ -329,7 +348,8 @@ class Model extends Object {
 		
 		if(isset($this->searches_params)) { $this->delete_search_index($id); } //Suppression de l'index dans la recherche
 		
-		return $this->db->query($sql);
+		//return $this->db->query($sql);
+		return $this->query($sql);
 	}	
 	
 /**
@@ -358,6 +378,8 @@ class Model extends Object {
 		
 		$queryExecutionResult = $preparedInfos['preparedQuery']->execute($datasToSave); //Exécution de la requête
 		
+		$this->_trace_sql('function save', $preparedInfos['preparedQuery']->queryString); //Récupération de la requête
+		
 		//Affectation de la valeur de la clé primaire à la variable de classe
 		if($preparedInfos['action'] == 'insert') { $this->id = $this->db->lastInsertId(); }
 		else { $this->id = $datas[$this->primaryKey]; }
@@ -385,6 +407,8 @@ class Model extends Object {
 			
 			$datasToSave = $this->_prepare_save_datas($v, $preparedInfos['moreDatasToSave'], $forceInsert, $escapeUpload);
 			$queryExecutionResult = $preparedInfos['preparedQuery']->execute($datasToSave);
+			
+			$this->_trace_sql('function saveAll', $preparedInfos['preparedQuery']->queryString); //Récupération de la requête
 			
 			if($preparedInfos['action'] == 'insert') { $this->id = $this->db->lastInsertId();}
 			else { $this->id = $datas['id']; }
@@ -518,11 +542,27 @@ class Model extends Object {
 	function shema() {		
 		
 		$shema = array();
-		if($this->exist_table_in_database($this->database, $this->table) == 1) {	
+		if($this->exist_table_in_database($this->database, $this->table) == 1) {			
+		
+			$cacheFolder = TMP.DS.'cache'.DS.'models'.DS;
+			$cacheSeconds = 60*60*24*30; //1 mois
+			$cacheFile = $cacheFolder.$this->table.'.cache';
 			
-			$sql = "SHOW COLUMNS FROM ".$this->table;			
-			$result = $this->query($sql, true);
-			foreach($result as $k => $v) { $shema[] = $v['Field']; }
+			if(!is_dir($cacheFolder)) { mkdir($cacheFolder, 0777); }
+			
+			$cacheFileExists = (@file_exists($cacheFile)) ? @filemtime($cacheFile) : 0;
+			
+			if($cacheFileExists > time() - $cacheSeconds) { $shema = unserialize(file_get_contents($cacheFile)); }
+			else {
+			
+				$sql = "SHOW COLUMNS FROM ".$this->table;			
+				$result = $this->query($sql, true);
+				foreach($result as $k => $v) { $shema[] = $v['Field']; }
+				
+				$pointeur = fopen($cacheFile, 'w');
+				fwrite($pointeur, serialize($shema));
+				fclose($pointeur);
+			}
 		}
 		
 		return $shema;
@@ -540,9 +580,30 @@ class Model extends Object {
  */
 	function exist_table_in_database($database, $table) {		
 		
-		$sql = 'SHOW TABLES FROM '.$database." LIKE '".$table."'"; //Requête de récupération de la liste des tables		
-		$result = $this->query($sql, true); //On effectue la requête
-		return count($result);
+		$cacheFolder = TMP.DS.'cache'.DS.'models'.DS;
+		$cacheSeconds = 60*60*24*30; //1 mois
+		$cacheFile = $cacheFolder."tables_list".'.cache';
+		
+		if(!is_dir($cacheFolder)) { mkdir($cacheFolder, 0777); }
+		
+		$cacheFileExists = (@file_exists($cacheFile)) ? @filemtime($cacheFile) : 0;
+		
+		if($cacheFileExists > time() - $cacheSeconds) { $tablesList = unserialize(file_get_contents($cacheFile)); }
+		else {
+		
+			$tablesList = array();
+			$sql = 'SHOW TABLES FROM '.$database;
+			foreach($this->query($sql, true) as $k => $v) {
+				
+				$value = array_values($v);
+				$tablesList[] = $value[0];
+			}
+			$pointeur = fopen($cacheFile, 'w');
+			fwrite($pointeur, serialize($tablesList));
+			fclose($pointeur);
+		}
+		
+		return in_array($table, $tablesList);
 	}		
 	
 /////////////////////////////
@@ -658,11 +719,11 @@ class Model extends Object {
 				$moreDatasToSave[':created_by'] = Session::read('Backoffice.User.id');
 			}		
 					
-			if(!in_array('send_newsletter', $datasShema) && in_array('send_newsletter', $shema)) { 
+			/*if(!in_array('send_newsletter', $datasShema) && in_array('send_newsletter', $shema)) { 
 				
 				$datasShema[] = 'send_newsletter'; 
 				$moreDatasToSave[':send_newsletter'] = 1;
-			}		
+			}*/		
 		}
 		
 		//Génération des chammps supplémentaires
@@ -754,6 +815,28 @@ class Model extends Object {
 		}
 		
 		return array_merge($datasToSave, $moreDatasToSave);		
+	}	
+	
+	protected function _trace_sql($function, $query) {
+				
+		//Pour le moment que des logs en local
+		if($_SERVER['HTTP_HOST'] == 'localhost') {
+			
+			$date = date('Y-m-d');
+			$traceSql = 
+				date('Y-m-d H:i:s').
+				"|#|".
+				get_class($this).
+				"|#|".
+				$this->refererUrl.
+				"|#|".
+				$function.
+				"|#|".
+				$query.
+				"\n";
+			
+			FileAndDir::put(TMP.DS.'logs'.DS.'models'.DS.$date.'.log', $traceSql, FILE_APPEND);
+		}		
 	}
 }
 

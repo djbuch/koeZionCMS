@@ -24,6 +24,27 @@ $(document).ready(function(){
 		});
 	});	
 	
+	$(".emailingBox").each(function() { //Pour chaque éléments de la classe deleteBox
+	
+		var url = $(this).attr('href'); //On récupère l'url
+		
+		//On supprime les attributs href et onclick on rajoute un attribut action et on change le css
+		$(this)
+			.removeAttr('href')
+			.removeAttr('onclick')
+			.attr('action', url)
+			.css('cursor', 'pointer');  
+	});		
+	
+	$(".emailingBox").click( function() { //Lors du clic sur un bouton suppression
+		
+		var current = $(this); //Récupération de l'élément courant
+		jConfirm('Voulez vous vraiment envoyer ce mailing?', 'Attention', function(r) { //On lance une box de confirmation
+			
+			if(r) { $(location).attr('href', current.attr('action')); } //Si vrai on exécute l'url
+		});
+	});	
+	
 	//ALERTS SUR LES FORMULAIRES DE SUPPRESSION EN MODE LISTE
 	$(".deleteFormBox").each(function() { //Pour chaque boutons ayant la classe deleteFormBox 
 		

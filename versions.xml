@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 18/12/2012</name>
+		<num>20121218</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Rajout du slider slicebox</task>
+			<task author="KoéZionCMS">Modification de la table websites</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 07/12/2012</name>
 		<num>20121207</num>
 		<supervisor>KoéZionCMS</supervisor>

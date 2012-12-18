@@ -1,6 +1,8 @@
 <?php if(isset($displayPosts) && $displayPosts) { ?>
-	<?php /* ?><h2 class="widgettitle"><?php echo $titlePostsList; ?></h2><?php */ ?>
+	<?php /* ?>
+	<h2 class="widgettitle"><?php echo $titlePostsList; ?></h2>
 	<div class="hr"></div>
+	<?php */ ?>
 	
 	<?php if(!isset($cssZone)) { $cssZone = 'gs_8'; } ?>
 	<div class="<?php echo $cssZone; ?> omega">

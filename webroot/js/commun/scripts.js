@@ -9,20 +9,25 @@ $(document).ready(function() {
 		$(this).html("<a href=\"mailto:" + sEmail + "\">" + sEmail + "</a>");
 	});
 	
+	var baseurl = $('span.websitebaseurl').text(); //A REPRENDRE PAS SUPER TOP
+	
 	jQuery.extend({
 		
-		get_host: function() { 
-	  		
+		get_host: function() {
+
 			//Appel $.get_host()
-	  		var sHost = window.location.host;
-	  		var sHref = window.location.href;
+	  		var sHost = window.location.host; //Récupération du host
+	  		var sHref = window.location.href; //Récupération de l'url
 	  		
+	  		sHrefExplode = sHref.substr(7, sHref.length); //Mise en tableau de l'url en ayant supprimé http://
+	  		sHrefExplode = sHrefExplode.split('/');
+
 	  		if(sHref.indexOf("/adm/", 0) > 0) { var sBack = "adm/"; } else { var sBack = ""; }	  		
 	  		
-	  		if(sHost == "localhost") { var sHostToReturn =  "http://" + sHost + "/www.koezion.com/" + sBack; }
+	  		if(sHost == "localhost") { var sHostToReturn =  "http://" + sHost + baseurl + "/" + sBack; }
 	  		else { var sHostToReturn =  "http://" + sHost + "/" + sBack; }
 	  			  		
-	  		return sHostToReturn; 
+	  		return sHostToReturn;
 		},
 		is_back: function() { 
 	  		

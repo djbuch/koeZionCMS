@@ -172,7 +172,7 @@ class View extends Object {
     	//$filePath = CONTROLLERS.DS.$fileName.'.php'; //On récupère dans une variable le chemin du controller
     	require_once $file_path; //Inclusion de ce fichier si il existe
     	$controllerName = Inflector::camelize($file_name); //On transforme le nom du fichier pour récupérer le nom du controller
-    	$c = new $controllerName(null, false); //Création d'une instance du controller souhaité
+    	$c = new $controllerName(new Request(), false); //Création d'une instance du controller souhaité
     	
     	//Appel de la fonction dans le contrôlleur
     	return call_user_func_array(array($c, $action), $parameters);

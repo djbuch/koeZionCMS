@@ -125,7 +125,7 @@ class Text {
 	function format_for_mailing($datas, $url2Use) {
 		
 		require_once(LIBS.DS.'simple_html_dom.php'); //Chargement de la librairie
-		
+				
 		//Modification des données
 		foreach($datas as $field => $data) {
 		
@@ -137,14 +137,14 @@ class Text {
 				foreach($html->find('img') as $k => $v) {
 			
 					$scr = $v->src;
-					if(!substr_count($scr, $url2Use)) { $v->src = $url2Use.$v->src; }
+					if(!substr_count($scr, $url2Use)) { $v->src = 'http://'.$url2Use.$v->src; }
 				}
 			
 				//Modification des liens
 				foreach($html->find('a') as $k => $v) {
 			
 					$href = $v->href;
-					if(!substr_count($href, "http://")) { $v->href = $url2Use.$v->href; }
+					if(!substr_count($href, "http://")) { $v->href = 'http://'.$url2Use.$v->href; }
 				}
 				$datas[$field] = $html->outertext;
 			}
