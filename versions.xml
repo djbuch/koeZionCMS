@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 20/12/2012 - Avant la fin du monde</name>
+		<num>20121220</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Mise en place d'une gestion de cache par génération de fichiers de données sérialisées</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 18/12/2012</name>
 		<num>20121218</num>
 		<supervisor>KoéZionCMS</supervisor>
