@@ -60,7 +60,6 @@ class WebsitesController extends AppController {
 		$parentEdit = parent::backoffice_edit($id, false); //On fait appel à la fonction d'édition parente		
 		if($parentEdit) {
 			
-			FileAndDir::delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'websites'.DS); //On vide le dossier qui contient les fichiers en cache
 			$this->_edit_session();			
 			$this->_update_template($id, $this->request->data['template_id']);
 			$this->_update_txt_mails($id, $this->request->data);
@@ -81,9 +80,7 @@ class WebsitesController extends AppController {
 	
 		$parentDelete = parent::backoffice_delete($id, false); //On fait appel à la fonction d'édition parente
 		if($parentDelete) {
-			
-			FileAndDir::delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'websites'.DS); //On vide le dossier qui contient les fichiers en cache
-			
+						
 			//Suppression des catégories
 			$this->loadModel('Category');
 			$this->Category->deleteByName('website_id', $id);
@@ -157,13 +154,13 @@ class WebsitesController extends AppController {
 /**
  * Cette fonction permet l'initialisation des données
  *
- * @access 	private
+ * @access 	protected 
  * @author 	koéZionCMS
  * @version 0.1 - 02/05/2012 by FI
  * @version 0.2 - 07/06/2012 by FI - Modification de la gestion des couleurs on travaille maintenant avec des templates
  * @todo voir si on peut pas faire autrement que $this->templatesList
  */	
-	function _init_datas() {
+	protected function _init_datas() {
 		
 		$this->loadModel('Template');
 		$templatesListTMP = $this->Template->find(array('conditions' => array('online' => 1), 'order' => 'name'));
@@ -176,11 +173,11 @@ class WebsitesController extends AppController {
 /**
  * Cette fonction permet la création du menu racine du site Internet
  *
- * @access 	private
+ * @access 	protected 
  * @author 	koéZionCMS
  * @version 0.1 - 02/05/2012 by FI
  */	
-	function _init_category() {
+	protected function _init_category() {
 		
 		////////////////////////////////////////////////////////
 		//   INITIALISATION DE LA CATEGORIE PARENTE DU SITE   //
@@ -208,11 +205,11 @@ class WebsitesController extends AppController {
 /**
  * Cette fonction permet la mise à jour de la variable de session contenant la liste des sites
  *
- * @access 	private
+ * @access 	protected 
  * @author 	koéZionCMS
  * @version 0.1 - 02/05/2012 by FI
  */
-	function _edit_session() {
+	protected function _edit_session() {
 		$user = Session::read('Backoffice.User');
 		$userRole = $user['role'];
 		$userGroupId = $user['users_group_id'];
@@ -258,11 +255,11 @@ class WebsitesController extends AppController {
  *
  * @param 	integer $websiteId 	Identifiant du site
  * @param 	integer $templateId Identifiant du template utilisé
- * @access 	private
+ * @access 	protected 
  * @author 	koéZionCMS
  * @version 0.1 - 07/06/2012 by FI
  */	
-	function _update_template($websiteId, $templateId) {
+	protected function _update_template($websiteId, $templateId) {
 		
 		$templateDatas = $this->templatesList[$templateId];
 		$templateLayout = $templateDatas['layout'];
@@ -276,11 +273,11 @@ class WebsitesController extends AppController {
  *
  * @param 	integer $websiteId 	Identifiant du site
  * @param 	array 	$datas 		Données postées
- * @access 	private
+ * @access 	protected 
  * @author 	koéZionCMS
  * @version 0.1 - 02/08/2012 by FI
  */	
-	function _update_txt_mails($websiteId, $datas) {
+	protected function _update_txt_mails($websiteId, $datas) {
 			
 		$txtMails = $this->components['Text']->format_for_mailing(
 			array(
@@ -298,5 +295,20 @@ class WebsitesController extends AppController {
 			'txt_mail_newsletter' => $txtMails['txt_mail_newsletter']
 		);
 		$this->Website->save($datas);
+	}
+    
+/**
+ * Cette fonction permet l'initialisation pour la suppression des fichier de cache
+ * 
+ * @param	array	$params Paramètres éventuels
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 20/12/2012 by FI
+ */  
+	protected function _init_caching($params = null) {		
+		
+		$this->cachingFiles = array(		
+			TMP.DS.'cache'.DS.'variables'.DS.'Websites'.DS.$_SERVER["HTTP_HOST"].'.cache'
+		);		
 	}
 }

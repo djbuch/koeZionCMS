@@ -76,7 +76,8 @@ class FileAndDir {
  */
 	function remove($path) {
 		
-		return unlink($path);
+		if(file_exists($path)) { return unlink($path); }
+		else { return false; }
 	}
 	
 	function fcopy($source, $dest) {
@@ -148,10 +149,10 @@ class FileAndDir {
 	 * @param   int       $maxlen   Taille maximale d'octets (facultatif).
 	 * @return  mixed               Contenu sous la forme du type passé en paramètre.
 	 */
-	/*public function get($filename, $type = 'string', $retour = '', $offset = null, $maxlen = null )
+	public function get($filename, $type = 'string', $retour = '', $offset = null, $maxlen = null )
 	{
-		try {
-			FileAndDir::testURI($filename);
+		//try {
+			//FileAndDir::testURI($filename);
 
 			switch ( $type )
 			{
@@ -174,28 +175,28 @@ class FileAndDir {
 					}
 					break;
 			}
-		}
-		catch ( Exception $e ) {
-			switch ( strtolower( $retour ) )
-			{
-				case 'css'    :
-				case 'js'     :*/
+		//}
+		//catch ( Exception $e ) {
+		//	switch ( strtolower( $retour ) )
+		//	{
+		//		case 'css'    :
+		//		case 'js'     :
 					//$contents = '/* ' . $e->getMessage() . ' */';
-					/*break;
+		//			break;
 
-				case 'html'   :
-				case 'xml'    :
-					$contents = '<!-- ' . $e->getMessage() . ' -->';
-					break;
+		//		case 'html'   :
+		//		case 'xml'    :
+		//			$contents = '<!-- ' . $e->getMessage() . ' -->';
+		//			break;
 
-				default       :
-					$contents = $e->getMessage();
-				break;
-			}
-		}
+		//		default       :
+		//			$contents = $e->getMessage();
+		//		break;
+		//	}
+		//}
 
 		return $contents;
-	}*/
+	}
 
 	/**
 	 * Ecrit le contenu passé en paramètre dans un fichier.
@@ -209,7 +210,7 @@ class FileAndDir {
 
 		try {
 			
-			if ( !file_put_contents( $filename, $content, $append)) {
+			if (!file_put_contents( $filename, $content, $append)) {
 				$message = error_get_last();
 				$message = $message['message'];
 				throw new Exception( 'Impossible d\'écrire dans ' . $filename . "\n" . $message );

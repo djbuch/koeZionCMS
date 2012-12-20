@@ -169,7 +169,9 @@ class PostsController extends AppController {
 			if($this->Post->id > 0 && $parentAdd) {
 				
 				$this->_save_assoc_datas($this->Post->id);	
-				$this->_check_send_mail($this->request->data);							
+				$this->_check_send_mail($this->request->data);	
+				FileAndDir::remove(TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS.'home_page_website_'.CURRENT_WEBSITE_ID.'.cache'); //On supprime le dossier cache
+				FileAndDir::remove(TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS.'website_'.CURRENT_WEBSITE_ID.'.cache'); //On supprime le dossier cache
 				$this->redirect('backoffice/posts/index'); //On retourne sur la page de listing
 			}
 		}
@@ -197,7 +199,9 @@ class PostsController extends AppController {
 			if($parentEdit) {						
 								
 				$this->_save_assoc_datas($id, true);
-				$this->_check_send_mail($this->request->data);		
+				$this->_check_send_mail($this->request->data);	
+				FileAndDir::remove(TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS.'home_page_website_'.CURRENT_WEBSITE_ID.'.cache'); //On supprime le dossier cache
+				FileAndDir::remove(TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS.'website_'.CURRENT_WEBSITE_ID.'.cache'); //On supprime le dossier cache
 				$this->redirect('backoffice/posts/index'); //On retourne sur la page de listing
 			}
 		}
@@ -404,5 +408,21 @@ class PostsController extends AppController {
 				$this->request->data['publication_date'] = $dateArray[2].'.'.$dateArray[1].'.'.$dateArray[0];
 			}
 		}		
+	}
+    
+/**
+ * Cette fonction permet l'initialisation pour la suppression des fichier de cache
+ * 
+ * @param	array	$params Paramètres éventuels
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 20/12/2012 by FI
+ */  
+	protected function _init_caching($params = null) {	
+		
+		$this->cachingFiles = array(		
+			TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS."home_page_website_".CURRENT_WEBSITE_ID.'.cache',
+			TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS."website_".CURRENT_WEBSITE_ID.'.cache'
+		);		
 	}
 }

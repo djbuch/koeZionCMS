@@ -20,6 +20,7 @@ require_once KOEZION.DS.'session.php'; //On charge le composant permettant la ge
 Session::init(); //On l'initialise
 
 require_once LIBS.DS.'file_and_dir.php'; //Chargement du Dispatcher
+require_once KOEZION.DS.'cache.php'; //
 require_once KOEZION.DS.'basics.php'; //Fichier contenant un certains nombres d'instructions utiles (debug, pr, etc)
 require_once KOEZION.DS.'router.php'; //Chargement de l'object Router (Analyse des Urls)
 require_once CONFIGS.DS.'configure.php'; //Classe de configuration

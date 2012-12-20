@@ -13,4 +13,20 @@
  * @copyright	KoéZionCMS
  * @link        http://www.koezion-cms.com
  */
-class SlidersController extends AppController {}
+class SlidersController extends AppController {
+    
+/**
+ * Cette fonction permet l'initialisation pour la suppression des fichier de cache
+ * 
+ * @param	array	$params Paramètres éventuels
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 20/12/2012 by FI
+ */  
+	protected function _init_caching($params = null) {	
+		
+		$this->cachingFiles = array(		
+			TMP.DS.'cache'.DS.'variables'.DS.'Sliders'.DS.'website_'.CURRENT_WEBSITE_ID.'.cache'
+		);		
+	}	
+}

@@ -81,19 +81,13 @@ class Controller extends Object {
 		}
 		
 		///////////////////////
-		//GESTION DES PLUGINS//    	
-		$pluginsList = array();
-    	$cacheFolder = TMP.DS.'cache'.DS.'variables'.DS.'plugins'.DS;
-    	$cacheSeconds = 60*60*24*30; //1 mois
-    	$cacheName = 'plugins';
-    	$cacheFile = $cacheFolder.$cacheName.'.cache';
-    	
-    	if(!is_dir($cacheFolder)) { mkdir($cacheFolder, 0777); }
-    	
-    	$cacheFileExists = (@file_exists($cacheFile)) ? @filemtime($cacheFile) : 0;
-    	
-    	if($cacheFileExists > time() - $cacheSeconds) { $pluginsList = unserialize(file_get_contents($cacheFile)); }
-    	else {	
+		//GESTION DES PLUGINS//
+		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Plugins'.DS;
+		$cacheFile 		= "plugins";
+		
+		$pluginsList = Cache::exists_cache_file($cacheFolder, $cacheFile);
+    
+		if(!$pluginsList) {	
 		
 			$this->loadModel('Plugin');
 			$activatePlugins = $this->Plugin->find(array('conditions' => array('online' => 1, 'installed' => 1)));
@@ -107,10 +101,9 @@ class Controller extends Object {
 				);
 			}
 			
-    		$pointeur = fopen($cacheFile, 'w');
-    		fwrite($pointeur, serialize($pluginsList));
-    		fclose($pointeur);
-    	}    	
+    		Cache::create_cache_file($cacheFolder, $cacheFile, $pluginsList);
+    	}
+    	
     	$this->plugins = $pluginsList;
 		
 		if($beforeFilter) { $this->beforeFilter(); } 
@@ -129,7 +122,23 @@ class Controller extends Object {
  * Cette fonction est appelée avant le rendu de la fonction
  *
  */
-	function beforeRender() {
+	function beforeRender() {		
+		
+		/////////////////////////////////////////////////
+		//PARAMETRAGE DE LA GESTION EVENTUELLE DU CACHE//
+		//A revoir quand plus de temps
+		if(
+			method_exists($this, '_init_caching') && 
+			in_array($this->params['action'], array('add', 'edit', 'delete', 'status', 'move2prev', 'move2next'))
+		) { 
+			
+			//Dans le cas de l'édition, de la suppression, du changement de status d'un élément on passe l'id pour l'initialisation
+			//au cas ou on ait un fichier de cache pour cet élément
+			$cachingParams = null;
+			if(isset($this->request->params[0]) && (int)$this->request->params[0] > 0) { $cachingParams['identifier'] = $this->request->params[0]; }
+			
+			$this->_init_caching($cachingParams); 
+		}
 		
 		$this->_plugins_before_functions('beforeRender');
 	}

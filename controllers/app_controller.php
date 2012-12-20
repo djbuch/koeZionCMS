@@ -141,7 +141,7 @@ class AppController extends Controller {
 				
 				//////////////////////////////////////////////////////////
 				//   MISE EN CACHE DE LA RECUPERATION DU MENU GENERAL   //
-				$datas['menuGeneral'] = $this->_cache_menu($datas['websiteParams']['id']);				
+				$datas['menuGeneral'] = $this->_get_website_menu($datas['websiteParams']['id']);				
 				//////////////////////////////////////////////////////////
 								
 				$this->set($datas);
@@ -166,6 +166,11 @@ class AppController extends Controller {
     	
        	//Si on est dans le backoffice
     	if($prefix == 'backoffice' || ($this->params['controllerName'] == 'Users' && $this->params['action'] == 'login')) {
+    		
+    		if(isset($this->cachingFiles)) {
+    		
+    			foreach($this->cachingFiles as $file) { FileAndDir::remove($file); }    		
+    		}
     		
     		//Gestion de la variable de session
     		$datas['flashMessage'] = Session::read('Flash');
@@ -236,12 +241,12 @@ class AppController extends Controller {
     		
     		if($this->$modelName->validates($this->request->data)) { //Si elles sont valides
         			
-    			$this->$modelName->save($this->request->data, $forceInsert); //On les sauvegarde    			
-    			    			
+    			$this->$modelName->save($this->request->data, $forceInsert); //On les sauvegarde 			    			
     			Session::setFlash('Le contenu a bien été ajouté'); //Message de confirmation
+    			    			
     			if($redirect) {
     				
-					$this->redirect('backoffice/'.$this->params['controllerFileName'].'/index'); //Redirection sur la page de listing
+					//$this->redirect('backoffice/'.$this->params['controllerFileName'].'/index'); //Redirection sur la page de listing
     			} else {
     				
     				return true;
@@ -280,7 +285,7 @@ class AppController extends Controller {
     			
     			if($redirect) {
     				
-    				$this->redirect('backoffice/'.$this->params['controllerFileName'].'/index'); //On retourne sur la page de listing
+    				//$this->redirect('backoffice/'.$this->params['controllerFileName'].'/index'); //On retourne sur la page de listing
     			} else {
     				
     				return true;
@@ -438,142 +443,7 @@ class AppController extends Controller {
     	$this->redirect('backoffice/'.$this->params['controllerFileName'].'/index'); //Redirection
     }	
 	
-/**
- * Migration anciennes versions
- */    
-	function backoffice_migration() {
-		
-		$this->auto_render = false; //Pas de rendu
-		set_time_limit(0);
-		
-		////////////////////////////////
-		//Migration des types de posts//
-		/*$this->loadModel('PostsType');
-		$sql = "SELECT * FROM old_posts_types";
-		foreach($this->PostsType->query($sql, true) as $k => $v) { $this->PostsType->save($v, true); }
-		$this->unloadModel('PostsType');*/
-		
-		/////////////////////////
-		//Migration des sliders//
-		/*$this->loadModel('Slider');
-		$sql = "SELECT * FROM old_sliders";
-		foreach($this->Slider->query($sql, true) as $k => $v) { 
-			
-			//$img_name = $v['img_name'];
-			//$img_path = $v['img_path'];			
-			//$v['image'] = '<img alt="" src="'.str_replace('/upload', '/upload/images', $v['img_path']).$v['img_name'].'" style="width: 918px; height: 350px;" />';
-			//unset($v['img_path']);
-			//unset($v['img_path']);
-			$this->Slider->save($v, true); 
-		}
-		$this->unloadModel('Slider');*/
-		
-		//////////////////////////////
-		//Migration des utilisateurs//
-		/*$this->loadModel('User');
-		$sql = "SELECT * FROM old_users";
-		foreach($this->User->query($sql, true) as $k => $v) { $this->User->save($v, true); }
-		$this->unloadModel('User');*/
-		
-		//////////////////////////
-		//Migration des contacts//
-		/*$this->loadModel('Contact');
-		$sql = "SELECT * FROM old_contacts";
-		foreach($this->Contact->query($sql, true) as $k => $v) { $this->Contact->save($v, true); }
-		$this->unloadModel('Contact');*/
-		
-		////////////////////////////////////////////////////////////////////
-		//Migration de l'association entre les posts et les types de posts//
-		/*$this->loadModel('PostsPostsType');
-		$sql = "SELECT * FROM old_posts_posts_types";
-		foreach($this->PostsPostsType->query($sql, true) as $k => $v) { $this->PostsPostsType->save($v, true); }
-		$this->unloadModel('PostsPostsType');*/
-		
-		///////////////////////
-		//Migration des posts//
-		/*$this->loadModel('Post');
-		$sql = "SELECT * FROM old_posts";
-		foreach($this->Post->query($sql, true) as $k => $v) { 
-			
-			$v['page_title'] = $v['name'];
-			//$v['order_by'] = $v['rang'];
-			//unset($v['rang']);
-			pr($v);
-			$this->Post->save($v, true); 
-		}
-		$this->unloadModel('Post');*/
-		
-		////////////////////////////
-		//Migration des catégories//
-		/*$this->loadModel('Category');
-		$sql = "SELECT * FROM old_categories";
-		foreach($this->Category->query($sql, true) as $k => $v) { 
-			
-			$v['page_title'] = $v['name'];
-			
-			//$this->Category->add($v, true); 
-			$sql = "
-				INSERT INTO `categories` (`id`, `name`, `content`, `slug`, `page_title`, `page_description`, `page_keywords`, `title_children`, `title_brothers`, `title_posts_list`, `type`, `display_contact_form`, `display_children`, `display_brothers`, `is_secure`, `txt_secure`, `online`, `lft`, `rgt`, `level`, `parent_id`, `redirect_category_id`, `website_id`) 
-				VALUES (
-					".$v['id'].", 
-					'".addslashes($v['name'])."', 
-					'".addslashes($v['content'])."', 
-					'".addslashes($v['slug'])."', 
-					'".addslashes($v['name'])."', 
-					'".addslashes($v['page_description'])."', 
-					'".addslashes($v['page_keywords'])."', 
-					'', 
-					'".addslashes($v['title_brothers'])."', 
-					'', 
-					'".$v['type']."', 
-					'".$v['display_contact_form']."', 
-					'', 
-					'".$v['display_brothers']."', 
-					'', 
-					'', 
-					'".$v['online']."', 
-					'".$v['lft']."', 
-					'".$v['rgt']."', 
-					'".$v['level']."', 
-					'".$v['parent_id']."', 
-					'".$v['redirect_category_id']."', 
-					'1'
-				);";			
-			
-			$this->Category->query($sql);
-			pr($v);
-		}
-		$this->unloadModel('Category');*/		
-		
-		//////////////////////////
-		//Migration des focus//
-		/*$this->loadModel('Focus');
-		$sql = "SELECT * FROM old_focus";
-		foreach($this->Focus->query($sql, true) as $k => $v) { $this->Focus->save($v, true); }
-		$this->unloadModel('Focus');*/
-				
-		//////////////////////////
-		//Migration des groupes d'utilisateurs//
-		/*$this->loadModel('UsersGroup');
-		$sql = "SELECT * FROM old_users_groups";
-		foreach($this->UsersGroup->query($sql, true) as $k => $v) { $this->UsersGroup->save($v, true); }
-		$this->unloadModel('UsersGroup');*/
-		
-		//////////////////////////
-		//Migration des groupes d'utilisateurs de sites//
-		/*$this->loadModel('UsersGroupsWebsite');
-		$sql = "SELECT * FROM old_users_groups_websites";
-		foreach($this->UsersGroupsWebsite->query($sql, true) as $k => $v) { $this->UsersGroupsWebsite->save($v, true); }
-		$this->unloadModel('UsersGroupsWebsite');*/
-		
-		//////////////////////////
-		//Migration des groupes d'utilisateurs de sites//
-		/*$this->loadModel('Website');
-		$sql = "SELECT * FROM old_websites";
-		foreach($this->Website->query($sql, true) as $k => $v) { $this->Website->save($v, true); }
-		$this->unloadModel('Website');*/
-	}    
-    
+
 //////////////////////////////////////////////////////////////////////////////////////////
 //									FONCTIONS PRIVEES									//
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -589,21 +459,15 @@ class AppController extends Controller {
  * @version 0.3 - 04/09/2012 by FI - Mise en place d'un passage de paramètre en GET pour pouvoir changer de site en local
  */
 	function _get_website_datas() {
-    	
 		
 		$httpHost = $_SERVER["HTTP_HOST"]; //Récupération de l'url
+  	
+    	$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Websites'.DS;
+		$cacheFile 		= $httpHost;	
 		
-    	$cacheFolder = TMP.DS.'cache'.DS.'variables'.DS.'websites'.DS;
-    	$cacheSeconds = 60*60*24*30; //1 mois
-    	$cacheName = 'array_Website';
-    	$cacheFile = $cacheFolder.md5($cacheName).'_'.$httpHost.'.cache';
+		$website = Cache::exists_cache_file($cacheFolder, $cacheFile);	
     	
-    	if(!is_dir($cacheFolder)) { mkdir($cacheFolder, 0777); }
-    	
-    	$cacheFileExists = (@file_exists($cacheFile)) ? @filemtime($cacheFile) : 0;
-    	
-    	if($cacheFileExists > time() - $cacheSeconds) { $website = unserialize(file_get_contents($cacheFile)); }
-    	else {
+    	if(!$website) { 
 	
 			$this->loadModel('Website'); //Chargement du modèle
 		
@@ -630,9 +494,7 @@ class AppController extends Controller {
 		
 			$website = $this->Website->findFirst($websiteConditions);
 		
-    		$pointeur = fopen($cacheFile, 'w');
-    		fwrite($pointeur, serialize($website));
-    		fclose($pointeur);
+    		Cache::create_cache_file($cacheFolder, $cacheFile, $website);
     	}
     	
 		define('CURRENT_WEBSITE_ID', $website['id']);	
@@ -703,7 +565,7 @@ class AppController extends Controller {
     }  
     
 /**
- * Cette fonction permet de mettre en cache le menu
+ * Cette fonction permet de récupérer le menu
  *
  * @param 	integer $websiteId Identifiant du site Internet
  * @return 	array 	Liste des catégories
@@ -711,27 +573,21 @@ class AppController extends Controller {
  * @author 	koéZionCMS
  * @version 0.1 - 03/05/2012 by FI
  */       
-    function _cache_menu($websiteId) {
+    function _get_website_menu($websiteId) {
     	
-    	$cacheFolder = TMP.DS.'cache'.DS.'variables'.DS.'categories'.DS;
-    	$cacheSeconds = 60*60*24*30; //1 mois
-    	$cacheName = 'array_Category_getTreeRecursive_frontoffice';
-    	$cacheFile = $cacheFolder.md5($cacheName).'_WS'.$websiteId.'.cache';
+    	$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS;
+    	$cacheFile 		= "website_menu_".$websiteId;
     	
-    	if(!is_dir($cacheFolder)) { mkdir($cacheFolder, 0777); }
+    	$menuGeneral = Cache::exists_cache_file($cacheFolder, $cacheFile);
     	
-    	$cacheFileExists = (@file_exists($cacheFile)) ? @filemtime($cacheFile) : 0;
-    	
-    	if($cacheFileExists > time() - $cacheSeconds) { $menuGeneral = unserialize(file_get_contents($cacheFile)); }
-    	else {
+    	if(!$menuGeneral) {
     	
     		//Récupération du menu général
     		$this->loadModel('Category');
     		$req = array('conditions' => array('online' => 1, 'type' => 1));
     		$menuGeneral = $this->Category->getTreeRecursive($req);
-    		$pointeur = fopen($cacheFile, 'w');
-    		fwrite($pointeur, serialize($menuGeneral));
-    		fclose($pointeur);
+    		
+    		Cache::create_cache_file($cacheFolder, $cacheFile, $menuGeneral);
     	}
     	
     	return $menuGeneral;

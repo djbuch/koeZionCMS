@@ -50,7 +50,7 @@ class CategoriesController extends AppController {
 		///////////////////////////////////////////////
 		//   RECUPERATION DE LA CATEGORIE DEMANDEE   //	
 		///////////////////////////////////////////////
-		$datas = $this->get_datas_category($id);
+		$datas = $this->_get_datas_category($id);
 		
 		////////////////////////////////////////////////////////////////////////////////////
 		//   GESTION DES EVENTUELLES ERREURS DANS LE RETOUR DE LA REQUETE OU DANS L'URL   //
@@ -198,28 +198,11 @@ class CategoriesController extends AppController {
 			
 			//////////////////////////////////
 			//   RECUPERATION DES ENFANTS   //
-			if($datas['category']['display_children']) { //Si on doit récupérer les enfants
-			
-				//$datas['children'] = $this->Category->getChildren($datas['category']['id'], false, false, $datas['category']['level']+1, array('conditions' => array('online' => 1))); //On récupère les enfants de la catégorie parente
-				$children = $this->Category->getChildren($datas['category']['id'], false, false, $datas['category']['level']+1, array('conditions' => array('online' => 1))); //On récupère les enfants de la catégorie parente
-				
-				foreach($children as $k => $v) { $datas['children'][$datas['category']['title_colonne_droite']][] = $v; }
-				
-				
-				//$datas['is_full_page'] = 0; //Si on doit afficher les catégories filles alors il faut la colonne de droite
-			}
-			
+			$datas = $this->_get_children_category($datas);
+									
 			/////////////////////////////////
 			//   RECUPERATION DES FRERES   //
-			if($datas['category']['display_brothers']) { //Si on doit récupérer les frères
-			
-				$brothers = $this->Category->getChildren($datas['category']['parent_id'], false, false, $datas['category']['level'], array('conditions' => array('online' => 1))); //On récupère les enfants de la catégorie parente
-				
-				//Cas particulier pour les catégories "frères" le titre de la colonne de droite peut varier en fonction des besoins
-				//On va donc parcourir le résultat et réorganiser le tout
-				foreach($brothers as $k => $v) { $datas['brothers'][$v['title_colonne_droite']][] = $v; }				
-				//$datas['is_full_page'] = 0; //Si on doit afficher les catégories "frères" alors il faut la colonne de droite
-			}
+			$datas = $this->_get_brothers_category($datas);
 			
 			//////////////////////////////
 			//   GESTION DES ARTICLES   //
@@ -227,68 +210,7 @@ class CategoriesController extends AppController {
 			
 			//////////////////////////////
 			//   GESTION DES BOUTONS   //
-			$datas = $this->_get_right_buttons_category($datas);
-			
-			//A supprimer quand on sera sur que tout fonctionne correctement
-			//On va compter le nombre d'articles de cette catégorie			
-			/*$this->loadModel('Post');
-			$postsConditions = array('online' => 1, 'category_id' => $id);
-			$nbPosts = $this->Post->findCount($postsConditions);
-						
-			if($nbPosts > 0) {
-				
-				//////////////////////////////////////////////////////
-				//   RECUPERATION DES CONFIGURATIONS DES ARTICLES   //
-				require_once(LIBS.DS.'config_magik.php'); 										//Import de la librairie de gestion des fichiers de configuration des posts
-				$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'posts.ini', false, false); 		//Création d'une instance
-				$postsConfigs = $cfg->keys_values();											//Récupération des configurations
-				//////////////////////////////////////////////////////
-				
-				$datas['displayPosts'] = true;
-				
-				//Récupération des types d'articles
-				$this->loadModel('PostsType');
-				$datas['postsTypes'] = $this->PostsType->get_for_front($id);
-								
-				//Construction des paramètres de la requête
-				$postsQuery = array(
-					'conditions' => $postsConditions,
-					'fields' => array('id', 'name', 'short_content', 'slug', 'display_link', 'modified_by', 'modified, prefix', 'category_id'),
-					'limit' => $this->pager['limit'].', '.$this->pager['elementsPerPage']
-				);				
-				
-				if($postsConfigs['order'] == 'modified') { $postsQuery['order'] = 'modified DESC'; }
-				else if($postsConfigs['order'] == 'order_by') { $postsQuery['order'] = 'order_by ASC'; }		
-				
-				$postsQuery['moreConditions'] = ''; //Par défaut pas de conditions de recherche complémentaire
-						
-				$datas['libellePage'] = $datas['category']['title_posts_list'];			
-				
-				//////////////////////////////////////////////////////////////////////////
-				///  GESTION DES EVENTUELS PARAMETRES PASSES EN GET PAR L'UTILISATEUR   //			
-				$filterPosts = $this->_filter_posts($datas['postsTypes'], $postsConfigs['search']);
-				if(isset($filterPosts['moreConditions'])) { 
-					
-					$postsQuery['moreConditions'] = $filterPosts['moreConditions']; 
-					unset($filterPosts['moreConditions']);
-				}
-				
-				$datas = am($datas, $filterPosts);			
-				//////////////////////////////////////////////////////////////////////////
-				
-				$datas['posts'] = $this->Post->find($postsQuery); //Récupération des articles
-				
-				//On va compter le nombre d'élement de la catégorie
-				//On compte deux fois le nombre de post une fois en totalité une fois en rajoutant si il est renseigné le type d'article
-				//Car si on ne faisait pas cela on avait toujours la zone d'affichage des catégories qui s'affichaient lorsqu'on affichait les frères
-				//même si il n'y avait pas de post
-				$nbPostsCategory = $this->Post->findCount($postsConditions);
-				
-				$this->pager['totalElements'] = $this->Post->findCount($postsConditions, $postsQuery['moreConditions']); //On va compter le nombre d'élement
-				$this->pager['totalPages'] = ceil($this->pager['totalElements'] / $this->pager['elementsPerPage']); //On va compter le nombre de page
-		
-				if($this->pager['totalElements'] > 0 || count($datas['postsTypes']) > 0) { $datas['is_full_page'] = 0; } //Si on doit afficher les articles alors il faut la colonne de droite				
-			}*/
+			$datas = $this->_get_right_buttons_category($datas);			
 			
 			$this->set($datas); //On fait passer les données à la vue
 				
@@ -374,7 +296,6 @@ class CategoriesController extends AppController {
 		$parentAdd = parent::backoffice_add(false); //On fait appel à la fonction d'ajout parente
 		if($parentAdd) { 
 			
-			FileAndDir::delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'categories'.DS); //On vide le dossier qui contient les fichiers en cache
 			$this->_update_template($this->Category->id, $this->request->data['template_id']);
 			$this->_save_assoc_datas($this->Category->id);
 			$this->_check_send_mail($this->request->data);
@@ -404,11 +325,7 @@ class CategoriesController extends AppController {
 				$parentAdd = parent::backoffice_add(false); //On fait appel à la fonction d'ajout parente
 			}			
 			
-			if($parentAdd) {
-			
-				FileAndDir::delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'categories'.DS); //On vide le dossier qui contient les fichiers en cache
-				$this->redirect('backoffice/categories/index');
-			} //On retourne sur la page de listing
+			if($parentAdd) { $this->redirect('backoffice/categories/index'); } //On retourne sur la page de listing
 		}
 	}
 	
@@ -431,7 +348,6 @@ class CategoriesController extends AppController {
 		if($parentEdit) { 
 			
 			$this->_update_children_statut($id, $this->request->data['online']);	
-			FileAndDir::delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'categories'.DS); //On vide le dossier qui contient les fichiers en cache
 			$this->_update_template($this->Category->id, $this->request->data['template_id']);
 			$this->_save_assoc_datas($id, true);
 			$this->_check_send_mail($this->request->data);
@@ -455,7 +371,6 @@ class CategoriesController extends AppController {
 		
 			$vars = $this->get('vars'); //Récupération des données			
 			$this->_update_children_statut($id, $vars['newOnline']);
-			FileAndDir::delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'categories'.DS); //On vide le dossier qui contient les fichiers en cache
 			$this->redirect('backoffice/categories/index'); //On retourne sur la page de listing
 		}		
 	}	
@@ -474,7 +389,6 @@ class CategoriesController extends AppController {
 		$parentDelete = parent::backoffice_delete($id, false); //On fait appel à la fonction d'édition parente
 		if($parentDelete) {			
 			
-			FileAndDir::delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'categories'.DS); //On vide le dossier qui contient les fichiers en cache			
 			if($redirect) { $this->redirect('backoffice/categories/index'); } //On retourne sur la page de listing
 			else { return true; }
 		}
@@ -492,7 +406,6 @@ class CategoriesController extends AppController {
 					
 		$this->auto_render = false; //Pas de rendu
 		$this->Category->move2prev($id); //On fait appel à la fonction présente dans le model
-		FileAndDir::delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'categories'.DS); //On vide le dossier qui contient les fichiers en cache
 		$this->redirect('backoffice/categories/index'); //On redirige vers l'index
 	}
 
@@ -508,7 +421,6 @@ class CategoriesController extends AppController {
 		
 		$this->auto_render = false; //Pas de rendu
 		$this->Category->move2next($id); //On fait appel à la fonction présente dans le model
-		FileAndDir::delete_directory_file(TMP.DS.'cache'.DS.'variables'.DS.'categories'.DS); //On vide le dossier qui contient les fichiers en cache
 		$this->redirect('backoffice/categories/index'); //On redirige vers l'index
 	}	
 	
@@ -964,28 +876,36 @@ class CategoriesController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 02/10/2012 by FI
  */		
-	protected function _get_right_buttons_category($datas, $setLimit = true) {
+	protected function _get_right_buttons_category($datas) {
+					
+		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS;
+		$cacheFile 		= "category_".$datas['category']['id']."_right_buttons";
 		
-		$datas['rightButtons'] = array();
+		$rightButtonsCategory = Cache::exists_cache_file($cacheFolder, $cacheFile);
 		
-		//On va compter le nombre d'articles de cette catégorie
-		$this->loadModel('CategoriesRightButton');
-		$this->CategoriesRightButton->primaryKey = 'category_id'; //Pour éviter les erreurs à l'exécution
-		$rightButtonsConditions = array('category_id' => $datas['category']['id']);
-		$nbRightButtons = $this->CategoriesRightButton->findCount($rightButtonsConditions);
+		if(!$rightButtonsCategory) {
 		
-		if($nbRightButtons) {
-
-			$this->loadModel('RightButton');
+			$this->loadModel('CategoriesRightButton');
+			$this->CategoriesRightButton->primaryKey = 'category_id'; //Pour éviter les erreurs à l'exécution
+			$rightButtonsConditions = array('category_id' => $datas['category']['id']);
+			$nbRightButtons = $this->CategoriesRightButton->findCount($rightButtonsConditions);
 			
-			//récupération des données
-			$rightButtonsList = $this->CategoriesRightButton->find(array('conditions' => $rightButtonsConditions, 'order' => 'order_by ASC'));
-			foreach($rightButtonsList as $k => $rightButton) {
+			if($nbRightButtons) {
+	
+				$this->loadModel('RightButton');
 				
-				$datas['rightButtons'][] = $this->RightButton->findFirst(array('conditions' => array('id' => $rightButton['right_button_id'])));
-			}
-		}
-
+				//récupération des données
+				$rightButtonsList = $this->CategoriesRightButton->find(array('conditions' => $rightButtonsConditions, 'order' => 'order_by ASC'));
+				foreach($rightButtonsList as $k => $rightButton) {
+					
+					$rightButtonsCategory[] = $this->RightButton->findFirst(array('conditions' => array('id' => $rightButton['right_button_id'])));
+				}
+				
+				Cache::create_cache_file($cacheFolder, $cacheFile, $rightButtonsCategory);
+			} else { $rightButtonsCategory = array(); }			
+		}		
+		
+		$datas['rightButtons'] = $rightButtonsCategory;		
 		return $datas;
 	}
 
@@ -998,35 +918,145 @@ class CategoriesController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 02/10/2012 by FI
  */	
-	protected function get_datas_category($id) {
+	protected function _get_datas_category($id) {
 		
-		$conditions = array(
-			'fields' => array(
-				'id',
-				'name',
-				'page_title',
-				'page_description',
-				'page_keywords',
-				'slug',
-				'content',
-				'type',
-				'title_colonne_droite',
-				'display_brothers',
-				'display_children',
-				'parent_id',
-				'redirect_category_id',
-				'level',
-				'display_form',
-				'is_secure',
-				'txt_secure',
-				'title_posts_list',
-				'tpl_layout',
-				'tpl_code',
-				'template_id'
-			),
-			'conditions' => array('online' => 1, 'id' => $id)
-		);
-		$datas['category'] = $this->Category->findFirst($conditions);
+		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS;
+		$cacheFile 		= "category_".$id;
+		
+		$category = Cache::exists_cache_file($cacheFolder, $cacheFile);
+		
+		if(!$category) {
+		
+			$conditions = array(
+				'fields' => array(
+					'id',
+					'name',
+					'page_title',
+					'page_description',
+					'page_keywords',
+					'slug',
+					'content',
+					'type',
+					'title_colonne_droite',
+					'display_brothers',
+					'display_children',
+					'parent_id',
+					'redirect_category_id',
+					'level',
+					'display_form',
+					'is_secure',
+					'txt_secure',
+					'title_posts_list',
+					'tpl_layout',
+					'tpl_code',
+					'template_id'
+				),
+				'conditions' => array('online' => 1, 'id' => $id)
+			);
+			$category = $this->Category->findFirst($conditions);
+		
+			Cache::create_cache_file($cacheFolder, $cacheFile, $category);
+		}
+
+		$datas['category'] = $category;
 		return $datas;
+	}
+
+/**
+ * Cette fonction permet la récupération des enfants de la catégorie courante
+ *
+ * @param 	array 	$datas Données de la page
+ * @return	array	Données de la page
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 20/12/2012 by FI
+ */	
+	protected function _get_children_category($datas) {
+		
+		//////////////////////////////////
+		//   RECUPERATION DES ENFANTS   //
+		if($datas['category']['display_children']) { //Si on doit récupérer les enfants			
+			
+			$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS;
+			$cacheFile 		= "category_".$datas['category']['id']."_children";
+			
+			$childrenCategory = Cache::exists_cache_file($cacheFolder, $cacheFile);
+			
+			if(!$childrenCategory) {
+			
+				$children = $this->Category->getChildren($datas['category']['id'], false, false, $datas['category']['level']+1, array('conditions' => array('online' => 1))); //On récupère les enfants de la catégorie parente
+				
+				//Cas particulier pour les catégories "frères" le titre de la colonne de droite peut varier en fonction des besoins
+				//On va donc parcourir le résultat et réorganiser le tout
+				foreach($children as $k => $v) { $childrenCategory[$datas['category']['title_colonne_droite']][] = $v; }
+			
+				Cache::create_cache_file($cacheFolder, $cacheFile, $childrenCategory);
+			}
+			
+			$datas['children'] = $childrenCategory;
+		}
+		
+		return $datas;
+	}	
+
+/**
+ * Cette fonction permet la récupération des frères de la catégorie courante
+ *
+ * @param 	array 	$datas Données de la page
+ * @return	array	Données de la page
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 20/12/2012 by FI
+ */	
+	protected function _get_brothers_category($datas) {
+						
+		/////////////////////////////////
+		//   RECUPERATION DES FRERES   //
+		if($datas['category']['display_brothers']) { //Si on doit récupérer les frères		
+			
+			$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS;
+			$cacheFile 		= "category_".$datas['category']['id']."_brothers";
+			
+			$brothersCategory = Cache::exists_cache_file($cacheFolder, $cacheFile);
+			
+			if(!$brothersCategory) {
+		
+				$brothers = $this->Category->getChildren($datas['category']['parent_id'], false, false, $datas['category']['level'], array('conditions' => array('online' => 1))); //On récupère les enfants de la catégorie parente
+			
+				//Cas particulier pour les catégories "frères" le titre de la colonne de droite peut varier en fonction des besoins
+				//On va donc parcourir le résultat et réorganiser le tout
+				foreach($brothers as $k => $v) { $brothersCategory[$v['title_colonne_droite']][] = $v; }
+				
+				Cache::create_cache_file($cacheFolder, $cacheFile, $brothersCategory);
+			}
+			
+			$datas['brothers'] = $brothersCategory;
+		}
+		
+		return $datas;		
+	}
+    
+/**
+ * Cette fonction permet l'initialisation pour la suppression des fichier de cache
+ * 
+ * @param	array	$params Paramètres éventuels
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 20/12/2012 by FI
+ */  
+	protected function _init_caching($params = null) {	
+				
+		$cachingFiles = array(		
+			TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."website_menu_".CURRENT_WEBSITE_ID.'.cache'
+		);
+		if(isset($params['identifier'])) {
+			
+			$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$params['identifier'].'.cache';
+			$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$params['identifier'].'_brothers.cache';
+			$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$params['identifier'].'_children.cache';
+			$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$params['identifier'].'_right_buttons.cache';
+		}
+		
+		$this->cachingFiles = $cachingFiles; 
 	}
 }

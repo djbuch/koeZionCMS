@@ -544,24 +544,18 @@ class Model extends Object {
 		$shema = array();
 		if($this->exist_table_in_database($this->database, $this->table) == 1) {			
 		
-			$cacheFolder = TMP.DS.'cache'.DS.'models'.DS;
-			$cacheSeconds = 60*60*24*30; //1 mois
-			$cacheFile = $cacheFolder.$this->table.'.cache';
+			$cacheFolder 	= TMP.DS.'cache'.DS.'models'.DS;
+			$cacheFile 		= $this->table;	
+		
+			$shema = Cache::exists_cache_file($cacheFolder, $cacheFile);
 			
-			if(!is_dir($cacheFolder)) { mkdir($cacheFolder, 0777); }
-			
-			$cacheFileExists = (@file_exists($cacheFile)) ? @filemtime($cacheFile) : 0;
-			
-			if($cacheFileExists > time() - $cacheSeconds) { $shema = unserialize(file_get_contents($cacheFile)); }
-			else {
+			if(!$shema) { 
 			
 				$sql = "SHOW COLUMNS FROM ".$this->table;			
 				$result = $this->query($sql, true);
 				foreach($result as $k => $v) { $shema[] = $v['Field']; }
 				
-				$pointeur = fopen($cacheFile, 'w');
-				fwrite($pointeur, serialize($shema));
-				fclose($pointeur);
+				Cache::create_cache_file($cacheFolder, $cacheFile, $shema);
 			}
 		}
 		
@@ -579,17 +573,13 @@ class Model extends Object {
  * @version 0.1 - 07/09/2012 by FI
  */
 	function exist_table_in_database($database, $table) {		
+				
+		$cacheFolder 	= TMP.DS.'cache'.DS.'models'.DS;
+		$cacheFile 		= "tables_list";	
 		
-		$cacheFolder = TMP.DS.'cache'.DS.'models'.DS;
-		$cacheSeconds = 60*60*24*30; //1 mois
-		$cacheFile = $cacheFolder."tables_list".'.cache';
+		$tablesList = Cache::exists_cache_file($cacheFolder, $cacheFile);		
 		
-		if(!is_dir($cacheFolder)) { mkdir($cacheFolder, 0777); }
-		
-		$cacheFileExists = (@file_exists($cacheFile)) ? @filemtime($cacheFile) : 0;
-		
-		if($cacheFileExists > time() - $cacheSeconds) { $tablesList = unserialize(file_get_contents($cacheFile)); }
-		else {
+		if(!$tablesList) { 
 		
 			$tablesList = array();
 			$sql = 'SHOW TABLES FROM '.$database;
@@ -598,9 +588,8 @@ class Model extends Object {
 				$value = array_values($v);
 				$tablesList[] = $value[0];
 			}
-			$pointeur = fopen($cacheFile, 'w');
-			fwrite($pointeur, serialize($tablesList));
-			fclose($pointeur);
+			
+			Cache::create_cache_file($cacheFolder, $cacheFile, $tablesList);
 		}
 		
 		return in_array($table, $tablesList);
