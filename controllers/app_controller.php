@@ -246,7 +246,7 @@ class AppController extends Controller {
     			    			
     			if($redirect) {
     				
-					//$this->redirect('backoffice/'.$this->params['controllerFileName'].'/index'); //Redirection sur la page de listing
+					$this->redirect('backoffice/'.$this->params['controllerFileName'].'/index'); //Redirection sur la page de listing
     			} else {
     				
     				return true;
@@ -285,7 +285,7 @@ class AppController extends Controller {
     			
     			if($redirect) {
     				
-    				//$this->redirect('backoffice/'.$this->params['controllerFileName'].'/index'); //On retourne sur la page de listing
+    				$this->redirect('backoffice/'.$this->params['controllerFileName'].'/index'); //On retourne sur la page de listing
     			} else {
     				
     				return true;
