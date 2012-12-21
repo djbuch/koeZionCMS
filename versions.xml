@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 21/12/2012 - La fin du monde</name>
+		<num>20121221</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Correction de bug lors de l'install</task>
+			<task author="KoéZionCMS">Rajout d'un template</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 20/12/2012 - Avant la fin du monde</name>
 		<num>20121220</num>
 		<supervisor>KoéZionCMS</supervisor>

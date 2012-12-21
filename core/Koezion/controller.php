@@ -320,8 +320,8 @@ class Controller extends Object {
 		////////////////////////////////////////////////////////////////
 		//GESTION DU CHARGEMENT DES PLUGINS ET DE LEURS INITIALISATION//
 		//On va récupérer la liste des plugins actifs et charger les fichier
-		if(isset($this->plugins)) {
-		
+		if(isset($this->plugins) && !empty($this->plugins)) {
+			
 			foreach($this->plugins as $pluginName => $pluginInfos) {
 		
 				$pluginFile = PLUGINS.DS.$pluginInfos['code'].DS.'plugin.php';
