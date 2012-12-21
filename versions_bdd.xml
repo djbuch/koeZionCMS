@@ -4,7 +4,7 @@
 		<num>20121221</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">INSERT INTO `koezion_studiomontecristo`.`templates` (`id`, `name`, `layout`, `code`, `color`, `online`, `created`) VALUES (NULL, 'Chesterfield', 'frontoffice', 'chesterfield', '292929', '1', '2012-01-06 03:03:44');<task>
+			<task author="KoéZionCMS">INSERT INTO `templates` (`id`, `name`, `layout`, `code`, `color`, `online`, `created`) VALUES (NULL, 'Chesterfield', 'frontoffice', 'chesterfield', '292929', '1', '2012-01-06 03:03:44');<task>
 		</tasks>	
 	</version>
 	<version>
