@@ -15,6 +15,10 @@
 					
 					$title = 'title="#htmlcaption-'.$v['id'].'" ';
 					$captions .= '<div id="htmlcaption-'.$v['id'].'" class="nivo-html-caption">'.$v['content'].'</div>'."\n";
+				} else {
+					
+					$title = 'title="#htmlcaption-'.$v['id'].'" ';
+					$captions .= '<div id="htmlcaption-'.$v['id'].'" class="nivo-html-caption empty">&nbsp;</div>'."\n";
 				}
 				
 				//On force la taille de l'image pour éviter les débordements
@@ -22,6 +26,7 @@
 					
 					?><img src="<?php echo $img; ?>" alt="" <?php echo $title; ?> style="width: 918px;height:350px" /><?php
 				}
+				//echo $v['image'];
 				echo "\n";			
 			}
 			?>

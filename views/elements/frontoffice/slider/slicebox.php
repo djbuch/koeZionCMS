@@ -2,14 +2,14 @@
 if(isset($sliders) && count($sliders) > 0) { 
 	
 	$css = array(
-		$websiteParams['tpl_layout'].'/slider/slicebox',
-		$websiteParams['tpl_layout'].'/slider/custom'
+		$websiteParams['tpl_layout'].'/slider/slicebox/slicebox',
+		$websiteParams['tpl_layout'].'/slider/slicebox/custom'
 	);		
 	echo $helpers['Html']->css($css, true);
 	
 	$js = array(
-			$websiteParams['tpl_layout'].'/slider/modernizr.custom.46884',
-			$websiteParams['tpl_layout'].'/slider/jquery.slicebox'
+			$websiteParams['tpl_layout'].'/slider/slicebox/modernizr.custom.46884',
+			$websiteParams['tpl_layout'].'/slider/slicebox/jquery.slicebox'
 	);
 	echo $helpers['Html']->js($js);
 	?>
