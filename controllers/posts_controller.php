@@ -41,11 +41,18 @@ class PostsController extends AppController {
         );
 		$datas['post'] = $this->Post->findFirst($conditions); //On récupère le premier élément
         
+		//Si aucune catégorie n'est définie on lance une erreur
+		if($datas['post']['category_id'] == 0) {
+			
+			Session::write('redirectMessage', "Désolé l'article n'existe plus");
+			$this->redirect('home/e404');			
+		}
+		
         //Si il est vide on affiche la page d'erreur
 		//if(empty($datas['post'])) { $this->e404('Elément introuvable'); }
 		if(empty($datas['post'])) { 
 			
-			Session::write('redirectMessage', "L'article est vide");
+			Session::write('redirectMessage', "Désolé l'article n'existe plus");
 			$this->redirect('home/e404'); 
 		}
 
@@ -56,7 +63,7 @@ class PostsController extends AppController {
 		//   RECUPERATION DU FIL D'ARIANE   //
 		$this->loadModel('Category'); //Chargement du modèle
 		$datas['breadcrumbs'] = $this->Category->getPath($datas['post']['category_id']);
-		
+				
 		$datas['breadcrumbsPost'][] = array(
 			'id' => $datas['post']['id'],
 			'slug' => $datas['post']['slug'],

@@ -14,7 +14,7 @@ $validate = array(
 		),
 		'rule2' => array(
 			'rule' => array('custom', '/^([a-zA-Z0-9-_.]+)$/'),
-			'message' => "Caractères non autorisés dans le champ (Uniquement lettres, chiffres et -)."
+			'message' => "Caractères non autorisés dans le champ (Uniquement lettres, chiffres, - (tiret), _ (underscore) et .(point))."
 		)
 	),
 	'login' => array(
@@ -23,8 +23,8 @@ $validate = array(
 			'message' => 'La valeur du champ est de 3 caractères minimum.'
 		),
 		'rule2' => array(
-			'rule' => array('custom', '/^([a-zA-Z0-9-_]+)$/'),
-			'message' => "Caractères non autorisés dans le champ (Uniquement lettres, chiffres et -)."
+			'rule' => array('custom', '/^([a-zA-Z0-9-_.]+)$/'),
+			'message' => "Caractères non autorisés dans le champ (Uniquement lettres, chiffres, - (tiret), _ (underscore) et .(point))."
 		)
 	),/*
 	'password' => array(
@@ -43,8 +43,8 @@ $validate = array(
 			'message' => 'La valeur du champ est de 3 caractères minimum.'
 		),
 		'rule2' => array(
-			'rule' => array('custom', '/^([a-zA-Z0-9-_]+)$/'),
-			'message' => "Caractères non autorisés dans le champ (Uniquement lettres, chiffres et -)."
+			'rule' => array('custom', '/^([a-zA-Z0-9-_.]+)$/'),
+			'message' => "Caractères non autorisés dans le champ (Uniquement lettres, chiffres, - (tiret), _ (underscore) et .(point))."
 		)
 	)
 );
