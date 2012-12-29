@@ -551,7 +551,7 @@ class Model extends Object {
 			
 			if(!$shema) { 
 			
-				$sql = "SHOW COLUMNS FROM ".$this->table;			
+				$sql = "SHOW COLUMNS FROM `".$this->table.'`;';			
 				$result = $this->query($sql, true);
 				foreach($result as $k => $v) { $shema[] = $v['Field']; }
 				
@@ -582,7 +582,7 @@ class Model extends Object {
 		if(!$tablesList) { 
 		
 			$tablesList = array();
-			$sql = 'SHOW TABLES FROM '.$database;
+			$sql = 'SHOW TABLES FROM `'.$database.'`;';
 			foreach($this->query($sql, true) as $k => $v) {
 				
 				$value = array_values($v);
