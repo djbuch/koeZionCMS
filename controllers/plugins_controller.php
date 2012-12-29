@@ -126,15 +126,19 @@ class PluginsController extends AppController {
 							);
 							$this->Plugin->save($insertPlugin);
 							
-							//On va également le rajouter dans la gestion des menus
-							$moduleDatas = array(
-								'name' => $xParsedXml['name'],
-								'controller_name' => $xParsedXml['code'],
-								'online' => 0, //Le plugin n'est pas activé donc idem pour le module
-								'modules_type_id' => 6, //Type de module plugin
-								'plugin_id' => $this->Plugin->id
-							);
-							$this->Module->save($moduleDatas);
+							
+							if($xParsedXml['display_in_menu']) {
+							
+								//On va également le rajouter dans la gestion des menus
+								$moduleDatas = array(
+									'name' => $xParsedXml['name'],
+									'controller_name' => $xParsedXml['code'],
+									'online' => 0, //Le plugin n'est pas activé donc idem pour le module
+									'modules_type_id' => 6, //Type de module plugin
+									'plugin_id' => $this->Plugin->id
+								);
+								$this->Module->save($moduleDatas);
+							}
 						}					
 					}
 				}
