@@ -563,6 +563,16 @@ class Model extends Object {
 	}
 	
 /**
+ * Cette fonction permet de récuperer les informations liées à la table 
+ */	
+	function table_status() {
+		
+		$sql = "SHOW TABLE STATUS LIKE '".$this->table."';";
+		$result = $this->query($sql, true);
+		return current($result);
+	}
+	
+/**
  * Cette fonction permet de tester l'existence d'une table dans la base de données
  *
  * @param 	varchar $database 	Nom de la base de données
