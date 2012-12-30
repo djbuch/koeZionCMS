@@ -1049,12 +1049,39 @@ class CategoriesController extends AppController {
 		$cachingFiles = array(		
 			TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."website_menu_".CURRENT_WEBSITE_ID.'.cache'
 		);
+		
 		if(isset($params['identifier'])) {
 			
 			$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$params['identifier'].'.cache';
 			$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$params['identifier'].'_brothers.cache';
 			$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$params['identifier'].'_children.cache';
 			$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$params['identifier'].'_right_buttons.cache';
+		
+			//Récuparation du path
+			$path = $this->Category->getPath($params['identifier']);
+			foreach($path as $k => $v) {
+				
+				if($v['id'] != $params['identifier']) {
+				
+					$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$v['id'].'.cache';
+					$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$v['id'].'_brothers.cache';
+					$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$v['id'].'_children.cache';
+					$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$v['id'].'_right_buttons.cache';
+				}			
+			}
+		
+			//Récupération des catégories enfants
+			$children = $this->Category->getChildren($params['identifier'], false);
+			foreach($children as $k => $v) {
+				
+				if($v['id'] != $params['identifier']) {
+				
+					$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$v['id'].'.cache';
+					$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$v['id'].'_brothers.cache';
+					$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$v['id'].'_children.cache';
+					$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$v['id'].'_right_buttons.cache';
+				}
+			}
 		}
 		
 		$this->cachingFiles = $cachingFiles; 

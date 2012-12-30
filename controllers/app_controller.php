@@ -95,9 +95,7 @@ class AppController extends Controller {
 			//$this->unloadModel('ModulesType'); //Déchargement du modèle des types de modules
 			
 			$leftMenus = array();
-			foreach($modulesTypes as $k => $v) { $leftMenus[$k] = array('libelle' => $v, 'menus' => array()); }			
-			
-			
+			foreach($modulesTypes as $k => $v) { $leftMenus[$k] = array('libelle' => $v, 'menus' => array()); }						
 			
 			$this->loadModel('Module');
 			$leftMenuTMP = $this->Module->find(array('conditions' => array('online' => 1), 'order' => 'order_by ASC'));
