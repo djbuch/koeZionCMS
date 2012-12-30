@@ -1050,6 +1050,7 @@ class CategoriesController extends AppController {
 			TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."website_menu_".CURRENT_WEBSITE_ID.'.cache'
 		);
 		
+		//Dans le cas d'une edition
 		if(isset($params['identifier'])) {
 			
 			$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$params['identifier'].'.cache';
@@ -1081,6 +1082,17 @@ class CategoriesController extends AppController {
 					$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$v['id'].'_children.cache';
 					$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$v['id'].'_right_buttons.cache';
 				}
+			}
+			
+		//Dans le cas d'un ajout
+		} else {	
+			
+			if(isset($this->request->data) && !empty($this->request->data)) {
+				
+				$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$this->request->data['parent_id'].'.cache';
+				$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$this->request->data['parent_id'].'_brothers.cache';
+				$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$this->request->data['parent_id'].'_children.cache';
+				$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$this->request->data['parent_id'].'_right_buttons.cache';
 			}
 		}
 		
