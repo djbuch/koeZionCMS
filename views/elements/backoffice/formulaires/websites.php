@@ -81,10 +81,10 @@
 			$sliderTypesList = array(1 => "Slider simple", 2 => "Slider 3D");
 			echo $helpers['Form']->input('slider_type', 'Type de slider', array('type' => 'select', 'datas' => $sliderTypesList));
 			echo $helpers['Form']->input('ga_code', 'Code Google Analytics', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge'));			
-			$txtSecure = 'Sécuriser le site. <i>Seuls les utilisateurs enregistrés pourront se connecter. Pour rajouter un utilisateurs utilisez la page suivante : <a href="'.Router::url('backoffice/users/index').'">'.$helpers['Html']->img('backoffice/icon-profile.png', array('alt' => _("Gestion utilisateurs")))._("Utilisateurs").'</a></i>';
+			$txtSecure = 'Sécuriser le site. <i>Seuls les utilisateurs enregistrés pourront se connecter. <a href="'.Router::url('backoffice/users/index').'">'._("Ajouter un utilisateur").'</a></i>';
 			echo $helpers['Form']->input('secure_activ', $txtSecure, array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour activer la sécurité sur le site"));			
-			$txtLog = "Logger les utilisateurs. <i>Attention cette option ne fonctionne que dans le cas de sites sécurisés. La mise en place de cette option peut ralentir l'affichage des pages</i>";
-			echo $helpers['Form']->input('log_users_activ', $txtLog, array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour activer le log des utilisateurs"));
+			$txtLog = "Logger les utilisateurs. <i>Attention cette option ne fonctionne que dans le cas de sites sécurisés.</i>";
+			echo $helpers['Form']->input('log_users_activ', $txtLog, array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour activer le log des utilisateurs. La mise en place de cette option peut ralentir l'affichage des pages"));
 			echo $helpers['Form']->input('css_hack', 'Rajout de code css', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge'));
 			?>
 		</div>

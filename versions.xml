@@ -5,6 +5,7 @@
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Rajout du module AddThis dans la gestion des sites Internet<task>
+			<task author="KoéZionCMS">Modification formulaire ajout site Internet<task>
 		</tasks>	
 	</version>
 	<version>
