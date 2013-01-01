@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 01/01/2013</name>
+		<num>20130101</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Rajout du module AddThis dans la gestion des sites Internet<task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 21/12/2012 - La fin du monde</name>
 		<num>20121221</num>
 		<supervisor>KoéZionCMS</supervisor>

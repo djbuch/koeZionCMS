@@ -25,7 +25,7 @@
 				</p>
 			<?php echo $helpers['Form']->end(); ?>
 			
-			<?php /* ?><div class="social"><?php echo $websiteParams['footer_social']; ?></div><?php */ ?>
+			<?php if(isset($websiteParams['footer_addthis'])) { ?><div class="social"><?php echo $websiteParams['footer_addthis']; ?></div><?php } ?>
 		</div>	
 		<div class="gs_3 omega widget"><?php echo $websiteParams['footer_droite']; ?></div>
 		<?php 
