@@ -250,7 +250,7 @@ class CategoriesController extends AppController {
 		
 		$this->layout = 'rss'; //Définition du layout à utiliser		
 		
-		$datas = $this->get_datas_category($id);
+		$datas = $this->_get_datas_category($id);
 		$datas = $this->_get_posts_category($datas, false);				
 		//$datas['type'] = 'application/rss+xml';
 		
