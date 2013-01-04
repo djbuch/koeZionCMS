@@ -154,26 +154,29 @@ class FileAndDir {
 		//try {
 			//FileAndDir::testURI($filename);
 
-			switch ( $type )
-			{
-				case 'array'  :
-					if ( is_null( $maxlen ) ) {
-						$contents = explode( "\n", file_get_contents( $filename, null, null, $offset ) );
-					}
-					else {
-						$contents = explode( "\n", file_get_contents( $filename, null, null, $offset, $maxlen ) );
-					}
-					break;
-
-				case 'string' :
-				default       :
-					if ( is_null( $maxlen ) ) {
-						$contents = file_get_contents( $filename, null, null, $offset );
-					}
-					else {
-						$contents = file_get_contents( $filename, null, null, $offset, $maxlen );
-					}
-					break;
+			$contents = '';
+			if(file_exists($filename)) {
+				switch ( $type )
+				{
+					case 'array'  :
+						if ( is_null( $maxlen ) ) {
+							$contents = explode( "\n", file_get_contents( $filename, null, null, $offset ) );
+						}
+						else {
+							$contents = explode( "\n", file_get_contents( $filename, null, null, $offset, $maxlen ) );
+						}
+						break;
+	
+					case 'string' :
+					default       :
+						if ( is_null( $maxlen ) ) {
+							$contents = file_get_contents( $filename, null, null, $offset );
+						}
+						else {
+							$contents = file_get_contents( $filename, null, null, $offset, $maxlen );
+						}
+						break;
+				}
 			}
 		//}
 		//catch ( Exception $e ) {

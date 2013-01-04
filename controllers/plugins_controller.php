@@ -89,7 +89,9 @@ class PluginsController extends AppController {
 		else { $sqlModule = "UPDATE modules SET online = 0 WHERE plugin_id = ".$id.";"; }
 		$this->Plugin->query($sqlModule);
 		
-		FileAndDir::remove(TMP.DS.'cache'.DS.'variables'.DS.'Plugins'.DS.'plugins.cache');
+		
+		FileAndDir::delete_directory_file(TMP.DS.'cache'.DS.'models'.DS); //Suppression du fichier de cache de la bdd
+		FileAndDir::remove(TMP.DS.'cache'.DS.'variables'.DS.'Plugins'.DS.'plugins.cache'); //Suppression du fichier de cache des plugins
 				
 		$this->redirect('backoffice/plugins/index'); //On retourne sur la page de listing
 	}	

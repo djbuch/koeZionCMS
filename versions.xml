@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 04/01/2013</name>
+		<num>20130104</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Correction de la gestion de l'ajout des plugins<task>
+			<task author="KoéZionCMS">Rajout d'un test dans la librairie de gestion des fichiers<task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 01/01/2013</name>
 		<num>20130101</num>
 		<supervisor>KoéZionCMS</supervisor>
