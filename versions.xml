@@ -6,6 +6,7 @@
 		<tasks>
 			<task author="KoéZionCMS">Correction du formulaire boutons colonne de droite<task>
 			<task author="KoéZionCMS">Gestion d'erreur des fichiers<task>
+			<task author="KoéZionCMS">Correction ligne htaccess<task>
 		</tasks>	
 	</version>
 	<version>
