@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 05/01/2013</name>
+		<num>20130105</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Correction du formulaire boutons colonne de droite<task>
+			<task author="KoéZionCMS">Gestion d'erreur des fichiers<task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 04/01/2013</name>
 		<num>20130104</num>
 		<supervisor>KoéZionCMS</supervisor>

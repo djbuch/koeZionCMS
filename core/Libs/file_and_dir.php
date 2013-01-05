@@ -149,12 +149,19 @@ class FileAndDir {
 	 * @param   int       $maxlen   Taille maximale d'octets (facultatif).
 	 * @return  mixed               Contenu sous la forme du type passé en paramètre.
 	 */
-	public function get($filename, $type = 'string', $retour = '', $offset = null, $maxlen = null )
-	{
+	public function get($filename, $type = 'string', $retour = '', $offset = null, $maxlen = null ) {
 		//try {
 			//FileAndDir::testURI($filename);
 
-			$contents = '';
+		$contents = '';
+		if(file_exists($filename)) {
+
+			//pr($filename);
+			$contents = file_get_contents($filename);
+			
+		}
+		
+			/*$contents = '';
 			if(file_exists($filename)) {
 				switch ( $type )
 				{
@@ -177,7 +184,7 @@ class FileAndDir {
 						}
 						break;
 				}
-			}
+			}*/
 		//}
 		//catch ( Exception $e ) {
 		//	switch ( strtolower( $retour ) )

@@ -51,6 +51,7 @@
 		$js = array(
 			//$websiteParams['tpl_layout'].'/jquery-1.8.2',
 			$websiteParams['tpl_layout'].'/jquery-1.5.1.min',
+			//$websiteParams['tpl_layout'].'/jquery-1.7.1.min',
 			$websiteParams['tpl_layout'].'/jquery-ui-1.9.1.custom.min',
 			'commun/scripts',
 			$websiteParams['tpl_layout'].'/menu',

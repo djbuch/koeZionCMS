@@ -817,25 +817,21 @@ class Model extends Object {
 	}	
 	
 	protected function _trace_sql($function, $query) {
-				
-		//Pour le moment que des logs en local
-		if($_SERVER['HTTP_HOST'] == 'localhost') {
 			
-			$date = date('Y-m-d');
-			$traceSql = 
-				date('Y-m-d H:i:s').
-				"|#|".
-				get_class($this).
-				"|#|".
-				$this->refererUrl.
-				"|#|".
-				$function.
-				"|#|".
-				$query.
-				"\n";
-			
-			FileAndDir::put(TMP.DS.'logs'.DS.'models'.DS.$date.'.log', $traceSql, FILE_APPEND);
-		}		
+		$date = date('Y-m-d');
+		$traceSql = 
+			date('Y-m-d H:i:s').
+			"|#|".
+			get_class($this).
+			"|#|".
+			$this->refererUrl.
+			"|#|".
+			$function.
+			"|#|".
+			$query.
+			"\n";
+		
+		FileAndDir::put(TMP.DS.'logs'.DS.'models'.DS.$date.'.log', $traceSql, FILE_APPEND);
 	}
 }
 
