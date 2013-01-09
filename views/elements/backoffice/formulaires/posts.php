@@ -34,17 +34,17 @@
 			$websiteUrl = Session::read('Backoffice.Websites.details.'.CURRENT_WEBSITE_ID.'.url');
 			
 			require_once(LIBS.DS.'config_magik.php');
-			$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'exports.ini', true, false);
-			$exportCode = $cfg->keys_values();
+			$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'security_code.ini', true, false);
+			$updateCode = $cfg->keys_values();
 			
-			if(empty($exportCode['export_code'])) {
+			if(empty($updateCode['security_code'])) {
 				
 				?><p style="padding:0 20px 0 20px;margin-bottom:5px">Pour utiliser cette fonctionnalité vous devez en premier lieu <a href="<?php echo Router::url('backoffice/configs/exports_liste'); ?>">paramétrer le code de sécurité</a> utilisé pour pouvoir lancer cette procédure</p><?php 
 			
 			} else { 
 			
 				?>
-				<p style="padding:0 20px 0 20px;margin-bottom:5px">Pour mettre en place la diffusion automatique vous pouvez utiliser l'url suivante <?php echo $websiteUrl; ?>/posts/update_publication_date.xml?update_code=<?php echo $exportCode['export_code']; ?></p>
+				<p style="padding:0 20px 0 20px;margin-bottom:5px">Pour mettre en place la diffusion automatique vous pouvez utiliser l'url suivante <?php echo $websiteUrl; ?>/posts/update_publication_date.xml?update_code=<?php echo $updateCode['security_code']; ?></p>
 				<p style="padding:0 20px 0 20px;margin-bottom:5px">Le type du format de retour est l'XML</p>
 				<p style="padding:0 20px 0 20px;margin-bottom:5px">
 				&lt;export&gt;<br />

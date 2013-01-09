@@ -1,5 +1,17 @@
 ﻿<versions>
 	<version>
+		<name>Version du 09/01/2013</name>
+		<num>20130109</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Modification du contrôleur Configs pour rajouter la fonction security_code_list à la place de export_list<task>
+			<task author="KoéZionCMS">Modification de la librairie Cache pour rajout une fonction qui supprime tous les fichiers de cache (Rajout des vues associées)<task>
+			<task author="KoéZionCMS">Modification de la barre de menu du haut dans le backoffice pour intégration de la nouvelle fonction du contrôleur Configs<task>
+			<task author="KoéZionCMS">Modification du contrôleur Posts et du formulaire backoffice suite au changement effectué dans le contrôleur Configs pour la gestion du code de sécurité<task>
+			<task author="KoéZionCMS">Modification de la vue d'affichage du détail d'une catégorie suite à la modification de la structure du plugin WineSearcher<task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 05/01/2013</name>
 		<num>20130105</num>
 		<supervisor>KoéZionCMS</supervisor>

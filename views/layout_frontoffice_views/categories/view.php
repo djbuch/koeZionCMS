@@ -23,7 +23,7 @@ if(isset($googleMapAPI) && $mapPosition == 'topPage') { $this->element(PLUGINS.D
 
 		if(isset($displayWinesearchers) && $displayWinesearchers) {
 		
-			$this->element(PLUGINS.DS.'winesearchers/views/elements/frontoffice/list', null, false);
+			$this->element(PLUGINS.DS.'winesearchers/views/winesearchers/elements/frontoffice/list', null, false);
 			$this->element('frontoffice/pagination');
 		}
 		

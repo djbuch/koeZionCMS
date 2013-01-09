@@ -42,8 +42,10 @@ class Cache {
  */	
 	function create_cache_file($cacheFolder, $cacheFile, $datas) {
 		
-		FileAndDir::createPath($cacheFolder);
-		return FileAndDir::put($cacheFolder.$cacheFile.Cache::$extention, serialize($datas));
+		FileAndDir::createPath($cacheFolder);		
+		$result = FileAndDir::put($cacheFolder.$cacheFile.Cache::$extention, serialize($datas));		
+		FileAndDir::chProperties($cacheFolder.$cacheFile.Cache::$extention, 0777);
+		return $result;
 		/*$pointeur = fopen($file, 'w');
 		fwrite($pointeur, serialize($datas));
 		fclose($pointeur);*/		
@@ -79,7 +81,21 @@ class Cache {
 	function delete_cache_file_content($cacheFolder, $cacheFile) {
 	
 		return FileAndDir::remove($cacheFolder.$cacheFile.Cache::$extention);
-	}
+	}	
 	
-
+/**
+ * 
+ * Cette fonction permet de supprimer un dossier de cache
+ * 
+ * @param 	varchar $cacheFolder 	Dossier de stockage du fichier
+ * @param 	varchar $cacheFile 		Nom du fichier
+ * @return 	boolean vrai si la suppression s'est correctement déroulée
+ * @access	public
+ * @author	koéZionCMS
+ * @version 0.1 - 19/12/2012 by FI
+ */	
+	function delete_cache_directory($cacheFolder) {
+	
+		return FileAndDir::remove_directory($cacheFolder);
+	}
 }

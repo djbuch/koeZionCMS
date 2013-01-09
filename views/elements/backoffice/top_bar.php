@@ -44,7 +44,8 @@
 					<li><a href="<?php echo Router::url('backoffice/configs/mailer_liste'); ?>"><?php echo _("Envoi de mails"); ?></a></li>			
 					<li><a href="<?php echo Router::url('backoffice/configs/router_liste'); ?>"><?php echo _("Gestion des routes"); ?></a></li>			
 					<li><a href="<?php echo Router::url('backoffice/configs/posts_liste'); ?>"><?php echo _("Articles"); ?></a></li>
-					<li><a href="<?php echo Router::url('backoffice/configs/exports_liste'); ?>"><?php echo _("Exports"); ?></a></li>
+					<li><a href="<?php echo Router::url('backoffice/configs/security_code_liste'); ?>"><?php echo _("Code sécurité tâches CRON"); ?></a></li>
+					<li><a href="<?php echo Router::url('backoffice/configs/delete_cache'); ?>"><?php echo _("Supprimer le cache"); ?></a></li>
 					<?php /* ?><li><a href="<?php echo Router::url('backoffice/configs/sessions_liste'); ?>"><?php echo _("Sessions"); ?></a></li><?php */ ?>	
 				</ul>
 			</li>

@@ -108,10 +108,10 @@ class PostsController extends AppController {
 		$this->set($datas);
 		
 		require_once(LIBS.DS.'config_magik.php');
-		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'exports.ini', true, false);
+		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'security_code.ini', true, false);
 		$cfgValues = $cfg->keys_values();
 		
-		if(isset($_GET['update_code']) && !empty($_GET['update_code']) && !empty($cfgValues['export_code']) && ($_GET['update_code'] == $cfgValues['export_code'])) {
+		if(isset($_GET['update_code']) && !empty($_GET['update_code']) && !empty($cfgValues['security_code']) && ($_GET['update_code'] == $cfgValues['security_code'])) {
 
 			//Conditions de recherche
 			$conditions = array('conditions' => "online = 0 AND publication_date <> '0000-00-00' AND publication_date <= '".date('Y-m-d')."'");

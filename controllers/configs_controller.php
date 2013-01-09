@@ -91,13 +91,26 @@ class ConfigsController extends AppController {
 	function backoffice_posts_liste() { $this->_proceed_datas_ini(CONFIGS.DS.'files'.DS.'posts.ini', 'backoffice/configs/posts_liste'); }
 	
 /**
- * Cette fonction va permettre l'affichage des configurations pour l'export
+ * Cette fonction va permettre l'affichage du code de sécurité utilisé pour les taches planifiées
  *
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 10/09/2012 by FI
  */
-	function backoffice_exports_liste() { $this->_proceed_datas_ini(CONFIGS.DS.'files'.DS.'exports.ini', 'backoffice/configs/exports_liste'); }		
+	function backoffice_security_code_liste() { $this->_proceed_datas_ini(CONFIGS.DS.'files'.DS.'security_code.ini', 'backoffice/configs/security_code_liste'); }	
+
+/**
+ * Cette fonction va permettre de supprimer les fichiers de cache
+ *
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 07/01/2013 by FI
+ */
+	function backoffice_delete_cache() {
+		
+		Cache::delete_cache_directory(TMP.DS.'cache'.DS);
+		Session::setFlash("Cache supprimé"); //Message de confirmation
+	}	
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //										FONCTIONS PRIVEES										//
