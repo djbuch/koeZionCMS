@@ -82,7 +82,7 @@ class View extends Object {
     		if(isset($this->vars['websiteParams'])) {
     			
     			$templateLayout = $this->vars['websiteParams']['tpl_layout']; //On récupère le layout courant
-    			$alternativeView = VIEWS.DS.'layout_'.$templateLayout.'_views'.DS.$this->controller->request->controller.DS.$this->view.'.php'; //On génère une variable contenant le chemin vers une vue alternative située dans un dossier portant le nom du layout
+    			$alternativeView = VIEWS.DS.'layout_views'.DS.$templateLayout.DS.$this->controller->request->controller.DS.$this->view.'.php'; //On génère une variable contenant le chemin vers une vue alternative située dans un dossier portant le nom du layout
     		
 	    		//Si ce fichier n'existe pas on prendra la vue par défaut
     			if(file_exists($alternativeView)) { $view = $alternativeView; }

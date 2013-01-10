@@ -10,6 +10,9 @@
 		?>
 		<meta name="generator" content="<?php echo GENERATOR_META; ?>" /><?php //ATTENTION VOUS NE POUVEZ PAS SUPPRIMER CETTE BALISE ?>		
 		<?php
+		/////////////
+		//   CSS   //
+		/////////////
 		echo "\n";
 		$css = array(
 			$websiteParams['tpl_layout'].'/reset',
@@ -31,23 +34,30 @@
 			$websiteParams['tpl_layout'].'/colors/'.trim($websiteParams['tpl_code']).'/body',
 			$websiteParams['tpl_layout'].'/syntaxhighlighter/shCore',
 			$websiteParams['tpl_layout'].'/syntaxhighlighter/shCoreDefault'
-		);		
+		);			
+		echo $helpers['Html']->css($css, true);		
+		if(!empty($websiteParams['css_hack'])) { ?><style type="text/css"><?php echo $websiteParams['css_hack']; ?></style><?php }		
+		?>
+	</head>
+	<body>
+		<div id="container">
+			<?php $this->element('frontoffice/header'); ?>
+			<?php $this->element('frontoffice/menu_general'); ?>		
+	    
+			<div class="main png_bg">
+				<div class="inner_main">
+					<?php echo $content_for_layout; ?>
+				</div>
+		    </div>
+		    <div class="endmain png_bg"></div>
 		
-		//On va vérifier si un dossier header est présent dans le dossier upload/images/header
-		//Si tel est le cas on va récupérer l'ensemble des fichiers présent puis compter qu'il y en ait au moins un
-		//Ensuite on va afficher le css qui gère le fond du header
-		//On ne fera rien par défaut
-		/*$headerDir = WEBROOT.DS.'upload'.DS.'images'.DS.'header';
-		if(is_dir($headerDir)) { 
-						
-			$headerFiles = directoryContent($headerDir);
-			if(count($headerFiles) > 0) { $css[] = $websiteParams['tpl_layout'].'/hook_header'; } 
-		}*/
-		
-		echo $helpers['Html']->css($css, true);
-		
-		if(!empty($websiteParams['css_hack'])) { ?><style type="text/css"><?php echo $websiteParams['css_hack']; ?></style><?php }
-		
+			<?php $this->element('frontoffice/footer'); ?>
+			<?php $this->element('frontoffice/logout'); ?>
+		</div>				
+		<?php 
+		////////////////////
+		//   JAVASCRIPT   //
+		////////////////////		
 		$js = array(
 			//$websiteParams['tpl_layout'].'/jquery-1.8.2',
 			$websiteParams['tpl_layout'].'/jquery-1.5.1.min',
@@ -71,29 +81,10 @@
 			$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushXml'
 		);
 		echo $helpers['Html']->js($js);
-				
-		echo $helpers['Html']->analytics($websiteParams['ga_code']);
 		?>
-		
-		<script type="text/javascript">
+     	<script type="text/javascript">	
      		SyntaxHighlighter.all()
 		</script>
-	</head>
-
-	<body>
-		<div id="container">
-			<?php $this->element('frontoffice/header'); ?>
-			<?php $this->element('frontoffice/menu_general'); ?>		
-	    
-			<div class="main png_bg">
-				<div class="inner_main">
-					<?php echo $content_for_layout; ?>
-				</div>
-		    </div>
-		    <div class="endmain png_bg"></div>
-		
-			<?php $this->element('frontoffice/footer'); ?>
-			<?php $this->element('frontoffice/logout'); ?>
-		</div>
+		<?php echo $helpers['Html']->analytics($websiteParams['ga_code']); ?>
 	</body>
 </html>

@@ -94,6 +94,7 @@ class CategoriesController extends AppController {
 			$websiteParams['tpl_layout'] = $datas['category']['tpl_layout']; //Mise à jour du layout
 			$websiteParams['tpl_code'] = $datas['category']['tpl_code']; //Mise à jour du code du layout
 			$websiteParams['template_id'] = $datas['category']['template_id']; //Mise à jour de l'identifiant du template
+			$this->layout = $datas['category']['tpl_layout'];
 			$this->set('websiteParams', $websiteParams); //Mise à jour des données du site
 		}		
 		/////////////////////////////////////////////////////////////////

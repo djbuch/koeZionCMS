@@ -39,7 +39,7 @@
 			
 			if(empty($updateCode['security_code'])) {
 				
-				?><p style="padding:0 20px 0 20px;margin-bottom:5px">Pour utiliser cette fonctionnalité vous devez en premier lieu <a href="<?php echo Router::url('backoffice/configs/exports_liste'); ?>">paramétrer le code de sécurité</a> utilisé pour pouvoir lancer cette procédure</p><?php 
+				?><p style="padding:0 20px 0 20px;margin-bottom:5px">Pour utiliser cette fonctionnalité vous devez en premier lieu <a href="<?php echo Router::url('backoffice/configs/security_code_liste'); ?>">paramétrer le code de sécurité</a> utilisé pour pouvoir lancer cette procédure</p><?php 
 			
 			} else { 
 			
