@@ -44,7 +44,7 @@ table{border-spacing:0;background:transparent;border-collapse:collapse}
 
 #ethernatable.catalogues th h6{font-size:15px;margin-top:0;padding-bottom:0}
 
-#ethernatable.catalogues td{vertical-align:middle;width:auto;padding:5px 0 5px 0}
+#ethernatable.catalogues td{vertical-align:middle;width:auto;padding:5px}
 #ethernatable.catalogues td.center{text-align:center}
 #ethernatable.catalogues td.right{text-align:right}
 

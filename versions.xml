@@ -9,6 +9,7 @@
 			<task author="KoéZionCMS">Correction du bug lié à la modification du template pour l'affichage d'une catégorie<task>
 			<task author="KoéZionCMS">Correction du lien permettant de modifier le code de sécurité pour les tâches planifiées<task>
 			<task author="KoéZionCMS">Passage du chargement des JS du frontoffice dans le body (dans l'espoir d'améliorer les temps de chargement --> à suivre)<task>
+			<task author="KoéZionCMS">Correction css tableau<task>
 		</tasks>	
 	</version>
 	<version>
