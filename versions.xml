@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 15/01/2013</name>
+		<num>20130115</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Correction de la suppression du cache pour les fonctions sans rendu<task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 13/01/2013</name>
 		<num>20130113</num>
 		<supervisor>KoéZionCMS</supervisor>

@@ -46,6 +46,8 @@ class AppController extends Controller {
 		'Plugins' => array('index', 'add', 'edit', 'delete'),
 		'Configs' => array('database_liste', 'mailer_liste', 'router_liste', 'posts_liste', 'sessions_liste'),
 		'Exports' => array('database', 'contacts'),
+		'Modules' => array('index', 'add', 'edit', 'delete'),
+		'ModulesTypes' => array('index', 'add', 'edit', 'delete'),
 	);
 	
 //////////////////////////////////////////////////////////////////////////////////////////	
@@ -165,10 +167,7 @@ class AppController extends Controller {
        	//Si on est dans le backoffice
     	if($prefix == 'backoffice' || ($this->params['controllerName'] == 'Users' && $this->params['action'] == 'login')) {
     		
-    		if(isset($this->cachingFiles)) {
-    		
-    			foreach($this->cachingFiles as $file) { FileAndDir::remove($file); }    		
-    		}
+    		$this->_delete_cache();
     		
     		//Gestion de la variable de session
     		$datas['flashMessage'] = Session::read('Flash');
@@ -323,6 +322,10 @@ class AppController extends Controller {
     	if(!isset($element['suppressible']) || (isset($element['suppressible']) && $element['suppressible'])) {
     	    		
 	    	$this->$modelName->delete($id); //Suppression de l'élément	    	
+	    	
+	    	$this->_check_cache_configs();
+	    	$this->_delete_cache();
+	    	
 	    	Session::setFlash('Le contenu a bien été supprimé'); //Message de confirmation
 	    	if($redirect) { $this->redirect('backoffice/'.$this->params['controllerFileName'].'/index'); } //Redirection 
 	    	else { return true; }
@@ -383,6 +386,10 @@ class AppController extends Controller {
     	$sql = 'UPDATE '.$this->$modelName->table.' SET online = '.$newOnline.' WHERE '.$primaryKey.' = '.$id; //On construit la requête à effectuer
     	$this->$modelName->query($sql); //On lance la requête
     	Session::setFlash('Le statut a bien été modifié'); //Message de confirmation
+    	
+    	$this->_check_cache_configs();
+    	$this->_delete_cache();    	
+    	
     	if($redirect) { $this->redirect('backoffice/'.$this->params['controllerFileName'].'/index'); } //On retourne sur la page de listing
     	else { 
     		
@@ -412,6 +419,9 @@ class AppController extends Controller {
     	$sql = ""; //Requête sql qui sera exécutée
     	foreach($datas['ligne'] as $position => $id) { $sql .= "UPDATE ".$modelTable." SET order_by = ".$position." WHERE ".$primaryKey." = ".$id."; "."\n"; } //Construction de la requête
     	$this->$modelName->query($sql); //Exécution de la requête
+    	
+    	$this->_check_cache_configs();
+    	$this->_delete_cache();
     }   
      
 
@@ -436,6 +446,9 @@ class AppController extends Controller {
     	foreach($datas as $k => $v) { $this->$modelName->make_search_index($v, $v['id']); } //Reconstruction de l'index
     	
     	$this->$modelName->optimize_search_index(); //Optimisation de l'index
+    	
+    	$this->_check_cache_configs();
+    	$this->_delete_cache();
     	
     	Session::setFlash('Index du moteur de recherche reconstruit'); //Message de confirmation
     	$this->redirect('backoffice/'.$this->params['controllerFileName'].'/index'); //Redirection
@@ -725,5 +738,13 @@ class AppController extends Controller {
     		$this->unloadModel('PostsComment'); //Déchargement du modèle
     	}
     	//////////////////////////////////////////
+    }
+    
+    protected function _delete_cache() {
+    	
+    	if(isset($this->cachingFiles)) {
+    		
+    		foreach($this->cachingFiles as $file) { FileAndDir::remove($file); }
+    	}    	
     }
 }

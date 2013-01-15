@@ -124,21 +124,7 @@ class Controller extends Object {
  */
 	function beforeRender() {		
 		
-		/////////////////////////////////////////////////
-		//PARAMETRAGE DE LA GESTION EVENTUELLE DU CACHE//
-		//A revoir quand plus de temps
-		if(
-			method_exists($this, '_init_caching') && 
-			in_array($this->params['action'], array('add', 'edit', 'delete', 'status', 'move2prev', 'move2next'))
-		) { 
-			
-			//Dans le cas de l'édition, de la suppression, du changement de status d'un élément on passe l'id pour l'initialisation
-			//au cas ou on ait un fichier de cache pour cet élément
-			$cachingParams = null;
-			if(isset($this->request->params[0]) && (int)$this->request->params[0] > 0) { $cachingParams['identifier'] = $this->request->params[0]; }
-			
-			$this->_init_caching($cachingParams); 
-		}
+		$this->_check_cache_configs();
 		
 		$this->_plugins_before_functions('beforeRender');
 	}
@@ -343,6 +329,25 @@ class Controller extends Object {
 					}
 				}
 			}
+		}		
+	}
+	
+	protected function _check_cache_configs() {
+		
+		/////////////////////////////////////////////////
+		//PARAMETRAGE DE LA GESTION EVENTUELLE DU CACHE//
+		//A revoir quand plus de temps
+		if(
+				method_exists($this, '_init_caching') &&
+				in_array($this->params['action'], array('add', 'edit', 'delete', 'status', 'move2prev', 'move2next', 'ajax_order_by'))
+		) {
+		
+			//Dans le cas de l'édition, de la suppression, du changement de status d'un élément on passe l'id pour l'initialisation
+			//au cas ou on ait un fichier de cache pour cet élément
+			$cachingParams = null;
+			if(isset($this->request->params[0]) && (int)$this->request->params[0] > 0) { $cachingParams['identifier'] = $this->request->params[0]; }
+		
+			$this->_init_caching($cachingParams);
 		}		
 	}
 }

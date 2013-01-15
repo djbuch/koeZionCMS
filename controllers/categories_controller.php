@@ -407,6 +407,10 @@ class CategoriesController extends AppController {
 					
 		$this->auto_render = false; //Pas de rendu
 		$this->Category->move2prev($id); //On fait appel à la fonction présente dans le model
+		
+		$this->_check_cache_configs();
+		$this->_delete_cache();
+		
 		$this->redirect('backoffice/categories/index'); //On redirige vers l'index
 	}
 
@@ -422,6 +426,10 @@ class CategoriesController extends AppController {
 		
 		$this->auto_render = false; //Pas de rendu
 		$this->Category->move2next($id); //On fait appel à la fonction présente dans le model
+		
+		$this->_check_cache_configs();
+		$this->_delete_cache();
+		
 		$this->redirect('backoffice/categories/index'); //On redirige vers l'index
 	}	
 	
