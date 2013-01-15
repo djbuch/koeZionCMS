@@ -5,6 +5,7 @@
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Correction de la suppression du cache pour les fonctions sans rendu<task>
+			<task author="KoéZionCMS">Modification du helper html pour la génération du menu<task>
 		</tasks>	
 	</version>
 	<version>
