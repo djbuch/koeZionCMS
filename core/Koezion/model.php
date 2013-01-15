@@ -410,8 +410,8 @@ class Model extends Object {
 			
 			$this->_trace_sql('function saveAll', $preparedInfos['preparedQuery']->queryString); //Récupération de la requête
 			
-			if($preparedInfos['action'] == 'insert') { $this->id = $this->db->lastInsertId();}
-			else { $this->id = $datas['id']; }
+			if($preparedInfos['action'] == 'insert') { $this->id[] = $this->db->lastInsertId();}
+			else { $this->id[] = $datas['id']; }
 			
 			$this->queryExecutionResult = $queryExecutionResult;
 			

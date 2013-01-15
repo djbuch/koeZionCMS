@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 16/01/2013</name>
+		<num>20130115</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Modification du model principal pour récupérer la liste des ID suite à un saveAll<task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 15/01/2013</name>
 		<num>20130115</num>
 		<supervisor>KoéZionCMS</supervisor>
