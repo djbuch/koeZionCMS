@@ -102,7 +102,7 @@ class Html {
  *
  * @param unknown_type $categories
  */	
-	function generateMenu($categories, $breadcrumbs) {
+	function generateMenu($categories, $breadcrumbs, $moreElements = null) {
 		
 		//pr($breadcrumbs);
 		if(count($categories) > 0) {
@@ -120,7 +120,17 @@ class Html {
 					<?php if(isset($v['children'])) { $this->generateMenu($v['children'], $breadcrumbs); }; ?>
 				</li>
 				<?php
-			}			
+			}
+
+			if(isset($moreElements) && !empty($moreElements)) { 
+				
+				foreach($moreElements as $k => $v) {
+					?>
+					<li<?php if(isset($v['class'])) { ?> class="<?php echo $v['class']; ?>"<?php } ?>><a href="<?php echo $v['link']; ?>"><?php echo $v['name']; ?></a></li>
+					<?php 
+				}
+			}
+			
 			/*if($contactInMenu) { ?><li><a href="<?php echo Router::url('contacts/contact'); ?>">Contact</a></li><?php }*/
 			?></ul><?php
 		}		
