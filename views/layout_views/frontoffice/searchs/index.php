@@ -1,5 +1,5 @@
 <?php 
-$this->element('frontoffice/breadcrumbs'); 
+$this->element($websiteParams['tpl_layout'].'/breadcrumbs'); 
 $title_for_layout = _("Résultats de votre recherche sur le terme : ").$q;
 $description_for_layout = _("Résultats de votre recherche sur le terme : ").$q;
 ?>

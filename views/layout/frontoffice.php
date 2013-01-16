@@ -41,8 +41,8 @@
 	</head>
 	<body>
 		<div id="container">
-			<?php $this->element('frontoffice/header'); ?>
-			<?php $this->element('frontoffice/menu_general'); ?>		
+			<?php $this->element($websiteParams['tpl_layout'].'/header'); ?>
+			<?php $this->element($websiteParams['tpl_layout'].'/menu_general'); ?>		
 	    
 			<div class="main png_bg">
 				<div class="inner_main">
@@ -51,8 +51,8 @@
 		    </div>
 		    <div class="endmain png_bg"></div>
 		
-			<?php $this->element('frontoffice/footer'); ?>
-			<?php $this->element('frontoffice/logout'); ?>
+			<?php $this->element($websiteParams['tpl_layout'].'/footer'); ?>
+			<?php $this->element($websiteParams['tpl_layout'].'/logout'); ?>
 		</div>				
 		<?php 
 		////////////////////

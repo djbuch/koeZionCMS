@@ -1,5 +1,5 @@
 <?php 
-$this->element('frontoffice/breadcrumbs'); 
+$this->element($websiteParams['tpl_layout'].'/breadcrumbs'); 
 $title_for_layout = $websiteParams['seo_page_title'];
 $description_for_layout = $websiteParams['seo_page_description'];
 $keywords_for_layout = $websiteParams['seo_page_keywords'];

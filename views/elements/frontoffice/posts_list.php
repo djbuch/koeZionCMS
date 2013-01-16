@@ -59,6 +59,6 @@
 			<div class="clearfix"></div>
 		<?php } ?>			
 	</div>
-	<?php $this->element('frontoffice/pagination'); ?>
+	<?php $this->element($websiteParams['tpl_layout'].'/pagination'); ?>
 	
 <?php } ?>

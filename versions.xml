@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 17/01/2013</name>
+		<num>20130117</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Mise en place de l'appel des élements de façon dynamique dans les vues ne faisant pas partie du backoffice (ce procédé facilitera la duplication de template)<task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 16/01/2013</name>
 		<num>20130115</num>
 		<supervisor>KoéZionCMS</supervisor>

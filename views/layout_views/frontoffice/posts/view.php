@@ -1,5 +1,5 @@
 <?php 
-$this->element('frontoffice/breadcrumbs');
+$this->element($websiteParams['tpl_layout'].'/breadcrumbs');
 $title_for_layout = $post['page_title']; 
 $description_for_layout = $post['page_description']; 
 $keywords_for_layout = $post['page_keywords'];
@@ -12,9 +12,9 @@ $keywords_for_layout = $post['page_keywords'];
 	<?php
 	if($post['display_form']) { 
 		
-		//$this->element('frontoffice/formulaire', array('formulaire' => $formulaire, 'formInfos' => $formInfos));
+		//$this->element($websiteParams['tpl_layout'].'/formulaire', array('formulaire' => $formulaire, 'formInfos' => $formInfos));
 		if(isset($formPlugin)) { $this->element(PLUGINS.DS.'formulaires/views/formulaires/elements/frontoffice/formulaire', null, false); } 
-		else { $this->element('frontoffice/formulaires/formulaire_commentaires'); } 
+		else { $this->element($websiteParams['tpl_layout'].'/formulaires/formulaire_commentaires'); } 
 	}
  		
 	if($postsComments) {

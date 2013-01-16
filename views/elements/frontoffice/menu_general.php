@@ -3,5 +3,5 @@
 	if(!isset($breadcrumbs)) $breadcrumbs = array();
 	$helpers['Html']->generateMenu($menuGeneral, $breadcrumbs); 
 	?>
-	<?php if(isset($websiteParams['search_engine_position']) && $websiteParams['search_engine_position'] == 'menu') { $this->element('frontoffice/search'); } ?>
+	<?php if(isset($websiteParams['search_engine_position']) && $websiteParams['search_engine_position'] == 'menu') { $this->element($websiteParams['tpl_layout'].'/search'); } ?>
 </div>

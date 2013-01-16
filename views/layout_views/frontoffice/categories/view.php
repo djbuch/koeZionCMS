@@ -1,10 +1,10 @@
 <?php 
-$this->element('frontoffice/breadcrumbs');
+$this->element($websiteParams['tpl_layout'].'/breadcrumbs');
 $title_for_layout = $category['page_title'];
 $description_for_layout = $category['page_description'];
 $keywords_for_layout = $category['page_keywords'];
 
-if(isset($sliders) && count($sliders) > 0) { $this->element('frontoffice/slider'); } //Plugin Sliders Catégories
+if(isset($sliders) && count($sliders) > 0) { $this->element($websiteParams['tpl_layout'].'/slider'); } //Plugin Sliders Catégories
 if(isset($googleMapAPI) && $mapPosition == 'topPage') { $this->element(PLUGINS.DS.'gmaps/views/gmaps/elements/frontoffice/map', null, false); } //Plugin Google Maps
 ?>
 <div class="container_omega">
@@ -18,22 +18,22 @@ if(isset($googleMapAPI) && $mapPosition == 'topPage') { $this->element(PLUGINS.D
 		if(isset($displayCatalogues) && $displayCatalogues) {
 			
 			$this->element(PLUGINS.DS.'catalogues/views/elements/frontoffice/list', null, false);
-			$this->element('frontoffice/pagination');
+			$this->element($websiteParams['tpl_layout'].'/pagination');
 		}
 
 		if(isset($displayWinesearchers) && $displayWinesearchers) {
 		
 			$this->element(PLUGINS.DS.'winesearchers/views/winesearchers/elements/frontoffice/list', null, false);
-			$this->element('frontoffice/pagination');
+			$this->element($websiteParams['tpl_layout'].'/pagination');
 		}
 		
 		if($category['display_form']) { 
 						
 			if(isset($formPlugin)) { $this->element(PLUGINS.DS.'formulaires/views/formulaires/elements/frontoffice/formulaire', null, false); }
-			else { $this->element('frontoffice/formulaires/formulaire_contact'); } 
+			else { $this->element($websiteParams['tpl_layout'].'/formulaires/formulaire_contact'); } 
 		}	
 		
-		$this->element('frontoffice/posts_list', array('cssZone' => ''));
+		$this->element($websiteParams['tpl_layout'].'/posts_list', array('cssZone' => ''));
 		
 	} else { 
 
@@ -47,24 +47,24 @@ if(isset($googleMapAPI) && $mapPosition == 'topPage') { $this->element(PLUGINS.D
 				if($category['display_form']) { 
 					
 					if(isset($formPlugin)) { $this->element(PLUGINS.DS.'formulaires/views/formulaires/elements/frontoffice/formulaire', null, false); } 
-					else { $this->element('frontoffice/formulaires/formulaire_contact'); } 
+					else { $this->element($websiteParams['tpl_layout'].'/formulaires/formulaire_contact'); } 
 				}
 				?>
 			</div>		
 			
 			<?php 
-			$this->element('frontoffice/posts_list');
+			$this->element($websiteParams['tpl_layout'].'/posts_list');
 			/*if(isset($displayPosts) && $displayPosts) { ?>
 				<h2 class="widgettitle"><?php echo $libellePage; ?></h2>
 				<div class="hr"></div>	
 				<div class="gs_8 omega">
-					<?php $this->element('frontoffice/posts_list'); ?>
-					<?php $this->element('frontoffice/pagination'); ?>
+					<?php $this->element($websiteParams['tpl_layout'].'/posts_list'); ?>
+					<?php $this->element($websiteParams['tpl_layout'].'/pagination'); ?>
 				</div>		
 			<?php }*/ ?>
 		</div>		
 		<?php 
-		$this->element('frontoffice/colonne_droite'); 
+		$this->element($websiteParams['tpl_layout'].'/colonne_droite'); 
 	}
 	?>
 	<div class="clearfix"></div>

@@ -1,5 +1,5 @@
 <?php 
-$this->element('frontoffice/breadcrumbs'); 
+$this->element($websiteParams['tpl_layout'].'/breadcrumbs'); 
 $title_for_layout = $libellePage;
 $description_for_layout = $websiteParams['seo_page_description'];
 $keywords_for_layout = $websiteParams['seo_page_keywords'];
@@ -13,8 +13,8 @@ $keywords_for_layout = $websiteParams['seo_page_keywords'];
 				<?php 
 				if($pager['totalPages'] > 0) { 
 					
-					$this->element('frontoffice/posts_list'); 
-					$this->element('frontoffice/pagination'); 				
+					$this->element($websiteParams['tpl_layout'].'/posts_list'); 
+					$this->element($websiteParams['tpl_layout'].'/pagination'); 				
 				} else { 
 					
 					?>Aucun résultat<?php 
@@ -23,6 +23,6 @@ $keywords_for_layout = $websiteParams['seo_page_keywords'];
 			</div>		
 		
 	</div>		
-	<?php $this->element('frontoffice/colonne_droite'); ?>
+	<?php $this->element($websiteParams['tpl_layout'].'/colonne_droite'); ?>
 	<div class="clearfix"></div>
 </div>
