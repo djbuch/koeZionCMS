@@ -8,6 +8,7 @@
 			<task author="KoéZionCMS">Modification du nom du template frontffice par koezion qui sera le template par défaut<task>
 			<task author="KoéZionCMS">Modification du fichier sql des données par défaut de la table template (Process d'install)<task>
 			<task author="KoéZionCMS">GROSSE MAJ sur la gestion des layouts --> Changement de dossier des vues, css, js et img<task>
+			<task author="KoéZionCMS">Rajout d'un dossier hook pour permettre des paramétrages supplémentaires dans le backoffice<task>
 		</tasks>	
 	</version>
 	<version>

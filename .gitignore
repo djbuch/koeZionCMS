@@ -9,6 +9,7 @@ _*/
 .settings/
 EXPORT_PDF/
 configs/files/*.ini
+configs/hooks/*.php
 configs/plugins/
 plugins/
 tmp/backup_bdd/

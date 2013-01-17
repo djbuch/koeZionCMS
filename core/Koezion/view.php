@@ -114,9 +114,35 @@ class View extends Object {
  * @version 0.2 - 21/05/2012 by FI - Rajout de la possibilité de passer des variables à la fonction
  * @version 0.3 - 24/09/2012 by FI - Rajout du boolean $inElementsFolder pour indiquer si le dossier de stockage de la vue est dans views
  * @version 0.4 - 17/01/2013 by FI - Modification du chemin de récupération des éléments suite à la modification du chemin de stockage des éléments des layout pour le frontoffice
+ * @version 0.5 - 17/01/2013 by FI - Mise en place de hooks permettant de redéfinir le chemin des éléments à la volée (cf fichiers dans le dossier hook)
  */
     public function element($element, $vars = null, $inElementsFolder = true) {
-        
+
+    	////////////////////////////////////////////////////////////
+    	//VERIFICATION SI UN HOOK EST DISPONIBLE POUR LES ELEMENTS//
+    	//Ce hook permet de redéfinir à la volée le chemin de certains éléments
+    	//Cela s'avère pratique dans le cas de template particulier n'ayant pas besoin de l'ensemble des fonctionnalités disponible dans la version de base
+    	//
+    	//La structure du fichier elements.php est :
+    	//
+    	//	$elementsHooks = array(
+    	//		'ELEMENT_INITIALEMENT_SOUHAITE' => 'ELEMENT_REELLEMENT_SOUHAITE'
+    	//	);
+    	//
+    	//Par exemple :
+    	//
+    	//	$elementsHooks = array(
+    	//		'backoffice/formulaires/categories' => 'backoffice/MON_DOSSIER/formulaires/categories'
+    	//	);
+    	//
+    	//Cette ligne nous permet donc de redéfinir le chemin de récupération du formulaire d'ajout des catégories vers un nouveau chemin
+    	if(file_exists(CONFIGS_HOOKS.DS.'elements.php')) {
+    		
+    		include(CONFIGS_HOOKS.DS.'elements.php');			
+    		if(isset($elementsHooks[$element])) { $element = $elementsHooks[$element]; }    		
+    	}     	
+    	////////////////////////////////////////////////////////////   	
+    	
     	if(isset($vars) && !empty($vars)) { 
     		
     		foreach($vars as $k => $v) { $this->vars[$k] = $v; } 
