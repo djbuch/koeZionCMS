@@ -113,6 +113,7 @@ class View extends Object {
  * @version 0.1 - 23/12/2011
  * @version 0.2 - 21/05/2012 by FI - Rajout de la possibilité de passer des variables à la fonction
  * @version 0.3 - 24/09/2012 by FI - Rajout du boolean $inElementsFolder pour indiquer si le dossier de stockage de la vue est dans views
+ * @version 0.4 - 17/01/2013 by FI - Modification du chemin de récupération des éléments suite à la modification du chemin de stockage des éléments des layout pour le frontoffice
  */
     public function element($element, $vars = null, $inElementsFolder = true) {
         
@@ -126,10 +127,15 @@ class View extends Object {
     	//if($element[0] != DS) { $element = ELEMENTS.DS.$element; }
     	//$element .= '.php'; //On rajoute l'extension
     	
-    	//pr($element);
-    	
-    	if($inElementsFolder) { $element = ELEMENTS.DS.$element.'.php'; }
-    	else { $element = $element.'.php'; }
+    	//pr($element);    	   	
+    	if($inElementsFolder) { 
+    		
+    		//Si la variable existe (Elle n'existe que pour le front)
+    		//Redéfinition du chemin des éléments en fonction du template
+    		if(isset($this->vars['websiteParams'])) { $element = ELEMENTS.DS.'layout'.DS.$element.'.php'; }
+    		else { $element = ELEMENTS.DS.$element.'.php'; }   		
+    		
+    	} else { $element = $element.'.php'; }
     	
     	if(!file_exists($element)) { require ELEMENTS.DS.'backoffice'.DS.'missing_element.php'; } //Si le fichier n'existe pas on affiche un message d'erreur 
     	else { require $element; } //Sinon on le charge

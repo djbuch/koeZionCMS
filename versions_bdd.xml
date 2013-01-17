@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 17/01/2013</name>
+		<num>20130117</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">UPDATE `templates` SET `layout` = 'koezion' WHERE `layout` = 'frontoffice';<task>
+			<task author="KoéZionCMS">UPDATE `websites` SET `tpl_layout` = 'koezion' WHERE `tpl_layout` = 'frontoffice';<task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 01/01/2013</name>
 		<num>20130101</num>
 		<supervisor>KoéZionCMS</supervisor>
