@@ -1,6 +1,7 @@
 <?php 
 //On va récupérer les fichiers à intégrer dans l'éditeur
-include(CONFIGS.DS.'layout'.DS.$websiteLayout.'.php');
+$fileToLoad = CONFIGS.DS.'layout'.DS.$websiteLayout.'.php';
+if(file_exists($fileToLoad)) { include($fileToLoad); } else { $cssLayoutUrlEditor = array(); }
 
 if(!function_exists('json_encode')) {
 
