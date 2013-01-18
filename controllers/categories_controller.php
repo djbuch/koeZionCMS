@@ -271,7 +271,7 @@ class CategoriesController extends AppController {
  * @version 0.2 - 21/05/2012 by FI - Rajout d'une condition sur la récupération des catégories
  */	
 	public function backoffice_index() {		
-			
+				
 		$conditions = array(
 			'conditions' => 'type != 3',
 			'fields' => array('id', 'name', 'lft', 'rgt', 'level', 'online', 'type'), 

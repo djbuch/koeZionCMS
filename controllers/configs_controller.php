@@ -111,6 +111,49 @@ class ConfigsController extends AppController {
 		Cache::delete_cache_directory(TMP.DS.'cache'.DS);
 		Session::setFlash("Cache supprimé"); //Message de confirmation
 	}	
+	
+//////////////////////////////////////////////////////////////////////////////////////
+//										AJAX										//
+//////////////////////////////////////////////////////////////////////////////////////
+	
+	/**
+	 * Cette fonction est utilisée par l'éditeur de texte pour récupérer le chemin de base des css de l'application
+	 *
+	 * @access 	public
+	 * @author 	koéZionCMS
+	 * @version 0.1 - 18/01/2013 by FI
+	 */
+	public function backoffice_ajax_get_css_editor() {
+	
+		$this->layout = 'ajax'; //Définition du layout à utiliser
+		
+		$currentWebsiteId = Session::read("Backoffice.Websites.current");
+		$websiteLayout = Session::read("Backoffice.Websites.details.".$currentWebsiteId.".tpl_layout");
+		$websiteLayoutCode = Session::read("Backoffice.Websites.details.".$currentWebsiteId.".tpl_code");
+		
+		$this->set('baseUrl', BASE_URL);
+		$this->set('websiteLayout', $websiteLayout);
+		$this->set('websiteLayoutCode', $websiteLayoutCode);
+	}
+	
+/**
+ * Cette fonction est utilisée par l'éditeur de texte pour récupérer le chemin de base de l'application
+ *
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 18/01/2013 by FI
+ */
+	public function backoffice_ajax_get_baseurl() {
+	
+		$this->layout = 'ajax'; //Définition du layout à utiliser		
+		
+		$currentWebsiteId = Session::read("Backoffice.Websites.current");
+		$websiteLayout = Session::read("Backoffice.Websites.details.".$currentWebsiteId.".tpl_layout");
+		$websiteLayoutCode = Session::read("Backoffice.Websites.details.".$currentWebsiteId.".tpl_code");
+		
+		$this->set('baseUrl', BASE_URL);
+		$this->set('websiteLayout', $websiteLayout);
+	}		
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //										FONCTIONS PRIVEES										//

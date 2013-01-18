@@ -55,21 +55,15 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	CKEDITOR.config.fontSize_sizes = '8/8px;9/9px;10/10px;11/11px;12/12px;13/13px;14/14px;15/15px;16/16px;17/17px;18/18px;19/19px;20/20px;21/21px;22/22px;23/23px;24/24px;25/25px;';
 	
 	//Insertion des css utilisés
-	CKEDITOR.config.contentsCss = [
-		CKEDITOR.basePath + '../../css/frontoffice/reset.css',
-		CKEDITOR.basePath + '../../css/frontoffice/style.css',
-		CKEDITOR.basePath + '../../css/frontoffice/grids.css',
-		CKEDITOR.basePath + '../../css/frontoffice/hook.css',
-		CKEDITOR.basePath + '../../css/frontoffice/superbuttons.css',
-		CKEDITOR.basePath + '../../css/frontoffice/prettyphoto.css',
-		CKEDITOR.basePath + '../../css/frontoffice/table.css',
-		CKEDITOR.basePath + '../../css/frontoffice/forms.css',
-		CKEDITOR.basePath + '../../css/frontoffice/pricing.css',
-		CKEDITOR.basePath + '../../css/frontoffice/colors/red/default.css',	
-		CKEDITOR.basePath + '../../css/frontoffice/hook_ckeditor.css'
-	];	
-	
-	CKEDITOR.config.stylesSet = 'default:' + CKEDITOR.basePath + 'default_styles.js'; //Mise en place des styles par défaut	
+	/////////////////////////////////////////////////////////////////////////
+    //   Récupération des chemins de bases des js et css du site courant   //	
+    var sHref = window.location.href;
+	var iSubStringPosition = sHref.indexOf('adm/', 0) + 4;
+	var sUrl = sHref.substr(0, iSubStringPosition);		
+	$.post(sUrl + 'configs/ajax_get_css_editor.html', function(cssEditor) { CKEDITOR.config.contentsCss = cssEditor; }, 'json');    
+    /////////////////////////////////////////////////////////////////////////
+
+	$.post(sUrl + 'configs/ajax_get_baseurl.html', function(baseUrlJsEditor) { CKEDITOR.config.stylesSet = 'default:' + baseUrlJsEditor + 'default_styles.js'; });
 	
 	CKEDITOR.config.colorButton_colors =
 		'8c8085,776890,9ccbc1,7c907c,91e4e6,9a1616,777777,776890,acbeac,b7c3c1,d171ce,ba91de,b37731,DE5328,e26fb5,7d96a4,128ece,598196,babc8e,DE5328,c884d0,b56de5,d83737,329ac0,dadd21,0576ab,bdcb71,9696dd,97cbc0,f0d137,'+		
