@@ -1,11 +1,12 @@
 ﻿<versions>
 	<version>
-		<name>Version du 19/01/2013</name>
-		<num>20130119</num>
+		<name>Version du 20/01/2013</name>
+		<num>20130120</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Modification de la gestion de la récupération des css et js intégrés dans l'éditeur<task>
 			<task author="KoéZionCMS">Suite modifs de la MAJ MAJEURE<task>
+			<task author="KoéZionCMS">Modification BDD websites pour rajout js_hack<task>
 		</tasks>	
 	</version>
 	<version>

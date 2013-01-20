@@ -8,6 +8,7 @@
 		<li><a href="#seo"><?php echo _("SEO"); ?></a></li>
 		<li><a href="#foot"><?php echo _("Footer"); ?></a></li>
 		<li><a href="#options"><?php echo _("Options"); ?></a></li>
+		<li><a href="#cssjs"><?php echo _("CSS & JS"); ?></a></li>
 	</ul>
 	<div id="general">
 		<div class="content nopadding">
@@ -86,7 +87,14 @@
 			echo $helpers['Form']->input('secure_activ', $txtSecure, array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour activer la sécurité sur le site"));			
 			$txtLog = "Logger les utilisateurs. <i>Attention cette option ne fonctionne que dans le cas de sites sécurisés.</i>";
 			echo $helpers['Form']->input('log_users_activ', $txtLog, array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour activer le log des utilisateurs. La mise en place de cette option peut ralentir l'affichage des pages"));
-			echo $helpers['Form']->input('css_hack', 'Rajout de code css', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge'));
+			?>
+		</div>
+	</div>
+	<div id="cssjs">
+		<div class="content nopadding">
+			<?php 
+			echo $helpers['Form']->input('css_hack', 'Rajout de code css', array('type' => 'textarea', 'rows' => 30, 'cols' => 10, 'class' => 'xxlarge'));
+			echo $helpers['Form']->input('js_hack', 'Rajout de code js', array('type' => 'textarea', 'rows' => 30, 'cols' => 10, 'class' => 'xxlarge'));
 			?>
 		</div>
 	</div>

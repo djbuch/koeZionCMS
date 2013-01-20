@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 19/01/2013</name>
+		<num>20130119</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">ALTER TABLE `websites` ADD `js_hack` LONGTEXT NOT NULL AFTER `css_hack`;<task>
+			<task author="KoéZionCMS">ALTER TABLE `websites` ADD `txt_secure` LONGTEXT NOT NULL AFTER `txt_mail_newsletter`;<task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 17/01/2013</name>
 		<num>20130117</num>
 		<supervisor>KoéZionCMS</supervisor>
