@@ -31,9 +31,7 @@
 			'layout/'.$websiteParams['tpl_layout'].'/pricing',
 			'layout/'.$websiteParams['tpl_layout'].'/footer',
 			'layout/'.$websiteParams['tpl_layout'].'/colors/'.trim($websiteParams['tpl_code']).'/default',
-			'layout/'.$websiteParams['tpl_layout'].'/colors/'.trim($websiteParams['tpl_code']).'/body',
-			'layout/'.$websiteParams['tpl_layout'].'/syntaxhighlighter/shCore',
-			'layout/'.$websiteParams['tpl_layout'].'/syntaxhighlighter/shCoreDefault'
+			'layout/'.$websiteParams['tpl_layout'].'/colors/'.trim($websiteParams['tpl_code']).'/body'
 		);			
 		echo $helpers['Html']->css($css, true);		
 		if(!empty($websiteParams['css_hack'])) { ?><style type="text/css"><?php echo $websiteParams['css_hack']; ?></style><?php }		
@@ -71,20 +69,12 @@
 			//'layout/'.$websiteParams['tpl_layout'].'/jquery.uniform',
 			'layout/'.$websiteParams['tpl_layout'].'/jquery.filestyle.mini',
 			'layout/'.$websiteParams['tpl_layout'].'/images_zoom',
-			'layout/'.$websiteParams['tpl_layout'].'/pricing_table',
-			'layout/'.$websiteParams['tpl_layout'].'/syntaxhighlighter/shCore',
-			'layout/'.$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushCss',
-			'layout/'.$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushJScript',
-			'layout/'.$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushPhp',
-			'layout/'.$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushPlain',
-			'layout/'.$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushSql',
-			'layout/'.$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushXml'
+			'layout/'.$websiteParams['tpl_layout'].'/pricing_table'
 		);
-		echo $helpers['Html']->js($js);
+		echo $helpers['Html']->js($js);		
+		if(!empty($websiteParams['js_hack'])) { ?><script type="text/javascript"><?php echo $websiteParams['js_hack']; ?></script><?php }
+		
+		echo $helpers['Html']->analytics($websiteParams['ga_code']); 
 		?>
-     	<script type="text/javascript">	
-     		SyntaxHighlighter.all()
-		</script>
-		<?php echo $helpers['Html']->analytics($websiteParams['ga_code']); ?>
 	</body>
 </html>

@@ -4,6 +4,8 @@ $title_for_layout = $category['page_title'];
 $description_for_layout = $category['page_description'];
 $keywords_for_layout = $category['page_keywords'];
 
+$contentPage = $this->vars['components']['Text']->format_content_text($category['content']);
+
 if(isset($sliders) && count($sliders) > 0) { $this->element($websiteParams['tpl_layout'].'/slider'); } //Plugin Sliders Catégories
 if(isset($googleMapAPI) && $mapPosition == 'topPage') { $this->element(PLUGINS.DS.'gmaps/views/gmaps/elements/frontoffice/map', null, false); } //Plugin Google Maps
 ?>
@@ -12,7 +14,7 @@ if(isset($googleMapAPI) && $mapPosition == 'topPage') { $this->element(PLUGINS.D
 	
 	if(count($children) == 0 && count($brothers) == 0 && count($postsTypes) == 0 && count($rightButtons) == 0) { 
 		
-		echo $this->vars['components']['Text']->format_content_text($category['content']);
+		echo $contentPage;
 		if(isset($googleMapAPI) && $mapPosition == 'afterTxt') { $this->element(PLUGINS.DS.'gmaps/views/gmaps/elements/frontoffice/map', null, false); } //Plugin Google Maps
 		
 		if(isset($displayCatalogues) && $displayCatalogues) {
@@ -41,7 +43,7 @@ if(isset($googleMapAPI) && $mapPosition == 'topPage') { $this->element(PLUGINS.D
 		<div class="gs_8">
 			<div class="gs_8 omega">
 				<?php		
-				echo $this->vars['components']['Text']->format_content_text($category['content']);
+				echo $contentPage;
 				if(isset($googleMapAPI) && $mapPosition == 'afterTxt') { $this->element(PLUGINS.DS.'gmaps/views/gmaps/elements/frontoffice/map', null, false); } //Plugin Google Maps
 
 				if($category['display_form']) { 
@@ -69,4 +71,28 @@ if(isset($googleMapAPI) && $mapPosition == 'topPage') { $this->element(PLUGINS.D
 	?>
 	<div class="clearfix"></div>
 </div>
-<?php if(isset($googleMapAPI) && $mapPosition == 'bottomPage') { $this->element(PLUGINS.DS.'gmaps/views/gmaps/elements/frontoffice/map', null, false); } //Plugin Google Maps ?>
+<?php 
+if(isset($googleMapAPI) && $mapPosition == 'bottomPage') { $this->element(PLUGINS.DS.'gmaps/views/gmaps/elements/frontoffice/map', null, false); } //Plugin Google Maps	
+	 
+//On contrôle la nécessité de l'utilisation de la coloration syntaxique
+if(substr_count($contentPage, '<pre class="brush')) {
+	
+	$css = array(
+		'layout/'.$websiteParams['tpl_layout'].'/syntaxhighlighter/shCore',
+		'layout/'.$websiteParams['tpl_layout'].'/syntaxhighlighter/shCoreDefault'
+	);
+	echo $helpers['Html']->css($css, true);
+	
+	$js = array(
+		'layout/'.$websiteParams['tpl_layout'].'/syntaxhighlighter/shCore',
+		'layout/'.$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushCss',
+		'layout/'.$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushJScript',
+		'layout/'.$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushPhp',
+		'layout/'.$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushPlain',
+		'layout/'.$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushSql',
+		'layout/'.$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushXml'
+	);
+	echo $helpers['Html']->js($js);
+	?><script type="text/javascript">SyntaxHighlighter.all()</script><?php 
+}
+?>

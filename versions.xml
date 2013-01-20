@@ -7,6 +7,7 @@
 			<task author="KoéZionCMS">Modification de la gestion de la récupération des css et js intégrés dans l'éditeur<task>
 			<task author="KoéZionCMS">Suite modifs de la MAJ MAJEURE<task>
 			<task author="KoéZionCMS">Modification BDD websites pour rajout js_hack<task>
+			<task author="KoéZionCMS">Mise en place du chargement automatique des js et css pour la coloration syntaxique pour rendre le layout principal plus light<task>
 		</tasks>	
 	</version>
 	<version>
