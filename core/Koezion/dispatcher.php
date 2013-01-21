@@ -102,6 +102,7 @@ class Dispatcher {
 					
 		//////////////////////////////////////////////
 		//   RECUPERATION DES CONNECTEURS PLUGINS   //
+		//Les connecteurs sont utilisés pour la correspondance entre les plugins et les dossiers des plugins
 		$pluginsConnectors = get_plugins_connectors();
 		if(isset($pluginsConnectors[$this->request->controller])) {
 			
@@ -111,33 +112,44 @@ class Dispatcher {
 		//////////////////////////////////////////////
 	
 		//Par défaut on va contrôler si le plugin existe en premier
-		//Cela permet de pouvroi réécrire les fonctionnalités du CMS		
+		//Cela permet de pouvoir réécrire les fonctionnalités du CMS (et mêmes celles déjà existentes)		
 		if(file_exists($file_path_plugin)) { 
 			
 			//On doit contrôler si le plugin est installé en allant lire le fichiers
-			$pluginsList = Cache::exists_cache_file(TMP.DS.'cache'.DS.'variables'.DS.'Plugins'.DS, "plugins");
-			
+			$pluginsList = Cache::exists_cache_file(TMP.DS.'cache'.DS.'variables'.DS.'Plugins'.DS, "plugins");			
 			$pluginControllerToLoad = Inflector::camelize($pluginControllerToLoad);
+			
+			//Si le plugin est installé
 			if(isset($pluginsList[$pluginControllerToLoad])) {
 
 				$file_name = $file_name_plugin;
 				$file_path = $file_path_plugin;
+				
+			//Si il n'est pas installé on va vérifier si un contrôleur n'existe pas dans le dossier par défaut
+			} else if(file_exists($file_path_default)) { 
+			
+				$file_name = $file_name_default;
+				$file_path = $file_path_default;
+			 
+			//Dans le cas contraire on génère une erreur
 			} else {
 
 				$this->error("Le controller du plugin ".$pluginControllerToLoad." n'existe pas"." dans le fichier dispatcher ou n'est pas correctement installé");
 				die();				
-			}			
+			}		
+
+		//On contrôle si le contrôleur existe bien dans le dossier par défaut
 		} else if(file_exists($file_path_default)) { 
 			
 			$file_name = $file_name_default;
 			$file_path = $file_path_default;
 			 
-		} //Sinon on teste si le controller par défaut existe
-		else { //Sinon on affiche une erreur
+		//Sinon on affiche une erreur
+		} else { 
 
 			$this->error("Le controller ".$this->request->controller." n'existe pas"." dans le fichier dispatcher");
 			die();	
-		}//On va tester l'existence de ce fichier
+		}
 		
 		require $file_path; //Inclusion de ce fichier si il existe
 	

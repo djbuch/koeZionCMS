@@ -4,8 +4,9 @@
 		<num>20130121</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Modification du helper form<task>
-			<task author="KoéZionCMS">Modification gestion des fichiers par défaut de ckeditor<task>
+			<task author="KoéZionCMS">Modification du helper form</task>
+			<task author="KoéZionCMS">Modification gestion des fichiers par défaut de ckeditor</task>
+			<task author="KoéZionCMS">Redéfinition de la fonctionnalité de chargement des plugins</task>
 		</tasks>	
 	</version>
 	<version>
@@ -13,10 +14,10 @@
 		<num>20130120</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Modification de la gestion de la récupération des css et js intégrés dans l'éditeur<task>
-			<task author="KoéZionCMS">Suite modifs de la MAJ MAJEURE<task>
-			<task author="KoéZionCMS">Modification BDD websites pour rajout js_hack<task>
-			<task author="KoéZionCMS">Mise en place du chargement automatique des js et css pour la coloration syntaxique pour rendre le layout principal plus light<task>
+			<task author="KoéZionCMS">Modification de la gestion de la récupération des css et js intégrés dans l'éditeur</task>
+			<task author="KoéZionCMS">Suite modifs de la MAJ MAJEURE</task>
+			<task author="KoéZionCMS">Modification BDD websites pour rajout js_hack</task>
+			<task author="KoéZionCMS">Mise en place du chargement automatique des js et css pour la coloration syntaxique pour rendre le layout principal plus light</task>
 		</tasks>	
 	</version>
 	<version>
@@ -24,11 +25,11 @@
 		<num>20130117</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Mise en place de l'appel des élements de façon dynamique dans les vues ne faisant pas partie du backoffice (ce procédé facilitera la duplication de template)<task>
-			<task author="KoéZionCMS">Modification du nom du template frontffice par koezion qui sera le template par défaut<task>
-			<task author="KoéZionCMS">Modification du fichier sql des données par défaut de la table template (Process d'install)<task>
-			<task author="KoéZionCMS">GROSSE MAJ sur la gestion des layouts --> Changement de dossier des vues, css, js et img<task>
-			<task author="KoéZionCMS">Rajout d'un dossier hook pour permettre des paramétrages supplémentaires dans le backoffice<task>
+			<task author="KoéZionCMS">Mise en place de l'appel des élements de façon dynamique dans les vues ne faisant pas partie du backoffice (ce procédé facilitera la duplication de template)</task>
+			<task author="KoéZionCMS">Modification du nom du template frontffice par koezion qui sera le template par défaut</task>
+			<task author="KoéZionCMS">Modification du fichier sql des données par défaut de la table template (Process d'install)</task>
+			<task author="KoéZionCMS">GROSSE MAJ sur la gestion des layouts --> Changement de dossier des vues, css, js et img</task>
+			<task author="KoéZionCMS">Rajout d'un dossier hook pour permettre des paramétrages supplémentaires dans le backoffice</task>
 		</tasks>	
 	</version>
 	<version>
@@ -36,7 +37,7 @@
 		<num>20130115</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Modification du model principal pour récupérer la liste des ID suite à un saveAll<task>
+			<task author="KoéZionCMS">Modification du model principal pour récupérer la liste des ID suite à un saveAll</task>
 		</tasks>	
 	</version>
 	<version>
@@ -44,8 +45,8 @@
 		<num>20130115</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Correction de la suppression du cache pour les fonctions sans rendu<task>
-			<task author="KoéZionCMS">Modification du helper html pour la génération du menu<task>
+			<task author="KoéZionCMS">Correction de la suppression du cache pour les fonctions sans rendu</task>
+			<task author="KoéZionCMS">Modification du helper html pour la génération du menu</task>
 		</tasks>	
 	</version>
 	<version>
@@ -53,7 +54,7 @@
 		<num>20130113</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Correction css et images templates<task>
+			<task author="KoéZionCMS">Correction css et images templates</task>
 		</tasks>	
 	</version>
 	<version>
@@ -61,12 +62,12 @@
 		<num>20130111</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Réorganisation du dossier contenant les vues d'un layout (le dossier est maintenant layout_views et dedans un dossier par template)<task>
-			<task author="KoéZionCMS">Modification dans l'objet View du dossier utilisé pour rendre les vues<task>
-			<task author="KoéZionCMS">Correction du bug lié à la modification du template pour l'affichage d'une catégorie<task>
-			<task author="KoéZionCMS">Correction du lien permettant de modifier le code de sécurité pour les tâches planifiées<task>
-			<task author="KoéZionCMS">Passage du chargement des JS du frontoffice dans le body (dans l'espoir d'améliorer les temps de chargement --> à suivre)<task>
-			<task author="KoéZionCMS">Correction css tableau<task>
+			<task author="KoéZionCMS">Réorganisation du dossier contenant les vues d'un layout (le dossier est maintenant layout_views et dedans un dossier par template)</task>
+			<task author="KoéZionCMS">Modification dans l'objet View du dossier utilisé pour rendre les vues</task>
+			<task author="KoéZionCMS">Correction du bug lié à la modification du template pour l'affichage d'une catégorie</task>
+			<task author="KoéZionCMS">Correction du lien permettant de modifier le code de sécurité pour les tâches planifiées</task>
+			<task author="KoéZionCMS">Passage du chargement des JS du frontoffice dans le body (dans l'espoir d'améliorer les temps de chargement --> à suivre)</task>
+			<task author="KoéZionCMS">Correction css tableau</task>
 		</tasks>	
 	</version>
 	<version>
@@ -74,11 +75,11 @@
 		<num>20130109</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Modification du contrôleur Configs pour rajouter la fonction security_code_list à la place de export_list<task>
-			<task author="KoéZionCMS">Modification de la librairie Cache pour rajout une fonction qui supprime tous les fichiers de cache (Rajout des vues associées)<task>
-			<task author="KoéZionCMS">Modification de la barre de menu du haut dans le backoffice pour intégration de la nouvelle fonction du contrôleur Configs<task>
-			<task author="KoéZionCMS">Modification du contrôleur Posts et du formulaire backoffice suite au changement effectué dans le contrôleur Configs pour la gestion du code de sécurité<task>
-			<task author="KoéZionCMS">Modification de la vue d'affichage du détail d'une catégorie suite à la modification de la structure du plugin WineSearcher<task>
+			<task author="KoéZionCMS">Modification du contrôleur Configs pour rajouter la fonction security_code_list à la place de export_list</task>
+			<task author="KoéZionCMS">Modification de la librairie Cache pour rajout une fonction qui supprime tous les fichiers de cache (Rajout des vues associées)</task>
+			<task author="KoéZionCMS">Modification de la barre de menu du haut dans le backoffice pour intégration de la nouvelle fonction du contrôleur Configs</task>
+			<task author="KoéZionCMS">Modification du contrôleur Posts et du formulaire backoffice suite au changement effectué dans le contrôleur Configs pour la gestion du code de sécurité</task>
+			<task author="KoéZionCMS">Modification de la vue d'affichage du détail d'une catégorie suite à la modification de la structure du plugin WineSearcher</task>
 		</tasks>	
 	</version>
 	<version>
@@ -86,9 +87,9 @@
 		<num>20130105</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Correction du formulaire boutons colonne de droite<task>
-			<task author="KoéZionCMS">Gestion d'erreur des fichiers<task>
-			<task author="KoéZionCMS">Correction ligne htaccess<task>
+			<task author="KoéZionCMS">Correction du formulaire boutons colonne de droite</task>
+			<task author="KoéZionCMS">Gestion d'erreur des fichiers</task>
+			<task author="KoéZionCMS">Correction ligne htaccess</task>
 		</tasks>	
 	</version>
 	<version>
@@ -96,8 +97,8 @@
 		<num>20130104</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Correction de la gestion de l'ajout des plugins<task>
-			<task author="KoéZionCMS">Rajout d'un test dans la librairie de gestion des fichiers<task>
+			<task author="KoéZionCMS">Correction de la gestion de l'ajout des plugins</task>
+			<task author="KoéZionCMS">Rajout d'un test dans la librairie de gestion des fichiers</task>
 		</tasks>	
 	</version>
 	<version>
@@ -105,8 +106,8 @@
 		<num>20130101</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Rajout du module AddThis dans la gestion des sites Internet<task>
-			<task author="KoéZionCMS">Modification formulaire ajout site Internet<task>
+			<task author="KoéZionCMS">Rajout du module AddThis dans la gestion des sites Internet</task>
+			<task author="KoéZionCMS">Modification formulaire ajout site Internet</task>
 		</tasks>	
 	</version>
 	<version>
@@ -260,10 +261,10 @@
 		<num>20121022</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Modification de la vue d'affichage des catégories pour y intégrer le plugin Google Maps<task>
-			<task author="KoéZionCMS">Rajout d'un CSS pour gérer la hauteur par défaut du bloc d'affichage frontoffice<task>
-			<task author="KoéZionCMS">Suppression des JS non utiles<task>
-			<task author="KoéZionCMS">Rajout d'un css pour la version mobile (A terminer)<task>
+			<task author="KoéZionCMS">Modification de la vue d'affichage des catégories pour y intégrer le plugin Google Maps</task>
+			<task author="KoéZionCMS">Rajout d'un CSS pour gérer la hauteur par défaut du bloc d'affichage frontoffice</task>
+			<task author="KoéZionCMS">Suppression des JS non utiles</task>
+			<task author="KoéZionCMS">Rajout d'un css pour la version mobile (A terminer)</task>
 		</tasks>	
 	</version>
 	<version>
@@ -271,9 +272,9 @@
 		<num>20121010</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Modification du parcours du dossier des plugins<task>
-			<task author="KoéZionCMS">Modification de l'import des modèles dans le contrôleur<task>
-			<task author="KoéZionCMS">Rajout d'une nouvelle barre de menu pour l'éditeur WYSIWYG<task>
+			<task author="KoéZionCMS">Modification du parcours du dossier des plugins</task>
+			<task author="KoéZionCMS">Modification de l'import des modèles dans le contrôleur</task>
+			<task author="KoéZionCMS">Rajout d'une nouvelle barre de menu pour l'éditeur WYSIWYG</task>
 		</tasks>	
 	</version>
 	<version>
@@ -281,8 +282,8 @@
 		<num>20121004</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Modification de la gestion des plugins pour qu'ils soient interprétés par défaut dans le but de pouvoir réécrire les fonctionnalités du CMS<task>
-			<task author="KoéZionCMS">Modification de la procédure d'installation<task>
+			<task author="KoéZionCMS">Modification de la gestion des plugins pour qu'ils soient interprétés par défaut dans le but de pouvoir réécrire les fonctionnalités du CMS</task>
+			<task author="KoéZionCMS">Modification de la procédure d'installation</task>
 		</tasks>	
 	</version>
 	<version>
@@ -290,9 +291,9 @@
 		<num>20121003</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Modification du htaccess (Conf OVH)<task>
-			<task author="KoéZionCMS">Correction gestion de l'installation d'un plugin<task>
-			<task author="KoéZionCMS">Passage en plugin de sliders catégories<task>
+			<task author="KoéZionCMS">Modification du htaccess (Conf OVH)</task>
+			<task author="KoéZionCMS">Correction gestion de l'installation d'un plugin</task>
+			<task author="KoéZionCMS">Passage en plugin de sliders catégories</task>
 		</tasks>	
 	</version>
 	<version>
@@ -300,11 +301,11 @@
 		<num>20121002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Mise en place de la gestion d'un slider par catégories<task>
-			<task author="KoéZionCMS">Mise en place de la gestion du template par page<task>
-			<task author="KoéZionCMS">Reprise procédure d'install<task>
-			<task author="KoéZionCMS">Suppression crytage des mots de passe dans la table users<task>
-			<task author="KoéZionCMS">Mise en place de message d'informations en local lors de redirections avec la fonction e404<task>
+			<task author="KoéZionCMS">Mise en place de la gestion d'un slider par catégories</task>
+			<task author="KoéZionCMS">Mise en place de la gestion du template par page</task>
+			<task author="KoéZionCMS">Reprise procédure d'install</task>
+			<task author="KoéZionCMS">Suppression crytage des mots de passe dans la table users</task>
+			<task author="KoéZionCMS">Mise en place de message d'informations en local lors de redirections avec la fonction e404</task>
 		</tasks>	
 	</version>
 	<version>
@@ -312,8 +313,8 @@
 		<num>20120928</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Correction de la gestion des plugins<task>
-			<task author="KoéZionCMS">Suppression des exports et passage en plugins<task>
+			<task author="KoéZionCMS">Correction de la gestion des plugins</task>
+			<task author="KoéZionCMS">Suppression des exports et passage en plugins</task>
 		</tasks>	
 	</version>
 	<version>
@@ -321,8 +322,8 @@
 		<num>20120927</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Suppression de l'ensemble des .ini du dossier config pour les générer au moment de l'install<task>
-			<task author="KoéZionCMS">Correction d'une erreur liée au appel de classe statique changement de $pluginClass::function() par $pluginClass->function()<task>
+			<task author="KoéZionCMS">Suppression de l'ensemble des .ini du dossier config pour les générer au moment de l'install</task>
+			<task author="KoéZionCMS">Correction d'une erreur liée au appel de classe statique changement de $pluginClass::function() par $pluginClass->function()</task>
 		</tasks>	
 	</version>
 	<version>
@@ -330,14 +331,14 @@
 		<num>20120926</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Suppression du champ AddThis dans le formulaire websites<task>
-			<task author="KoéZionCMS">Suppression de la zone social dans le layout frontoffice<task>
-			<task author="KoéZionCMS">Rajout d'un style p.arrow dans ckeditor et modification du css<task>
-			<task author="KoéZionCMS">Suppression du composant xmlform<task>
-			<task author="KoéZionCMS">Rajout d'un style dans ckeditor permettant de décaller les listes vers la droite<task>
-			<task author="KoéZionCMS">Changement de la couleur par défaut du texte dans les paragraphes pour uniformiser avec les listes<task>
-			<task author="KoéZionCMS">Modification de la gestion du titre de la colonne de droite pour les catégories (Modification du formulaire d'ajout, de la récupération des données dans le controller et de l'affichage de la colonne de droite<task>
-			<task author="KoéZionCMS">Modification de la base de données des catégories<task>
+			<task author="KoéZionCMS">Suppression du champ AddThis dans le formulaire websites</task>
+			<task author="KoéZionCMS">Suppression de la zone social dans le layout frontoffice</task>
+			<task author="KoéZionCMS">Rajout d'un style p.arrow dans ckeditor et modification du css</task>
+			<task author="KoéZionCMS">Suppression du composant xmlform</task>
+			<task author="KoéZionCMS">Rajout d'un style dans ckeditor permettant de décaller les listes vers la droite</task>
+			<task author="KoéZionCMS">Changement de la couleur par défaut du texte dans les paragraphes pour uniformiser avec les listes</task>
+			<task author="KoéZionCMS">Modification de la gestion du titre de la colonne de droite pour les catégories (Modification du formulaire d'ajout, de la récupération des données dans le controller et de l'affichage de la colonne de droite</task>
+			<task author="KoéZionCMS">Modification de la base de données des catégories</task>
 		</tasks>	
 	</version>
 	<version>
@@ -345,11 +346,11 @@
 		<num>20120924</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Mise en place du système de plugins<task>
-			<task author="KoéZionCMS">Mise en place du plugin pixlr pour ckfinder<task>
-			<task author="KoéZionCMS">Correction bugs d'installation<task>
-			<task author="KoéZionCMS">Modification de la barre de menu haute dans le backoffice<task>
-			<task author="KoéZionCMS">Mise à jour des droits de l'administrateur de site<task>
+			<task author="KoéZionCMS">Mise en place du système de plugins</task>
+			<task author="KoéZionCMS">Mise en place du plugin pixlr pour ckfinder</task>
+			<task author="KoéZionCMS">Correction bugs d'installation</task>
+			<task author="KoéZionCMS">Modification de la barre de menu haute dans le backoffice</task>
+			<task author="KoéZionCMS">Mise à jour des droits de l'administrateur de site</task>
 		</tasks>	
 	</version>
 	<version>
@@ -357,9 +358,9 @@
 		<num>20120921</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Correction règles de validation<task>
-			<task author="KoéZionCMS">mise à jour données insérée par défaut<task>
-			<task author="KoéZionCMS">correction page installation des dossiers<task>
+			<task author="KoéZionCMS">Correction règles de validation</task>
+			<task author="KoéZionCMS">mise à jour données insérée par défaut</task>
+			<task author="KoéZionCMS">correction page installation des dossiers</task>
 		</tasks>	
 	</version>
 	<version>
@@ -367,9 +368,9 @@
 		<num>20120919</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Gestion dynamique des formulaires frontoffice via des fichiers xml<task>
-			<task author="KoéZionCMS">Mise à jour procédure d'installation pour y intégrer les formulaires xml<task>
-			<task author="KoéZionCMS">Modification du javascript pour ouvrir les liens externes dans une nouvelle page<task>
+			<task author="KoéZionCMS">Gestion dynamique des formulaires frontoffice via des fichiers xml</task>
+			<task author="KoéZionCMS">Mise à jour procédure d'installation pour y intégrer les formulaires xml</task>
+			<task author="KoéZionCMS">Modification du javascript pour ouvrir les liens externes dans une nouvelle page</task>
 		</tasks>	
 	</version>
 	<version>
@@ -377,7 +378,7 @@
 		<num>20120917</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Correction fonctionnalité permettant la retaille de la longueur des focus avec jQuery<task>
+			<task author="KoéZionCMS">Correction fonctionnalité permettant la retaille de la longueur des focus avec jQuery</task>
 		</tasks>	
 	</version>
 	<version>
@@ -385,7 +386,7 @@
 		<num>20120914</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Mise en place d'une fonctionnalité permettant la retaille de la longueur des focus avec jQuery<task>
+			<task author="KoéZionCMS">Mise en place d'une fonctionnalité permettant la retaille de la longueur des focus avec jQuery</task>
 		</tasks>	
 	</version>
 	<version>
@@ -393,7 +394,7 @@
 		<num>20120913</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Correction d'un bug lors de la mise à jour des index de recherches<task>
+			<task author="KoéZionCMS">Correction d'un bug lors de la mise à jour des index de recherches</task>
 		</tasks>	
 	</version>
 	<version>
@@ -401,8 +402,8 @@
 		<num>20120912</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Mise à jour du fichier sql d'import des données par défaut lors de l'installation<task>
-			<task author="KoéZionCMS">Mise à jour de la procédure d'installation des dossier par défaut dans upload<task>
+			<task author="KoéZionCMS">Mise à jour du fichier sql d'import des données par défaut lors de l'installation</task>
+			<task author="KoéZionCMS">Mise à jour de la procédure d'installation des dossier par défaut dans upload</task>
 		</tasks>	
 	</version>
 	<version>
@@ -410,8 +411,8 @@
 		<num>20120910</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Mise à jour de la version de ckFinder qui gère, apparement, mieux les sessions<task>
-			<task author="KoéZionCMS">Mise en place d'une fonction d'export permettant de faire un backup de la bdd par CRON<task>
+			<task author="KoéZionCMS">Mise à jour de la version de ckFinder qui gère, apparement, mieux les sessions</task>
+			<task author="KoéZionCMS">Mise en place d'une fonction d'export permettant de faire un backup de la bdd par CRON</task>
 		</tasks>	
 	</version>
 	<version>
@@ -419,7 +420,7 @@
 		<num>20120907</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Modification de la gestion des models sans tables pour éviter d'avoir à gérer un ModelStd<task>
+			<task author="KoéZionCMS">Modification de la gestion des models sans tables pour éviter d'avoir à gérer un ModelStd</task>
 		</tasks>	
 	</version>
 	<version>
@@ -427,9 +428,9 @@
 		<num>20120906</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Modification css powered_by<task>
-			<task author="KoéZionCMS">Modification des données de base insérées lors de l'installation<task>
-			<task author="KoéZionCMS">Mise en place lors de l'install de données de démo par défaut<task>
+			<task author="KoéZionCMS">Modification css powered_by</task>
+			<task author="KoéZionCMS">Modification des données de base insérées lors de l'installation</task>
+			<task author="KoéZionCMS">Mise en place lors de l'install de données de démo par défaut</task>
 		</tasks>	
 	</version>
 	<version>
@@ -437,9 +438,9 @@
 		<num>20120904</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Mise en place d'un passage de paramètre en GET pour pouvoir changer de site en local<task>
-			<task author="KoéZionCMS">Suppression automatique du chargement du model export et du model sitemap<task>
-			<task author="KoéZionCMS">Déplacement de la fonction _get_website_datas dans le controleur principal pour la rendre accéssible à tous les controleurs<task>
+			<task author="KoéZionCMS">Mise en place d'un passage de paramètre en GET pour pouvoir changer de site en local</task>
+			<task author="KoéZionCMS">Suppression automatique du chargement du model export et du model sitemap</task>
+			<task author="KoéZionCMS">Déplacement de la fonction _get_website_datas dans le controleur principal pour la rendre accéssible à tous les controleurs</task>
 		</tasks>	
 	</version>
 	<version>
@@ -447,11 +448,11 @@
 		<num>20120831</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Correction css liste déroulante backoffice<task>
-			<task author="KoéZionCMS">Rajout d'une colonne dans la table des sites permettant de rajouter si besoin du css à la volée + modification formulaire ajout et layout frontoffice<task>
-			<task author="KoéZionCMS">Modification de tous les types text pour les passer en longtext<task>
-			<task author="KoéZionCMS">Rajout d'un caractère spécial dans l'éditeur de texte<task>
-			<task author="KoéZionCMS">Création d'un bdd plugins pour désengorger l'affichage du back par défaut les plugins seront désactivés (Catalogue à l'heure actuelle) il suffira de les activer pour y avoir accès<task>
+			<task author="KoéZionCMS">Correction css liste déroulante backoffice</task>
+			<task author="KoéZionCMS">Rajout d'une colonne dans la table des sites permettant de rajouter si besoin du css à la volée + modification formulaire ajout et layout frontoffice</task>
+			<task author="KoéZionCMS">Modification de tous les types text pour les passer en longtext</task>
+			<task author="KoéZionCMS">Rajout d'un caractère spécial dans l'éditeur de texte</task>
+			<task author="KoéZionCMS">Création d'un bdd plugins pour désengorger l'affichage du back par défaut les plugins seront désactivés (Catalogue à l'heure actuelle) il suffira de les activer pour y avoir accès</task>
 		</tasks>	
 	</version>
 	<version>
@@ -459,9 +460,9 @@
 		<num>20120829</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Mise en place du module catalogue<task>
-			<task author="KoéZionCMS">Modification de la gestion du tri des colonnes du catalogue<task>
-			<task author="KoéZionCMS">Finalisation gestion catalogue, imports et rajout de colonne pour l'affichage<task>
+			<task author="KoéZionCMS">Mise en place du module catalogue</task>
+			<task author="KoéZionCMS">Modification de la gestion du tri des colonnes du catalogue</task>
+			<task author="KoéZionCMS">Finalisation gestion catalogue, imports et rajout de colonne pour l'affichage</task>
 		</tasks>	
 	</version>
 	<version>
@@ -469,7 +470,7 @@
 		<num>20120827</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Mise en place des modifications sur le moteur de recherche au modèle Post<task>
+			<task author="KoéZionCMS">Mise en place des modifications sur le moteur de recherche au modèle Post</task>
 		</tasks>	
 	</version>
 	<version>
@@ -477,7 +478,7 @@
 		<num>20120826</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Suppression du moteur de recherche ZEND_SEARCH_LUCENE qui provoquait des ralentissements et mise en place d'un moteur de recherche base de données<task>
+			<task author="KoéZionCMS">Suppression du moteur de recherche ZEND_SEARCH_LUCENE qui provoquait des ralentissements et mise en place d'un moteur de recherche base de données</task>
 		</tasks>	
 	</version>
 	<version>
@@ -485,7 +486,7 @@
 		<num>20120824</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Modification des insert et update de pdo<task>
+			<task author="KoéZionCMS">Modification des insert et update de pdo</task>
 		</tasks>	
 	</version>
 	<version>
@@ -493,7 +494,7 @@
 		<num>20120821</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Mise en place d'un hack pour la gestion de l'affichage de l'antislash dans les textes<task>
+			<task author="KoéZionCMS">Mise en place d'un hack pour la gestion de l'affichage de l'antislash dans les textes</task>
 		</tasks>	
 	</version>
 	<version>
@@ -501,8 +502,8 @@
 		<num>20120820</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Rajout modèle de page et correction css en fonction<task>
-			<task author="KoéZionCMS">Rajout ajout massif catégories<task>
+			<task author="KoéZionCMS">Rajout modèle de page et correction css en fonction</task>
+			<task author="KoéZionCMS">Rajout ajout massif catégories</task>
 		</tasks>	
 	</version>
 	<version>
@@ -510,7 +511,7 @@
 		<num>20120814</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Déplacement procédure update versions<task>
+			<task author="KoéZionCMS">Déplacement procédure update versions</task>
 		</tasks>	
 	</version>
 	<version>
@@ -518,7 +519,7 @@
 		<num>20120813</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Rajout de brush pour syntaxhighlighter<task>
+			<task author="KoéZionCMS">Rajout de brush pour syntaxhighlighter</task>
 		</tasks>	
 	</version>
 	<version>
@@ -526,7 +527,7 @@
 		<num>20120811</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Mise en place de syntaxhighlighter<task>
+			<task author="KoéZionCMS">Mise en place de syntaxhighlighter</task>
 		</tasks>	
 	</version>
 	<version>
@@ -534,9 +535,9 @@
 		<num>20120809</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Rajout de fullUrl dans la classe request<task>
-			<task author="KoéZionCMS">Rajout dans les mails de l'url de la page par laquelle le formulaire est posté<task>
-			<task author="KoéZionCMS">Modification des templates de ckEditor pour rajouter &lt;div class=&quot;clearfix&quot;&gt;&nbsp;&lt;/div&gt; lors de l'ajout des portfolios<task>
+			<task author="KoéZionCMS">Rajout de fullUrl dans la classe request</task>
+			<task author="KoéZionCMS">Rajout dans les mails de l'url de la page par laquelle le formulaire est posté</task>
+			<task author="KoéZionCMS">Modification des templates de ckEditor pour rajouter &lt;div class=&quot;clearfix&quot;&gt;&amp;nbsp;&lt;/div&gt; lors de l'ajout des portfolios</task>
 		</tasks>	
 	</version>
 	<version>
@@ -544,7 +545,7 @@
 		<num>20120807</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">Initialisation de ce fichier<task>
+			<task author="KoéZionCMS">Initialisation de ce fichier</task>
 		</tasks>	
 	</version>
 </versions>
