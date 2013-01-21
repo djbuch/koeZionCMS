@@ -164,8 +164,20 @@ class Form {
  * @return unknown
  *
  */
-	function upload_files($field) {
+	function upload_files($field, $params = null) {
 	
+		if(!isset($params) || empty($params)) {
+
+			$params['label'] = "Fichier à importer";
+			$params['tooltip'] = "Sélectionnez le fichier à importer, sélectionnez un fichier vide pour supprimer les données de la catégorie";
+			$params['button_value'] = "Sélectionnez le fichier";			
+		} else {
+
+			if(!isset($params['label'])) { $params['label'] = "Fichier à importer"; }
+			if(!isset($params['tooltip'])) { $params['tooltip'] = "Sélectionnez le fichier à importer, sélectionnez un fichier vide pour supprimer les données de la catégorie"; }
+			if(!isset($params['button_value'])) { $params['button_value'] = "Sélectionnez le fichier"; }			
+		}
+		
 		ob_start();
 		?>
 		<script type="text/javascript">
@@ -190,20 +202,20 @@ class Form {
 		</script>	
 		<div class="row">	
 			<label>
-				Fichier à importer
-				<img original-title="Sélectionnez le fichier à importer, sélectionnez un fichier vide pour supprimer les données de la catégorie" class="tip-w" style="float: left; margin-right: 5px; cursor: pointer;" alt="tooltip" src="<?php echo BASE_URL; ?>/img/backoffice/tooltip.png">	
+				<?php echo $params['label']; ?>
+				<img original-title="<?php echo $params['tooltip']; ?>" class="tip-w" style="float: left; margin-right: 5px; cursor: pointer;" alt="tooltip" src="<?php echo BASE_URL; ?>/img/backoffice/tooltip.png">	
 			</label>
 			
 			<div class="rowright">			
 				<?php 
 				echo $this->input($field, '', array('tooltip' => false, 'div' => false, 'label' => false, 'class' => 'upload_file'));
-				echo $this->input('select_file', '', array('type' => 'button', 'onclick' => 'BrowseServer();', 'displayError' => false, 'label' => false, 'div' => false, 'tooltip' => false, 'value' => "Sélectionnez le fichier"));
+				echo $this->input('select_file', '', array('type' => 'button', 'onclick' => 'BrowseServer();', 'displayError' => false, 'label' => false, 'div' => false, 'tooltip' => false, 'value' => $params['button_value']));
 				?>
 			</div>
 		</div>	
 		<?php
 		return ob_get_clean();
-	}	
+	}		
 
 /**
  * Enter description here...
