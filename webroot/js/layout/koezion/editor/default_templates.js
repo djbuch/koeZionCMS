@@ -2,14 +2,13 @@
 Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
-
 CKEDITOR.addTemplates(
 	'default', {
-		imagesPath:CKEDITOR.getUrl(CKEDITOR.plugins.getPath('templates')+'templates/images/'),
+		imagesPath:CKEDITOR.basePath + '../../img/backoffice/editor/',
 		templates:[
 		    {
 				title:'Texte catégorie',
-				image:'txt_categorie.gif',
+				image:'koezion_txt_categorie.gif',
 				description:'',
 				html:''+
 						'<h2 class="widgettitle">Lorem ipsum</h2>' +
@@ -18,7 +17,7 @@ CKEDITOR.addTemplates(
 			},
 			{
 				title:'Texte slider',
-				image:'slider.gif',
+				image:'koezion_slider.gif',
 				description:'',
 				html:'' +					
 						'<h3 class="widgettitle">Lorem ipsum</h3>' +
@@ -27,7 +26,7 @@ CKEDITOR.addTemplates(
 			},
 			{
 				title:'Texte focus',
-				image:'focus.gif',
+				image:'koezion_focus.gif',
 				description:'Image 48/48px',
 				html:'' +
 						'<h3 class="widgettitle">Lorem ipsum</h3>' +
@@ -41,7 +40,7 @@ CKEDITOR.addTemplates(
 			},
 			{
 				title:'Texte descriptif court article (V1)',
-				image:'desc_court_article.gif',
+				image:'koezion_desc_court_article.gif',
 				description:'Image 187/100px',
 				html:'' +				
 						'<p>' +
@@ -52,7 +51,7 @@ CKEDITOR.addTemplates(
 			},
 			{
 				title:'Texte descriptif court article (V2)',
-				image:'desc_court_article.gif',
+				image:'koezion_desc_court_article.gif',
 				description:'Image 100/157px',
 				html:'' +				
 						'<p>' +
@@ -63,7 +62,7 @@ CKEDITOR.addTemplates(
 			},
 			{
 				title:'Texte descriptif long article (V1)',
-				image:'desc_long_article.gif',
+				image:'koezion_desc_long_article.gif',
 				description:'Images 264/111px',
 				html:'' +				
 						'<h2 class="widgettitle">Lorem Ipsum is simply dummy text of the printing and typesetting industry</h2>' +
@@ -123,7 +122,7 @@ CKEDITOR.addTemplates(
 			},
 			{
 				title:'Texte descriptif long article (V2)',
-				image:'desc_long_article.gif',
+				image:'koezion_desc_long_article.gif',
 				description:'Images 100/157px et 187/100px',
 				html:'' +				
 						'<h2 class="widgettitle">Lorem Ipsum Dolor<span>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span></h2>' +
@@ -175,7 +174,7 @@ CKEDITOR.addTemplates(
 			},
 			{
 				title:'Texte footer (Colonne gauche)',
-				image:'footer.gif',
+				image:'koezion_footer.gif',
 				description:'',
 				html:'' +
 						'<h4 class="widgettitle">Lorem ipsum</h4>' +
@@ -188,7 +187,7 @@ CKEDITOR.addTemplates(
 			},
 			{
 				title:'Texte footer (Colonne droite)',
-				image:'footer.gif',
+				image:'koezion_footer.gif',
 				description:'',
 				html:'' +
 						'<h4 class="widgettitle">Lorem ipsum</h4>' +
@@ -201,7 +200,7 @@ CKEDITOR.addTemplates(
 			},
 			{
 				title:'Titre niveau 1 et sous-titre',
-				image:'titre_sous_titre.gif',
+				image:'koezion_titre_sous_titre.gif',
 				description:'',
 				html:''+
 						'<h1>' + 
@@ -211,7 +210,7 @@ CKEDITOR.addTemplates(
 			},
 			{
 				title:'Titre niveau 2 et sous-titre',
-				image:'titre_sous_titre.gif',
+				image:'koezion_titre_sous_titre.gif',
 				description:'',
 				html:''+
 						'<h2>' + 
@@ -221,7 +220,7 @@ CKEDITOR.addTemplates(
 			},
 			{
 				title:'Titre niveau 3 et sous-titre',
-				image:'titre_sous_titre.gif',
+				image:'koezion_titre_sous_titre.gif',
 				description:'',
 				html:''+
 						'<h3>' + 
@@ -231,7 +230,7 @@ CKEDITOR.addTemplates(
 			},
 			{
 				title:'Colonne de prix',
-				image:'pricing.gif',
+				image:'koezion_pricing.gif',
 				description:'',
 				html:'' + 
 						'<div class="pricing">' +
@@ -250,7 +249,7 @@ CKEDITOR.addTemplates(
 			},
 			{
 				title:'Menu accordéon',
-				image:'accordeon.gif',
+				image:'koezion_accordeon.gif',
 				description:'',
 				html:'' +
 						'<h3 class="toggle">Lorem ipsum</h3>' +
@@ -260,7 +259,7 @@ CKEDITOR.addTemplates(
 			},
 			{
 				title:'Portfolio 1 colonne (avec colonne droite)',
-				image:'portfolio_1c.gif',
+				image:'koezion_portfolio_1c.gif',
 				description:'Image 300/200px',
 				html:'' +
 						'<div class="gs_8 omega">' +
@@ -273,7 +272,7 @@ CKEDITOR.addTemplates(
 			},
 			{
 				title:'Portfolio 1 colonne (pleine page)',
-				image:'portfolio_1c.gif',
+				image:'koezion_portfolio_1c.gif',
 				description:'Image 649/420px',
 				html:'' +
 						'<div class="gs_12 omega">' +
@@ -286,7 +285,7 @@ CKEDITOR.addTemplates(
 			},
 			{
 				title:'Portfolio 2 colonnes (avec colonne droite)',
-				image:'portfolio_2c.gif',
+				image:'koezion_portfolio_2c.gif',
 				description:'Images 264/111px',
 				html:'' +
 						'<div class="gs_4">' +
@@ -305,7 +304,7 @@ CKEDITOR.addTemplates(
 			},
 			{
 				title:'Portfolio 2 colonnes (pleine page)',
-				image:'portfolio_2c.gif',
+				image:'koezion_portfolio_2c.gif',
 				description:'Images 418/200px',
 				html:'' +
 						'<div class="gs_6">' +
@@ -324,7 +323,7 @@ CKEDITOR.addTemplates(
 			},
 			{
 				title:'Portfolio 3 colonnes (pleine page)',
-				image:'portfolio_3c.gif',
+				image:'koezion_portfolio_3c.gif',
 				description:'Images 264/111px',
 				html:'' +
 						'<div class="gs_4">' + 
@@ -349,7 +348,7 @@ CKEDITOR.addTemplates(
 			},
 			{
 				title:'Portfolio 4 colonnes (pleine page)',
-				image:'portfolio_4c.gif',
+				image:'koezion_portfolio_4c.gif',
 				description:'Images 187/100px',
 				html:'' +
 						'<div class="gs_3">' +
@@ -380,7 +379,7 @@ CKEDITOR.addTemplates(
 			},
 			{
 				title:'Images articles 2 colonnes (Pleine page)',
-				image:'portfolio_2c.gif',
+				image:'koezion_portfolio_2c.gif',
 				description:'Images 276/148px',
 				html:'' +
 						'<div class="gs_4">' +
@@ -397,7 +396,7 @@ CKEDITOR.addTemplates(
 			},
 			{
 				title:'Tableau',
-				image:'tableau.gif',
+				image:'koezion_tableau.gif',
 				description:'',
 				html:'' +
 						'<table cellspacing="0" cellpadding="0" id="ethernatable">' +
@@ -457,7 +456,7 @@ CKEDITOR.addTemplates(
 			},
 			{
 				title:'Tableau simple',
-				image:'tableau_simple.gif',
+				image:'koezion_tableau_simple.gif',
 				description:'',
 				html:'' +
 						'<table cellspacing="0" cellpadding="0" id="ethernatable" class="simple">' +
@@ -511,31 +510,31 @@ CKEDITOR.addTemplates(
 			},
 			{
 				title:'Saut de ligne',
-				image:'breakline.gif',
+				image:'koezion_breakline.gif',
 				description:'',
 				html:'<div class="hr"><div class="inner_hr"></div></div>'
 			},
 			{
 				title:'Clear',
-				image:'breakline.gif',
+				image:'koezion_breakline.gif',
 				description:'',
 				html:'<div class="clearfix"></div>'
 			},
 			{
 				title:'Image zoomée',
-				image:'image_zoom.gif',
+				image:'koezion_image_zoom.gif',
 				description:'Image 264/111px',
 				html:'<a class="zoomer" href="/" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>'
 			},
 			{
 				title:'Image encadrée',
-				image:'image_zoom.gif',
+				image:'koezion_image_zoom.gif',
 				description:'Image 264/111px',
 				html:'<img class="border_magic" alt="" src="" style="width: 187px; height: 100px; float: left; margin-right: 10px; margin-bottom: 10px;" />'
 			}/*,
 			{
 				title:'Système d\'onglets ',
-				image:'image_zoom.gif',
+				image:'koezion_image_zoom.gif',
 				description:'',
 				html:'' + 
 					'<div id="containerTabs">' + 

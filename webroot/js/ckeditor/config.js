@@ -63,8 +63,12 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	$.post(sUrl + 'configs/ajax_get_css_editor.html', function(cssEditor) { CKEDITOR.config.contentsCss = cssEditor; }, 'json');    
     /////////////////////////////////////////////////////////////////////////
 
-	$.post(sUrl + 'configs/ajax_get_baseurl.html', function(baseUrlJsEditor) { CKEDITOR.config.stylesSet = 'default:' + baseUrlJsEditor + 'default_styles.js'; });
+	$.post(sUrl + 'configs/ajax_get_baseurl.html', function(baseUrlJsEditor) { 
 	
+		CKEDITOR.config.stylesSet = 'default:' + baseUrlJsEditor['js'] + 'default_styles.js';
+		CKEDITOR.config.templates_files = [baseUrlJsEditor['js'] + 'default_templates.js']; 
+	}, 'json');
+				
 	CKEDITOR.config.colorButton_colors =
 		'8c8085,776890,9ccbc1,7c907c,91e4e6,9a1616,777777,776890,acbeac,b7c3c1,d171ce,ba91de,b37731,DE5328,e26fb5,7d96a4,128ece,598196,babc8e,DE5328,c884d0,b56de5,d83737,329ac0,dadd21,0576ab,bdcb71,9696dd,97cbc0,f0d137,'+		
 		'000,800000,8B4513,2F4F4F,008080,000080,4B0082,696969,' +

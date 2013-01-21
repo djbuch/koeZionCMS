@@ -5,6 +5,7 @@
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Modification du helper form<task>
+			<task author="KoéZionCMS">Modification gestion des fichiers par défaut de ckeditor<task>
 		</tasks>	
 	</version>
 	<version>

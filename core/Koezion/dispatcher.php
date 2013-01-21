@@ -92,6 +92,8 @@ class Dispatcher {
  */
 	function loadController() {
 		
+		$pluginControllerToLoad = $this->request->controller; //Sert pour verifier si un plugin est installé ou pas
+		
 		$file_name_default = strtolower($this->request->controller.'_controller'); //On récupère dans une variable le nom du controller		
 		$file_path_default = CONTROLLERS.DS.$file_name_default.'.php'; //On récupère dans une variable le chemin du controller
 		
@@ -103,7 +105,7 @@ class Dispatcher {
 		$pluginsConnectors = get_plugins_connectors();
 		if(isset($pluginsConnectors[$this->request->controller])) {
 			
-			$connectorController = $pluginsConnectors[$this->request->controller];
+			$pluginControllerToLoad = $connectorController = $pluginsConnectors[$this->request->controller];
 			$file_path_plugin = PLUGINS.DS.$connectorController.DS.'controller.php';
 		}
 		//////////////////////////////////////////////
@@ -112,9 +114,19 @@ class Dispatcher {
 		//Cela permet de pouvroi réécrire les fonctionnalités du CMS		
 		if(file_exists($file_path_plugin)) { 
 			
-			$file_name = $file_name_plugin;
-			$file_path = $file_path_plugin;
+			//On doit contrôler si le plugin est installé en allant lire le fichiers
+			$pluginsList = Cache::exists_cache_file(TMP.DS.'cache'.DS.'variables'.DS.'Plugins'.DS, "plugins");
 			
+			$pluginControllerToLoad = Inflector::camelize($pluginControllerToLoad);
+			if(isset($pluginsList[$pluginControllerToLoad])) {
+
+				$file_name = $file_name_plugin;
+				$file_path = $file_path_plugin;
+			} else {
+
+				$this->error("Le controller du plugin ".$pluginControllerToLoad." n'existe pas"." dans le fichier dispatcher ou n'est pas correctement installé");
+				die();				
+			}			
 		} else if(file_exists($file_path_default)) { 
 			
 			$file_name = $file_name_default;
