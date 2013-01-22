@@ -6,6 +6,7 @@
 		<tasks>
 			<task author="KoéZionCMS">Modification du helper form pour la mise en place de l'insertion des CSS et JS directement dans les vues avec insertion dans le layout</task>
 			<task author="KoéZionCMS">Rajout d'un modèle de page pour l'éditeur</task>
+			<task author="KoéZionCMS">Suppression de vues devenues inutiles dans la gestion des catégories</task>
 		</tasks>	
 	</version>
 	<version>
