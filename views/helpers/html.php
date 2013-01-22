@@ -12,7 +12,7 @@ class Html {
  * Variable contenant les différents doctypes possibles
  *
  * @var 	array
- * @access 	public
+ * @access 	private
  * @author 	koéZionCMS
  * @version 0.1 - 06/03/2012 by FI
  */	
@@ -26,43 +26,78 @@ class Html {
 		'xhtml11' => '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">'
 	);	
 	
+/**
+ * Variable contenant les différents fichiers CSS supplémentaires à charger
+ *
+ * @var 	array
+ * @access 	private
+ * @author 	koéZionCMS
+ * @version 0.1 - 06/03/2012 by FI
+ */	
+	private $css = array();
+	
+/**
+ * Variable contenant les différents fichiers JS supplémentaires à charger
+ *
+ * @var 	array
+ * @access 	private
+ * @author 	koéZionCMS
+ * @version 0.1 - 06/03/2012 by FI
+ */	
+	private $js = array();
+	
 //////////////////////////////////////////////////////////////////////////////////////////
 //								FONCTIONS PUBLIQUES										//
 //////////////////////////////////////////////////////////////////////////////////////////
 	
 /**
- * Enter description here...
+ * Cette fonction permet de générer le doctype d'une page HTML 
+ * Par défaut le doctype sera xhtml-strict
  *
- * @param unknown_type $type
- * @return unknown
+ * @param varchar $type Type de document
+ * @return varchar Code HTML du doctype
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 06/03/2012 by FI
  */	
-	function docType($type = 'xhtml-strict') {
+	public function docType($type = 'xhtml-strict') {
 		
-		if (isset($this->docTypes[$type])) { return $this->docTypes[$type]; }
+		if(isset($this->docTypes[$type])) { return $this->docTypes[$type]; }
 		return null;
 	}
 	
 /**
- * Enter description here...
+ * Cette fonction permet le chargement des fichiers CSS utilisés dans le CMS (Front et Back)
  *
- * @param unknown_type $css
- * @return unknown
+ * @param varchar $css		Chemin du fichier CSS à charger
+ * @param boolean $inline 	Permet d'indiquer si il faut charger directement le css ou pas
+ * @param boolean $minified	Permet d'indiquer à la fonction si il faut ou non compresser les CSS
+ * @return varchar Balises html permettant l'insertion des CSS
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 06/03/2012 by FI
  */	
-	function css($css, $minified = false) {
+	public function css($css, $inline = false, $minified = false) {	
 		
-		/*if(!$minified) {*/
-			
-			$html = '';
-			foreach($css as $v) {
+		if($inline) { $this->css = am($this->css, $css); } //Si on ne doit pas charger directement le fichier on le stocke dans la variable de classe
+		else {
+		
+			$css = am($css, $this->css); //On récupère les les éventuels CSS qui sont dans la variable de classe			
+			$html = ''; //Code HTML qui sera retourné
+			foreach($css as $v) { //Parcours de l'ensemble des fichiers
 				
-				$cssFile = '/css/'.$v.'.css';
-				$cssPath = Router::webroot($cssFile);
-				$html .= "\t\t".'<link href="'.$cssPath.'" rel="stylesheet" type="text/css" />'."\n";
+				$cssFile = '/css/'.$v; //Chemin par défaut du fichier
+				if(!substr_count($v, '.css')) { $cssFile.='.css'; }	//On teste si l'extension n'est pas déjà renseignée sinon on la rajout			
+				$cssPath = Router::webroot($cssFile); //On génère le chemin vers le fichier
+				$html .= "\t\t".'<link href="'.$cssPath.'" rel="stylesheet" type="text/css" />'."\n"; //On génère la balise de chargement		
 				
 			}
-			$html .= "\n";
-			return $html;
-		/*} else {
+			$html .= "\n"; //Rajout d'un saut de ligne
+			return $html; //On retourne le code HTML
+		}
+			
+		/*if(!$minified) {
+		} else {
 			
 			$html = '';
 			foreach($css as $v) {
@@ -79,38 +114,53 @@ class Html {
 	}
 	
 /**
- * Enter description here...
+ * Cette fonction permet le chargement des fichiers javascript utilisés dans le CMS (Front et Back)
  *
- * @param unknown_type $js
- * @return unknown
+ * @param varchar $js		Chemin du fichier JS à charger
+ * @param boolean $inline 	Permet d'indiquer si il faut charger directement le js ou pas
+ * @param boolean $minified	Permet d'indiquer à la fonction si il faut ou non compresser les JS
+ * @return varchar Balises html permettant l'insertion des JS
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 06/03/2012 by FI
  */	
-	function js($js) {
+	public function js($js, $inline = false, $minified = false) {
 		
-		$html = '';
-		foreach($js as $v) {
-			
-			$jsFile = 'js/'.$v.'.js';
-			$jsPath = Router::webroot($jsFile);
-			$html .= "\t\t".'<script src="'.$jsPath.'" type="text/javascript"></script>'."\n";			
+		if($inline) { $this->js = am($this->js, $js); } //Si on ne doit pas charger directement le fichier on le stocke dans la variable de classe
+		else {
+		
+			$js = am($js, $this->js); //On récupère les les éventuels JS qui sont dans la variable de classe
+			$html = ''; //Code HTML qui sera retourné
+			foreach($js as $v) { //Parcours de l'ensemble des fichiers
+				
+				$jsFile = 'js/'.$v; //Chemin par défaut du fichier
+				if(!substr_count($v, '.js')) { $jsFile.='.js'; } //On teste si l'extension n'est pas déjà renseignée sinon on la rajoute
+				$jsPath = Router::webroot($jsFile); //On génère le chemin vers le fichier
+				$html .= "\t\t".'<script src="'.$jsPath.'" type="text/javascript"></script>'."\n"; //On génère la balise de chargement			
+			}	
+			$html .= "\n"; //Rajout d'un saut de ligne
+			return $html; //On retourne le code HTML
 		}
-		
-		return $html;
 	}
 	
 /**
- * Enter description here...
+ * Cette fonction est utilisée pour générer le menu frontoffice
+ * Cette fonction est récursive
+ * Elle ne retourne aucune données
  *
- * @param unknown_type $categories
+ * @param array $categories		Liste des catégories qui composent le menu
+ * @param array $breadcrumbs	Fil d'ariane utilisé pour sélectionner la catégorie courante
+ * @param array $moreElements	Permet de rajouter des menus qui ne sont pas dans la table des catégories
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 06/03/2012 by FI
  */	
-	function generateMenu($categories, $breadcrumbs, $moreElements = null) {
+	public function generateMenu($categories, $breadcrumbs, $moreElements = null) {
 		
-		//pr($breadcrumbs);
-		if(count($categories) > 0) {
-		
+		if(count($categories) > 0) {		
 			
 			if(!empty($breadcrumbs)) { $iParentCategory = $breadcrumbs[0]['id']; } else { $iParentCategory = 0; }
 			?><ul><?php			
-			/*if($link_home_in_menu) { ?><li><a href="<?php echo Router::url('/'); ?>">Accueil</a></li><?php }*/			
 			foreach($categories as $k => $v) {
 				
 				?>
@@ -130,39 +180,40 @@ class Html {
 					<?php 
 				}
 			}
-			
-			/*if($contactInMenu) { ?><li><a href="<?php echo Router::url('contacts/contact'); ?>">Contact</a></li><?php }*/
 			?></ul><?php
 		}		
 	}
 	
 /**
- * 
- * @param unknown_type $image
- * @param unknown_type $options
+ * Cette fonction est utilisée pour afficher des images
+ *
+ * @param varchar 	$image		Chemin de l'image
+ * @param array 	$options	Options possibles pour l'image (alt, etc...)
+ * @return varchar Balises html permettant l'insertion de l'image
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 06/03/2012 by FI
  */	
-	function img($image, $options = null) {
-		
-		//Gestion des éventuels attributs
-		$attr = '';
-		if(isset($options)) {
+	public function img($image, $options = null) {
 
-			foreach($options as $k => $v) { $attr .= ' '.$k.'="'.$v.'"'; }
-		}
-		
+		$attr = '';
+		if(isset($options)) { foreach($options as $k => $v) { $attr .= ' '.$k.'="'.$v.'"'; } }		
 		$html = '<img src="'.BASE_URL.'/img/'.$image.'" '.$attr.' />';			
 		return $html;
 	}
 	
 /**
- * 
- * @param unknown_type $code
+ * Cette fonction est utilisée pour afficher le code Google Analytics
+ * Le code n'est retourné que si l'on est pas en local afin d'éviter les logs inutiles par Google
+ *
+ * @param 	varchar 	$code		Code communiqué par Google
+ * @return 	varchar 	Code Analytics
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 06/03/2012 by FI
  */	
-	function analytics($code) {
+	public function analytics($code) {
 		
 		if(!empty($code) && $_SERVER["HTTP_HOST"] != 'localhost') { return $code; }
-	}	
-//////////////////////////////////////////////////////////////////////////////////////////
-//								FONCTIONS PRIVEES										//
-//////////////////////////////////////////////////////////////////////////////////////////	
+	}		
 }

@@ -33,7 +33,7 @@
 			'layout/'.$websiteParams['tpl_layout'].'/colors/'.trim($websiteParams['tpl_code']).'/default',
 			'layout/'.$websiteParams['tpl_layout'].'/colors/'.trim($websiteParams['tpl_code']).'/body'
 		);			
-		echo $helpers['Html']->css($css, true);		
+		echo $helpers['Html']->css($css);		
 		if(!empty($websiteParams['css_hack'])) { ?><style type="text/css"><?php echo $websiteParams['css_hack']; ?></style><?php }		
 		?>
 	</head>

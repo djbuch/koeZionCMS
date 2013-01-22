@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 22/01/2013</name>
+		<num>20130122</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Modification du helper form pour la mise en place de l'insertion des CSS et JS directement dans les vues avec insertion dans le layout</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 21/01/2013</name>
 		<num>20130121</num>
 		<supervisor>KoéZionCMS</supervisor>
