@@ -5,6 +5,7 @@
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Modification du helper form pour la mise en place de l'insertion des CSS et JS directement dans les vues avec insertion dans le layout</task>
+			<task author="KoéZionCMS">Rajout d'un modèle de page pour l'éditeur</task>
 		</tasks>	
 	</version>
 	<version>

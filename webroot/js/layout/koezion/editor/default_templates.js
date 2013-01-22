@@ -173,6 +173,65 @@ CKEDITOR.addTemplates(
 						'<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s.</p>'
 			},
 			{
+				title:'Page portfolio',
+				image:'page_portfolio.gif',
+				description:'Images 649/420px et 187/125px',
+				html:'' +				
+						'<h2 class="widgettitle">Lorem ipsum</h2>' +
+						'<div class="hr"><div class="inner_hr">&nbsp;</div></div>' +
+						'<p><span class="dropcapspot">L</span>orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>' +
+						'<div class="gs_12 omega">' +
+							'<img alt="" class="border_magic alignleft" src="/" style="width: 649px; height: 420px;" />' +
+							'<h3>Vivamus non tellus</h3>' +
+							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula. Cras arcu tortor, euismod id lacinia quis, ultricies sagittis urna. Etiam feugiat porttitor ullamcorper.</p>' +
+						'</div>' +
+						'<div class="clearfix">&nbsp;</div>' +
+						'<p>&nbsp;</p>' +
+						'<div class="gs_3">' +
+							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="/" style="width: 187px; height: 125px;" /></a>' +
+							'<h3>Sultricies sagittis</h3>' +
+							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula.</p>' +
+						'</div>' +
+						'<div class="gs_3">' +
+							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="/" style="width: 187px; height: 125px;" /></a>' +
+							'<h3>Sultricies sagittis</h3>' +
+							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula.</p>' +
+						'</div>' +
+						'<div class="gs_3">' +
+							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="/" style="width: 187px; height: 125px;" /></a>' +
+							'<h3>Sultricies sagittis</h3>' +
+							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula.</p>' +
+						'</div>' +
+						'<div class="gs_3 omega">' +
+							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="/" style="width: 187px; height: 125px;" /></a>' +
+							'<h3>Sultricies sagittis</h3>' +
+							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula.</p>' +
+						'</div>' +
+						'<div class="clearfix">&nbsp;</div>' +
+						'<div class="gs_3">' +
+							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="/" style="width: 187px; height: 125px;" /></a>' +
+							'<h3>Sultricies sagittis</h3>' +
+							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula.</p>' +
+						'</div>' +
+						'<div class="gs_3">' +
+							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="/" style="width: 187px; height: 125px;" /></a>' +
+							'<h3>Sultricies sagittis</h3>' +
+							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula.</p>' +
+						'</div>' +
+						'<div class="gs_3">' +
+							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="/" style="width: 187px; height: 125px;" /></a>' +
+							'<h3>Sultricies sagittis</h3>' +
+							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula.</p>' +
+						'</div>' +
+						'<div class="gs_3 omega">' +
+							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="/" style="width: 187px; height: 125px;" /></a>' +
+							'<h3>Sultricies sagittis</h3>' +
+							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula.</p>' +
+						'</div>' +
+						'<div class="clearfix">&nbsp;</div>' +
+						'<p>&nbsp;</p><p>&nbsp;</p>'
+			},
+			{
 				title:'Texte footer (Colonne gauche)',
 				image:'footer.gif',
 				description:'',
@@ -206,7 +265,8 @@ CKEDITOR.addTemplates(
 						'<h1>' + 
 							'Lorem ipsum' + 
 							'<span>Dolor sit amet</span>' + 
-						'</h1>'
+						'</h1>' +
+						'<p>&nbsp;</p>'
 			},
 			{
 				title:'Titre niveau 2 et sous-titre',
@@ -216,7 +276,8 @@ CKEDITOR.addTemplates(
 						'<h2>' + 
 							'Lorem ipsum' + 
 							'<span>Dolor sit amet</span>' + 
-						'</h2>'
+						'</h2>' +
+						'<p>&nbsp;</p>'
 			},
 			{
 				title:'Titre niveau 3 et sous-titre',
@@ -226,7 +287,8 @@ CKEDITOR.addTemplates(
 						'<h3>' + 
 							'Lorem ipsum' + 
 							'<span>Dolor sit amet</span>' + 
-						'</h3>'
+						'</h3>' +
+						'<p>&nbsp;</p>'
 			},
 			{
 				title:'Colonne de prix',
@@ -268,7 +330,8 @@ CKEDITOR.addTemplates(
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula. Cras arcu tortor, euismod id lacinia quis, ultricies sagittis urna. Etiam feugiat porttitor ullamcorper.</p>' +
 							'<p><a href="/">Lorem ipsum</a></p>' +
 						'</div>' +
-						'<div class="clearfix">&nbsp;</div>'
+						'<div class="clearfix">&nbsp;</div>' +
+						'<p>&nbsp;</p>'
 			},
 			{
 				title:'Portfolio 1 colonne (pleine page)',
@@ -281,7 +344,8 @@ CKEDITOR.addTemplates(
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula. Cras arcu tortor, euismod id lacinia quis, ultricies sagittis urna. Etiam feugiat porttitor ullamcorper.</p>' +
 							'<p><a href="/">Lorem ipsum</a></p>' +
 						'</div>' +
-						'<div class="clearfix">&nbsp;</div>'
+						'<div class="clearfix">&nbsp;</div>' +
+						'<p>&nbsp;</p>'
 			},
 			{
 				title:'Portfolio 2 colonnes (avec colonne droite)',
@@ -300,7 +364,8 @@ CKEDITOR.addTemplates(
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula. Cras arcu tortor, euismod id lacinia quis, ultricies sagittis urna. Etiam feugiat porttitor ullamcorper.</p>' +
 							'<p><a href="/">Lorem ipsum</a></p>' +
 						'</div>' +
-						'<div class="clearfix">&nbsp;</div>'
+						'<div class="clearfix">&nbsp;</div>' +
+						'<p>&nbsp;</p>'
 			},
 			{
 				title:'Portfolio 2 colonnes (pleine page)',
@@ -319,7 +384,8 @@ CKEDITOR.addTemplates(
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula. Cras arcu tortor, euismod id lacinia quis, ultricies sagittis urna. Etiam feugiat porttitor ullamcorper.</p>' +
 							'<p><a href="/">Lorem ipsum</a></p>' +
 						'</div>' +
-						'<div class="clearfix">&nbsp;</div>'
+						'<div class="clearfix">&nbsp;</div>' +
+						'<p>&nbsp;</p>'
 			},
 			{
 				title:'Portfolio 3 colonnes (pleine page)',
@@ -344,7 +410,8 @@ CKEDITOR.addTemplates(
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula. Cras arcu tortor, euismod id lacinia quis, ultricies sagittis urna. Etiam feugiat porttitor ullamcorper.</p>' + 
 							'<p><a href="/">Lorem ipsum</a></p>' + 
 						'</div>' +
-						'<div class="clearfix">&nbsp;</div>'
+						'<div class="clearfix">&nbsp;</div>' +
+						'<p>&nbsp;</p>'
 			},
 			{
 				title:'Portfolio 4 colonnes (pleine page)',
@@ -375,7 +442,8 @@ CKEDITOR.addTemplates(
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula.</p>' +
 							'<p><a href="/">Lorem ipsum</a></p>' +
 						'</div>' +
-						'<div class="clearfix">&nbsp;</div>'
+						'<div class="clearfix">&nbsp;</div>' +
+						'<p>&nbsp;</p>'
 			},
 			{
 				title:'Images articles 2 colonnes (Pleine page)',
@@ -392,7 +460,8 @@ CKEDITOR.addTemplates(
 							'<h3>Lorem Ipsum</h3>' +
 							'<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>' +
 						'</div>' +
-						'<div class="clearfix">&nbsp;</div>'
+						'<div class="clearfix">&nbsp;</div>' +
+						'<p>&nbsp;</p>'
 			},
 			{
 				title:'Tableau',
@@ -524,13 +593,13 @@ CKEDITOR.addTemplates(
 				title:'Image zoomée',
 				image:'image_zoom.gif',
 				description:'Image 264/111px',
-				html:'<a class="zoomer" href="/" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>'
+				html:'<a class="zoomer" href="/" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a><p>&nbsp;</p>'
 			},
 			{
 				title:'Image encadrée',
 				image:'image_zoom.gif',
 				description:'Image 264/111px',
-				html:'<img class="border_magic" alt="" src="" style="width: 187px; height: 100px; float: left; margin-right: 10px; margin-bottom: 10px;" />'
+				html:'<img class="border_magic" alt="" src="" style="width: 187px; height: 100px; float: left; margin-right: 10px; margin-bottom: 10px;" /><p>&nbsp;</p>'
 			}/*,
 			{
 				title:'Système d\'onglets ',
