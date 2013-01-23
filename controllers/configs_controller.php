@@ -110,7 +110,17 @@ class ConfigsController extends AppController {
 		
 		Cache::delete_cache_directory(TMP.DS.'cache'.DS);
 		Session::setFlash("Cache supprimé"); //Message de confirmation
+		$this->redirect('backoffice/configs/delete_cache_result'); //Redirection
 	}	
+	
+/**
+ * Cette fonction va permettre l'affichage du message de confirmation lors de la suppression du cache
+ *
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 23/01/2013 by FI
+ */
+	function backoffice_delete_cache_result() {}	
 	
 //////////////////////////////////////////////////////////////////////////////////////
 //										AJAX										//
