@@ -38,17 +38,19 @@
 		?>
 	</head>
 	<body>
-		<div id="container">
+		<div class="wrap_content">
 			<?php $this->element($websiteParams['tpl_layout'].'/header'); ?>
 			<?php $this->element($websiteParams['tpl_layout'].'/menu_general'); ?>		
-	    
+	    </div>
+	    <div class="wrap_content">
 			<div class="main png_bg">
 				<div class="inner_main">
 					<?php echo $content_for_layout; ?>
 				</div>
 		    </div>
 		    <div class="endmain png_bg"></div>
-		
+		</div>
+		<div class="wrap_content">
 			<?php $this->element($websiteParams['tpl_layout'].'/footer'); ?>
 			<?php $this->element($websiteParams['tpl_layout'].'/logout'); ?>
 		</div>				

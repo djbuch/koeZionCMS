@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 23/01/2013</name>
+		<num>20130123</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Modification du layout par défaut pour séparer les zones header, content et footer.</task>
+			<task author="KoéZionCMS">Modification du css gérant #container qui devient .wrap_content</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 22/01/2013</name>
 		<num>20130122</num>
 		<supervisor>KoéZionCMS</supervisor>
