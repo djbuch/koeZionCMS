@@ -178,15 +178,16 @@ class Form {
 			if(!isset($params['button_value'])) { $params['button_value'] = "Sélectionnez le fichier"; }			
 		}
 		
+		$inputFieldId = $this->_set_input_id($field);		
 		ob_start();
 		?>
 		<script type="text/javascript">
-			function BrowseServer() {
+			function BrowseServer<?php echo $inputFieldId; ?>() {
 			
 				// You can use the "CKFinder" class to render CKFinder in a page:
 				var finder = new CKFinder();
 				finder.basePath = './js/ckfinder/';	// The path for the installation of CKFinder (default = "/ckfinder/").
-				finder.selectActionFunction = SetFileField;
+				finder.selectActionFunction = SetFileField<?php echo $inputFieldId; ?>;
 				finder.popup();
 			
 				// It can also be done in a single line, calling the "static"
@@ -198,7 +199,7 @@ class Form {
 			}
 			
 			// This is a sample function which is called when a file is selected in CKFinder.
-			function SetFileField(fileUrl) { document.getElementById("<?php echo $this->_set_input_id($field); ?>").value = fileUrl; }				
+			function SetFileField<?php echo $inputFieldId; ?>(fileUrl) { document.getElementById("<?php echo $inputFieldId; ?>").value = fileUrl; }				
 		</script>	
 		<div class="row">	
 			<label>
@@ -209,7 +210,7 @@ class Form {
 			<div class="rowright">			
 				<?php 
 				echo $this->input($field, '', array('tooltip' => false, 'div' => false, 'label' => false, 'class' => 'upload_file'));
-				echo $this->input('select_file', '', array('type' => 'button', 'onclick' => 'BrowseServer();', 'displayError' => false, 'label' => false, 'div' => false, 'tooltip' => false, 'value' => $params['button_value']));
+				echo $this->input('select_file', '', array('type' => 'button', 'onclick' => 'BrowseServer'.$inputFieldId.'();', 'displayError' => false, 'label' => false, 'div' => false, 'tooltip' => false, 'value' => $params['button_value']));
 				?>
 			</div>
 		</div>	
