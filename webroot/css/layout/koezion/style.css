@@ -76,7 +76,8 @@ p.information{background:url(../../../img/layout/koezion/information.png) no-rep
 p.error{background:url(../../../img/layout/koezion/error.png) no-repeat 15px 9px;color:#5a5a5a;border:1px dotted #e3b7b7;border-radius:4px;background-color:#f4dada;padding:15px 57px}
 p.arrow{background:url(../../../img/layout/koezion/bullet-arrow.png) no-repeat 0 1px;color:#5a5a5a;padding:0 15px 0 20px;margin-bottom:10px}
 #powered_by a {background:url(../../../img/koezion_logo.gif) no-repeat top right transparent;}
-.wrap_content{width:980px;margin:0 auto;/*overflow:hidden;*/display:block;position:relative}
+.wrap_content{width:980px;margin:0 auto;overflow:hidden;display:block;position:relative}
+.wrap_content.header{overflow:visible;}
 .wrap_content.wait{padding-top:50px}
 #header{width:960px;height:120px;margin:0 10px;position:relative}
 #header .locales{float:right;margin-top:5px}

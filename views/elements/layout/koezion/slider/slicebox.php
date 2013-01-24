@@ -44,6 +44,5 @@ if(isset($sliders) && count($sliders) > 0) {
 			?>
 		</ul>		
 		<?php echo $nav; ?>
-		<div class="loader"></div>
 	</div>
 <?php } ?>		

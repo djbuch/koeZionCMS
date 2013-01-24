@@ -37,7 +37,7 @@
 		?>
 	</head>
 	<body>
-		<div class="wrap_content">
+		<div class="wrap_content header">
 			<?php $this->element($websiteParams['tpl_layout'].'/header'); ?>
 			<?php $this->element($websiteParams['tpl_layout'].'/menu_general'); ?>		
 	    </div>
