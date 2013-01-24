@@ -308,7 +308,8 @@ class WebsitesController extends AppController {
 	protected function _init_caching($params = null) {		
 		
 		$this->cachingFiles = array(		
-			TMP.DS.'cache'.DS.'variables'.DS.'Websites'.DS.$_SERVER["HTTP_HOST"].'.cache'
+			//TMP.DS.'cache'.DS.'variables'.DS.'Websites'.DS.$_SERVER["HTTP_HOST"].'.cache'
+			TMP.DS.'cache'.DS.'variables'.DS.'Websites'
 		);		
 	}
 }

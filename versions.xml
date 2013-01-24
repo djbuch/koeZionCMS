@@ -8,6 +8,7 @@
 			<task author="KoéZionCMS">Mise en place d'une librairie jQuery plus récente.</task>
 			<task author="KoéZionCMS">Mise du choix du double slider 2D et 3D dans le formulaire des sites Internet.</task>
 			<task author="KoéZionCMS">Modification du layout koezion.php ainsi que des JS suite à la mise en place de la double gestion du slider.</task>
+			<task author="KoéZionCMS">Correction d'un bug lié à la suppresion du cache lors de la modification du statut et de la gestion des sites Internet.</task>
 		</tasks>	
 	</version>
 	<version>

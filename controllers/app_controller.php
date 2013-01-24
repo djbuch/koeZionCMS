@@ -744,7 +744,12 @@ class AppController extends Controller {
     	
     	if(isset($this->cachingFiles)) {
     		
-    		foreach($this->cachingFiles as $file) { FileAndDir::remove($file); }
+    		foreach($this->cachingFiles as $file) { 
+    			
+    			if(FileAndDir::dexists($file)) { Cache::delete_cache_directory($file); }
+    			else if(FileAndDir::fexists($file)) { FileAndDir::remove($file); }
+    			
+    		}
     	}    	
     }
 }

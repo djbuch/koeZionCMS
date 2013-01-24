@@ -339,7 +339,7 @@ class Controller extends Object {
 		//A revoir quand plus de temps
 		if(
 				method_exists($this, '_init_caching') &&
-				in_array($this->params['action'], array('add', 'edit', 'delete', 'status', 'move2prev', 'move2next', 'ajax_order_by'))
+				in_array($this->params['action'], array('add', 'edit', 'delete', 'statut', 'move2prev', 'move2next', 'ajax_order_by'))
 		) {
 		
 			//Dans le cas de l'édition, de la suppression, du changement de status d'un élément on passe l'id pour l'initialisation
