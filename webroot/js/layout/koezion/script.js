@@ -21,7 +21,7 @@ $(document).ready(function() {
 		
 	/* Hack for all browsers to load the slider nicier way. The #slider has default property of display:none in css(for nice IE loading), then when js is loaded it changes to block (so Opera can
 	render height of the slider properly while loading images), and then hides it again. Later, when all images are loaded - the fadeIn function kicks in. */
-	$('#slider').css({display: "block"}).hide();
+	//$('#slider').css({display: "block"}).hide();
 	
 	/* Prepare border magic image loading */
 	$('.inner_main .border_magic, #footer .border_magic').css({display: "block"}).hide();
@@ -42,21 +42,21 @@ $(document).ready(function() {
 $(window).load(function(){
 	
 	/* Load the slider nicely with fade-in effect and wait till all images are loaded */
-	$('#slider').fadeIn(900);
-	$('.inner_main .loader').css({display: "none"});
+	//$('#slider').fadeIn(900);
+	//$('.inner_main .loader').css({display: "none"});
 	
 	/* Innitialize Nivo Slider */
-	$('#slider').nivoSlider({		
+	/*$('#slider').nivoSlider({		
 		directionNav:false,
 		captionOpacity:0.85,
 		slices:10,
 		pauseTime:8000,
 		keyboardNav:true,
 		pauseOnHover:true
-	});
+	});*/
 
 	/* Add special rounded corners to the Slider */
-	$('.inner_main .nivoSlider').append('<div class="slider_cover_tl png_bg"></div><div class="slider_cover_tr png_bg"></div><div class="slider_cover_br png_bg"></div><div class="slider_cover_bl png_bg"></div>');
+	//$('.inner_main .nivoSlider').append('<div class="slider_cover_tl png_bg"></div><div class="slider_cover_tr png_bg"></div><div class="slider_cover_br png_bg"></div><div class="slider_cover_bl png_bg"></div>');
 	
 	/* Make the Slider navigation bullets align to center automaticly */
 	var dotsMargin = $('.inner_main .nivo-controlNav').width();
@@ -100,12 +100,12 @@ $(window).load(function(){
 		speed:         1000,
 		before: onAfter
 	});*/
-	function onAfter(curr, next, opts, fwd){
+	/*function onAfter(curr, next, opts, fwd){
         //get the height of the current slide
         var ht = $(this).height();
         //set the container's height to that of the current slide
         $(this).parent().animate({height: ht});
-	}
+	}*/
 	
 	$('a').filter(function() { return this.hostname && this.hostname !== location.hostname; }).attr("target", "_blank");
 	$(".blank").attr("target", "_blank");

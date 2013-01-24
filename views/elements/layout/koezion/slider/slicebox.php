@@ -2,30 +2,34 @@
 if(isset($sliders) && count($sliders) > 0) { 
 	
 	$css = array(
-		$websiteParams['tpl_layout'].'/slider/slicebox/slicebox',
-		$websiteParams['tpl_layout'].'/slider/slicebox/custom'
+		'layout/'.$websiteParams['tpl_layout'].'/slider/slicebox/slicebox',
+		'layout/'.$websiteParams['tpl_layout'].'/slider/slicebox/custom'
 	);		
 	echo $helpers['Html']->css($css, true);
 	
 	$js = array(
-			$websiteParams['tpl_layout'].'/slider/slicebox/modernizr.custom.46884',
-			$websiteParams['tpl_layout'].'/slider/slicebox/jquery.slicebox'
+			'layout/'.$websiteParams['tpl_layout'].'/slider/slicebox/modernizr.custom.46884',
+			'layout/'.$websiteParams['tpl_layout'].'/slider/slicebox/jquery.slicebox',
+			'layout/'.$websiteParams['tpl_layout'].'/slider/slicebox/slicebox'
 	);
-	echo $helpers['Html']->js($js);
+	echo $helpers['Html']->js($js, true);
 	?>
-	<div class="container_alpha slicebox">
-			
+	<div class="container_alpha slicebox">			
 		<ul id="sb-slider" class="sb-slider">
 			<?php 
-			//require_once(LIBS.DS.'simple_html_dom.php');
 			
 			$nav = '<div id="nav-dots" class="nav-dots">';
 			$cpt = 0;
-			foreach($sliders as $k => $v) {					
+			foreach($sliders as $k => $v) {	
+
+				require_once(LIBS.DS.'simple_html_dom.php');
+				
+				$sliderImg = str_get_html($v['image']);
+				$sliderImg->find('img', 0)->style = 'width: 918px;';				
 				?>
 				<li>
 					<?php 
-					echo $v['image'];
+					echo $sliderImg;
 					if(isset($v['content']) && !empty($v['content'])) { 
 						?><div class="sb-description"><?php echo $v['content']; ?></div><?php 
 					} 
@@ -38,88 +42,8 @@ if(isset($sliders) && count($sliders) > 0) {
 			}
 			$nav .= '</div>';
 			?>
-		</ul>
-		
+		</ul>		
 		<?php echo $nav; ?>
+		<div class="loader"></div>
 	</div>
-
-	<script type="text/javascript">
-		$(function() {
-	
-			var Page = (function() {
-	
-				var $navArrows = $('#nav-arrows').hide(),
-					$navDots = $('#nav-dots').hide(),
-					$nav = $navDots.children( 'span' ),
-					$shadow = $('#shadow').hide(),
-					slicebox = $('#sb-slider').slicebox( {
-						onReady : function() {
-	
-							$navArrows.show();
-							$navDots.show();
-							$shadow.show();
-	
-						},
-						onBeforeChange : function( pos ) {
-	
-							$nav.removeClass('nav-dot-current');
-							$nav.eq(pos).addClass('nav-dot-current');	
-						},
-					orientation : 'r',
-					cuboidsRandom : true,
-					disperseFactor : 30,
-					autoplay : true,
-					interval : 4500
-					} ),
-					
-					init = function() { initEvents(); },
-					initEvents = function() {
-	
-						// add navigation events
-						$navArrows.children(':first').on('click', function() {
-	
-							slicebox.next();
-							return false;	
-						} );
-	
-						$navArrows.children(':last').on('click', function() {
-							
-							slicebox.previous();
-							return false;	
-						} );
-	
-						$nav.each(function(i) {
-						
-							$(this).on( 'click', function( event ) {
-								
-								var $dot = $( this );
-								
-								if(!slicebox.isActive()) {
-	
-									$nav.removeClass('nav-dot-current');
-									$dot.addClass('nav-dot-current');								
-								}
-								
-								slicebox.jump(i + 1);
-								return false;							
-							});
-							
-						} );					
-						
-					
-						$('.slicebox').hover(
-							function() { slicebox.pause(); }, 
-							function() { slicebox.play(); }
-						);
-	
-					};
-	
-					return { init : init };
-	
-			})();
-	
-			Page.init();
-	
-		});
-	</script>	
 <?php } ?>		

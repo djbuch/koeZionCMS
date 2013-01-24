@@ -76,7 +76,7 @@ p.information{background:url(../../../img/layout/koezion/information.png) no-rep
 p.error{background:url(../../../img/layout/koezion/error.png) no-repeat 15px 9px;color:#5a5a5a;border:1px dotted #e3b7b7;border-radius:4px;background-color:#f4dada;padding:15px 57px}
 p.arrow{background:url(../../../img/layout/koezion/bullet-arrow.png) no-repeat 0 1px;color:#5a5a5a;padding:0 15px 0 20px;margin-bottom:10px}
 #powered_by a {background:url(../../../img/koezion_logo.gif) no-repeat top right transparent;}
-.wrap_content{width:980px;margin:0 auto;overflow:hidden;display:block;position:relative}
+.wrap_content{width:980px;margin:0 auto;/*overflow:hidden;*/display:block;position:relative}
 .wrap_content.wait{padding-top:50px}
 #header{width:960px;height:120px;margin:0 10px;position:relative}
 #header .locales{float:right;margin-top:5px}
@@ -94,9 +94,9 @@ p.arrow{background:url(../../../img/layout/koezion/bullet-arrow.png) no-repeat 0
 .container_gamma{width:892px;padding:15px 32px 17px;overflow:hidden;background:url(../../../img/layout/koezion/container_gamma.png) repeat-x center bottom transparent;z-index:988;zoom:1}
 .container_omega{width:892px;padding:32px 32px 15px;overflow:hidden;background:url(../../../img/layout/koezion/container_omega.png) repeat-x center top transparent;z-index:988;zoom:1/*;min-height:350px*/}
 .container_omega_plus{width:892px;margin-top:6px;padding:35px 32px 18px;overflow:hidden;background:url(../../../img/layout/koezion/container_omega_plus.png) repeat-x center top transparent;z-index:988;zoom:1}
-.container_alpha.slider{width:918px;padding:16px 19px 33px}
+.container_alpha.slider{width:918px;padding:16px 19px 5px}
 .second_block .container_alpha,.second_block .container_alpha_nogradients{padding-top:0}
-.loader{width:918px;height:12px;padding-top:19px;background:url(../../../img/layout/koezion/loading.gif) no-repeat 50% 14px}
+.loader{width:918px;height:12px;padding:19px 0;background:url(../../../img/layout/koezion/loading.gif) no-repeat 50% 14px}
 .t_widget h1,.t_widget h2,.t_widget h3,.t_widget h4,.t_widget h5,.t_widget h6{margin-top:13px}
 .breadcrumbs{width:916px;padding:5px 20px 9px}
 .breadcrumbs p{margin:0}

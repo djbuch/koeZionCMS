@@ -317,7 +317,8 @@ CKEDITOR.addTemplates(
 						'<h3 class="toggle">Lorem ipsum</h3>' +
 						'<div class="toggler">' +
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula. Cras arcu tortor, euismod id lacinia quis, ultricies sagittis urna. Etiam feugiat porttitor ullamcorper.</p>' +
-						'</div>'
+						'</div>' +
+						'<p>&nbsp;</p>'
 			},
 			{
 				title:'Portfolio 1 colonne (avec colonne droite)',

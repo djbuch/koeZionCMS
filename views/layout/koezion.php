@@ -20,8 +20,7 @@
 			'layout/'.$websiteParams['tpl_layout'].'/style',
 			'layout/'.$websiteParams['tpl_layout'].'/grids',
 			'layout/'.$websiteParams['tpl_layout'].'/hook',
-			'layout/'.$websiteParams['tpl_layout'].'/menu',
-			'layout/'.$websiteParams['tpl_layout'].'/nivo_slider',
+			'layout/'.$websiteParams['tpl_layout'].'/menu',			
 			'layout/'.$websiteParams['tpl_layout'].'/superbuttons',
 			'layout/'.$websiteParams['tpl_layout'].'/pagination',
 			'layout/'.$websiteParams['tpl_layout'].'/prettyphoto',
@@ -59,8 +58,8 @@
 		//   JAVASCRIPT   //
 		////////////////////		
 		$js = array(
-			//'layout/'.$websiteParams['tpl_layout'].'/jquery-1.8.2',
-			'layout/'.$websiteParams['tpl_layout'].'/jquery-1.5.1.min',
+			'layout/'.$websiteParams['tpl_layout'].'/jquery-1.8.2',
+			//'layout/'.$websiteParams['tpl_layout'].'/jquery-1.5.1.min',
 			//'layout/'.$websiteParams['tpl_layout'].'/jquery-1.7.1.min',
 			'layout/'.$websiteParams['tpl_layout'].'/jquery-ui-1.9.1.custom.min',
 			'commun/scripts',

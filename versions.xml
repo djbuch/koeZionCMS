@@ -1,5 +1,16 @@
 ﻿<versions>
 	<version>
+		<name>Version du 24/01/2013</name>
+		<num>20130124</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Modification du slider par défaut.</task>
+			<task author="KoéZionCMS">Mise en place d'une librairie jQuery plus récente.</task>
+			<task author="KoéZionCMS">Mise du choix du double slider 2D et 3D dans le formulaire des sites Internet.</task>
+			<task author="KoéZionCMS">Modification du layout koezion.php ainsi que des JS suite à la mise en place de la double gestion du slider.</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 23/01/2013</name>
 		<num>20130123</num>
 		<supervisor>KoéZionCMS</supervisor>
