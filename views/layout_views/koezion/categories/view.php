@@ -28,6 +28,8 @@ if(isset($googleMapAPI) && $mapPosition == 'topPage') { $this->element(PLUGINS.D
 			$this->element(PLUGINS.DS.'winesearchers/views/winesearchers/elements/frontoffice/list', null, false);
 			$this->element($websiteParams['tpl_layout'].'/pagination');
 		}
+
+		if(isset($portfolio) && !empty($portfolio)) { $this->element(PLUGINS.DS.'portfolios/views/elements/frontoffice/portfolio', array('fullPage' => true), false); }
 		
 		if($category['display_form']) { 
 						
@@ -45,7 +47,9 @@ if(isset($googleMapAPI) && $mapPosition == 'topPage') { $this->element(PLUGINS.D
 				<?php		
 				echo $contentPage;
 				if(isset($googleMapAPI) && $mapPosition == 'afterTxt') { $this->element(PLUGINS.DS.'gmaps/views/gmaps/elements/frontoffice/map', null, false); } //Plugin Google Maps
-
+								
+				if(isset($portfolio) && !empty($portfolio)) { $this->element(PLUGINS.DS.'portfolios/views/elements/frontoffice/portfolio', array('fullPage' => false), false); }
+				
 				if($category['display_form']) { 
 					
 					if(isset($formPlugin)) { $this->element(PLUGINS.DS.'formulaires/views/formulaires/elements/frontoffice/formulaire', null, false); } 
@@ -54,16 +58,7 @@ if(isset($googleMapAPI) && $mapPosition == 'topPage') { $this->element(PLUGINS.D
 				?>
 			</div>		
 			
-			<?php 
-			$this->element($websiteParams['tpl_layout'].'/posts_list');
-			/*if(isset($displayPosts) && $displayPosts) { ?>
-				<h2 class="widgettitle"><?php echo $libellePage; ?></h2>
-				<div class="hr"></div>	
-				<div class="gs_8 omega">
-					<?php $this->element($websiteParams['tpl_layout'].'/posts_list'); ?>
-					<?php $this->element($websiteParams['tpl_layout'].'/pagination'); ?>
-				</div>		
-			<?php }*/ ?>
+			<?php $this->element($websiteParams['tpl_layout'].'/posts_list'); ?>
 		</div>		
 		<?php 
 		$this->element($websiteParams['tpl_layout'].'/colonne_droite'); 
