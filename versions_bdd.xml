@@ -1,11 +1,20 @@
 ﻿<versions>
 	<version>
+		<name>Version du 27/01/2013</name>
+		<num>20130127</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">ALTER TABLE `templates` ADD `version` VARCHAR( 255 ) NOT NULL AFTER `layout`;</task>
+			<task author="KoéZionCMS">UPDATE `templates` SET `version` = 'Basic';</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 19/01/2013</name>
 		<num>20130119</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">ALTER TABLE `websites` ADD `js_hack` LONGTEXT NOT NULL AFTER `css_hack`;<task>
-			<task author="KoéZionCMS">ALTER TABLE `websites` ADD `txt_secure` LONGTEXT NOT NULL AFTER `txt_mail_newsletter`;<task>
+			<task author="KoéZionCMS">ALTER TABLE `websites` ADD `js_hack` LONGTEXT NOT NULL AFTER `css_hack`;</task>
+			<task author="KoéZionCMS">ALTER TABLE `websites` ADD `txt_secure` LONGTEXT NOT NULL AFTER `txt_mail_newsletter`;</task>
 		</tasks>	
 	</version>
 	<version>
@@ -13,8 +22,8 @@
 		<num>20130117</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">UPDATE `templates` SET `layout` = 'koezion' WHERE `layout` = 'frontoffice';<task>
-			<task author="KoéZionCMS">UPDATE `websites` SET `tpl_layout` = 'koezion' WHERE `tpl_layout` = 'frontoffice';<task>
+			<task author="KoéZionCMS">UPDATE `templates` SET `layout` = 'koezion' WHERE `layout` = 'frontoffice';</task>
+			<task author="KoéZionCMS">UPDATE `websites` SET `tpl_layout` = 'koezion' WHERE `tpl_layout` = 'frontoffice';</task>
 		</tasks>	
 	</version>
 	<version>
@@ -22,7 +31,7 @@
 		<num>20130101</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">ALTER TABLE `websites` ADD `footer_addthis` LONGTEXT NOT NULL AFTER `footer_bottom`;<task>
+			<task author="KoéZionCMS">ALTER TABLE `websites` ADD `footer_addthis` LONGTEXT NOT NULL AFTER `footer_bottom`;</task>
 		</tasks>	
 	</version>
 	<version>
@@ -30,7 +39,7 @@
 		<num>20121221</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">INSERT INTO `templates` (`id`, `name`, `layout`, `code`, `color`, `online`, `created`) VALUES (NULL, 'Chesterfield', 'frontoffice', 'chesterfield', '292929', '1', '2012-01-06 03:03:44');<task>
+			<task author="KoéZionCMS">INSERT INTO `templates` (`id`, `name`, `layout`, `code`, `color`, `online`, `created`) VALUES (NULL, 'Chesterfield', 'frontoffice', 'chesterfield', '292929', '1', '2012-01-06 03:03:44');</task>
 		</tasks>	
 	</version>
 	<version>
@@ -38,7 +47,7 @@
 		<num>20121218</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">ALTER TABLE `websites` ADD `slider_type` INT NOT NULL DEFAULT '1' AFTER `css_hack`;<task>
+			<task author="KoéZionCMS">ALTER TABLE `websites` ADD `slider_type` INT NOT NULL DEFAULT '1' AFTER `css_hack`;</task>
 		</tasks>	
 	</version>
 	<version>
@@ -46,8 +55,8 @@
 		<num>20121119</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">ALTER TABLE `contacts` ADD `message_backoffice` LONGTEXT NOT NULL AFTER `message`;<task>
-			<task author="KoéZionCMS">ALTER TABLE `posts_comments` ADD `message_backoffice` LONGTEXT NOT NULL AFTER `message`;<task>
+			<task author="KoéZionCMS">ALTER TABLE `contacts` ADD `message_backoffice` LONGTEXT NOT NULL AFTER `message`;</task>
+			<task author="KoéZionCMS">ALTER TABLE `posts_comments` ADD `message_backoffice` LONGTEXT NOT NULL AFTER `message`;</task>
 		</tasks>	
 	</version>
 	<version>
@@ -55,7 +64,7 @@
 		<num>20121106</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">INSERT INTO `templates` (`id`, `name`, `layout`, `code`, `color`, `online`, `created`) VALUES (37, 'Dark V2', 'frontoffice', 'dark_v2', '292929', 1, '2012-01-06 03:03:44');<task>
+			<task author="KoéZionCMS">INSERT INTO `templates` (`id`, `name`, `layout`, `code`, `color`, `online`, `created`) VALUES (37, 'Dark V2', 'frontoffice', 'dark_v2', '292929', 1, '2012-01-06 03:03:44');</task>
 		</tasks>	
 	</version>
-</versions
+</versions>

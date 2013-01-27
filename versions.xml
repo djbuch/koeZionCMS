@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 27/01/2013</name>
+		<num>20130127</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Modification de la table des templates en prévision de développements futurs.</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 26/01/2013</name>
 		<num>20130126</num>
 		<supervisor>KoéZionCMS</supervisor>
