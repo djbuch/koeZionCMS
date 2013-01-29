@@ -1,22 +1,17 @@
+<?php 
+/**
+ * Correction du bug affichant une erreur dans la colonne
+ * Remplacement de tous les count() > 0 par des !empty
+ * 
+ * @author			koéZionCMS
+ * @contributor 	https://github.com/destylia
+ * @version 		29/01/2013 by FI 
+ * @see				https://github.com/koeZionCMS/koeZionCMS/issues/1
+ */
+?>
 <div class="gs_4 omega sidebar">
 
-	<?php /*if(isset($children) && count($children) > 0) { ?>
-	<div class="widget">				
-		<?php if(isset($category['title_children'])) { ?><h2 class="widgettitle"><?php echo $category['title_children']; ?></h2><?php } ?>
-		<ul class="nobordertop">
-			<?php 
-			foreach($children as $k => $v) {
-
-				$classLi = '';
-				if($category['id'] == $v['id']) { $classLi = ' class="selected"'; }
-				?><li<?php echo $classLi; ?>><a href="<?php echo Router::url('categories/view/id:'.$v['id'].'/slug:'.$v['slug']); ?>"><?php echo $v['name']; ?></a></li><?php 
-			} 
-			?>
-		</ul>
-	</div>
-	<?php }*/ ?>
-
-	<?php if(isset($children) && count($children) > 0) { ?>
+	<?php if(isset($children) && !empty($children)) { ?>
 	<div class="widget">		
 		<?php foreach($children as $columnTitle => $childrenValues) { ?>
 						
@@ -35,7 +30,7 @@
 	</div>
 	<?php } ?>
 
-	<?php if(isset($brothers) && count($brothers) > 0) { ?>
+	<?php if(isset($brothers) && !empty($brothers)) { ?>
 	<div class="widget">		
 		<?php foreach($brothers as $columnTitle => $brothersValues) { ?>
 						
@@ -54,7 +49,7 @@
 	</div>
 	<?php } ?>
 	
-	<?php if(isset($rightButtons) && count($rightButtons) > 0) { ?>
+	<?php if(isset($rightButtons) && !empty($rightButtons)) { ?>
 		<div class="widget right_buttons">
 			<ul>
 			<?php foreach($rightButtons as $order => $rightButtonValues) { ?>
@@ -67,7 +62,7 @@
 	<?php } ?>
 
 	<?php 
-	if(isset($postsTypes) && count($postsTypes) > 0) { ?>
+	if(isset($postsTypes) && !empty($postsTypes)) { ?>
 		<div class="widget widget2">
 			<?php foreach($postsTypes as $columnTitle => $postsTypesValues) { ?>
 				<h2 class="widgettitle"><?php echo $columnTitle; ?></h2>
@@ -102,4 +97,5 @@
 			<?php } ?>
 		</div>
 	<?php } ?>
+	
 </div>
