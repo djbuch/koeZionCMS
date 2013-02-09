@@ -13,5 +13,8 @@ configs/hooks/*.php
 configs/plugins/
 plugins/
 tmp/backup_bdd/
+webroot/css/plugins/*
 webroot/files/*
+webroot/img/plugins/*
+webroot/js/plugins/*
 webroot/upload/*

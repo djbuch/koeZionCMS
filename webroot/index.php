@@ -28,7 +28,6 @@ define('DS', DIRECTORY_SEPARATOR); //Définition du séparateur dans le cas ou l
 define('WEBROOT', dirname(__FILE__)); //Chemin vers le dossier webroot
 	define('CSS', WEBROOT.DS.'css'); //Chemin vers le dossier css
 	define('FILES', WEBROOT.DS.'files'); //Chemin vers le dossier files
-		define('SEARCH_LUCENE', FILES.DS.'search'); //Chemin vers le dossier search	
 	define('IMG', WEBROOT.DS.'img'); //Chemin vers le dossier img
 	define('JS', WEBROOT.DS.'js'); //Chemin vers le dossier js
 	define('UPLOAD', WEBROOT.DS.'upload'); //Chemin vers le dossier upload
@@ -38,6 +37,8 @@ define('ROOT', dirname(WEBROOT)); //Chemin vers le dossier racine du site
 define('CONFIGS', ROOT.DS.'configs'); //Chemin vers le dossier config
 	define('CONFIGS_FILES', CONFIGS.DS.'files'); //Chemin vers le dossier des .ini
 	define('CONFIGS_HOOKS', CONFIGS.DS.'hooks'); //Chemin vers le dossier des hooks
+	define('CONFIGS_LAYOUT', CONFIGS.DS.'layout'); //Chemin vers le dossier des layout
+	define('CONFIGS_PLUGINS', CONFIGS.DS.'plugins'); //Chemin vers le dossier des plugins
 
 define('CONTROLLERS', ROOT.DS.'controllers'); //Chemin vers le dossier des contrôleurs
 	define('COMPONENTS', CONTROLLERS.DS.'components'); //Chemin vers le dossier des composants
@@ -49,9 +50,8 @@ define('CORE', ROOT.DS.'core'); //Chemin vers le coeur de l'application
 	define('LIBS', CORE.DS.'Libs'); //Chemin vers les librairies diverses
 	define('PEAR', CORE.DS.'Pear'); //Chemin vers les librairies de Pear
 	define('SWIFTMAILER', CORE.DS.'SwiftMailer'); //Chemin vers les librairies de SwiftMailer
-	//define('ZEND', CORE.DS.'Zend'); //Chemin vers les librairies de Zend
 
-define('LOCALE', ROOT.DS.'locale'); //Chemin vers le dossier des traductions
+//define('LOCALE', ROOT.DS.'locale'); //Chemin vers le dossier des traductions
 
 define('MODELS', ROOT.DS.'models'); //Chemin vers le dossier des modèles
 	define('BEHAVIORS', MODELS.DS.'behaviors'); //Chemin vers le dossier des comportements
@@ -59,10 +59,14 @@ define('MODELS', ROOT.DS.'models'); //Chemin vers le dossier des modèles
 define('PLUGINS', ROOT.DS.'plugins'); //Chemin vers le dossier des plugins	
 	
 define('TMP', ROOT.DS.'tmp'); //Chemin vers le dossier temporaire
+	define('CACHE', TMP.DS.'cache'); //Chemin vers le dossier cache
+	define('LOGS', TMP.DS.'logs'); //Chemin vers le dossier logs
 
 define('VIEWS', ROOT.DS.'views'); //Chemin vers le dossier des vues
 	define('ELEMENTS', VIEWS.DS.'elements'); //Chemin vers le dossier des élements
 	define('HELPERS', VIEWS.DS.'helpers'); //Chemin vers le dossier des helpers
+	define('LAYOUT', VIEWS.DS.'layout'); //Chemin vers le dossier des layouts
+	define('LAYOUT_VIEWS', VIEWS.DS.'layout_views'); //Chemin vers le dossier des vues layouts
 ////////////////////////////////////////////////////////////////////////////////////	
 	
 /////////////////////////////////////////////////////////

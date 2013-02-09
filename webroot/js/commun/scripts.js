@@ -24,9 +24,10 @@ $(document).ready(function() {
 
 	  		if(sHref.indexOf("/adm/", 0) > 0) { var sBack = "adm/"; } else { var sBack = ""; }	  		
 	  		
-	  		if(sHost == "localhost") { var sHostToReturn =  "http://" + sHost + baseurl + "/" + sBack; }
-	  		else { var sHostToReturn =  "http://" + sHost + "/" + sBack; }
+	  		/*if(sHost == "localhost") { var sHostToReturn =  "http://" + sHost + baseurl + "/" + sBack; }
+	  		else { var sHostToReturn =  "http://" + sHost + "/" + sBack; }*/
 	  			  		
+			var sHostToReturn =  "http://" + sHost + baseurl + "/" + sBack;
 	  		return sHostToReturn;
 		},
 		is_back: function() { 

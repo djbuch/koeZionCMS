@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 09/02/2013</name>
+		<num>20130209</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Rajout d'un nouveau slider BxSlider.</task>
+			<task author="KoéZionCMS">Passage du layout backoffice en 100%.</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 29/01/2013</name>
 		<num>20130129</num>
 		<supervisor>KoéZionCMS</supervisor>

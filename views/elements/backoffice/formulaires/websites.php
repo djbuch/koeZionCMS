@@ -79,7 +79,11 @@
 			<?php 
 			$positionList = array('header' => "Dans le header", 'menu' => "Dans le menu");
 			echo $helpers['Form']->input('search_engine_position', 'Position du moteur de recherche', array('type' => 'select', 'datas' => $positionList));			
-			$sliderTypesList = array(1 => "Slider simple", 2 => "Slider 3D");
+			$sliderTypesList = array(
+				1 => "Slider simple", 
+				2 => "Slider 3D", 
+				3 => "Slider Vidéo"
+			);
 			echo $helpers['Form']->input('slider_type', 'Type de slider', array('type' => 'select', 'datas' => $sliderTypesList));
 			echo $helpers['Form']->input('ga_code', 'Code Google Analytics', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge'));			
 			$txtSecure = 'Sécuriser le site. <i>Seuls les utilisateurs enregistrés pourront se connecter. <a href="'.Router::url('backoffice/users/index').'">'._("Ajouter un utilisateur").'</a></i>';
