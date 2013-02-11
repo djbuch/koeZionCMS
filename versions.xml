@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 11/02/2013</name>
+		<num>20130211</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Correction bug CSS pour bxSlider.</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 09/02/2013</name>
 		<num>20130209</num>
 		<supervisor>KoéZionCMS</supervisor>
