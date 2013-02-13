@@ -59,7 +59,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
     //   Récupération des chemins de bases des js et css du site courant   //	
     var sHref = window.location.href;
 	var iSubStringPosition = sHref.indexOf('adm/', 0) + 4;
-	var sUrl = sHref.substr(0, iSubStringPosition);		
+	var sUrl = sHref.substr(0, iSubStringPosition);
 	$.post(sUrl + 'configs/ajax_get_css_editor.html', function(cssEditor) { CKEDITOR.config.contentsCss = cssEditor; }, 'json');    
     /////////////////////////////////////////////////////////////////////////
 

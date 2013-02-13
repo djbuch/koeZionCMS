@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 13/02/2013</name>
+		<num>20130213</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Suppression d'une image non utilisée par défaut.</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 11/02/2013</name>
 		<num>20130211</num>
 		<supervisor>KoéZionCMS</supervisor>
