@@ -6,6 +6,7 @@
 		<tasks>
 			<task author="KoéZionCMS">Correction dans app_controller du test pour récupérer le site courant en fonction de l'url, mise en place d'une recherche plus large.</task>
 			<task author="KoéZionCMS">Correction dans les controleurs categories et posts de la récupération des utilisateurs pour l'envoi de mail en cas de site sécurisé pour informer de la mise à jour des données.</task>
+			<task author="KoéZionCMS">Correction de la récupération de l'élément HTML (contenu du mail) lors de l'envoi de mail.</task>
 		</tasks>	
 	</version>
 	<version>

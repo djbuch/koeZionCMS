@@ -620,14 +620,15 @@ class AppController extends Controller {
 		
 				//Récupération du contenu à envoyer dans le mail
 				$vars = $this->get('vars');
-				$messageContent = $vars['websiteParams']['txt_mail_contact'];
+				$messageContent = $vars['websiteParams']['txt_mail_contact'];				
+				$tplLayout = $vars['websiteParams']['tpl_layout'];
 				
 				///////////////////////
 				//   ENVOI DE MAIL   //
 				$mailDatas = array(
 					'subject' => '::Contact::',
 					'to' => $this->request->data['email'],
-					'element' => 'frontoffice/email/contact',
+					'element' => $tplLayout.'/email/contact',
 					'vars' => array(
 						'formUrl' => $this->request->fullUrl,
 						'messageContent' => $messageContent
@@ -689,14 +690,15 @@ class AppController extends Controller {
     	
     			//Récupération du contenu à envoyer dans le mail
     			$vars = $this->get('vars');
-    			$messageContent = $vars['websiteParams']['txt_mail_comments'];
+    			$messageContent = $vars['websiteParams']['txt_mail_comments'];				
+				$tplLayout = $vars['websiteParams']['tpl_layout'];
     			
     			///////////////////////
     			//   ENVOI DE MAIL   //
     			$mailDatas = array(
 	    			'subject' => '::Commentaire::',
 	    			'to' => $this->request->data['email'],
-	    			'element' => 'frontoffice/email/commentaire',
+	    			'element' => $tplLayout.'/email/commentaire',
 					'vars' => array(
 						'formUrl' => $this->request->fullUrl,						
 						'messageContent' => $messageContent
