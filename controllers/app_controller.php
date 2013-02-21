@@ -500,7 +500,7 @@ class AppController extends Controller {
 			} else { 
 				
 				if($hackCurrentWebsiteId) { $websiteConditions = array('conditions' => array('id' => $hackCurrentWebsiteId, 'online' => 1)); } 
-				else { $websiteConditions = array('conditions' => "url LIKE '%".$_SERVER['HTTP_HOST']."' AND online = 1"); }
+				else { $websiteConditions = array('conditions' => "url LIKE '%".$_SERVER['HTTP_HOST']."%' AND online = 1"); }
 			}
 		
 			$website = $this->Website->findFirst($websiteConditions);

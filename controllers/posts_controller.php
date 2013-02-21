@@ -352,7 +352,7 @@ class PostsController extends AppController {
 			
 			//On formate les données
 			$usersGroupsWebsitesList = array();
-			foreach($usersGroupsWebsites as $k => $v) { $usersGroupsWebsitesList[] = $v['website_id']; }
+			foreach($usersGroupsWebsites as $k => $v) { $usersGroupsWebsitesList[] = $v['users_group_id']; }
 			
 			//On va maintenant récupérer tous les utilisateurs de rôle user ayant ce groupe dans leurs données
 			$this->loadModel('User'); //Chargement du modèle

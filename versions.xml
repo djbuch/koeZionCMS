@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 21/02/2013</name>
+		<num>20130221</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Correction dans app_controller du test pour récupérer le site courant en fonction de l'url, mise en place d'une recherche plus large.</task>
+			<task author="KoéZionCMS">Correction dans les controleurs categories et posts de la récupération des utilisateurs pour l'envoi de mail en cas de site sécurisé pour informer de la mise à jour des données.</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 13/02/2013</name>
 		<num>20130213</num>
 		<supervisor>KoéZionCMS</supervisor>
