@@ -398,32 +398,7 @@ class AppController extends Controller {
     		$this->set('newOnline', $newOnline);
     		return true; 
     	}
-    }
-    
-/**
- * Cette fonction permet la mise à jour du champ order_by dans la base de données
- *
- * @access 	public
- * @author 	koéZionCMS
- * @version 0.1 - 31/05/2012 by FI
- * @version 0.2 - 01/08/2012 by FI - Modification de la requête on passe par un query au lieu d'un save
- */
-    function backoffice_ajax_order_by() {
-    	
-    	$this->auto_render = false; //On ne fait pas de rendu de la vue
-    	$modelName =  $this->params['modelName']; //Récupération du nom du modèle    	
-    	$primaryKey = $this->$modelName->primaryKey;
-    	$modelTable =  $this->$modelName->table; //Récupération du nom de la table
-    	$datas = $this->request->data; //Récupération des données
-    	
-    	$sql = ""; //Requête sql qui sera exécutée
-    	foreach($datas['ligne'] as $position => $id) { $sql .= "UPDATE ".$modelTable." SET order_by = ".$position." WHERE ".$primaryKey." = ".$id."; "."\n"; } //Construction de la requête
-    	$this->$modelName->query($sql); //Exécution de la requête
-    	
-    	$this->_check_cache_configs();
-    	$this->_delete_cache();
-    }   
-     
+    }     
 
 /**
  * Cette fonction permet la reconstruction de l'index de recherche
@@ -452,6 +427,91 @@ class AppController extends Controller {
     	
     	Session::setFlash('Index du moteur de recherche reconstruit'); //Message de confirmation
     	$this->redirect('backoffice/'.$this->params['controllerFileName'].'/index'); //Redirection
+    }	
+	
+//////////////////////////////////////////////////////////////////////////////////////
+//										AJAX										//
+//////////////////////////////////////////////////////////////////////////////////////	
+	
+/**
+ * Cette fonction est utilisée par l'éditeur de texte pour afficher la liste des liens disponibles
+ *
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 21/02/2012 by FI
+ * @version 0.2 - 07/03/2012 by FI - Rajout de la récupération des types de posts
+ * @version 0.3 - 14/03/2012 by FI - Rajout de la récupération des rédacteurs et des dates de parution
+ * @version 0.4 - 16/05/2012 by FI - Modification de la récupération des catégories suite à la mise en place de la gestion des sites
+ * @version 0.5 - 25/02/2013 by FI - Fonction déplacée de CategoriesController vers AppController
+ */	
+	public function backoffice_ajax_ckeditor_get_internal_links() {
+				
+		$this->layout = 'ajax'; //Définition du layout à utiliser
+		
+		///Récupération de toutes les catégories et envoi des données à la vue
+		$this->loadModel('Category'); //Chargement du model
+		$categories = $this->Category->getTree(array('conditions' => 'type != 3'));
+		$this->set('categories', $categories);
+		//$this->unloadModel('Category'); //Déchargement du model
+		
+		//Récupération de tous les articles et envoi des données à la vue
+		$this->loadModel('Post'); //Chargement du model
+		$posts = $this->Post->find();
+		$this->set('posts', $posts);
+		//$this->unloadModel('Post'); //Déchargement du model
+		
+		//Gestion des liens pour les plugins
+		if(isset($this->plugins['Flipbooks'])) {
+			
+			//Récupération de tous les flipbooks et envoi des données à la vue
+			$this->loadModel('Flipbook'); //Chargement du model
+			$flipbooks = $this->Flipbook->find();
+			$this->set('flipbooks', $flipbooks);			
+		}
+		
+		$this->render('/elements/ajax/backoffice_ajax_ckeditor_get_internal_links');
+
+		/*
+		//Récupération de tous les types d'articles et envoi des données à la vue
+		$this->loadModel('PostsType'); //Chargement du model
+		$postsTypes = $this->PostsType->find();
+		$this->set('postsTypes', $postsTypes);
+		$this->unloadModel('PostsType'); //Déchargement du model
+		
+		//Récupération de tous les utilisateurs (Rédacteurs)
+		$this->loadModel('User'); //Chargement du model
+		$writers = $this->User->findList();
+		$this->set('writers', $writers);
+		$this->unloadModel('User'); //Déchargement du model
+		
+		//Récupération des dates de publication
+		$publicationDates = $this->Category->query("SELECT DISTINCT(STR_TO_DATE(CONCAT(YEAR(modified), '-', MONTH(modified)), '%Y-%m')) AS publication_date FROM posts", true);
+		$this->set('publicationDates', $publicationDates);
+		*/
+	}
+    
+/**
+ * Cette fonction permet la mise à jour du champ order_by dans la base de données
+ *
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 31/05/2012 by FI
+ * @version 0.2 - 01/08/2012 by FI - Modification de la requête on passe par un query au lieu d'un save
+ */
+    function backoffice_ajax_order_by() {
+    	
+    	$this->auto_render = false; //On ne fait pas de rendu de la vue
+    	$modelName =  $this->params['modelName']; //Récupération du nom du modèle    	
+    	$primaryKey = $this->$modelName->primaryKey;
+    	$modelTable =  $this->$modelName->table; //Récupération du nom de la table
+    	$datas = $this->request->data; //Récupération des données
+    	
+    	$sql = ""; //Requête sql qui sera exécutée
+    	foreach($datas['ligne'] as $position => $id) { $sql .= "UPDATE ".$modelTable." SET order_by = ".$position." WHERE ".$primaryKey." = ".$id."; "."\n"; } //Construction de la requête
+    	$this->$modelName->query($sql); //Exécution de la requête
+    	
+    	$this->_check_cache_configs();
+    	$this->_delete_cache();
     }	
 	
 

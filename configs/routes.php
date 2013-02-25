@@ -40,9 +40,18 @@ Router::connect('e404', 								'home/e404'); 																//Erreur 404
 Router::connect('newsletter', 							'contacts/newsletter'); 													//Inscription à la newsletter
 Router::connect('rechercher', 							'searchs/rechercher');														//Préparation de l'url pour la recherche
 Router::connect('recherche', 							'searchs/index');															//Résultat de la recherche
+
+////////////////////////////////////////////////
+//   REGLES ADDITIONNELLES POUR LES PLUGINS   //
+$moreRoutes = CONFIGS.DS.'plugins'.DS.'routes';
+if(is_dir($moreRoutes)) {
+
+	foreach(FileAndDir::directoryContent($moreRoutes) as $moreRoute) { require_once($moreRoutes.DS.$moreRoute); }
+}
+////////////////////////////////////////////////
+
 Router::connect('rss/:slug-:id', 						'categories/rss/id:([0-9]+)/slug:([a-zA-Z0-9\-]+)'); 						//Affichage du flux rss d'une page catégorie
 Router::connect(':prefix/:slug-:id', 					'posts/view/id:([0-9]+)/slug:([a-zA-Z0-9\-]+)/prefix:([a-zA-Z0-9\-]+)'); 	//Affichage du détail d'un post
-Router::connect($routesConfigs['posts_prefix_plural'], 	'posts/listing');															//Liste de tous les posts
 Router::connect(':slug-:id', 							'categories/view/id:([0-9]+)/slug:([a-zA-Z0-9\-]+)'); 						//Affichage d'une page catégorie
 ////////////////////////////
 
@@ -51,15 +60,6 @@ Router::connect(':slug-:id', 							'categories/view/id:([0-9]+)/slug:([a-zA-Z0-
 Router::connect('connexion', 'users/login'); 																	//Connexion au backoffice
 Router::connect($routesConfigs['backoffice_prefix'], $routesConfigs['backoffice_prefix'].'/categories/index'); 	//Accueil backoffice
 ///////////////////////////
-
-////////////////////////////////////////////////
-//   REGLES ADDITIONNELLES POUR LES PLUGINS   //
-$moreRoutes = CONFIGS.DS.'plugins'.DS.'routes';
-if(is_dir($moreRoutes)) {
-	
-	foreach(FileAndDir::directoryContent($moreRoutes) as $moreRoute) { require_once($moreRoutes.DS.$moreRoute); }
-}
-////////////////////////////////////////////////
 
 // Pense bête : 
 // 

@@ -1,5 +1,17 @@
 ﻿<versions>
 	<version>
+		<name>Version du 25/02/2013</name>
+		<num>20130225</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Mise à jour des classes statiques pour PHP5.4.x.</task>
+			<task author="KoéZionCMS">Modification sur la gestion des routes pour les plugins.</task>
+			<task author="KoéZionCMS">Mutualisation de la fonction utilisée pour la récupération des liens internes en backoffice.</task>
+			<task author="KoéZionCMS">Modification du layout KoéZion pour la gestion du plugin Ads.</task>
+			<task author="KoéZionCMS">Changement de la méthode de log des erreurs.</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 21/02/2013</name>
 		<num>20130221</num>
 		<supervisor>KoéZionCMS</supervisor>

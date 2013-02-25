@@ -12,7 +12,7 @@ class Session {
  * @version 0.2 - 31/07/2012 - Suppression de la récupération des données de la variable de session par un fichier
  * @version 0.3 - 09/11/2012 - Rajout du test pour savoir si les classes Inflector et Set sont chargées
  */
-	function init() {
+	static function init() {
 		
 		if(!class_exists('Inflector')) { require_once(CAKEPHP.DS.'inflector.php'); }
 		if(!class_exists('Set')) { require_once(CAKEPHP.DS.'set.php'); }
@@ -35,7 +35,7 @@ class Session {
  * @version 0.1 - 30/12/2011 
  * @see /Koezion/lib/set.php
  */
-	function check($key) {
+	static function check($key) {
 		
 		if(empty($key)) { return false; } //Si la clée est vide
 		$result = Set::classicExtract($_SESSION, $key); //On procède à l'extraction de la donnée
@@ -51,7 +51,7 @@ class Session {
  * @version 0.1 - 30/12/2011
  * @see /Koezion/lib/set.php
  */	
-	function write($key, $value) {
+	static function write($key, $value) {
 		
 		$session = Set::insert($_SESSION, $key, $value); //On insère les données et on récupère la nouvelle variable de session
 		$_SESSION = $session; //On affecte les données à la variable de session
@@ -66,7 +66,7 @@ class Session {
  * @version 0.1 - 30/12/2011
  * @see /Koezion/lib/set.php
  */		
-	function read($key = null) {
+	static function read($key = null) {
 		
 		$result = Set::classicExtract($_SESSION, $key);
 		if(!is_null($result)) { return $result; }
@@ -81,7 +81,7 @@ class Session {
  * @version 0.1 - 30/12/2011
  * @see /Koezion/lib/set.php
  */			
-	function delete($key) {
+	static function delete($key) {
 		
 		$_SESSION = Set::remove($_SESSION, $key);
 		return (Session::check($key) == false);
@@ -93,7 +93,7 @@ class Session {
  * @version 0.1 - 20/04/2012
  * @see http://www.php.net/manual/fr/function.session-destroy.php
  */	
-	function destroy() {
+	static function destroy() {
 		
 		session_unset(); // Détruit toutes les données dans la variable de session
 		
@@ -119,7 +119,7 @@ class Session {
  * @param varchar $type Type du message
  * @version 0.1 - 30/12/2011
  */	
-	function setFlash($message, $type = 'succes') {
+	static function setFlash($message, $type = 'succes') {
 		
 		//Initialisation de la variable de session avec les valeurs reçues
 		Session::write('Flash.message', $message);
@@ -132,7 +132,7 @@ class Session {
  * @return unknown
  */	
 	
-	function isLogged() {
+	static function isLogged() {
 		
 		$role = Session::read('Backoffice.User.role');
 		return isset($role);
@@ -140,7 +140,7 @@ class Session {
 	
 	
 	
-	function user($key) {
+	static function user($key) {
 		
 		//Si session user
 		if(Session::read('Backoffice.User')) {			

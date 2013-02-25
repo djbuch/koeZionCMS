@@ -5,7 +5,11 @@ $logFile = TMP.DS.'logs'.DS.'php'.DS.date('Y-m-d').'.log'; //Chemin du fichier d
 $httpHost = $_SERVER["HTTP_HOST"];
 if($httpHost == 'localhost' || $httpHost == '127.0.0.1') { $displayErrors = 1; } else { $displayErrors = 0; }
 ini_set('display_errors', $displayErrors); //Affichage des erreurs
-ini_set('error_reporting', E_ALL); //On report toutes les erreurs ou error_reporting(E_ALL);
+//error_reporting(E_ALL); //On report toutes les erreurs ou error_reporting(E_ALL);
+//Rapporte les erreurs d'exécution de script
+//Rapporter les E_NOTICE peut vous aider à améliorer vos scripts
+//(variables non initialisées, variables mal orthographiées..)
+error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 ini_set('log_errors', 1); //Log des erreurs
 ini_set('error_log', $logFile); //Définition du chemin du fichier de logs
 //echo phpinfo();

@@ -1,6 +1,6 @@
 <?php
 /**
- * Permet la gestion des fichiers de caches
+ * Classe statique permettant la gestion des fichiers de caches
  *
  */
 class Cache {
@@ -16,11 +16,11 @@ class Cache {
  * @param 	varchar $cacheFile 		Nom du fichier
  * @param 	boolean $returnDatas 	Indique si on retourne les données ou vrai
  * @return 	mixed soit un booléen soit le contenu du ficher
- * @access	public
+ * @access	static
  * @author	koéZionCMS
  * @version 0.1 - 19/12/2012 by FI
  */	
-	function exists_cache_file($cacheFolder, $cacheFile, $returnDatas = true) {
+	static function exists_cache_file($cacheFolder, $cacheFile, $returnDatas = true) {
 
 		if(!file_exists($cacheFolder.$cacheFile.Cache::$extention)) { return false; }
 		else if($returnDatas) { return Cache::get_cache_file_content($cacheFolder, $cacheFile); }
@@ -36,11 +36,11 @@ class Cache {
  * @param 	varchar $cacheFile 		Nom du fichier
  * @param 	array 	$datas 			Données à sauvegarder
  * @return 	boolean si le processus s'est correctement déroulé retourne vrai
- * @access	public
+ * @access	static
  * @author	koéZionCMS
  * @version 0.1 - 19/12/2012 by FI
  */	
-	function create_cache_file($cacheFolder, $cacheFile, $datas) {
+	static function create_cache_file($cacheFolder, $cacheFile, $datas) {
 		
 		FileAndDir::createPath($cacheFolder);		
 		$result = FileAndDir::put($cacheFolder.$cacheFile.Cache::$extention, serialize($datas));		
@@ -58,11 +58,11 @@ class Cache {
  * @param 	varchar $cacheFolder 	Dossier de stockage du fichier
  * @param 	varchar $cacheFile 		Nom du fichier
  * @return 	array données contenues dans le fichier
- * @access	public
+ * @access	static
  * @author	koéZionCMS
  * @version 0.1 - 19/12/2012 by FI
  */	
-	function get_cache_file_content($cacheFolder, $cacheFile) {
+	static function get_cache_file_content($cacheFolder, $cacheFile) {
 		
 		return unserialize(FileAndDir::get($cacheFolder.$cacheFile.Cache::$extention));
 	}	
@@ -74,11 +74,11 @@ class Cache {
  * @param 	varchar $cacheFolder 	Dossier de stockage du fichier
  * @param 	varchar $cacheFile 		Nom du fichier
  * @return 	boolean vrai si la suppression s'est correctement déroulée
- * @access	public
+ * @access	static
  * @author	koéZionCMS
  * @version 0.1 - 19/12/2012 by FI
  */	
-	function delete_cache_file_content($cacheFolder, $cacheFile) {
+	static function delete_cache_file_content($cacheFolder, $cacheFile) {
 	
 		return FileAndDir::remove($cacheFolder.$cacheFile.Cache::$extention);
 	}	
@@ -90,11 +90,11 @@ class Cache {
  * @param 	varchar $cacheFolder 	Dossier de stockage du fichier
  * @param 	varchar $cacheFile 		Nom du fichier
  * @return 	boolean vrai si la suppression s'est correctement déroulée
- * @access	public
+ * @access	static
  * @author	koéZionCMS
  * @version 0.1 - 19/12/2012 by FI
  */	
-	function delete_cache_directory($cacheFolder) {
+	static function delete_cache_directory($cacheFolder) {
 	
 		return FileAndDir::remove_directory($cacheFolder);
 	}

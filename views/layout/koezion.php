@@ -37,6 +37,9 @@
 		?>
 	</head>
 	<body>
+	
+	
+		<?php if(isset($plugin_ads)) { $this->element(PLUGINS.DS.'ads/views/ads/elements/frontoffice/ads', null, false); } ?>
 		<div class="wrap_content header">
 			<?php $this->element($websiteParams['tpl_layout'].'/header'); ?>
 			<?php $this->element($websiteParams['tpl_layout'].'/menu_general'); ?>		

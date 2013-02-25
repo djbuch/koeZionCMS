@@ -436,49 +436,6 @@ class CategoriesController extends AppController {
 //////////////////////////////////////////////////////////////////////////////////////
 //										AJAX										//
 //////////////////////////////////////////////////////////////////////////////////////	
-	
-/**
- * Cette fonction est utilisée par l'éditeur de texte pour afficher la liste des liens disponibles
- *
- * @access 	public
- * @author 	koéZionCMS
- * @version 0.1 - 21/02/2012 by FI
- * @version 0.2 - 07/03/2012 by FI - Rajout de la récupération des types de posts
- * @version 0.3 - 14/03/2012 by FI - Rajout de la récupération des rédacteurs et des dates de parution
- * @version 0.4 - 16/05/2012 by FI - Modification de la récupération des catégories suite à la mise en place de la gestion des sites
- */	
-	public function backoffice_ajax_get_pages() {
-				
-		$this->layout = 'ajax'; //Définition du layout à utiliser
-		
-		///Récupération de toutes les catégories et envoi des données à la vue
-		$categories = $this->Category->getTree(array('conditions' => 'type != 3'));
-		$this->set('categories', $categories);
-		
-		//Récupération de tous les articles et envoi des données à la vue
-		$this->loadModel('Post'); //Chargement du model
-		$posts = $this->Post->find();
-		$this->set('posts', $posts);
-		$this->unloadModel('Post'); //Déchargement du model
-
-		/*
-		//Récupération de tous les types d'articles et envoi des données à la vue
-		$this->loadModel('PostsType'); //Chargement du model
-		$postsTypes = $this->PostsType->find();
-		$this->set('postsTypes', $postsTypes);
-		$this->unloadModel('PostsType'); //Déchargement du model
-		
-		//Récupération de tous les utilisateurs (Rédacteurs)
-		$this->loadModel('User'); //Chargement du model
-		$writers = $this->User->findList();
-		$this->set('writers', $writers);
-		$this->unloadModel('User'); //Déchargement du model
-		
-		//Récupération des dates de publication
-		$publicationDates = $this->Category->query("SELECT DISTINCT(STR_TO_DATE(CONCAT(YEAR(modified), '-', MONTH(modified)), '%Y-%m')) AS publication_date FROM posts", true);
-		$this->set('publicationDates', $publicationDates);
-		*/
-	}
 		
 /**
  * Cette fonction est utilisée lors de l'ajout d'un nouvel attribut

@@ -7,7 +7,7 @@ class FileAndDir {
 /**
  * Crée une arborescence (vérifie son existence) en fonction du chemin indiqué
  */
-	function createPath($path, $mod = 0777) {
+	static function createPath($path, $mod = 0777) {
 		
 		$path_pieces = explode(DS, $path);
 		$path = '';
@@ -24,7 +24,7 @@ class FileAndDir {
  * @param   string  $path    Dossier à créer.
  * @param   int     $mod     Nouveaux droits du fichier (en octal). Exemple : 0777
  */
-	function createDirectory($path, $mod) {
+	static function createDirectory($path, $mod) {
 		
 		umask(0);
 		mkdir($path, $mod);
@@ -34,7 +34,7 @@ class FileAndDir {
  * Vérifie l'existence du fichier.
  * @return  bool Retourne true si le fichier existe, false le cas contraire.
  */
-	function fexists($path) {
+	static function fexists($path) {
 		
 		clearstatcache();
 		return file_exists($path);
@@ -44,7 +44,7 @@ class FileAndDir {
  * Vérifie l'existence du dossier.
  * @return  bool Retourne true si le dossier existe, false le cas contraire.
  */
-	function dexists($path) {
+	static function dexists($path) {
 		
 		clearstatcache();
 		return is_dir($path);
@@ -54,7 +54,7 @@ class FileAndDir {
  * Vérifie l'existence du dossier.
  * @return  bool Retourne true si le dossier existe, false le cas contraire.
  */
-	function dwritable($path) {
+	static function dwritable($path) {
 		
 		clearstatcache();
 		return is_writable($path);
@@ -64,7 +64,7 @@ class FileAndDir {
  * Modifie les droits d'un fichier.
  * @param int $mod Nouveaux droits du fichier (en octal). Exemple : 0777
  */
-	function chProperties($path, $mod) {
+	static function chProperties($path, $mod) {
 		
 		umask(0);
 		chmod($path, $mod);
@@ -74,20 +74,20 @@ class FileAndDir {
  * Supprime le fichier.
  * @return  bool Retourne true si le fichier a pu être supprimé, false sinon.
  */
-	function remove($path) {
+	static function remove($path) {
 		
 		if(file_exists($path)) { return unlink($path); }
 		else { return false; }
 	}
 	
-	function fcopy($source, $dest) {
+	static function fcopy($source, $dest) {
 		
 		return copy($source, $dest);
 	}
 	
 	
 	
-	function directoryContent($directory) {
+	static function directoryContent($directory) {
 				
 		$files = array();
 		$dir = opendir($directory);
@@ -104,7 +104,7 @@ class FileAndDir {
 		return $files;
 	}	
 	
-	function remove_directory($chemin) {
+	static function remove_directory($chemin) {
 			
 		// vérifie si le nom du repertoire contient "/" à la fin
 		// place le pointeur en fin d'url
@@ -133,7 +133,7 @@ class FileAndDir {
 		}
 	}
 	
-	function delete_directory_file($dir) {
+	static function delete_directory_file($dir) {
 		
 		foreach(FileAndDir::directoryContent($dir) as $file) { unlink($dir.$file); } //On supprime le fichier
 	}
@@ -149,7 +149,7 @@ class FileAndDir {
 	 * @param   int       $maxlen   Taille maximale d'octets (facultatif).
 	 * @return  mixed               Contenu sous la forme du type passé en paramètre.
 	 */
-	public function get($filename, $type = 'string', $retour = '', $offset = null, $maxlen = null ) {
+	static function get($filename, $type = 'string', $retour = '', $offset = null, $maxlen = null ) {
 		//try {
 			//FileAndDir::testURI($filename);
 
@@ -215,7 +215,7 @@ class FileAndDir {
 	 * @param   int       $append     Précise si on écrase le fichier ou si on écrit à la fin (0 par défaut : écrase) (facultatif).
 	 * @return  bool                  Retourne true en cas de succès et false en cas d'échec.
 	 */
-	public function put($filename, $content, $append = 0 ) {
+	static function put($filename, $content, $append = 0 ) {
 		
 
 		try {
