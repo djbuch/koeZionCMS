@@ -444,6 +444,7 @@ class AppController extends Controller {
  * @version 0.3 - 14/03/2012 by FI - Rajout de la récupération des rédacteurs et des dates de parution
  * @version 0.4 - 16/05/2012 by FI - Modification de la récupération des catégories suite à la mise en place de la gestion des sites
  * @version 0.5 - 25/02/2013 by FI - Fonction déplacée de CategoriesController vers AppController
+ * @version 0.6 - 27/02/2013 by FI - Mise en place d'une procédure automatisée pour la récupération des liens des plugins à intégrer dans l'éditeur (Thanks to Pierstoval) 
  */	
 	public function backoffice_ajax_ckeditor_get_internal_links() {
 				
@@ -461,14 +462,23 @@ class AppController extends Controller {
 		$this->set('posts', $posts);
 		//$this->unloadModel('Post'); //Déchargement du model
 		
-		//Gestion des liens pour les plugins
+		/////////////////////////////////////////////////////////////////////////////////////////
+		//   REGLES ADDITIONNELLES POUR LA RECUPERATION DES LIENS A GENERER POUR LES PLUGINS   //
+		$moreLinks = CONFIGS.DS.'plugins'.DS.'ckeditor'.DS.'get_links';
+		if(is_dir($moreLinks)) {
+		
+			foreach(FileAndDir::directoryContent($moreLinks) as $moreLink) { require_once($moreLinks.DS.$moreLink); }
+		}
+		/////////////////////////////////////////////////////////////////////////////////////////		
+		
+		/*//Gestion des liens pour les plugins
 		if(isset($this->plugins['Flipbooks'])) {
 			
 			//Récupération de tous les flipbooks et envoi des données à la vue
 			$this->loadModel('Flipbook'); //Chargement du model
 			$flipbooks = $this->Flipbook->find();
 			$this->set('flipbooks', $flipbooks);			
-		}
+		}*/
 		
 		$this->render('/elements/ajax/backoffice_ajax_ckeditor_get_internal_links');
 

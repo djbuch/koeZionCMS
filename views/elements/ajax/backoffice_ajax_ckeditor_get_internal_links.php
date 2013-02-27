@@ -15,14 +15,23 @@ foreach($posts as $k => $v) {
 	$aUrlList['___'.$v['name']] = Router::url('posts/view/id:'.$v['id'].'/slug:'.$v['slug'].'/prefix:'.$v['prefix']);
 }
 
-if(isset($flipbooks) && !empty($flipbooks)) {
+/////////////////////////////////////////////////////////////////////////////
+//   REGLES ADDITIONNELLES POUR LA generation DES LIENS POUR LES PLUGINS   //
+$moreLinks = CONFIGS.DS.'plugins'.DS.'ckeditor'.DS.'generate_links';
+if(is_dir($moreLinks)) {
+
+	foreach(FileAndDir::directoryContent($moreLinks) as $moreLink) { require_once($moreLinks.DS.$moreLink); }
+}
+/////////////////////////////////////////////////////////////////////////////
+
+/*if(isset($flipbooks) && !empty($flipbooks)) {
 	
 	foreach($flipbooks as $k => $v) {
 	
 		$aUrlList['[ ==== '._("Flipbooks").' ==== ]'] = '';
 		$aUrlList['___'.$v['name']] = Router::url('flipbooks/index/id:'.$v['id'].'/slug:'.$v['slug']);
 	}
-}
+}*/
 
 /*
 //Réorganisation de la liste des types d'articles

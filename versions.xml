@@ -7,6 +7,7 @@
 			<task author="KoéZionCMS">Mise à jour majeure de la gestion des plugins.</task>
 			<task author="KoéZionCMS">Modification de la fonction de rendu de la classe View pour intégrer le rendu automatique des plugins.</task>
 			<task author="KoéZionCMS">Modification du layout principal pour intégration du plugin Ads.</task>
+			<task author="KoéZionCMS">Intégration d'une gestion automatique pour la récupération des liens des plugins dans CKEditor (Thanks to Pierstoval).</task>
 		</tasks>	
 	</version>
 	<version>
