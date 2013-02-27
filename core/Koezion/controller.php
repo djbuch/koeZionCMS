@@ -37,7 +37,7 @@ class Controller extends Object {
 		'Text'
 	);
 	
-	var $params = array(); //Liste des paramètres du controlleur (name, modelName) 
+	var $params = array(); //Liste des paramètres du controlleur (name, modelName)
 	
 /**
  * Constructeur de la classe Controller
@@ -167,7 +167,7 @@ class Controller extends Object {
 		$this->beforeRender();
 
 		$this->set('pager', $this->pager); //Variable de pagination
-		$this->set('params', $this->params); //Variable de paramètres		
+		$this->set('params', $this->params); //Variable de paramètres
 		$this->View = new View($view, $this);		
 		$this->View->render($inViewsFolder);		
 	}

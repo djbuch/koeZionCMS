@@ -5,6 +5,7 @@ table thead{background:url(../../img/backoffice/back-title.gif) repeat-x right t
 table thead tr th{border:1px solid #e5e5e5;border-bottom:0;padding:8px 8px 10px;line-height:1.0em}
 table thead tr th.header{border:1px solid #e5e5e5;background-color:transparent}
 table tbody td{border:1px solid #e5e5e5;border-top:0;padding:7px 8px;line-height:1.0em}
+table.nothing tbody td{border:none;}
 table td.txtcenter{text-align:center}
 table td.xl{width:150px}
 table td.l{width:120px}

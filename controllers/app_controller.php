@@ -118,9 +118,10 @@ class AppController extends Controller {
 			$this->set('nbPostsComments', $nbPostsComments);
 			
 			//Récupération des plugins
-			$this->loadModel('Plugin');
+			/*$this->loadModel('Plugin');
 			$activatePlugins = $this->Plugin->find(array('conditions' => array('online' => 1)));
-			$this->set('activatePlugins', $activatePlugins);
+			pr($activatePlugins);
+			$this->set('activatePlugins', $activatePlugins);*/
 			
 		//Si on est dans le frontoffice			
 		} else {

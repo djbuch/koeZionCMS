@@ -86,9 +86,27 @@ class View extends Object {
     		
 	    		//Si ce fichier n'existe pas on prendra la vue par défaut
     			if(file_exists($alternativeView)) { $view = $alternativeView; }
-    		}    		 
-    	} 
-    	    	
+    		}    	 
+    	
+	    	//Cas des plugins
+	    	//On adopte un comportement par défaut pour le rendu des vues des plugins
+	    	//On va les chercher dans le dossier du plugin, puis dans le dossier views, puis dans le dossier du controlleur
+	    	$pluginsList = $this->controller->plugins;
+	    	$potentialPluginControllerName = Inflector::camelize($params['controllerName']);
+	    	
+	    	//////////////////////////////////////////////
+	    	//   RECUPERATION DES CONNECTEURS PLUGINS   //
+	    	$pluginsConnectors = get_plugins_connectors();
+	    	if(isset($pluginsConnectors[$params['controllerFileName']])) { $potentialPluginControllerName = Inflector::camelize($pluginsConnectors[$params['controllerFileName']]); }
+	    	//////////////////////////////////////////////
+	    		    	
+	    	if(isset($pluginsList[$potentialPluginControllerName]) && $inViewsFolder) {
+	    		
+	    		$pluginInfos = $pluginsList[$potentialPluginControllerName];    		    		
+	    		$view = PLUGINS.DS.$pluginInfos['code'].DS.'views'.DS.$params['controllerFileName'].DS.$this->view.'.php';
+	    	}	 
+    	}
+    	
     	ob_start(); //On va récupérer dans une variable le contenu de la vue pour l'affichage dans la variable layout_for_content
     	if(file_exists($view)) require_once($view); //Chargement de la vue
     	$content_for_layout = ob_get_clean(); //On stocke dans cette variable le contenu de la vue

@@ -40,6 +40,7 @@ class PluginsController extends AppController {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 24/09/2012 by FI
+ * @version 0.1 - 26/02/2013 by FI - Modification de la gestion de l'installation des plugins
  */
 	function backoffice_statut($id) {
 	
@@ -48,6 +49,10 @@ class PluginsController extends AppController {
 		$conditions = array('conditions' => array('id' => $id));
 		$plugin = $this->Plugin->findFirst($conditions);
 		
+		//On arrive dans ce cas si online = 0 et installed = 0
+		//Du coup après la mise à jour du status on à online = 1 et installed = 0
+		//Le plugin n'est donc pas en ligne et pas installé
+		//On l'installe et on l'active 
 		if($plugin['online'] && !$plugin['installed']) {
 						
 			$isInstalled = false; //Par défaut le plugin est considéré comme non installé
@@ -75,21 +80,33 @@ class PluginsController extends AppController {
 				Session::setFlash('Le plugin est correctement installé');		
 						
 			} else { Session::setFlash("Problème lors de l'installation du plugin", 'error'); }		
-			
-		} else if(!$plugin['online']) {
+
+		//On arrive dans ce cas si online = 1 et installed = 1
+		//Du coup après la mise à jour du status on à online = 0 et installed = 1
+		//Le plugin est donc en ligne et installé cela veut donc dire qu'on souhaite le passer hors ligne
+		} else if(!$plugin['online'] && $plugin['installed']) {
 
 			//Si le plugin est désactivé on désactive également le module
-			 
-		
+			$sqlModule = "UPDATE modules SET online = 0 WHERE plugin_id = ".$id.";";
+			$this->Plugin->query($sqlModule);
 			Session::setFlash('Le plugin est correctement désactivé'); 
+		
+		//On arrive dans ce cas si online = 0 et installed = 1
+		//Du coup après la mise à jour du status online = 1 et installed = 1
+		//Le plugin était donc installé mais hors ligne donc on le réactive
+		} else if($plugin['online'] && $plugin['installed']) {
+
+			//Si le plugin est désactivé on désactive également le module
+			$sqlModule = "UPDATE modules SET online = 1 WHERE plugin_id = ".$id.";";
+			$this->Plugin->query($sqlModule);
+			Session::setFlash('Le plugin est correctement activé'); 
 		}
 		
 		//On va contrôller la valeur du champ online pour le plugin et remettre à jour la table des modules		
-		if($plugin['online']) { $sqlModule = "UPDATE modules SET online = 1 WHERE plugin_id = ".$id.";"; }
-		else { $sqlModule = "UPDATE modules SET online = 0 WHERE plugin_id = ".$id.";"; }
-		$this->Plugin->query($sqlModule);
-		
-		
+		//if($plugin['online']) { $sqlModule = "UPDATE modules SET online = 1 WHERE plugin_id = ".$id.";"; }
+		//else { $sqlModule = "UPDATE modules SET online = 0 WHERE plugin_id = ".$id.";"; }
+		//$this->Plugin->query($sqlModule);
+				
 		FileAndDir::delete_directory_file(TMP.DS.'cache'.DS.'models'.DS); //Suppression du fichier de cache de la bdd
 		FileAndDir::remove(TMP.DS.'cache'.DS.'variables'.DS.'Plugins'.DS.'plugins.cache'); //Suppression du fichier de cache des plugins
 				
@@ -127,8 +144,9 @@ class PluginsController extends AppController {
 								'installed' => 0
 							);
 							$this->Plugin->save($insertPlugin);
-							
-							
+														
+							/*
+							//Supprimé le 26/02/2013 suite à la nouvelle gestion de l'installation des plugins
 							if($xParsedXml['display_in_menu']) {
 							
 								//On va également le rajouter dans la gestion des menus
@@ -141,6 +159,7 @@ class PluginsController extends AppController {
 								);
 								$this->Module->save($moduleDatas);
 							}
+							*/
 						}					
 					}
 				}

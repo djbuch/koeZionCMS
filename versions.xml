@@ -1,5 +1,15 @@
 ﻿<versions>
 	<version>
+		<name>Version du 27/02/2013</name>
+		<num>20130227</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Mise à jour majeure de la gestion des plugins.</task>
+			<task author="KoéZionCMS">Modification de la fonction de rendu de la classe View pour intégrer le rendu automatique des plugins.</task>
+			<task author="KoéZionCMS">Modification du layout principal pour intégration du plugin Ads.</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 25/02/2013</name>
 		<num>20130225</num>
 		<supervisor>KoéZionCMS</supervisor>
