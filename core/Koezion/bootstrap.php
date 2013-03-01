@@ -34,6 +34,7 @@ require_once KOEZION.DS.'controller.php'; //Classe Controller
 require_once CONTROLLERS.DS.'app_controller.php'; //Classe App
 require_once KOEZION.DS.'model.php'; //Classe Model
 require_once KOEZION.DS.'view.php'; //Classe View
+require_once KOEZION.DS.'koezion_plugin.php'; //Classe Plugin
 require_once KOEZION.DS.'dispatcher.php'; //Chargement du Dispatcher
 
 /////////////////////////////////////////////

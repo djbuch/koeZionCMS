@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 01/03/2013</name>
+		<num>20130301</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Mise en place d'une classe parente pour la gestion de l'installation des plugins.</task>
+			<task author="KoéZionCMS">Chargement de cette classe dans le bootstrap.</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 27/02/2013</name>
 		<num>20130227</num>
 		<supervisor>KoéZionCMS</supervisor>
