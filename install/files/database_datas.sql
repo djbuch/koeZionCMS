@@ -18,15 +18,15 @@ INSERT INTO `modules_types` (`id`, `name`, `order_by`, `online`, `created`, `mod
 (4, 'Actualités / Blog', 1, 1, '2012-12-01 06:39:16', '2012-12-01 06:39:16', 1),
 (5, 'Paramètres', 3, 1, '2012-12-01 06:39:27', '2012-12-01 06:39:27', 1);
 
-INSERT INTO `users` (`id`, `name`, `second_name`, `login`, `password`, `email`, `role`, `online`, `users_group_id`) VALUES
-(1, 'Superadmin', 				'', 'superadmin', 		'superadmin', 		'superadmin@monsite.com', 		'admin', 			1, 1),
-(2, 'Administrateur du site', 	'', 'administrateur', 	'administrateur', 	'administrateur@monsite.com', 	'website_admin', 	1, 2),
-(3, 'Utilisateur du site', 		'', 'utilisateur', 		'utilisateur', 		'utilisateur@monsite.com', 		'user', 			1, 3);
+INSERT INTO `users` (`id`, `name`, `second_name`, `login`, `password`, `email`, `online`, `users_group_id`) VALUES
+(1, 'Superadmin', 				'', 'superadmin', 		'superadmin', 		'superadmin@monsite.com', 		1, 1),
+(2, 'Administrateur du site', 	'', 'administrateur', 	'administrateur', 	'administrateur@monsite.com', 	1, 2),
+(3, 'Utilisateur du site', 		'', 'utilisateur', 		'utilisateur', 		'utilisateur@monsite.com', 		1, 3);
 
-INSERT INTO `users_groups` (`id`, `name`, `online`, `created`, `modified`, `created_by`, `modified_by`) VALUES
-(1, 'Super administrateur', 	1, '2012-09-06 10:34:08', '2012-09-06 10:34:08', 1, 1),
-(2, 'Administrateur de site', 	1, '2012-09-06 10:34:08', '2012-09-06 10:34:08', 1, 1),
-(3, 'Utilisateur', 				1, '2012-09-06 10:34:08', '2012-09-06 10:34:08', 1, 1);
+INSERT INTO `users_groups` (`id`, `name`, `online`, `is_deletable`, `created`, `modified`, `created_by`, `modified_by`, `role_id`) VALUES
+(1, 'Super administrateur', 	1, 0, '2012-09-06 10:34:08', '2012-09-06 10:34:08', 1, 1, 1),
+(2, 'Administrateur de site', 	1, 0, '2012-09-06 10:34:08', '2012-09-06 10:34:08', 1, 1, 2),
+(3, 'Utilisateur', 				1, 0, '2012-09-06 10:34:08', '2012-09-06 10:34:08', 1, 1, 3);
 
 INSERT INTO `users_groups_websites` (`users_group_id`, `website_id`) VALUES
 (1, 1),

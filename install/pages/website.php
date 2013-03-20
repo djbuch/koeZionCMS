@@ -20,7 +20,7 @@ if(isset($_POST) && !empty($_POST)) {
 		$subject = '..:: Nouveau Site KoéZion Installé ::..';
 		$message = 'Un nouveau site koéZion vient d\'être installé à l\'adresse suivante : '.$datas['url'].' (Penser à demander la description au webmaster pour insertion dans le portfolio)';
 		$headers = 'From: contact@koezion-cms.com'."\r\n".'Reply-To: contact@koezion-cms.com' . "\r\n".'X-Mailer: PHP/' . phpversion();
-		mail($to, $subject, $message, $headers);
+		//mail($to, $subject, $message, $headers);
 	}
 }
 ?>
