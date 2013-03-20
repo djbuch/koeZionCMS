@@ -8,6 +8,8 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `page_description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `page_keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `title_colonne_droite` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `title_children` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `title_brothers` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `title_posts_list` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `type` int(11) NOT NULL,
   `display_form` int(11) NOT NULL,
@@ -73,6 +75,7 @@ CREATE TABLE IF NOT EXISTS `modules` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `controller_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `display_in_menu` int(11) NOT NULL,
   `order_by` int(11) NOT NULL,
   `online` int(11) NOT NULL,
   `created` datetime DEFAULT NULL,
@@ -107,7 +110,7 @@ CREATE TABLE IF NOT EXISTS `plugins` (
   `created_by` int(11) NOT NULL,
   `modified_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `posts`;
 CREATE TABLE IF NOT EXISTS `posts` (
@@ -147,6 +150,7 @@ CREATE TABLE IF NOT EXISTS `posts_comments` (
   `cpostal` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `message` longtext COLLATE utf8_unicode_ci NOT NULL,
   `message_backoffice` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `send_newsletter` int(11) NOT NULL,
   `online` int(11) NOT NULL,
   `created` datetime NOT NULL,
   `post_id` int(11) NOT NULL,
@@ -225,6 +229,7 @@ CREATE TABLE IF NOT EXISTS `templates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `layout` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `version` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `color` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `online` int(11) NOT NULL,
@@ -240,8 +245,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   `login` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `role` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'user',
   `online` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
   `users_group_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -251,10 +257,12 @@ CREATE TABLE IF NOT EXISTS `users_groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `online` int(11) NOT NULL,
+  `is_deletable` int(11) NOT NULL DEFAULT '1',
   `created` datetime DEFAULT NULL,
   `modified` datetime NOT NULL,
   `created_by` int(11) NOT NULL,
   `modified_by` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -275,6 +283,13 @@ CREATE TABLE IF NOT EXISTS `users_logs` (
   `website_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `users_websites`;
+CREATE TABLE IF NOT EXISTS `users_websites` (
+  `user_id` int(11) NOT NULL,
+  `website_id` int(11) NOT NULL,
+  PRIMARY KEY (`user_id`,`website_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `websites`;
 CREATE TABLE IF NOT EXISTS `websites` (

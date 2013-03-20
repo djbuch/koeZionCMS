@@ -64,7 +64,7 @@ class Configure {
 
 /*class App {
 	
-	function import($librairie, $ext = 'php') {
+	static function import($librairie, $ext = 'php') {
 		
 		if(isset($ext)) $librairie = $librairie.'.'.$ext;
 		require_once($librairie);		

@@ -45,6 +45,7 @@ $Errorsmessages['User']['password'] = _('La valeur de ce champ est de 4 caractè
 $Errorsmessages['User']['email'] = _('Vous devez indiquer un email valide.');
 
 $Errorsmessages['UsersGroup']['name'] = _('La valeur de ce champ est de 2 caractères minimum.');
+$Errorsmessages['UsersGroup']['role_id'] = _('Vous devez sélectionner une valeur.');
 
 $Errorsmessages['Website']['name'] = _('La valeur de ce champ est de 2 caractères minimum.');
 $Errorsmessages['Website']['url'] = _('Vous devez indiquer une url valide.');

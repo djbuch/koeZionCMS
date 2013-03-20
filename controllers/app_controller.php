@@ -20,16 +20,6 @@ class AppController extends Controller {
 //////////////////////////////////////////////////////////////////////////////////////////	
 	
 /**
- * Tableau contenant la liste des rôles administrateur
- *
- * @var 	array
- * @access 	public
- * @author 	KoéZionCMS
- * @version 0.1 - 21/05/2012 by FI
- */
-	var $adminRoles = array('admin', 'website_admin');	
-	
-/**
  * Variable contenant le nombre d'éléments à afficher par page
  *
  * @var 	integer
@@ -38,17 +28,6 @@ class AppController extends Controller {
  * @version 0.1 - 21/05/2012 by FI
  */
 	var $backofficeElementPerPage = 50;	
-	
-	var $notAuth = array(
-		'Websites' => array('index', 'add', 'edit', 'delete'),
-		'Users' => array('index', 'add', 'edit', 'delete'),
-		'UsersGroups' => array('index', 'add', 'edit', 'delete'),
-		'Plugins' => array('index', 'add', 'edit', 'delete'),
-		'Configs' => array('database_liste', 'mailer_liste', 'router_liste', 'posts_liste', 'sessions_liste'),
-		'Exports' => array('database', 'contacts'),
-		'Modules' => array('index', 'add', 'edit', 'delete'),
-		'ModulesTypes' => array('index', 'add', 'edit', 'delete'),
-	);
 	
 //////////////////////////////////////////////////////////////////////////////////////////	
 //										KOEZION											//
@@ -72,15 +51,9 @@ class AppController extends Controller {
     	//Si on est dans le backoffice    	
 		if($prefix == 'backoffice') {
 			
-			$adminRole = Session::user('role'); //Récupération du rôle de l'administrateur connecté
-			
-			//Si pas loggé ou que le rôle n'est pas dans le tableau des rôles administrateur
-			if(!Session::isLogged() || (!in_array($adminRole, $this->adminRoles))) { $this->redirect('users/login'); }
-			
-			//Dans le cas d'un administrateur de site il faut 'vérouiller' certaines pages dans le cas ou l'utilisateur tapes directement l'url dans la barre d'adresse
-			$controllerName = $this->params['controllerName']; //Contrôleur courant
-			$actionName = $this->params['action']; //Action courante
-			if($adminRole == 'website_admin' && isset($this->notAuth[$controllerName]) && in_array($actionName, $this->notAuth[$controllerName])) { $this->redirect('backoffice/home/not_auth'); }
+			$adminRole = Session::getRole(); //Récupération du rôle de l'utilisateur connecté			
+			if(!Session::isLogged() && !$adminRole) { $this->redirect('users/login'); } //Si pas loggé ou que l'on ne récupère pas de rôle			
+			$this->_check_acls($adminRole); //Contrôle des droits utilisateurs
 			
 			define('IS_USER_LOGGED', 'ok');
 			
@@ -90,23 +63,10 @@ class AppController extends Controller {
 			
 			$this->layout = 'backoffice'; //Définition du layout pour le backoffice			
 			$this->pager['elementsPerPage'] = $this->backofficeElementPerPage; //Nombre d'élément par page
-						
-			//Récupération des modules
-			$this->loadModel('ModulesType'); //Chargement du modèle des types de modules
-			$modulesTypes = $this->ModulesType->findList(array('conditions' => array('online' => 1), 'order' => 'order_by ASC')); //On récupère les types de modules
-			//$this->unloadModel('ModulesType'); //Déchargement du modèle des types de modules
-			
-			$leftMenus = array();
-			foreach($modulesTypes as $k => $v) { $leftMenus[$k] = array('libelle' => $v, 'menus' => array()); }						
-			
-			$this->loadModel('Module');
-			$leftMenuTMP = $this->Module->find(array('conditions' => array('online' => 1), 'order' => 'order_by ASC'));
-			foreach($leftMenuTMP as $k => $v) { 
 
-				if(isset($leftMenus[$v['modules_type_id']])) { $leftMenus[$v['modules_type_id']]['menus'][] = $v; } 
-			}
+			$leftMenus = $this->_get_backoffice_menu();			
 			$this->set('leftMenus', $leftMenus);
-						
+			
 			//Récupération des formulaires de contacts non validés
 			$this->loadModel('Contact');
 			$nbFormsContacts = $this->Contact->findCount(array('online' => 0));
@@ -132,7 +92,7 @@ class AppController extends Controller {
 				//////////////////////////////////////////////////
 				//   RECUPERATION DES DONNEES DU SITE COURANT   //
 				$datas['websiteParams'] = $this->_get_website_datas();				
-				if(empty($datas['websiteParams'])) {$datas['websiteParams']['secure_activ'] = 1; } //Si aucun site n'est retourné on affiche le formulaire de connexion
+				if(empty($datas['websiteParams'])) { $datas['websiteParams']['secure_activ'] = 1; } //Si aucun site n'est retourné on affiche le formulaire de connexion
 				//////////////////////////////////////////////////
 				
 				//////////////////////////////////////////////
@@ -320,7 +280,7 @@ class AppController extends Controller {
     	$findConditions = array('conditions' => array($primaryKey => $id));
     	$element = $this->$modelName->findFirst($findConditions);
     	
-    	if(!isset($element['suppressible']) || (isset($element['suppressible']) && $element['suppressible'])) {
+    	if(!isset($element['is_deletable']) || (isset($element['is_deletable']) && $element['is_deletable'])) {
     	    		
 	    	$this->$modelName->delete($id); //Suppression de l'élément	    	
 	    	
@@ -534,13 +494,13 @@ class AppController extends Controller {
  * Cette fonction permet la récupération des données du site courant
  *
  * @return 	array Données du site Internet
- * @access 	private
+ * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 02/05/2012 by FI
  * @version 0.2 - 14/06/2012 by FI - Modification de la récupération du site pour la boucle locale - On récupère le premier site de la liste et plus celui avec l'id 1 pour éviter les éventuelles erreurs
  * @version 0.3 - 04/09/2012 by FI - Mise en place d'un passage de paramètre en GET pour pouvoir changer de site en local
  */
-	function _get_website_datas() {
+	protected function _get_website_datas() {
 		
 		$httpHost = $_SERVER["HTTP_HOST"]; //Récupération de l'url
   	
@@ -589,7 +549,7 @@ class AppController extends Controller {
  *
  * @param 	integer $isSecure 			Si vrai alors le site est sécurisé
  * @param 	integer $isLogUsersActiv 	Si vrai alors la mise en place du log des utilisateurs sera activée
- * @access 	private
+ * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 03/05/2012 by FI
  * @version 0.2 - 05/06/2012 by FI - Changement de la gestion de la sécurité du frontoffice, on test maintenant que l'utilisateur puisse avoir accès au site courant (via son groupe) 
@@ -598,15 +558,15 @@ class AppController extends Controller {
  * @todo Essayer d'alléger les if/else en cascade 
  */   
     
-    function _is_secure_activ($isSecure, $isLogUsersActiv) {
-
-    	$session = Session::read('Frontoffice');
-    	
-    	$redirectConnect = false;
+    protected function _is_secure_activ($isSecure, $isLogUsersActiv) {
     	
     	//Si le site est sécurisé on va procéder à quelques contrôles
     	//On évite le contrôleur Errors volontairement pour permettre l'affichage des erreurs
    		if($isSecure && $this->params['controllerName'] != "Errors") { 
+   			
+   			$session = Session::read('Frontoffice');
+   			
+   			$redirectConnect = false;
    			
    			//Si la session n'existe pas
    			if(!isset($session['AuthWebsites'])) { $redirectConnect = true; }
@@ -623,26 +583,26 @@ class AppController extends Controller {
    				//Si la session est vide
    				} else { $redirectConnect = true; }   				
    			} 
-   		}
    		
-   		if($redirectConnect) { $this->redirect('users/login'); }
+   			if($redirectConnect) { $this->redirect('users/login'); }
    		
-   		//Mise en place du log utilisateurs
-   		if($isLogUsersActiv) {
-   			
-   			$type = 1;
-   			if($this->params['controllerName'] == "Errors") { $type = 2; }
-   			
-   			$this->loadModel('UsersLog');
-   			$logDatas = array(
-   				'url' => $_SERVER['REQUEST_URI'],
-   				'date' => date('Y-m-d H:i:s'),
-   				'type' => $type,
-   				'user_id' => $session['User']['id'],
-   				'website_id' => CURRENT_WEBSITE_ID
-   			);
-   			$this->UsersLog->save($logDatas);   			
-   			$this->unloadModel('UsersLog');   			
+	   		//Mise en place du log utilisateurs
+	   		if($isLogUsersActiv) {
+	   			
+	   			$type = 1;
+	   			if($this->params['controllerName'] == "Errors") { $type = 2; }
+	   			
+	   			$this->loadModel('UsersLog');
+	   			$logDatas = array(
+	   				'url' => $_SERVER['REQUEST_URI'],
+	   				'date' => date('Y-m-d H:i:s'),
+	   				'type' => $type,
+	   				'user_id' => $session['User']['id'],
+	   				'website_id' => CURRENT_WEBSITE_ID
+	   			);
+	   			$this->UsersLog->save($logDatas);   			
+	   			$this->unloadModel('UsersLog');   			
+	   		}
    		}
     }  
     
@@ -651,11 +611,11 @@ class AppController extends Controller {
  *
  * @param 	integer $websiteId Identifiant du site Internet
  * @return 	array 	Liste des catégories
- * @access 	private
+ * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 03/05/2012 by FI
  */       
-    function _get_website_menu($websiteId) {
+    protected function _get_website_menu($websiteId) {
     	
     	$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS;
     	$cacheFile 		= "website_menu_".$websiteId;
@@ -678,11 +638,11 @@ class AppController extends Controller {
 /**
  * Cette fonction permet le contrôle et l'envoi des formulaires de contact
  *
- * @access 	private
+ * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 02/08/2012 by FI
  */    
-    function _send_mail_contact() {
+    protected function _send_mail_contact() {
 		    	
     	if(isset($this->request->data['type_formulaire']) && $this->request->data['type_formulaire'] == 'contact') { //Si le formulaire de contact est posté  		
     		
@@ -745,11 +705,11 @@ class AppController extends Controller {
 /**
  * Cette fonction permet le contrôle et l'envoi des formulaires de commentaires
  *
- * @access 	private
+ * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 02/08/2012 by FI
  */      
-    function _send_mail_comments() {
+    protected function _send_mail_comments() {
     	    	
     	//////////////////////////////////////////
     	//   GESTION DU DEPOT DE COMMENTAIRES   //
@@ -825,4 +785,86 @@ class AppController extends Controller {
     		}
     	}    	
     }
+    
+/**
+ * Cette fonction permet le contrôle des droits utilisateurs
+ *
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 02/03/2013 by FI
+ */
+    protected function _check_acls($adminRole) {      	
+    	
+    	//Dans le cas d'un utilisateur backoffice (2) 
+    	//il faut 'vérouiller' certaines pages dans le cas ou on tape directement l'url dans la barre d'adresse
+		if($adminRole > 1) {
+									
+			//GESTION DU PLUGIN ACLS//
+			if(isset($this->plugins['Acls'])) {
+			
+				$controller = $this->request->controller;
+				$action = $this->request->action;
+				if(isset($this->request->prefix) && !empty($this->request->prefix)) { $action = $this->request->prefix.'_'.$action; }				
+				$this->load_component('Acls', PLUGINS.DS.'acls'.DS.'class'.DS.'components');
+				$isAuth = $this->components['Acls']->is_auth($controller, $action);
+				
+			} else {
+				
+		    	//Contrôleurs à vérouilles
+		    	$notAuthControllers = array(
+					'Websites',
+		    		'Users',
+		    		'UsersGroups',
+		    		'Plugins',
+		    		'Configs',
+		    		'Modules',
+		    		'ModulesTypes',
+		    	);
+		    	$controllerName = $this->params['controllerName']; //Contrôleur courant
+		    	$isAuth = in_array($controllerName, $notAuthControllers);
+		    	
+			}
+		    	
+			if(!$isAuth) { $this->redirect('backoffice/home/not_auth'); }
+		}    	
+    } 
+    
+/**
+ * Cette fonction permet la récupération du menu backoffice
+ *
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 16/03/2013 by FI
+ */
+    protected function _get_backoffice_menu() {  
+						
+		//Récupération des modules
+		$this->loadModel('ModulesType'); //Chargement du modèle des types de modules
+		$modulesTypes = $this->ModulesType->findList(array('conditions' => array('online' => 1), 'order' => 'order_by ASC')); //On récupère les types de modules
+		
+		$leftMenus = array();
+		foreach($modulesTypes as $k => $v) { $leftMenus[$k] = array('libelle' => $v, 'menus' => array()); }						
+		
+		$this->loadModel('Module');
+		$leftMenuTMP = $this->Module->find(array('conditions' => array('online' => 1), 'order' => 'order_by ASC'));
+		foreach($leftMenuTMP as $k => $v) { 
+			
+			$session = Session::read('Backoffice'); //Récupération des données de la session courante
+			
+			//GESTION DU PLUGIN ACLS//
+			if(isset($this->plugins['Acls']) && $session['UsersGroup']['id'] > 1) {
+			
+				$moduleControllerName = $v['controller_name'];
+				$acls = $session['Acl'];
+				if(isset($acls[$moduleControllerName]) && isset($leftMenus[$v['modules_type_id']]) && in_array('backoffice_index', $acls[$moduleControllerName])) {
+					
+					 $leftMenus[$v['modules_type_id']]['menus'][] = $v;
+				}
+			} else {
+			
+				if(isset($leftMenus[$v['modules_type_id']])) { $leftMenus[$v['modules_type_id']]['menus'][] = $v; }
+			} 
+		}
+		return $leftMenus;    	   	
+    } 
 }

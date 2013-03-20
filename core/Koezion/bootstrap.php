@@ -20,6 +20,11 @@ require_once KOEZION.DS.'session.php'; //On charge le composant permettant la ge
 Session::init(); //On l'initialise
 
 require_once LIBS.DS.'file_and_dir.php'; //Chargement du Dispatcher
+require_once KOEZION.DS.'object.php'; //Classe Object
+require_once KOEZION.DS.'model.php'; //Classe Model
+require_once KOEZION.DS.'view.php'; //Classe View
+require_once KOEZION.DS.'controller.php'; //Classe Controller
+
 require_once KOEZION.DS.'cache.php'; //
 require_once KOEZION.DS.'basics.php'; //Fichier contenant un certains nombres d'instructions utiles (debug, pr, etc)
 require_once KOEZION.DS.'router.php'; //Chargement de l'object Router (Analyse des Urls)
@@ -29,11 +34,7 @@ require_once CAKEPHP.DS.'string.php'; //Classe Object permettant la manipulation
 require_once CAKEPHP.DS.'set.php'; //Classe Object permettant des manipulations sur les tableaux
 require_once KOEZION.DS.'validation.php'; //Classe Object permettant la gestion des différentes règles de validation des modèles
 require_once KOEZION.DS.'request.php'; //Chargement de l'objet Request
-require_once KOEZION.DS.'object.php'; //Classe Object
-require_once KOEZION.DS.'controller.php'; //Classe Controller
 require_once CONTROLLERS.DS.'app_controller.php'; //Classe App
-require_once KOEZION.DS.'model.php'; //Classe Model
-require_once KOEZION.DS.'view.php'; //Classe View
 require_once KOEZION.DS.'koezion_plugin.php'; //Classe Plugin
 require_once KOEZION.DS.'dispatcher.php'; //Chargement du Dispatcher
 

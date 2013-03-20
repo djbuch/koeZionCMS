@@ -58,7 +58,7 @@ Router::connect(':slug-:id', 							'categories/view/id:([0-9]+)/slug:([a-zA-Z0-
 ///////////////////////////
 //   REGLES BACKOFFICE   //
 Router::connect('connexion', 'users/login'); 																	//Connexion au backoffice
-Router::connect($routesConfigs['backoffice_prefix'], $routesConfigs['backoffice_prefix'].'/categories/index'); 	//Accueil backoffice
+Router::connect($routesConfigs['backoffice_prefix'], $routesConfigs['backoffice_prefix'].'/dashboard/index'); 	//Accueil backoffice
 ///////////////////////////
 
 // Pense bête : 

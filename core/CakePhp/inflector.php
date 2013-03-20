@@ -53,6 +53,7 @@ class Inflector {
 			'/([ti])um$/i' => '\1a',
 			'/(p)erson$/i' => '\1eople',
 			'/(m)an$/i' => '\1en',
+			'/(f)ocus$/i' => '\1ocus',
 			'/(c)hild$/i' => '\1hildren',
 			'/(buffal|tomat)o$/i' => '\1\2oes',
 			'/(alumn|bacill|cact|foc|fung|nucle|radi|stimul|syllab|termin|vir)us$/i' => '\1i',

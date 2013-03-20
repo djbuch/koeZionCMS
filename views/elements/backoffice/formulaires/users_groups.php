@@ -7,6 +7,12 @@
 		<div class="content nopadding">
 			<?php 
 			echo $helpers['Form']->input('name', "<i>(*)</i> Libellé du groupe", array('tooltip' => "Indiquez le libellé du groupe d'utilisateurs"));
+			$rolesId = array(
+				1 => "Administrateur backoffice", 
+				2 => "Utilisateur backoffice", 
+				3 => 'Utilisateur frontoffice'
+			);
+			echo $helpers['Form']->input('role_id', "<i>(*)</i> Type de profil", array('type' => 'select', 'datas' => $rolesId, 'firstElementList' => _("Sélectionnez un type de profil"), 'tooltip' => "Indiquez le type de profil de ce groupe d'utilisateurs"));			
 			echo $helpers['Form']->input('online', 'En ligne', array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour diffuser ce groupe d'utilisateurs"));
 			?>
 		</div>

@@ -1,8 +1,12 @@
 <?php
+$aclsHelper = PLUGINS.DS.'acls'.DS.'views'.DS.'helpers'.DS.'acls'.DS.'backoffice_html.php';
+if(file_exists($aclsHelper)) { require_once($aclsHelper); } 
+else { require_once('backoffice_html.php'); }
+
 /**
  * @todo mutualiser la generation de lid pour ckeditor avec le helper form
  */
-class Html {
+class Html extends BackofficeHtml {
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //										VARIABLES										//
@@ -215,5 +219,5 @@ class Html {
 	public function analytics($code) {
 		
 		if(!empty($code) && $_SERVER["HTTP_HOST"] != 'localhost') { return $code; }
-	}		
+	}
 }

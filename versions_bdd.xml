@@ -1,4 +1,31 @@
-﻿<versions>
+﻿<versions> 
+	<version>
+		<name>Version du 17/03/2013</name>
+		<num>20130317</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">ALTER TABLE `modules` ADD `display_in_menu` INT NOT NULL AFTER `controller_name`;</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 02/03/2013</name>
+		<num>20130302</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">ALTER TABLE `users_groups` ADD `role_id` INT NOT NULL;</task>
+			<task author="KoéZionCMS">ALTER TABLE `users` ADD `created` DATETIME NOT NULL AFTER `online`, ADD `modified` DATETIME NOT NULL AFTER `created`;</task>
+			<task author="KoéZionCMS">ALTER TABLE `users` DROP `role`;</task>
+			<task author="KoéZionCMS">ALTER TABLE `users_groups` ADD `is_deletable` INT NOT NULL DEFAULT '1' AFTER `online`;</task>
+			<task author="KoéZionCMS">
+				DROP TABLE IF EXISTS `users_websites`;
+				CREATE TABLE IF NOT EXISTS `users_websites` (
+				  `user_id` int(11) NOT NULL,
+				  `website_id` int(11) NOT NULL,
+				  PRIMARY KEY (`user_id`,`website_id`)
+				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+			</task>
+		</tasks>	
+	</version>
 	<version>
 		<name>Version du 27/01/2013</name>
 		<num>20130127</num>

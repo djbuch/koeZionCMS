@@ -34,8 +34,10 @@ class Controller extends Object {
 	
 	var $components = array(
 		'Email',
-		'Text'
+		'Text',
 	);
+	
+	var $view = false;
 	
 	var $params = array(); //Liste des paramètres du controlleur (name, modelName)
 	
@@ -61,8 +63,8 @@ class Controller extends Object {
 
 		$modelName = Inflector::singularize($controllerName); //Création du nom du model		
 		
-		$this->loadModel($modelName);		
-		//if($this->auto_load_model) { $this->loadModel($modelName); } //Si la variable de chargement automatique du model est à vrai chargement du model
+		//$this->loadModel($modelName);		
+		if($this->auto_load_model) { $this->loadModel($modelName); } //Si la variable de chargement automatique du model est à vrai chargement du model
 		//else { $this->$modelName = new ModelStd(); }		
 		
 		$this->params['modelName'] = $modelName; //Affectation du nom du model		
@@ -74,12 +76,9 @@ class Controller extends Object {
 		//Chargement des composants
 		foreach($this->components as $k => $v) {
 		
-			$component = low($v); //Nom du fichier
-			require_once COMPONENTS.DS.$component.'.php'; //Inclusion du fichier
-			unset($this->components[$k]); //On supprime de la variable
-			$this->components[$v] = new $v($this); //Et on insère l'objet
+			$this->load_component($v);
+			unset($this->components[$k]);
 		}
-		
 		///////////////////////
 		//GESTION DES PLUGINS//
 		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Plugins'.DS;
@@ -161,78 +160,18 @@ class Controller extends Object {
  * @param boolean $inViewsFolder	Cette variable indique à l'objet View si la vue à rendre se trouve dans le dossier views 
  * @version 0.1 - 23/12/2011
  * @version 0.2 - 24/09/2012 by FI - Rajout du boolean $inViewsFolder pour indiquer si le dossier de stockage de la vue est dans views
+ * @version 0.3 - 04/03/2013 by FI - Modification de la fonction de rendu pour pouvoir redéfinir la vue à rendre directement d'un plugin
  */
 	public function render($view, $inViewsFolder = true) {
 
+		if($this->view) { $view = $this->view; $inViewsFolder = false; }
+		
 		$this->beforeRender();
 
 		$this->set('pager', $this->pager); //Variable de pagination
 		$this->set('params', $this->params); //Variable de paramètres
 		$this->View = new View($view, $this);		
 		$this->View->render($inViewsFolder);		
-	}
-
-/**
- * Cette fonction permet le chargement d'un model dans un controller
- *
- * @param varchar $name Nom du model à charger
- * @version 0.1 - 23/12/2011
- */
-	function loadModel($name, $return = false) {
-		
-		//En premier lieu on test si le model n'est pas déjà instancié
-		//et si il ne l'est pas on procède à son intenciation
-		if(!isset($this->$name)) {
-			
-			$file_path = '';				
-			$file_name = Inflector::underscore($name).'.php'; //Nom du fichier à charger		
-			$file_path_default = ROOT.DS.'models'.DS.$file_name; //Chemin vers le fichier à charger
-			
-			//Pour déterminer le dossier du plugin nous devons transformer le nom du model à charger
-			//Etape 1 : passage au pluriel
-			//Etape 2 : transformation du camelCased en _
-			$pluralizeName = Inflector::pluralize($name);		
-			$underscoreName = Inflector::underscore($pluralizeName);		
-			$file_path_plugin = PLUGINS.DS.$underscoreName.DS.'model.php'; //Chemin vers le fichier plugin à charger
-			
-			//////////////////////////////////////////////
-			//   RECUPERATION DES CONNECTEURS PLUGINS   //
-			$pluginsConnectors = get_plugins_connectors();
-			if(isset($pluginsConnectors[Inflector::pluralize(Inflector::underscore($name))])) {
-					
-				$connectorModel = $pluginsConnectors[Inflector::pluralize(Inflector::underscore($name))];
-				$file_path_plugin = PLUGINS.DS.$connectorModel.DS.'model.php';				
-			}
-			//////////////////////////////////////////////		
-						
-			if(file_exists($file_path_plugin)) { $file_path = $file_path_plugin; } //Si il y a un plugin on le charge par défaut		
-			else if(file_exists($file_path_default)) { $file_path = $file_path_default; } //Sinon on test si le model par défaut existe
-			
-			if(!file_exists($file_path)) { 				
-				
-				Session::write('redirectMessage', "Impossible de charger le modèle ".$name." dans le fichier controller");
-				$this->redirect('home/e404');
-				die();
-			} //On va tester l'existence de ce fichier
-			
-			require_once($file_path); //Inclusion du fichier
-			
-			if($return) { return new $name($this->request->fullUrl); }
-			else { $this->$name = new $name($this->request->fullUrl); } //Création d'un objet Model de type $name que l'on va instancier dans la classe
-		}
-	}
-	
-	/**
-	 * Cette fonction permet le "déchargement" d'un model dans un controller
-	 *
-	 * @param varchar $name Nom du model à "décharger"
-	 * @version 0.1 - 25/01/2011
-	 */
-	function unloadModel($name) {	
-	
-		//En premier lieu on test si le model n'est pas déjà instancié
-		//et si il ne l'est pas on procède à son intenciation
-		if(isset($this->$name)) { unset($this->$name); }
 	}
 
 /**

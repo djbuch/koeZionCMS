@@ -7,6 +7,7 @@ $keywords_for_layout = $category['page_keywords'];
 $contentPage = $this->vars['components']['Text']->format_content_text($category['content']);
 
 if(isset($sliders) && count($sliders) > 0) { $this->element($websiteParams['tpl_layout'].'/slider'); } //Plugin Sliders Catégories
+if(isset($focus) && count($focus) > 0) { $this->element($websiteParams['tpl_layout'].'/focus'); } //Plugin Focus Catégories
 if(isset($googleMapAPI) && $mapPosition == 'topPage') { $this->element(PLUGINS.DS.'gmaps/views/elements/gmaps/frontoffice/map', null, false); } //Plugin Google Maps
 ?>
 <div class="container_omega">

@@ -134,13 +134,30 @@ class Session {
 	
 	static function isLogged() {
 		
-		$role = Session::read('Backoffice.User.role');
-		return isset($role);
+		$session = Session::read('Backoffice');
+		return (isset($session) && !empty($session));
 	}
 	
+/**
+ * Cette fonction permet de récupérer la valeur du role de l'utilisateur connecté
+ * 
+ * @access	static
+ * @author	koéZionCMS
+ * @version 0.1 - 02/03/2013 by FI 
+ */
+	static function getRole() {
+
+		//Si session
+		if(Session::read('Backoffice.UsersGroup')) {
+			
+			$role = Session::read('Backoffice.UsersGroup.role_id'); //Récupération de la valeur
+			if($role) { return $role; } //Si la valeur est valide on la retourne
+			else { return false; } //On retourne faux sinon
+		}
+		return false;
+	}
 	
-	
-	static function user($key) {
+	/*static function user($key) {
 		
 		//Si session user
 		if(Session::read('Backoffice.User')) {			
@@ -152,5 +169,5 @@ class Session {
 			else { return false; } 
 		}
 		return false;	
-	}
+	}*/
 }

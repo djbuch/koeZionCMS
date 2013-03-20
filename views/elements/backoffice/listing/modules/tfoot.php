@@ -1,5 +1,5 @@
 <tfoot>
 	<tr>
-		<td colspan="6" class="txtright"><a class="btn red deleteFormBox" onclick="return confirm('<?php echo _("Voulez vous vraiment supprimer?"); ?>');" href="formDelete" style="margin-top: 10px;"><span><?php echo _("SUPPRIMER"); ?></span></a></td>					
+		<td colspan="6" class="txtright"><?php echo $helpers['Html']->backoffice_delete_button($params['controllerFileName']); ?></td>					
 	</tr>
 </tfoot>

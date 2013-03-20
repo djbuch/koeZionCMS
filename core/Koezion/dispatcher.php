@@ -26,11 +26,15 @@ class Dispatcher {
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 30/01/2012 by FI 
+ * @version 0.2 - 04/03/2013 by FI - Modification du constructeur pour donner la possibilité de ne pas faire le dispatch par défaut 
  */	
-	public function __construct() {
+	public function __construct($dispatch = true) {
         
-		$this->request = new Request(); //Création d'un objet de type Request		
-		$this->dispatch(); //On lance la fonction principale de la classe		      
+		if($dispatch) {
+		
+			$this->request = new Request(); //Création d'un objet de type Request		
+			$this->dispatch(); //On lance la fonction principale de la classe
+		}		      
 	} 
 	
 /**
@@ -87,10 +91,12 @@ class Dispatcher {
 	}	
 	
 /**
- * Cette fonction va charger un controller
+ * Cette fonction va charger le fichier contenant la classe d'un controller
  * @return $name Objet correspondant au type de controller souhaité
  */
-	function loadController() {
+	function loadControllerFile($controllerToLoad = null) {
+		
+		if(isset($controllerToLoad) && !empty($controllerToLoad)) { $this->request->controller = $controllerToLoad; }
 		
 		$pluginControllerToLoad = $this->request->controller; //Sert pour verifier si un plugin est installé ou pas
 		
@@ -151,8 +157,17 @@ class Dispatcher {
 			die();	
 		}
 		
-		require $file_path; //Inclusion de ce fichier si il existe
+		require_once $file_path; //Inclusion de ce fichier si il existe	
+		return $file_name;
+	}
 	
+/**
+ * Cette fonction va charger un controller
+ * @return $name Objet correspondant au type de controller souhaité
+ */
+	function loadController() {
+	
+		$file_name = $this->loadControllerFile();
 		$controller_name = Inflector::camelize($file_name); //On transforme le nom du fichier pour récupérer le nom du controller		
 		$controller =  new $controller_name($this->request); //Création d'une instance du controller souhaité dans lequel on injecte la request		
 		return $controller;

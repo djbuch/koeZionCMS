@@ -1,5 +1,24 @@
 ﻿<versions>
 	<version>
+		<name>Version du 20/03/2013</name>
+		<num>20130220</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">Mise à jour majeure pour l'intégration des droits utilisateurs.</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 02/03/2013</name>
+		<num>20130302</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">MODIFICATION MAJEURE de la gestion de base des droits utilisateurs.</task>
+			<task author="KoéZionCMS">Mise en plugin de l'import des utilisateurs.</task>
+			<task author="KoéZionCMS">Modification de la fonction de rendu dans le contrôleur principal pour pouvoir redéfinir les vues a rendre directement des plugins.</task>
+			<task author="KoéZionCMS">Modification de la fonction loadController dans le Dispatcher pour la diviser en deux fonctions (une qui charge le fichier et une qui charge la classe).</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 01/03/2013</name>
 		<num>20130301</num>
 		<supervisor>KoéZionCMS</supervisor>

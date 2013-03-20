@@ -20,6 +20,10 @@ class UsersGroup extends Model {
 		'name' => array(
 			'rule' => array('minLength', 2),
 			'message' => 'UsersGroup.name'
+		),
+		'role_id' => array(
+			'rule' => 'notEmpty',
+			'message' => 'UsersGroup.role_id'
 		)
 	);
 }

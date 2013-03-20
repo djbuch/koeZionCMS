@@ -31,25 +31,21 @@
 			}
 			?>
 		</li>
-		<?php if(Session::user('role') == 'admin') { ?>
-			<?php /* ?><li><a href="<?php echo Router::url('backoffice/users/index'); ?>"><?php echo $helpers['Html']->img('backoffice/icon-profile.png', array('alt' => _("Gestion utilisateurs"))); ?> <?php echo _("Utilisateurs"); ?></a></li><?php */ ?>
+		<?php if(Session::getRole() == 1) { ?>
 			<li>
 				<img src="<?php echo BASE_URL; ?>/img/backoffice/icon-settings.png" alt="Settings" /> <?php echo _("Paramètres"); ?>
 				<ul>
-					<?php /* ?><li><a href="<?php echo Router::url('backoffice/websites/index'); ?>"><?php echo _("Gestion des sites Internet"); ?></a></li>
-					<li><a href="<?php echo Router::url('backoffice/users/index'); ?>"><?php echo _("Gestion des utilisateurs"); ?></a></li>
-					<li><a href="<?php echo Router::url('backoffice/plugins/index'); ?>"><?php echo _("Gestion des plugins"); ?></a></li>					
-					<li class="nolink center">---------- <?php echo _("FICHIERS DE CONF"); ?> ----------</li><?php */ ?>	
 					<li><a href="<?php echo Router::url('backoffice/configs/database_liste'); ?>"><?php echo _("Base de données"); ?></a></li>			
 					<li><a href="<?php echo Router::url('backoffice/configs/mailer_liste'); ?>"><?php echo _("Envoi de mails"); ?></a></li>			
 					<li><a href="<?php echo Router::url('backoffice/configs/router_liste'); ?>"><?php echo _("Gestion des routes"); ?></a></li>			
 					<li><a href="<?php echo Router::url('backoffice/configs/posts_liste'); ?>"><?php echo _("Articles"); ?></a></li>
 					<li><a href="<?php echo Router::url('backoffice/configs/security_code_liste'); ?>"><?php echo _("Code sécurité tâches CRON"); ?></a></li>
 					<li><a href="<?php echo Router::url('backoffice/configs/delete_cache'); ?>"><?php echo _("Supprimer le cache"); ?></a></li>
-					<?php /* ?><li><a href="<?php echo Router::url('backoffice/configs/sessions_liste'); ?>"><?php echo _("Sessions"); ?></a></li><?php */ ?>	
+					<li class="nolink center">-------- <?php echo _("GESTIONS DES MODULES"); ?> --------</li>
+					<li><a href="<?php echo Router::url('backoffice/modules/index'); ?>"><?php echo _("Modules"); ?></a></li>			
+					<li><a href="<?php echo Router::url('backoffice/modules_types/index'); ?>"><?php echo _("Types de modules"); ?></a></li>
 				</ul>
 			</li>
-			<?php /* ?><li><a href="<?php echo Router::url('backoffice/websites/index'); ?>"><?php echo $helpers['Html']->img('backoffice/icon-websites.png', array('alt' => _("Gestion des Sites Internet"))); ?> <?php echo _("Sites Internet"); ?></a></li><?php */ ?>
 		<?php } ?>			
 		
 		<li class="logout"><a href="<?php echo Router::url('users/logout'); ?>" title="Logout"><?php echo $helpers['Html']->img('backoffice/logout.png', array('alt' => _("Déconnexion"))); ?></a></li>

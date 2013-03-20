@@ -154,3 +154,5 @@ div.toggler p{margin:0;padding:0}
 div.toggler h2{margin:5px 0 10px}
 div.toggler h3{margin:5px 0 8px}
 .fb-like-box{background:white;}
+.focus_line{overflow:hidden;}
+.focus_line + .focus_line{margin-top:30px;}

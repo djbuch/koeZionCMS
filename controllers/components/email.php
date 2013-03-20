@@ -16,7 +16,7 @@
  * @link		http://swiftmailer.org/
  * @todo Si il y a des erreurs dans le paramétrage des configurations une fatal error générée par swiftMailer est lancé voir comment faire pour la gérer de façon plus jolie
  */
-class Email {
+class EmailComponent extends Object {
 
 	var $mailer = false;
 	

@@ -167,7 +167,7 @@ class Model extends Object {
 		///////////////////////////////////////////////////////////
 		//   CONDITIONS DE RECHERCHE SUR L'IDENTIFIANT DU SITE   //
 		//Si dans le shema de la table on a une colonne website_id		
-		if(in_array('website_id', $shema) && get_class($this) != 'UsersGroupsWebsite') {
+		if(in_array('website_id', $shema) && !in_array(get_class($this), array('UsersWebsite', 'UsersGroupsWebsite'))) {
 		
 			//Si on a pas de conditions de recherche particulières
 			if(!isset($req['conditions'])) { $req['conditions']['website_id'] = CURRENT_WEBSITE_ID; }
@@ -353,6 +353,21 @@ class Model extends Object {
 	}	
 	
 /**
+ * Cette fonction est chargée de vider une table
+ * 
+ * @return  objet Objet PDO
+ * @access	public
+ * @author	koéZionCMS
+ * @version 0.1 - 07/03/2013 by FI
+ */		
+	public function truncate() {
+		
+		$sql = "TRUNCATE TABLE ".$this->table.";";  //Requête de suppression
+		$queryResult = $this->query($sql);		
+		return $queryResult;
+	}
+	
+/**
  * Fonction chargée d'éffectuer la sauvegarde des données
  * Selon les cas un INSERT ou un UPDATE sera effectué
  * On va travailler avec les requetes préparées de PDO
@@ -402,20 +417,23 @@ class Model extends Object {
  */	
 	function saveAll($datas, $forceInsert = false, $escapeUpload = true) {
 		
-		$preparedInfos = $this->_prepare_save_query(array_keys(current($datas)), $forceInsert, $escapeUpload);
-		foreach($datas as $k => $v) { 
+		if(!empty($datas)) {
 			
-			$datasToSave = $this->_prepare_save_datas($v, $preparedInfos['moreDatasToSave'], $forceInsert, $escapeUpload);
-			$queryExecutionResult = $preparedInfos['preparedQuery']->execute($datasToSave);
-			
-			$this->_trace_sql('function saveAll', $preparedInfos['preparedQuery']->queryString); //Récupération de la requête
-			
-			if($preparedInfos['action'] == 'insert') { $this->id[] = $this->db->lastInsertId();}
-			else { $this->id[] = $datas['id']; }
-			
-			$this->queryExecutionResult = $queryExecutionResult;
-			
-			if(isset($this->searches_params)) { $this->make_search_index($datasToSave, $this->id, $preparedInfos['action']); } //On génère le fichier d'index de recherche
+			$preparedInfos = $this->_prepare_save_query(array_keys(current($datas)), $forceInsert, $escapeUpload);
+			foreach($datas as $k => $v) { 
+				
+				$datasToSave = $this->_prepare_save_datas($v, $preparedInfos['moreDatasToSave'], $forceInsert, $escapeUpload);
+				$queryExecutionResult = $preparedInfos['preparedQuery']->execute($datasToSave);
+				
+				$this->_trace_sql('function saveAll', $preparedInfos['preparedQuery']->queryString); //Récupération de la requête
+				
+				if($preparedInfos['action'] == 'insert') { $this->id[] = $this->db->lastInsertId();}
+				else { $this->id[] = $datas['id']; }
+				
+				$this->queryExecutionResult = $queryExecutionResult;
+				
+				if(isset($this->searches_params)) { $this->make_search_index($datasToSave, $this->id, $preparedInfos['action']); } //On génère le fichier d'index de recherche
+			}
 		}
 	}
 	
@@ -542,7 +560,7 @@ class Model extends Object {
 	function shema() {		
 		
 		$shema = array();
-		if($this->exist_table_in_database($this->database, $this->table) == 1) {			
+		if($this->exist_table_in_database($this->table) == 1) {			
 		
 			$cacheFolder 	= TMP.DS.'cache'.DS.'models'.DS;
 			$cacheFile 		= $this->table;	
@@ -575,14 +593,28 @@ class Model extends Object {
 /**
  * Cette fonction permet de tester l'existence d'une table dans la base de données
  *
- * @param 	varchar $database 	Nom de la base de données
  * @param 	varchar $table 		Table à tester
  * @return 	integer Résultat de la requête
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 07/09/2012 by FI
+ * @version 0.2 - 04/03/2013 by FI - Suppression de la variable database et récupération de celle-ci de la variable de classe
  */
-	function exist_table_in_database($database, $table) {		
+	function exist_table_in_database($table) {		
+				
+		$tablesList = $this->table_list_in_database();		
+		return in_array($table, $tablesList);
+	}		
+	
+/**
+ * Cette fonction permet de récupérer la liste des tables de la base de données
+ *
+ * @return 	array	Liste des tables
+ * @access	public
+ * @author	koéZionCMS
+ * @version 0.1 - 04/03/2013 by FI
+ */
+	function table_list_in_database() {		
 				
 		$cacheFolder 	= TMP.DS.'cache'.DS.'models'.DS;
 		$cacheFile 		= "tables_list";	
@@ -592,7 +624,7 @@ class Model extends Object {
 		if(!$tablesList) { 
 		
 			$tablesList = array();
-			$sql = 'SHOW TABLES FROM `'.$database.'`;';
+			$sql = 'SHOW TABLES FROM `'.$this->database.'`;';
 			foreach($this->query($sql, true) as $k => $v) {
 				
 				$value = array_values($v);
@@ -602,8 +634,8 @@ class Model extends Object {
 			Cache::create_cache_file($cacheFolder, $cacheFile, $tablesList);
 		}
 		
-		return in_array($table, $tablesList);
-	}		
+		return $tablesList;
+	}
 	
 /////////////////////////////
 //   MOTEUR DE RECHERCHE   //

@@ -193,8 +193,10 @@ class Router {
 		$url = str_replace('//', '/', '/'.$url);
 		if($url != '/' && !empty($extension)) { $url .= '.'.$extension; } //Cas ou on est pas sur la racine du site
 		
-		if($fullUrl) { return 'http://'.$_SERVER['HTTP_HOST'].BASE_URL.$url; }
-		else { return BASE_URL.$url; }
+		if($fullUrl) { $url2Return = 'http://'.$_SERVER['HTTP_HOST'].BASE_URL.$url; }
+		else { $url2Return = BASE_URL.$url; }
+		
+		return $url2Return;
 	}
 	
 /**

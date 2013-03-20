@@ -32,3 +32,4 @@ table.all td:first-child+td+td+td+td+td,table.pagesort td:first-child+td+td+td+t
 .dataTables_wrapper .dataTables_filter{position:absolute;top:-36px;right:34px}
 .dataTables_wrapper .dataTables_filter input{float:right;display:inline-block;border:1px solid #e5e5e5;margin:8px 0 0;padding:3px 19px 3px 4px;font:11px/15px Arial;color:#848484;width:100px;height:15px}
 table tbody tr th{border:1px solid #e5e5e5;border-bottom:0;padding:8px 8px 10px;line-height:1.0em;background-color:#e5e5e5}
+table tbody tr td.subtitle{background-color:#959595;color:white;font-weight:bold;}

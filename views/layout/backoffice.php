@@ -33,8 +33,30 @@
 			'backoffice/hook',
 			'backoffice/prettyradio'
 		);
-		echo $helpers['Html']->css($css);		
-		
+		echo $helpers['Html']->css($css);
+		?>
+	</head>
+
+	<body>
+		<div id="wrapper">
+			<?php $this->element('backoffice/top_bar'); ?>
+			<?php $this->element('backoffice/left'); ?>
+			
+			<div id="right">
+			
+				
+				<?php //$this->element('backoffice/breadcrumbs'); ?>
+				
+				<div id="main">
+					<?php
+					$this->element('backoffice/flash_messages');
+					echo $content_for_layout; 
+					?>
+				</div>
+			</div>
+		</div>
+		<span class="websitebaseurl" style="display:none;"><?php echo BASE_URL; ?></span>		
+		<?php 
 		$js = array(
 			'backoffice/jquery-1.7.1.min', 				//Librairie JQuery
 			'backoffice/jquery-ui',						//Librairie JQueryUI
@@ -69,26 +91,5 @@
 		);
 		echo $helpers['Html']->js($js);
 		?>
-	</head>
-
-	<body>
-		<div id="wrapper">
-			<?php $this->element('backoffice/top_bar'); ?>
-			<?php $this->element('backoffice/left'); ?>
-			
-			<div id="right">
-			
-				
-				<?php //$this->element('backoffice/breadcrumbs'); ?>
-				
-				<div id="main">
-					<?php
-					$this->element('backoffice/flash_messages');
-					echo $content_for_layout; 
-					?>
-				</div>
-			</div>
-		</div>
-		<span class="websitebaseurl" style="display:none;"><?php echo BASE_URL; ?></span>
 	</body>
 </html>

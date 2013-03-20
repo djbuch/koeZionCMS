@@ -31,11 +31,11 @@ $(document).ready(function() {
 	$('.toggle').click(function() { $(this).toggleClass("active").next().slideToggle("fast"); });
 	
 	/*Position du bouton des focus*/
-	$('.focus').focusWidth('.gs_3');	
+	$('.focus .focus_line').focusWidth('.gs_3');	
 	
-	$('.focus').sameHeights('.gs_3');	
-	$('.focus .gs_3').css({'position': 'relative'});
-	$('.focus .gs_3 .superbutton').css({'position': 'absolute', 'bottom': 0});	
+	$('.focus .focus_line').sameHeights('.gs_3');	
+	$('.focus .focus_line .gs_3').css({'position': 'relative'});
+	$('.focus .focus_line .gs_3 .superbutton').css({'position': 'absolute', 'bottom': 0});	
 });
 
 /* Start of functions initialized after full load of page */

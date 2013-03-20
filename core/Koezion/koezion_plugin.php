@@ -12,10 +12,10 @@ class KoeZionPlugin extends Object {
 			FileAndDir::createPath($fileCopy['destinationPath']); //Création du dossier de destination
 		
 			//Dans le cas ou on un seul fichier à copier
-			if(isset($fileCopy['sourceName']) && isset($fileCopy['destinationNane'])) {
+			if(isset($fileCopy['sourceName']) && isset($fileCopy['destinationName'])) {
 		
 				$sourceFile = $fileCopy['sourcePath'].DS.$fileCopy['sourceName']; //Chemin du fichier source
-				$destinationFile = $fileCopy['destinationPath'].DS.$fileCopy['destinationNane']; //Chemin du fichier de destination
+				$destinationFile = $fileCopy['destinationPath'].DS.$fileCopy['destinationName']; //Chemin du fichier de destination
 				$processResult = FileAndDir::fcopy($sourceFile, $destinationFile); //Copie du fichier
 		
 				//Dans le cas ou on a le contenu d'un dossier à copier

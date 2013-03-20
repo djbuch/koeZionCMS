@@ -85,10 +85,9 @@ class UsersGroupsController extends AppController {
 			$this->loadModel('UsersGroupsWebsite'); //Chargement du modèle
 			$this->UsersGroupsWebsite->deleteByName('users_group_id', $id);
 			$this->unloadModel('UsersGroupsWebsite'); //Déchargement du modèle
-	
-			if($redirect) { $this->redirect('backoffice/users_groups/index'); } //On retourne sur la page de listing
-			else { return true; }
 		}
+		
+		$this->redirect('backoffice/users_groups/index');
 	}	
 	
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -98,11 +97,11 @@ class UsersGroupsController extends AppController {
 /**
  * Cette fonction permet l'initialisation de la liste des sites Internet paramétrés dans l'application
  *
- * @access 	private
+ * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 18/05/2012 by FI
  */
-	function _init_websites() {
+	protected function _init_websites() {
 	
 		$this->loadModel('Website');
 		$websitesList = $this->Website->findList(); //On récupère la liste des sites
@@ -114,11 +113,11 @@ class UsersGroupsController extends AppController {
  * Cette fonction permet l'initialisation des données de l'association entre les groupes d'utilisateur et les sites Internet
  *
  * @param	integer $usersGroupId Identifiant du groupe d'utilisateur
- * @access 	private
+ * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 05/06/2012 by FI
  */	
-	function _get_assoc_datas($usersGroupId) {
+	protected function _get_assoc_datas($usersGroupId) {
 
 		$this->loadModel('UsersGroupsWebsite'); //Chargement du modèle		
 		$usersGroupsWebsite = $this->UsersGroupsWebsite->find(array('conditions' => array('users_group_id' => $usersGroupId))); //On récupère les données
@@ -132,11 +131,11 @@ class UsersGroupsController extends AppController {
  *
  * @param	integer $usersGroupId 	Identifiant du groupe d'utilisateur
  * @param	boolean $deleteAssoc 	Si vrai l'association entre les groupes d'utilisateurs et les sites sera supprimée
- * @access 	private
+ * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 05/06/2012 by FI
  */	
-	function _save_assoc_datas($usersGroupId, $deleteAssoc = false) {
+	protected function _save_assoc_datas($usersGroupId, $deleteAssoc = false) {
 				
 		$this->loadModel('UsersGroupsWebsite'); //Chargement du modèle
 

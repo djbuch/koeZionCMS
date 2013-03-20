@@ -70,7 +70,7 @@ img{border:0}
 #top-bar ul li li b{padding:0;font:11px/18px Arial;font-weight:bold;color:#fff}
 #right #breadcrumbs{display:block;position:relative;background:url(../../img/backoffice/back-breadcrumbs.gif) repeat-x left top;height:29px}
 #right #breadcrumbs ul{margin:0;padding:10px 20px 2px;list-style:none;height:17px}
-#right #breadcrumbs ul li{float:left;position:relative;border-left:1px solid #d8d8d8;padding:0 10px 0;font:10px/1.0em 'MyriadProRegular',Arial;color:#bfbfbf;text-transform:uppercase}
+#right #breadcrumbs ul li{float:left;position:relative;border-left:1px solid #d8d8d8;padding:0 10px 0;font:10px/1.0em;color:#bfbfbf;text-transform:uppercase}
 #right #breadcrumbs ul li:first-child{border-left:none;padding:0 10px 0 0}
 #right #breadcrumbs ul li a,#right #breadcrumbs ul li a:link,#right #breadcrumbs ul li a:active,#right #breadcrumbs ul li a:visited{color:#bfbfbf;text-decoration:none}
 #right #breadcrumbs ul li a:hover,#right #breadcrumbs ul li.active a,#right #breadcrumbs ul li.active a:link,#right #breadcrumbs ul li.active a:active,#right #breadcrumbs ul li.active a:visited{color:#807f7f;text-decoration:none}
@@ -87,9 +87,9 @@ img{border:0}
 #right .third{float:left;width:33.33%}
 #right .three-quarter{float:left;width:75%}
 #right .box .title{display:block;background:url(../../img/backoffice/back-title.gif) repeat-x left top;overflow:hidden;min-height:31px}
-#right .box .title h2{float:left;background:url(../../img/backoffice/title-bullit.gif) no-repeat 9px center;margin:0;padding:0;font:15px/2.0em 'MyriadProRegular',Arial;text-indent:25px;text-transform:uppercase;font-weight:normal;word-spacing:3px;height:29px}
+#right .box .title h2{float:left;background:url(../../img/backoffice/title-bullit.gif) no-repeat 9px center;margin:0;padding:0;font:15px/2.0em;text-indent:25px;text-transform:uppercase;font-weight:normal;word-spacing:3px;height:29px;line-height:29px;font-size:14px;}
 #right .box .title .hide{float:right;background:url(../../img/backoffice/hide.gif) no-repeat left top;overflow:hidden;cursor:pointer;width:32px;height:29px}
-#right .box .content{display:block;position:relative;padding:20px}
+#right .box .content{display:block;position:relative;padding:20px;overflow:hidden;}
 #right .box .content.nopadding{padding:0}
 #right .box .content.gallery{text-align:center;padding:15px 20px 18px 15px}
 #right .box .content .thumb{display:inline-block;position:relative;background:#FFF;border:1px solid #e5e5e5;margin:5px 0 0 5px;overflow:hidden;text-align:center}

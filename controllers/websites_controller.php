@@ -208,20 +208,24 @@ class WebsitesController extends AppController {
  * @access 	protected 
  * @author 	koéZionCMS
  * @version 0.1 - 02/05/2012 by FI
+ * @version 0.2 - 02/03/2013 by FI - Reprise suite à la modification de la gestion des utilisateurs
  */
 	protected function _edit_session() {
-		$user = Session::read('Backoffice.User');
-		$userRole = $user['role'];
+		
+		$backofficeSession = Session::read('Backoffice');
+		$user = $backofficeSession['User'];
+		$usersGroup = $backofficeSession['UsersGroup'];		
 		$userGroupId = $user['users_group_id'];
+		$userRole = $usersGroup['role_id'];
 		
 		$websitesListe = array(); //Liste des sites (ID => NAME)
 		$websitesDetails = array(); //Détails des sites
 		
-		if($userRole == 'admin') {
+		if($userRole == 1) {
 			
 			$websites = $this->Website->find(); //Récupération des données			
 			
-		} else if($userRole == 'website_admin') {
+		} else if($userRole == 2) {
 			
 			//Récupération des sites auxquels l'utilisateurs peut se connecter
 			$this->loadModel('UsersGroupsWebsite'); //Chargement du modèle

@@ -2,7 +2,7 @@
 	<div class="box">
 		<div class="title">
 			<h2><?php echo _("Ajout massif de catégories"); ?></h2>
-			<a class="btn black" href="<?php echo Router::url('backoffice/'.$params['controllerFileName'].'/index'); ?>" style="float: right; margin-top: 3px;"><span><?php echo _("Listing"); ?></span></a>
+			<?php echo $helpers['Html']->backoffice_button_title($params['controllerFileName'], 'index', "Listing"); ?>
 		</div>
 		<div class="content nopadding">
 			<?php 

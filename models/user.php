@@ -13,10 +13,10 @@ class User extends Model {
  * @version 0.1 - 05/06/2012 by FI
  */
 	var $validate = array(
-		'role' => array(
+		/*'role' => array(
 			'rule' => 'notEmpty',
 			'message' => 'User.role'
-		),
+		);*/
 		'users_group_id' => array(
 			'rule' => 'notEmpty',
 			'message' => 'User.group'
