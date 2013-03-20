@@ -5,6 +5,7 @@
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS">Mise à jour majeure pour l'intégration des droits utilisateurs.</task>
+			<task author="KoéZionCMS">Mise à jour du bootstrap d'install.</task>
 		</tasks>	
 	</version>
 	<version>

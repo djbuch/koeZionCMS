@@ -29,6 +29,22 @@ define('INSTALL_FUNCTIONS', ROOT.DS.'install'.DS.'functions'); 	//Chemin vers le
 define('INSTALL_INCLUDE', ROOT.DS.'install'.DS.'include'); 		//Chemin vers les fichiers include de configuration
 define('INSTALL_VALIDATE', ROOT.DS.'install'.DS.'validate'); 	//Chemin vers les fichiers de validation
 	
+//GESTION DES ERREURS --> http://www.ficgs.com/Comment-montrer-les-erreur-PHP-f1805.html
+//ini_set( 'magic_quotes_gpc', 0 );
+$logFile = TMP.DS.'logs'.DS.'php'.DS.date('Y-m-d').'.log'; //Chemin du fichier de logs
+$httpHost = $_SERVER["HTTP_HOST"];
+if($httpHost == 'localhost' || $httpHost == '127.0.0.1') { $displayErrors = 1; } else { $displayErrors = 0; }
+ini_set('display_errors', $displayErrors); //Affichage des erreurs
+//error_reporting(E_ALL); //On report toutes les erreurs ou error_reporting(E_ALL);
+//Rapporte les erreurs d'exécution de script
+//Rapporter les E_NOTICE peut vous aider à améliorer vos scripts
+//(variables non initialisées, variables mal orthographiées..)
+error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
+ini_set('log_errors', 1); //Log des erreurs
+ini_set('error_log', $logFile); //Définition du chemin du fichier de logs
+//echo phpinfo();
+/////////////////////////////	
+	
 /////////////////////////////////////////////////////////
 //   MISE EN PLACE DU CHEMIN RELATIF VERS LE WEBROOT   //
 //http://www.siteduzero.com/forum-83-692076-p1-base-url.html
