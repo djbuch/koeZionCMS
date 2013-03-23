@@ -145,7 +145,7 @@ class Model extends Object {
  * @version 0.1 - 28/12/2011 by FI
  * @version 0.2 - 02/05/2012 by FI - Mise en place de la conditions de récupérations selon l'identifiant du site
  */    
-	public function find($req = array(), $type = PDO::FETCH_ASSOC) {
+	/*public function find($req = array(), $type = PDO::FETCH_ASSOC) {
 		
 		$shema = $this->shema;
 		$sql = 'SELECT '; //Requete sql
@@ -179,6 +179,173 @@ class Model extends Object {
 			}			
 		}
 		///////////////////////////////////////////////////////////
+		
+		///////////////////////////
+		//   CHAMPS CONDITIONS   //
+		if(isset($req['conditions'])) { //Si on a des conditions
+			
+			$conditions = 'WHERE ';	//Mise en variable des conditions	
+			
+			//On teste si conditions est un tableau
+			//Sinon on est dans le cas d'une requête personnalisée
+			if(!is_array($req['conditions'])) {
+                
+				$conditions .= $req['conditions']; //On les ajoute à la requete
+			
+			//Si c'est un tableau on va rajouter les valeurs
+			} else {
+				
+				$cond = array();
+				foreach($req['conditions'] as $k => $v) {
+					
+					if(!is_numeric($v)) {
+						
+						$v = $this->db->quote($v); //Equivalement de mysql_real_escape_string
+						//$v = '"'.mysql_escape_string($v).'"'; //Equivalement de mysql_real_escape_string
+					}
+					
+					$k = get_class($this).".".$k; //On rajoute le nom de la classe devant le nom de la colonne
+					$cond[] = "$k=$v";
+				}
+				$conditions .= implode(' AND ', $cond);
+			}
+			
+			$sql .= $conditions; //On rajoute les conditions à la requête
+		}
+		
+		////////////////////////////////
+		//   CHAMPS MORE CONDITIONS   //
+		if(isset($req['moreConditions']) && !empty($req['moreConditions'])) { 
+			
+			if(isset($req['conditions'])) { $sql .= ' AND '; } else { $sql .= ' WHERE '; }			
+			$sql .= $req['moreConditions']; 
+		}
+		
+		//////////////////////
+		//   CHAMPS GROUP BY   //
+		if(isset($req['groupBy'])) { $sql .= ' '.$req['groupBy']; }
+		
+		//////////////////////
+		//   CHAMPS ORDER   //
+		if(isset($req['order'])) { $sql .= ' ORDER BY '.$req['order']; }
+		
+		//////////////////////
+		//   CHAMPS LIMIT   //
+		if(isset($req['limit'])) { $sql .= ' LIMIT '.$req['limit']; }
+		
+		//if($this->trace_sql) { pr($sql); }
+		
+		$preparedQuery = $this->db->prepare($sql);
+		$preparedQuery->execute();
+		
+		$this->_trace_sql('function find', $preparedQuery->queryString); //Récupération de la requête
+		
+        return $preparedQuery->fetchAll($type);        
+    }*/
+/**
+ * Fonction permettant d'effectuer des recherches dans la base de données
+ * 
+ * $req peut être composé des index suivants :
+ * 	- fields (optionnel) : liste des champs à récupérer. Cet index peut être une chaine de caractères ou un tableau, si il est laissé vide la requête récupèrera l'ensemble des colonnes de la table.
+ * 	- conditions (optionnel) : ensemble des conditions de recherche à mettre en place. Cet index peut être une chaine de caractères ou un tableau.
+ * 	- moreConditions (optionnel) : cet index est une chaine de caractères et permet lorsqu'il est renseigné de rajouter des conditions de recherche particulières.
+ * 	- order (optionnel) : cet index est une chaine de caractères et permet lorsqu'il est renseigné d'effectuer un tri sur les éléments retournés.
+ * 	- limit (optionnel) : cet index est un entier et permet lorsqu'il est renseigné de limiter le nombre de résultats retournés.
+ *  - allLocales (optionnel) : cet index est un booléen qui permet lors de la récupération d'un élément d'indiquer si il faut ou non récupérer l'ensemble des champs traduits
+ *  - innerJoin (optionnel) : cet index permet d'effectuer une instruction "INNER JOIN" dans une requête, il contient un tableau qui doit lui-même contenir les index 'table' et 'pivot'. 
+ *    L'index 'table' contient le nom de la table sur laquelle on va effectuer la recherche, et l'index 'pivot' contient la comparaison entre les deux tables. 
+ *    L'utilisation de l'index 'fields' est obligatoire pour déterminer les éléments à récupérer dans les multiples tables.
+ * 		
+ * 	  Exemple d'utilisation : On récupère des données à partir d'une table d'association. On souhaite également récupérer l'attribut "name" des éléments entrés dans cette table. 
+ *    Mais vu que la table d'association ne contient que l'id, on va effectuer un "INNER JOIN" sur la table d'origine pour récupérer l'attribut "name" dans celle-ci.
+ * 		
+ *    Voici un exemple de code php :
+ *    
+ * 			$datas = $this->AssociationModel->find(array(									#On effectue l'action dans le modèle de la table d'association
+ * 				'fields' => array(' AssociationModel.* ', ' `original_table`.name '),		#On définit les tables dans lesquelles on va chercher les données, ainsi que les champs (le champ 'name' en l'occurrence)
+ * 				'innerJoin' => array(
+ * 					'table' => ' `original_table` ',										#Dans le champ "table" on entre le nom de la table d'origine dans laquelle se trouve l'attribut "name" que l'on cherche
+ * 					'pivot' => ' AssociationModel.`original_id` = `original_table`.`id` '	#Ceci est notre point de pivot : on compare l'id dans la table d'association avec l'id dans la table originale, afin de récupérer les bons éléments
+ * 				)
+ * 			));
+ *	  Celui-ci ne concerne qu'une seule table et donc un seul "INNER JOIN", mais on peut récupérer également des infos sur plusieurs tables.
+ * 	  Exemple concret : Notre table d'association contient l'id d'un livre et l'id d'un catalogue dans lequel ce livre est contenu. Un livre peut donc être dans plusieurs catalogues.
+ * 	  Voici un exemple de code php qui va exécuter une requête qui va récupérer le nom du livre et le nom du catalogue, le tout à partir de la table d'association
+ * 
+ * 			$datas = $this->AssociationCataloguesLivres->find(array(								#On effectue l'action dans le modèle de la table d'association
+ * 				'fields' => array(
+ * 					' AssociationCataloguesLivres.* ', 
+ * 					' table_livres.name as livre_name ', 
+ * 					' table_catalogues.name as catalogue_name '
+ * 				),																					#On définit les tables dans lesquelles on va chercher les données, ainsi que les champs (le champ 'name' en l'occurrence) et on met un alias pour que PHP trie correctement le tableau
+ *				'innerJoin' => array(
+ *					array(
+ *						'table' => ' table_livres ',												#Nom de la table des livres
+ *						'pivot' => ' AssociationCataloguesLivres.livre_id = table_livres.id '		#Point de pivot pour la table des livres
+ *					),
+ *					array(
+ *						'table' => ' table_catalogues ',											#Nom de la table des catalogues
+ *						'pivot' => ' AssociationCataloguesLivres.livre_id = table_catalogues.id '	#Point de pivot pour la table des catalogues
+ *					),
+ *				)
+ *			));
+ * 
+ * @param 	array 	$req 	Tableau de conditions et paramétrages de la requete
+ * @param 	object 	$type 	Indique le type de retour de PDO dans notre cas un tableau dont les index sont les colonnes de la table
+ * @return 	array 	Tableau contenant les éléments récupérés lors de la requête  
+ * @version 0.1 - 28/12/2011 by FI
+ * @version 0.2 - 02/05/2012 by FI - Mise en place de la conditions de récupérations selon l'identifiant du site
+ */    
+	public function find($req = array(), $type = PDO::FETCH_ASSOC) {
+		
+		$shema = $this->shema;
+		$sql = 'SELECT '; //Requete sql
+        
+		///////////////////////
+		//   CHAMPS FIELDS   //		
+		if(!isset($req['fields'])) {
+			
+			//Si aucun champ n'est demandé on va récupérer le shéma de la table et récupérer ces champs
+			//Dans le cas de table traduite on va également récupérer les champs traduits ainsi que la langue associée
+			$req['fields'] = $shema;
+		}	
+		
+		if(is_array($req['fields'])) { $sql .= implode(', ', $req['fields']); } //Si il s'agit d'un tableau		
+		else { $sql .= $req['fields']; } //Si il s'agit d'une chaine de caractères 
+		
+		$sql .= ' FROM '.$this->table.' AS '.get_class($this).' '; //Mise en place du from
+
+		///////////////////////////////////////////////////////////
+		//   CONDITIONS DE RECHERCHE SUR L'IDENTIFIANT DU SITE   //
+		//Si dans le shema de la table on a une colonne website_id		
+		if(in_array('website_id', $shema) && get_class($this) != 'UsersGroupsWebsite') {
+		
+			//Si on a pas de conditions de recherche particulières
+			if(!isset($req['conditions'])) { $req['conditions']['website_id'] = CURRENT_WEBSITE_ID; }
+			else {
+				
+				//Sinon on va tester si il s'agit d'un tableau ou d'une chaine de caractères
+				if(is_array($req['conditions'])) { $req['conditions']['website_id'] = CURRENT_WEBSITE_ID; } 
+				else { $req['conditions'] .= " AND website_id=".CURRENT_WEBSITE_ID; }
+			}			
+		}
+		///////////////////////////////////////////////////////////
+		
+		///////////////////////////
+		//   CHAMPS INNER JOIN   //
+		if(isset($req['innerJoin']) && !empty($req['innerJoin'])) {
+			if (!is_array($req['innerJoin'])) {
+				$sql .= $req['innerJoin'].' ';//On ajoute à la requête s'il s'agit d'une chaîne
+			} else {
+				if (isset($req['innerJoin'][0])) {//Si l'on a un tableau à index numérique, on peut avoir plusieurs "join" à la suite et sur plusieurs tables
+					foreach ($req['innerJoin'] as $k => $v) {
+						$sql .= ' INNER JOIN '.$v['table'].' ON '.$v['pivot'].' ';//On ajoute à la requête
+					}
+				} else {//Sinon, on n'a qu'un seul "join"
+					$sql .= ' INNER JOIN '.$req['innerJoin']['table'].' ON '.$req['innerJoin']['pivot'].' ';//On ajoute à la requête
+				}
+			}
+		}
 		
 		///////////////////////////
 		//   CHAMPS CONDITIONS   //

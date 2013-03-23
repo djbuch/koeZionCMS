@@ -4,7 +4,7 @@ INSERT INTO `modules` (`id`, `name`, `controller_name`, `order_by`, `online`, `c
 (3, 'Focus', 'focus', 5, 1, '2012-11-29 22:59:01', 2),
 (4, 'Boutons colonne de droite', 'right_buttons', 6, 1, '2012-11-29 22:59:29', 2),
 (5, 'Articles', 'posts', 8, 1, '2012-11-29 23:00:13', 4),
-(6, 'Types d''aticle', 'posts_types', 9, 1, '2012-11-29 23:00:35', 4),
+(6, 'Types d''article', 'posts_types', 9, 1, '2012-11-29 23:00:35', 4),
 (7, 'Commentaires articles', 'posts_comments', 10, 1, '2012-11-29 23:01:11', 4),
 (8, 'Contacts', 'contacts', 7, 1, '2012-11-29 23:06:17', 2),
 (9, 'Sites Internet', 'websites', 0, 1, '2012-11-30 09:27:12', 5),

@@ -69,14 +69,14 @@ CKEDITOR.addTemplates(
 						'<div class="hr"><div class="inner_hr">&nbsp;</div></div>' +
 						'<p><span class="dropcapspot">L</span>orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s.</p>' +
 						'<div class="gs_4">' +
-							'<a class="zoomer" href="/" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
+							'<a class="zoomer" href="/" rel="prettyPhoto" title=" "><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
 							'<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>' +
 						'</div>' +
 						'<div class="gs_4">' +
-							'<a class="zoomer" href="/" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
+							'<a class="zoomer" href="/" rel="prettyPhoto" title=" "><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
 							'<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p></div>' +
 						'<div class="gs_4 omega">' +
-							'<a class="zoomer" href="/" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
+							'<a class="zoomer" href="/" rel="prettyPhoto" title=" "><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
 							'<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>' +
 						'</div>' +
 						'<div class="hr"><div class="inner_hr">&nbsp;</div></div>' +
@@ -95,7 +95,7 @@ CKEDITOR.addTemplates(
 						'</ul>' +
 						'<p class="information"><strong>Lorem Ipsum :</strong><br />Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>' +
 						'<div class="gs_4">' +
-							'<a class="zoomer" href="/" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
+							'<a class="zoomer" href="/" rel="prettyPhoto" title=" "><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
 							'<ul class="bullet-dot">' +
 								'<li>Lorem Ipsum is simply dummy text.</li>' +
 								'<li><strong>Lorem Ipsum is simply dummy text.</strong></li>' +
@@ -103,7 +103,7 @@ CKEDITOR.addTemplates(
 							'</ul>' +
 						'</div>' +
 						'<div class="gs_4">' +
-							'<a class="zoomer" href="/" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
+							'<a class="zoomer" href="/" rel="prettyPhoto" title=" "><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
 							'<ul class="bullet-dot">' +
 								'<li>Lorem Ipsum is simply dummy text.</li>' +
 								'<li><strong>Lorem Ipsum is simply dummy text.</strong></li>' +
@@ -111,7 +111,7 @@ CKEDITOR.addTemplates(
 							'</ul>' +
 						'</div>' +
 						'<div class="gs_4 omega">' +
-							'<a class="zoomer" href="/" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
+							'<a class="zoomer" href="/" rel="prettyPhoto" title=" "><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
 							'<ul class="bullet-dot">' +
 								'<li>Lorem Ipsum is simply dummy text.</li>' +
 								'<li><strong>Lorem Ipsum is simply dummy text.</strong></li>' +
@@ -188,43 +188,43 @@ CKEDITOR.addTemplates(
 						'<div class="clearfix">&nbsp;</div>' +
 						'<p>&nbsp;</p>' +
 						'<div class="gs_3">' +
-							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="/" style="width: 187px; height: 125px;" /></a>' +
+							'<a class="zoomer" href="" rel="prettyPhoto" title=" "><img alt="" class="border_magic" src="/" style="width: 187px; height: 125px;" /></a>' +
 							'<h3>Sultricies sagittis</h3>' +
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula.</p>' +
 						'</div>' +
 						'<div class="gs_3">' +
-							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="/" style="width: 187px; height: 125px;" /></a>' +
+							'<a class="zoomer" href="" rel="prettyPhoto" title=" "><img alt="" class="border_magic" src="/" style="width: 187px; height: 125px;" /></a>' +
 							'<h3>Sultricies sagittis</h3>' +
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula.</p>' +
 						'</div>' +
 						'<div class="gs_3">' +
-							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="/" style="width: 187px; height: 125px;" /></a>' +
+							'<a class="zoomer" href="" rel="prettyPhoto" title=" "><img alt="" class="border_magic" src="/" style="width: 187px; height: 125px;" /></a>' +
 							'<h3>Sultricies sagittis</h3>' +
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula.</p>' +
 						'</div>' +
 						'<div class="gs_3 omega">' +
-							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="/" style="width: 187px; height: 125px;" /></a>' +
+							'<a class="zoomer" href="" rel="prettyPhoto" title=" "><img alt="" class="border_magic" src="/" style="width: 187px; height: 125px;" /></a>' +
 							'<h3>Sultricies sagittis</h3>' +
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula.</p>' +
 						'</div>' +
 						'<div class="clearfix">&nbsp;</div>' +
 						'<div class="gs_3">' +
-							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="/" style="width: 187px; height: 125px;" /></a>' +
+							'<a class="zoomer" href="" rel="prettyPhoto" title=" "><img alt="" class="border_magic" src="/" style="width: 187px; height: 125px;" /></a>' +
 							'<h3>Sultricies sagittis</h3>' +
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula.</p>' +
 						'</div>' +
 						'<div class="gs_3">' +
-							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="/" style="width: 187px; height: 125px;" /></a>' +
+							'<a class="zoomer" href="" rel="prettyPhoto" title=" "><img alt="" class="border_magic" src="/" style="width: 187px; height: 125px;" /></a>' +
 							'<h3>Sultricies sagittis</h3>' +
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula.</p>' +
 						'</div>' +
 						'<div class="gs_3">' +
-							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="/" style="width: 187px; height: 125px;" /></a>' +
+							'<a class="zoomer" href="" rel="prettyPhoto" title=" "><img alt="" class="border_magic" src="/" style="width: 187px; height: 125px;" /></a>' +
 							'<h3>Sultricies sagittis</h3>' +
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula.</p>' +
 						'</div>' +
 						'<div class="gs_3 omega">' +
-							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="/" style="width: 187px; height: 125px;" /></a>' +
+							'<a class="zoomer" href="" rel="prettyPhoto" title=" "><img alt="" class="border_magic" src="/" style="width: 187px; height: 125px;" /></a>' +
 							'<h3>Sultricies sagittis</h3>' +
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula.</p>' +
 						'</div>' +
@@ -326,7 +326,7 @@ CKEDITOR.addTemplates(
 				description:'Image 300/200px',
 				html:'' +
 						'<div class="gs_8 omega">' +
-							'<a href="/" class="zoomer" rel="prettyPhoto"><img src="" alt="" class="border_magic alignleft" style="width: 300px; height: 200px;" /></a>' +
+							'<a href="/" class="zoomer" rel="prettyPhoto" title=" "><img src="" alt="" class="border_magic alignleft" style="width: 300px; height: 200px;" /></a>' +
 							'<h3>Vivamus non tellus</h3>' +
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula. Cras arcu tortor, euismod id lacinia quis, ultricies sagittis urna. Etiam feugiat porttitor ullamcorper.</p>' +
 							'<p><a href="/">Lorem ipsum</a></p>' +
@@ -340,7 +340,7 @@ CKEDITOR.addTemplates(
 				description:'Image 649/420px',
 				html:'' +
 						'<div class="gs_12 omega">' +
-							'<a href="/" class="zoomer" rel="prettyPhoto"><img src="" alt="" class="border_magic alignleft" style="width: 649px; height: 420px;" /></a>' +
+							'<a href="/" class="zoomer" rel="prettyPhoto" title=" "><img src="" alt="" class="border_magic alignleft" style="width: 649px; height: 420px;" /></a>' +
 							'<h3>Vivamus non tellus</h3>' +
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula. Cras arcu tortor, euismod id lacinia quis, ultricies sagittis urna. Etiam feugiat porttitor ullamcorper.</p>' +
 							'<p><a href="/">Lorem ipsum</a></p>' +
@@ -354,13 +354,13 @@ CKEDITOR.addTemplates(
 				description:'Images 264/111px',
 				html:'' +
 						'<div class="gs_4">' +
-							'<a href="/" class="zoomer" rel="prettyPhoto"><img src="" alt="" class="border_magic" style="width: 264px; height: 111px;" /></a>' +
+							'<a href="/" class="zoomer" rel="prettyPhoto" title=" "><img src="" alt="" class="border_magic" style="width: 264px; height: 111px;" /></a>' +
 							'<h3>Vivamus non tellus ligula.</h3>' +
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula. Cras arcu tortor, euismod id lacinia quis, ultricies sagittis urna. Etiam feugiat porttitor ullamcorper.</p>' +
 							'<p><a href="/">Lorem ipsum</a></p>' +
 						'</div>' + 
 						'<div class="gs_4 omega">' +
-							'<a href="/" class="zoomer" rel="prettyPhoto"><img src="" alt="" class="border_magic" style="width: 264px; height: 111px;" /></a>' +
+							'<a href="/" class="zoomer" rel="prettyPhoto" title=" "><img src="" alt="" class="border_magic" style="width: 264px; height: 111px;" /></a>' +
 							'<h3>Vivamus non tellus ligula.</h3>' +
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula. Cras arcu tortor, euismod id lacinia quis, ultricies sagittis urna. Etiam feugiat porttitor ullamcorper.</p>' +
 							'<p><a href="/">Lorem ipsum</a></p>' +
@@ -374,13 +374,13 @@ CKEDITOR.addTemplates(
 				description:'Images 418/200px',
 				html:'' +
 						'<div class="gs_6">' +
-							'<a href="/" class="zoomer" rel="prettyPhoto"><img src="" alt="" class="border_magic" style="width: 418px; height: 200px;" /></a>' +
+							'<a href="/" class="zoomer" rel="prettyPhoto" title=" "><img src="" alt="" class="border_magic" style="width: 418px; height: 200px;" /></a>' +
 							'<h3>Vivamus non tellus ligula.</h3>' +
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula. Cras arcu tortor, euismod id lacinia quis, ultricies sagittis urna. Etiam feugiat porttitor ullamcorper.</p>' +
 							'<p><a href="/">Lorem ipsum</a></p>' +
 						'</div>' + 
 						'<div class="gs_6 omega">' +
-							'<a href="/" class="zoomer" rel="prettyPhoto"><img src="" alt="" class="border_magic" style="width: 418px; height: 200px;" /></a>' +
+							'<a href="/" class="zoomer" rel="prettyPhoto" title=" "><img src="" alt="" class="border_magic" style="width: 418px; height: 200px;" /></a>' +
 							'<h3>Vivamus non tellus ligula.</h3>' +
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula. Cras arcu tortor, euismod id lacinia quis, ultricies sagittis urna. Etiam feugiat porttitor ullamcorper.</p>' +
 							'<p><a href="/">Lorem ipsum</a></p>' +
@@ -394,19 +394,19 @@ CKEDITOR.addTemplates(
 				description:'Images 264/111px',
 				html:'' +
 						'<div class="gs_4">' + 
-							'<a href="/" class="zoomer" rel="prettyPhoto"><img src="" alt="" class="border_magic" style="width: 264px; height: 111px;" /></a>' + 
+							'<a href="/" class="zoomer" rel="prettyPhoto" title=" "><img src="" alt="" class="border_magic" style="width: 264px; height: 111px;" /></a>' + 
 							'<h3>Vivamus non tellus</h3>' + 
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula. Cras arcu tortor, euismod id lacinia quis, ultricies sagittis urna. Etiam feugiat porttitor ullamcorper.</p>' + 
 							'<p><a href="/">Lorem ipsum</a></p>' + 
 						'</div>' + 
 						'<div class="gs_4">' + 
-							'<a href="/" class="zoomer" rel="prettyPhoto"><img src="" alt="" class="border_magic" style="width: 264px; height: 111px;" /></a>' + 
+							'<a href="/" class="zoomer" rel="prettyPhoto" title=" "><img src="" alt="" class="border_magic" style="width: 264px; height: 111px;" /></a>' + 
 							'<h3>Cras arcu tortor</h3>' + 
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula. Cras arcu tortor, euismod id lacinia quis, ultricies sagittis urna. Etiam feugiat porttitor ullamcorper.</p>' + 
 							'<p><a href="/">Lorem ipsum</a></p>' + 
 						'</div>' + 
 						'<div class="gs_4 omega">' + 
-							'<a href="/" class="zoomer" rel="prettyPhoto"><img src="" alt="" class="border_magic" style="width: 264px; height: 111px;" /></a>' + 
+							'<a href="/" class="zoomer" rel="prettyPhoto" title=" "><img src="" alt="" class="border_magic" style="width: 264px; height: 111px;" /></a>' + 
 							'<h3>Donec eget</h3>' + 
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula. Cras arcu tortor, euismod id lacinia quis, ultricies sagittis urna. Etiam feugiat porttitor ullamcorper.</p>' + 
 							'<p><a href="/">Lorem ipsum</a></p>' + 
@@ -420,25 +420,25 @@ CKEDITOR.addTemplates(
 				description:'Images 187/100px',
 				html:'' +
 						'<div class="gs_3">' +
-							'<a href="/" class="zoomer" rel="prettyPhoto"><img src="" alt="" class="border_magic" style="width: 187px; height: 100px;" /></a>' +
+							'<a href="/" class="zoomer" rel="prettyPhoto" title=" "><img src="" alt="" class="border_magic" style="width: 187px; height: 100px;" /></a>' +
 							'<h3>Sultricies sagittis</h3>' +
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula.</p>' +
 							'<p><a href="/">Lorem ipsum</a></p>' +
 						'</div>' +
 						'<div class="gs_3">' +
-							'<a href="/" class="zoomer" rel="prettyPhoto"><img src="" alt="" class="border_magic" style="width: 187px; height: 100px;" /></a>' +
+							'<a href="/" class="zoomer" rel="prettyPhoto" title=" "><img src="" alt="" class="border_magic" style="width: 187px; height: 100px;" /></a>' +
 							'<h3>Vivamus non tellus</h3>' +
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula.</p>' +
 							'<p><a href="/">Lorem ipsum</a></p>' +
 						'</div>' +
 						'<div class="gs_3">' +
-							'<a href="/" class="zoomer" rel="prettyPhoto"><img src="" alt="" class="border_magic" style="width: 187px; height: 100px;" /></a>' +
+							'<a href="/" class="zoomer" rel="prettyPhoto" title=" "><img src="" alt="" class="border_magic" style="width: 187px; height: 100px;" /></a>' +
 							'<h3>Proin tristique</h3>' +
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula.</p>' +
 							'<p><a href="/">Lorem ipsum</a></p>' +
 						'</div>' +
 						'<div class="gs_3 omega">' +
-							'<a href="/" class="zoomer" rel="prettyPhoto"><img src="" alt="" class="border_magic" style="width: 187px; height: 100px;" /></a>' +
+							'<a href="/" class="zoomer" rel="prettyPhoto" title=" "><img src="" alt="" class="border_magic" style="width: 187px; height: 100px;" /></a>' +
 							'<h3>Aenean pulvinar</h3>' +
 							'<p>Proin tristique dictum vehicula. Vivamus non tellus ligula.</p>' +
 							'<p><a href="/">Lorem ipsum</a></p>' +
@@ -452,12 +452,12 @@ CKEDITOR.addTemplates(
 				description:'Images 276/148px',
 				html:'' +
 						'<div class="gs_4">' +
-							'<a class="zoomer" href="/"><img alt="" class="border_magic" src="" style="width: 276px; height: 148px;" /></a>' +
+							'<a class="zoomer" href="/" rel="prettyPhoto" title=" "><img alt="" class="border_magic" src="" style="width: 276px; height: 148px;" /></a>' +
 							'<h3>Lorem Ipsum</h3>' +
 							'<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>' +
 						'</div>' +
 						'<div class="gs_4 omega">' +
-							'<a class="zoomer" href="/"><img alt="" class="border_magic" src="" style="width: 276px; height: 148px;" /></a>' +
+							'<a class="zoomer" href="/" rel="prettyPhoto" title=" "><img alt="" class="border_magic" src="" style="width: 276px; height: 148px;" /></a>' +
 							'<h3>Lorem Ipsum</h3>' +
 							'<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>' +
 						'</div>' +
@@ -594,7 +594,7 @@ CKEDITOR.addTemplates(
 				title:'Image zoomée',
 				image:'image_zoom.gif',
 				description:'Image 264/111px',
-				html:'<a class="zoomer" href="/" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a><p>&nbsp;</p>'
+				html:'<a class="zoomer" href="/" rel="prettyPhoto" title=" "><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a><p>&nbsp;</p>'
 			},
 			{
 				title:'Image encadrée',
