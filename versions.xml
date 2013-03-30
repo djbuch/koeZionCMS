@@ -5,6 +5,7 @@
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="KoéZionCMS" type="code">Correction d'un bug sur l'authentification des contrôleurs non autorisés dans le cas où l'utilisateur se connecte au backoffice</task>
+			<task author="KoéZionCMS" type="code">Ajout d'une fonctionnalité de désinstallation des plugins</task>
 		</tasks>	
 	</version>
 	<version>

@@ -6,5 +6,10 @@
 			<?php echo $v['name']; ?><br />
 			<?php echo $v['description']; ?>
 		</td>
+		<td class="txtcenter xs"><?php
+			if ($v['installed']) {
+				echo $helpers['Html']->backoffice_delete_picto($params['controllerFileName'], $v['id'], 'uninstall');
+			}
+		?></td>
 	</tr>
 <?php endforeach; ?>

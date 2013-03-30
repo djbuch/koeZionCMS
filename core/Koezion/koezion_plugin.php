@@ -31,4 +31,9 @@ class KoeZionPlugin extends Object {
 		
 		return $processResult;
 	}
+	
+	public function _test()	{
+		$class_vars = get_object_vars($this);
+		var_dump($class_vars);
+	}
 }
