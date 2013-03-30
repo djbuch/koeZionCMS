@@ -821,7 +821,7 @@ class AppController extends Controller {
 		    		'ModulesTypes',
 		    	);
 		    	$controllerName = $this->params['controllerName']; //Contrôleur courant
-		    	$isAuth = in_array($controllerName, $notAuthControllers);
+		    	$isAuth = !in_array($controllerName, $notAuthControllers);//Si le nom du contrôleur est dans la liste, alors c'est qu'il ne doit pas être autorisé
 		    	
 			}
 		    	
