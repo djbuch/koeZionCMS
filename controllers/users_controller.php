@@ -25,6 +25,7 @@ class UsersController extends AppController {
  * @version 0.3 - 05/06/2012 by FI - Gestion de la connexion utilisateurs avec vérification des sites autorisés 
  * @version 0.4 - 11/07/2012 by FI - Mise en fonction privée de la récupération des sites Internet 
  * @version 0.5 - 02/03/2013 by FI - Modification de la gestion du role de l'utilisateur, donnée provenant maintenant de la table des groupes 
+ * @version 0.6 - 16/04/2013 by FI - Mise en place de la récupération dynamique de la route pour l'interface d'administration
  */
 	function login() {
 		
@@ -63,6 +64,11 @@ class UsersController extends AppController {
 						$usersGroup = $this->UsersGroup->findFirst(array('conditions' => array('id' => $user['users_group_id'])));
 						$bddRole = $usersGroup['role_id'];
 											
+						//Mise en place de la récupération dynamique de la route pour l'interface d'administration
+						require_once(LIBS.DS.'config_magik.php'); 									//Import de la librairie de gestion des fichiers de configuration
+						$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'routes.ini', true, false); 	//Création d'une instance
+						$routesConfigs = $cfg->keys_values();										//Récupération des configurations
+						
 						//ADMINISTRATEUR BACKOFFICE//
 						if($bddRole == 1) {
 														
@@ -73,7 +79,7 @@ class UsersController extends AppController {
 							);
 														
 							Session::write('Backoffice', $session); //On insère dans la variable de session les données de l'utilisateur
-							$this->redirect('adm'); //On redirige vers la page d'accueil du backoffice													
+							$this->redirect($routesConfigs['backoffice_prefix']); //On redirige vers la page d'accueil du backoffice													
 						
 						//UTILISATEUR BACKOFFICE//
 						} else if($bddRole == 2) {
@@ -110,7 +116,7 @@ class UsersController extends AppController {
 								}				
 								
 								Session::write('Backoffice', $session); //On insère dans la variable de session les données de l'utilisateur
-								$this->redirect('adm'); //On redirige vers la page d'accueil du backoffice					
+								$this->redirect($routesConfigs['backoffice_prefix']); //On redirige vers la page d'accueil du backoffice					
 								
 							} else { Session::setFlash(_("Désolé mais votre accès au backoffice n'est pas autorisé (Aucun site administrable)"), 'error'); } //Sinon on génère le message d'erreur			
 							

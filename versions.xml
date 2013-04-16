@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 16/04/2013</name>
+		<num>20130416.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Mise en place de la récupération dynamique de la route pour l'interface d'administration</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 30/03/2013</name>
 		<num>20130330.001</num>
 		<supervisor>KoéZionCMS</supervisor>

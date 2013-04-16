@@ -6,7 +6,7 @@ $keywords_for_layout = $post['page_keywords'];
 
 $contentPage = $this->vars['components']['Text']->format_content_text($post['content']);
 ?>
-<div class="container_omega">
+<div id="post<?php echo $category['id']; ?>" class="container_omega">
 	
 	<?php echo $contentPage; ?>	
 	<div class="clearfix"></div>

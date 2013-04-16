@@ -10,7 +10,7 @@ if(isset($sliders) && count($sliders) > 0) { $this->element($websiteParams['tpl_
 if(isset($focus) && count($focus) > 0) { $this->element($websiteParams['tpl_layout'].'/focus'); } //Plugin Focus Catégories
 if(isset($googleMapAPI) && $mapPosition == 'topPage') { $this->element(PLUGINS.DS.'gmaps/views/elements/gmaps/frontoffice/map', null, false); } //Plugin Google Maps
 ?>
-<div class="container_omega">
+<div id="category<?php echo $category['id']; ?>" class="container_omega">
 	<?php	
 	
 	if(count($children) == 0 && count($brothers) == 0 && count($postsTypes) == 0 && count($rightButtons) == 0) { 

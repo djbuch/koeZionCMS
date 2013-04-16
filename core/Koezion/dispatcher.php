@@ -175,6 +175,18 @@ class Dispatcher {
     
 	function error($message) {
         
+		//Rajout le 02/04/2013
+		$date = date('Y-m-d');
+		$traceSql =
+			date('Y-m-d H:i:s').
+			"|#|".
+			$message.
+			"|#|".
+			$this->request->url.
+			"\n";
+		
+		FileAndDir::put(TMP.DS.'logs'.DS.'php'.DS.'e404_'.$date.'.log', $traceSql, FILE_APPEND);
+		
 		Session::write('redirectMessage', $message);
 		header("Location: ".Router::url('e404'));
 	}

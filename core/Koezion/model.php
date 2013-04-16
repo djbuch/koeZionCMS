@@ -581,6 +581,7 @@ class Model extends Object {
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 24/08/2012 by FI
+ * @version 0.2 - 03/04/2013 by FI - Correction de l'affectation des ids
  */	
 	function saveAll($datas, $forceInsert = false, $escapeUpload = true) {
 		
@@ -595,7 +596,7 @@ class Model extends Object {
 				$this->_trace_sql('function saveAll', $preparedInfos['preparedQuery']->queryString); //Récupération de la requête
 				
 				if($preparedInfos['action'] == 'insert') { $this->id[] = $this->db->lastInsertId();}
-				else { $this->id[] = $datas['id']; }
+				else { $this->id[] = $v['id']; }
 				
 				$this->queryExecutionResult = $queryExecutionResult;
 				
