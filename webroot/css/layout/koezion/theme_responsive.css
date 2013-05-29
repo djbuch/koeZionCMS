@@ -43,7 +43,7 @@
 }
 
 .focus {
-	margin-bottom: -20px;
+	margin-bottom: -20px; /* Pour "enlever" la marge de la dernière ligne de focus */
 }
 
 #slider .nivo-caption p,
