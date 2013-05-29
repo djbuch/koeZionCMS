@@ -5,7 +5,7 @@ if(count($focus) > 0) {
 	$i = 1;
 	foreach($focus as $k => $v) {
 		$class = 'gs_3';		
-		if($i == 4) { $class = 'gs_3 omega'; }
+		if($i % 4 == 0) { $class = 'gs_3 omega'; }
 		$i++;
 		?>		
 		<div class="<?php echo $class; ?>"><?php echo $v['content']; ?></div>				

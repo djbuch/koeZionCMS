@@ -39,6 +39,11 @@
 
 .focus .gs_3 {
 	padding: 0;
+	margin-bottom: 20px;
+}
+
+.focus {
+	margin-bottom: -20px; /* Pour "enlever" la marge de la dernière ligne de focus */
 }
 
 #slider .nivo-caption p,
@@ -467,7 +472,7 @@ a.scroll-to-top.visible {
 	/* Diminution du padding */
 	.container_gamma,
 	.container_omega {
-		padding-left: 10px;
+		padding-left: 10px !important;
 		padding-right: 10px !important;
 	}
 
