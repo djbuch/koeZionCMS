@@ -1,4 +1,4 @@
-<?php 
+<?php
 $this->element($websiteParams['tpl_layout'].'/breadcrumbs');
 $title_for_layout = $category['page_title'];
 $description_for_layout = $category['page_description'];
@@ -41,7 +41,7 @@ if(isset($googleMapAPI) && $mapPosition == 'topPage') { $this->element(PLUGINS.D
 		$this->element($websiteParams['tpl_layout'].'/posts_list', array('cssZone' => ''));
 		
 	} else { 
-
+		$this->element($websiteParams['tpl_layout'].'/colonne_droite'); 
 		?>		
 		<div class="gs_8">
 			<div class="gs_8 omega">
@@ -62,7 +62,6 @@ if(isset($googleMapAPI) && $mapPosition == 'topPage') { $this->element(PLUGINS.D
 			<?php $this->element($websiteParams['tpl_layout'].'/posts_list'); ?>
 		</div>		
 		<?php 
-		$this->element($websiteParams['tpl_layout'].'/colonne_droite'); 
 	}
 	?>
 	<div class="clearfix"></div>

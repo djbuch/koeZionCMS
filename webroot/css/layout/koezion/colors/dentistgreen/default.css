@@ -5,8 +5,8 @@ h1 strong,h2 strong,h3 strong,h4 strong,h5 strong,h6 strong,.dropcapcolor,.inner
 blockquote,q{border-color:#acbeac}
 .post_header a{text-decoration:none;color:#1e1e1e}
 .dropcapspot{background-color:#acbeac}
-a.superbutton,.inner_main input.superbutton{color:#fff;background:url(../../../../../img/layout/koezion/superbutton.png) repeat-x center -660px transparent;border:1px solid #8ca48b;box-shadow:inset 0 1px 1px #dee6de;text-shadow:1px 1px #8ca48b}
-a.superbutton:hover,.inner_main input.superbutton:hover,a.superbutton.selected{background:url(../../../../../img/layout/koezion/superbutton.png) repeat-x center -690px transparent}
+/*a.superbutton,.inner_main input.superbutton{color:#fff;background:url(../../../../../img/layout/koezion/superbutton.png) repeat-x center -660px transparent;border:1px solid #8ca48b;box-shadow:inset 0 1px 1px #dee6de;text-shadow: 1px 1px #8ca48b}*/
+/*a.superbutton:hover,.inner_main input.superbutton:hover,a.superbutton.selected{background:url(../../../../../img/layout/koezion/superbutton.png) repeat-x center -690px transparent}*/
 ::-moz-selection{background:#acbeac;color:#fff;text-shadow:none}
 ::selection{background:#acbeac;color:#fff;text-shadow:none}
 a:link{-webkit-tap-highlight-color:#acbeac}

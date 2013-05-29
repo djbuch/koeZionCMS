@@ -1,4 +1,4 @@
-/**
+*
  * BxSlider v4.0 - Fully loaded, responsive content slider
  * http://bxslider.com
  *
@@ -201,7 +201,7 @@
 .bx-wrapper .bx-caption p{padding:10px 10px;margin:0;color:#fff;text-shadow:none}
 .bx-wrapper .bx-caption p b,.bx-wrapper .bx-caption p strong{color:#fff}
 .bx-wrapper .bx-caption h3{font:26px/ 30px 'customFont',Arial,sans-serif;color:#fff;text-shadow:none;padding:35px 10px 0}
-.bx-wrapper .bx-caption a{display:inline!important}
+/*.bx-wrapper .bx-caption a{display:inline!important}*/ /* Non compatible avec le Responsive Design */
 .bx-wrapper .bx-caption a:hover{color:#fff}
 
 /*.bx-wrapper .bx-caption {
@@ -219,4 +219,4 @@
 	display: block;
 	font-size: .85em;
 	padding: 10px;
-}*/
+}

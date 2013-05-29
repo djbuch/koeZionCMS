@@ -21,7 +21,7 @@
 			'layout/'.$websiteParams['tpl_layout'].'/grids',
 			'layout/'.$websiteParams['tpl_layout'].'/hook',
 			'layout/'.$websiteParams['tpl_layout'].'/menu',			
-			'layout/'.$websiteParams['tpl_layout'].'/superbuttons',
+			'layout/'.$websiteParams['tpl_layout'].'/buttons',
 			'layout/'.$websiteParams['tpl_layout'].'/pagination',
 			'layout/'.$websiteParams['tpl_layout'].'/prettyphoto',
 			'layout/'.$websiteParams['tpl_layout'].'/table',
@@ -30,7 +30,9 @@
 			'layout/'.$websiteParams['tpl_layout'].'/pricing',
 			'layout/'.$websiteParams['tpl_layout'].'/footer',
 			'layout/'.$websiteParams['tpl_layout'].'/colors/'.trim($websiteParams['tpl_code']).'/default',
-			'layout/'.$websiteParams['tpl_layout'].'/colors/'.trim($websiteParams['tpl_code']).'/body'
+			'layout/'.$websiteParams['tpl_layout'].'/colors/'.trim($websiteParams['tpl_code']).'/body',
+			'layout/'.$websiteParams['tpl_layout'].'/colors/'.trim($websiteParams['tpl_code']).'/buttons',
+			'layout/'.$websiteParams['tpl_layout'].'/theme_responsive'
 		);			
 		echo $helpers['Html']->css($css);		
 		if(!empty($websiteParams['css_hack'])) { ?><style type="text/css"><?php echo $websiteParams['css_hack']; ?></style><?php }		
@@ -43,14 +45,21 @@
 		<div class="wrap_content header">
 			<?php $this->element($websiteParams['tpl_layout'].'/header'); ?>
 			<?php $this->element($websiteParams['tpl_layout'].'/menu_general'); ?>		
-	    </div>
-	    <div class="wrap_content">
+		</div>
+		<div class="wrap_content">
 			<div class="main png_bg">
 				<div class="inner_main">
 					<?php echo $content_for_layout; ?>
 				</div>
-		    </div>
-		    <div class="endmain png_bg"></div>
+				<div class="fake_foot"></div>
+			</div>
+			<div class="main_left"></div>
+			<div class="main_right"></div>
+			<div class="endmain png_bg">
+			<div class="endmain_center_left"></div>
+			<div class="endmain_center_right"></div>
+			<div class="endmain_right"></div>
+			</div>
 		</div>
 		<div class="wrap_content">
 			<?php $this->element($websiteParams['tpl_layout'].'/footer'); ?>
@@ -65,6 +74,7 @@
 			//'layout/'.$websiteParams['tpl_layout'].'/jquery-1.5.1.min',
 			//'layout/'.$websiteParams['tpl_layout'].'/jquery-1.7.1.min',
 			'layout/'.$websiteParams['tpl_layout'].'/jquery-ui-1.9.1.custom.min',
+			'layout/'.$websiteParams['tpl_layout'].'/jquery.ba-throttle-debounce',
 			'commun/scripts',
 			'layout/'.$websiteParams['tpl_layout'].'/menu',
 			'layout/'.$websiteParams['tpl_layout'].'/input',
@@ -73,12 +83,25 @@
 			//'layout/'.$websiteParams['tpl_layout'].'/jquery.uniform',
 			'layout/'.$websiteParams['tpl_layout'].'/jquery.filestyle.mini',
 			'layout/'.$websiteParams['tpl_layout'].'/images_zoom',
-			'layout/'.$websiteParams['tpl_layout'].'/pricing_table'
+			'layout/'.$websiteParams['tpl_layout'].'/pricing_table',
+			'layout/'.$websiteParams['tpl_layout'].'/navigation/selectnav',
+			'layout/'.$websiteParams['tpl_layout'].'/scrollToTop',
+			'layout/'.$websiteParams['tpl_layout'].'/browserSelector',
+			'layout/'.$websiteParams['tpl_layout'].'/theme',
+			'layout/'.$websiteParams['tpl_layout'].'/fittext/jquery.fittext'
 		);
 		echo $helpers['Html']->js($js);		
 		if(!empty($websiteParams['js_hack'])) { ?><script type="text/javascript"><?php echo $websiteParams['js_hack']; ?></script><?php }
 		
 		echo $helpers['Html']->analytics($websiteParams['ga_code']); 
 		?>
+
+		<script>
+			$(document).ready(function(){
+				$(function(){
+					jQuery("#title404").fitText(0.22, { maxFontSize: '200px'});
+				});
+			});
+		</script>
 	</body>
 </html>

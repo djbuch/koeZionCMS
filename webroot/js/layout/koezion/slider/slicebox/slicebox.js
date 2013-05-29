@@ -36,7 +36,7 @@ $(function() {
 		cuboidsRandom : true,
 		disperseFactor : 30,
 		autoplay : true,
-		interval : 4500
+		interval : 6500
 		} ),
 		
 		init = function() { initEvents(); },

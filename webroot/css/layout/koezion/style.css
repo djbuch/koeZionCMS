@@ -1,158 +1,951 @@
-body{font:13px/ 1.231 sans-serif;* font-size:small}
-select,input,textarea,button{font:99% sans-serif}
-pre,code,kbd,samp{font-family:monospace,sans-serif}
-body,select,input,textarea{color:#444}
-h1,h2,h3,h4,h5,h6{font-weight:normal}
-html{overflow-y:scroll}
-a:hover,a:active{outline:0}
-a:focus{outline:0}
-:focus{outline:0}
-::-moz-focus-inner{border:0}
-ul,ol{margin-left:1.8em}
-ol{list-style-type:decimal}
-ol li{margin-bottom:2px}
-nav ul,nav li{margin:0}
-small{font-size:85%}
-strong,th{font-weight:bold}
-td,td img{vertical-align:top}
-sub{vertical-align:sub;font-size:smaller}
-sup{vertical-align:super;font-size:smaller}
-pre{padding:15px;white-space:pre;white-space:pre-wrap;white-space:pre-line;word-wrap:break-word}
-textarea{overflow:auto}
-.ie6 legend,.ie7 legend{margin-left:-7px}
-input[type="radio"]{vertical-align:text-bottom}
-input[type="checkbox"]{vertical-align:bottom}
-.ie7 input[type="checkbox"]{vertical-align:baseline}
-.ie6 input{vertical-align:text-bottom}
-label,input[type=button],input[type=submit],button{cursor:pointer}
-button,input,select,textarea{margin:0}
-input:invalid,textarea:invalid{border-radius:1px;-moz-box-shadow:0 0 5px red;-webkit-box-shadow:0 0 5px red;box-shadow:0 0 5px red}
-.no-boxshadow input:invalid,.no-boxshadow textarea:invalid{background-color:#f0dddd}
-button{width:auto;overflow:visible}
-.ie7 img{-ms-interpolation-mode:bicubic}
-.alignright{float:right;margin-left:13px}
-.alignleft{float:left;margin-right:13px}
-.border_magic{background:#fff;padding:4px;border:1px solid #dedede;vertical-align:bottom;display:none}
-.add_border{border:1px solid #fff}
-.hr{height:19px;margin:15px 0 0 -5px;clear:both;background:url(../../../img/layout/koezion/hr.png) no-repeat top left transparent}
-.inner_hr{width:50%;height:19px;margin:0 -5px 0 0;float:right;background:url(../../../img/layout/koezion/hr.png) no-repeat top right transparent}
-.spaceclear{height:10px;clear:both}
-.ir{display:block;text-indent:-999em;overflow:hidden;background-repeat:no-repeat;text-align:left;direction:ltr}
-.hidden{display:none;visibility:hidden}
-.visuallyhidden{position:absolute!important;clip:rect(1px,1px,1px,1px);clip:rect(1px,1px,1px,1px)}
-.invisible{visibility:hidden}
-.clearfix:before,.clearfix:after{content:"\0020";display:block;height:0;visibility:hidden}
-.clearfix:after{clear:both}
-.clearfix{zoom:1}
-p{font:13px/ 19px Trebuchet MS,Arial,Helvetica,sans-serif;letter-spacing:.1px;margin:0 0 1.5em;/*color:#666*/;overflow:visible}
-h1 span,h2 span,h3 span,h4 span,h5 span,h6 span,h1 strong,h2 strong,h3 strong,h4 strong,h5 strong,h6 strong,.inner_main .widget ul.testimonials li p{font-family:'customFontBold',Arial,sans-serif;font-weight:normal}
-h1,h2,h3,h4,h5,h6,.hotstuff ul li a,.inner_main .widget ul.testimonials li p span{font-family:'customFont',Arial,sans-serif}
-h1{font-size:28px;line-height:30px;text-shadow:1px 1px #fff;color:#444;margin:22px 0 3px}
-h1 strong{line-height:32px}
-.slogan h1,.slogan h2,.slogan h3,.slogan h4,.slogan h5,.slogan h6{margin:0;color:#444}
-.slogan h1,.slogan h1 strong{font-size:26px}
-h2{font-size:25px;line-height:30px;margin:18px 0 10px;text-shadow:1px 1px #fff;color:#444}
-h3{font-size:21px;line-height:26px;margin:15px 0 9px;text-shadow:1px 1px #fff;color:#444}
-h4{font-size:19px;line-height:24px;margin:12px 0 0;text-shadow:1px 1px #fff;color:#444}
-h5{font-size:17px;line-height:22px;margin:12px 0 6px;text-shadow:1px 1px #fff;color:#444}
-h6{font-size:13px;line-height:18px;margin:10px 0 6px;text-shadow:1px 1px #fff;color:#444}
-h1 span,h2 span,h3 span,h4 span,h5 span,h6 span{display:block;font-size:.62em;margin-bottom:-0.43em;line-height:1.1em;text-shadow:1px 1px #fff}
-h3 span{font-size:15px}
-img.icon{margin-top:4px}
-ul{list-style:none;margin:0 0 1.5em}
-ul.bullet-dot li{background:url(../../../img/layout/koezion/bullet-dot.png) no-repeat scroll 0 .1em transparent;padding-left:22px;margin-bottom:6px}
-ul.bullet-check li{background:url(../../../img/layout/koezion/bullet-check.png) no-repeat scroll 0 .1em transparent;padding-left:22px;margin-bottom:6px}
-ul.bullet-cross li{background:url(../../../img/layout/koezion/bullet-cross.png) no-repeat scroll 0 .1em transparent;padding-left:22px;margin-bottom:6px}
-ul.bullet-plus li{background:url(../../../img/layout/koezion/bullet-plus.png) no-repeat scroll 0 .1em transparent;padding-left:22px;margin-bottom:6px}
-ul.bullet-minus li{background:url(../../../img/layout/koezion/bullet-minus.png) no-repeat scroll 0 .1em transparent;padding-left:22px;margin-bottom:6px}
-ul.bullet-info li{background:url(../../../img/layout/koezion/bullet-info.png) no-repeat scroll 0 .1em transparent;padding-left:22px;margin-bottom:6px;padding-bottom:2px}
-ul.bullet-arrow li{background:url(../../../img/layout/koezion/bullet-arrow.png) no-repeat scroll 0 .1em transparent;padding-left:22px;margin-bottom:6px}
-code{color:#5a5a5a;border:1px dotted #ccc;padding:1px 5px;background-color:#ececec;font:1em/ 1.4em Consolas,"Courier New",Courier,monospace}
-pre{display:block;overflow:hidden;padding:0 0 0 22px;border:1px dotted #e5e5e5;margin-bottom:16px;background-color:#fbfbfb;font:1em/ 1.4em Consolas,"Courier New",Courier,monospace}
-pre:hover{overflow:visible}
-p.confirmation{background:url(../../../img/layout/koezion/confirmation.png) no-repeat 15px 9px;color:#5a5a5a;border:1px dotted #a4e673;border-radius:4px;background-color:#dffec8;padding:15px 57px}
-p.warning{background:url(../../../img/layout/koezion/warning.png) no-repeat 15px 9px;color:#5a5a5a;border:1px dotted #e5de73;border-radius:4px;background-color:#fefac8;padding:15px 57px}
-p.information{background:url(../../../img/layout/koezion/information.png) no-repeat 15px 9px;color:#5a5a5a;border:1px dotted #96dee9;border-radius:4px;background-color:#ddf5f9;padding:15px 57px}
-p.error{background:url(../../../img/layout/koezion/error.png) no-repeat 15px 9px;color:#5a5a5a;border:1px dotted #e3b7b7;border-radius:4px;background-color:#f4dada;padding:15px 57px}
-p.arrow{background:url(../../../img/layout/koezion/bullet-arrow.png) no-repeat 0 1px;color:#5a5a5a;padding:0 15px 0 20px;margin-bottom:10px}
-#powered_by a {background:url(../../../img/koezion_logo.gif) no-repeat top right transparent;}
-.wrap_content{width:980px;margin:0 auto;overflow:hidden;display:block;position:relative}
-.wrap_content.header{overflow:visible;}
-.wrap_content.wait{padding-top:50px}
-#header{width:960px;height:120px;margin:0 10px;position:relative}
-#header .locales{float:right;margin-top:5px}
-#header .locales a{font-size:10px}
-#logo{position:absolute}
-#personal_data{position:absolute;bottom:0;right:0}
-#personal_data p{color:#535352;text-shadow:none;font:13px/ 18px Arial,sans-serif;margin:0;font-weight:bold;text-align:right}
-#personal_data p span a{text-decoration:none}
-.search{width:200px;height:30px;background:url(../../../img/layout/koezion/search_hovered.png) no-repeat scroll 0 0 transparent;display:inline;float:right}
-.main{width:956px;padding:0 12px;background:url(../../../img/layout/koezion/main_background.png) repeat-y scroll 0 0 transparent;z-index:987;zoom:1}
-.inner_main{min-height:50px;overflow:visible;background:url(../../../img/layout/koezion/fake_foot.png) no-repeat center bottom transparent;z-index:988;zoom:1}
-.inner_main.second_block{padding-top:14px}
-.container_alpha{width:892px;padding:15px 32px 18px;overflow:hidden;background:url(../../../img/layout/koezion/container_alpha.png) repeat-x center bottom transparent;z-index:988;zoom:1}
-.container_alpha_nogradients{width:892px;padding:15px 32px 15px;overflow:hidden;background:0;z-index:988;zoom:1}
-.container_gamma{width:892px;padding:15px 32px 17px;overflow:hidden;background:url(../../../img/layout/koezion/container_gamma.png) repeat-x center bottom transparent;z-index:988;zoom:1}
-.container_omega{width:892px;padding:32px 32px 15px;overflow:hidden;background:url(../../../img/layout/koezion/container_omega.png) repeat-x center top transparent;z-index:988;zoom:1/*;min-height:350px*/}
-.container_omega_plus{width:892px;margin-top:6px;padding:35px 32px 18px;overflow:hidden;background:url(../../../img/layout/koezion/container_omega_plus.png) repeat-x center top transparent;z-index:988;zoom:1}
-.container_alpha.slider{width:918px;padding:16px 19px 5px}
-.second_block .container_alpha,.second_block .container_alpha_nogradients{padding-top:0}
-.loader{width:918px;height:12px;padding:19px 0;background:url(../../../img/layout/koezion/loading.gif) no-repeat 50% 14px}
-.t_widget h1,.t_widget h2,.t_widget h3,.t_widget h4,.t_widget h5,.t_widget h6{margin-top:13px}
-.breadcrumbs{width:916px;padding:5px 20px 9px}
-.breadcrumbs p{margin:0}
-.breadcrumbs p span{font-weight:bold;font-size:14px}
-.breadcrumbs p a{color:#777;font-size:11px;padding:0 3px;text-decoration:none}
-.breadcrumbs p a.home{text-indent:-9999px;background:url(../../../img/layout/koezion/home.png) no-repeat;display:block;width:16px;height:16px;float:left}
-.breadcrumbs p a:hover{color:#1e1e1e;text-decoration:underline}
-.hotstuff{background:#1e1e1e;border-radius:4px;-moz-border-radius:4px;margin:0 8px 0;position:relative;top:-23px;width:auto;overflow:hidden}
-.hotstuff h1,.hotstuff h2,.hotstuff h3,.hotstuff h4,.hotstuff h5,.hotstuff h6{padding:8px 11px 7px;color:#fafafa;text-shadow:1px 1px #000;text-transform:uppercase;display:inline;float:left;margin:0}
-.hotstuff ul{padding:8px 11px 7px;margin:0 0 0 143px;width:auto;top:8px}
-.hotstuff ul li{list-style:none;display:none}
-.hotstuff ul li a{font-size:17px;line-height:22px;text-shadow:1px 1px #000;display:inline;text-transform:none;text-decoration:none}
-.post_holder h2{margin:0}
-.post_holder p.post_info{margin:0;font-size:12px}
-.post_holder p.post_info a{text-decoration:none}
-.post_holder .hr{margin-top:2px}
-.post_holder a.post_info .add_border{margin-top:-15px;margin-bottom:5px}
-.post_holder p.post_link{float:left;width:100%}
-.post_holder p.post_link a{float:right}
-.startmain{margin:6px 0 0;width:980px;height:22px;overflow:hidden;background:url(../../../img/layout/koezion/true_top.png) no-repeat scroll 0 0 transparent}
-.endmain{width:980px;height:7px;overflow:hidden;background:url(../../../img/layout/koezion/true_foot.png) no-repeat scroll 0 0 transparent}
-.stripe{width:956px;height:1px;margin:6px 12px 4px;overflow:hidden;background-color:#fff;border-top:1px solid #d9d9d9}
-.portfolio{padding-bottom:0}
-.portfolio p{margin:0 0 .7em}
-.portfolio h1,.portfolio h2,.portfolio h3,.portfolio h4,.portfolio h5,.portfolio h6{margin:10px 0 8px}
-.portfolio .gs_1,.portfolio .gs_2,.portfolio .gs_3,.portfolio .gs_4,.portfolio .gs_5,.portfolio .gs_6,.portfolio .gs_7,.portfolio .gs_8,.portfolio .gs_9,.portfolio .gs_10,.portfolio .gs_11,.portfolio .gs_12{margin-bottom:26px}
-.no_bcg,#search_input.no_bcg{background:0}
-.no_bottom_margin,#footer .no_bottom_margin{margin-bottom:0}
-.nopadding,.specs p.nopadding{padding:0}
-.widgettitle,.portfolio .widgettitle{margin:0 0 12px}
-h4.widgettitle{margin-bottom:8px}
-.dropcap{float:left;font-size:41px;margin:10px 6px 1px 0}
-.dropcapcolor{float:left;font-size:41px;margin:10px 6px 1px 0}
-.dropcapspot{border-radius:30px 30px 30px 30px;color:#fff;display:block;float:left;font-size:25px;height:20px;margin:5px 10px 0 0;padding:13px 10px 13px 12px;text-align:center;text-shadow:none;vertical-align:bottom;width:25px}
-@media print{*{background:transparent!important;color:#444!important;text-shadow:none!important}
-a,a:visited{color:#444!important;text-decoration:underline}
-a:after{content:" (" attr(href) ")"}
-abbr:after{content:" (" attr(title) ")"}
-.ir a:after{content:""}
-pre,blockquote{border:1px solid #999;page-break-inside:avoid}
-thead{display:table-header-group}
-tr,img{page-break-inside:avoid}
-@page{margin:.5cm}
-p,h2,h3{orphans:3;widows:3}
-h2,h3{page-break-after:avoid}
+body {
+	font: 13px/ 1.231 sans-serif;
+	* font-size: small;
 }
-h1.e404{font-size:190px;line-height:120px;margin:20px 30px 36px 40px}
-.ie7 h1.e404 strong{height:180px;line-height:180px}
-h6.e404{margin:12px 0 16px 0}
-h3.toggle,h3.toggle.active.open{padding:0 0 0 22px;background:url(../../../img/layout/koezion/toggle.png) no-repeat 0 5px transparent;margin:12px 0 9px;cursor:pointer}
-h3.toggle.active,h3.toggle.open{background-position:0 -45px}
-div.toggler{padding:10px 15px 10px;background-color:#ececec;background-color:#f1f1f2;border:1px solid #fff;border-radius:4px 4px 4px 4px;box-shadow:0 1px 3px #ccc inset;color:#b6b6b6;font-size:12px;margin:1px 0 10px;outline:medium none;text-shadow:1px 1px #fff;overflow:hidden}
-div.toggler p{margin:0;padding:0}
-div.toggler h2{margin:5px 0 10px}
-div.toggler h3{margin:5px 0 8px}
-.fb-like-box{background:white;}
-.focus_line{overflow:hidden;}
-.focus_line + .focus_line{margin-top:30px;}
+
+select,input,textarea,button {
+	font: 99% sans-serif;
+}
+
+pre,code,kbd,samp {
+	font-family: monospace,sans-serif;
+}
+
+body,select,input,textarea {
+	color: #444;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	font-weight: normal;
+}
+
+html {
+	overflow-y: scroll;
+}
+
+a:hover,a:active {
+	outline: 0;
+}
+
+a:focus {
+	outline: 0;
+}
+
+:focus {
+	outline: 0;
+}
+
+::-moz-focus-inner {
+	border: 0;
+}
+
+ul,ol {
+	margin-left: 1.8em;
+}
+
+ol {
+	list-style-type: decimal;
+}
+
+ol li {
+	margin-bottom: 2px;
+}
+
+nav ul,nav li {
+	margin: 0;
+}
+
+small {
+	font-size: 85%;
+}
+
+strong,th {
+	font-weight: bold;
+}
+
+td,td img {
+	vertical-align: top;
+}
+
+sub {
+	vertical-align: sub;
+	font-size: smaller;
+}
+
+sup {
+	vertical-align: super;
+	font-size: smaller;
+}
+
+pre {
+	padding: 15px;
+	white-space: pre;
+	white-space: pre-wrap;
+	white-space: pre-line;
+	word-wrap: break-word;
+}
+
+textarea {
+	overflow: auto;
+}
+
+.ie6 legend,.ie7 legend {
+	margin-left: -7px;
+}
+
+input[type="radio"] {
+	vertical-align: text-bottom;
+}
+
+input[type="checkbox"] {
+	vertical-align: bottom;
+}
+
+.ie7 input[type="checkbox"] {
+	vertical-align: baseline;
+}
+
+.ie6 input {
+	vertical-align: text-bottom;
+}
+
+label,input[type=button],input[type=submit],button {
+	cursor: pointer;
+}
+
+button,input,select,textarea {
+	margin: 0;
+}
+
+input:invalid,textarea:invalid {
+	border-radius: 1px;
+	-moz-box-shadow: 0 0 5px red;
+	-webkit-box-shadow: 0 0 5px red;
+	box-shadow: 0 0 5px red;
+}
+
+.no-boxshadow input:invalid,.no-boxshadow textarea:invalid {
+	background-color: #f0dddd;
+}
+
+button {
+	width: auto;
+	overflow: visible;
+}
+
+.ie7 img {
+	-ms-interpolation-mode: bicubic;
+}
+
+.alignright {
+	float: right;
+	margin-left: 13px;
+}
+
+.alignleft {
+	float: left;
+	margin-right: 13px;
+}
+
+.border_magic {
+	background: #fff;
+	padding: 4px;
+	border: 1px solid #dedede;
+	vertical-align: bottom;
+	display: none;
+}
+
+.add_border {
+	border: 1px solid #fff;
+}
+
+.hr {
+	height: 19px;
+	margin: 15px 0 0 -5px;
+	clear: both;
+	background: url(../../../img/layout/koezion/hr.png) no-repeat top left transparent;
+}
+
+.inner_hr {
+	width: 50%;
+	height: 19px;
+	margin: 0 -5px 0 0;
+	float: right;
+	background: url(../../../img/layout/koezion/hr.png) no-repeat top right transparent;
+}
+
+.spaceclear {
+	height: 10px;
+	clear: both;
+}
+
+.ir {
+	display: block;
+	text-indent: -999em;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	text-align: left;
+	direction: ltr;
+}
+
+.hidden {
+	display: none;
+	visibility: hidden;
+}
+
+.visuallyhidden {
+	position: absolute!important;
+	clip: rect(1px,1px,1px,1px);
+	clip: rect(1px,1px,1px,1px);
+}
+
+.invisible {
+	visibility: hidden;
+}
+
+.clearfix:before,.clearfix:after {
+	content: "\0020";
+	display: block;
+	height: 0;
+	visibility: hidden;
+}
+
+.clearfix:after {
+	clear: both;
+}
+
+.clearfix {
+	zoom: 1;
+}
+
+p {
+	font: 13px/ 19px Trebuchet MS,Arial,Helvetica,sans-serif;
+	letter-spacing: .1px;
+	margin: 0 0 1.5em;
+/*color:#666*/
+	;overflow: visible;
+}
+
+h1 span,h2 span,h3 span,h4 span,h5 span,h6 span,h1 strong,h2 strong,h3 strong,h4 strong,h5 strong,h6 strong,.inner_main .widget ul.testimonials li p {
+	font-family: 'customFontBold',Arial,sans-serif;
+	font-weight: normal;
+}
+
+h1,h2,h3,h4,h5,h6,.hotstuff ul li a,.inner_main .widget ul.testimonials li p span {
+	font-family: 'customFont',Arial,sans-serif;
+}
+
+h1 {
+	font-size: 28px;
+	line-height: 30px;
+	text-shadow: 1px 1px #fff;
+	color: #444;
+	margin: 22px 0 3px;
+}
+
+h1 strong {
+	line-height: 32px;
+}
+
+.slogan h1,.slogan h2,.slogan h3,.slogan h4,.slogan h5,.slogan h6 {
+	margin: 0;
+	color: #444;
+}
+
+.slogan h1,.slogan h1 strong {
+	font-size: 26px;
+}
+
+h2 {
+	font-size: 25px;
+	line-height: 30px;
+	margin: 18px 0 10px;
+	text-shadow: 1px 1px #fff;
+	color: #444;
+}
+
+h3 {
+	font-size: 21px;
+	line-height: 26px;
+	margin: 15px 0 9px;
+	text-shadow: 1px 1px #fff;
+	color: #444;
+}
+
+h4 {
+	font-size: 19px;
+	line-height: 24px;
+	margin: 12px 0 0;
+	text-shadow: 1px 1px #fff;
+	color: #444;
+}
+
+h5 {
+	font-size: 17px;
+	line-height: 22px;
+	margin: 12px 0 6px;
+	text-shadow: 1px 1px #fff;
+	color: #444;
+}
+
+h6 {
+	font-size: 13px;
+	line-height: 18px;
+	margin: 10px 0 6px;
+	text-shadow: 1px 1px #fff;
+	color: #444;
+}
+
+h1 span,h2 span,h3 span,h4 span,h5 span,h6 span {
+	display: block;
+	font-size: .62em;
+	margin-bottom: -0.43em;
+	line-height: 1.1em;
+	text-shadow: 1px 1px #fff;
+}
+
+h3 span {
+	font-size: 15px;
+}
+
+img.icon {
+	margin-top: 4px;
+}
+
+ul {
+	list-style: none;
+	margin: 0 0 1.5em;
+}
+
+ul.bullet-dot li {
+	background: url(../../../img/layout/koezion/bullet-dot.png) no-repeat scroll 0 .1em transparent;
+	padding-left: 22px;
+	margin-bottom: 6px;
+}
+
+ul.bullet-check li {
+	background: url(../../../img/layout/koezion/bullet-check.png) no-repeat scroll 0 .1em transparent;
+	padding-left: 22px;
+	margin-bottom: 6px;
+}
+
+ul.bullet-cross li {
+	background: url(../../../img/layout/koezion/bullet-cross.png) no-repeat scroll 0 .1em transparent;
+	padding-left: 22px;
+	margin-bottom: 6px;
+}
+
+ul.bullet-plus li {
+	background: url(../../../img/layout/koezion/bullet-plus.png) no-repeat scroll 0 .1em transparent;
+	padding-left: 22px;
+	margin-bottom: 6px;
+}
+
+ul.bullet-minus li {
+	background: url(../../../img/layout/koezion/bullet-minus.png) no-repeat scroll 0 .1em transparent;
+	padding-left: 22px;
+	margin-bottom: 6px;
+}
+
+ul.bullet-info li {
+	background: url(../../../img/layout/koezion/bullet-info.png) no-repeat scroll 0 .1em transparent;
+	padding-left: 22px;
+	margin-bottom: 6px;
+	padding-bottom: 2px;
+}
+
+ul.bullet-arrow li {
+	background: url(../../../img/layout/koezion/bullet-arrow.png) no-repeat scroll 0 .1em transparent;
+	padding-left: 22px;
+	margin-bottom: 6px;
+}
+
+code {
+	color: #5a5a5a;
+	border: 1px dotted #ccc;
+	padding: 1px 5px;
+	background-color: #ececec;
+	font: 1em/ 1.4em Consolas,"Courier New",Courier,monospace;
+}
+
+pre {
+	display: block;
+	overflow: hidden;
+	padding: 0 0 0 22px;
+	border: 1px dotted #e5e5e5;
+	margin-bottom: 16px;
+	background-color: #fbfbfb;
+	font: 1em/ 1.4em Consolas,"Courier New",Courier,monospace;
+}
+
+pre:hover {
+	overflow: visible;
+}
+
+p.confirmation {
+	background: url(../../../img/layout/koezion/confirmation.png) no-repeat 15px 9px;
+	color: #5a5a5a;
+	border: 1px dotted #a4e673;
+	border-radius: 4px;
+	background-color: #dffec8;
+	padding: 15px 57px;
+}
+
+p.warning {
+	background: url(../../../img/layout/koezion/warning.png) no-repeat 15px 9px;
+	color: #5a5a5a;
+	border: 1px dotted #e5de73;
+	border-radius: 4px;
+	background-color: #fefac8;
+	padding: 15px 57px;
+}
+
+p.information {
+	background: url(../../../img/layout/koezion/information.png) no-repeat 15px 9px;
+	color: #5a5a5a;
+	border: 1px dotted #96dee9;
+	border-radius: 4px;
+	background-color: #ddf5f9;
+	padding: 15px 57px;
+}
+
+p.error {
+	background: url(../../../img/layout/koezion/error.png) no-repeat 15px 9px;
+	color: #5a5a5a;
+	border: 1px dotted #e3b7b7;
+	border-radius: 4px;
+	background-color: #f4dada;
+	padding: 15px 57px;
+}
+
+p.arrow {
+	background: url(../../../img/layout/koezion/bullet-arrow.png) no-repeat 0 1px;
+	color: #5a5a5a;
+	padding: 0 15px 0 20px;
+	margin-bottom: 10px;
+}
+
+#powered_by a {
+	background: url(../../../img/koezion_logo.gif) no-repeat top right transparent;
+}
+
+.wrap_content {
+	max-width: 980px;
+	margin: 0 auto;
+	display: block;
+	position: relative;
+}
+
+.wrap_content.header {
+	overflow: visible;
+}
+
+.wrap_content.wait {
+	padding-top: 50px;
+}
+
+#header {
+	max-width: 960px;
+	height: 120px;
+	margin: 0 10px;
+	position: relative;
+	overflow: hidden;
+}
+
+#header .locales {
+	float: right;
+	margin-top: 5px;
+}
+
+#header .locales a {
+	font-size: 10px;
+}
+
+#logo {
+	position: absolute;
+}
+
+#personal_data {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
+
+#personal_data p {
+	color: #535352;
+	text-shadow: none;
+	font: 13px/ 18px Arial,sans-serif;
+	margin: 0;
+	font-weight: bold;
+	text-align: right;
+}
+
+#personal_data p span a {
+	text-decoration: none;
+}
+
+.search {
+	width: 200px;
+	height: 30px;
+	background: url(../../../img/layout/koezion/search_hovered.png) no-repeat scroll 0 0 transparent;
+	display: inline;
+	float: right;
+}
+
+.main {
+	max-width: 960px;
+	padding: 0 12px;
+	z-index: 987;
+	zoom: 1;
+}
+
+.main_left {
+	height: 100%;
+	background: url(../../../img/layout/koezion/main_background_left.png) repeat-y scroll 0 0 transparent;
+	width: 12px;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+.main_right {
+	height: 100%;
+	background: url(../../../img/layout/koezion/main_background_right.png) repeat-y scroll 0 0 transparent;
+	width: 12px;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+
+.inner_main {
+	min-height: 50px;
+	overflow: visible;
+	background: #f4f5f6;
+	z-index: 988;
+	zoom: 1;
+}
+
+.inner_main.second_block {
+	padding-top: 14px;
+}
+
+.container_alpha {
+	max-width: 892px;
+	padding: 15px 32px 18px;
+	overflow: hidden;
+	background: url(../../../img/layout/koezion/container_alpha.png) repeat-x center bottom transparent;
+	z-index: 988;
+	zoom: 1;
+}
+
+.container_alpha_nogradients {
+	max-width: 892px;
+	padding: 15px 32px 15px;
+	overflow: hidden;
+	background: 0;
+	z-index: 988;
+	zoom: 1;
+}
+
+.container_gamma {
+	max-width: 892px;
+	padding: 15px 32px 17px;
+	overflow: hidden;
+	background: url(../../../img/layout/koezion/container_gamma.png) repeat-x center bottom transparent;
+	z-index: 988;
+	zoom: 1;
+}
+
+.container_omega {
+	padding: 32px 32px 15px;
+	overflow: hidden;
+	background: url(../../../img/layout/koezion/container_omega.png) repeat-x center top transparent;
+	z-index: 988;
+	zoom: 1/*;min-height:350px*/;
+}
+
+.container_omega_plus {
+	max-width: 892px;
+	margin-top: 6px;
+	padding: 35px 32px 18px;
+	overflow: hidden;
+	background: url(../../../img/layout/koezion/container_omega_plus.png) repeat-x center top transparent;
+	z-index: 988;
+	zoom: 1;
+}
+
+.container_alpha.slider {
+	max-width: 918px;
+	padding: 16px 19px 5px;
+}
+
+.second_block .container_alpha,.second_block .container_alpha_nogradients {
+	padding-top: 0;
+}
+
+.loader {
+	max-width: 918px;
+	height: 12px;
+	padding: 19px 0;
+	background: url(../../../img/layout/koezion/loading.gif) no-repeat 50% 14px;
+}
+
+.t_widget h1,.t_widget h2,.t_widget h3,.t_widget h4,.t_widget h5,.t_widget h6 {
+	margin-top: 13px;
+}
+
+.breadcrumbs {
+	max-width: 916px;
+	padding: 5px 20px 9px;
+}
+
+.breadcrumbs p {
+	margin: 0;
+}
+
+.breadcrumbs p span {
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.breadcrumbs p a {
+	color: #777;
+	font-size: 11px;
+	padding: 0 3px;
+	text-decoration: none;
+}
+
+.breadcrumbs p a.home {
+	text-indent: -9999px;
+	background: url(../../../img/layout/koezion/home.png) no-repeat;
+	display: block;
+	width: 16px;
+	height: 16px;
+	float: left;
+}
+
+.breadcrumbs p a:hover {
+	color: #1e1e1e;
+	text-decoration: underline;
+}
+
+.hotstuff {
+	background: #1e1e1e;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	margin: 0 8px 0;
+	position: relative;
+	top: -23px;
+	width: auto;
+	overflow: hidden;
+}
+
+.hotstuff h1,.hotstuff h2,.hotstuff h3,.hotstuff h4,.hotstuff h5,.hotstuff h6 {
+	padding: 8px 11px 7px;
+	color: #fafafa;
+	text-shadow: 1px 1px #000;
+	text-transform: uppercase;
+	display: inline;
+	float: left;
+	margin: 0;
+}
+
+.hotstuff ul {
+	padding: 8px 11px 7px;
+	margin: 0 0 0 143px;
+	width: auto;
+	top: 8px;
+}
+
+.hotstuff ul li {
+	list-style: none;
+	display: none;
+}
+
+.hotstuff ul li a {
+	font-size: 17px;
+	line-height: 22px;
+	text-shadow: 1px 1px #000;
+	display: inline;
+	text-transform: none;
+	text-decoration: none;
+}
+
+.post_holder h2 {
+	margin: 0;
+}
+
+.post_holder p.post_info {
+	margin: 0;
+	font-size: 12px;
+}
+
+.post_holder p.post_info a {
+	text-decoration: none;
+}
+
+.post_holder .hr {
+	margin-top: 2px;
+}
+
+.post_holder a.post_info .add_border {
+	margin-top: -15px;
+	margin-bottom: 5px;
+}
+
+.post_holder p.post_link {
+	float: left;
+	width: 100%;
+}
+
+.post_holder p.post_link a {
+	float: right;
+}
+
+.startmain {
+	margin: 6px 0 0;
+	width: 980px;
+	height: 22px;
+	overflow: hidden;
+	background: url(../../../img/layout/koezion/true_top.png) no-repeat scroll 0 0 transparent;
+}
+
+.endmain {
+	max-width: 980px;
+	height: 7px;
+	position: relative;
+	top: 7px;
+	background: url(../../../img/layout/koezion/true_foot_left.png) no-repeat scroll 0 0 transparent;
+}
+
+.endmain_center_left{
+	max-width:948px;
+	width:75%;
+	height:7px;
+	position:absolute;
+	top:0px;
+	left:15px;
+	background:url(../../../img/layout/koezion/true_foot_center.png) repeat-x 0 0 transparent;
+	z-index:995;
+	zoom:1
+}
+
+.endmain_center_right{
+	max-width:948px;
+	width:75%;
+	height:7px;
+	position:absolute;
+	top:0px;
+	right:15px;
+	background:url(../../../img/layout/koezion/true_foot_center.png) repeat-x 0 0 transparent;
+	z-index:995;
+	zoom:1
+}
+
+.endmain_right{
+	width:15px;
+	height:7px;
+	position:absolute;
+	top:0px;
+	right:0px;
+	background:url(../../../img/layout/koezion/true_foot_right.png) no-repeat 0 0 transparent;
+	z-index:997;
+	zoom:1
+}
+
+.fake_foot {
+	position: relative;
+	bottom: 0px;
+	left: 0px;
+	height: 15px;
+	background: url(../../../img/layout/koezion/fake_foot.png) repeat center bottom transparent;
+}
+
+.stripe {
+	max-width: 956px;
+	height: 1px;
+	margin: 6px 12px 4px;
+	overflow: hidden;
+	background-color: #fff;
+	border-top: 1px solid #d9d9d9;
+}
+
+.portfolio {
+	padding-bottom: 0;
+}
+
+.portfolio p {
+	margin: 0 0 .7em;
+}
+
+.portfolio h1,.portfolio h2,.portfolio h3,.portfolio h4,.portfolio h5,.portfolio h6 {
+	margin: 10px 0 8px;
+}
+
+.portfolio .gs_1,.portfolio .gs_2,.portfolio .gs_3,.portfolio .gs_4,.portfolio .gs_5,.portfolio .gs_6,.portfolio .gs_7,.portfolio .gs_8,.portfolio .gs_9,.portfolio .gs_10,.portfolio .gs_11,.portfolio .gs_12 {
+	margin-bottom: 26px;
+}
+
+.no_bcg,#search_input.no_bcg {
+	background: 0;
+}
+
+.no_bottom_margin,#footer .no_bottom_margin {
+	margin-bottom: 0;
+}
+
+.nopadding,.specs p.nopadding {
+	padding: 0;
+}
+
+.widgettitle,.portfolio .widgettitle {
+	margin: 0 0 12px;
+}
+
+h4.widgettitle {
+	margin-bottom: 8px;
+}
+
+.dropcap {
+	float: left;
+	font-size: 41px;
+	margin: 10px 6px 1px 0;
+}
+
+.dropcapcolor {
+	float: left;
+	font-size: 41px;
+	margin: 10px 6px 1px 0;
+}
+
+.dropcapspot {
+	border-radius: 30px 30px 30px 30px;
+	color: #fff;
+	display: block;
+	float: left;
+	font-size: 25px;
+	height: 20px;
+	margin: 5px 10px 0 0;
+	padding: 13px 10px 13px 12px;
+	text-align: center;
+	text-shadow: none;
+	vertical-align: bottom;
+	width: 25px;
+}
+
+@media print {
+	* {
+		background: transparent!important;
+		color: #444!important;
+		text-shadow: none!important;
+	}
+
+	a,a:visited {
+		color: #444!important;
+		text-decoration: underline;
+	}
+
+	a:after {
+		content: " (" attr(href) ")";
+	}
+
+	abbr:after {
+		content: " (" attr(title) ")";
+	}
+
+	.ir a:after {
+		content: "";
+	}
+
+	pre,blockquote {
+		border: 1px solid #999;
+		page-break-inside: avoid;
+	}
+
+	thead {
+		display: table-header-group;
+	}
+
+	tr,img {
+		page-break-inside: avoid;
+	}
+
+	@page {
+		margin: .5cm;
+	}
+
+	p,h2,h3 {
+		orphans: 3;
+		widows: 3;
+	}
+
+	h2,h3 {
+		page-break-after: avoid;
+	};
+}
+
+h1.e404 {
+	font-size: 190px;
+	line-height: 120px;
+	margin: 20px 30px 36px 40px;
+}
+
+.ie7 h1.e404 strong {
+	height: 180px;
+	line-height: 180px;
+}
+
+h6.e404 {
+	margin: 12px 0 16px 0;
+}
+
+h3.toggle,h3.toggle.active.open {
+	padding: 0 0 0 22px;
+	background: url(../../../img/layout/koezion/toggle.png) no-repeat 0 5px transparent;
+	margin: 12px 0 9px;
+	cursor: pointer;
+}
+
+h3.toggle.active,h3.toggle.open {
+	background-position: 0 -45px;
+}
+
+div.toggler {
+	padding: 10px 15px 10px;
+	background-color: #ececec;
+	background-color: #f1f1f2;
+	border: 1px solid #fff;
+	border-radius: 4px 4px 4px 4px;
+	box-shadow: 0 1px 3px #ccc inset;
+	color: #b6b6b6;
+	font-size: 12px;
+	margin: 1px 0 10px;
+	outline: medium none;
+	text-shadow: 1px 1px #fff;
+	overflow: hidden;
+}
+
+div.toggler p {
+	margin: 0;
+	padding: 0;
+}
+
+div.toggler h2 {
+	margin: 5px 0 10px;
+}
+
+div.toggler h3 {
+	margin: 5px 0 8px;
+}
+
+.fb-like-box {
+	background: white;
+}
+
+.focus_line {
+	overflow: hidden;
+}
+
+.focus_line + .focus_line {
+	margin-top: 30px;
+}

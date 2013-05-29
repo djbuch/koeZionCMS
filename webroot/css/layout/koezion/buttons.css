@@ -1,0 +1,591 @@
+.superbutton.orange {
+	color: #FFFFFF !important;
+	text-shadow: 1px 1px #c8542d;
+	background-color: #d65f34;
+	background-image: -moz-linear-gradient(top, #f6854d, #d65f34);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f6854d), to(#d65f34));
+	background-image: -webkit-linear-gradient(top, #f6854d, #d65f34);
+	background-image: -o-linear-gradient(top, #f6854d, #d65f34);
+	background-image: linear-gradient(to bottom, #f6854d, #d65f34);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff6854d', endColorstr='#ffd65f34', GradientType=0);
+	border-color: #d65f34 !important;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.superbutton.orange:hover, .superbutton.orange:focus {
+	background-color: #d65f34;
+	*background-color: #d65f34;
+}
+
+.superbutton.orange:active, .superbutton.orange.active {
+	background-color: #d45b32;
+}
+
+
+.superbutton.black{
+	color: #DFDFDF !important;
+	text-shadow: 1px 1px #000;
+}
+
+.superbutton.black {
+	background-color: #0e0e0e;
+	background-image: -moz-linear-gradient(top, #252525, #0e0e0e);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#252525), to(#0e0e0e));
+	background-image: -webkit-linear-gradient(top, #252525, #0e0e0e);
+	background-image: -o-linear-gradient(top, #252525, #0e0e0e);
+	background-image: linear-gradient(to bottom, #252525, #0e0e0e);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff252525', endColorstr='#ff0e0e0e', GradientType=0);
+	border-color: #0e0e0e !important;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.superbutton.black:hover,
+.superbutton.black:focus {
+	background-color: #0e0e0e;
+	*background-color: #0e0e0e;
+}
+
+.superbutton.black:active,
+.superbutton.black.active {
+	background-color: #242424;
+}
+
+
+
+.superbutton.white {
+	color: #7A7A7A !important;
+	text-shadow: 1px 1px #fff;
+	background-color: #cecece;
+	background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+	background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+	background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+	background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
+	border-color: #cecece !important;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.superbutton.white:hover, .superbutton.white:focus {
+	background-color: #e6e6e6;
+	*background-color: #e6e6e6;
+}
+
+.superbutton.white:active, .superbutton.white.active {
+	background-color: #e6e6e6;
+}
+
+
+.superbutton.bronze {
+	color: #FFFFFF !important;
+	text-shadow: 1px 1px #3d3638;
+	background-color: #43363b;
+	background-image: -moz-linear-gradient(top, #624f57, #43363b);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#624f57), to(#43363b));
+	background-image: -webkit-linear-gradient(top, #624f57, #43363b);
+	background-image: -o-linear-gradient(top, #624f57, #43363b);
+	background-image: linear-gradient(to bottom, #624f57, #43363b);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff624f57', endColorstr='#ff43363b', GradientType=0);
+	border-color: #43363b !important;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.superbutton.bronze:hover, .superbutton.bronze:focus {
+	background-color: #43363b;
+	*background-color: #43363b;
+}
+
+.superbutton.bronze:active, .superbutton.bronze.active {
+	background-color: #43363b;
+}
+
+
+.superbutton.brown {
+	color: #FFFFFF !important;
+	text-shadow: 1px 1px #3d3638;
+	background-color: #4a413e;
+	background-image: -moz-linear-gradient(top, #6c5f5b, #4a413e);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#6c5f5b), to(#4a413e));
+	background-image: -webkit-linear-gradient(top, #6c5f5b, #4a413e);
+	background-image: -o-linear-gradient(top, #6c5f5b, #4a413e);
+	background-image: linear-gradient(to bottom, #6c5f5b, #4a413e);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff6c5f5b', endColorstr='#ff4a413e', GradientType=0);
+	border-color: #4a413e !important;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.superbutton.brown:hover, .superbutton.brown:focus {
+	background-color: #4a413e;
+	*background-color: #595959;
+}
+
+.superbutton.brown:active, .superbutton.brown.active {
+	background-color: #4a413e;
+}
+
+
+
+.superbutton.green {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #374936;
+	background-color: #40533f;
+	background-image: -moz-linear-gradient(top, #597458, #40533f);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#597458), to(#40533f));
+	background-image: -webkit-linear-gradient(top, #597458, #40533f);
+	background-image: -o-linear-gradient(top, #597458, #40533f);
+	background-image: linear-gradient(to bottom, #597458, #40533f);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff597458', endColorstr='#ff40533f', GradientType=0);
+	border-color: #40533f !important;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.superbutton.green:hover, .superbutton.green:focus {
+	background-color: #40533f;
+	*background-color: #40533f;
+}
+
+.superbutton.green:active, .superbutton.green.active {
+	background-color: #3a4b39;
+}
+
+
+.superbutton.purple {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #352d42;
+	background-color: #352d42;
+	background-image: -moz-linear-gradient(top, #4c405f, #352d42);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#4c405f), to(#352d42));
+	background-image: -webkit-linear-gradient(top, #4c405f, #352d42);
+	background-image: -o-linear-gradient(top, #4c405f, #352d42);
+	background-image: linear-gradient(to bottom, #4c405f, #352d42);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff4c405f', endColorstr='#ff352d42', GradientType=0);
+	border-color: #352d42 !important;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.superbutton.purple:hover, .superbutton.purple:focus {
+	background-color: #352d42;
+	*background-color: #352d42;
+}
+
+.superbutton.purple:active, .superbutton.purple.active {
+	background-color: #2e273a;
+}
+
+
+.superbutton.teal {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #40665e;
+	background-color: #40665e;
+	background-image: -moz-linear-gradient(top, #5e9589, #40665e);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#5e9589), to(#40665e));
+	background-image: -webkit-linear-gradient(top, #5e9589, #40665e);
+	background-image: -o-linear-gradient(top, #5e9589, #40665e);
+	background-image: linear-gradient(to bottom, #5e9589, #40665e);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5e9589', endColorstr='#ff40665e', GradientType=0);
+	border-color: #40665e !important;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.superbutton.teal:hover, .superbutton.teal:focus {
+	background-color: #40665e;
+	*background-color: #40665e;
+}
+
+.superbutton.teal:active, .superbutton.teal.active {
+	background-color: #365a53;
+}
+
+
+.superbutton.coral {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #44a6ac;
+	background-color: #44a6ac;
+	background-image: -moz-linear-gradient(top, #62ced1, #44a6ac);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#62ced1), to(#44a6ac));
+	background-image: -webkit-linear-gradient(top, #62ced1, #44a6ac);
+	background-image: -o-linear-gradient(top, #62ced1, #44a6ac);
+	background-image: linear-gradient(to bottom, #62ced1, #44a6ac);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff62ced1', endColorstr='#ff44a6ac', GradientType=0);
+	border-color: #44a6ac !important;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.superbutton.coral:hover, .superbutton.coral:focus {
+	background-color: #44a6ac;
+	*background-color: #44a6ac;
+}
+
+.superbutton.coral:active, .superbutton.coral.active {
+	background-color: #3f9aa0;
+}
+
+
+.superbutton.dentist {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #8ca48b;
+	background-color: #8fa68e;
+	background-image: -moz-linear-gradient(top, #ccd9cc, #8fa68e);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ccd9cc), to(#8fa68e));
+	background-image: -webkit-linear-gradient(top, #ccd9cc, #8fa68e);
+	background-image: -o-linear-gradient(top, #ccd9cc, #8fa68e);
+	background-image: linear-gradient(to bottom, #ccd9cc, #8fa68e);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffccd9cc', endColorstr='#ff8fa68e', GradientType=0);
+	border-color: #8fa68e !important;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.superbutton.dentist:hover, .superbutton.dentist:focus {
+	background-color: #8fa68e;
+	*background-color: #8fa68e;
+}
+
+.superbutton.dentist:active, .superbutton.dentist.active {
+	background-color: #869a85;
+}
+
+
+.superbutton.friendly_grey {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #819792;
+	background-color: #819792;
+	background-image: -moz-linear-gradient(top, #c7d2cf, #819792);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#c7d2cf), to(#819792));
+	background-image: -webkit-linear-gradient(top, #c7d2cf, #819792);
+	background-image: -o-linear-gradient(top, #c7d2cf, #819792);
+	background-image: linear-gradient(to bottom, #c7d2cf, #819792);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffc7d2cf', endColorstr='#ff819792', GradientType=0);
+	border-color: #819792 !important;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.superbutton.friendly_grey:hover, .superbutton.friendly_grey:focus {
+	background-color: #819792;
+	*background-color: #819792;
+}
+
+.superbutton.friendly_grey:active, .superbutton.friendly_grey.active {
+	background-color: #788c88;
+}
+
+
+.superbutton.hospital_green {
+	color: #FFFFFF !important;
+	text-shadow: 1px 1px #649873;
+	background-color: #649873;
+	background-image: -moz-linear-gradient(top, #99cdae, #649873);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#99cdae), to(#649873));
+	background-image: -webkit-linear-gradient(top, #99cdae, #649873);
+	background-image: -o-linear-gradient(top, #99cdae, #649873);
+	background-image: linear-gradient(to bottom, #99cdae, #649873);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff99cdae', endColorstr='#ff649873', GradientType=0);
+	border-color: #649873 !important;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.superbutton.hospital_green:hover, .superbutton.hospital_green:focus {
+	background-color: #649873;
+	*background-color: #649873;
+}
+
+.superbutton.hospital_green:active, .superbutton.hospital_green.active {
+	background-color: #608c6c;
+}
+
+
+.superbutton.navy {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #36434a;
+	background-color: #36434a;
+	background-image: -moz-linear-gradient(top, #5b6f7b, #36434a);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#5b6f7b), to(#36434a));
+	background-image: -webkit-linear-gradient(top, #5b6f7b, #36434a);
+	background-image: -o-linear-gradient(top, #5b6f7b, #36434a);
+	background-image: linear-gradient(to bottom, #5b6f7b, #36434a);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5b6f7b', endColorstr='#ff36434a', GradientType=0);
+	border-color: #36434a !important;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.superbutton.navy:hover, .superbutton.navy:focus {
+	background-color: #36434a;
+	*background-color: #36434a;
+}
+
+.superbutton.navy:active, .superbutton.navy.active {
+	background-color: #323c41;
+}
+
+
+.superbutton.neon {
+	color: #FFFFFF !important;
+	text-shadow: 1px 1px #128ece;
+	background-color: #128ece;
+	background-image: -moz-linear-gradient(top, #1ac0e4, #128ece);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#1ac0e4), to(#128ece));
+	background-image: -webkit-linear-gradient(top, #1ac0e4, #128ece);
+	background-image: -o-linear-gradient(top, #1ac0e4, #128ece);
+	background-image: linear-gradient(to bottom, #1ac0e4, #128ece);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff1ac0e4', endColorstr='#ff128ece', GradientType=0);
+	border-color: #128ece !important;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.superbutton.neon:hover, .superbutton.neon:focus {
+	background-color: #128ece;
+	*background-color: #128ece;
+}
+
+.superbutton.neon:active, .superbutton.neon.active {
+	background-color: #1088c6;
+}
+
+
+.superbutton.ocean {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #284250;
+	background-color: #284250;
+	background-image: -moz-linear-gradient(top, #44687b, #284250);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#44687b), to(#284250));
+	background-image: -webkit-linear-gradient(top, #44687b, #284250);
+	background-image: -o-linear-gradient(top, #44687b, #284250);
+	background-image: linear-gradient(to bottom, #44687b, #284250);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff44687b', endColorstr='#ff284250', GradientType=0);
+	border-color: #284250 !important;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.superbutton.ocean:hover, .superbutton.ocean:focus {
+	background-color: #284250;
+	*background-color: #284250;
+}
+
+.superbutton.ocean:active, .superbutton.ocean.active {
+	background-color: #233c49;
+}
+
+
+.superbutton.olive {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #6c6e4b;
+	background-color: #6c6e4b;
+	background-image: -moz-linear-gradient(top, #a0a277, #6c6e4b);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#a0a277), to(#6c6e4b));
+	background-image: -webkit-linear-gradient(top, #a0a277, #6c6e4b);
+	background-image: -o-linear-gradient(top, #a0a277, #6c6e4b);
+	background-image: linear-gradient(to bottom, #a0a277, #6c6e4b);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffa0a277', endColorstr='#ff6c6e4b', GradientType=0);
+	border-color: #6c6e4b !important;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.superbutton.olive:hover, .superbutton.olive:focus {
+	background-color: #6c6e4b;
+	*background-color: #6c6e4b;
+}
+
+.superbutton.olive:active, .superbutton.olive.active {
+	background-color: #646646;
+}
+
+
+.superbutton.pink {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #a35eaf;
+	background-color: #a35eaf;
+	background-image: -moz-linear-gradient(top, #da93e0, #a35eaf);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#da93e0), to(#a35eaf));
+	background-image: -webkit-linear-gradient(top, #da93e0, #a35eaf);
+	background-image: -o-linear-gradient(top, #da93e0, #a35eaf);
+	background-image: linear-gradient(to bottom, #da93e0, #a35eaf);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffda93e0', endColorstr='#ffa35eaf', GradientType=0);
+	border-color: #a35eaf !important;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.superbutton.pink:hover, .superbutton.pink:focus {
+	background-color: #a35eaf;
+	*background-color: #a35eaf;
+}
+
+.superbutton.pink:active, .superbutton.pink.active {
+	background-color: #9759a2;
+}
+
+
+.superbutton.red {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #a63535;
+	background-color: #a63535;
+	background-image: -moz-linear-gradient(top, #d54444, #a63535);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#d54444), to(#a63535));
+	background-image: -webkit-linear-gradient(top, #d54444, #a63535);
+	background-image: -o-linear-gradient(top, #d54444, #a63535);
+	background-image: linear-gradient(to bottom, #d54444, #a63535);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffd54444', endColorstr='#ffa63535', GradientType=0);
+	border-color: #a63535 !important;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.superbutton.red:hover, .superbutton.red:focus {
+	background-color: #a63535;
+	*background-color: #a63535;
+}
+
+.superbutton.red:active, .superbutton.red.active {
+	background-color: #962727;
+}
+
+
+.superbutton.selen {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #a8aa21;
+	background-color: #bfc517;
+	background-image: -moz-linear-gradient(top, #e6e823, #bfc517);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#e6e823), to(#bfc517));
+	background-image: -webkit-linear-gradient(top, #e6e823, #bfc517);
+	background-image: -o-linear-gradient(top, #e6e823, #bfc517);
+	background-image: linear-gradient(to bottom, #e6e823, #bfc517);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffe6e823', endColorstr='#ffbfc517', GradientType=0);
+	border-color: #bfc517 !important;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.superbutton.selen:hover, .superbutton.selen:focus {
+	background-color: #bfc517;
+	*background-color: #bfc517;
+}
+
+.superbutton.selen:active, .superbutton.selen.active {
+	background-color: #b7bd18;
+}
+
+
+.superbutton.soft_green {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #90a850;
+	background-color: #90a850;
+	background-image: -moz-linear-gradient(top, #cddb82, #90a850);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#cddb82), to(#90a850));
+	background-image: -webkit-linear-gradient(top, #cddb82, #90a850);
+	background-image: -o-linear-gradient(top, #cddb82, #90a850);
+	background-image: linear-gradient(to bottom, #cddb82, #90a850);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffcddb82', endColorstr='#ff90a850', GradientType=0);
+	border-color: #90a850 !important;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.superbutton.soft_green:hover, .superbutton.soft_green:focus {
+	background-color: #90a850;
+	*background-color: #90a850;
+}
+
+.superbutton.soft_green:active, .superbutton.soft_green.active {
+	background-color: #88a049;
+}
+
+
+.superbutton.soft_teal {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #6b9f93;
+	background-color: #92c9bd;
+	background-image: -moz-linear-gradient(top, #cceae3, #92c9bd);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#cceae3), to(#92c9bd));
+	background-image: -webkit-linear-gradient(top, #cceae3, #92c9bd);
+	background-image: -o-linear-gradient(top, #cceae3, #92c9bd);
+	background-image: linear-gradient(to bottom, #cceae3, #92c9bd);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffcceae3', endColorstr='#ff92c9bd', GradientType=0);
+	border-color: #92c9bd !important;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.superbutton.soft_teal:hover, .superbutton.soft_teal:focus {
+	background-color: #92c9bd;
+	*background-color: #92c9bd;
+}
+
+.superbutton.soft_teal:active, .superbutton.soft_teal.active {
+	background-color: #8cc3b7;
+}
+
+
+.superbutton.yellow {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #d4ae00;
+	background-color: #edc72e;
+	background-image: -moz-linear-gradient(top, #ffe932, #edc72e);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffe932), to(#edc72e));
+	background-image: -webkit-linear-gradient(top, #ffe932, #edc72e);
+	background-image: -o-linear-gradient(top, #ffe932, #edc72e);
+	background-image: linear-gradient(to bottom, #ffe932, #edc72e);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffe932', endColorstr='#ffedc72e', GradientType=0);
+	border-color: #edc72e !important;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.superbutton.yellow:hover, .superbutton.yellow:focus {
+	background-color: #edc72e;
+	*background-color: #edc72e;
+}
+
+.superbutton.yellow:active, .superbutton.yellow.active {
+	background-color: #e0bb28;
+}
+
+
+
+
+
+
+
+
+
+/*****************************************************/
+/* Cette partie est à supprimer dès la fin des tests */
+/*****************************************************/
+/*
+a.superbutton.orange{color:#fff;background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -1px transparent;border:1px solid #d65f34;box-shadow:inset 0 1px #faaa82;text-shadow: 1px 1px #c8542d}
+a.superbutton.orange:hover,a.superbutton.orange.selected{background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -31px transparent}
+a.superbutton.black{color:#dfdfdf;background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -61px transparent;border:1px solid #000;box-shadow:inset 0 1px 1px #474747;text-shadow: 1px 1px #000}
+a.superbutton.black:hover,a.superbutton.black.selected{background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -91px transparent}
+a.superbutton.white{color:#7a7a7a;background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -181px transparent;border:1px solid #cecece;box-shadow:inset 0 1px 2px #fff;text-shadow: 1px 1px #fff}
+a.superbutton.white:hover,a.superbutton.white.selected{background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -211px transparent}
+a.superbutton.bronze{color:#fff;background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -301px transparent;border:1px solid #43363b;box-shadow:inset 0 1px 1px #8c8085;text-shadow: 1px 1px #3d3638}
+a.superbutton.bronze:hover,a.superbutton.bronze.selected{background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -330px transparent}
+a.superbutton.brown{color:#fff;background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -361px transparent;border:1px solid #4a413e;box-shadow:inset 0 1px 1px #8c8085;text-shadow: 1px 1px #3d3638}
+a.superbutton.brown:hover,a.superbutton.brown.selected{background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -390px transparent}
+a.superbutton.green{color:#fff;background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -421px transparent;border:1px solid #40533f;box-shadow:inset 0 1px 1px #7c907c;text-shadow: 1px 1px #374936}
+a.superbutton.green:hover,a.superbutton.green.selected{background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -450px transparent}
+a.superbutton.purple{color:#fff;background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -481px transparent;border:1px solid #352d42;box-shadow:inset 0 1px 1px #776890;text-shadow: 1px 1px #352d42}
+a.superbutton.purple:hover,a.superbutton.purple.selected{background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -510px transparent}
+a.superbutton.teal{color:#fff;background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -541px transparent;border:1px solid #40665e;box-shadow:inset 0 1px 1px #9ccbc1;text-shadow: 1px 1px #40665e}
+a.superbutton.teal:hover,a.superbutton.teal.selected{background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -570px transparent}
+a.superbutton.coral{color:#fff;background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -601px transparent;border:1px solid #44a6ac;box-shadow:inset 0 1px 1px #91e4e6;text-shadow: 1px 1px #44a6ac}
+a.superbutton.coral:hover,a.superbutton.coral.selected{background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -630px transparent}
+a.superbutton.dentist{color:#fff;background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -660px transparent;border:1px solid #8ca48b;box-shadow:inset 0 1px 1px #dee6de;text-shadow: 1px 1px #8ca48b}
+a.superbutton.dentist:hover,a.superbutton.dentist.selected{background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -690px transparent}
+a.superbutton.friendly_grey{color:#fff;background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -721px transparent;border:1px solid #819792;box-shadow:inset 0 1px 1px #d6dedc;text-shadow: 1px 1px #819792}
+a.superbutton.friendly_grey:hover,a.superbutton.friendly_grey.selected{background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -750px transparent}
+a.superbutton.hospital_green{color:#fff;background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -781px transparent;border:1px solid #649873;box-shadow:inset 0 1px 1px #acd2bb;text-shadow: 1px 1px #649873}
+a.superbutton.hospital_green:hover,a.superbutton.hospital_green.selected{background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -810px transparent}
+a.superbutton.navy{color:#fff;background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -841px transparent;border:1px solid #36434a;box-shadow:inset 0 1px 1px #7d96a4;text-shadow: 1px 1px #36434a}
+a.superbutton.navy:hover,a.superbutton.navy.selected{background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -870px transparent}
+a.superbutton.neon{color:#fff;background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -901px transparent;border:1px solid #128ece;box-shadow:inset 0 1px 1px #38d4f6;text-shadow: 1px 1px #128ece}
+a.superbutton.neon:hover,a.superbutton.neon.selected{background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -930px transparent}
+a.superbutton.ocean{color:#fff;background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -961px transparent;border:1px solid #284250;box-shadow:inset 0 1px 1px #598196;text-shadow: 1px 1px #284250}
+a.superbutton.ocean:hover,a.superbutton.ocean.selected{background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -990px transparent}
+a.superbutton.olive{color:#fff;background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -1021px transparent;border:1px solid #6c6e4b;box-shadow:inset 0 1px 1px #babc8e;text-shadow: 1px 1px #6c6e4b}
+a.superbutton.olive:hover,a.superbutton.olive.selected{background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -1050px transparent}
+a.superbutton.pink{color:#fff;background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -1081px transparent;border:1px solid #a35eaf;box-shadow:inset 0 1px 1px #e8acee;text-shadow: 1px 1px #a35eaf}
+a.superbutton.pink:hover,a.superbutton.pink.selected{background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -1110px transparent}
+a.superbutton.red{color:#fff;background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -1141px transparent;border:1px solid #9e2b2b;box-shadow:inset 0 1px 1px #ec6161;text-shadow: 1px 1px #9e2b2b}
+a.superbutton.red:hover,a.superbutton.red.selected{background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -1170px transparent}
+a.superbutton.selen{color:#fff;background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -1201px transparent;border:1px solid #bfc517;box-shadow:inset 0 1px 1px #fdff6a;text-shadow: 1px 1px #a8aa21}
+a.superbutton.selen:hover,a.superbutton.selen.selected{background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -1230px transparent}
+a.superbutton.soft_green{color:#fff;background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -1261px transparent;border:1px solid #90a850;box-shadow:inset 0 1px 1px #e4edad;text-shadow: 1px 1px #90a850}
+a.superbutton.soft_green:hover,a.superbutton.soft_green.selected{background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -1290px transparent}
+a.superbutton.soft_teal{color:#fff;background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -1321px transparent;border:1px solid #92c9bd;box-shadow:inset 0 1px 1px #e2f6f1;text-shadow: 1px 1px #6b9f93}
+a.superbutton.soft_teal:hover,a.superbutton.soft_teal.selected{background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -1350px transparent}
+a.superbutton.yellow{color:#fff;background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -1381px transparent;border:1px solid #edc72e;box-shadow:inset 0 1px 1px #fff49c;text-shadow: 1px 1px #d4ae00}
+a.superbutton.yellow:hover,a.superbutton.yellow.selected{background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -1410px transparent}
+*/
