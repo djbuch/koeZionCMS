@@ -19,7 +19,7 @@ $keywords_for_layout = $websiteParams['seo_page_keywords'];
 				<?php if(isset($newsletter_id)) { echo $helpers['Form']->input('id', '', array('type' => 'hidden', 'value' => $newsletter_id)); } ?>
 				<?php echo $helpers['Form']->input('name', _('Nom'), am($commonOptions, array("value" => _('Indiquez votre nom'), "title" => _('Indiquez votre nom'))));  ?>
 				<?php echo $helpers['Form']->input('email', _('Email'), am($commonOptions, array("value" => _('Indiquez votre email'), "title" => _('Indiquez votre email'))));  ?>
-				<p><?php echo $helpers['Form']->input('envoyer', _('Envoyer'), am($commonOptions, array('type' => 'submit', "class" => "btn btnPrimary", 'value' => _('Envoyer'))));  ?></p>
+				<p><?php echo $helpers['Form']->input('envoyer', _('Envoyer'), am($commonOptions, array('type' => 'submit', "class" => "superbutton", 'value' => _('Envoyer'))));  ?></p>
 			</div>
 		</div>
 	<?php echo $helpers['Form']->end(); ?>

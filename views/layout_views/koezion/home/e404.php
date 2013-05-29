@@ -17,7 +17,7 @@ $keywords_for_layout = $websiteParams['seo_page_keywords'];
 	}
 	
 	?>	
-	<p><a href="<?php echo Router::url('home/index'); ?>" class="btn btnPrimary"><?php echo _("Retour sur la page d'accueil"); ?></a></p>	
+	<p><a href="<?php echo Router::url('home/index'); ?>" class="superbutton"><?php echo _("Retour sur la page d'accueil"); ?></a></p>	
 	<div class="clearfix"></div>
 
 </div>

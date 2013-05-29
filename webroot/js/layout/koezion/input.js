@@ -37,7 +37,7 @@ $(document).ready(function() {
     /* Contact form validation, ajax response */
     /*var paraTag = $('input#submit').parent('p');
     $(paraTag).children('input').remove();
-    $(paraTag).append('<input type="button" name="submit" id="submit" value="Send it!" class="btn btnPrimary" />');*/
+    $(paraTag).append('<input type="button" name="submit" id="submit" value="Send it!" class="superbutton" />');*/
 
 	$('#websiteForm').submit(function() {
 		

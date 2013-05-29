@@ -27,7 +27,7 @@
 				<p>
 					&nbsp;
 					<?php echo $helpers['Form']->input('email', _('Email'), am($commonOptions, array("value" => _('Indiquez votre email'), "title" => _('Indiquez votre email'))));  ?>
-					<?php echo $helpers['Form']->input('envoyer', _('Envoyer'), am($commonOptions, array('type' => 'submit', "class" => "btn btnPrimary black", 'value' => _('Valider'))));  ?>
+					<?php echo $helpers['Form']->input('envoyer', _('Envoyer'), am($commonOptions, array('type' => 'submit', "class" => "superbutton black", 'value' => _('Valider'))));  ?>
 				</p>
 			<?php echo $helpers['Form']->end(); ?>
 			

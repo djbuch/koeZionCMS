@@ -15,7 +15,7 @@ $commonOptions = array('label' => false, 'div' => false, 'displayError' => false
 			echo $helpers['Form']->input('cpostal', _('Code postal'), am($commonOptions, array("value" => _('Indiquez votre code postal'), "title" => _('Indiquez votre code postal'))));
 			echo $helpers['Form']->input('message', _('Message'), am($commonOptions, array("value" => _('Indiquez votre message'), "title" => _('Indiquez votre message'), 'type' => 'textarea', 'rows' => '5', 'cols' => '10')));
 			?>
-			<p style="position:relative;min-height:28px;"><?php echo $helpers['Form']->input('envoyer', _('Envoyer'), am($commonOptions, array('type' => 'submit', "class" => "btn btnPrimary", 'value' => _('Envoyer'))));  ?></p>
+			<p style="position:relative;min-height:28px;"><?php echo $helpers['Form']->input('envoyer', _('Envoyer'), am($commonOptions, array('type' => 'submit', "class" => "superbutton", 'value' => _('Envoyer'))));  ?></p>
 		</div>
 	</div>
 	<?php 

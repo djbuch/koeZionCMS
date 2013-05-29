@@ -13,7 +13,7 @@ $description_for_layout = _("Résultats de votre recherche sur le terme : ").$q;
 			?>
 			<h3><a href="<?php echo $hit['url']; ?>"><?php echo $hit['title']; ?></a></h3>			
 			<?php echo "<p>".$hit['description']."</p>"; ?>
-			<?php /* ?><p><a href="<?php echo $hit['url']; ?>" class="btn btnPrimary"><?php echo _("En savoir +"); ?></a></p><?php */ ?>
+			<?php /* ?><p><a href="<?php echo $hit['url']; ?>" class="superbutton"><?php echo _("En savoir +"); ?></a></p><?php */ ?>
 			<div class="hr"><div class="inner_hr"></div></div>
 			<?php
 		 }
