@@ -3,6 +3,7 @@
 !empty
 !.htaccess
 _*.*
+_*
 _*/
 *.cache
 *.log

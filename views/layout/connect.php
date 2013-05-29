@@ -56,7 +56,7 @@
 						</div>						
 					</div>										
 				</div>
-				<a href="<?php echo BASE_URL; ?>" title="Aller sur le site" style="float:right;font-size:10px;font-style:italic;text-decoration:none;">Aller sur le site</a>
+				<a href="<?php echo Router::url('/'); ?>" title="Aller sur le site" style="float:right;font-size:10px;font-style:italic;text-decoration:none;">Aller sur le site</a>
 			</div>
 		</div>
 	</body>
