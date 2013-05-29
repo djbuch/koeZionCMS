@@ -39,6 +39,11 @@
 
 .focus .gs_3 {
 	padding: 0;
+	margin-bottom: 20px;
+}
+
+.focus {
+	margin-bottom: -20px;
 }
 
 #slider .nivo-caption p,
