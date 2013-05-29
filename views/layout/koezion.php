@@ -33,11 +33,7 @@
 			'layout/'.$websiteParams['tpl_layout'].'/colors/'.trim($websiteParams['tpl_code']).'/default',
 			'layout/'.$websiteParams['tpl_layout'].'/colors/'.trim($websiteParams['tpl_code']).'/body',
 			'layout/'.$websiteParams['tpl_layout'].'/colors/'.trim($websiteParams['tpl_code']).'/buttons',
-<<<<<<< HEAD
 			'layout/'.$websiteParams['tpl_layout'].'/theme_responsive',
-=======
-			'layout/'.$websiteParams['tpl_layout'].'/theme-responsive',
->>>>>>> Commit MAI
 			'layout/'.$websiteParams['tpl_layout'].'/font-awsome'
 		);			
 		echo $helpers['Html']->css($css);		
@@ -94,10 +90,7 @@
 			'layout/'.$websiteParams['tpl_layout'].'/scrollToTop',
 			'layout/'.$websiteParams['tpl_layout'].'/browserSelector',
 			'layout/'.$websiteParams['tpl_layout'].'/theme',
-<<<<<<< HEAD
 			'layout/'.$websiteParams['tpl_layout'].'/fittext/jquery.fittext'
-=======
->>>>>>> Commit MAI
 		);
 		echo $helpers['Html']->js($js);		
 		if(!empty($websiteParams['js_hack'])) { ?><script type="text/javascript"><?php echo $websiteParams['js_hack']; ?></script><?php }

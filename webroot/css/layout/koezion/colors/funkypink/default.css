@@ -5,13 +5,8 @@ h1 strong,h2 strong,h3 strong,h4 strong,h5 strong,h6 strong,.dropcapcolor,.inner
 blockquote,q{border-color:#d171ce}
 .post_header a{text-decoration:none;color:#1e1e1e}
 .dropcapspot{background-color:#d171ce}
-<<<<<<< HEAD
 /*a.superbutton,.inner_main input.superbutton{color:#fff;background:url(../../../../../img/layout/koezion/superbutton.png) repeat-x center -1081px transparent;border:1px solid #a35eaf;box-shadow:inset 0 1px 1px #e8acee;text-shadow: 1px 1px #a35eaf}*/
 /*a.superbutton:hover,.inner_main input.superbutton:hover,a.superbutton.selected{background:url(../../../../../img/layout/koezion/superbutton.png) repeat-x center -1110px transparent}*/
-=======
-a.superbutton,.inner_main input.superbutton{color:#fff;background:url(../../../../../img/layout/koezion/superbutton.png) repeat-x center -1081px transparent;border:1px solid #a35eaf;box-shadow:inset 0 1px 1px #e8acee;text-shadow: 1px 1px #a35eaf}
-a.superbutton:hover,.inner_main input.superbutton:hover,a.superbutton.selected{background:url(../../../../../img/layout/koezion/superbutton.png) repeat-x center -1110px transparent}
->>>>>>> Commit MAI
 ::-moz-selection{background:#d171ce;color:#fff;text-shadow:none}
 ::selection{background:#d171ce;color:#fff;text-shadow:none}
 a:link{-webkit-tap-highlight-color:#d171ce}

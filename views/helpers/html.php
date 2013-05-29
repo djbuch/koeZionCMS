@@ -219,15 +219,9 @@ class Html extends BackofficeHtml {
  * @version 0.2 - 23/05/2013 by TB ajout de l'adresse 127.0.0.1 dans les adresses à ne pas traiter
  */	
 	public function analytics($code) {
-<<<<<<< HEAD
+
 
         if(!empty($code) && !in_array($_SERVER["HTTP_HOST"], array('localhost', '127.0.0.1'))) { return $code; }
         else { return ''; }
     }
-=======
-		
-		if(!empty($code) && !in_array($_SERVER["HTTP_HOST"], array('localhost', '127.0.0.1'))) { return $code; }
-		else { return ''; }
-	}
->>>>>>> Commit MAI
 }
