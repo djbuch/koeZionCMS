@@ -104,7 +104,7 @@
 .nivo-caption p{padding:10px 10px;margin:0;color:#fff;text-shadow:none}
 .nivo-caption p b,.nivo-caption p strong{color:#fff}
 .nivo-caption h3{font:26px/ 30px 'customFont',Arial,sans-serif;color:#fff;text-shadow:none;padding:35px 10px 0}
-.nivo-caption a{display:inline!important}
+ /*.nivo-caption a{display:inline!important}   */ /* Non compatible avec le Responsive Design */
 .nivo-caption a:hover{color:#fff}
 
 .nivo-html-caption {

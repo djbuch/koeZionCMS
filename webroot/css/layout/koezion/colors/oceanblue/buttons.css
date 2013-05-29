@@ -1,0 +1,27 @@
+/* Boutons */
+.superbutton {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #284250;
+	background-color: #284250;
+	background-image: -moz-linear-gradient(top, #44687b, #284250);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#44687b), to(#284250));
+	background-image: -webkit-linear-gradient(top, #44687b, #284250);
+	background-image: -o-linear-gradient(top, #44687b, #284250);
+	background-image: linear-gradient(to bottom, #44687b, #284250);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff44687b', endColorstr='#ff284250', GradientType=0);
+	border-color: #284250 !important;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.superbutton:hover,
+.superbutton:focus,
+.superbutton.disabled,
+.superbutton[disabled] {
+	background-color: #284250;
+	*background-color: #284250;
+}
+
+.superbutton:active,
+.superbutton.active {
+	background-color: #233c49;
+}

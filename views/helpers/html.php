@@ -158,13 +158,14 @@ class Html extends BackofficeHtml {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 06/03/2012 by FI
+ * @version 0.2 - 28/05/2013 by TB	ajout de l'id "mainMenu" pour la liste du menu
  */	
 	public function generateMenu($categories, $breadcrumbs, $moreElements = null) {
 		
 		if(count($categories) > 0) {		
 			
 			if(!empty($breadcrumbs)) { $iParentCategory = $breadcrumbs[0]['id']; } else { $iParentCategory = 0; }
-			?><ul><?php			
+			?><ul id="mainMenu"><?php			
 			foreach($categories as $k => $v) {
 				
 				?>
@@ -215,9 +216,11 @@ class Html extends BackofficeHtml {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 06/03/2012 by FI
+ * @version 0.2 - 23/05/2013 by TB ajout de l'adresse 127.0.0.1 dans les adresses à ne pas traiter
  */	
 	public function analytics($code) {
-		
-		if(!empty($code) && $_SERVER["HTTP_HOST"] != 'localhost') { return $code; }
-	}
+
+        if(!empty($code) && !in_array($_SERVER["HTTP_HOST"], array('localhost', '127.0.0.1'))) { return $code; }
+        else { return ''; }
+    }
 }

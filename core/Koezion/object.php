@@ -74,8 +74,8 @@ class Object {
 	 */
 	function unloadModel($name) {	
 	
-		//En premier lieu on test si le model n'est pas déjà instancié
-		//et si il ne l'est pas on procède à son intenciation
+		//En premier lieu on test si le model est déjà instancié
+		//et s'il l'est on supprime l'intenciation
 		if(isset($this->$name)) { unset($this->$name); }
 	}
 	

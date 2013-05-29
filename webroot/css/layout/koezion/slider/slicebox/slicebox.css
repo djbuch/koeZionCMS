@@ -56,7 +56,7 @@
 
 .sb-description p{padding:10px 10px;margin:0;color:#fff;text-shadow:none}
 .sb-description p b,.sb-description p strong{color:#fff}
-.sb-description a{display:inline!important}
+/*.sb-description a{display:inline!important}*/ /* Non compatible avec le Responsive Design */
 .sb-description a:hover{color:#fff}
 
 .sb-slider li.sb-current .sb-description {

@@ -1,4 +1,7 @@
-<div id="menu" class="png_bg">			
+<div id="menu" class="png_bg">	
+	<div class="menu_center_left"></div>		
+	<div class="menu_center_right"></div>		
+	<div class="menu_right"></div>		
 	<?php 
 	if(!isset($breadcrumbs)) $breadcrumbs = array();
 	$helpers['Html']->generateMenu($menuGeneral, $breadcrumbs); 
