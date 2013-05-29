@@ -22,7 +22,7 @@ CKEDITOR.addTemplates(
 				html:'' +					
 						'<h3 class="widgettitle">Lorem ipsum</h3>' +
 						'<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s.</p>' +
-						'<p><a class="superbutton" href="/">Lorem ipsum</a></p>'
+						'<p><a class="btn btnPrimary" href="/">Lorem ipsum</a></p>'
 			},
 			{
 				title:'Texte focus',
@@ -35,7 +35,7 @@ CKEDITOR.addTemplates(
 							'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s.' +
 						'</p>' +
 						'<p>' + 
-							'<a class="superbutton" href="/">Lorem ipsum</a>' + 
+							'<a class="btn btnPrimary" href="/">Lorem ipsum</a>' + 
 						'</p>'
 			},
 			{
@@ -305,7 +305,7 @@ CKEDITOR.addTemplates(
 								'<div class="specs"><p>1TB Bandwidth</p></div>' +
 								'<div class="specs"><p>1GB Space</p></div>' +
 								'<div class="specs"><p>Hot Dogs</p></div>' +
-								'<div class="buyme"><p><a href="/" class="superbutton">Buy Now!</a></p></div>' +
+								'<div class="buyme"><p><a href="/" class="btn btnPrimary">Buy Now!</a></p></div>' +
 							'</div>' +
 						'</div>'
 			},

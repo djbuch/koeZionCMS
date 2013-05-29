@@ -1,7 +1,16 @@
 /* Boutons */
+<<<<<<< HEAD
 .superbutton {
 	color: #ffffff !important;
 	text-shadow: 1px 1px #d4ae00;
+=======
+.btn {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #d4ae00;
+}
+
+.btnPrimary {
+>>>>>>> Commit MAI
 	background-color: #edc72e;
 	background-image: -moz-linear-gradient(top, #ffe932, #edc72e);
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffe932), to(#edc72e));
@@ -13,15 +22,29 @@
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
+<<<<<<< HEAD
 .superbutton:hover,
 .superbutton:focus,
 .superbutton.disabled,
 .superbutton[disabled] {
+=======
+.btnPrimary:hover,
+.btnPrimary:focus,
+.btnPrimary:active,
+.btnPrimary.active,
+.btnPrimary.disabled,
+.btnPrimary[disabled] {
+>>>>>>> Commit MAI
 	background-color: #edc72e;
 	*background-color: #edc72e;
 }
 
+<<<<<<< HEAD
 .superbutton:active,
 .superbutton.active {
+=======
+.btnPrimary:active,
+.btnPrimary.active {
+>>>>>>> Commit MAI
 	background-color: #e0bb28;
 }

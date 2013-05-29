@@ -59,14 +59,20 @@ class Configure {
 		$_this = Configure::getInstance(); //On va créer une instence de la classe car en static l'objet $this n'est pas accessible
 		$_this->$var = $value;
 		unset($o);		
-	}	
-}
-
-/*class App {
+	}
 	
+/**
+ * Cette fonction permet l'import de librairie dans le code
+ *
+ * @param 	varchar $librairie 	Chemin vers le fichier à importer
+ * @param 	varchar $ext	 	Extension du fichier (php par défaut)
+ * @access 	static
+ * @author 	koéZionCMS
+ * @version 0.1 - 16/05/2012 by FI
+ */	
 	static function import($librairie, $ext = 'php') {
 		
 		if(isset($ext)) $librairie = $librairie.'.'.$ext;
 		require_once($librairie);		
 	}
-}*/
+}

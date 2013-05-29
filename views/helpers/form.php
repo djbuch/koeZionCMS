@@ -407,7 +407,7 @@ class Form {
 		if($options['displayError']) {
 
 			$modelName = $this->view->controller->params['modelName']; //Récupération du model courant
-			$errors = $this->view->controller->$modelName->errors; //Récupération des erreurs du formulaires
+			if(isset($this->view->controller->$modelName->errors)) $errors = $this->view->controller->$modelName->errors; //Récupération des erreurs du formulaires
 		}
 
 		//On va contrôler si on a des erreurs

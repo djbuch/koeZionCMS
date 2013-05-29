@@ -53,7 +53,7 @@
 				<?php		
 				echo $this->vars['components']['Text']->format_content_text($v['short_content']); 
 				//echo $v['short_content']; 
-				if($v['display_link']) { ?><p class="post_link"><a href="<?php echo Router::url('posts/view/id:'.$v['id'].'/slug:'.$v['slug'].'/prefix:'.$v['prefix']); ?>" class="superbutton"><?php echo _('En savoir +'); ?></a></p><?php } 
+				if($v['display_link']) { ?><p class="post_link"><a href="<?php echo Router::url('posts/view/id:'.$v['id'].'/slug:'.$v['slug'].'/prefix:'.$v['prefix']); ?>" class="btn btnPrimary"><?php echo _('En savoir +'); ?></a></p><?php } 
 				?>
 			</div>
 			<div class="clearfix"></div>

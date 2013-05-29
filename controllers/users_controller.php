@@ -144,13 +144,13 @@ class UsersController extends AppController {
 								
 								$websiteDatas = $this->_get_website_datas(); //Récupération des données du site courant
 								
-								if(!in_array(CURRENT_WEBSITE_ID, $usersWebsites)) { Session::setFlash(_("Désolé mais vous ne pouvez pas accéder à ce site"), 'error'); }
+								if(!in_array(CURRENT_WEBSITE_ID, $websitesList)) { Session::setFlash(_("Désolé mais vous ne pouvez pas accéder à ce site"), 'error'); }
 								else { 
 									
 									$session = array(
 										'User' => $user,
 										'UsersGroup' => $usersGroup,
-										'AuthWebsites' => $usersGroupsWebsitesList
+										'AuthWebsites' => $websitesList
 									);
 									Session::write('Frontoffice', $session); //On insère dans la variable de session les données de l'utilisateur
 									$this->redirect('/'); //On redirige vers la page d'accueil du site
@@ -175,7 +175,7 @@ class UsersController extends AppController {
 	function logout() {
 				
 		Session::destroy();
-		$this->redirect('/');		
+		$this->redirect('/connexion');		
 	}
 	
 /**

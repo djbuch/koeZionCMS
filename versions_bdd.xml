@@ -1,5 +1,13 @@
 ﻿<versions> 
 	<version>
+		<name>Version du 16/05/2013</name>
+		<num>20130516.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">ALTER TABLE `websites`  ADD `ga_login` VARCHAR(255) NOT NULL AFTER `ga_code`,  ADD `ga_password` VARCHAR(255) NOT NULL AFTER `ga_login`,  ADD `ga_id` VARCHAR(255) NOT NULL AFTER `ga_password`;</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 17/03/2013</name>
 		<num>20130317</num>
 		<supervisor>KoéZionCMS</supervisor>

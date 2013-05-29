@@ -1,6 +1,5 @@
 <div id="left">
 	<ul>
-		<li><a href="<?php echo Router::url('backoffice/dashboard'); ?>"><?php echo _("Tableau de bord"); ?></a></li>
 		<?php 
 		foreach($leftMenus as $k => $v) {
 
@@ -19,5 +18,6 @@
 			}
 		} 
 		?>
+	</ul>
 	<div id="credits">&#169; Copyright 2011 koéZionCMS</div>
 </div>

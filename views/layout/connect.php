@@ -3,8 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title><?php echo _(".:: Zone sécurisée ::."); ?></title>
-		
+		<title><?php echo _(".:: Connexion au backoffice ::."); ?></title>		
 		<?php
 		$css = array(
 			'backoffice/style',
@@ -25,7 +24,6 @@
 		echo $helpers['Html']->js($js);
 		?>
 	</head>
-
 	<body>
 		<div id="wrapper" class="login">		
 			<div id="right">
@@ -36,56 +34,29 @@
 							<div class="title">
 								<h2><?php echo _("Zone sécurisée"); ?></h2>
 							</div>
-							<div class="content nopadding">
-							
-								<div class="smarttabs nobottom">
-									
-									<?php /* ?>
-									<ul class="anchor">
-										<li><a href="#tabs-1"><?php echo _("Login"); ?></a></li> 
-										<li><a href="#tabs-2"><?php echo _("Mot de passe oublié?"); ?></a></li>
-									</ul>
-									<?php */ ?>
-									
-									<div id="tabs-1">
-										<form method="post" action="<?php echo Router::url('users/login'); ?>" id="UserLogin">										
-											<div class="row">
-												<label><?php echo _("Identifiant"); ?></label>
-												<div class="rowright"><input type="text" name="login" id="inputlogin" /></div>
+							<div class="content nopadding">							
+								<div class="nobottom">									
+									<form method="post" action="<?php echo Router::url('users/login'); ?>" id="UserLogin">										
+										<div class="row">
+											<label><?php echo _("Identifiant"); ?></label>
+											<div class="rowright"><input type="text" name="login" id="inputlogin" /></div>
+										</div>
+										<div class="row">
+											<label><?php echo _("Mot de passe"); ?></label>
+											<div class="rowright"><input type="password" name="password" id="inputpassword" /></div>
+										</div>
+										<div class="row">
+											<div class="rowright button">
+												<button type="submit" class="medium grey"><span><?php echo _("Connectez vous"); ?></span></button>
 											</div>
-											<div class="row">
-												<label><?php echo _("Mot de passe"); ?></label>
-												<div class="rowright"><input type="password" name="password" id="inputpassword" /></div>
-											</div>
-											<div class="row">
-												<div class="rowright button">
-													<button type="submit" class="medium grey"><span><?php echo _("Connectez vous"); ?></span></button>
-												</div>
-											</div>
-										</form>
-									</div>
-									
-									<?php /* ?>									
-									<div id="tabs-2">
-										<form method="post" action="<?php echo Router::url('users/lost_password'); ?>" id="UserLostPassword">	
-											<div class="row">
-												<label><?php echo _("Identifiant"); ?></label>
-												<div class="rowright"><input type="text" name="login" id="inputlogin" /></div>
-											</div>
-											<div class="row">
-												<div class="rowright button">
-													<button type="submit" class="medium grey"><span><?php echo _("Valider"); ?></span></button>
-												</div>
-											</div>
-										</form>
-									</div>
-									<?php */ ?>	
-								</div>
-								
-							</div>
-						</div>
-					</div>					
+										</div>
+									</form>									
+								</div>								
+							</div>							
+						</div>						
+					</div>										
 				</div>
+				<a href="<?php echo BASE_URL; ?>" title="Aller sur le site" style="float:right;font-size:10px;font-style:italic;text-decoration:none;">Aller sur le site</a>
 			</div>
 		</div>
 	</body>

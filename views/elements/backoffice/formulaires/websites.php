@@ -8,6 +8,7 @@
 		<li><a href="#seo"><?php echo _("SEO"); ?></a></li>
 		<li><a href="#foot"><?php echo _("Footer"); ?></a></li>
 		<li><a href="#options"><?php echo _("Options"); ?></a></li>
+		<li><a href="#googleanalytics"><?php echo _("Google Analytics"); ?></a></li>
 		<li><a href="#cssjs"><?php echo _("CSS & JS"); ?></a></li>
 	</ul>
 	<div id="general">
@@ -85,11 +86,20 @@
 				3 => "Slider Vidéo"
 			);
 			echo $helpers['Form']->input('slider_type', 'Type de slider', array('type' => 'select', 'datas' => $sliderTypesList));
-			echo $helpers['Form']->input('ga_code', 'Code Google Analytics', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge'));			
 			$txtSecure = 'Sécuriser le site. <i>Seuls les utilisateurs enregistrés pourront se connecter. <a href="'.Router::url('backoffice/users/index').'">'._("Ajouter un utilisateur").'</a></i>';
 			echo $helpers['Form']->input('secure_activ', $txtSecure, array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour activer la sécurité sur le site"));			
 			$txtLog = "Logger les utilisateurs. <i>Attention cette option ne fonctionne que dans le cas de sites sécurisés.</i>";
 			echo $helpers['Form']->input('log_users_activ', $txtLog, array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour activer le log des utilisateurs. La mise en place de cette option peut ralentir l'affichage des pages"));
+			?>
+		</div>
+	</div>
+	<div id="googleanalytics">
+		<div class="content nopadding">
+			<?php 
+			echo $helpers['Form']->input('ga_login', 'Google analytics Login', array('tooltip' => "Indiquez ici votre identifiant de connexion à Google Analytics"));
+			echo $helpers['Form']->input('ga_password', 'Google analytics Password', array('tooltip' => "Indiquez ici votre mot de passe de connexion à Google Analytics"));
+			echo $helpers['Form']->input('ga_id', 'Google analytics ID', array('tooltip' => "Indiquez ici l'ID du profil Google Analytics (Disponible les paramètres du profil)"));
+			echo $helpers['Form']->input('ga_code', 'Code Google Analytics', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge', 'tooltip' => "Indiquez ici le code de suivi Google Analytics"));			
 			?>
 		</div>
 	</div>

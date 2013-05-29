@@ -11,7 +11,7 @@ $commonOptions = array('label' => false, 'div' => false, 'displayError' => false
 			echo $helpers['Form']->input('login', 'Identifiant');
 			echo $helpers['Form']->input('password', 'Mot de passe', array('type' => 'password'));
 			?>
-			<p><?php echo $helpers['Form']->input('envoyer', _('Envoyer'), am($commonOptions, array('type' => 'submit', "class" => "superbutton", 'value' => _('Envoyer'))));  ?></p>
+			<p><?php echo $helpers['Form']->input('envoyer', _('Envoyer'), am($commonOptions, array('type' => 'submit', "class" => "btn btnPrimary", 'value' => _('Envoyer'))));  ?></p>
 		</div>
 	</div>
 <?php echo $helpers['Form']->end(); ?>

@@ -60,10 +60,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
     var sHref = window.location.href;
 	var iSubStringPosition = sHref.indexOf('adm/', 0) + 4;
 	var sUrl = sHref.substr(0, iSubStringPosition);
-	$.post(sUrl + 'configs/ajax_get_css_editor.html', function(cssEditor) { CKEDITOR.config.contentsCss = cssEditor; }, 'json');    
+	$.post(sUrl + 'home/ajax_get_css_editor.html', function(cssEditor) { CKEDITOR.config.contentsCss = cssEditor; }, 'json');    
     /////////////////////////////////////////////////////////////////////////
 
-	$.post(sUrl + 'configs/ajax_get_baseurl.html', function(baseUrlJsEditor) { 
+	$.post(sUrl + 'home/ajax_get_baseurl.html', function(baseUrlJsEditor) { 
 	
 		CKEDITOR.config.stylesSet = 'default:' + baseUrlJsEditor['js'] + 'default_styles.js';
 		CKEDITOR.config.templates_files = [baseUrlJsEditor['js'] + 'default_templates.js']; 

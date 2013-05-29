@@ -9,6 +9,7 @@
 		if(isset($rss_for_layout) && !empty($rss_for_layout)) { echo "\t\t"; echo '<link rel="alternate" type="application/rss+xml" title="'.$rss_for_layout['title'].'" href="'.$rss_for_layout['link'].'" />'; echo "\n"; }
 		?>
 		<meta name="generator" content="<?php echo GENERATOR_META; ?>" /><?php //ATTENTION VOUS NE POUVEZ PAS SUPPRIMER CETTE BALISE ?>		
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<?php
 		/////////////
 		//   CSS   //
@@ -32,7 +33,11 @@
 			'layout/'.$websiteParams['tpl_layout'].'/colors/'.trim($websiteParams['tpl_code']).'/default',
 			'layout/'.$websiteParams['tpl_layout'].'/colors/'.trim($websiteParams['tpl_code']).'/body',
 			'layout/'.$websiteParams['tpl_layout'].'/colors/'.trim($websiteParams['tpl_code']).'/buttons',
+<<<<<<< HEAD
 			'layout/'.$websiteParams['tpl_layout'].'/theme_responsive',
+=======
+			'layout/'.$websiteParams['tpl_layout'].'/theme-responsive',
+>>>>>>> Commit MAI
 			'layout/'.$websiteParams['tpl_layout'].'/font-awsome'
 		);			
 		echo $helpers['Html']->css($css);		
@@ -89,7 +94,10 @@
 			'layout/'.$websiteParams['tpl_layout'].'/scrollToTop',
 			'layout/'.$websiteParams['tpl_layout'].'/browserSelector',
 			'layout/'.$websiteParams['tpl_layout'].'/theme',
+<<<<<<< HEAD
 			'layout/'.$websiteParams['tpl_layout'].'/fittext/jquery.fittext'
+=======
+>>>>>>> Commit MAI
 		);
 		echo $helpers['Html']->js($js);		
 		if(!empty($websiteParams['js_hack'])) { ?><script type="text/javascript"><?php echo $websiteParams['js_hack']; ?></script><?php }

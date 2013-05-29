@@ -101,7 +101,7 @@ class TextComponent extends Object {
 			return array(
 				'j' => $dateTmp[0],	
 				'm' => $dateTmp[1],	
-				'a' => $dateTmp[2]
+				'a' => $dateTmp[2]		
 			);	
 		} else if($retour == 'i') {
 			return array(
@@ -109,7 +109,58 @@ class TextComponent extends Object {
 				$dateTmp[1],
 				$dateTmp[2]
 			);
+		} else if($retour == 'us') {
+			return $dateTmp[2].'-'.$dateTmp[1].'-'.$dateTmp[0];
+		} else if($retour == 'fr') {
+			return $dateTmp[2].'.'.$dateTmp[1].'.'.$dateTmp[0];
 		}
+	}
+	
+/**
+ * fuction get_first_day_of_month
+ *
+ * fonction qui permet de recuperer la date du premier jour du mois
+ * 
+ * @param integer $iMonth	mois en cours
+ * @param integer $iYear	année
+ * @return date
+ * @access public
+ * @author Az
+ * @version 0.1 - 09/03/2011 by AB
+ */
+	function get_first_day_of_month($iMonth = '', $iYear = ''){
+		
+		if(empty($iMonth)) $iMonth = date('m');
+		if(empty($iYear)) $iYear = date('Y');
+		
+		$tTimeMonth = mktime(0, 0, 0, $iMonth, 1, $iYear);
+		$dFirstDayMonth = date('Y-m-d', $tTimeMonth);
+		
+		return $dFirstDayMonth;
+		
+	}
+
+/**
+ * function get_last_day_of_month
+ *
+ * fonction qui permet de recuperer le dernier jour du mois
+ * @param integer $iMonth	mois en cours
+ * @param integer $iYear	année
+ * @return date
+ * @access public
+ * @author Az
+ * @version 0.1 - 09/03/2011 by AB
+ */	
+	function get_last_day_of_month($iMonth = '', $iYear = ''){
+		
+		if(empty($iMonth)) $iMonth = date('m');
+		if(empty($iYear)) $iYear = date('Y');
+		
+		//recuperation du dernier jour du mois
+		$tTimeMonth = mktime(0, 0, 0, $iMonth, 1, $iYear);
+		$dLastDayMonth = date('Y-m-t', $tTimeMonth);
+		
+		return $dLastDayMonth;
 	}
 	
 /**

@@ -16,6 +16,7 @@ class Model extends Object {
 	public $schema = array(); //Shéma de la table
 	public $queryExecutionResult = false; //indique si la requete de save s'est bien passée 
 	public $refererUrl = ''; //Cette variable va contenir l'url de la page appelante
+	public $manageWebsiteId = true; //Permet d'éviter de prendr en compte la recherche basée sur le champ website_id
     
 /**
  * Constructeur de la classe
@@ -318,7 +319,7 @@ class Model extends Object {
 		///////////////////////////////////////////////////////////
 		//   CONDITIONS DE RECHERCHE SUR L'IDENTIFIANT DU SITE   //
 		//Si dans le shema de la table on a une colonne website_id		
-		if(in_array('website_id', $shema) && get_class($this) != 'UsersGroupsWebsite') {
+		if($this->manageWebsiteId && in_array('website_id', $shema) && get_class($this) != 'UsersGroupsWebsite') {
 		
 			//Si on a pas de conditions de recherche particulières
 			if(!isset($req['conditions'])) { $req['conditions']['website_id'] = CURRENT_WEBSITE_ID; }
@@ -513,7 +514,7 @@ class Model extends Object {
 		$sql = "DELETE FROM {$this->table} WHERE {$this->primaryKey} = {$value}";
 		$this->primaryKey = $oldPrimaryKey;		
 		
-		if(isset($this->searches_params)) { $this->delete_search_index($id); } //Suppression de l'index dans la recherche
+		//if(isset($this->searches_params)) { $this->delete_search_index($id); } //Suppression de l'index dans la recherche
 		
 		//return $this->db->query($sql);
 		return $this->query($sql);
@@ -719,32 +720,33 @@ class Model extends Object {
 /**
  * Cette fonction permet d'afficher le shéma d'une table
  *
- * @return 	array Tableau contenant les colonnes de la table
+ * @param 	varchar $table Nom de la table dont on souhaite récupérer le shéma (Par défaut $this->table sera utilisé)
+ * @return 	array 	Tableau contenant les colonnes de la table
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 12/03/2012 by FI
  * @version 0.2 - 07/09/2012 by FI - Test pour vérifier si la table existe dans le cas de model sans table
+ * @version 0.3 - 08/05/2013 by FI - Modification de la fonction pour y intégrer la possibilité de récupérer le shéma d'une table passée en paramètre
  */
-	function shema() {		
+	function shema($table = null) {		
 		
 		$shema = array();
-		if($this->exist_table_in_database($this->table) == 1) {			
+		if(!isset($table)) { $table = $this->table; }
+		if($this->exist_table_in_database($table) == 1) {			
 		
 			$cacheFolder 	= TMP.DS.'cache'.DS.'models'.DS;
-			$cacheFile 		= $this->table;	
-		
+			$cacheFile 		= $table;			
 			$shema = Cache::exists_cache_file($cacheFolder, $cacheFile);
 			
 			if(!$shema) { 
 			
-				$sql = "SHOW COLUMNS FROM `".$this->table.'`;';			
+				$sql = "SHOW COLUMNS FROM `".$table.'`;';			
 				$result = $this->query($sql, true);
 				foreach($result as $k => $v) { $shema[] = $v['Field']; }
 				
 				Cache::create_cache_file($cacheFolder, $cacheFile, $shema);
 			}
-		}
-		
+		}		
 		return $shema;
 	}
 	

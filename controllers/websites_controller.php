@@ -75,13 +75,31 @@ class WebsitesController extends AppController {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 23/03/2012 by FI
+ * @version 0.2 - 08/05/2013 by FI - Amélioration de la fonction de suppression d'un site pour prendre en compte l'ensemble des tables contenant une colonne website_id
  */
 	function backoffice_delete($id, $redirect = true) {
 	
 		$parentDelete = parent::backoffice_delete($id, false); //On fait appel à la fonction d'édition parente
 		if($parentDelete) {
+	
+			//On fait le parcours de l'ensemble des table de la base de données
+			foreach($this->Website->table_list_in_database() as $table) {
+				
+				//Pour chacune d'elles on va récupérer le shéma et vérifier si la colonne website_id est présente
+				$tableShema = $this->Website->shema($table); //Récupération du shéma de la table $table
+				//On sort de la boule les tables qui commencent par _ (généralement des tables de backup ou de test)
+				//On check si website_id est présent dans le shéma
+				if(substr($table, 0, 1) != '_' && in_array('website_id', $tableShema)) {
+		
+					$modelName = Inflector::classify($table); //Transformation du nom de la table en nom de modèle grâce à Inflector
+					$modelName = str_replace('Plugins', '', $modelName); //Cas des plugins on supprime le mot Plugins car il est présent dans le nom de la table
+					$this->loadModel($modelName); //Chargement du modèle
+					$this->$modelName->deleteByName('website_id', $id); //Suppression des données
+					$this->unloadModel($modelName); //Déchargement du modèle
+				}
+			}
 						
-			//Suppression des catégories
+			/*//Suppression des catégories
 			$this->loadModel('Category');
 			$this->Category->deleteByName('website_id', $id);
 			$this->unloadModel('Category');
@@ -124,7 +142,7 @@ class WebsitesController extends AppController {
 			//Suppression de l'association entre le site et les groupes d'utilisateurs
 			$this->loadModel('UsersGroupsWebsite');
 			$this->UsersGroupsWebsite->deleteByName('website_id', $id);
-			$this->unloadModel('UsersGroupsWebsite');
+			$this->unloadModel('UsersGroupsWebsite');*/
 			
 			$this->_edit_session();
 			

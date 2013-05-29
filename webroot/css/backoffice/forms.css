@@ -51,7 +51,7 @@ input.file{float:left;margin:0 6px 0 0;z-index:99;height:15px}
 div.btn-upload{display:inline-block;position:relative;top:-1px;background:url(../../img/backoffice/browse.gif) no-repeat right top transparent}
 div.datepicker{width:228px}
 input.datepicker{width:64px}
-.ui-datepicker{margin:5px 0 0}
+.ui-datepicker{margin:5px 0 0;z-index:200!important;}
 .ui-datepicker-calendar{background:#fff;margin:-1px 0 0}
 .ui-datepicker-calendar thead{background:url(../../img/backoffice/back-breadcrumbs.gif) repeat-x left top;border-top:0}
 .ui-datepicker-calendar thead th{border-top:0}

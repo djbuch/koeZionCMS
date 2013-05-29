@@ -1,6 +1,21 @@
+<<<<<<< HEAD
 .superbutton.orange {
 	color: #FFFFFF !important;
 	text-shadow: 1px 1px #c8542d;
+=======
+a.superbutton,.inner_main input.superbutton{height:28px;line-height:28px;width:auto;padding:0 13px;margin:0 6px 6px 0;display:inline;float:left;font-size:13px;text-decoration:none;border-radius:4px}
+.inner_main input.superbutton{margin:0 6px 22px 0}
+.ie9 a.superbutton,.ie9 .inner_main input.superbutton{line-height:29px}
+#footer a.superbutton{background:url(../../../img/layout/koezion/superbuttonblack.png) repeat-x center top transparent;text-shadow: 1px 1px #000}
+a.superbuttonh,#footer a.superbuttonh,#footer input.superbuttonh:hover,#footer input.superformh,.inner_main input.superbuttonh{background-position:center -30px}
+
+.btn.orange {
+	color: #FFFFFF !important;
+	text-shadow: 1px 1px #c8542d;
+}
+
+.btnPrimary.orange {
+>>>>>>> Commit MAI
 	background-color: #d65f34;
 	background-image: -moz-linear-gradient(top, #f6854d, #d65f34);
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f6854d), to(#d65f34));
@@ -12,22 +27,38 @@
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
+<<<<<<< HEAD
 .superbutton.orange:hover, .superbutton.orange:focus {
+=======
+.btnPrimary.orange:hover, .btnPrimary.orange:focus {
+>>>>>>> Commit MAI
 	background-color: #d65f34;
 	*background-color: #d65f34;
 }
 
+<<<<<<< HEAD
 .superbutton.orange:active, .superbutton.orange.active {
 	background-color: #d45b32;
 }
 
 
 .superbutton.black{
+=======
+.btnPrimary.orange:active, .btnPrimary.orange.active {
+	background-color: #d45b32;
+}
+
+.btn.black{
+>>>>>>> Commit MAI
 	color: #DFDFDF !important;
 	text-shadow: 1px 1px #000;
 }
 
+<<<<<<< HEAD
 .superbutton.black {
+=======
+.btnPrimary.black {
+>>>>>>> Commit MAI
 	background-color: #0e0e0e;
 	background-image: -moz-linear-gradient(top, #252525, #0e0e0e);
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#252525), to(#0e0e0e));
@@ -39,22 +70,41 @@
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
+<<<<<<< HEAD
 .superbutton.black:hover,
 .superbutton.black:focus {
+=======
+.btnPrimary.black:hover,
+.btnPrimary.black:focus {
+>>>>>>> Commit MAI
 	background-color: #0e0e0e;
 	*background-color: #0e0e0e;
 }
 
+<<<<<<< HEAD
 .superbutton.black:active,
 .superbutton.black.active {
+=======
+.btnPrimary.black:active,
+.btnPrimary.black.active {
+>>>>>>> Commit MAI
 	background-color: #242424;
 }
 
 
 
+<<<<<<< HEAD
 .superbutton.white {
 	color: #7A7A7A !important;
 	text-shadow: 1px 1px #fff;
+=======
+.btn.white {
+	color: #7A7A7A !important;
+	text-shadow: 1px 1px #fff;
+}
+
+.btnPrimary.white {
+>>>>>>> Commit MAI
 	background-color: #cecece;
 	background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
@@ -66,11 +116,16 @@
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
+<<<<<<< HEAD
 .superbutton.white:hover, .superbutton.white:focus {
+=======
+.btnPrimary.white:hover, .btnPrimary.white:focus {
+>>>>>>> Commit MAI
 	background-color: #e6e6e6;
 	*background-color: #e6e6e6;
 }
 
+<<<<<<< HEAD
 .superbutton.white:active, .superbutton.white.active {
 	background-color: #e6e6e6;
 }
@@ -79,6 +134,18 @@
 .superbutton.bronze {
 	color: #FFFFFF !important;
 	text-shadow: 1px 1px #3d3638;
+=======
+.btnPrimary.white:active, .btnPrimary.white.active {
+	background-color: #e6e6e6;
+}
+
+.btn.bronze {
+	color: #FFFFFF !important;
+	text-shadow: 1px 1px #3d3638;
+}
+
+.btnPrimary.bronze {
+>>>>>>> Commit MAI
 	background-color: #43363b;
 	background-image: -moz-linear-gradient(top, #624f57, #43363b);
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#624f57), to(#43363b));
@@ -90,11 +157,16 @@
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
+<<<<<<< HEAD
 .superbutton.bronze:hover, .superbutton.bronze:focus {
+=======
+.btnPrimary.bronze:hover, .btnPrimary.bronze:focus {
+>>>>>>> Commit MAI
 	background-color: #43363b;
 	*background-color: #43363b;
 }
 
+<<<<<<< HEAD
 .superbutton.bronze:active, .superbutton.bronze.active {
 	background-color: #43363b;
 }
@@ -103,6 +175,18 @@
 .superbutton.brown {
 	color: #FFFFFF !important;
 	text-shadow: 1px 1px #3d3638;
+=======
+.btnPrimary.bronze:active, .btnPrimary.bronze.active {
+	background-color: #43363b;
+}
+
+.btn.brown {
+	color: #FFFFFF !important;
+	text-shadow: 1px 1px #3d3638;
+}
+
+.btnPrimary.brown {
+>>>>>>> Commit MAI
 	background-color: #4a413e;
 	background-image: -moz-linear-gradient(top, #6c5f5b, #4a413e);
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#6c5f5b), to(#4a413e));
@@ -114,20 +198,37 @@
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
+<<<<<<< HEAD
 .superbutton.brown:hover, .superbutton.brown:focus {
+=======
+.btnPrimary.brown:hover, .btnPrimary.brown:focus {
+>>>>>>> Commit MAI
 	background-color: #4a413e;
 	*background-color: #595959;
 }
 
+<<<<<<< HEAD
 .superbutton.brown:active, .superbutton.brown.active {
+=======
+.btnPrimary.brown:active, .btnPrimary.brown.active {
+>>>>>>> Commit MAI
 	background-color: #4a413e;
 }
 
 
+<<<<<<< HEAD
 
 .superbutton.green {
 	color: #ffffff !important;
 	text-shadow: 1px 1px #374936;
+=======
+.btn.green {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #374936;
+}
+
+.btnPrimary.green {
+>>>>>>> Commit MAI
 	background-color: #40533f;
 	background-image: -moz-linear-gradient(top, #597458, #40533f);
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#597458), to(#40533f));
@@ -139,11 +240,16 @@
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
+<<<<<<< HEAD
 .superbutton.green:hover, .superbutton.green:focus {
+=======
+.btnPrimary.green:hover, .btnPrimary.green:focus {
+>>>>>>> Commit MAI
 	background-color: #40533f;
 	*background-color: #40533f;
 }
 
+<<<<<<< HEAD
 .superbutton.green:active, .superbutton.green.active {
 	background-color: #3a4b39;
 }
@@ -152,6 +258,18 @@
 .superbutton.purple {
 	color: #ffffff !important;
 	text-shadow: 1px 1px #352d42;
+=======
+.btnPrimary.green:active, .btnPrimary.green.active {
+	background-color: #3a4b39;
+}
+
+.btn.purple {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #352d42;
+}
+
+.btnPrimary.purple {
+>>>>>>> Commit MAI
 	background-color: #352d42;
 	background-image: -moz-linear-gradient(top, #4c405f, #352d42);
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#4c405f), to(#352d42));
@@ -163,11 +281,16 @@
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
+<<<<<<< HEAD
 .superbutton.purple:hover, .superbutton.purple:focus {
+=======
+.btnPrimary.purple:hover, .btnPrimary.purple:focus {
+>>>>>>> Commit MAI
 	background-color: #352d42;
 	*background-color: #352d42;
 }
 
+<<<<<<< HEAD
 .superbutton.purple:active, .superbutton.purple.active {
 	background-color: #2e273a;
 }
@@ -176,6 +299,18 @@
 .superbutton.teal {
 	color: #ffffff !important;
 	text-shadow: 1px 1px #40665e;
+=======
+.btnPrimary.purple:active, .btnPrimary.purple.active {
+	background-color: #2e273a;
+}
+
+.btn.teal {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #40665e;
+}
+
+.btnPrimary.teal {
+>>>>>>> Commit MAI
 	background-color: #40665e;
 	background-image: -moz-linear-gradient(top, #5e9589, #40665e);
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#5e9589), to(#40665e));
@@ -187,11 +322,16 @@
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
+<<<<<<< HEAD
 .superbutton.teal:hover, .superbutton.teal:focus {
+=======
+.btnPrimary.teal:hover, .btnPrimary.teal:focus {
+>>>>>>> Commit MAI
 	background-color: #40665e;
 	*background-color: #40665e;
 }
 
+<<<<<<< HEAD
 .superbutton.teal:active, .superbutton.teal.active {
 	background-color: #365a53;
 }
@@ -200,6 +340,18 @@
 .superbutton.coral {
 	color: #ffffff !important;
 	text-shadow: 1px 1px #44a6ac;
+=======
+.btnPrimary.teal:active, .btnPrimary.teal.active {
+	background-color: #365a53;
+}
+
+.btn.coral {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #44a6ac;
+}
+
+.btnPrimary.coral {
+>>>>>>> Commit MAI
 	background-color: #44a6ac;
 	background-image: -moz-linear-gradient(top, #62ced1, #44a6ac);
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#62ced1), to(#44a6ac));
@@ -211,11 +363,16 @@
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
+<<<<<<< HEAD
 .superbutton.coral:hover, .superbutton.coral:focus {
+=======
+.btnPrimary.coral:hover, .btnPrimary.coral:focus {
+>>>>>>> Commit MAI
 	background-color: #44a6ac;
 	*background-color: #44a6ac;
 }
 
+<<<<<<< HEAD
 .superbutton.coral:active, .superbutton.coral.active {
 	background-color: #3f9aa0;
 }
@@ -224,6 +381,18 @@
 .superbutton.dentist {
 	color: #ffffff !important;
 	text-shadow: 1px 1px #8ca48b;
+=======
+.btnPrimary.coral:active, .btnPrimary.coral.active {
+	background-color: #3f9aa0;
+}
+
+.btn.dentist {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #8ca48b;
+}
+
+.btnPrimary.dentist {
+>>>>>>> Commit MAI
 	background-color: #8fa68e;
 	background-image: -moz-linear-gradient(top, #ccd9cc, #8fa68e);
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ccd9cc), to(#8fa68e));
@@ -235,11 +404,16 @@
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
+<<<<<<< HEAD
 .superbutton.dentist:hover, .superbutton.dentist:focus {
+=======
+.btnPrimary.dentist:hover, .btnPrimary.dentist:focus {
+>>>>>>> Commit MAI
 	background-color: #8fa68e;
 	*background-color: #8fa68e;
 }
 
+<<<<<<< HEAD
 .superbutton.dentist:active, .superbutton.dentist.active {
 	background-color: #869a85;
 }
@@ -248,6 +422,18 @@
 .superbutton.friendly_grey {
 	color: #ffffff !important;
 	text-shadow: 1px 1px #819792;
+=======
+.btnPrimary.dentist:active, .btnPrimary.dentist.active {
+	background-color: #869a85;
+}
+
+.btn.friendly_grey {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #819792;
+}
+
+.btnPrimary.friendly_grey {
+>>>>>>> Commit MAI
 	background-color: #819792;
 	background-image: -moz-linear-gradient(top, #c7d2cf, #819792);
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#c7d2cf), to(#819792));
@@ -259,11 +445,16 @@
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
+<<<<<<< HEAD
 .superbutton.friendly_grey:hover, .superbutton.friendly_grey:focus {
+=======
+.btnPrimary.friendly_grey:hover, .btnPrimary.friendly_grey:focus {
+>>>>>>> Commit MAI
 	background-color: #819792;
 	*background-color: #819792;
 }
 
+<<<<<<< HEAD
 .superbutton.friendly_grey:active, .superbutton.friendly_grey.active {
 	background-color: #788c88;
 }
@@ -272,6 +463,18 @@
 .superbutton.hospital_green {
 	color: #FFFFFF !important;
 	text-shadow: 1px 1px #649873;
+=======
+.btnPrimary.friendly_grey:active, .btnPrimary.friendly_grey.active {
+	background-color: #788c88;
+}
+
+.btn.hospital_green {
+	color: #FFFFFF !important;
+	text-shadow: 1px 1px #649873;
+}
+
+.btnPrimary.hospital_green {
+>>>>>>> Commit MAI
 	background-color: #649873;
 	background-image: -moz-linear-gradient(top, #99cdae, #649873);
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#99cdae), to(#649873));
@@ -283,11 +486,16 @@
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
+<<<<<<< HEAD
 .superbutton.hospital_green:hover, .superbutton.hospital_green:focus {
+=======
+.btnPrimary.hospital_green:hover, .btnPrimary.hospital_green:focus {
+>>>>>>> Commit MAI
 	background-color: #649873;
 	*background-color: #649873;
 }
 
+<<<<<<< HEAD
 .superbutton.hospital_green:active, .superbutton.hospital_green.active {
 	background-color: #608c6c;
 }
@@ -296,6 +504,18 @@
 .superbutton.navy {
 	color: #ffffff !important;
 	text-shadow: 1px 1px #36434a;
+=======
+.btnPrimary.hospital_green:active, .btnPrimary.hospital_green.active {
+	background-color: #608c6c;
+}
+
+.btn.navy {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #36434a;
+}
+
+.btnPrimary.navy {
+>>>>>>> Commit MAI
 	background-color: #36434a;
 	background-image: -moz-linear-gradient(top, #5b6f7b, #36434a);
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#5b6f7b), to(#36434a));
@@ -307,11 +527,16 @@
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
+<<<<<<< HEAD
 .superbutton.navy:hover, .superbutton.navy:focus {
+=======
+.btnPrimary.navy:hover, .btnPrimary.navy:focus {
+>>>>>>> Commit MAI
 	background-color: #36434a;
 	*background-color: #36434a;
 }
 
+<<<<<<< HEAD
 .superbutton.navy:active, .superbutton.navy.active {
 	background-color: #323c41;
 }
@@ -320,6 +545,18 @@
 .superbutton.neon {
 	color: #FFFFFF !important;
 	text-shadow: 1px 1px #128ece;
+=======
+.btnPrimary.navy:active, .btnPrimary.navy.active {
+	background-color: #323c41;
+}
+
+.btn.neon {
+	color: #FFFFFF !important;
+	text-shadow: 1px 1px #128ece;
+}
+
+.btnPrimary.neon {
+>>>>>>> Commit MAI
 	background-color: #128ece;
 	background-image: -moz-linear-gradient(top, #1ac0e4, #128ece);
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#1ac0e4), to(#128ece));
@@ -331,11 +568,16 @@
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
+<<<<<<< HEAD
 .superbutton.neon:hover, .superbutton.neon:focus {
+=======
+.btnPrimary.neon:hover, .btnPrimary.neon:focus {
+>>>>>>> Commit MAI
 	background-color: #128ece;
 	*background-color: #128ece;
 }
 
+<<<<<<< HEAD
 .superbutton.neon:active, .superbutton.neon.active {
 	background-color: #1088c6;
 }
@@ -344,6 +586,18 @@
 .superbutton.ocean {
 	color: #ffffff !important;
 	text-shadow: 1px 1px #284250;
+=======
+.btnPrimary.neon:active, .btnPrimary.neon.active {
+	background-color: #1088c6;
+}
+
+.btn.ocean {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #284250;
+}
+
+.btnPrimary.ocean {
+>>>>>>> Commit MAI
 	background-color: #284250;
 	background-image: -moz-linear-gradient(top, #44687b, #284250);
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#44687b), to(#284250));
@@ -355,11 +609,16 @@
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
+<<<<<<< HEAD
 .superbutton.ocean:hover, .superbutton.ocean:focus {
+=======
+.btnPrimary.ocean:hover, .btnPrimary.ocean:focus {
+>>>>>>> Commit MAI
 	background-color: #284250;
 	*background-color: #284250;
 }
 
+<<<<<<< HEAD
 .superbutton.ocean:active, .superbutton.ocean.active {
 	background-color: #233c49;
 }
@@ -368,6 +627,18 @@
 .superbutton.olive {
 	color: #ffffff !important;
 	text-shadow: 1px 1px #6c6e4b;
+=======
+.btnPrimary.ocean:active, .btnPrimary.ocean.active {
+	background-color: #233c49;
+}
+
+.btn.olive {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #6c6e4b;
+}
+
+.btnPrimary.olive {
+>>>>>>> Commit MAI
 	background-color: #6c6e4b;
 	background-image: -moz-linear-gradient(top, #a0a277, #6c6e4b);
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#a0a277), to(#6c6e4b));
@@ -379,11 +650,16 @@
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
+<<<<<<< HEAD
 .superbutton.olive:hover, .superbutton.olive:focus {
+=======
+.btnPrimary.olive:hover, .btnPrimary.olive:focus {
+>>>>>>> Commit MAI
 	background-color: #6c6e4b;
 	*background-color: #6c6e4b;
 }
 
+<<<<<<< HEAD
 .superbutton.olive:active, .superbutton.olive.active {
 	background-color: #646646;
 }
@@ -392,6 +668,18 @@
 .superbutton.pink {
 	color: #ffffff !important;
 	text-shadow: 1px 1px #a35eaf;
+=======
+.btnPrimary.olive:active, .btnPrimary.olive.active {
+	background-color: #646646;
+}
+
+.btn.pink {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #a35eaf;
+}
+
+.btnPrimary.pink {
+>>>>>>> Commit MAI
 	background-color: #a35eaf;
 	background-image: -moz-linear-gradient(top, #da93e0, #a35eaf);
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#da93e0), to(#a35eaf));
@@ -403,11 +691,16 @@
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
+<<<<<<< HEAD
 .superbutton.pink:hover, .superbutton.pink:focus {
+=======
+.btnPrimary.pink:hover, .btnPrimary.pink:focus {
+>>>>>>> Commit MAI
 	background-color: #a35eaf;
 	*background-color: #a35eaf;
 }
 
+<<<<<<< HEAD
 .superbutton.pink:active, .superbutton.pink.active {
 	background-color: #9759a2;
 }
@@ -416,6 +709,18 @@
 .superbutton.red {
 	color: #ffffff !important;
 	text-shadow: 1px 1px #a63535;
+=======
+.btnPrimary.pink:active, .btnPrimary.pink.active {
+	background-color: #9759a2;
+}
+
+.btn.red {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #a63535;
+}
+
+.btnPrimary.red {
+>>>>>>> Commit MAI
 	background-color: #a63535;
 	background-image: -moz-linear-gradient(top, #d54444, #a63535);
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#d54444), to(#a63535));
@@ -427,11 +732,16 @@
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
+<<<<<<< HEAD
 .superbutton.red:hover, .superbutton.red:focus {
+=======
+.btnPrimary.red:hover, .btnPrimary.red:focus {
+>>>>>>> Commit MAI
 	background-color: #a63535;
 	*background-color: #a63535;
 }
 
+<<<<<<< HEAD
 .superbutton.red:active, .superbutton.red.active {
 	background-color: #962727;
 }
@@ -440,6 +750,18 @@
 .superbutton.selen {
 	color: #ffffff !important;
 	text-shadow: 1px 1px #a8aa21;
+=======
+.btnPrimary.red:active, .btnPrimary.red.active {
+	background-color: #962727;
+}
+
+.btn.selen {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #a8aa21;
+}
+
+.btnPrimary.selen {
+>>>>>>> Commit MAI
 	background-color: #bfc517;
 	background-image: -moz-linear-gradient(top, #e6e823, #bfc517);
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#e6e823), to(#bfc517));
@@ -451,11 +773,16 @@
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
+<<<<<<< HEAD
 .superbutton.selen:hover, .superbutton.selen:focus {
+=======
+.btnPrimary.selen:hover, .btnPrimary.selen:focus {
+>>>>>>> Commit MAI
 	background-color: #bfc517;
 	*background-color: #bfc517;
 }
 
+<<<<<<< HEAD
 .superbutton.selen:active, .superbutton.selen.active {
 	background-color: #b7bd18;
 }
@@ -464,6 +791,18 @@
 .superbutton.soft_green {
 	color: #ffffff !important;
 	text-shadow: 1px 1px #90a850;
+=======
+.btnPrimary.selen:active, .btnPrimary.selen.active {
+	background-color: #b7bd18;
+}
+
+.btn.soft_green {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #90a850;
+}
+
+.btnPrimary.soft_green {
+>>>>>>> Commit MAI
 	background-color: #90a850;
 	background-image: -moz-linear-gradient(top, #cddb82, #90a850);
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#cddb82), to(#90a850));
@@ -475,11 +814,16 @@
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
+<<<<<<< HEAD
 .superbutton.soft_green:hover, .superbutton.soft_green:focus {
+=======
+.btnPrimary.soft_green:hover, .btnPrimary.soft_green:focus {
+>>>>>>> Commit MAI
 	background-color: #90a850;
 	*background-color: #90a850;
 }
 
+<<<<<<< HEAD
 .superbutton.soft_green:active, .superbutton.soft_green.active {
 	background-color: #88a049;
 }
@@ -488,6 +832,18 @@
 .superbutton.soft_teal {
 	color: #ffffff !important;
 	text-shadow: 1px 1px #6b9f93;
+=======
+.btnPrimary.soft_green:active, .btnPrimary.soft_green.active {
+	background-color: #88a049;
+}
+
+.btn.soft_teal {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #6b9f93;
+}
+
+.btnPrimary.soft_teal {
+>>>>>>> Commit MAI
 	background-color: #92c9bd;
 	background-image: -moz-linear-gradient(top, #cceae3, #92c9bd);
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#cceae3), to(#92c9bd));
@@ -499,11 +855,16 @@
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
+<<<<<<< HEAD
 .superbutton.soft_teal:hover, .superbutton.soft_teal:focus {
+=======
+.btnPrimary.soft_teal:hover, .btnPrimary.soft_teal:focus {
+>>>>>>> Commit MAI
 	background-color: #92c9bd;
 	*background-color: #92c9bd;
 }
 
+<<<<<<< HEAD
 .superbutton.soft_teal:active, .superbutton.soft_teal.active {
 	background-color: #8cc3b7;
 }
@@ -512,6 +873,18 @@
 .superbutton.yellow {
 	color: #ffffff !important;
 	text-shadow: 1px 1px #d4ae00;
+=======
+.btnPrimary.soft_teal:active, .btnPrimary.soft_teal.active {
+	background-color: #8cc3b7;
+}
+
+.btn.yellow {
+	color: #ffffff !important;
+	text-shadow: 1px 1px #d4ae00;
+}
+
+.btnPrimary.yellow {
+>>>>>>> Commit MAI
 	background-color: #edc72e;
 	background-image: -moz-linear-gradient(top, #ffe932, #edc72e);
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffe932), to(#edc72e));
@@ -523,12 +896,20 @@
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
+<<<<<<< HEAD
 .superbutton.yellow:hover, .superbutton.yellow:focus {
+=======
+.btnPrimary.yellow:hover, .btnPrimary.yellow:focus {
+>>>>>>> Commit MAI
 	background-color: #edc72e;
 	*background-color: #edc72e;
 }
 
+<<<<<<< HEAD
 .superbutton.yellow:active, .superbutton.yellow.active {
+=======
+.btnPrimary.yellow:active, .btnPrimary.yellow.active {
+>>>>>>> Commit MAI
 	background-color: #e0bb28;
 }
 
@@ -539,11 +920,18 @@
 
 
 
+<<<<<<< HEAD
 
 /*****************************************************/
 /* Cette partie est à supprimer dès la fin des tests */
 /*****************************************************/
 /*
+=======
+/*****************************************************/
+/* Cette partie est à supprimer dès la fin des tests */
+/*****************************************************/
+
+>>>>>>> Commit MAI
 a.superbutton.orange{color:#fff;background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -1px transparent;border:1px solid #d65f34;box-shadow:inset 0 1px #faaa82;text-shadow: 1px 1px #c8542d}
 a.superbutton.orange:hover,a.superbutton.orange.selected{background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -31px transparent}
 a.superbutton.black{color:#dfdfdf;background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -61px transparent;border:1px solid #000;box-shadow:inset 0 1px 1px #474747;text-shadow: 1px 1px #000}
@@ -587,5 +975,9 @@ a.superbutton.soft_green:hover,a.superbutton.soft_green.selected{background:url(
 a.superbutton.soft_teal{color:#fff;background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -1321px transparent;border:1px solid #92c9bd;box-shadow:inset 0 1px 1px #e2f6f1;text-shadow: 1px 1px #6b9f93}
 a.superbutton.soft_teal:hover,a.superbutton.soft_teal.selected{background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -1350px transparent}
 a.superbutton.yellow{color:#fff;background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -1381px transparent;border:1px solid #edc72e;box-shadow:inset 0 1px 1px #fff49c;text-shadow: 1px 1px #d4ae00}
+<<<<<<< HEAD
 a.superbutton.yellow:hover,a.superbutton.yellow.selected{background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -1410px transparent}
 */
+=======
+a.superbutton.yellow:hover,a.superbutton.yellow.selected{background:url(../../../img/layout/koezion/superbutton.png) repeat-x center -1410px transparent}
+>>>>>>> Commit MAI

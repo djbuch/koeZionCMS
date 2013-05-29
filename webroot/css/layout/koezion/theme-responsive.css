@@ -1,0 +1,337 @@
+/* Général */
+
+#footer {
+	padding:16px 33px; /* Padding corrigé pour éviter une répartition inégale des widgets */
+}
+
+#footer .gs_3 {
+	float: right;
+}
+
+#logo img {
+	max-width: 100%;
+	height: auto !important;
+}
+
+.search {
+	position: relative;
+	z-index: 997;
+}
+
+.container_omega img {
+	max-height: 100% !important;
+	max-width: 100% !important;
+	width: auto;
+	height: auto !important; /* /!\ EN COURS DE TEST /!\ */
+}
+
+.main {
+	margin-bottom: -7px; /* Pour le footer */
+}
+.stripe {
+	margin-top: 13px; /* 7 px de plus pour corriger le footer qui est plus bas */
+}
+
+.focus .gs_3 {
+	margin:0 15px 30px 0;
+}
+
+/* Boutons */
+a.btn {
+  text-decoration: none;
+}
+
+.btn {
+  display: inline-block;
+  *display: inline;
+  /* IE7 inline-block hack */
+
+  *zoom: 1;
+  padding: 4px 12px;
+  margin-bottom: 0;
+  font-size: 1em;
+  line-height: 20px;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 1px solid #cccccc;
+  *border: 0;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  *margin-left: .3em;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+  -moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+}
+
+
+.btn:hover,
+.btn:focus {
+  text-decoration: none;
+  background-position: 0 -15px;
+  -webkit-transition: background-position 0.1s linear;
+  -moz-transition: background-position 0.1s linear;
+  -o-transition: background-position 0.1s linear;
+  transition: background-position 0.1s linear;
+}
+.btn:focus {
+  outline: thin dotted #333;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+.btn.active,
+.btn:active {
+  background-image: none;
+  outline: 0;
+  -webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
+  -moz-box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
+}
+
+
+
+.btnLarge {
+  padding: 11px 19px;
+  font-size: 1.4em;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+
+.btnPrimary {
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+}
+
+/* Bouton Scroll To Top */
+a.scroll-to-top {
+	-moz-border-radius: 50px 50px 0 0;
+	-moz-transition: all 0.3s;
+	-o-transition: all 0.3s;
+	-webkit-border-radius: 50px 50px 0 0;
+	-webkit-transition: all 0.3s;
+	background: #404040;
+	border-radius: 50px 50px 0 0;
+	bottom: 0px;
+	color: white;
+	display: block;
+	height: 9px;
+	opacity: 0;
+	padding: 13px 0 27px;
+	position: fixed;
+	right: 10px;
+	text-align: center;
+	text-decoration: none;
+	transition: all 0.3s;
+	width: 49px;
+	z-index: 9999;
+}
+
+a.scroll-to-top.visible {
+	filter: alpha(opacity=75);
+	opacity: 0.75;
+}
+
+
+/* Thème Responsive */
+@media (min-width: 971px) { 
+
+	.header #menu select.selectnav {
+		display: none;
+	}
+
+	.container_omega .gs_4 {
+		float: right;
+		min-width: 276px;
+	}
+
+	.container_omega.focus {
+		padding-right: 0px;
+	}
+}
+
+@media screen and (max-width: 978px) {
+	#footer .gs_3 {
+		float: left;
+	}
+
+	#footer .gs_4 {
+		width: 353px;
+		height: auto !important;
+	}
+
+	#footer .gs_4 form p {
+		margin-bottom: 0px;
+	}
+
+	#footer #InputEmail {
+		margin-left: 57px;
+		position: relative;
+	}
+}
+
+@media (max-width: 970px) { 
+
+	/* Base */
+
+	.container_alpha.slider{padding:60px 19px 5px;}
+	.header #menu select.selectnav {
+		/* Affichage */
+		display: block;
+		position: relative;
+		margin: 0px auto 0px auto;
+		width: 60%;
+		z-index: 995;
+
+		/* Style - dump du bootstrap.css de la version 2013 de koeZion */
+		border: 1px solid #CCC;
+		background-color: white;
+		height: 30px;
+		line-height: 30px;
+		padding: 4px 6px;
+		margin-bottom: 10px;
+		font-size: 14px;
+		color: #555;
+		-webkit-border-radius: 4px;
+		-moz-border-radius: 4px;
+		border-radius: 4px;
+		vertical-align: middle;
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		cursor: pointer;
+	}
+
+	.header #menu #mainMenu {
+		display: none;
+	}
+
+	a.scroll-to-top.visible {
+		display: none;
+	}
+
+	#menu .search{
+		display: block;
+		float: none;
+		margin: 23px auto 0px auto !important;
+	}
+
+	.container_omega .gs_4 {
+		float: none;
+		position: relative;
+		max-width: 45%;
+		margin: 0 auto 0 auto;
+	}
+	
+	.container_omega.focus {
+		padding-right: 0px;
+	}
+}
+
+@media screen and (max-width: 750px) {
+	.nivo-caption {
+		position: relative !important;
+		width: 100% !important;
+		opacity: 0.9 !important;
+		-moz-opacity: 0.9 !important;
+		filter: alpha(opacity=9) !important;
+		padding: 16px 10px !important;
+	}
+
+	.nivo-caption h3 {
+		padding-top: 0px !important;
+	}
+
+}
+
+@media screen and (max-width: 630px) {
+	.inner_main input[type="text"],
+	.inner_main textarea {
+		width: 86%;
+	}
+
+	.container_omega.focus {
+		padding-right: 32px;
+	}
+}
+
+@media screen and (max-width: 570px) {
+	.focus .gs_3 {
+		width: 100%;
+		margin-right: 0;
+		padding-right: 0;
+		height:auto;	
+		
+	}
+	.focus .gs_3 a.superbutton {position:relative !important;float:right;} 
+
+	.gs_3 {
+		margin: 0px auto 30px auto !important;
+		padding: 50px 17px 0 0;
+		float: none;
+	}
+
+	.container_omega .gs_4 {
+		position: relative;
+		max-width: 70%;
+		margin: 0 auto 0 auto;
+	}
+
+}
+
+@media screen and (max-width: 450px) {
+	.header #menu select.selectnav {
+		width: 75%;
+	}
+
+	.container_omega .gs_4 {
+		max-width: 90%;
+		margin: 0;
+	}
+}
+
+@media screen and (max-width: 400px) {
+	#footer input[type=text] {
+		width: 90%;
+	}
+	#footer input[type=submit] {
+		margin: 5px 15px -20px 10px;
+		width: 90%;
+	}
+	#footer #InputEmail{
+		margin-left: 0px;
+	}
+
+	#footer .gs_4 form p {
+		margin-bottom: 16px;
+	}
+}
+
+@media screen and (max-width: 350px) {
+	.container_omega .gs_4 {
+		position: relative;
+		max-width: 100%;
+		margin: 0px 0px 0px -25px;
+	}
+
+	.sidebar, .inner_main .widget {
+		overflow: visible;
+	}
+}
+
+@media screen and (max-width: 701px) {
+	#footer .gs_3, #footer .gs_4, #footer .gs_5 {
+		padding: 0px;
+		margin: 0 auto 0 auto;
+		max-width: 350px;
+		width: auto;
+		height: auto !important;
+		float: none;
+		background : none !important;
+		text-align: center;
+	}
+
+	/* Marge de 32px au dessus de chaque widget */
+	#footer .gs_3, #footer .gs_4 {
+		margin-top: 32px;
+	}
+}
