@@ -472,7 +472,7 @@ a.scroll-to-top.visible {
 	/* Diminution du padding */
 	.container_gamma,
 	.container_omega {
-		padding-left: 10px;
+		padding-left: 10px !important;
 		padding-right: 10px !important;
 	}
 
