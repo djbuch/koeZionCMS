@@ -9,6 +9,7 @@ _*/
 .settings/
 EXPORT_PDF/
 configs/files/*.ini
+installed
 configs/hooks/*.php
 configs/plugins/
 plugins/
