@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 30/05/2013</name>
+		<num>20130530.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Correction du problème  #26 --> https://github.com/koeZionCMS/koeZionCMS/issues/26</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 16/04/2013</name>
 		<num>20130416.001</num>
 		<supervisor>KoéZionCMS</supervisor>

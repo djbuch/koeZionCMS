@@ -296,6 +296,7 @@ class Model extends Object {
  * @return 	array 	Tableau contenant les éléments récupérés lors de la requête  
  * @version 0.1 - 28/12/2011 by FI
  * @version 0.2 - 02/05/2012 by FI - Mise en place de la conditions de récupérations selon l'identifiant du site
+ * @version 0.3 - 30/05/2012 by FI - Modification de la génération de la condition de recherche pour intégrer l'utilisation de tableau de condition sans index particulier ==> $condition = array('conditions' => array("name LIKE '%...%'"));
  */    
 	public function find($req = array(), $type = PDO::FETCH_ASSOC) {
 		
@@ -364,16 +365,21 @@ class Model extends Object {
 			} else {
 				
 				$cond = array();
-				foreach($req['conditions'] as $k => $v) {
+				foreach($req['conditions'] as $k => $v) {					
 					
-					if(!is_numeric($v)) {
+					//On va échaper les caractères spéciaux
+					//Equivalement de mysql_real_escape_string --> $v = '"'.mysql_escape_string($v).'"';
+					if(!is_numeric($v)) { $v = $this->db->quote($v); }
+					
+					//On va ensuite tester si la clé est une chaine de caractère
+					//On rajoute le nom de la classe devant le nom de la colonne
+					if(is_string($k)) { 
 						
-						$v = $this->db->quote($v); //Equivalement de mysql_real_escape_string
-						//$v = '"'.mysql_escape_string($v).'"'; //Equivalement de mysql_real_escape_string
-					}
-					
-					$k = get_class($this).".".$k; //On rajoute le nom de la classe devant le nom de la colonne
-					$cond[] = "$k=$v";
+						$k = get_class($this).".".$k;
+						$cond[] = "$k=$v";
+						
+					} 
+					else { $cond[] = $v; } //Sinon on rajoute directement la condition dans le tableau
 				}
 				$conditions .= implode(' AND ', $cond);
 			}
