@@ -367,13 +367,15 @@ class Model extends Object {
 				$cond = array();
 				foreach($req['conditions'] as $k => $v) {					
 					
-					//On va échaper les caractères spéciaux
-					//Equivalement de mysql_real_escape_string --> $v = '"'.mysql_escape_string($v).'"';
-					if(!is_numeric($v)) { $v = $this->db->quote($v); }
+					
 					
 					//On va ensuite tester si la clé est une chaine de caractère
 					//On rajoute le nom de la classe devant le nom de la colonne
 					if(is_string($k)) { 
+
+						//On va échaper les caractères spéciaux
+						//Equivalement de mysql_real_escape_string --> $v = '"'.mysql_escape_string($v).'"';
+						if(!is_numeric($v)) { $v = $this->db->quote($v); }
 						
 						$k = get_class($this).".".$k;
 						$cond[] = "$k=$v";

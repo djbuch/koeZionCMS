@@ -5,6 +5,8 @@ $(document).ready(function() {
 		$(this).parent().next('.content').slideToggle(400);
 	});
 	
+	$('.title .hide.default').parent().next('.content').slideUp("fast");
+	
 	// SELECTBOXES
 	$(function() {
         $('.dataTables_length input, select').not("select.multiple").selectmenu({

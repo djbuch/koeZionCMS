@@ -163,17 +163,35 @@ class AppController extends Controller {
     	$tableShema = $this->$modelName->shema();
     	if(in_array('order_by', $tableShema)) { $orderBy = 'order_by ASC, name ASC'; } else { $orderBy = $primaryKey.' ASC'; }
     	
-    	$findConditions = array('fields' => $fields, 'order' => $orderBy);
+    	$findConditions = array('fields' => $fields, 'order' => $orderBy);    	
+    	
+    	if(isset($this->request->data['Search'])) {
+    	
+    		$searchConditions = array();
+    		foreach($this->request->data['Search'] as $k => $v) {
+
+    			if(!empty($v)) {
+
+    				if($k == 'id') { $searchConditions[] = $k."='".$v."'"; }
+    				else { $searchConditions[] = $k." LIKE '%".$v."%'"; }
+    			}
+    		}
+    	
+    		if(count($searchConditions) > 0) { $this->searchConditions = $searchConditions; }
+    	}
     	
     	$datas['displayAll'] = false;
     	if(!isset($this->request->data['displayall'])) { $findConditions['limit'] = $this->pager['limit'].', '.$this->pager['elementsPerPage']; } else { $datas['displayAll'] = true; }	
     	if(isset($order)) { $findConditions['order'] = $order; }
     	
+    	if(isset($this->searchConditions)) { $findConditions['conditions'] = $this->searchConditions; }
     	$datas[$controllerVarName] = $this->$modelName->find($findConditions);    	
     	   	
     	//////////////////////////////////
 		//   GESTION DE LA PAGINATION   //
-    	$this->pager['totalElements'] = $this->$modelName->findCount();
+    	if(isset($findConditions['conditions'])) { $this->pager['totalElements'] = $this->$modelName->findCount($findConditions['conditions']); }
+    	else { $this->pager['totalElements'] = $this->$modelName->findCount(); }
+    	//$this->pager['totalElements'] = $this->$modelName->findCount();
     	if(!$datas['displayAll']) { $this->pager['totalPages'] = ceil($this->pager['totalElements'] / $this->pager['elementsPerPage']); }
     	else { $this->pager['totalPages'] = 1; }
     	//////////////////////////////////

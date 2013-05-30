@@ -4,6 +4,12 @@
 		<?php $this->element('backoffice/listing/'.$this->vars['params']['controllerFileName'].'/title'); ?>		
 		<div class="content">
 			<?php 
+			
+			if(file_exists(ELEMENTS.DS.'backoffice'.DS.'listing'.DS.$this->vars['params']['controllerFileName'].DS.'search.php')) {
+				
+				$this->element('backoffice/listing/'.$this->vars['params']['controllerFileName'].'/search');
+			}
+			
 			if($pager['totalElements'] > 0) { 
 				
 				$formOptions = array('action' => Router::url('backoffice/'.$params['controllerFileName'].'/massive_delete'), 'method' => 'post', 'id' => 'formDelete');
