@@ -33,7 +33,7 @@
 			'layout/'.$websiteParams['tpl_layout'].'/colors/'.trim($websiteParams['tpl_code']).'/default',
 			'layout/'.$websiteParams['tpl_layout'].'/colors/'.trim($websiteParams['tpl_code']).'/body',
 			'layout/'.$websiteParams['tpl_layout'].'/colors/'.trim($websiteParams['tpl_code']).'/buttons',
-			'layout/'.$websiteParams['tpl_layout'].'/theme_responsive',
+			'layout/'.$websiteParams['tpl_layout'].'/theme-responsive',
 			'layout/'.$websiteParams['tpl_layout'].'/font-awsome'
 		);			
 		echo $helpers['Html']->css($css);		

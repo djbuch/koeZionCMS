@@ -22,7 +22,7 @@
 .footer_top_center_right{max-width:980px;width:75%;height:19px;position:absolute;top:6px;right:25px;background:url(../../../img/layout/koezion/footer_center.png) repeat-x 0 0 transparent;z-index:995;zoom:1}
 .footer_top_right{width:25px;height:19px;position:absolute;top:6px;right:0px;background:url(../../../img/layout/koezion/footer_right.png) no-repeat 0 0 transparent;z-index:997;zoom:1}
 
-.footer_left_top{width:22px;height:63%;position:absolute;top:25px;left:0px;background:url(../../../img/layout/koezion/footer_mid.png) repeat-y 0 0 transparent;z-index:995;zoom:1}
+.footer_left_top{width:22px;height:63%;position:absolute;top:24px;left:0px;background:url(../../../img/layout/koezion/footer_mid.png) repeat-y 0 0 transparent;z-index:995;zoom:1}
 .footer_left_bottom{width:22px;height:63%;position:absolute;bottom:66px;left:0px;background:url(../../../img/layout/koezion/footer_mid.png) repeat-y 0 0 transparent;z-index:995;zoom:1}
 .footer_right_top{width:22px;height:63%;position:absolute;top:25px;right:0px;background:url(../../../img/layout/koezion/footer_mid.png) repeat-y -22px 0 transparent;z-index:995;zoom:1}
 .footer_right_bottom{width:22px;height:63%;position:absolute;bottom:66px;right:0px;background:url(../../../img/layout/koezion/footer_mid.png) repeat-y -22px 0 transparent;z-index:995;zoom:1}
