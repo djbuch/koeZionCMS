@@ -105,9 +105,12 @@ class AppController extends Controller {
 				$datas['menuGeneral'] = $this->_get_website_menu($datas['websiteParams']['id']);				
 				//////////////////////////////////////////////////////////
 								
+				//ON VA DEFINIR LA CONSTANTE D'ACCES AUX VUES DU TEMPLATE//
+				define('LAYOUT_VIEWS', WEBROOT.DS.'templates'.DS.$datas['websiteParams']['tpl_layout'].DS.'views');				
+				
 				$this->set($datas);
 			}
-		}
+		}		
 		
 		//////////////////////////////////
 		//   GESTION DE LA PAGINATION   //

@@ -42,11 +42,10 @@
 	</head>
 	<body>
 	
-	
 		<?php if(isset($plugin_ads)) { $this->element(PLUGINS.DS.'ads/views/elements/ads/frontoffice/ads', null, false); } ?>
 		<div class="wrap_content header">
-			<?php $this->element($websiteParams['tpl_layout'].'/header'); ?>
-			<?php $this->element($websiteParams['tpl_layout'].'/menu_general'); ?>		
+			<?php $this->element('header'); ?>
+			<?php $this->element('menu_general'); ?>		
 		</div>
 		<div class="wrap_content">
 			<div class="main png_bg">
@@ -64,8 +63,8 @@
 			</div>
 		</div>
 		<div class="wrap_content">
-			<?php $this->element($websiteParams['tpl_layout'].'/footer'); ?>
-			<?php $this->element($websiteParams['tpl_layout'].'/logout'); ?>
+			<?php $this->element('footer'); ?>
+			<?php $this->element('logout'); ?>
 		</div>				
 		<?php 
 		////////////////////

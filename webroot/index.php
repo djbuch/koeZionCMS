@@ -66,7 +66,7 @@ define('VIEWS', ROOT.DS.'views'); //Chemin vers le dossier des vues
 	define('ELEMENTS', VIEWS.DS.'elements'); //Chemin vers le dossier des élements
 	define('HELPERS', VIEWS.DS.'helpers'); //Chemin vers le dossier des helpers
 	define('LAYOUT', VIEWS.DS.'layout'); //Chemin vers le dossier des layouts
-	define('LAYOUT_VIEWS', VIEWS.DS.'layout_views'); //Chemin vers le dossier des vues layouts
+	//define('LAYOUT_VIEWS', VIEWS.DS.'layout_views'); //Chemin vers le dossier des vues layouts
 ////////////////////////////////////////////////////////////////////////////////////	
 	
 /////////////////////////////////////////////////////////

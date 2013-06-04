@@ -82,7 +82,8 @@ class View extends Object {
     		if(isset($this->vars['websiteParams'])) {
     			
     			$templateLayout = $this->vars['websiteParams']['tpl_layout']; //On récupère le layout courant
-    			$alternativeView = VIEWS.DS.'layout_views'.DS.$templateLayout.DS.$this->controller->request->controller.DS.$this->view.'.php'; //On génère une variable contenant le chemin vers une vue alternative située dans un dossier portant le nom du layout
+    			//$alternativeView = VIEWS.DS.'layout_views'.DS.$templateLayout.DS.$this->controller->request->controller.DS.$this->view.'.php'; //On génère une variable contenant le chemin vers une vue alternative située dans un dossier portant le nom du layout
+    			$alternativeView = LAYOUT_VIEWS.DS.$this->controller->request->controller.DS.$this->view.'.php'; //On génère une variable contenant le chemin vers une vue alternative située dans un dossier portant le nom du layout
     		
 	    		//Si ce fichier n'existe pas on prendra la vue par défaut
     			if(file_exists($alternativeView)) { $view = $alternativeView; }
@@ -133,6 +134,7 @@ class View extends Object {
  * @version 0.3 - 24/09/2012 by FI - Rajout du boolean $inElementsFolder pour indiquer si le dossier de stockage de la vue est dans views
  * @version 0.4 - 17/01/2013 by FI - Modification du chemin de récupération des éléments suite à la modification du chemin de stockage des éléments des layout pour le frontoffice
  * @version 0.5 - 17/01/2013 by FI - Mise en place de hooks permettant de redéfinir le chemin des éléments à la volée (cf fichiers dans le dossier hook)
+ * @version 0.6 - 05/06/2013 by FI - Correction inclusion éléments
  */
     public function element($element, $vars = null, $inElementsFolder = true) {
 
@@ -172,17 +174,24 @@ class View extends Object {
     	//$element .= '.php'; //On rajoute l'extension
     	
     	//pr($element);    	   	
-    	if($inElementsFolder) { 
+    	/*if($inElementsFolder) { 
     		
     		//Si la variable existe (Elle n'existe que pour le front)
     		//Redéfinition du chemin des éléments en fonction du template
     		if(isset($this->vars['websiteParams'])) { $element = ELEMENTS.DS.'layout'.DS.$element.'.php'; }
     		else { $element = ELEMENTS.DS.$element.'.php'; }   		
     		
-    	} else { $element = $element.'.php'; }
+    	} else { $element = $element.'.php'; }*/
     	
+    	$element = $element.'.php';
+    	if(file_exists($element)) { require $element; } //Cas le plus simple on donne tous le chemin de l'élément
+    	else if(isset($this->vars['websiteParams']) && file_exists(LAYOUT_VIEWS.DS.'elements'.DS.$element)) { require LAYOUT_VIEWS.DS.'elements'.DS.$element; } //Chemin d'un élément d'un layout
+    	else if(file_exists(ELEMENTS.DS.$element)) { require ELEMENTS.DS.$element; } //Cas basique
+    	else { require ELEMENTS.DS.'backoffice'.DS.'missing_element.php'; } 
+    	
+    	/*
     	if(!file_exists($element)) { require ELEMENTS.DS.'backoffice'.DS.'missing_element.php'; } //Si le fichier n'existe pas on affiche un message d'erreur 
-    	else { require $element; } //Sinon on le charge
+    	else { require $element; } //Sinon on le charge*/
     }
     
 /**
