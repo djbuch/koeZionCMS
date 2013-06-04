@@ -133,6 +133,7 @@ class View extends Object {
     	//pr($alternativeLayoutFolder);
     	
     	if($alternativeLayoutFolder) { require_once $this->layout.'.php'; }
+    	else if(defined('LAYOUT_VIEWS') && file_exists(LAYOUT_VIEWS.DS.'layout'.DS.$this->layout.'.php')) { require LAYOUT_VIEWS.DS.'layout'.DS.$this->layout.'.php'; } //Chemin d'un élément d'un layout
     	else { require_once VIEWS.DS.'layout'.DS.$this->layout.'.php'; } //On fait l'inclusion du layout par défaut et on affiche la variable dedans
     	$this->rendered = true; //On indique que la vue est rendue   	
     }
@@ -201,7 +202,8 @@ class View extends Object {
     	
     	$element = $element.'.php';
     	if(file_exists($element)) { require $element; } //Cas le plus simple on donne tous le chemin de l'élément
-    	else if(isset($this->vars['websiteParams']) && file_exists(LAYOUT_VIEWS.DS.'elements'.DS.$element)) { require LAYOUT_VIEWS.DS.'elements'.DS.$element; } //Chemin d'un élément d'un layout
+    	//else if(isset($this->vars['websiteParams']) && file_exists(LAYOUT_VIEWS.DS.'elements'.DS.$element)) { require LAYOUT_VIEWS.DS.'elements'.DS.$element; } //Chemin d'un élément d'un layout
+    	else if(defined('LAYOUT_VIEWS') && file_exists(LAYOUT_VIEWS.DS.'elements'.DS.$element)) { require LAYOUT_VIEWS.DS.'elements'.DS.$element; } //Chemin d'un élément d'un layout
     	else if(file_exists(ELEMENTS.DS.$element)) { require ELEMENTS.DS.$element; } //Cas basique
     	else { require ELEMENTS.DS.'backoffice'.DS.'missing_element.php'; } 
     	
