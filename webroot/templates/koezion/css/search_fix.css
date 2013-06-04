@@ -1,0 +1,14 @@
+@media (max-width: 1000px) {
+	.header #menu select.selectnav {
+		width: -moz-calc(100% - 60px) !important;
+		width: -webkit-calc(100% - 60px) !important;
+		width: -o-calc(100% - 60px) !important;
+		width: calc(100% - 60px) !important;
+	}
+}
+
+@media (max-width: 500px) {	
+	.inner_main .container_gamma.breadcrumbs {
+		padding: 5px 20px 9px !important;
+	}
+}

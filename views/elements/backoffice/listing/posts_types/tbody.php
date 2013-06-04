@@ -7,7 +7,7 @@
 			<tr <?php if($displayAll) { echo 'class="sortable" id="ligne_'.$v['id'].'"'; } ?>>
 				<td class="txtcenter xxs2">
 					<?php 
-					if($displayAll) { echo $helpers['Html']->img('backoffice/move.png', array('alt' => _('Déplacer'), 'title' => _('Déplacer'))); }
+					if($displayAll) { echo $helpers['Html']->img('/backoffice/move.png', array('alt' => _('Déplacer'), 'title' => _('Déplacer'))); }
 					else { echo '&nbsp;'; }
 					?>
 				</td>

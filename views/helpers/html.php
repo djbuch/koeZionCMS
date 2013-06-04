@@ -80,8 +80,9 @@ class Html extends BackofficeHtml {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 06/03/2012 by FI
+ * @version 0.2 - 03/06/2013 by TB : dossier "/templates/" par défaut ou "/css" si la chaîne commence par "/"
  */	
-	public function css($css, $inline = false, $minified = false) {	
+	public function css($css, $inline = false, $minified = false, $template = '') {	
 		
 		if($inline) { $this->css = am($this->css, $css); } //Si on ne doit pas charger directement le fichier on le stocke dans la variable de classe
 		else {
@@ -89,9 +90,10 @@ class Html extends BackofficeHtml {
 			$css = am($css, $this->css); //On récupère les les éventuels CSS qui sont dans la variable de classe			
 			$html = ''; //Code HTML qui sera retourné
 			foreach($css as $v) { //Parcours de l'ensemble des fichiers
-				
-				$cssFile = '/css/'.$v; //Chemin par défaut du fichier
-				if(!substr_count($v, '.css')) { $cssFile.='.css'; }	//On teste si l'extension n'est pas déjà renseignée sinon on la rajout			
+				// Test : si le chemin commence par '/' alors le chemin est celui par défaut
+				// sinon on cherche dans le dossier templates
+				$cssFile = $v{0} == '/' ? '/css'.$v : '/templates/'.$v; //Chemin par défaut du fichier
+				if(!substr_count($v, '.css')) { $cssFile.='.css'; }	//On teste si l'extension n'est pas déjà renseignée sinon on la rajoute			
 				$cssPath = Router::webroot($cssFile); //On génère le chemin vers le fichier
 				$html .= "\t\t".'<link href="'.$cssPath.'" rel="stylesheet" type="text/css" />'."\n"; //On génère la balise de chargement		
 				
@@ -127,6 +129,7 @@ class Html extends BackofficeHtml {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 06/03/2012 by FI
+ * @version 0.2 - 03/06/2013 by TB : dossier "/templates" par défaut ou "/js" si la chaîne commence par "/"
  */	
 	public function js($js, $inline = false, $minified = false) {
 		
@@ -137,7 +140,7 @@ class Html extends BackofficeHtml {
 			$html = ''; //Code HTML qui sera retourné
 			foreach($js as $v) { //Parcours de l'ensemble des fichiers
 				
-				$jsFile = 'js/'.$v; //Chemin par défaut du fichier
+				$jsFile = $v{0} == '/' ? 'js'.$v : 'templates/'.$v; //Chemin par défaut du fichier
 				if(!substr_count($v, '.js')) { $jsFile.='.js'; } //On teste si l'extension n'est pas déjà renseignée sinon on la rajoute
 				$jsPath = Router::webroot($jsFile); //On génère le chemin vers le fichier
 				$html .= "\t\t".'<script src="'.$jsPath.'" type="text/javascript"></script>'."\n"; //On génère la balise de chargement			
@@ -198,12 +201,14 @@ class Html extends BackofficeHtml {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 06/03/2012 by FI
+ * @version 0.2 - 03/06/2013 by TB : dossier "/templates/" par défaut ou "/img" si la chaîne commence par "/"
  */	
 	public function img($image, $options = null) {
 
 		$attr = '';
-		if(isset($options)) { foreach($options as $k => $v) { $attr .= ' '.$k.'="'.$v.'"'; } }		
-		$html = '<img src="'.BASE_URL.'/img/'.$image.'" '.$attr.' />';			
+		if(isset($options)) { foreach($options as $k => $v) { $attr .= ' '.$k.'="'.$v.'"'; } }	
+		$chemin = $image{0} == "/" ? '/img' : '/templates/';
+		$html = '<img src="'.BASE_URL.$chemin.$image.'" '.$attr.' />';			
 		return $html;
 	}
 	

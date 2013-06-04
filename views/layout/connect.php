@@ -6,20 +6,20 @@
 		<title><?php echo _(".:: Connexion au backoffice ::."); ?></title>		
 		<?php
 		$css = array(
-			'backoffice/style',
-			'backoffice/style_text',
-			'backoffice/login',
-			'backoffice/forms',
-			'backoffice/form-buttons',
-			'backoffice/system-messages',
-			'backoffice/smart_tab',			//Pour la mise en place des smarttabs
+			'/backoffice/style',
+			'/backoffice/style_text',
+			'/backoffice/login',
+			'/backoffice/forms',
+			'/backoffice/form-buttons',
+			'/backoffice/system-messages',
+			'/backoffice/smart_tab',			//Pour la mise en place des smarttabs
 		);
 		echo $helpers['Html']->css($css);			
 		
 		$js = array(
-			'backoffice/jquery-1.7.1.min', 		//Librairie JQuery
-			'backoffice/jquery.smartTab',		//Pour la mise en place des smarttabs			
-			'connect/costum', 					//Appel des différents plugins
+			'/backoffice/jquery-1.7.1.min', 		//Librairie JQuery
+			'/backoffice/jquery.smartTab',		//Pour la mise en place des smarttabs			
+			'/connect/costum', 					//Appel des différents plugins
 		);
 		echo $helpers['Html']->js($js);
 		?>

@@ -3,14 +3,14 @@
 if(isset($sliders) && count($sliders) > 0) { 
 	
 	$css = array(
-		'layout/'.$websiteParams['tpl_layout'].'/slider/nivoslider/nivoslider_default_theme',
-		'layout/'.$websiteParams['tpl_layout'].'/slider/nivoslider/nivo_slider'
+		$websiteParams['tpl_layout'].'/css/slider/nivoslider/nivoslider_default_theme',
+		$websiteParams['tpl_layout'].'/css/slider/nivoslider/nivo_slider'
 	);
 	echo $helpers['Html']->css($css, true);
 	
 	$js = array(
-		'layout/'.$websiteParams['tpl_layout'].'/slider/nivoslider/jquery.nivo.slider.pack',
-		'layout/'.$websiteParams['tpl_layout'].'/slider/nivoslider/nivoslider'
+		$websiteParams['tpl_layout'].'/js/slider/nivoslider/jquery.nivo.slider.pack',
+		$websiteParams['tpl_layout'].'/js/slider/nivoslider/nivoslider'
 	);
 	echo $helpers['Html']->js($js, true);
 	?>

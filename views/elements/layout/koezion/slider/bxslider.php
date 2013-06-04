@@ -3,15 +3,15 @@
 if(isset($sliders) && count($sliders) > 0) { 
 	
 	$css = array(
-		'layout/'.$websiteParams['tpl_layout'].'/slider/bxslider/jquery.bxslider'
+		$websiteParams['tpl_layout'].'/css/slider/bxslider/jquery.bxslider'
 	);		
 	echo $helpers['Html']->css($css, true);
 	
 	$js = array(
-			'layout/'.$websiteParams['tpl_layout'].'/slider/bxslider/jquery.bxslider.min',
-			'layout/'.$websiteParams['tpl_layout'].'/slider/bxslider/jquery.easing.1.3',
-			'layout/'.$websiteParams['tpl_layout'].'/slider/bxslider/jquery.fitvids',
-			'layout/'.$websiteParams['tpl_layout'].'/slider/bxslider/bxslider'
+			$websiteParams['tpl_layout'].'/js/slider/bxslider/jquery.bxslider.min',
+			$websiteParams['tpl_layout'].'/js/slider/bxslider/jquery.easing.1.3',
+			$websiteParams['tpl_layout'].'/js/slider/bxslider/jquery.fitvids',
+			$websiteParams['tpl_layout'].'/js/slider/bxslider/bxslider'
 	);
 	echo $helpers['Html']->js($js, true);
 	?>

@@ -4,19 +4,19 @@
 		<?php 
 		if($nbFormsContacts > 0) { 
 			
-			?><li><a href="<?php echo Router::url('backoffice/contacts/index'); ?>"><?php echo $helpers['Html']->img('backoffice/icon-message.png', array('alt' => _("Messages Internautes"))); ?> <?php echo _("Messages"); ?><span><?php echo $nbFormsContacts; ?></span></a></li><?php
+			?><li><a href="<?php echo Router::url('backoffice/contacts/index'); ?>"><?php echo $helpers['Html']->img('/backoffice/icon-message.png', array('alt' => _("Messages Internautes"))); ?> <?php echo _("Messages"); ?><span><?php echo $nbFormsContacts; ?></span></a></li><?php
 		}
 		
 		if($nbPostsComments > 0) { 
 			
-			?><li><a href="<?php echo Router::url('backoffice/posts_comments/index'); ?>"><?php echo $helpers['Html']->img('backoffice/icon-message.png', array('alt' => _("Commentaires Internautes"))); ?> <?php echo _("Commentaires articles"); ?><span><?php echo $nbPostsComments; ?></span></a></li><?php 
+			?><li><a href="<?php echo Router::url('backoffice/posts_comments/index'); ?>"><?php echo $helpers['Html']->img('/backoffice/icon-message.png', array('alt' => _("Commentaires Internautes"))); ?> <?php echo _("Commentaires articles"); ?><span><?php echo $nbPostsComments; ?></span></a></li><?php 
 		}
 		
 		$websites = Session::read('Backoffice.Websites');
 		$websitesListe = $websites['liste'];
 		$currentWebsite = Session::read('Backoffice.Websites.current');		
 		?>
-		<li class="browse_website"><a href="<?php echo $websites['details'][$currentWebsite]['url']; ?>" target="_blank"><?php echo $helpers['Html']->img('backoffice/website.png', array('alt' => _("Sites Internet"))); ?></a></li>
+		<li class="browse_website"><a href="<?php echo $websites['details'][$currentWebsite]['url']; ?>" target="_blank"><?php echo $helpers['Html']->img('/backoffice/website.png', array('alt' => _("Sites Internet"))); ?></a></li>
 		<li class="noborder">
 			<?php			
 			echo _("Site courant").' : '.$websitesListe[$currentWebsite];
@@ -48,6 +48,6 @@
 			</li>
 		<?php } ?>			
 		
-		<li class="logout"><a href="<?php echo Router::url('users/logout'); ?>" title="Logout"><?php echo $helpers['Html']->img('backoffice/logout.png', array('alt' => _("Déconnexion"))); ?></a></li>
+		<li class="logout"><a href="<?php echo Router::url('users/logout'); ?>" title="Logout"><?php echo $helpers['Html']->img('/backoffice/logout.png', array('alt' => _("Déconnexion"))); ?></a></li>
 	</ul>
 </div>

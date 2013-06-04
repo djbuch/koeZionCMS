@@ -22,7 +22,7 @@
 		<div class="content nopadding">
 			<div class="row" style="overflow:hidden;">
 				<label>
-					<?php echo $helpers['Html']->img('backoffice/tooltip.png', array("original-title" => "Cochez le (ou les) site(s) que cet utilisateur peut administrer", "class" => "tip-w", "style" => "float: left; margin-right: 5px; cursor: pointer;", "alt" => "tooltip")); ?>
+					<?php echo $helpers['Html']->img('/backoffice/tooltip.png', array("original-title" => "Cochez le (ou les) site(s) que cet utilisateur peut administrer", "class" => "tip-w", "style" => "float: left; margin-right: 5px; cursor: pointer;", "alt" => "tooltip")); ?>
 					Site(s) administrable(s)
 				</label>
 				<div class="rowright">

@@ -16,25 +16,25 @@
 		/////////////
 		echo "\n";
 		$css = array(
-			'layout/'.$websiteParams['tpl_layout'].'/reset',
-			'layout/'.$websiteParams['tpl_layout'].'/jquery-ui-1.9.1.custom',
-			'layout/'.$websiteParams['tpl_layout'].'/style',
-			'layout/'.$websiteParams['tpl_layout'].'/grids',
-			'layout/'.$websiteParams['tpl_layout'].'/hook',
-			'layout/'.$websiteParams['tpl_layout'].'/menu',			
-			'layout/'.$websiteParams['tpl_layout'].'/buttons',
-			'layout/'.$websiteParams['tpl_layout'].'/pagination',
-			'layout/'.$websiteParams['tpl_layout'].'/prettyphoto',
-			'layout/'.$websiteParams['tpl_layout'].'/table',
-			'layout/'.$websiteParams['tpl_layout'].'/forms',
-			//'layout/'.$websiteParams['tpl_layout'].'/uniform.default',
-			'layout/'.$websiteParams['tpl_layout'].'/pricing',
-			'layout/'.$websiteParams['tpl_layout'].'/footer',
-			'layout/'.$websiteParams['tpl_layout'].'/colors/'.trim($websiteParams['tpl_code']).'/default',
-			'layout/'.$websiteParams['tpl_layout'].'/colors/'.trim($websiteParams['tpl_code']).'/body',
-			'layout/'.$websiteParams['tpl_layout'].'/colors/'.trim($websiteParams['tpl_code']).'/buttons',
-			'layout/'.$websiteParams['tpl_layout'].'/theme-responsive',
-			'layout/'.$websiteParams['tpl_layout'].'/font-awsome'
+			$websiteParams['tpl_layout'].'/css/reset',
+			$websiteParams['tpl_layout'].'/css/jquery-ui-1.9.1.custom',
+			$websiteParams['tpl_layout'].'/css/style',
+			$websiteParams['tpl_layout'].'/css/grids',
+			$websiteParams['tpl_layout'].'/css/hook',
+			$websiteParams['tpl_layout'].'/css/menu',			
+			$websiteParams['tpl_layout'].'/css/buttons',
+			$websiteParams['tpl_layout'].'/css/pagination',
+			$websiteParams['tpl_layout'].'/css/prettyphoto',
+			$websiteParams['tpl_layout'].'/css/table',
+			$websiteParams['tpl_layout'].'/css/forms',
+			//$websiteParams['tpl_layout'].'/css/uniform.default',
+			$websiteParams['tpl_layout'].'/css/pricing',
+			$websiteParams['tpl_layout'].'/css/footer',
+			$websiteParams['tpl_layout'].'/css/colors/'.trim($websiteParams['tpl_code']).'/default',
+			$websiteParams['tpl_layout'].'/css/colors/'.trim($websiteParams['tpl_code']).'/body',
+			$websiteParams['tpl_layout'].'/css/colors/'.trim($websiteParams['tpl_code']).'/buttons',
+			$websiteParams['tpl_layout'].'/css/theme_responsive',
+			$websiteParams['tpl_layout'].'/css/font-awsome'
 		);			
 		echo $helpers['Html']->css($css);		
 		if(!empty($websiteParams['css_hack'])) { ?><style type="text/css"><?php echo $websiteParams['css_hack']; ?></style><?php }		
@@ -72,25 +72,25 @@
 		//   JAVASCRIPT   //
 		////////////////////		
 		$js = array(
-			'layout/'.$websiteParams['tpl_layout'].'/jquery-1.8.2',
-			//'layout/'.$websiteParams['tpl_layout'].'/jquery-1.5.1.min',
-			//'layout/'.$websiteParams['tpl_layout'].'/jquery-1.7.1.min',
-			'layout/'.$websiteParams['tpl_layout'].'/jquery-ui-1.9.1.custom.min',
-			'layout/'.$websiteParams['tpl_layout'].'/jquery.ba-throttle-debounce',
-			'commun/scripts',
-			'layout/'.$websiteParams['tpl_layout'].'/menu',
-			'layout/'.$websiteParams['tpl_layout'].'/input',
-			'layout/'.$websiteParams['tpl_layout'].'/plugins',
-			'layout/'.$websiteParams['tpl_layout'].'/script',
-			//'layout/'.$websiteParams['tpl_layout'].'/jquery.uniform',
-			'layout/'.$websiteParams['tpl_layout'].'/jquery.filestyle.mini',
-			'layout/'.$websiteParams['tpl_layout'].'/images_zoom',
-			'layout/'.$websiteParams['tpl_layout'].'/pricing_table',
-			'layout/'.$websiteParams['tpl_layout'].'/navigation/selectnav',
-			'layout/'.$websiteParams['tpl_layout'].'/scrollToTop',
-			'layout/'.$websiteParams['tpl_layout'].'/browserSelector',
-			'layout/'.$websiteParams['tpl_layout'].'/theme',
-			'layout/'.$websiteParams['tpl_layout'].'/fittext/jquery.fittext'
+			$websiteParams['tpl_layout'].'/js/jquery-1.8.2',
+			//$websiteParams['tpl_layout'].'/js/jquery-1.5.1.min',
+			//$websiteParams['tpl_layout'].'/js/jquery-1.7.1.min',
+			$websiteParams['tpl_layout'].'/js/jquery-ui-1.9.1.custom.min',
+			$websiteParams['tpl_layout'].'/js/jquery.ba-throttle-debounce',
+			'/commun/scripts',
+			$websiteParams['tpl_layout'].'/js/menu',
+			$websiteParams['tpl_layout'].'/js/input',
+			$websiteParams['tpl_layout'].'/js/plugins',
+			$websiteParams['tpl_layout'].'/js/script',
+			//$websiteParams['tpl_layout'].'/js/jquery.uniform',
+			$websiteParams['tpl_layout'].'/js/jquery.filestyle.mini',
+			$websiteParams['tpl_layout'].'/js/images_zoom',
+			$websiteParams['tpl_layout'].'/js/pricing_table',
+			$websiteParams['tpl_layout'].'/js/navigation/selectnav',
+			$websiteParams['tpl_layout'].'/js/scrollToTop',
+			$websiteParams['tpl_layout'].'/js/browserSelector',
+			$websiteParams['tpl_layout'].'/js/theme',
+			$websiteParams['tpl_layout'].'/js/fittext/jquery.fittext'
 		);
 		echo $helpers['Html']->js($js);		
 		if(!empty($websiteParams['js_hack'])) { ?><script type="text/javascript"><?php echo $websiteParams['js_hack']; ?></script><?php }

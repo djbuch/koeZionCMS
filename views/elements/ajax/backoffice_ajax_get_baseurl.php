@@ -1,7 +1,7 @@
 <?php 
 $baseUrlUrls = array(
 	'img' => $baseUrl."/img/layout/".$websiteLayout."/editor/",
-	'js' => $baseUrl."/js/layout/".$websiteLayout."/editor/",	
+	'js' => $baseUrl."/templates/".$websiteLayout."/js/editor/",	
 );
 
 if(!function_exists('json_encode')) {

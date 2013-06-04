@@ -70,7 +70,7 @@
 		<div class="content nopadding">
 			<div class="row" style="overflow:hidden;">
 				<label>
-					<?php echo $helpers['Html']->img('backoffice/tooltip.png', array("original-title" => "Cochez les types d'article (Plusieurs choix possibles)", "class" => "tip-w", "style" => "float: left; margin-right: 5px; cursor: pointer;", "alt" => "tooltip")); ?>
+					<?php echo $helpers['Html']->img('/backoffice/tooltip.png', array("original-title" => "Cochez les types d'article (Plusieurs choix possibles)", "class" => "tip-w", "style" => "float: left; margin-right: 5px; cursor: pointer;", "alt" => "tooltip")); ?>
 					Type d'article
 				</label>
 				<div class="rowright">

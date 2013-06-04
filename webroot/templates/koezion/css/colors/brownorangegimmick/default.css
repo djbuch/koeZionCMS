@@ -1,0 +1,16 @@
+a,a:active,a:visited,#main_link_color,#personal_data p span,#personal_data p span a{color:#de5328}
+a:hover{color:#1e1e1e}
+#footer a:hover{color:#fff}
+h1 strong,h2 strong,h3 strong,h4 strong,h5 strong,h6 strong,.dropcapcolor,.inner_main .widget ul.testimonials li p span,.post_header a:hover,.breadcrumbs p span,h1 span,h2 span,h3 span,h4 span,h5 span,h6 span,.hotstuff ul li a{color:#de5328}
+blockquote,q{border-color:#de5328}
+.post_header a{text-decoration:none;color:#1e1e1e}
+.dropcapspot{background-color:#de5328}
+/*a.superbutton,.inner_main input.superbutton{color:#fff;background:url(../../../../../templates/koezion/img/superbutton.png) repeat-x center -1px transparent;border:1px solid #d65f34;box-shadow:inset 0 1px #faaa82;text-shadow: 1px 1px #c8542d}*/
+/*a.superbutton:hover,.inner_main input.superbutton:hover,a.superbutton.selected{background:url(../../../../../templates/koezion/img/superbutton.png) repeat-x center -31px transparent}*/
+::-moz-selection{background:#de5328;color:#fff;text-shadow:none}
+::selection{background:#de5328;color:#fff;text-shadow:none}
+a:link{-webkit-tap-highlight-color:#de5328}
+.stripe{background:0;border-top:1px solid transparent} /* Bordure obligatoire sinon il y a un décalage  */
+#ethernatable.catalogues tr.title th{background-color:#de5328;}
+#ethernatable.catalogues.coup_coeur tr {border-color:#de5328;}
+#ethernatable.catalogues.recherche tr {border-color:#de5328;}

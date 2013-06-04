@@ -14,7 +14,7 @@
 				<?php if($postsOrder == 'order_by') { ?>
 					<td class="txtcenter xxs2">
 						<?php 
-						if($displayAll) { echo $helpers['Html']->img('backoffice/move.png', array('alt' => _('Déplacer'), 'title' => _('Déplacer'))); }
+						if($displayAll) { echo $helpers['Html']->img('/backoffice/move.png', array('alt' => _('Déplacer'), 'title' => _('Déplacer'))); }
 						//else { echo $v['order_by']; }
 						?>
 					</td>

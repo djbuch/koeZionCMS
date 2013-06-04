@@ -7,5 +7,14 @@
 		</div>		
 	<?php }*/ ?>
 	<div id="logo"><?php echo $websiteParams['tpl_logo']; ?></div>
-	<?php if(isset($websiteParams['search_engine_position']) && $websiteParams['search_engine_position'] == 'header') { $this->element($websiteParams['tpl_layout'].'/search'); } ?>
+	<?php 
+		if(isset($websiteParams['search_engine_position']) && $websiteParams['search_engine_position'] == 'header') {
+			$this->element($websiteParams['tpl_layout'].'/search'); 
+			echo "\n";
+			$css = array(
+				$websiteParams['tpl_layout'].'/css/search_fix',
+			);
+			echo $helpers['Html']->css($css);	
+		} 
+	?>
 </div>

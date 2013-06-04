@@ -48,13 +48,13 @@ class Paginator {
 			if($totalPages < 7 + ($adjacent * 2)) {
 				
 				//Ajout de la page 1
-				if($currentPage == 1) { $pagination .= '<a href="?page=1'.$moreParams.'" title="Page 1" class="select">1</a>'; } 
+				if($currentPage == 1) { $pagination .= '<a href="?page=1'.$moreParams.'" title="Page 1" class="superbutton select">1</a>'; } 
 				else { $pagination .= '<a href="?page=1'.$moreParams.'" title="Page 1">1</a>'; }
 				
 				//Pour les pages restantes on utilise une boucle for
 				for($i=2; $i<=$totalPages; $i++) {
 										
-					if($i == $currentPage) { $pagination .= '<a href="?page='.$i.$moreParams.'" title="Page '.$i.'" class="select">'.$i.'</a>'; } 
+					if($i == $currentPage) { $pagination .= '<a href="?page='.$i.$moreParams.'" title="Page '.$i.'" class="superbutton select">'.$i.'</a>'; } 
 					else { $pagination .= '<a href="?page='.$i.$moreParams.'" title="Page '.$i.'">'.$i.'</a>'; }
 				}
 			}
@@ -67,13 +67,13 @@ class Paginator {
 				if($currentPage < 2 + ($adjacent * 2)) {
 					
 					//Ajout de la page 1
-					if($currentPage == 1) { $pagination .= '<a href="?page=1'.$moreParams.'" title="Première page (1)" class="select">1</a>'; } 
+					if($currentPage == 1) { $pagination .= '<a href="?page=1'.$moreParams.'" title="Première page (1)" class="superbutton select">1</a>'; } 
 					else { $pagination .= '<a href="?page=1'.$moreParams.'" title="'._("Première page (1)").'">1</a>'; }
 	
 					//puis des huit autres suivants
 					for($i = 2; $i < 4 + ($adjacent * 2); $i++) {
 						
-						if($i == $currentPage) { $pagination .= '<a href="?page='.$i.$moreParams.'" title="Page '.$i.'" class="select">'.$i.'</a>'; } 
+						if($i == $currentPage) { $pagination .= '<a href="?page='.$i.$moreParams.'" title="Page '.$i.'" class="superbutton select">'.$i.'</a>'; } 
 						else { $pagination .= '<a href="?page='.$i.$moreParams.'" title="Page '.$i.'" class="first">'.$i.'</a>'; }
 					}
 	
@@ -97,7 +97,7 @@ class Paginator {
 					//les septs du milieu : les trois précédents la page courante, la page courante, puis les trois lui succédant
 					for($i = $currentPage - $adjacent; $i <= $currentPage + $adjacent; $i++) {
 						
-						if($i == $currentPage) { $pagination .= '<span class="select">'.$i.'</span>'; } 
+						if($i == $currentPage) { $pagination .= '<span class="superbutton select">'.$i.'</span>'; } 
 						else { $pagination .= '<a href="?page='.$i.$moreParams.'" title="Page '.$i.'">'.$i.'</a>'; }
 					}
 	
@@ -121,7 +121,7 @@ class Paginator {
 					//puis des neufs dernières
 					for($i = $totalPages - (2 + ($adjacent * 2)); $i <= $totalPages; $i++) {
 						
-						if($i == $currentPage) { $pagination .= '<span class="select">'.$i.'</span>'; }
+						if($i == $currentPage) { $pagination .= '<span class="superbutton select">'.$i.'</span>'; }
 						else { $pagination .= '<a href="?page='.$i.$moreParams.'" title="Page '.$i.'">'.$i.'</a>'; }
 					}
 				}				

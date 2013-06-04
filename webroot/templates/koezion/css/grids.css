@@ -1,0 +1,54 @@
+.gs_12{max-width:892px;display:inline;float:left}
+.gs_11{max-width:815px;display:inline;float:left}
+.gs_10{max-width:738px;display:inline;float:left}
+.gs_9{max-width:661px;display:inline;float:left}
+.gs_8{max-width:584px;display:inline;float:left}
+.gs_7{max-width:507px;display:inline;float:left}
+.gs_6{max-width:430px;display:inline;float:left}
+.gs_5{width:353px;float: left}
+.gs_4{width:276px;float: left}
+.gs_3{width:200px;float: left;}
+.gs_2{max-width:122px;display:inline;float:left}
+.gs_1{max-width:45px;display:inline;float:left}
+#footer .gs_9,#footer .gs_8,#footer .gs_6,#footer .gs_4,#footer .gs_3,#footer .gs_2,#footer .gs_1{background:url(../../../templates/koezion/img/footer_sep.png) repeat-y top right transparent}
+.gs_11,.gs_10,.gs_9,.gs_8,.gs_6,.gs_5,.gs_4,.gs_3,.gs_2,.gs_1{margin:0 15px 0 0;padding:0 17px 0 0}
+#footer .omega,.omega{margin:0;padding:0;background:0}
+.sidebar{background:url(../../../templates/koezion/img/sidebar.png) repeat-y left top transparent;overflow:hidden}
+.sidebar_mirror{background:url(../../../templates/koezion/img/sidebar_mirror.png) repeat-y right top transparent;overflow:hidden}
+.sidebar ul{padding:0;margin:0}
+.sidebar_mirror ul{padding:0;margin:0}
+.inner_main .widget{overflow:hidden;margin:0 0 28px}
+.inner_main .widget p,.inner_main .widget h1,.inner_main .widget h2,.inner_main .widget h3,.inner_main .widget h4,.inner_main .widget h5,.inner_main .widget h6,.inner_main .widget ol{padding-left:30px;padding-right:0}
+.inner_main .sidebar_mirror .widget p,.inner_main .sidebar_mirror .widget h1,.inner_main .sidebar_mirror .widget h2,.inner_main .sidebar_mirror .widget h3,.inner_main .sidebar_mirror .widget h4,.inner_main .sidebar_mirror .widget h5,.inner_main .sidebar_mirror .widget h6,.inner_main .sidebar_mirror .widget ol{padding-right:30px;padding-left:0}
+.inner_main .top_sidebar_mask{height:6px;overflow:hidden;margin-top:10px;background:url(../../../templates/koezion/img/sidebar_mask.png) no-repeat top left transparent}
+.inner_main .top_sidebar_mask_mirror{height:6px;overflow:hidden;margin-top:10px;background:url(../../../templates/koezion/img/sidebar_mask_mirror.png) no-repeat top right transparent}
+.inner_main .bottom_sidebar_mask{height:6px;overflow:hidden;background:url(../../../templates/koezion/img/sidebar_mask.png) no-repeat bottom left transparent}
+.inner_main .bottom_sidebar_mask_mirror{height:6px;overflow:hidden;background:url(../../../templates/koezion/img/sidebar_mask_mirror.png) no-repeat bottom right transparent}
+.inner_main .widget ul{background:url(../../../templates/koezion/img/sidebar_lists.png) no-repeat bottom left transparent;overflow:hidden;padding:0 0 3px 0;margin:12px 0 8px 7px}
+.inner_main .widget.right_buttons ul{background:none;}
+.inner_main .widget ul.nobordertop{margin-top:0}
+.inner_main .sidebar_mirror .widget ul{background:url(../../../templates/koezion/img/sidebar_lists_mirror.png) no-repeat bottom right transparent;margin:12px 7px 8px 0}
+.inner_main .widget ul li{background:url(../../../templates/koezion/img/sidebar_lists.png) no-repeat top left transparent;overflow:hidden;list-style:none;margin:0;padding:0}
+.inner_main .widget.right_buttons ul li{background:none;width: 249px;padding-left: 20px}
+.inner_main .widget ul li.selected,.inner_main .widget ul li:hover{background:url(../../../templates/koezion/img/list_selected.png) no-repeat top left transparent}
+.inner_main .widget.right_buttons ul li:hover{background:none}
+.inner_main .sidebar_mirror .widget ul li{background:url(../../../templates/koezion/img/sidebar_lists_mirror.png) no-repeat top right transparent}
+.inner_main .sidebar_mirror .widget ul li.selected,.inner_main .sidebar_mirror .widget ul li:hover{background:url(../../../templates/koezion/img/list_selected_mirror.png) no-repeat top right transparent}
+.inner_main .widget ul li a{font:15px/ 21px Arial,sans-serif;display:block;padding:8px 0 7px 50px;text-decoration:none;text-shadow:1px 1px #fff;background:url(../../../templates/koezion/img/slider_dots.png) no-repeat 22px -116px transparent}
+.inner_main .widget.right_buttons ul li a{font:15px/ 21px Arial,sans-serif;display:block;padding:0;text-decoration:none;text-shadow:none;background:none}
+.inner_main .sidebar_mirror .widget ul li a{padding:8px 50px 7px 0;text-align:right;background:url(../../../templates/koezion/img/slider_dots.png) no-repeat right -116px transparent}
+.ie7 .inner_main .widget ul li a{padding:8px 0 5px 50px}
+.ie7 .inner_main .sidebar_mirror .widget ul li a{padding:8px 50px 5px 0}
+.inner_main .widget ul li a:hover,.inner_main .widget ul li.selected a{color:#1e1e1e;background:url(../../../templates/koezion/img/slider_dots.png) no-repeat 22px 9px transparent}
+.inner_main .widget.right_buttons ul li a:hover{background:none}
+.inner_main .widget.widget2 ul li.selected a{color:#1e1e1e;background:url(../../../templates/koezion/img/slider_dots.png) no-repeat 22px -260px transparent}
+.inner_main .sidebar_mirror .widget ul li a:hover,.inner_main .sidebar_mirror .widget ul li.selected a{color:#1e1e1e;background:url(../../../templates/koezion/img/slider_dots.png) no-repeat right 9px transparent}
+.inner_main .tweeter_widget ul li{padding:8px 0 8px 25px;font:11px/ 15px Arial,sans-serif}
+.inner_main .sidebar_mirror .tweeter_widget ul li{padding:8px 25px 8px 0;font:11px/ 15px Arial,sans-serif}
+.inner_main .tweeter_widget ul li span{margin:0;padding:0}
+.inner_main .tweeter_widget ul li a{padding:0;margin:0;font:11px/ 14px Arial,sans-serif;display:inline;background:0}
+.inner_main .sidebar_mirror .tweeter_widget ul li a{padding:0;margin:0;font:11px/ 14px Arial,sans-serif;display:inline;background:0}
+.inner_main .tweeter_widget ul li a:hover{background:0}
+.ie7 .inner_main .tweeter_widget ul li a{padding:0;margin:0}
+.inner_main .tweeter_widget ul li a img{padding:2px 9px 2px 0;margin:0;float:left}
+.inner_main .sidebar_mirror .tweeter_widget ul li a img{padding:2px 0 2px 9px;margin:0;float:right}

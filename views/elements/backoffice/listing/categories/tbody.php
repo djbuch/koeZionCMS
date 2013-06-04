@@ -4,9 +4,9 @@
 			<td class="txtcenter xxs"><?php echo $v['id']; ?></td>
 			<td class="txtcenter xxs">
 				<?php										 
-				if($v['type'] == 1) { echo $helpers['Html']->img('backoffice/in_arbo.png', array('alt' => _('Page catégorie'), 'title' => _('Page catégorie'))); } 
-				else if($v['type'] == 2) { echo $helpers['Html']->img('backoffice/event.png', array('alt' => _('Page évènement'), 'title' => _('Page évènement'))); }
-				else if($v['type'] == 3) { echo $helpers['Html']->img('backoffice/root.png', array('alt' => _('Racine'), 'title' => _('Racine'))); } 
+				if($v['type'] == 1) { echo $helpers['Html']->img('/backoffice/in_arbo.png', array('alt' => _('Page catégorie'), 'title' => _('Page catégorie'))); } 
+				else if($v['type'] == 2) { echo $helpers['Html']->img('/backoffice/event.png', array('alt' => _('Page évènement'), 'title' => _('Page évènement'))); }
+				else if($v['type'] == 3) { echo $helpers['Html']->img('/backoffice/root.png', array('alt' => _('Racine'), 'title' => _('Racine'))); } 
 				?>
 			</td>
 			<td class="txtcenter xs"><?php echo $helpers['Html']->backoffice_statut_link($params['controllerFileName'], $v['id'], $v['online']); ?></td>

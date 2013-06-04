@@ -2,7 +2,7 @@
 	<div class="row" style="overflow:hidden;">
 		<label>
 			<?php 
-			echo $helpers['Html']->img('backoffice/move.png', array('alt' => _('Déplacer'), 'title' => _('Déplacer'), 'style' => 'float:left;margin-right:5px;margin-top:-3px;cursor:move'));
+			echo $helpers['Html']->img('/backoffice/move.png', array('alt' => _('Déplacer'), 'title' => _('Déplacer'), 'style' => 'float:left;margin-right:5px;margin-top:-3px;cursor:move'));
 			echo $rightButtonName; 
 			?>
 		</label>
