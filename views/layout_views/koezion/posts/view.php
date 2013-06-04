@@ -14,7 +14,7 @@ $contentPage = $this->vars['components']['Text']->format_content_text($post['con
 	if($post['display_form']) { 
 		
 		//$this->element($websiteParams['tpl_layout'].'/formulaire', array('formulaire' => $formulaire, 'formInfos' => $formInfos));
-		if(isset($formPlugin)) { $this->element(PLUGINS.DS.'formulaires/views/elements/formulaires/frontoffice/formulaire', null, false); } 
+		if(isset($formPlugin)) { $this->element(PLUGINS.DS.'formulaires/views/formulaires/elements/frontoffice/formulaire', null, false); } 
 		else { $this->element($websiteParams['tpl_layout'].'/formulaires/formulaire_commentaires'); } 
 	}
  		
@@ -38,19 +38,19 @@ $contentPage = $this->vars['components']['Text']->format_content_text($post['con
 if(substr_count($contentPage, '<pre class="brush')) {
 
 	$css = array(
-			'layout/'.$websiteParams['tpl_layout'].'/syntaxhighlighter/shCore',
-			'layout/'.$websiteParams['tpl_layout'].'/syntaxhighlighter/shCoreDefault'
+		$websiteParams['tpl_layout'].'/css/syntaxhighlighter/shCore',
+		$websiteParams['tpl_layout'].'/css/syntaxhighlighter/shCoreDefault'
 	);
 	echo $helpers['Html']->css($css, true);
 
 	$js = array(
-			'layout/'.$websiteParams['tpl_layout'].'/syntaxhighlighter/shCore',
-			'layout/'.$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushCss',
-			'layout/'.$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushJScript',
-			'layout/'.$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushPhp',
-			'layout/'.$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushPlain',
-			'layout/'.$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushSql',
-			'layout/'.$websiteParams['tpl_layout'].'/syntaxhighlighter/shBrushXml'
+		$websiteParams['tpl_layout'].'/js/syntaxhighlighter/shCore',
+		$websiteParams['tpl_layout'].'/js/syntaxhighlighter/shBrushCss',
+		$websiteParams['tpl_layout'].'/js/syntaxhighlighter/shBrushJScript',
+		$websiteParams['tpl_layout'].'/js/syntaxhighlighter/shBrushPhp',
+		$websiteParams['tpl_layout'].'/js/syntaxhighlighter/shBrushPlain',
+		$websiteParams['tpl_layout'].'/js/syntaxhighlighter/shBrushSql',
+		$websiteParams['tpl_layout'].'/js/syntaxhighlighter/shBrushXml'
 	);
 	echo $helpers['Html']->js($js);
 	?><script type="text/javascript">SyntaxHighlighter.all()</script><?php
