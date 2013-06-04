@@ -13,4 +13,4 @@ a:link{-webkit-tap-highlight-color:#8c8085}
 #ethernatable.catalogues tr.title th{background-color:#8c8085;}
 #ethernatable.catalogues.coup_coeur tr {border-color:#8c8085;}
 #ethernatable.catalogues.recherche tr {border-color:#8c8085;}
-.stripe{background:none;border:none}
+.stripe{background:none;border-color: transparent;}

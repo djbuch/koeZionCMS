@@ -659,7 +659,8 @@ class CategoriesController extends AppController {
  */	
 	protected function _check_send_mail($datas) {
 
-		if(isset($datas['send_mail'])) {
+		//REPRENDRE FONCTIONNALITE PB LORS DE LA CREATION DE L'OBJET EMAIL
+		/*if(isset($datas['send_mail'])) {
 		
 			$session = Session::read('Backoffice');
 			
@@ -702,7 +703,7 @@ class CategoriesController extends AppController {
 					}
 				}
 			}
-		}		
+		}*/		
 	} 
 	
 /**
