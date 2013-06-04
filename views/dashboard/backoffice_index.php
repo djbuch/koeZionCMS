@@ -7,16 +7,16 @@
  * 
  */
 $css = array(
-	'backoffice/visualize/basic',
-	'backoffice/visualize/visualize',
-	'backoffice/visualize/visualize-light'
+	'/backoffice/visualize/basic',
+	'/backoffice/visualize/visualize',
+	'/backoffice/visualize/visualize-light'
 );		
 echo $helpers['Html']->css($css, true);
 
 $js = array(
-	'backoffice/visualize/excanvas',
-	'backoffice/visualize/visualize.jQuery',
-	'backoffice/visualize/start',
+	'/backoffice/visualize/excanvas',
+	'/backoffice/visualize/visualize.jQuery',
+	'/backoffice/visualize/start',
 );
 echo $helpers['Html']->js($js, true);
 ?>
