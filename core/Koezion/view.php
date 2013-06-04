@@ -31,6 +31,7 @@ class View extends Object {
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 13/06/2012 by FI
+ * @version 0.2 - 05/06/2013 by FI - Mise en place du chargement des helpers template
  */	
 	function __construct($view, $controller) {
 		
@@ -49,6 +50,21 @@ class View extends Object {
 			$this->vars['helpers'][$v] = new $v($this);
 		}
 		
+		//INSERTION DES EVENTUELS HELPERS DU TEMPLATE//
+		//Cette variable n'existe qu'en front
+		if(defined('LAYOUT_VIEWS')) {
+			
+			$moreHelpers = LAYOUT_VIEWS.DS.'helpers';
+			if(is_dir($moreHelpers)) {
+			
+				foreach(FileAndDir::directoryContent($moreHelpers) as $moreHelper) { 
+					
+					require_once($moreHelpers.DS.$moreHelper);
+					$helperClass = Inflector::camelize(str_replace('.php', '', $moreHelper));
+					$this->vars['helpers'][$helperClass] = new $helperClass($this);
+				}
+			}
+		}
 		$this->rendered = false;		
     }    
 

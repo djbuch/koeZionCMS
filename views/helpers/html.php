@@ -162,8 +162,9 @@ class Html extends BackofficeHtml {
  * @author 	koéZionCMS
  * @version 0.1 - 06/03/2012 by FI
  * @version 0.2 - 28/05/2013 by TB	ajout de l'id "mainMenu" pour la liste du menu
+ * @deprecated since 05/06/2013 Cette fonction est maintenant dans le helper nav qui se trouve dans le dossier du template
  */	
-	public function generateMenu($categories, $breadcrumbs, $moreElements = null) {
+	/*public function generateMenu($categories, $breadcrumbs, $moreElements = null) {
 		
 		if(count($categories) > 0) {		
 			
@@ -190,7 +191,7 @@ class Html extends BackofficeHtml {
 			}
 			?></ul><?php
 		}		
-	}
+	}*/
 	
 /**
  * Cette fonction est utilisée pour afficher des images
