@@ -14,7 +14,7 @@ $contentPage = $this->vars['components']['Text']->format_content_text($post['con
 	if($post['display_form']) { 
 		
 		//$this->element('formulaire', array('formulaire' => $formulaire, 'formInfos' => $formInfos));
-		if(isset($formPlugin)) { $this->element(PLUGINS.DS.'formulaires/views/formulaires/elements/frontoffice/formulaire', null, false); } 
+		if(isset($formPlugin)) { $this->element(PLUGINS.DS.'formulaires/views/elements/formulaires/frontoffice/formulaire', null, false); } 
 		else { $this->element('formulaires/formulaire_commentaires'); } 
 	}
  		
