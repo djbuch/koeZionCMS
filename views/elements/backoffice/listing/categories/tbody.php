@@ -18,6 +18,8 @@
 				echo $helpers['Html']->backoffice_edit_link($params['controllerFileName'], $v['id'], $name);
 				?>
 			</td>
+			<td class="txtcenter xxs"><?php echo $v['lft']; ?></td>
+			<td class="txtcenter xxs"><?php echo $v['rgt']; ?></td>
 			<td class="txtcenter m">				
 				<?php echo $helpers['Html']->backoffice_move2prev_picto($params['controllerFileName'], $v['id']); ?>			
 				<?php echo $helpers['Html']->backoffice_move2next_picto($params['controllerFileName'], $v['id']); ?>
