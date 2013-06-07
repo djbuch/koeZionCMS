@@ -2,6 +2,7 @@
 #menu ul{height:28px;margin:1px 0 0 17px;position:relative;float:left;text-shadow:1px 1px #fff;z-index:997;zoom:1}
 .ie6 #menu ul{margin-left:11px}
 #menu ul li{height:15px;padding:0 8px 14px 5px;margin:0;background:url(../../../templates/koezion/img/menu_separator.png) repeat-y top right transparent;font:15px/ 15px Arial,sans-serif;display:inline;float:left;position:relative;z-index:998;zoom:1}
+#menu ul > li:last-child{background:none;}
 .ie6 #menu ul li{padding-bottom:0}
 #menu ul li a{text-decoration:none;color:#777;font:15px/ 15px Arial,sans-serif;letter-spacing:.3px;display:block;float:left;padding:8px 6px 11px;zoom:1}
 #menu ul li a.menu_selected_bg{background:url(../../../templates/koezion/img/menu_box.png) no-repeat center 2px transparent;color:#1e1e1e}

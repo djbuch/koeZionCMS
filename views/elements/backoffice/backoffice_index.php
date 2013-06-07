@@ -3,8 +3,7 @@
 		
 		<?php $this->element('backoffice/listing/'.$this->vars['params']['controllerFileName'].'/title'); ?>		
 		<div class="content">
-			<?php 
-			
+			<?php 			
 			if(file_exists(ELEMENTS.DS.'backoffice'.DS.'listing'.DS.$this->vars['params']['controllerFileName'].DS.'search.php')) {
 				
 				$this->element('backoffice/listing/'.$this->vars['params']['controllerFileName'].'/search');

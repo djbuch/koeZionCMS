@@ -425,10 +425,6 @@ p.arrow {
 	margin-bottom: 10px;
 }
 
-#powered_by a {
-	background: url(../../../img/koezion_logo.gif) no-repeat top right transparent;
-}
-
 .wrap_content {
 	max-width: 980px;
 	margin: 0 auto;
