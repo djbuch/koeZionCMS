@@ -1,5 +1,16 @@
 ﻿<versions>
 	<version>
+		<name>Version du 19/06/2013</name>
+		<num>20130619.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Correction dans la model principal de la gestion du champ website_id via la variable manageWebsiteId</task>
+			<task author="KoéZionCMS" type="code">Modification du modèle UsersGroupsWebsite suite à la gestion de la variable manageWebsiteId dans le modèle principal</task>
+			<task author="KoéZionCMS" type="code">Mise en place d'une fonction dans le js commun pour récupérer le base url A TESTER</task>
+			<task author="KoéZionCMS" type="code">Correction mineure de css</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 30/05/2013</name>
 		<num>20130530.003</num>
 		<supervisor>KoéZionCMS</supervisor>

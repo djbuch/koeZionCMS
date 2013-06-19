@@ -16,19 +16,39 @@ $(document).ready(function() {
 		get_host: function() {
 
 			//Appel $.get_host()
-	  		var sHost = window.location.host; //Récupération du host
+	  		/*var sHost = window.location.host; //Récupération du host
 	  		var sHref = window.location.href; //Récupération de l'url
 	  		
 	  		sHrefExplode = sHref.substr(7, sHref.length); //Mise en tableau de l'url en ayant supprimé http://
 	  		sHrefExplode = sHrefExplode.split('/');
 
-	  		if(sHref.indexOf("/adm/", 0) > 0) { var sBack = "adm/"; } else { var sBack = ""; }	  		
+	  		if(sHref.indexOf("/adm/", 0) > 0) { var sBack = "adm/"; } else { var sBack = ""; }*/	  		
 	  		
 	  		/*if(sHost == "localhost") { var sHostToReturn =  "http://" + sHost + baseurl + "/" + sBack; }
 	  		else { var sHostToReturn =  "http://" + sHost + "/" + sBack; }*/
 	  			  		
-			var sHostToReturn =  "http://" + sHost + baseurl + "/" + sBack;
-	  		return sHostToReturn;
+			/*var sHostToReturn =  "http://" + sHost + baseurl + "/" + sBack;
+	  		return sHostToReturn;*/
+			
+			/*RAJOUT DU 17/06/2013 A TESTER POUR VOIR SI CA FONCTIONNE CORRECTEMENT*/
+			/*http://stackoverflow.com/questions/6179882/getbaseurl-javascript-call-function-in-a-href*/
+			var url = location.href;  // entire url including querystring - also: window.location.href;
+			var baseURL = url.substring(0, url.indexOf('/', 14));
+
+			if (baseURL.indexOf('http://localhost') != -1) {
+			    // Base Url for localhost
+			    var url = location.href;  // window.location.href;
+			    var pathname = location.pathname;  // window.location.pathname;
+			    var index1 = url.indexOf(pathname);
+			    var index2 = url.indexOf("/", index1 + 1);
+			    var baseLocalUrl = url.substr(0, index2);
+			
+			    return baseLocalUrl + "/";
+			}
+			else {
+			    // Root Url for domain name
+			    return baseURL + "/";
+			}
 		},
 		is_back: function() { 
 	  		

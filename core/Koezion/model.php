@@ -16,7 +16,7 @@ class Model extends Object {
 	public $schema = array(); //Shéma de la table
 	public $queryExecutionResult = false; //indique si la requete de save s'est bien passée 
 	public $refererUrl = ''; //Cette variable va contenir l'url de la page appelante
-	public $manageWebsiteId = true; //Permet d'éviter de prendr en compte la recherche basée sur le champ website_id
+	public $manageWebsiteId = true; //Permet d'éviter de prendre en compte la recherche basée sur le champ website_id ainsi que l'insertion automatique de ce champ
     
 /**
  * Constructeur de la classe
@@ -315,7 +315,9 @@ class Model extends Object {
 		if(is_array($req['fields'])) { $sql .= implode(', ', $req['fields']); } //Si il s'agit d'un tableau		
 		else { $sql .= $req['fields']; } //Si il s'agit d'une chaine de caractères 
 		
-		$sql .= ' FROM '.$this->table.' AS '.get_class($this).' '; //Mise en place du from
+		//$sql .= ' FROM '.$this->table.' AS '.get_class($this).' '; //Mise en place du from//Mise en place du from
+		$sql .= ' FROM '.$this->table.' ';		
+		if(get_class($this) != 'Order') { $sql .= 'AS '.get_class($this).' '; } //Hack spécial si on a un model Order
 
 		///////////////////////////////////////////////////////////
 		//   CONDITIONS DE RECHERCHE SUR L'IDENTIFIANT DU SITE   //
@@ -947,7 +949,7 @@ class Model extends Object {
 			$moreDatasToSave[':modified_by'] = Session::read('Backoffice.User.id');
 		}						
 		
-		if(!in_array('website_id', $datasShema) && in_array('website_id', $shema) && get_class($this) != 'UsersGroupsWebsite') { 
+		if(!in_array('website_id', $datasShema) && in_array('website_id', $shema) && $this->manageWebsiteId) { //get_class($this) != 'UsersGroupsWebsite') { 
 			
 			$datasShema[] = 'website_id';
 			$moreDatasToSave[':website_id'] = CURRENT_WEBSITE_ID;
