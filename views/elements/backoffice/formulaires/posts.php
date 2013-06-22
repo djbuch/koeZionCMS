@@ -3,6 +3,8 @@
 		<li><a href="#general"><?php echo _("Général"); ?></a></li>
 		<li><a href="#textes"><?php echo _("Descriptifs court et long"); ?></a></li>
 		<li><a href="#types"><?php echo _("Types d'article"); ?></a></li>
+		<li><a href="#right_column"><?php echo _("Colonne de droite"); ?></a></li>
+		<li><a href="#buttons"><?php echo _("Boutons"); ?></a></li>
 		<li><a href="#seo"><?php echo _("SEO"); ?></a></li>
 		<li><a href="#options"><?php echo _("Options"); ?></a></li>
 		
@@ -68,6 +70,7 @@
 	</div>
 	<div id="types">
 		<div class="content nopadding">
+			<?php echo $helpers['Form']->input('display_posts_types', "Afficher les types d'articles dans la colonne de droite", array('type' => 'checkbox', 'tooltip' => "En cliquant sur cette case les types d'articles seront affichés dans la colonne de droite")); ?>
 			<div class="row" style="overflow:hidden;">
 				<label>
 					<?php echo $helpers['Html']->img('/backoffice/tooltip.png', array("original-title" => "Cochez les types d'article (Plusieurs choix possibles)", "class" => "tip-w", "style" => "float: left; margin-right: 5px; cursor: pointer;", "alt" => "tooltip")); ?>
@@ -83,6 +86,33 @@
 					?>
 				</div>
 			</div>
+		</div>
+	</div>
+	<div id="right_column">
+		<div class="content nopadding">
+			<?php
+			echo $helpers['Form']->input('title_colonne_droite', 'Titre colonne de droite', array('tooltip' => "Indiquez le titre qui sera affiché dans la colonne de droite"));			
+			echo $helpers['Form']->input('display_children', 'Afficher les pages enfants dans la colonne de droite', array('type' => 'checkbox', 'tooltip' => "En cliquant sur cette case les enfants de la page seront affichés dans la colonne de droite, ATTENTION pensez à saisir le champ titre de la colonne de droite"));
+			echo $helpers['Form']->input('display_brothers', 'Afficher les pages du même niveau dans la colonne de droite', array('type' => 'checkbox', 'tooltip' => "En cliquant sur cette case les pages du même niveau seront affichés dans la colonne de droite, ATTENTION pensez à saisir le champ titre de la colonne de droite"));
+			?>
+		</div>
+	</div>
+	<div id="buttons">
+		<div class="content nopadding">
+			<div class="content">
+			<p>Précisez ici le ou les boutons à rajouter à cet article.</p>
+			<?php echo $helpers['Form']->input('rightButtonsListId', '', array('type' => 'select', 'datas' => $rightButton, 'label' => false, 'div' => false, 'displayError' => false, 'firstElementList' => "Sélectionnez un bouton")); ?>
+			<a id="addRightButton" class="btn blue" style="cursor:pointer;margin-bottom:3px;"><span><?php echo _("Rajouter ce bouton"); ?></span></a>
+		</div>		
+		<?php
+		if(isset($this->controller->request->data['right_button_id'])) {
+		
+			foreach($this->controller->request->data['right_button_id'] as $rightButtonId => $isActiv) {
+			
+				$this->element('backoffice/right_button_line', array('rightButtonId' => $rightButtonId, 'rightButtonName' => $rightButton[$rightButtonId]));
+			}
+		}
+		?>
 		</div>
 	</div>
 	<div id="seo">
@@ -118,3 +148,48 @@
 		</div>
 	<?php } ?>
 </div>
+<script type="text/javascript">			
+	$(document).ready(function() {			
+
+		var addedButton = [];
+		
+		<?php 
+		if(isset($this->controller->request->data['right_button_id'])) {
+
+			foreach($this->controller->request->data['right_button_id'] as $rightButtonId => $isActiv) {
+				
+				?>addedButton.push("<?php echo $rightButtonId; ?>");<?php echo "\n\t";
+			}
+		}		
+		?>		
+		//Rajout d'une nouvelle option de question 
+		$("#addRightButton").click(function() {
+		
+			var rightButton = $('#InputRightButtonsListId').val();
+			
+			if(rightButton.length) {
+				
+				if(jQuery.inArray(rightButton, addedButton) < 0) {
+				
+					var host = $.get_host(); //Récupération du host
+					
+					var action = host + 'posts/ajax_add_right_button/' + rightButton + '.html'; //On génère l'url			
+					
+					//On récupère les données en GET et on rajoute une nouvelle ligne
+					$.get(action, function(datas) { $(datas).appendTo("#buttons"); });
+					addedButton.push(rightButton);
+				} else { jAlert("Ce bouton est déjà associé à cet article"); }
+			} else { jAlert("Vous devez sélectionner un bouton"); }		
+		});		
+		
+		$("#buttons").livequery(function() { 	
+
+			$(this).sortable({
+				items: '.sortable', 
+				revert: true, 
+				axis: 'y', 
+				cursor: 'move'
+			});
+		});
+	});
+</script>

@@ -35,10 +35,7 @@ class PostsController extends AppController {
 	function view($id, $slug, $prefix) {
 		
 		//Conditions de recherche
-		$conditions = array(
-			'fields' => array('id', 'name', 'short_content', 'content', 'page_title', 'page_description', 'page_keywords', 'slug', 'display_form', 'category_id', 'prefix'),
-			'conditions' => array('online' => 1, 'id' => $id)
-        );
+		$conditions = array('conditions' => array('online' => 1, 'id' => $id));
 		$datas['post'] = $this->Post->findFirst($conditions); //On récupère le premier élément
         
 		//Si aucune catégorie n'est définie on lance une erreur
@@ -63,7 +60,8 @@ class PostsController extends AppController {
 		//   RECUPERATION DU FIL D'ARIANE   //
 		$this->loadModel('Category'); //Chargement du modèle
 		$datas['breadcrumbs'] = $this->Category->getPath($datas['post']['category_id']);
-				
+		$datas['category'] = $this->Category->findFirst(array('conditions' => array('id' => $datas['post']['category_id']))); //Récupération des données de la catégorie parente
+		
 		$datas['breadcrumbsPost'][] = array(
 			'id' => $datas['post']['id'],
 			'slug' => $datas['post']['slug'],
@@ -87,7 +85,27 @@ class PostsController extends AppController {
 			$this->unloadModel('PostsComment'); //Déchargement du modèle
 		//}
 		////////////////////////////////////////////////////
+				
+		$datas['children'] = array();
+		$datas['brothers'] = array();
+		$datas['postsTypes'] = array();
 		
+		//////////////////////////////////
+		//   RECUPERATION DES ENFANTS   //
+		$datas = $this->_get_children_category($datas);
+								
+		/////////////////////////////////
+		//   RECUPERATION DES FRERES   //
+		$datas = $this->_get_brothers_category($datas);
+		
+		/////////////////////////////
+		//   GESTION DES BOUTONS   //
+		$datas = $this->_get_right_buttons($datas);	
+		
+		//////////////////////////////////////
+		//   GESTION DES TYPES D'ARTICLES   //
+		$datas = $this->_get_posts_types($datas);	
+			
 		$this->set($datas); //On fait passer les données à la vue	
 				
 		//On va tester si des données sont postées par un formulaire et que le plugin Formulaires n'est pas installé
@@ -165,6 +183,7 @@ class PostsController extends AppController {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 17/01/2012 by FI
+ * @version 0.2 - 21/06/2013 by FI - Rajout de la récupération des boutons colonnes de doite --> C'est le jour le plus long de l'année
  */	
 	function backoffice_add() {
 
@@ -173,9 +192,10 @@ class PostsController extends AppController {
 		
 		if($this->request->data) {
 		
-			if($this->Post->id > 0 && $parentAdd) {
+			if($this->Post->id > 0 && $parentAdd) {		 
 				
-				$this->_save_assoc_datas($this->Post->id);	
+				$this->_save_assoc_datas_posts_posts_type($this->Post->id);	
+				$this->_save_assoc_datas_posts_right_button($this->Post->id);	
 				$this->_check_send_mail($this->request->data);	
 				FileAndDir::remove(TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS.'home_page_website_'.CURRENT_WEBSITE_ID.'.cache'); //On supprime le dossier cache
 				FileAndDir::remove(TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS.'website_'.CURRENT_WEBSITE_ID.'.cache'); //On supprime le dossier cache
@@ -186,6 +206,7 @@ class PostsController extends AppController {
 		$this->_transform_date('sql2Fr'); //Transformation de la date SQL en date FR		
 		$this->_init_categories();
 		$this->_init_posts_types();
+		$this->_init_right_buttons();
 	}
 	
 /**
@@ -195,6 +216,7 @@ class PostsController extends AppController {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 17/01/2012 by FI
+ * @version 0.2 - 21/06/2013 by FI - Rajout de la récupération des boutons colonnes de doite --> C'est le jour le plus long de l'année
  */	
 	function backoffice_edit($id = null) {
 				
@@ -205,7 +227,8 @@ class PostsController extends AppController {
 			
 			if($parentEdit) {						
 								
-				$this->_save_assoc_datas($id, true);
+				$this->_save_assoc_datas_posts_posts_type($this->Post->id, true);	
+				$this->_save_assoc_datas_posts_right_button($this->Post->id, true);	
 				$this->_check_send_mail($this->request->data);	
 				FileAndDir::remove(TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS.'home_page_website_'.CURRENT_WEBSITE_ID.'.cache'); //On supprime le dossier cache
 				FileAndDir::remove(TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS.'website_'.CURRENT_WEBSITE_ID.'.cache'); //On supprime le dossier cache
@@ -216,6 +239,7 @@ class PostsController extends AppController {
 		$this->_transform_date('sql2Fr'); //Transformation de la date SQL en date FR
 		$this->_init_categories();
 		$this->_init_posts_types();
+		$this->_init_right_buttons();
 		$this->_get_assoc_datas($id);
 	}
 
@@ -246,11 +270,170 @@ class PostsController extends AppController {
 			if($redirect) { $this->redirect('backoffice/posts/index'); } //On retourne sur la page de listing
 			else { return true; }
 		}
+	}		
+	
+//////////////////////////////////////////////////////////////////////////////////////
+//										AJAX										//
+//////////////////////////////////////////////////////////////////////////////////////	
+		
+/**
+ * Cette fonction est utilisée lors de l'ajout d'un nouvel attribut
+ *
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 16/12/2012 by FI
+ */
+	public function backoffice_ajax_add_right_button($rightButtonId) {
+	
+		$this->layout = 'ajax'; //Définition du layout à utiliser		
+				
+		//Récupération des informations du bouton
+		$this->loadModel('RightButton'); //Chargement du modèle
+		$rightButton = $this->RightButton->findFirst(array('fields' => array('name'), 'conditions' => array('id' => $rightButtonId))); //On récupère les données
+		$this->unloadModel('RightButton'); //Déchargement du modèle
+		
+		$this->set('rightButtonId', $rightButtonId);
+		$this->set('rightButtonName', $rightButton['name']);
 	}	
 	
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //										FONCTIONS PRIVEES										//
 //////////////////////////////////////////////////////////////////////////////////////////////////	
+
+/**
+ * Cette fonction permet la récupération des boutons liés à la catégorie courante
+ *
+ * @param 	array 	$datas 		Tableau des données à passer à la vue
+ * @return	array	Tableau de données à passer à la vue 
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 21/06/2013 by FI
+ */		
+	protected function _get_right_buttons($datas) {
+					
+		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS;
+		$cacheFile 		= "post_".$datas['post']['id']."_right_buttons";
+		
+		$rightButtonsPost = Cache::exists_cache_file($cacheFolder, $cacheFile);
+		
+		if(!$rightButtonsPost) {
+		
+			$this->loadModel('PostsRightButton');
+			$this->PostsRightButton->primaryKey = 'post_id'; //Pour éviter les erreurs à l'exécution
+			$rightButtonsConditions = array('post_id' => $datas['post']['id']);
+			$nbRightButtons = $this->PostsRightButton->findCount($rightButtonsConditions);
+			
+			if($nbRightButtons) {
+	
+				$this->loadModel('RightButton');
+				
+				//récupération des données
+				$rightButtonsList = $this->PostsRightButton->find(array('conditions' => $rightButtonsConditions, 'order' => 'order_by ASC'));
+				foreach($rightButtonsList as $k => $rightButton) {
+					
+					$rightButtonsPost[] = $this->RightButton->findFirst(array('conditions' => array('id' => $rightButton['right_button_id'])));
+				}
+				
+				Cache::create_cache_file($cacheFolder, $cacheFile, $rightButtonsPost);
+			} else { $rightButtonsPost = array(); }			
+		}		
+		
+		$datas['rightButtons'] = $rightButtonsPost;		
+		return $datas;
+	}	
+
+/**
+ * Cette fonction permet la récupération des types d'articles rattachés à la catégorie parente de l'article
+ *
+ * @param 	array 	$datas 		Tableau des données à passer à la vue
+ * @return	array	Tableau de données à passer à la vue 
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 22/06/2013 by FI
+ */		
+	protected function _get_posts_types($datas) {
+
+		if($datas['post']['display_posts_types']) {
+			
+			//Récupération des types d'articles
+			$this->loadModel('PostsType');
+			$datas['postsTypes'] = $this->PostsType->get_for_front($datas['category']['id']);	
+		}
+		return $datas;
+	}
+
+/**
+ * Cette fonction permet la récupération des enfants de la catégorie courante
+ *
+ * @param 	array 	$datas Données de la page
+ * @return	array	Données de la page
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 21/06/2013 by FI
+ */	
+	protected function _get_children_category($datas) {
+		
+		//////////////////////////////////
+		//   RECUPERATION DES ENFANTS   //
+		if($datas['post']['display_children']) { //Si on doit récupérer les enfants			
+			
+			$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS;
+			$cacheFile 		= "post_".$datas['post']['id']."_children";
+			
+			$childrenCategory = Cache::exists_cache_file($cacheFolder, $cacheFile);
+			
+			if(!$childrenCategory) {
+			
+				$children = $this->Category->getChildren($datas['category']['id'], false, false, $datas['category']['level']+1, array('conditions' => array('online' => 1))); //On récupère les enfants de la catégorie parente
+				
+				//Cas particulier pour les catégories "frères" le titre de la colonne de droite peut varier en fonction des besoins
+				//On va donc parcourir le résultat et réorganiser le tout
+				foreach($children as $k => $v) { $childrenCategory[$datas['post']['title_colonne_droite']][] = $v; }
+			
+				Cache::create_cache_file($cacheFolder, $cacheFile, $childrenCategory);
+			}
+			
+			$datas['children'] = $childrenCategory;
+		}
+		return $datas;
+	}	
+
+/**
+ * Cette fonction permet la récupération des frères de la catégorie courante
+ *
+ * @param 	array 	$datas Données de la page
+ * @return	array	Données de la page
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 21/06/2013 by FI
+ */	
+	protected function _get_brothers_category($datas) {
+						
+		/////////////////////////////////
+		//   RECUPERATION DES FRERES   //
+		if($datas['post']['display_brothers']) { //Si on doit récupérer les frères		
+			
+			$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS;
+			$cacheFile 		= "post_".$datas['post']['id']."_brothers";
+			
+			$brothersCategory = Cache::exists_cache_file($cacheFolder, $cacheFile);
+			
+			if(!$brothersCategory) {
+		
+				$brothers = $this->Category->getChildren($datas['category']['parent_id'], false, false, $datas['category']['level'], array('conditions' => array('online' => 1))); //On récupère les enfants de la catégorie parente
+			
+				//Cas particulier pour les catégories "frères" le titre de la colonne de droite peut varier en fonction des besoins
+				//On va donc parcourir le résultat et réorganiser le tout
+				foreach($brothers as $k => $v) { $brothersCategory[$datas['post']['title_colonne_droite']][] = $v; }
+				
+				Cache::create_cache_file($cacheFolder, $cacheFile, $brothersCategory);
+			}
+			
+			$datas['brothers'] = $brothersCategory;
+		}
+		
+		return $datas;		
+	}
 	
 /**
  * Cette fonction permet l'initialisation de la liste des catégories dans le site
@@ -283,12 +466,28 @@ class PostsController extends AppController {
 	}
 	
 /**
+ * Cette fonction permet l'initialisation des boutons colonnes de droite
+ *
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 21/06/2013 by FI
+ */	
+	protected function _init_right_buttons() {		
+		
+		$this->loadModel('RightButton'); //Chargement du modèle des types de posts
+		$rightButton = $this->RightButton->findList(array('conditions' => array('online' => 1))); //On récupère les types de posts
+		$this->unloadModel('RightButton'); //Déchargement du modèle des types de posts
+		$this->set('rightButton', $rightButton); //On les envois à la vue
+	}
+	
+/**
  * Cette fonction permet l'initialisation des données de l'association entre le post et les types de posts
  *
  * @param	integer $postId Identifiant du post
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 26/01/2012 by FI
+ * @version 0.2 - 21/06/2013 by FI - Rajout de la récupération des boutons colonnes de droite
  */	
 	protected function _get_assoc_datas($postId) {
 
@@ -298,6 +497,13 @@ class PostsController extends AppController {
 		
 		//On va les rajouter dans la variable $this->request->data
 		foreach($postsPostsTypes as $k => $v) { $this->request->data['posts_type_id'][$v['posts_type_id']] = 1; }
+
+		$this->loadModel('PostsRightButton'); //Chargement du modèle		
+		$rightButtons = $this->PostsRightButton->find(array('conditions' => array('post_id' => $postId), 'order' => 'order_by ASC')); //On récupère les données
+		$this->unloadModel('PostsRightButton'); //Déchargement du modèle
+		
+		//On va les rajouter dans la variable $this->request->data
+		foreach($rightButtons as $k => $v) { $this->request->data['right_button_id'][$v['right_button_id']] = 1; }
 	}
 	
 /**
@@ -309,7 +515,7 @@ class PostsController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 26/01/2012 by FI
  */	
-	protected function _save_assoc_datas($postId, $deleteAssoc = false) {
+	protected function _save_assoc_datas_posts_posts_type($postId, $deleteAssoc = false) {
 		
 		$this->loadModel('PostsPostsType'); //Chargement du modèle
 
@@ -328,6 +534,43 @@ class PostsController extends AppController {
 			}
 		}
 		$this->unloadModel('PostsPostsType'); //Déchargement du modèle
+	}
+	
+/**
+ * Cette fonction permet la sauvegarde de l'association entre les posts et les boutons colonne de droite
+ *
+ * @param	integer $postId 		Identifiant du post
+ * @param	boolean $deleteAssoc 	Si vrai l'association entre l'utilisateur et les sites sera supprimée
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 21/06/2013 by FI
+ */			
+	protected function _save_assoc_datas_posts_right_button($postId, $deleteAssoc = false) {	
+		
+		$this->loadModel('PostsRightButton'); //Chargement du modèle
+
+		if($deleteAssoc) { $this->PostsRightButton->deleteByName('post_id', $postId); }
+		
+		if(isset($this->request->data['right_button_id'])) { $rightButtonId = $this->request->data['right_button_id']; }
+		else { $rightButtonId = array(); }
+		
+		$order = 0;
+		foreach($rightButtonId as $k => $v) {
+		
+			if($v) {
+		
+				$this->PostsRightButton->save(array(
+					'post_id' => $postId,
+					'right_button_id'	=> $k,
+					'order_by' => $order
+				));
+				
+				$order++;
+			}
+		}
+		$this->unloadModel('PostsRightButton'); //Déchargement du modèle
+		
+		
 	}
 	
 /**
@@ -430,7 +673,10 @@ class PostsController extends AppController {
 		
 		$this->cachingFiles = array(		
 			TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS."home_page_website_".CURRENT_WEBSITE_ID.'.cache',
-			TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS."website_".CURRENT_WEBSITE_ID.'.cache'
+			TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS."website_".CURRENT_WEBSITE_ID.'.cache',
+			TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS."post_".$this->request->data['id'].'_brothers.cache',
+			TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS."post_".$this->request->data['id'].'_children.cache',
+			TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS."post_".$this->request->data['id'].'_right_buttons.cache'
 		);		
 	}
 }

@@ -86,6 +86,5 @@
 				</div>
 			</div>
 		</div>
-		<span class="websitebaseurl" style="display:none;"><?php echo BASE_URL; ?></span>
 	</body>
 </html>

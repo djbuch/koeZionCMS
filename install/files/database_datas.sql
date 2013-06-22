@@ -10,6 +10,7 @@ INSERT INTO `modules` (`id`, `name`, `controller_name`, `order_by`, `online`, `c
 (9, 'Sites Internet', 'websites', 0, 1, '2012-11-30 09:27:12', 5),
 (10, 'Liste des utilisateurs', 'users', 1, 1, '2012-11-30 09:27:32', 5),
 (11, 'Plugins', 'plugins', 2, 1, '2012-11-30 09:27:47', 5);
+(11, 'Statistiques de visites', 'dashboard', 1, 1, '2012-11-30 09:27:47', 6);
 
 
 INSERT INTO `modules_types` (`id`, `name`, `order_by`, `online`, `created`, `modified`, `modified_by`) VALUES
@@ -17,6 +18,7 @@ INSERT INTO `modules_types` (`id`, `name`, `order_by`, `online`, `created`, `mod
 (2, 'Contenus', 0, 1, '2012-12-01 06:38:44', '2012-12-01 06:38:44', 1),
 (4, 'Actualités / Blog', 1, 1, '2012-12-01 06:39:16', '2012-12-01 06:39:16', 1),
 (5, 'Paramètres', 3, 1, '2012-12-01 06:39:27', '2012-12-01 06:39:27', 1);
+(6, 'Tableau de bord', 3, 1, '2012-12-01 06:39:27', '2012-12-01 06:39:27', 1);
 
 INSERT INTO `users` (`id`, `name`, `second_name`, `login`, `password`, `email`, `online`, `users_group_id`) VALUES
 (1, 'Superadmin', 				'', 'superadmin', 		'superadmin', 		'superadmin@monsite.com', 		1, 1),

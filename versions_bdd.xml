@@ -1,5 +1,23 @@
 ﻿<versions> 
 	<version>
+		<name>Version du 22/06/2013</name>
+		<num>20130622.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" num="1">
+				DROP TABLE IF EXISTS `posts_right_buttons`;
+				CREATE TABLE IF NOT EXISTS `posts_right_buttons` (
+				  `post_id` int(11) NOT NULL,
+				  `right_button_id` int(11) NOT NULL,
+				  `order_by` int(11) NOT NULL,
+				  PRIMARY KEY (`post_id`,`right_button_id`)
+				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+			</task>
+			<task author="KoéZionCMS" num="2">ALTER TABLE `posts`  ADD `title_colonne_droite` VARCHAR(255) NOT NULL AFTER `img_path`,  ADD `display_children` INT NOT NULL AFTER `title_colonne_droite`,  ADD `display_brothers` INT NOT NULL AFTER `display_children`;</task>
+			<task author="KoéZionCMS" num="3">ALTER TABLE `posts`  ADD `display_posts_types` INT NOT NULL AFTER `display_home_page`;</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 30/05/2013</name>
 		<num>20130530.001</num>
 		<supervisor>KoéZionCMS</supervisor>

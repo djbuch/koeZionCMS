@@ -120,6 +120,7 @@ CREATE TABLE IF NOT EXISTS `plugins` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+
 DROP TABLE IF EXISTS `posts`;
 CREATE TABLE IF NOT EXISTS `posts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -134,9 +135,13 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `page_keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `img_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `img_path` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `title_colonne_droite` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `display_children` int(11) NOT NULL,
+  `display_brothers` int(11) NOT NULL,
   `display_link` int(11) NOT NULL,
   `display_form` int(11) NOT NULL,
   `display_home_page` int(11) NOT NULL,
+  `display_posts_types` int(11) NOT NULL,
   `order_by` int(11) NOT NULL,
   `message_mail` longtext COLLATE utf8_unicode_ci NOT NULL,
   `publication_date` date NOT NULL,
@@ -173,6 +178,14 @@ CREATE TABLE IF NOT EXISTS `posts_posts_types` (
   `category_id` int(11) NOT NULL,
   `website_id` int(11) NOT NULL,
   PRIMARY KEY (`post_id`,`posts_type_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `posts_right_buttons`;
+CREATE TABLE IF NOT EXISTS `posts_right_buttons` (
+  `post_id` int(11) NOT NULL,
+  `right_button_id` int(11) NOT NULL,
+  `order_by` int(11) NOT NULL,
+  PRIMARY KEY (`post_id`,`right_button_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `posts_types`;

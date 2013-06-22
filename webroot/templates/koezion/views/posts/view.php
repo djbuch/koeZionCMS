@@ -5,10 +5,22 @@ $description_for_layout = $post['page_description'];
 $keywords_for_layout = $post['page_keywords'];
 
 $contentPage = $this->vars['components']['Text']->format_content_text($post['content']);
+
+if(count($children) == 0 && count($brothers) == 0 && count($postsTypes) == 0 && count($rightButtons) == 0) { $rightColumn = false; } 
+else { $rightColumn = true; }
 ?>
 <div id="post<?php echo $post['id']; ?>" class="container_omega">
 	
-	<?php echo $contentPage; ?>	
+	<?php 
+	if($rightColumn) { 
+		
+		$this->element('colonne_droite');
+		echo '<div class="gs_8"><div class="gs_8 omega">'; 
+	}
+	
+	echo $contentPage; 
+	?>
+			
 	<div class="clearfix"></div>
 	<?php
 	if($post['display_form']) { 
@@ -30,7 +42,9 @@ $contentPage = $this->vars['components']['Text']->format_content_text($post['con
 			</div>
 			<?php 
 		}		
-	}
+	}			
+			
+	if($rightColumn) { echo '</div></div>'; }
 	?>
 </div>
 <?php 

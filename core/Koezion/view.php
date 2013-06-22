@@ -77,6 +77,7 @@ class View extends Object {
  * @version 0.1 - 13/06/2012 by FI
  * @version 0.2 - 24/09/2012 by FI - Rajout du boolean $inViewsFolder pour indiquer si le dossier de stockage de la vue est dans views
  * @todo IMPORTANT essayer de voir pourquoi si on retire le file_exists($view) la fonction export du plugin formulaire ne marche plus!!!
+ * @todo Essayer d'améliorer l'ajout de websitebaseurl dans le template car il est inséré juste après la récupération de la vue
  */    
     public function render($inViewsFolder = true) {
     	
@@ -127,6 +128,8 @@ class View extends Object {
     	ob_start(); //On va récupérer dans une variable le contenu de la vue pour l'affichage dans la variable layout_for_content
     	if(file_exists($view)) require_once($view); //Chargement de la vue
     	$content_for_layout = ob_get_clean(); //On stocke dans cette variable le contenu de la vue
+    	$content_for_layout .= '<span class="websitebaseurl" style="display:none;">'.BASE_URL.'</span>'; //Pour le moment seul moyen trouvé pour qu'il soit inséré en front et en back...
+    	
     	
     	$alternativeLayoutFolder = substr_count($this->layout, DS) + substr_count($this->layout, '/');
 
