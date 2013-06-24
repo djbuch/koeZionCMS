@@ -792,8 +792,7 @@ class CategoriesController extends AppController {
 		
 			//Construction des paramètres de la requête
 			$postsQuery = array(
-				'conditions' => $postsConditions,
-				'fields' => array('id', 'name', 'short_content', 'slug', 'display_link', 'page_description', 'modified_by', 'modified, prefix', 'category_id')
+				'conditions' => $postsConditions
 			);			
 			if($setLimit) { $postsQuery['limit'] = $this->pager['limit'].', '.$this->pager['elementsPerPage']; }
 		

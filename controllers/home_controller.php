@@ -91,7 +91,6 @@ class HomeController extends AppController {
 			
 			$postsQuery = array(
 				'conditions' => array('online' => 1, 'display_home_page' => 1),
-				'fields' => array('id', 'name', 'short_content', 'slug', 'display_link', 'created_by', 'modified_by', 'modified', 'prefix', 'category_id'),
 				'limit' => '0, 5'
 			);	
 		
