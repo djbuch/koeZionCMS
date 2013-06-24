@@ -1,6 +1,13 @@
 ﻿<versions>
 	<version>
 		<name>Version du 24/06/2013</name>
+		<num>20130624.004</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Correction problème css sur la page index</task>
+		</tasks>	
+	</version>
+		<name>Version du 24/06/2013</name>
 		<num>20130624.003</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
