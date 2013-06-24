@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 24/06/2013</name>
+		<num>20130624.005</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Correction problème gestion de l'identifiant du rédacteur d'un article</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 24/06/2013</name>
 		<num>20130624.004</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

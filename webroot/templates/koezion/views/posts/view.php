@@ -31,7 +31,7 @@ else { $rightColumn = true; }
 		if($nbComments == 0) { $nbCommentsTxt = _('aucun'); } else { $nbCommentsTxt = $nbComments; }				
 		echo '|'.$nbCommentsTxt.' commentaire(s)';
 						
-		$writer = $this->request('Users', 'get_user_libelle', array($post['modified_by']));				
+		$writer = $this->request('Users', 'get_user_libelle', array($post['created_by']));				
 		echo '| '._('par').' '.'<a href="'.$postBaseRoute.'?writer='.$writer['id'].'">'.$writer['name'].'</a>';				
 		
 		$inTypes = $this->request('PostsTypes', 'get_posts_types', array($post['id']));
