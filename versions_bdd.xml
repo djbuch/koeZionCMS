@@ -5,7 +5,7 @@
 		<num>20130624.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS" num="1">ALTER TABLE `modules` ADD `action_name` VARCHAR( 255 ) NOT NULL AFTER `controller_name`;</task>
+			<task author="KoéZionCMS" num="1">ALTER TABLE `modules` ADD `action_name` VARCHAR( 255 ) NOT NULL AFTER `controller_name`</task>
 		</tasks>	
 	</version>
 	<version>
