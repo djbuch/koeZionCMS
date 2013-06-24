@@ -13,6 +13,10 @@ class Post extends Model {
  * @version 0.1 - 17/01/2012 by FI
  */
 	var $validate = array(
+		'category_id' => array(
+			'rule' =>'notEmpty',
+			'message' => 'Post.category_id'
+		),
 		'name' => array(
 			'rule' => array('minLength', 2),
 			'message' => 'Post.name'

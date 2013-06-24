@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 24/06/2013</name>
+		<num>20130624.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Mise en place d'une règle de validation sur la catégorie dans le formulaire d'ajout d'un article</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 24/06/2013</name>
 		<num>20130624.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

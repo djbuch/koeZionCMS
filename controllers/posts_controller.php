@@ -445,7 +445,7 @@ class PostsController extends AppController {
 	protected function _init_categories() {
 
 		$this->loadModel('Category'); //Chargement du modèle des catégories
-		$categoriesList = $this->Category->getTreeList(); //On récupère les catégories
+		$categoriesList = $this->Category->getTreeList(false); //On récupère les catégories
 		$this->unloadModel('Category'); //Déchargement du modèle des catégories
 		$this->set('categoriesList', $categoriesList); //On les envois à la vue
 	}
@@ -673,10 +673,16 @@ class PostsController extends AppController {
 		
 		$this->cachingFiles = array(		
 			TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS."home_page_website_".CURRENT_WEBSITE_ID.'.cache',
-			TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS."website_".CURRENT_WEBSITE_ID.'.cache',
-			TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS."post_".$this->request->data['id'].'_brothers.cache',
-			TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS."post_".$this->request->data['id'].'_children.cache',
-			TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS."post_".$this->request->data['id'].'_right_buttons.cache'
-		);		
+			TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS."website_".CURRENT_WEBSITE_ID.'.cache'
+		);
+		
+		if(isset($this->request->data['id']) && !empty($this->request->data['id'])) {
+			
+			$this->cachingFiles = array(
+				TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS."post_".$this->request->data['id'].'_brothers.cache',
+				TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS."post_".$this->request->data['id'].'_children.cache',
+				TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS."post_".$this->request->data['id'].'_right_buttons.cache'
+			);
+		}		
 	}
 }

@@ -19,6 +19,7 @@ $Errorsmessages['Module']['controller_name'] = _('La valeur de ce champ est de 2
 $Errorsmessages['Plugin']['name'] = _('La valeur de ce champ est de 2 caractères minimum.');
 $Errorsmessages['Plugin']['code'] = _('La valeur de ce champ est de 5 caractères exactement.');
 
+$Errorsmessages['Post']['category_id'] = _('Vous devez sélectionner une catégorie.');
 $Errorsmessages['Post']['name'] = _('La valeur de ce champ est de 2 caractères minimum.');
 $Errorsmessages['Post']['slug']['rule1'] = _('La valeur de ce champ est de 3 caractères minimum.');
 $Errorsmessages['Post']['slug']['rule2'] = _('Il y a des caractères non autorisés dans ce champ.');
