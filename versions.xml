@@ -1,6 +1,16 @@
 ﻿<versions>
 	<version>
 		<name>Version du 24/06/2013</name>
+		<num>20130624.003</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Rajout d'un nouveau filtre sur la date de création pour le tri des articles</task>
+			<task author="KoéZionCMS" type="code">Modification de la fonction render dans l'objet vue pour éviter de rajouter le code de base url dans l'ajax, le rss et le layout vide.</task>
+			<task author="KoéZionCMS" type="code">Mise en place de la gestion automatique de l'affichage de l'entête d'un article dans la page de détail.</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 24/06/2013</name>
 		<num>20130624.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

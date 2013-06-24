@@ -87,15 +87,26 @@ class HomeController extends AppController {
 		
 		$posts = Cache::exists_cache_file($cacheFolder, $cacheFile);
 		
-		if(!$posts) {			
+		if(!$posts) {	
 			
-			$this->loadModel('Post');		
 			$postsQuery = array(
 				'conditions' => array('online' => 1, 'display_home_page' => 1),
 				'fields' => array('id', 'name', 'short_content', 'slug', 'display_link', 'modified_by', 'modified', 'prefix', 'category_id'),
-				'limit' => '0, 5',
-				'order' => 'modified DESC'
-			);		
+				'limit' => '0, 5'
+			);	
+		
+			//////////////////////////////////////////////////////
+			//   RECUPERATION DES CONFIGURATIONS DES ARTICLES   //
+			require_once(LIBS.DS.'config_magik.php'); 										//Import de la librairie de gestion des fichiers de configuration des posts
+			$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'posts.ini', false, false); 		//Création d'une instance
+			$postsConfigs = $cfg->keys_values();											//Récupération des configurations
+			//////////////////////////////////////////////////////
+		
+			if($postsConfigs['order'] == 'modified') { $postsQuery['order'] = 'modified DESC'; }
+			else if($postsConfigs['order'] == 'created') { $postsQuery['order'] = 'created DESC'; }
+			else if($postsConfigs['order'] == 'order_by') { $postsQuery['order'] = 'order_by ASC'; }			
+			
+			$this->loadModel('Post');		
 			$posts = $this->Post->find($postsQuery);
 		
 			Cache::create_cache_file($cacheFolder, $cacheFile, $posts);

@@ -11,6 +11,7 @@
 				echo $helpers['Form']->input('search', _('Type de recherche'), array('type' => 'select', 'datas' => $typeSearch, 'tooltip' => _("Sélectionnez le type de recherche associée aux types d'articles pour l'affichage des articles")));
 
 				$orderType = array(						
+					'created' => _("La date de création"),
 					'modified' => _("La date de modification"),
 					'order_by' => _("Le rang")
 				);

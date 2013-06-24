@@ -698,6 +698,19 @@ p.arrow {
 	float: right;
 }
 
+.post_details h2.widgettitle {
+	margin: 0;
+}
+
+.post_details h2.widgettitle + p.post_info {
+	margin: 0;
+	font-size: 12px;
+}
+
+.post_details h2.widgettitle + p.post_info + .hr {
+	margin-top: 5px;
+}
+
 .startmain {
 	margin: 6px 0 0;
 	width: 980px;

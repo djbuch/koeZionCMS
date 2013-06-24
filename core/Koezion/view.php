@@ -128,8 +128,12 @@ class View extends Object {
     	ob_start(); //On va récupérer dans une variable le contenu de la vue pour l'affichage dans la variable layout_for_content
     	if(file_exists($view)) require_once($view); //Chargement de la vue
     	$content_for_layout = ob_get_clean(); //On stocke dans cette variable le contenu de la vue
-    	$content_for_layout .= '<span class="websitebaseurl" style="display:none;">'.BASE_URL.'</span>'; //Pour le moment seul moyen trouvé pour qu'il soit inséré en front et en back...
     	
+    	//On ne rajoute pas ce code si on est dans un layout xml ou ajax
+    	if($this->layout != 'ajax' && $this->layout != 'empty' && $this->layout != 'rss') { 
+    		
+    		$content_for_layout .= '<span class="websitebaseurl" style="display:none;">'.BASE_URL.'</span>'; //Pour le moment seul moyen trouvé pour qu'il soit inséré en front et en back...
+    	}    	
     	
     	$alternativeLayoutFolder = substr_count($this->layout, DS) + substr_count($this->layout, '/');
 

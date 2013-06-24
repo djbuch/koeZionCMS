@@ -798,6 +798,7 @@ class CategoriesController extends AppController {
 			if($setLimit) { $postsQuery['limit'] = $this->pager['limit'].', '.$this->pager['elementsPerPage']; }
 		
 			if($postsConfigs['order'] == 'modified') { $postsQuery['order'] = 'modified DESC'; }
+			else if($postsConfigs['order'] == 'created') { $postsQuery['order'] = 'created DESC'; }
 			else if($postsConfigs['order'] == 'order_by') { $postsQuery['order'] = 'order_by ASC'; }
 		
 			$postsQuery['moreConditions'] = ''; //Par défaut pas de conditions de recherche complémentaire
