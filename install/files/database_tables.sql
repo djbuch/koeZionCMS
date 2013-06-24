@@ -83,6 +83,7 @@ CREATE TABLE IF NOT EXISTS `modules` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `controller_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `action_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `display_in_menu` int(11) NOT NULL,
   `order_by` int(11) NOT NULL,
   `online` int(11) NOT NULL,

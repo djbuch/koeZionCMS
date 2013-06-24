@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 24/06/2013</name>
+		<num>20130624.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="bdd">Préparation de la future fonctionnalité liée à l'utilisation de la fonction dans les modules pour la gestion du menu en backoffice</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 22/06/2013</name>
 		<num>20130622.001</num>
 		<supervisor>KoéZionCMS</supervisor>
