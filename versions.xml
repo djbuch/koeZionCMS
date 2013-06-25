@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 25/06/2013</name>
+		<num>20130625.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Changement du include_once en include pour le chargement des messages d'erreurs car dans le cas de validations multiples le fichier n'était pas chargé</task>
+			<task author="KoéZionCMS" type="code">Recorrection de la gestion du websitebaseurl utilisé pour l'ajax... Il faut trouver une solution durable!!!</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 24/06/2013</name>
 		<num>20130624.005</num>
 		<supervisor>KoéZionCMS</supervisor>

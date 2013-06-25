@@ -627,13 +627,14 @@ class Model extends Object {
  * @version 0.2 - 06/02/2012 - Ne validera que les champs envoyés dans le formulaire 
  * @version 0.3 - 03/04/2012 - Modification de la gestion des messages d'erreurs suite à l'ajout de gettext
  * @version 0.4 - 20/04/2012 - Mise en place des validations par callback 
+ * @version 0.5 - 25/06/2013 - Changement du include_once en include pour le chargement des messages d'erreurs car dans le cas de validations multiples le fichier n'était pas chargé  
  */	
 	function validates($datas) {
 				
 		if(isset($this->validate)) { //Si on a un tableau de validation dans la classe
 			
 			$errors = array(); //Tableau d'erreurs qui sera retourné
-			include_once(CONFIGS.DS.'messages.php'); //Inclusion des éventuels messages d'erreurs
+			include(CONFIGS.DS.'messages.php'); //Inclusion des éventuels messages d'erreurs
 						
 			foreach($this->validate as $k => $v) { //On va parcourir tous les champs à valider
 				
