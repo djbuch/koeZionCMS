@@ -1,5 +1,16 @@
 ﻿<versions>
 	<version>
+		<name>Version du 27/06/2013</name>
+		<num>20130627.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Gestion des attributs pour les cases à cocher</task>
+			<task author="KoéZionCMS" type="bdd">Corrections dans le fichier sql contenant les données à enregistrer dans les tables lors de l'installation du CMS</task>
+			<task author="KoéZionCMS" type="code">Correction du bug lié à la non récupération de l'élément lors de l'envoi de mail</task>
+			<task author="KoéZionCMS" type="code">Mise en place du nettoyage des donnés de formulaire frontoffice via la librairie Sanitize de CakePhp</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 25/06/2013</name>
 		<num>20130625.001</num>
 		<supervisor>KoéZionCMS</supervisor>

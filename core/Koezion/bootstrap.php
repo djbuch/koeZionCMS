@@ -32,6 +32,7 @@ require_once CONFIGS.DS.'configure.php'; //Classe de configuration
 require_once CONFIGS.DS.'routes.php'; //Fichier contenant la liste des réécritures d'url
 require_once CAKEPHP.DS.'string.php'; //Classe Object permettant la manipulation de chaîne de caractères
 require_once CAKEPHP.DS.'set.php'; //Classe Object permettant des manipulations sur les tableaux
+require_once CAKEPHP.DS.'sanitize.php'; //Classe Object permettant des manipulations de nettoyage
 require_once KOEZION.DS.'validation.php'; //Classe Object permettant la gestion des différentes règles de validation des modèles
 require_once KOEZION.DS.'request.php'; //Chargement de l'objet Request
 require_once CONTROLLERS.DS.'app_controller.php'; //Classe App

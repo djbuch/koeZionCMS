@@ -35,7 +35,7 @@ class Form {
  * @author 	koéZionCMS
  * @version 0.1 - 20/01/2012 by FI
  */
-	var $escapeAttributes = array('type', 'displayError', 'label', 'div', 'datas', 'value', 'divRowBorderTop');
+	var $escapeAttributes = array('type', 'displayError', 'label', 'div', 'datas', 'value', 'divRowBorderTop', 'tooltip');
 
 /**
  * Constructeur de la classe
@@ -479,7 +479,7 @@ class Form {
 
 				//Par défaut le champ hidden permettra de mettre à 0 la valeur du champ si la case n'est pas cochée
 				$inputReturn .= '<input type="hidden" id="'.$inputIdText.'hidden" name="'.$inputNameText.'" value="0" />';
-				$inputReturn .= '<input type="checkbox" id="'.$inputIdText.'" name="'.$inputNameText.'" value="1" '.(empty($value) ? '' : 'checked').' />';
+				$inputReturn .= '<input type="checkbox" id="'.$inputIdText.'" name="'.$inputNameText.'" value="1" '.(empty($value) ? '' : 'checked').' '.$attributes.' />';
 			break;
 
 			//   INPUT DE TYPE RADIO   //

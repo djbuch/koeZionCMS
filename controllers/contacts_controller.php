@@ -26,6 +26,7 @@ class ContactsController extends AppController {
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 10/02/2012 by FI 
+ * @version 0.2 - 27/06/2013 by FI - Correction sur la gestion de l'élément suite au changement dans la gestion des templates plus nettoyage des données
  */	
 	function newsletter() {
 		
@@ -37,12 +38,17 @@ class ContactsController extends AppController {
     			$vars = $this->get('vars');
     			$messageContent = $vars['websiteParams']['txt_mail_newsletter'];
 			
+    			if(defined('LAYOUT_VIEWS')) { $emailElement = LAYOUT_VIEWS.DS.'elements'.DS.'email'.DS.'newsletter'; }
+    			else { $emailElement = ELEMENTS.DS.'email'.DS.'default'; }
+    			
+    			$this->request->data = Sanitize::clean($this->request->data, array('remove_html' => true)); //Petit nettoyage des données avant envoi et insertion
+    			
 				///////////////////////
 				//   ENVOI DE MAIL   //
 				$mailDatas = array(
 					'subject' => '::Newsletter::',
 					'to' => $this->request->data['email'],
-					'element' => 'frontoffice/email/newsletter',
+					'element' => $emailElement,
 					'vars' => array('messageContent' => $messageContent)
 				);
 				$this->components['Email']->send($mailDatas, $this); //On fait appel au composant email

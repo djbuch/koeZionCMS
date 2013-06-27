@@ -703,6 +703,7 @@ class AppController extends Controller {
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 02/08/2012 by FI
+ * @version 0.2 - 27/06/2013 by FI - Correction sur la gestion de l'élément suite au changement dans la gestion des templates plus nettoyage des données
  */    
     protected function _send_mail_contact() {
 		    	
@@ -716,12 +717,17 @@ class AppController extends Controller {
 				$messageContent = $vars['websiteParams']['txt_mail_contact'];				
 				$tplLayout = $vars['websiteParams']['tpl_layout'];
 				
+				if(defined('LAYOUT_VIEWS')) { $emailElement = LAYOUT_VIEWS.DS.'elements'.DS.'email'.DS.'contact'; }
+				else { $emailElement = ELEMENTS.DS.'email'.DS.'default'; }
+				
+				$this->request->data = Sanitize::clean($this->request->data, array('remove_html' => true)); //Petit nettoyage des données avant envoi et insertion
+				
 				///////////////////////
 				//   ENVOI DE MAIL   //
 				$mailDatas = array(
 					'subject' => '::Contact::',
 					'to' => $this->request->data['email'],
-					'element' => $tplLayout.'/email/contact',
+					'element' => $emailElement,
 					'vars' => array(
 						'formUrl' => $this->request->fullUrl,
 						'messageContent' => $messageContent
@@ -731,7 +737,7 @@ class AppController extends Controller {
 				///////////////////////
 		
 				////////////////////////////////////////////
-				//   SAUVEGARDE DANS LA BASE DE DONNEES   //
+				//   SAUVEGARDE DANS LA BASE DE DONNEES   //				
 				$this->Contact->save($this->request->data); 
 				$message = '<p class="confirmation">Votre demande a bien été prise en compte</p>';
 				$this->set('message', $message);
@@ -770,6 +776,7 @@ class AppController extends Controller {
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 02/08/2012 by FI
+ * @version 0.2 - 27/06/2013 by FI - Correction sur la gestion de l'élément suite au changement dans la gestion des templates plus nettoyage des données
  */      
     protected function _send_mail_comments() {
     	    	
@@ -785,13 +792,18 @@ class AppController extends Controller {
     			$vars = $this->get('vars');
     			$messageContent = $vars['websiteParams']['txt_mail_comments'];				
 				$tplLayout = $vars['websiteParams']['tpl_layout'];
+				
+				if(defined('LAYOUT_VIEWS')) { $emailElement = LAYOUT_VIEWS.DS.'elements'.DS.'email'.DS.'commentaire'; } 
+				else { $emailElement = ELEMENTS.DS.'email'.DS.'default'; }
+				
+				$this->request->data = Sanitize::clean($this->request->data, array('remove_html' => true)); //Petit nettoyage des données avant envoi et insertion
     			
     			///////////////////////
     			//   ENVOI DE MAIL   //
     			$mailDatas = array(
 	    			'subject' => '::Commentaire::',
 	    			'to' => $this->request->data['email'],
-	    			'element' => $tplLayout.'/email/commentaire',
+	    			'element' => $emailElement,
 					'vars' => array(
 						'formUrl' => $this->request->fullUrl,						
 						'messageContent' => $messageContent
