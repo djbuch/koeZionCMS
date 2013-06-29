@@ -1,5 +1,13 @@
 ﻿<versions> 
 	<version>
+		<name>Version du 29/06/2013</name>
+		<num>20130629.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" num="1">ALTER TABLE `websites` CHANGE `url` `url` LONGTEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL;</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 24/06/2013</name>
 		<num>20130624.001</num>
 		<supervisor>KoéZionCMS</supervisor>

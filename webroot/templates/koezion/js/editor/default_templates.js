@@ -61,6 +61,17 @@ CKEDITOR.addTemplates(
 						'<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s.</p>'
 			},
 			{
+				title:'Texte descriptif court article (V3)',
+				image:'desc_court_article.gif',
+				description:'Image 572/300px',
+				html:'' +				
+						'<p>' +
+							'<img alt="" class="border_magic" src="" style="width: 572px; height: 300px; float: left; margin-bottom: 10px;" />' +
+							'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s.' +
+						'</p>' +
+						'<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s.</p>'
+			},
+			{
 				title:'Texte descriptif long article (V1)',
 				image:'desc_long_article.gif',
 				description:'Images 264/111px',
@@ -171,6 +182,95 @@ CKEDITOR.addTemplates(
 						'<p style="text-align: center;"><em>Lorem ipsum dolor sit amet</em></p>' +
 						'<p><img alt="" class="border_magic" src="" style="width: 187px; height: 100px; float: left; margin-right: 10px; margin-bottom: 10px;" />Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s.</p>' +
 						'<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s.</p>'
+			},
+			{
+				title:'Texte descriptif long article (V2)',
+				image:'desc_long_article.gif',
+				description:'Images 100/157px et 187/100px',
+				html: '' + 				
+						'<h2 class="widgettitle">Lorem ipsum</h2>' +
+						'<div class="hr"><div class="inner_hr">&nbsp;</div></div>' +
+						'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec enim lacus, tristique quis felis non, congue porttitor ipsum. Phasellus fermentum ipsum odio, nec rhoncus augue tempus eu.&nbsp;</p>' +
+						'<p><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec enim lacus, tristique quis felis non, congue porttitor ipsum. Phasellus fermentum ipsum odio, nec rhoncus augue tempus eu. </strong></p>' +
+						'<div class="gs_4">' +
+							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
+							'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>' +
+						'</div>' +
+						'<div class="gs_4">' +
+							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
+							'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>' +
+						'</div>' +
+						'<div class="gs_4 omega">' +
+							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
+							'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>' +
+						'</div>' +
+						'<div class="clearfix">&nbsp;</div>' +
+						'<div class="gs_4">' +
+							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
+							'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>' +
+						'</div>' +
+						'<div class="gs_4">' +
+							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
+							'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>' +
+						'</div>' +
+						'<div class="gs_4 omega">' +
+							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
+							'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>' +
+						'</div>' +
+						'<div class="clearfix">&nbsp;</div>' +
+						'<div class="gs_4">' +
+							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
+							'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>' +
+						'</div>' +
+						'<div class="gs_4">' +
+							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
+							'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>' +
+						'</div>' +
+						'<div class="gs_4 omega">' +
+							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
+							'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>' +
+						'</div>' +
+						'<div class="clearfix">&nbsp;</div>' +
+						'<div class="gs_4">' +
+							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
+							'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>' +
+						'</div>' +
+						'<div class="gs_4">' +
+							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
+							'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>' +
+						'</div>' +
+						'<div class="gs_4 omega">' +
+							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
+							'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>' +
+						'</div>' +
+						'<div class="clearfix">&nbsp;</div>' +
+						'<div class="gs_4">' +
+							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
+							'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>' +
+						'</div>' +
+						'<div class="gs_4">' +
+							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
+							'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>' +
+						'</div>' +
+						'<div class="gs_4 omega">' +
+							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
+							'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>' +
+						'</div>' +
+						'<div class="clearfix">&nbsp;</div>' +
+						'<div class="gs_4">' +
+							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
+							'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>' +
+						'</div>' +
+						'<div class="gs_4">' +
+							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
+							'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>' +
+						'</div>' +
+						'<div class="gs_4 omega">' +
+							'<a class="zoomer" href="" rel="prettyPhoto"><img alt="" class="border_magic" src="" style="width: 264px; height: 111px; " /></a>' +
+							'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>' +
+						'</div>' +
+						'<div class="clearfix">&nbsp;</div>' +
+						'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.<p/>'
 			},
 			{
 				title:'Page portfolio',

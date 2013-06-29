@@ -1,5 +1,15 @@
 ﻿<versions>
 	<version>
+		<name>Version du 29/06/2013</name>
+		<num>20130629.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Modification du formulaire d'ajout des site Internet pour la gestion des alias</task>
+			<task author="KoéZionCMS" type="bdd">Modification de la structure de la bdd des websites</task>		
+			<task author="KoéZionCMS" type="code">Rajout de nouveaux modèles de page pour les articles</task>		
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 27/06/2013</name>
 		<num>20130627.001</num>
 		<supervisor>KoéZionCMS</supervisor>
