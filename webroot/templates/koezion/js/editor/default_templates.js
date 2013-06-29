@@ -66,7 +66,7 @@ CKEDITOR.addTemplates(
 				description:'Image 572/300px',
 				html:'' +				
 						'<p>' +
-							'<img alt="" class="border_magic" src="" style="width: 572px; height: 300px; float: left; margin-bottom: 10px;" />' +
+							'<img alt="" class="border_magic" src="" style="width: 572px; height: 300px; margin-bottom: 10px;" />' +
 							'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s.' +
 						'</p>' +
 						'<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s.</p>'
