@@ -184,9 +184,9 @@ CKEDITOR.addTemplates(
 						'<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s.</p>'
 			},
 			{
-				title:'Texte descriptif long article (V2)',
+				title:'Texte descriptif long article (V3)',
 				image:'desc_long_article.gif',
-				description:'Images 100/157px et 187/100px',
+				description:'Images 264/111px',
 				html: '' + 				
 						'<h2 class="widgettitle">Lorem ipsum</h2>' +
 						'<div class="hr"><div class="inner_hr">&nbsp;</div></div>' +
