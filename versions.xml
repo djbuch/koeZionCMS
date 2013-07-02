@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 02/07/2013</name>
+		<num>20130702.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Légères modifications dans la gestion des flux rss des articles</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 29/06/2013</name>
 		<num>20130629.001</num>
 		<supervisor>KoéZionCMS</supervisor>
