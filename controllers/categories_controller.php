@@ -775,7 +775,7 @@ class CategoriesController extends AppController {
 			$datas['rss_for_layout'] = array(
 				'title' => $datas['category']['page_title'],	
 				'link' => Router::url('categories/rss/id:'.$datas['category']['id'].'/slug:'.$datas['category']['slug'], 'xml', true),
-				'pageLink' => Router::url('categories/rss/id:'.$datas['category']['id'].'/slug:'.$datas['category']['slug'], 'html', true)
+				'pageLink' => Router::url('categories/view/id:'.$datas['category']['id'].'/slug:'.$datas['category']['slug'], 'html', true)
 			);
 		
 			//////////////////////////////////////////////////////
