@@ -13,3 +13,4 @@ html pre{white-space:pre-wrap}
 .posts_comments{background:url(../../../templates/koezion/img/open-quote.gif) no-repeat 10px center;padding:10px 10px 10px 65px;background-color:white;margin-bottom:20px;border-radius:4px}
 .posts_comments .post_message{margin-bottom:10px}
 .posts_comments .post_name{margin-bottom:0;text-align:right;font-style:italic;font-size:11px}
+p.post_source{font-size:8px;font-style:italic;}

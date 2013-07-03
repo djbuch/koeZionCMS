@@ -273,6 +273,12 @@ CKEDITOR.addTemplates(
 						'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.<p/>'
 			},
 			{
+				title:'Source article',
+				image:'source.gif',
+				description:'',
+				html:'<p class="post_source">Source : <a href="#">Lorem Ipsum Dolor Sit Amet</a></p>'
+			},
+			{
 				title:'Page portfolio',
 				image:'page_portfolio.gif',
 				description:'Images 649/420px et 187/125px',

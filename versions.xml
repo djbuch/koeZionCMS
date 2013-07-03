@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 03/07/2013</name>
+		<num>20130703.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Rajout d'un modèle de page pourla gestion de la source dans les articles</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 02/07/2013</name>
 		<num>20130702.001</num>
 		<supervisor>KoéZionCMS</supervisor>
