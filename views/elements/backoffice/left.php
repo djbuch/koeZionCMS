@@ -9,9 +9,13 @@
 				<li>
 					<?php if(!empty($v['libelle'])) { ?><a><?php echo $v['libelle']; ?></a><?php } ?>
 					<ul>
-						<?php foreach($v['menus'] as $leftMenus) { ?>
-							<li><a href="<?php echo Router::url('backoffice/'.$leftMenus['controller_name'].'/index'); ?>"><?php echo $leftMenus['name']; ?></a></li>
-						<?php } ?>
+						<?php 
+						foreach($v['menus'] as $leftMenus) {
+
+							$action = !empty($leftMenus['action_name']) ? $leftMenus['action_name'] : 'index';						
+							?><li><a href="<?php echo Router::url('backoffice/'.$leftMenus['controller_name'].'/'.$action); ?>"><?php echo $leftMenus['name']; ?></a></li><?php 
+						} 
+						?>
 					</ul>
 				</li>
 				<?php 

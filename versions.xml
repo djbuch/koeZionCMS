@@ -1,10 +1,18 @@
 ﻿<versions>
 	<version>
+		<name>Version du 04/07/2013</name>
+		<num>20130704.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Gestion de l'action dans le contrôleur Modules pour le menu en backoffice</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 03/07/2013</name>
 		<num>20130703.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS" type="code">Rajout d'un modèle de page pourla gestion de la source dans les articles</task>
+			<task author="KoéZionCMS" type="code">Rajout d'un modèle de page pour la gestion de la source dans les articles</task>
 		</tasks>	
 	</version>
 	<version>
