@@ -7,7 +7,7 @@ class Model extends Object {
 	static $connections = array();
     
 	public $conf = 'localhost'; //Paramètres de connexion par défaut
-	public $table = false; //Nom de la table
+	public $table = false; //Nom de la table	
 	public $db; //Variable contenant la connexion à la base de données
 	public $primaryKey = 'id';  //Valeur par défaut de la clé primaire
 	public $id; //Variable qui va contenir la valeur de la clé primaire après isert ou update
@@ -17,6 +17,8 @@ class Model extends Object {
 	public $queryExecutionResult = false; //indique si la requete de save s'est bien passée 
 	public $refererUrl = ''; //Cette variable va contenir l'url de la page appelante
 	public $manageWebsiteId = true; //Permet d'éviter de prendre en compte la recherche basée sur le champ website_id ainsi que l'insertion automatique de ce champ
+	
+	protected $alias = false; //Alias de la table
     
 /**
  * Constructeur de la classe
@@ -29,6 +31,7 @@ class Model extends Object {
  * @version 0.4 - 24/08/2012 by FI - Rajout du shéma de la table comme variable de classe
  * @version 0.5 - 07/09/2012 by FI - Rajout de la variable database si la connexion existe déjà
  * @version 0.6 - 14/12/2012 by FI - Rajout de la variable $refererUrl dans le constructeur pour les logs bdd
+ * @version 0.7 - 05/07/2013 by FI - Gestion de l'alias
  */
 	public function __construct($refererUrl = null) {
 
@@ -53,6 +56,8 @@ class Model extends Object {
 			$tableName = Inflector::tableize(get_class($this)); //Mise en variable du nom de la table
 			$this->table = $prefix.$tableName; //Affectation de la variable de classe
 		}		
+		
+		$this->alias = "Kz".get_class($this);
 		
 		//On test qu'une connexion ne soit pas déjà active
 		if(isset(Model::$connections[$this->conf])) {
@@ -316,8 +321,8 @@ class Model extends Object {
 		else { $sql .= $req['fields']; } //Si il s'agit d'une chaine de caractères 
 		
 		//$sql .= ' FROM '.$this->table.' AS '.get_class($this).' '; //Mise en place du from//Mise en place du from
-		$sql .= ' FROM '.$this->table.' ';		
-		if(get_class($this) != 'Order') { $sql .= 'AS '.get_class($this).' '; } //Hack spécial si on a un model Order
+		$sql .= ' FROM '.$this->table.' AS '.$this->alias.' ';		
+		//if(get_class($this) != 'Order') { $sql .= 'AS '.get_class($this).' '; } //Hack spécial si on a un model Order
 
 		///////////////////////////////////////////////////////////
 		//   CONDITIONS DE RECHERCHE SUR L'IDENTIFIANT DU SITE   //
@@ -379,7 +384,7 @@ class Model extends Object {
 						//Equivalement de mysql_real_escape_string --> $v = '"'.mysql_escape_string($v).'"';
 						if(!is_numeric($v)) { $v = $this->db->quote($v); }
 						
-						$k = get_class($this).".".$k;
+						$k = $this->alias.".".$k;
 						$cond[] = "$k=$v";
 						
 					} 
@@ -451,7 +456,7 @@ class Model extends Object {
 		
 		$res = $this->findFirst(
 			array(
-				'fields' => 'COUNT('.get_class($this).'.'.$this->primaryKey.') AS count',
+				'fields' => 'COUNT('.$this->alias.'.'.$this->primaryKey.') AS count',
 				'conditions' => $conditions,
 				'moreConditions' => $moreConditions
 			)

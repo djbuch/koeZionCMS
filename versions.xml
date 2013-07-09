@@ -1,5 +1,22 @@
 ﻿<versions>
 	<version>
+		<name>Version du 09/07/2013</name>
+		<num>20130709.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Correction bug url colonne de droite</task>
+			<task author="KoéZionCMS" type="code">Correction gestion colonne website_id dans le model UsersWebsite</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 05/07/2013</name>
+		<num>20130705.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Gestion des alias dans la base de données</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 04/07/2013</name>
 		<num>20130704.001</num>
 		<supervisor>KoéZionCMS</supervisor>

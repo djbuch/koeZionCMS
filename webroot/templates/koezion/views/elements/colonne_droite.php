@@ -85,11 +85,11 @@
 						else { $urlParams = ''; }
 						
 						//Contrôle de la route à mettre en place
-						if($this->params['controllerName'] == 'Categories') { 
+						//if($this->params['controllerName'] == 'Categories') { 
 							$postsRoute = Router::url('categories/view/id:'.$category['id'].'/slug:'.$category['slug']).$urlParams; 
-						} else { 
-							$postsRoute = Router::url('posts/listing').$urlParams; 
-						}
+						//} else { 
+						//	$postsRoute = Router::url('posts/listing').$urlParams; 
+						//}
 						?>
 						<li<?php echo $classLi; ?>><a href="<?php echo $postsRoute; ?>"><?php echo $postsTypesName; ?></a></li>
 					<?php } ?>

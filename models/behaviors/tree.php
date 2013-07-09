@@ -422,7 +422,7 @@ class Tree extends Model {
  */    
     function getTree($req = array()) {    	
     	
-    	$defaultReq = array('order' => 'Category.lft ASC');    	
+    	$defaultReq = array('order' => 'lft ASC');    	
     	$req = array_merge($defaultReq, $req); //Génération du tableau utilisé pour les conditions de recherche
     	
     	$tree = $this->find($req);
@@ -536,7 +536,7 @@ class Tree extends Model {
     	$children = $this->getTree(array('conditions' => array('id' => $childrenId))); //Récupération de l'enfant    	
 		$children = $children[$childrenId]; //Récupération de l'enfant
 
-		$req = array('moreConditions' => "Category.lft<".$children['lft']." AND Category.rgt>".$children['rgt']." AND type != 3"); //Conditions de recherche
+		$req = array('moreConditions' => "lft<".$children['lft']." AND rgt>".$children['rgt']." AND type != 3"); //Conditions de recherche
     	$node = $this->getTree($req); //On va récupérer les menus
     	
     	if($type == 'array') {
