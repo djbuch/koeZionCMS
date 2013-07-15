@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 15/07/2013</name>
+		<num>20130715.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Mise à jour de la librairie SwiftMailer - Paassage à la version 5.0.1</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 09/07/2013</name>
 		<num>20130709.001</num>
 		<supervisor>KoéZionCMS</supervisor>
