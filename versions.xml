@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 22/07/2013</name>
+		<num>20130722.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Mise à jour du coeur du model principal, correctif sur la récupération de types d'articles</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 15/07/2013</name>
 		<num>20130715.001</num>
 		<supervisor>KoéZionCMS</supervisor>

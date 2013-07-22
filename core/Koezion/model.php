@@ -317,11 +317,11 @@ class Model extends Object {
 			$req['fields'] = $shema;
 		}	
 		
-		if(is_array($req['fields'])) { $sql .= implode(', ', $req['fields']); } //Si il s'agit d'un tableau		
+		if(is_array($req['fields'])) { $sql .= '`'.implode('`, `', $req['fields']).'`'; } //Si il s'agit d'un tableau		
 		else { $sql .= $req['fields']; } //Si il s'agit d'une chaine de caractères 
 		
 		//$sql .= ' FROM '.$this->table.' AS '.get_class($this).' '; //Mise en place du from//Mise en place du from
-		$sql .= ' FROM '.$this->table.' AS '.$this->alias.' ';		
+		$sql .= ' FROM `'.$this->table.'` AS '.$this->alias.' ';		
 		//if(get_class($this) != 'Order') { $sql .= 'AS '.get_class($this).' '; } //Hack spécial si on a un model Order
 
 		///////////////////////////////////////////////////////////

@@ -33,7 +33,7 @@ class PostsTypesController extends AppController {
 			array(
 				'fields' => array('id', 'name'),
 				'conditions' => array('online' => 1),
-				'moreConditions' => 'PostsType.id IN (SELECT posts_type_id FROM posts_posts_types WHERE post_id = '.$postId.')'
+				'moreConditions' => 'KzPostsType.id IN (SELECT posts_type_id FROM posts_posts_types WHERE post_id = '.$postId.')'
 			)
 		);
 		return $result;
