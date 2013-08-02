@@ -2,7 +2,7 @@
 /* Général */
 
 #footer {
-	padding:16px 33px; /* Padding corrigé pour éviter une répartition inégale des widgets */
+	padding:16px 20px; /* Padding corrigé pour éviter une répartition inégale des widgets */
 }
 
 #footer .gs_3 {
@@ -34,7 +34,7 @@
 	margin-bottom: -7px; /* Pour le footer */
 }
 .stripe {
-	margin-top: 13px; /* 7 px de plus pour corriger le footer qui est plus bas */
+	margin-top: 15px; /* 7 px de plus pour corriger le footer qui est plus bas */
 }
 
 .focus .gs_3 {

@@ -1,5 +1,15 @@
 ﻿<versions>
 	<version>
+		<name>Version du 02/08/2013</name>
+		<num>20130802.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Corrections de la gestion des coins du footer ==> Passage en CSS3</task>
+			<task author="KoéZionCMS" type="code">Correction bug dans le composant Email</task>
+			<task author="KoéZionCMS" type="code">Correction bug dans le formatage des textes pour les mails</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 22/07/2013</name>
 		<num>20130722.001</num>
 		<supervisor>KoéZionCMS</supervisor>

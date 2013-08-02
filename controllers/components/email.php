@@ -63,7 +63,7 @@ class EmailComponent extends Object {
 		
 			require_once SWIFTMAILER.DS.'swift_required.php'; //Inclusion de la librairie d'envoi de mails
 			
-			if($conf['smtp_secure']) { $encryption = 'ssl'; } else {  $encryption = null; }
+			if(isset($conf['smtp_secure']) && $conf['smtp_secure']) { $encryption = 'ssl'; } else {  $encryption = null; }
 			
 			//Définition du transport smtp
 			$transport = Swift_SmtpTransport::newInstance()
@@ -111,7 +111,7 @@ class EmailComponent extends Object {
 	
 				foreach($datas['vars'] as $k => $v) { $view->vars[$k] = $v; }
 			}
-						
+			
 			ob_start(); //On démarre le rendu
 			$view->element($datas['element'], $controller->request->data); //On récupère l'élément à envoyer
 			$content_for_layout = ob_get_clean(); //On récupère le rendu

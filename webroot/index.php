@@ -19,7 +19,7 @@
  */
 //$debut = microtime(true);
 define('GENERATOR_META', 'koéZion CMS - CMS OPENSOURCE PHP');
-define('GENERATOR_LINK', '<p id="powered_by" style="position:absolute;width:20px;bottom:5px;right:5px;font-size:8px;margin-bottom:0;height:20px;opacity:.5"><a href="http://www.koezion-cms.com" title="koéZionCMS - CMS opensource PHP" style="width:20px;height:20px;text-indent:-9999px;display:block;background: url(../img/logo_koezion_mini.png) no-repeat top right transparent;">propulsé par koéZionCMS - CMS opensource PHP</a></p>');
+define('GENERATOR_LINK', '<p id="powered_by" style="position:absolute;width:20px;bottom:5px;right:5px;font-size:8px;margin-bottom:0;height:20px;opacity:.5"><a href="http://www.koezion-cms.com" title="koéZionCMS - CMS opensource PHP" style="width:20px;height:20px;text-indent:-9999px;display:block;background: url(./img/logo_koezion_mini.png) no-repeat top right transparent;">propulsé par koéZionCMS - CMS opensource PHP</a></p>');
 
 define('DS', DIRECTORY_SEPARATOR); //Définition du séparateur dans le cas ou l'on est sur windows ou linux
 

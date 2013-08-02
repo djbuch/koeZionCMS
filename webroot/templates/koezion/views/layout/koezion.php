@@ -62,10 +62,7 @@
 			<div class="endmain_right"></div>
 			</div>
 		</div>
-		<div class="wrap_content">
-			<?php $this->element('footer'); ?>
-			<?php $this->element('logout'); ?>
-		</div>				
+		<?php $this->element('footer'); ?>						
 		<?php 
 		////////////////////
 		//   JAVASCRIPT   //
