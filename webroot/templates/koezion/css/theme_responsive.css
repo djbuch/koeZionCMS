@@ -248,7 +248,7 @@ a.scroll-to-top.visible {
 	}
 
 	.sidebar {
- 		margin: 0 0 0 -34px;
+ 		/*margin: 0 0 0 -34px;*/
  		float: none !important;
  		padding-top: 12px;
 	}
@@ -308,7 +308,28 @@ a.scroll-to-top.visible {
 	.gs_4 {
 		max-width: 100%;
 	}
-
+	
+	/*SIDEBAR*/
+	.gs_4.sidebar{
+		width: 100%!important;
+		margin:0!important;
+		background: none!important;
+	}
+	.gs_4.sidebar h2{
+		padding-left:0!important;
+	}
+	.gs_4.sidebar ul{
+		margin-left:0!important;
+	}
+	.gs_4.sidebar li a{
+		padding-left:30px!important;
+		background-position: 5px -116px!important;
+	}
+	.gs_4.sidebar li.selected a, .gs_4.sidebar li.selected a:hover{
+		background-position: 5px -260px!important;	
+	}.gs_4.sidebar li a:hover{
+		background-position: 5px 9px!important;	
+	}
 	.container_omega > p {
 		clear: left;
 	}
@@ -469,7 +490,7 @@ a.scroll-to-top.visible {
 
 	.focus_line .gs_3 {
 		margin: 0px auto 30px auto !important;
-		padding: 50px 17px 0 0;
+		/*padding: 50px 17px 0 0;*/
 		float: none;
 	}
 }
@@ -511,9 +532,9 @@ a.scroll-to-top.visible {
 		padding: 45px 18px 5px !important;
 	}
 
-	.sidebar {
+	/*.sidebar {
 		margin: 0 0 0 -22px;
-	}
+	}*/
 }
 
 @media (max-width: 400px) {
@@ -525,11 +546,9 @@ a.scroll-to-top.visible {
 	}
 
 	#footer input[type=submit] {
-		margin: 5px 15px -20px 10px;
-		width: -moz-calc(100% - 20px);
-		width: -webkit-calc(100% - 20px);
-		width: -o-calc(100% - 20px);
-		width: calc(100% - 20px);
+		/*margin: 5px 15px -20px 10px;*/
+		margin: 5px 0 -20px 0;
+		width: 100%;
 	}
 
 	#footer #InputEmail{
@@ -553,21 +572,27 @@ a.scroll-to-top.visible {
 		max-width: 410px !important;
 	}
 
-	.sidebar {
+	/*.sidebar {
 		margin: 0 0 0 -12px;
-	}
+	}*/
 }
 
 @media (max-width: 350px) {
-	.sidebar {
+	/*.sidebar {
 		position: relative;
 		max-width: 120%;
 		width: 120%;
 		margin: 0px 0px 0px -20px;
-	}
+	}*/
 
 	.sidebar, .inner_main .widget {
 		overflow: visible;
+	}
+}
+
+@media (max-width: 380px) {
+	.post_holder p img.border_magic{
+		width: 100%!important;
 	}
 }
 
