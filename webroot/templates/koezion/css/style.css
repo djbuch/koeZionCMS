@@ -458,7 +458,8 @@ p.arrow {
 }
 
 #logo {
-	position: absolute;
+	position: relative;
+	float: left;
 }
 
 #personal_data {
@@ -484,8 +485,12 @@ p.arrow {
 	width: 200px;
 	height: 30px;
 	background: url(../../../templates/koezion/img/search_hovered.png) no-repeat scroll 0 0 transparent;
-	display: inline;
-	float: right;
+	/*display: inline;
+	float: right;*/
+	position: absolute;
+	bottom:5px;
+	right: 5px;
+	z-index: 999;
 }
 
 .main {

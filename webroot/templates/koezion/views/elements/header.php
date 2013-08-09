@@ -10,11 +10,11 @@
 	<?php 
 		if(isset($websiteParams['search_engine_position']) && $websiteParams['search_engine_position'] == 'header') {
 			$this->element('search'); 
-			echo "\n";
+			/*echo "\n";
 			$css = array(
 				$websiteParams['tpl_layout'].'/css/search_fix',
 			);
-			echo $helpers['Html']->css($css);	
+			echo $helpers['Html']->css($css);*/	
 		} 
 	?>
 </div>

@@ -9,19 +9,19 @@
 	float: right;
 }
 
-#logo {
+/*#logo {
 	max-width: 100%;
-}
+}*/
 
 #logo img {
 	max-width: 100%;
 	height: auto !important;
 }
 
-.search {
+/*.search {
 	position: relative;
 	z-index: 997;
-}
+}*/
 
 .container_omega img {
 	max-height: 100% !important;
@@ -261,9 +261,10 @@ a.scroll-to-top.visible {
 		/* Affichage */
 		display: block;
 		position: relative;
-		margin: 0px 32px 0px;
-		width: 60%;
+		/*margin: 0px 32px 0px;
+		width: 60%;*/
 		z-index: 995;
+		left:16px;
 
 		/* Style - dump du bootstrap.css de la version 2013 de koeZion */
 		border: 1px solid #CCC;
@@ -271,7 +272,7 @@ a.scroll-to-top.visible {
 		height: 30px;
 		line-height: 30px;
 		padding: 4px 6px;
-		margin-bottom: 10px;
+		/*margin-bottom: 10px;*/
 		font-size: 14px;
 		color: #555;
 		-webkit-border-radius: 4px;
@@ -290,11 +291,11 @@ a.scroll-to-top.visible {
 		margin-bottom: 20px;
 	}
 
-	#menu .search{
+	/*#menu .search{
 		display: block;
 		float: right;
 		margin: -40px 32px 0px !important;
-	}
+	}*/
 
 	.focus .gs_3 {
 		margin:0 13px 30px;
@@ -412,9 +413,7 @@ a.scroll-to-top.visible {
 		padding-top: 0px !important;
 	}
 
-	.header #menu select.selectnav {
-		width: 50%;
-	}
+	
 
 	.focus_line {
 		width: 452px;
@@ -454,9 +453,7 @@ a.scroll-to-top.visible {
 }
 
 @media (max-width: 570px) {
-	.header #menu select.selectnav {
-		width: 40%;
-	}
+	
 
 	.gs_3 {
 		margin: 0px auto 30px auto;
@@ -497,21 +494,19 @@ a.scroll-to-top.visible {
 
 @media (max-width: 500px) {	
 	#menu .search {
-		margin: 16px auto -40px !important;
+		/*margin: 16px auto -40px !important;*/
 		float: none;
+		position: absolute;
 	}
 
-	.inner_main .container_gamma.breadcrumbs {
+	/*.inner_main .container_gamma.breadcrumbs {
 		padding: 40px 20px 9px;
-	}
+	}*/
 
 	.header #menu select.selectnav {
 		margin: 0 auto;
 	}
 
-	.header #menu select.selectnav {
-		width: 75%;
-	}
 
 	/* Diminution du padding */
 	.container_gamma,
@@ -611,4 +606,29 @@ a.scroll-to-top.visible {
 	#footer .gs_3, #footer .gs_4 {
 		margin-top: 32px !important;
 	}
+}
+
+@media (max-width: 1000px) {
+	#menu select.selectnav {
+		width: -moz-calc(100% - 241px) !important;
+		width: -webkit-calc(100% - 241px) !important;
+		width: -o-calc(100% - 241px) !important;
+		width: calc(100% - 241px) !important;
+	}
+	#header{overflow: visible;}
+	#header .search{bottom: -41px;}
+	#menu .search{right:20px;}
+}
+
+@media (max-width: 500px) {	
+	.inner_main .container_gamma.breadcrumbs {padding: 5px 20px 9px !important;}
+	#menu select.selectnav {
+		width: -moz-calc(100% - 40px) !important;
+		width: -webkit-calc(100% - 40px) !important;
+		width: -o-calc(100% - 40px) !important;
+		width: calc(100% - 40px) !important;
+		left: 0!important;
+	}
+	#header .search{bottom: -85px;}
+	#menu .search{bottom: -36px;}
 }
