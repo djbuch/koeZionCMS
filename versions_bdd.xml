@@ -1,5 +1,19 @@
 ﻿<versions> 
 	<version>
+		<name>Version du 26/09/2013</name>
+		<num>20130926.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" num="1">
+				ALTER TABLE `websites` ADD `connect_background` LONGTEXT NOT NULL AFTER `js_hack` ,
+				ADD `connect_text` LONGTEXT NOT NULL AFTER `connect_background` ,
+				ADD `connect_css` LONGTEXT NOT NULL AFTER `connect_text` ,
+				ADD `connect_css_file` LONGTEXT NOT NULL AFTER `connect_text` ,
+				ADD `connect_js` LONGTEXT NOT NULL AFTER `connect_css_files`;
+			</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 29/06/2013</name>
 		<num>20130629.001</num>
 		<supervisor>KoéZionCMS</supervisor>

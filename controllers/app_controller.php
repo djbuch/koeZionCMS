@@ -86,11 +86,14 @@ class AppController extends Controller {
 		//Si on est dans le frontoffice			
 		} else {
 			
+			//////////////////////////////////////////////////
+			//   RECUPERATION DES DONNEES DU SITE COURANT   //
+			$datas['websiteParams'] = $this->_get_website_datas();
+			
 			//Dans tous les cas sauf si on est sur le formulaire de connexion
 			if($this->params['controllerName'] != 'Users' && ($this->request->action != 'login' || $this->request->action != 'logout')) {
 				
-				//////////////////////////////////////////////////
-				//   RECUPERATION DES DONNEES DU SITE COURANT   //
+				//Si aucun site trouvé on affiche la connexion
 				$datas['websiteParams'] = $this->_get_website_datas();				
 				if(empty($datas['websiteParams'])) { $datas['websiteParams']['secure_activ'] = 1; } //Si aucun site n'est retourné on affiche le formulaire de connexion
 				//////////////////////////////////////////////////
@@ -103,13 +106,12 @@ class AppController extends Controller {
 				//////////////////////////////////////////////////////////
 				//   MISE EN CACHE DE LA RECUPERATION DU MENU GENERAL   //
 				$datas['menuGeneral'] = $this->_get_website_menu($datas['websiteParams']['id']);				
-				//////////////////////////////////////////////////////////
-								
-				//ON VA DEFINIR LA CONSTANTE D'ACCES AUX VUES DU TEMPLATE//
-				define('LAYOUT_VIEWS', WEBROOT.DS.'templates'.DS.$datas['websiteParams']['tpl_layout'].DS.'views');				
-				
-				$this->set($datas);
+				//////////////////////////////////////////////////////////				
 			}
+			
+			//ON VA DEFINIR LA CONSTANTE D'ACCES AUX VUES DU TEMPLATE//
+			define('LAYOUT_VIEWS', WEBROOT.DS.'templates'.DS.$datas['websiteParams']['tpl_layout'].DS.'views');
+			$this->set($datas);
 		}		
 		
 		//////////////////////////////////
@@ -601,7 +603,7 @@ class AppController extends Controller {
     		Cache::create_cache_file($cacheFolder, $cacheFile, $website);
     	}
     	
-		define('CURRENT_WEBSITE_ID', $website['id']);	
+    	if(!defined('CURRENT_WEBSITE_ID')) { define('CURRENT_WEBSITE_ID', $website['id']); }	
 		$this->layout = $website['tpl_layout'];	
 		return $website;
 	}

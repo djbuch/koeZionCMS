@@ -176,7 +176,21 @@ class Validation {
  * @access public
  * @version 0.1 - 29/12/2011
  */	
-	function url($val, $strict = false) {
+	function url($val, $strict = false, $multiple = false) {
+		
+		if($multiple) {
+			
+			$urls = explode("\n", $val);
+			foreach($urls as $url) {
+				
+				$url = trim($url);
+				$return = $this->_url($url, $strict);
+				if(!$return) {return false;}
+			}
+		} else { return $this->_url($val, $strict); }
+		return true;
+	}		
+	function _url($val, $strict = false) {
 		
 		$this->__populateIp();
 		$validChars = '([' . preg_quote('!"$&\'()*+,-.@_:;=~') . '\/0-9a-z\p{L}\p{N}]|(%[0-9a-f]{2}))';
@@ -190,7 +204,7 @@ class Validation {
 			'(?:#' . $validChars . '*)?$/iu';
 		
 		return preg_match($regex, $val) ? true : false;
-	}	
+	}
 	
 /**
  * Cette fonction permet de faire appel à une fonction dans un model en respectant la logique de celui-ci

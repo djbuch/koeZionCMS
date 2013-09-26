@@ -179,12 +179,12 @@ class Form {
 		if(!isset($params) || empty($params)) {
 
 			$params['label'] = "Fichier à importer";
-			$params['tooltip'] = "Sélectionnez le fichier à importer, sélectionnez un fichier vide pour supprimer les données de la catégorie";
+			$params['tooltip'] = "Sélectionnez le fichier à importer";
 			$params['button_value'] = "Sélectionnez le fichier";
 		} else {
 
 			if(!isset($params['label'])) { $params['label'] = "Fichier à importer"; }
-			if(!isset($params['tooltip'])) { $params['tooltip'] = "Sélectionnez le fichier à importer, sélectionnez un fichier vide pour supprimer les données de la catégorie"; }
+			if(!isset($params['tooltip'])) { $params['tooltip'] = "Sélectionnez le fichier à importer"; }
 			if(!isset($params['button_value'])) { $params['button_value'] = "Sélectionnez le fichier"; }
 		}
 

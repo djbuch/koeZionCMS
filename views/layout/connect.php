@@ -14,17 +14,25 @@
 			'/backoffice/system-messages',
 			'/backoffice/smart_tab',			//Pour la mise en place des smarttabs
 		);
-		echo $helpers['Html']->css($css);			
+		echo $helpers['Html']->css($css);	
 		
-		$js = array(
-			'/backoffice/jquery-1.7.1.min', 		//Librairie JQuery
-			'/backoffice/jquery.smartTab',		//Pour la mise en place des smarttabs			
-			'/connect/costum', 					//Appel des différents plugins
-		);
-		echo $helpers['Html']->js($js);
+		if(!empty($websiteParams['connect_css_file'])) { ?><link href="<?php echo $websiteParams['connect_css_file']; ?>" rel="stylesheet" type="text/css" /><?php }
+		if(!empty($websiteParams['connect_css'])) { ?><style type="text/css"><?php echo $websiteParams['connect_css']; ?></style><?php }
+	
+		if(!empty($websiteParams['connect_background'])) {
+		
+			?>
+			<style type="text/css">
+				body{background: url("<?php echo $websiteParams['connect_background']; ?>");}	
+			</style>
+			<?php
+		}
 		?>
 	</head>
 	<body>
+		<?php 
+		if(!empty($websiteParams['connect_text'])) { ?><div class="connect_text"><?php echo $websiteParams['connect_text']; ?></div><?php }
+		?>
 		<div id="wrapper" class="login">		
 			<div id="right">
 				<div id="main">
@@ -58,6 +66,18 @@
 				</div>
 				<a href="<?php echo Router::url('/'); ?>" title="Aller sur le site" style="float:right;font-size:10px;font-style:italic;text-decoration:none;">Aller sur le site</a>
 			</div>
-		</div>
+		</div>						
+		<?php 
+		////////////////////
+		//   JAVASCRIPT   //
+		////////////////////
+		$js = array(
+			'/backoffice/jquery-1.7.1.min', 	//Librairie JQuery
+			'/backoffice/jquery.smartTab',		//Pour la mise en place des smarttabs			
+			'/connect/costum', 					//Appel des différents plugins
+		);
+		echo $helpers['Html']->js($js);
+		if(!empty($websiteParams['connect_js'])) { ?><script type="text/javascript"><?php echo $websiteParams['connect_js']; ?></script><?php }
+		?>
 	</body>
 </html>

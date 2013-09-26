@@ -9,6 +9,7 @@
 		<li><a href="#foot"><?php echo _("Footer"); ?></a></li>
 		<li><a href="#options"><?php echo _("Options"); ?></a></li>
 		<li><a href="#googleanalytics"><?php echo _("Google Analytics"); ?></a></li>
+		<li><a href="#connect"><?php echo _("Page de connexion"); ?></a></li>
 		<li><a href="#cssjs"><?php echo _("CSS & JS"); ?></a></li>
 	</ul>
 	<div id="general">
@@ -100,6 +101,17 @@
 			echo $helpers['Form']->input('ga_password', 'Google analytics Password', array('tooltip' => "Indiquez ici votre mot de passe de connexion à Google Analytics"));
 			echo $helpers['Form']->input('ga_id', 'Google analytics ID', array('tooltip' => "Indiquez ici l'ID du profil Google Analytics (Disponible les paramètres du profil)"));
 			echo $helpers['Form']->input('ga_code', 'Code Google Analytics', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge', 'tooltip' => "Indiquez ici le code de suivi Google Analytics"));			
+			?>
+		</div>
+	</div>
+	<div id="connect">
+		<div class="content nopadding">
+			<?php 
+			echo $helpers['Form']->upload_files('connect_background', array('label' => "Image de fond"));
+			echo $helpers['Form']->input('connect_text', 'Texte', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge'));	
+			echo $helpers['Form']->upload_files('connect_css_file', array('label' => "Fichier css supplémentaire"));		
+			echo $helpers['Form']->input('connect_css', 'Rajout de code css', array('type' => 'textarea', 'rows' => 30, 'cols' => 10, 'class' => 'xxlarge'));
+			echo $helpers['Form']->input('connect_js', 'Rajout de code js', array('type' => 'textarea', 'rows' => 30, 'cols' => 10, 'class' => 'xxlarge'));
 			?>
 		</div>
 	</div>

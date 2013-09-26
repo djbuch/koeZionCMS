@@ -1,5 +1,15 @@
 ﻿<versions>
 	<version>
+		<name>Version du 26/09/2013</name>
+		<num>20130926.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="bdd">Modification de la base de données permettant la gestion des site Internet</task>
+			<task author="KoéZionCMS" type="code">Modification du formulaire de gestion des sites Internet pour y rajouter la possibilité de personnalisation de la page de connexion</task>
+			<task author="KoéZionCMS" type="code">Correction de la règle de validation url pour permettre les tests multiples (Cf Website model)</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 10/08/2013</name>
 		<num>20130810.001</num>
 		<supervisor>KoéZionCMS</supervisor>

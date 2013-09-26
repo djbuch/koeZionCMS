@@ -18,12 +18,12 @@ class Website extends Model {
 			'message' => 'Website.name'
 		),
 		'url' => array(
-			'rule' => array('url', true),
+			'rule' => array('url', true, true),
 			'message' => 'Website.url'
 		),
 		'template_id' => array(
 			'rule' => 'notEmpty',
 			'message' => 'Website.template'
 		)
-	);	
+	);
 }
