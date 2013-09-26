@@ -3,7 +3,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title><?php echo _(".:: Connexion au backoffice ::."); ?></title>		
+		<?php 
+		if(isset($websiteParams['seo_page_title']) && !empty($websiteParams['seo_page_title'])) { echo '<title>'.$websiteParams['seo_page_title'].'</title>'; echo "\n"; } 
+		if(isset($websiteParams['seo_page_description']) && !empty($websiteParams['seo_page_description'])) { echo "\t\t"; echo '<meta name="description" content="'.$websiteParams['seo_page_description'].'" />'; echo "\n"; }
+		if(isset($websiteParams['seo_page_keywords']) && !empty($websiteParams['seo_page_keywords'])) { echo "\t\t"; echo '<meta name="keywords" content="'.$websiteParams['seo_page_keywords'].'" />'; echo "\n"; }
+		?>
+		<meta name="generator" content="<?php echo GENERATOR_META; ?>" /><?php //ATTENTION VOUS NE POUVEZ PAS SUPPRIMER CETTE BALISE ?>		
 		<?php
 		$css = array(
 			'/backoffice/style',
