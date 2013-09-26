@@ -9,7 +9,7 @@
 				ADD `connect_text` LONGTEXT NOT NULL AFTER `connect_background` ,
 				ADD `connect_css` LONGTEXT NOT NULL AFTER `connect_text` ,
 				ADD `connect_css_file` LONGTEXT NOT NULL AFTER `connect_text` ,
-				ADD `connect_js` LONGTEXT NOT NULL AFTER `connect_css_files`;
+				ADD `connect_js` LONGTEXT NOT NULL AFTER `connect_css_file`;
 			</task>
 		</tasks>	
 	</version>

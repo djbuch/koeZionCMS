@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 26/09/2013</name>
+		<num>20130926.003</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="bdd">Correction erreur requête</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 26/09/2013</name>
 		<num>20130926.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
