@@ -20,9 +20,6 @@
 			'/backoffice/smart_tab',			//Pour la mise en place des smarttabs
 		);
 		echo $helpers['Html']->css($css);	
-		
-		if(!empty($websiteParams['connect_css_file'])) { ?><link href="<?php echo $websiteParams['connect_css_file']; ?>" rel="stylesheet" type="text/css" /><?php }
-		if(!empty($websiteParams['connect_css'])) { ?><style type="text/css"><?php echo $websiteParams['connect_css']; ?></style><?php }
 	
 		if(!empty($websiteParams['connect_background'])) {
 		
@@ -32,6 +29,9 @@
 			</style>
 			<?php
 		}
+		
+		if(!empty($websiteParams['connect_css_file'])) { ?><link href="<?php echo $websiteParams['connect_css_file']; ?>" rel="stylesheet" type="text/css" /><?php }
+		if(!empty($websiteParams['connect_css'])) { ?><style type="text/css"><?php echo $websiteParams['connect_css']; ?></style><?php }
 		?>
 	</head>
 	<body>
