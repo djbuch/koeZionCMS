@@ -568,7 +568,7 @@ class CategoriesController extends AppController {
     			$this->loadModel('PostsPostsType');
     			$typePost = explode(',', $this->request->data['typepost']); //Récupération des types de post passés en GET
     	
-    			$tableAliasBase = Inflector::camelize('posts_posts_types'); //Définition de la base des alias
+    			$tableAliasBase = 'Kz'.Inflector::camelize('posts_posts_types'); //Définition de la base des alias
     			$sql =  'SELECT DISTINCT '.$tableAliasBase.'.post_id '; //Construction de la requête
     			$sql .= 'FROM posts_posts_types AS '.$tableAliasBase.' '; //Construction de la requête
     	
@@ -593,15 +593,15 @@ class CategoriesController extends AppController {
     			$postsIdIn = array();
     			foreach($result as $k => $v) { $postsIdIn[] = $v['post_id']; }
     	
-    			if(count($postsIdIn)) { $return['moreConditions'] = 'Post.id IN ('.implode(',', $postsIdIn).')'; }
-    			else { $return['moreConditions'] = 'Post.id IN (0)'; }
+    			if(count($postsIdIn)) { $return['moreConditions'] = 'KzPost.id IN ('.implode(',', $postsIdIn).')'; }
+    			else { $return['moreConditions'] = 'KzPost.id IN (0)'; }
     	
     			///////////////////////////////////////////
     			//   MISE EN PLACE DE LA REQUETE LARGE   //
     		} else if($searchType == 'large') {
     	
     			//Construction de la requête de recherche
-    			$return['moreConditions'] = 'Post.id IN (SELECT post_id FROM posts_posts_types WHERE posts_type_id';
+    			$return['moreConditions'] = 'KzPost.id IN (SELECT post_id FROM posts_posts_types WHERE posts_type_id';
     			if(is_numeric($this->request->data['typepost'])) { $return['moreConditions'] .= ' = '.$this->request->data['typepost']; } //Si un seul type
     			else { $return['moreConditions'] .= ' IN ('.$this->request->data['typepost'].')'; }	//Si plusieurs types
     			$return['moreConditions'] .= ')';

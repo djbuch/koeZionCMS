@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 02/10/2013</name>
+		<num>20131002.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Correction requête dans le contrôler Catégories</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 26/09/2013</name>
 		<num>20130926.005</num>
 		<supervisor>KoéZionCMS</supervisor>
