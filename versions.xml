@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 03/10/2013</name>
+		<num>20131003.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Tests sur le .gitignore</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 02/10/2013</name>
 		<num>20131002.001</num>
 		<supervisor>KoéZionCMS</supervisor>

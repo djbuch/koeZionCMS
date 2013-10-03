@@ -12,8 +12,9 @@ EXPORT_PDF/
 configs/files/*.ini
 installed
 configs/hooks/*.php
-configs/plugins/
+
 plugins/
+!configs/plugins/
 tmp/backup_bdd/
 webroot/css/plugins/*
 webroot/files/*
