@@ -7,6 +7,16 @@ $folders = array(
 		'check'			=> 'chmod'
 	),
 	array(
+		'checkFolder' 	=> CONFIGS_HOOKS,
+		'txtFolder' 	=> DS.'configs'.DS.'hooks',
+		'check'			=> 'chmod'
+	),
+	array(
+		'checkFolder' 	=> CONFIGS_PLUGINS,
+		'txtFolder' 	=> DS.'configs'.DS.'plugins',
+		'check'			=> 'chmod'
+	),
+	array(
 		'checkFolder' 	=> TMP,
 		'txtFolder' 	=> DS.'tmp',
 		'check'			=> 'chmod'

@@ -7,6 +7,8 @@ define('ROOT', dirname(dirname(__FILE__))); 					//Chemin vers le dossier racine
 
 define('CONFIGS', ROOT.DS.'configs'); 							//Chemin vers le dossier config
 	define('CONFIGS_FILES', ROOT.DS.'configs'.DS.'files'); 		//Chemin vers les fichiers d'initialisation de la bdd
+	define('CONFIGS_HOOKS', CONFIGS.DS.'hooks'); 				//Chemin vers le dossier des hooks
+	define('CONFIGS_PLUGINS', ROOT.DS.'configs'.DS.'plugins'); 	//Chemin vers le dossier des plugins
 
 define('COMPONENTS', ROOT.DS.'controllers'.DS.'components');	//Chemin vers les librairies koéZion
 

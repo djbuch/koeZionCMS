@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 03/10/2013</name>
+		<num>20131003.003</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Modification des fichiers testés lors de l'installation</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 03/10/2013</name>
 		<num>20131003.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
