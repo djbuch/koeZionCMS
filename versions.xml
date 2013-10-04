@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 04/10/2013</name>
+		<num>20131004.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Mise en place du système de contrôle des versions BDD et code (Etape 1)</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 04/10/2013</name>
 		<num>20131004.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

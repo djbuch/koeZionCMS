@@ -15,8 +15,15 @@
  */
 class DashboardController extends AppController {   
 
-	public $auto_load_model = false;
+	public $auto_load_model = false;	
 	
+/**
+ * Cette fonction permet l'affichage d'une page
+ *
+ * @access	public
+ * @author	koéZionCMS
+ * @version 0.1 - 27/09/2013 by FI
+ */	
 	function backoffice_index() {
 		
 		$aParams = $this->_check_datas_stats(); //Contrôle des dates
@@ -116,6 +123,29 @@ class DashboardController extends AppController {
 					
 			} else { $this->set('sMessageErreurGa', 'Il y a un problème dans le paramétrages de vos données Google Analytics'); }
 		}		
+	}	
+	
+/**
+ * Cette fonction permet l'affichage d'une page
+ *
+ * @access	public
+ * @author	koéZionCMS
+ * @version 0.1 - 27/09/2013 by FI
+ */
+	function backoffice_version() {
+		
+		$bddVersion = $this->_check_version('versions_bdd.xml');
+		$this->set('bddVersion', $bddVersion);
+		
+		$cmsVersion = $this->_check_version('versions.xml');
+		$this->set('cmsVersion', $cmsVersion);
+		
+		if(isset($this->request->data['update_bdd']) && $this->request->data['update_bdd']) {
+						
+			$sql = Session::read('Update.sql');
+			$this->loadModel('Config');
+			$this->Config->query($sql);
+		}
 	}
 	
 //==================================================================================================================================================//
@@ -131,7 +161,7 @@ class DashboardController extends AppController {
  * @author koéZionCMS
  * @version 0.1 - 15/05/2013 by FI
  */
-	protected function _check_datas_stats(){
+	protected function _check_datas_stats() {
 		
 		////////////////////////////////////////////////////////
 		//   CONTROLE DES DONNEES DU FORMULAIRE STATISTIQUE   //		
@@ -179,5 +209,48 @@ class DashboardController extends AppController {
 		////////////////////////////////////////////////////////
 		
 		return $datesParams;
+	}	
+	
+/** 
+ * Fonction qui permet de comparer la verion locale et distante de la base de données et du code du CMS
+ *
+ * @return array tableau contenant les paramètres des recherches statistiques
+ * @access protected
+ * @author koéZionCMS
+ * @version 0.1 - 04/10/2013 by FI
+ */
+	protected function _check_version($file) {
+		
+		$remoteBddXML = simplexml_load_file("http://raw.github.com/koeZionCMS/koeZionCMS/master/".$file);
+		//$remoteBddXML = simplexml_load_file("http://localhost/".$file);
+		$remoteVersion = (float)$remoteBddXML->version[0]->num;
+		$remoteName = (string)$remoteBddXML->version[0]->name;
+		$remoteSupervisor = (string)$remoteBddXML->version[0]->supervisor;
+		
+		$localBddXML = simplexml_load_file(ROOT.DS.$file);
+		$localVersion = (float)$localBddXML->version[0]->num;
+		
+		$updates = array();
+		if($localVersion < $remoteVersion) { 
+			
+			foreach($remoteBddXML->version as $version) {
+				
+				$versionNum = (float)$version->num;
+				foreach ($version->tasks->task as $task) {
+					
+					if($versionNum > $localVersion) { array_unshift($updates, (string)$task); }
+					else { break 2; }
+				}
+			}
+		}	
+		
+		return array(
+			'remoteVersion' => $remoteVersion,
+			'remoteName' => $remoteName,
+			'remoteSupervisor' => $remoteSupervisor,
+			'localVersion' => $localVersion,
+			'updates' => $updates
+		);
+		
 	}
 }

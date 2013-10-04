@@ -23,7 +23,7 @@ echo $helpers['Html']->js($js, true);
 <div class="section">
 	<div class="box">
 		<div class="title">
-			<h2>Tableau de bord</h2>			
+			<h2>Statistiques de visites</h2>			
 		</div>
 		<div class="content nopadding">
 			<?php 
