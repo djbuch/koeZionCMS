@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 06/10/2013</name>
+		<num>20131006.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Modification récupération distante du fichier de versions</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 06/10/2013</name>
 		<num>20131006.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

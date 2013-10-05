@@ -221,7 +221,7 @@ class DashboardController extends AppController {
  */
 	protected function _check_version($file) {
 		
-		$remoteBddXML = simplexml_load_file("http://raw.github.com/koeZionCMS/koeZionCMS/master/".$file);
+		$remoteBddXML = simplexml_load_file("https://raw.github.com/koeZionCMS/koeZionCMS/master/configs/files/".$file);
 		//$remoteBddXML = simplexml_load_file("http://localhost/".$file);
 		$remoteVersion = (float)$remoteBddXML->version[0]->num;
 		$remoteName = (string)$remoteBddXML->version[0]->name;
