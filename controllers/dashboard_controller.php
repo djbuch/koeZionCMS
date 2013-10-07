@@ -22,9 +22,22 @@ class DashboardController extends AppController {
  *
  * @access	public
  * @author	koéZionCMS
+ * @version 0.1 - 08/10/2013 by FI
+ */
+	function backoffice_index() {
+	
+		$redirectUrl = "backoffice/dashboard/version";		
+		$this->redirect($redirectUrl, 301); //On lance la redirection		
+	}
+
+/**
+ * Cette fonction permet l'affichage des statistiques de visites
+ *
+ * @access	public
+ * @author	koéZionCMS
  * @version 0.1 - 27/09/2013 by FI
  */	
-	function backoffice_index() {
+	function backoffice_statistiques() {
 		
 		$aParams = $this->_check_datas_stats(); //Contrôle des dates
 
@@ -227,7 +240,7 @@ class DashboardController extends AppController {
 		$remoteName = (string)$remoteBddXML->version[0]->name;
 		$remoteSupervisor = (string)$remoteBddXML->version[0]->supervisor;
 		
-		$localBddXML = simplexml_load_file(ROOT.DS.$file);
+		$localBddXML = simplexml_load_file(CONFIGS_FILES.DS.$file);
 		$localVersion = (float)$localBddXML->version[0]->num;
 		
 		$updates = array();

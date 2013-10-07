@@ -1,16 +1,17 @@
-INSERT INTO `modules` (`id`, `name`, `controller_name`, `order_by`, `online`, `created`, `modules_type_id`) VALUES
-(1, 'Catégories', 'categories', 3, 1, '2012-11-29 22:58:29', 2),
-(2, 'Sliders', 'sliders', 4, 1, '2012-11-29 22:58:46', 2),
-(3, 'Focus', 'focus', 5, 1, '2012-11-29 22:59:01', 2),
-(4, 'Boutons colonne de droite', 'right_buttons', 6, 1, '2012-11-29 22:59:29', 2),
-(5, 'Articles', 'posts', 8, 1, '2012-11-29 23:00:13', 4),
-(6, 'Types d''article', 'posts_types', 9, 1, '2012-11-29 23:00:35', 4),
-(7, 'Commentaires articles', 'posts_comments', 10, 1, '2012-11-29 23:01:11', 4),
-(8, 'Contacts', 'contacts', 7, 1, '2012-11-29 23:06:17', 2),
-(9, 'Sites Internet', 'websites', 0, 1, '2012-11-30 09:27:12', 5),
-(10, 'Liste des utilisateurs', 'users', 1, 1, '2012-11-30 09:27:32', 5),
-(11, 'Plugins', 'plugins', 2, 1, '2012-11-30 09:27:47', 5),
-(12, 'Statistiques de visites', 'dashboard', 1, 1, '2012-11-30 09:27:47', 7);
+INSERT INTO `modules` (`id`, `name`, `controller_name`, `action_name`, `display_in_menu`, `order_by`, `online`, `created`, `modules_type_id`, `plugin_id`) VALUES
+(1, 'Catégories', 'categories', '', 0, 3, 1, '2012-11-29 22:58:29', 2, 0),
+(2, 'Sliders', 'sliders', '', 0, 4, 1, '2012-11-29 22:58:46', 2, 0),
+(3, 'Focus', 'focus', '', 0, 5, 1, '2012-11-29 22:59:01', 2, 0),
+(4, 'Boutons colonne de droite', 'right_buttons', '', 0, 6, 1, '2012-11-29 22:59:29', 2, 0),
+(5, 'Articles', 'posts', '', 0, 8, 1, '2012-11-29 23:00:13', 4, 0),
+(6, 'Types d''article', 'posts_types', '', 0, 9, 1, '2012-11-29 23:00:35', 4, 0),
+(7, 'Commentaires articles', 'posts_comments', '', 0, 10, 1, '2012-11-29 23:01:11', 4, 0),
+(8, 'Contacts', 'contacts', '', 0, 7, 1, '2012-11-29 23:06:17', 2, 0),
+(9, 'Sites Internet', 'websites', '', 0, 0, 1, '2012-11-30 09:27:12', 5, 0),
+(10, 'Liste des utilisateurs', 'users', '', 0, 1, 1, '2012-11-30 09:27:32', 5, 0),
+(11, 'Plugins', 'plugins', '', 0, 2, 1, '2012-11-30 09:27:47', 5, 0),
+(12, 'Statistiques de visites', 'dashboard', 'statistiques', 0, 2, 1, '2012-11-30 09:27:47', 7, 0),
+(13, 'Tableau de bord', 'dashboard', 'version', 0, 1, 1, '2013-10-08 00:52:32', 7, 0);
 
 
 INSERT INTO `modules_types` (`id`, `name`, `order_by`, `online`, `created`, `modified`, `modified_by`) VALUES
@@ -21,9 +22,7 @@ INSERT INTO `modules_types` (`id`, `name`, `order_by`, `online`, `created`, `mod
 (5, 'Paramètres', 4, 1, '2012-12-01 06:39:27', '2012-12-01 06:39:27', 1);
 
 INSERT INTO `users` (`id`, `name`, `second_name`, `login`, `password`, `email`, `online`, `users_group_id`) VALUES
-(1, 'Superadmin', 				'', 'superadmin', 		'superadmin', 		'superadmin@monsite.com', 		1, 1),
-(2, 'Administrateur du site', 	'', 'administrateur', 	'administrateur', 	'administrateur@monsite.com', 	1, 2),
-(3, 'Utilisateur du site', 		'', 'utilisateur', 		'utilisateur', 		'utilisateur@monsite.com', 		1, 3);
+(1, 'Superadmin', 				'', 'superadmin', 		'superadmin', 		'superadmin@monsite.com', 		1, 1);
 
 INSERT INTO `users_groups` (`id`, `name`, `online`, `is_deletable`, `created`, `modified`, `created_by`, `modified_by`, `role_id`) VALUES
 (1, 'Super administrateur', 	1, 0, '2012-09-06 10:34:08', '2012-09-06 10:34:08', 1, 1, 1),
@@ -31,9 +30,7 @@ INSERT INTO `users_groups` (`id`, `name`, `online`, `is_deletable`, `created`, `
 (3, 'Utilisateur', 				1, 0, '2012-09-06 10:34:08', '2012-09-06 10:34:08', 1, 1, 3);
 
 INSERT INTO `users_groups_websites` (`users_group_id`, `website_id`) VALUES
-(1, 1),
-(2, 1),
-(3, 1);
+(1, 1);
 
 INSERT INTO `templates` (`id`, `name`, `layout`, `code`, `color`, `online`, `created`) VALUES
 (1, 'Bronze', 'koezion', 'bronze', '5e4b52', 1, '2012-01-06 03:00:21'),

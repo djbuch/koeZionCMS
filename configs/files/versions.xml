@@ -1,5 +1,15 @@
 ﻿<versions>
 	<version>
+		<name>Version du 08/10/2013</name>
+		<num>20131008.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Modification de la page d'accueil du backoffice</task>
+			<task author="KoéZionCMS" type="code">Modification de la requête d'installation</task>
+			<task author="KoéZionCMS" type="code">Rajout du gestionnaire de version de les modules</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 07/10/2013</name>
 		<num>20131007.005</num>
 		<supervisor>KoéZionCMS</supervisor>
