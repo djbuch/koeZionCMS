@@ -15,7 +15,7 @@ configs/hooks/*.php
 /configs/plugins/
 !/configs/plugins/empty
 /plugins/
-tmp/backup_bdd/
+tmp/backup_bdd/*.sql
 webroot/css/plugins/*
 webroot/files/*
 webroot/img/plugins/*
