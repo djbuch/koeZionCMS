@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 07/10/2013</name>
+		<num>20131007.003</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Modification du fichier gitignore</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 07/10/2013</name>
 		<num>20131007.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

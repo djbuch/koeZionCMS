@@ -9,8 +9,8 @@ _*/
 *.log
 .settings/
 EXPORT_PDF/
-configs/files/*.ini
 installed
+configs/files/*.ini
 configs/hooks/*.php
 /configs/plugins/
 !/configs/plugins/empty
