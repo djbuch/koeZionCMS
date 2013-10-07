@@ -1,6 +1,8 @@
 <?php 
 //Liste des dossiers à contrôler
 $folders = array(
+		
+	//DOSSIER CONFIGS
 	array(
 		'checkFolder' 	=> CONFIGS_FILES,
 		'txtFolder' 	=> DS.'configs'.DS.'files',
@@ -16,11 +18,40 @@ $folders = array(
 		'txtFolder' 	=> DS.'configs'.DS.'plugins',
 		'check'			=> 'chmod'
 	),
+		
+	//DOSSIER TMP
 	array(
-		'checkFolder' 	=> TMP,
-		'txtFolder' 	=> DS.'tmp',
+		'checkFolder' 	=> TMP.DS.'backup_bdd',
+		'txtFolder' 	=> TMP.DS.'backup_bdd',
 		'check'			=> 'chmod'
 	),
+	array(
+		'checkFolder' 	=> TMP.DS.'cache'.DS.'models',
+		'txtFolder' 	=> TMP.DS.'cache'.DS.'models',
+		'check'			=> 'chmod'
+	),
+	array(
+		'checkFolder' 	=> TMP.DS.'cache'.DS.'variables',
+		'txtFolder' 	=> TMP.DS.'cache'.DS.'variables',
+		'check'			=> 'chmod'
+	),
+	array(
+		'checkFolder' 	=> TMP.DS.'logs'.DS.'models',
+		'txtFolder' 	=> TMP.DS.'logs'.DS.'models',
+		'check'			=> 'chmod'
+	),
+	array(
+		'checkFolder' 	=> TMP.DS.'logs'.DS.'php',
+		'txtFolder' 	=> TMP.DS.'logs'.DS.'php',
+		'check'			=> 'chmod'
+	),
+	array(
+		'checkFolder' 	=> TMP.DS.'upload',
+		'txtFolder' 	=> TMP.DS.'upload',
+		'check'			=> 'chmod'
+	),		
+		
+	//DOSSIER WEBROOT
 	array(
 		'checkFolder' 	=> WEBROOT_FILES,
 		'txtFolder' 	=> DS.'webroot'.DS.'files',
