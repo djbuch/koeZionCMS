@@ -22,32 +22,32 @@ $folders = array(
 	//DOSSIER TMP
 	array(
 		'checkFolder' 	=> TMP.DS.'backup_bdd',
-		'txtFolder' 	=> DS.'backup_bdd',
+		'txtFolder' 	=> DS.'tmp'.DS.'backup_bdd',
 		'check'			=> 'chmod'
 	),
 	array(
 		'checkFolder' 	=> TMP.DS.'cache'.DS.'models',
-		'txtFolder' 	=> DS.'cache'.DS.'models',
+		'txtFolder' 	=> DS.'tmp'.DS.'cache'.DS.'models',
 		'check'			=> 'chmod'
 	),
 	array(
 		'checkFolder' 	=> TMP.DS.'cache'.DS.'variables',
-		'txtFolder' 	=> DS.'cache'.DS.'variables',
+		'txtFolder' 	=> DS.'tmp'.DS.'cache'.DS.'variables',
 		'check'			=> 'chmod'
 	),
 	array(
 		'checkFolder' 	=> TMP.DS.'logs'.DS.'models',
-		'txtFolder' 	=> DS.'logs'.DS.'models',
+		'txtFolder' 	=> DS.'tmp'.DS.'logs'.DS.'models',
 		'check'			=> 'chmod'
 	),
 	array(
 		'checkFolder' 	=> TMP.DS.'logs'.DS.'php',
-		'txtFolder' 	=> DS.'logs'.DS.'php',
+		'txtFolder' 	=> DS.'tmp'.DS.'logs'.DS.'php',
 		'check'			=> 'chmod'
 	),
 	array(
 		'checkFolder' 	=> TMP.DS.'upload',
-		'txtFolder' 	=> DS.'upload',
+		'txtFolder' 	=> DS.'tmp'.DS.'upload',
 		'check'			=> 'chmod'
 	),		
 		
