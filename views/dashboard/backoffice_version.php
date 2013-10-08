@@ -105,7 +105,7 @@ $currentWebsite = Session::read('Backoffice.Websites.current');
 					</pre>
 					
 					<?php 
-					$formOptions = array('action' => Router::url('backoffice/'.$params['controllerFileName'].'/index'), 'method' => 'post');
+					$formOptions = array('action' => Router::url('backoffice/'.$params['controllerFileName'].'/version'), 'method' => 'post');
 					echo $helpers['Form']->create($formOptions);
 					echo $helpers['Form']->input('update_bdd', '', array('type' => 'hidden', 'value' => 1));
 					?>

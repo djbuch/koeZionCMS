@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 08/10/2013</name>
+		<num>20131008.005</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Modification url formulaire exécution automatique de la mise à jour de la BDD</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 08/10/2013</name>
 		<num>20131008.004</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
