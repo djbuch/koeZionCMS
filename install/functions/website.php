@@ -14,7 +14,7 @@ function init_templates() {
 	require_once(MODELS.DS.'template.php');	
 	$template = new Template();
 	
-	$templateListTMP = $template->find();
+	$templateListTMP = $template->find(array('order' => 'name'));
 	$templateList = array();
 	foreach($templateListTMP as $k => $v) { $templateList[$v['id']] = $v; }
 	return $templateList;	

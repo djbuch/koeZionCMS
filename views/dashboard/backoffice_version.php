@@ -115,7 +115,6 @@ $currentWebsite = Session::read('Backoffice.Websites.current');
 		<div class="box">
 			<div class="title">
 				<h2>Message de KoéZion CMS</h2>
-				<div class="hide"></div>
 			</div>
 			<div class="content">
 				<?php 

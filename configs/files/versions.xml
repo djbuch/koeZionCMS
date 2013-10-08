@@ -1,6 +1,15 @@
 ﻿<versions>
 	<version>
 		<name>Version du 08/10/2013</name>
+		<num>20131008.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Reprise de la procédure d'installation</task>
+			<task author="KoéZionCMS" type="code">Correction mineure tableau de bord backoffice</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 08/10/2013</name>
 		<num>20131008.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
