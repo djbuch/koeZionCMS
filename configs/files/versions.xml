@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 08/10/2013</name>
+		<num>20131008.003</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Reprise des traitements du tableau de bord, intégration d'un webservice en SOAP</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 08/10/2013</name>
 		<num>20131008.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

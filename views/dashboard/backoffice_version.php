@@ -40,19 +40,39 @@ $currentWebsite = Session::read('Backoffice.Websites.current');
 	</div>
 	
 	<div class="half">	
+		<?php if(!in_array($_SERVER["HTTP_HOST"], array('localhost', '127.0.0.1')) && FileAndDir::dexists(ROOT.DS.'install')) { ?>
+			<div class="box">
+				<div class="title">
+					<h2>ATTENTION</h2>
+				</div>
+				<div class="content">				
+					<div class="system warning">
+						Le dossier /install est toujours présent sur le serveur.<br />
+						L'installation étant maintenant terminée vous devriez vous connecter à votre FTP et le supprimer.						
+					</div>
+				</div>
+			</div>
+		<?php } ?>
 		<div class="box">
 			<div class="title">
 				<h2>VÉRIFICATION DE LA VERSION DE LA BASE DE DONNEES</h2>
 			</div>
 			<div class="content">
-				<div class="system info">
-					Version locale de la base de données : <b><?php echo $bddVersion['localVersion']; ?></b><br />
-					Version distante de la base de données : <b><?php echo $bddVersion['remoteVersion']; ?></b> 
-				</div>
-				<?php if($bddVersion['localVersion'] < $bddVersion['remoteVersion']) { ?>
-					<div class="system error">Votre base de données nécessite une mise à jour.</div>
+				<?php if(isset($soapErrorMessage)) { ?>
+					<div class="system error">
+						<?php echo $soapErrorMessage; ?>
+						<br />Cette extension est nécessaire pour effetuer le contrôle des versions
+					</div>
 				<?php } else { ?>
-					<div class="system succes">Votre base de données ne nécessite aucune mise à jour.</div>
+					<div class="system info">
+						Version locale de la base de données : <b><?php echo $bddVersion['localVersion']; ?></b><br />
+						Version distante de la base de données : <b><?php echo $bddVersion['remoteVersion']; ?></b> 
+					</div>
+					<?php if($bddVersion['localVersion'] < $bddVersion['remoteVersion']) { ?>
+						<div class="system error">Votre base de données nécessite une mise à jour.</div>
+					<?php } else { ?>
+						<div class="system succes">Votre base de données ne nécessite aucune mise à jour.</div>
+					<?php } ?>		
 				<?php } ?>		
 			</div>
 		</div>
@@ -100,14 +120,21 @@ $currentWebsite = Session::read('Backoffice.Websites.current');
 				<h2>VÉRIFICATION DE LA VERSION DE KOEZION CMS</h2>
 			</div>
 			<div class="content">
-				<div class="system info">
-					Version locale de KoézionCMS : <b><?php echo $cmsVersion['localVersion']; ?></b><br />
-					Version distante de KoéZionCMS : <b><?php echo $cmsVersion['remoteVersion']; ?></b> 
-				</div>
-				<?php if($cmsVersion['localVersion'] < $cmsVersion['remoteVersion']) { ?>
-					<div class="system error">Votre code nécessite une mise à jour.</div>
+				<?php if(isset($soapErrorMessage)) { ?>
+					<div class="system error">
+						<?php echo $soapErrorMessage; ?>
+						<br />Cette extension est nécessaire pour effetuer le contrôle des versions
+					</div>
 				<?php } else { ?>
-					<div class="system succes">Votre code ne nécessite aucune mise à jour.</div>
+					<div class="system info">
+						Version locale de KoézionCMS : <b><?php echo $cmsVersion['localVersion']; ?></b><br />
+						Version distante de KoéZionCMS : <b><?php echo $cmsVersion['remoteVersion']; ?></b> 
+					</div>
+					<?php if($cmsVersion['localVersion'] < $cmsVersion['remoteVersion']) { ?>
+						<div class="system error">Votre code nécessite une mise à jour.</div>
+					<?php } else { ?>
+						<div class="system succes">Votre code ne nécessite aucune mise à jour.</div>
+					<?php } ?>		
 				<?php } ?>		
 			</div>
 		</div>
@@ -117,10 +144,14 @@ $currentWebsite = Session::read('Backoffice.Websites.current');
 				<h2>Message de KoéZion CMS</h2>
 			</div>
 			<div class="content">
-				<?php 
-				$koezionCmsMessage = file_get_contents('http://www.koezion-cms.com/__MESSAGES__/');
-				echo $koezionCmsMessage;
-				?>
+				<?php if(isset($soapErrorMessage)) { ?>
+					<div class="system error">
+						<?php echo $soapErrorMessage; ?>
+						<br />Cette extension est nécessaire pour récupérer les messages de KoéZionCMS
+					</div>
+				<?php } else { ?>
+					<ul><?php foreach($cmsMessage as $k => $v) { ?><li><?php echo $v; ?></li><?php } ?></ul>
+				<?php } ?>	
 			</div>
 		</div>
 	</div>

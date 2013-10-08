@@ -147,11 +147,39 @@ class DashboardController extends AppController {
  */
 	function backoffice_version() {
 		
-		$bddVersion = $this->_check_version('versions_bdd.xml');
-		$this->set('bddVersion', $bddVersion);
+		if(!extension_loaded('soap')) {
 		
-		$cmsVersion = $this->_check_version('versions.xml');
-		$this->set('cmsVersion', $cmsVersion);
+			$this->set('soapErrorMessage', "<b>L'extension SOAP n'est pas installée</b>");
+			
+		} else {
+			
+			try {
+				
+				$clientSOAP = new SoapClient( null,
+				array (
+					'uri' => 'http://www.koezion-cms.com/__WEBSERVICES__/webservices.php',
+					'location' => 'http://www.koezion-cms.com/__WEBSERVICES__/webservices.php',
+					'trace' => 1,
+					'exceptions' => 0
+				));
+		
+				$localVersion = $this->_check_local_version('versions_bdd.xml');
+				$bddVersion = $clientSOAP->__call('get_version', array('file' => 'versions_bdd.xml', 'localVersion' => $localVersion));
+				$this->set('bddVersion', $bddVersion);
+				
+				$localVersion = $this->_check_local_version('versions.xml');
+				$cmsVersion = $clientSOAP->__call('get_version', array('file' => 'versions.xml', 'localVersion' => $localVersion));
+				$this->set('cmsVersion', $cmsVersion);
+				
+				$cmsMessage = $clientSOAP->__call('get_messages', array());
+				$this->set('cmsMessage', $cmsMessage);
+			}
+			catch(SoapFault $f) {
+				
+				$this->set('soapErrorMessage', $f);
+			
+			}
+		}
 		
 		if(isset($this->request->data['update_bdd']) && $this->request->data['update_bdd']) {
 						
@@ -222,48 +250,20 @@ class DashboardController extends AppController {
 		////////////////////////////////////////////////////////
 		
 		return $datesParams;
-	}	
+	}
 	
 /** 
  * Fonction qui permet de comparer la verion locale et distante de la base de données et du code du CMS
  *
  * @return array tableau contenant les paramètres des recherches statistiques
- * @access protected
+ * @access public
  * @author koéZionCMS
  * @version 0.1 - 04/10/2013 by FI
  */
-	protected function _check_version($file) {
-		
-		$remoteBddXML = simplexml_load_file("https://raw.github.com/koeZionCMS/koeZionCMS/master/configs/files/".$file);
-		//$remoteBddXML = simplexml_load_file("http://localhost/".$file);
-		$remoteVersion = (float)$remoteBddXML->version[0]->num;
-		$remoteName = (string)$remoteBddXML->version[0]->name;
-		$remoteSupervisor = (string)$remoteBddXML->version[0]->supervisor;
+	protected function _check_local_version($file) {
 		
 		$localBddXML = simplexml_load_file(CONFIGS_FILES.DS.$file);
 		$localVersion = (float)$localBddXML->version[0]->num;
-		
-		$updates = array();
-		if($localVersion < $remoteVersion) { 
-			
-			foreach($remoteBddXML->version as $version) {
-				
-				$versionNum = (float)$version->num;
-				foreach ($version->tasks->task as $task) {
-					
-					if($versionNum > $localVersion) { array_unshift($updates, (string)$task); }
-					else { break 2; }
-				}
-			}
-		}	
-		
-		return array(
-			'remoteVersion' => $remoteVersion,
-			'remoteName' => $remoteName,
-			'remoteSupervisor' => $remoteSupervisor,
-			'localVersion' => $localVersion,
-			'updates' => $updates
-		);
-		
+		return $localVersion;
 	}
 }

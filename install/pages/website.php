@@ -15,12 +15,6 @@ if(isset($_POST) && !empty($_POST)) {
 			
 		$datas = $_POST; //Création d'une variable contenant les données postées		
 		$process_website = save_website($datas); //Sauvegarde du site
-		
-		$to      = 'contact@koezion-cms.com';
-		$subject = '..:: Nouveau Site KoéZion Installé ::..';
-		$message = 'Un nouveau site koéZion vient d\'être installé à l\'adresse suivante : '.$datas['url'].' (Penser à demander la description au webmaster pour insertion dans le portfolio)';
-		$headers = 'From: contact@koezion-cms.com'."\r\n".'Reply-To: contact@koezion-cms.com' . "\r\n".'X-Mailer: PHP/' . phpversion();
-		//mail($to, $subject, $message, $headers);
 	}
 }
 ?>
