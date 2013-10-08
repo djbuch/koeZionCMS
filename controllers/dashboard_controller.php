@@ -210,10 +210,10 @@ class DashboardController extends AppController {
 			
 			//On contrôle que les champs soient bien remplis sinon on leur affecte une valeur par défaut
 			if(!empty($this->request->data['start']) && $this->request->data['start'] != 'dd.mm.yy') { $dateStartUs = $this->components['Text']->date_human_to_array($this->request->data['start'], '.', 'us'); } 
-			else { $dateStartUs = $this->components['Text']->get_first_day_of_month(date('m'), date('Y')); pr('1');}
+			else { $dateStartUs = $this->components['Text']->get_first_day_of_month(date('m'), date('Y')); }
 			
 			if(!empty($this->request->data['end']) && $this->request->data['end'] != 'dd.mm.yy') { $dateEndUs = $this->components['Text']->date_human_to_array($this->request->data['end'], '.', 'us'); } 
-			else { $dateEndUs = $this->components['Text']->get_last_day_of_month(date('m'), date('Y')); pr('2');}
+			else { $dateEndUs = $this->components['Text']->get_last_day_of_month(date('m'), date('Y')); }
 			
 			//On contrôle que la date de fin ne soit pas antérieure à la date de début
 			//auquel la date de fin sera égale à la date de début

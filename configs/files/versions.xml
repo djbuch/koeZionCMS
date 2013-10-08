@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 08/10/2013</name>
+		<num>20131008.004</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Suppression de pr dans le contrôleur dashboard</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 08/10/2013</name>
 		<num>20131008.003</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
