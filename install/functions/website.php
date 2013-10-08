@@ -33,6 +33,7 @@ function save_website($datas) {
 	$template = $templatesList[$templateId];
 	$datas['tpl_layout'] = $template['layout'];
 	$datas['tpl_code'] = $template['code'];
+	$datas['search_engine_position'] = 'header';
 	$datas['created_by'] = 1;
 	$datas['modified_by'] = 1;
 	$datas['online'] = 1;
