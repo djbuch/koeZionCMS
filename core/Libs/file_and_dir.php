@@ -113,7 +113,7 @@ class FileAndDir {
 		if(is_dir($chemin)) {
 			$sq = opendir($chemin); // lecture
 			while($f = readdir($sq)) {
-				if($f != '.' && $f != '..') {
+				if($f != '.' && $f != '..' && $f != 'empty') {
 					$fichier = $chemin.$f; // chemin fichier
 					if (is_dir($fichier)) {
 						

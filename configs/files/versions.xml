@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 09/10/2013</name>
+		<num>20131009.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Mise en place du bug https://github.com/koeZionCMS/koeZionCMS/issues/18, rajout des mentions dans les formulaires</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 09/10/2013</name>
 		<num>20131009.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

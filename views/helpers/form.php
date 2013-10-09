@@ -437,12 +437,12 @@ class Form {
 		//Gestion du label de l'input
 		if($options['label']) {
 
-			$labelReturn = '<label for="'.$inputIdText.'">'.$label;
+			$labelReturn = '<label for="'.$inputIdText.'">';
 			if($options['tooltip']) {
 
 				$labelReturn .= '<img src="'.BASE_URL.'/img/backoffice/tooltip.png" alt="tooltip" style="float: left; margin-right: 5px; cursor: pointer;" class="tip-w" original-title="'.$options['tooltip'].'" />';
 			}
-			$labelReturn .= '</label>';
+			$labelReturn .= $label.'</label>';
 		}
 		else { $labelReturn = ''; }
 

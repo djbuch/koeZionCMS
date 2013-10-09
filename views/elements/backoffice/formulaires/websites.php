@@ -50,8 +50,13 @@
 	<div id="txtemails">
 		<div class="content nopadding">
 			<?php 
+			echo $helpers['Form']->input('txt_after_form_contact', 'Mentions après formulaire de contact', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge', 'tooltip' => "Indiquez le texte qui sera affiché après le formulaire de contact"));
 			echo $helpers['Form']->input('txt_mail_contact', 'Contenu email contact', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge', 'tooltip' => "Indiquez le texte qui sera envoyé par email"));
+			
+			echo $helpers['Form']->input('txt_after_form_comments', 'Mentions après formulaire commentaires', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge', 'tooltip' => "Indiquez le texte qui sera affiché après le formulaire de commentaires article"));
 			echo $helpers['Form']->input('txt_mail_comments', 'Contenu email commentaires', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge', 'tooltip' => "Indiquez le texte qui sera envoyé par email"));
+			
+			echo $helpers['Form']->input('txt_after_newsletter', 'Mentions après formulaire newsletter', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge', 'tooltip' => "Indiquez le texte qui sera affiché après le formulaire d'inscription à la newsletter"));
 			echo $helpers['Form']->input('txt_mail_newsletter', 'Contenu email newsletter', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge', 'tooltip' => "Indiquez le texte qui sera envoyé par email"));
 			?>
 		</div>

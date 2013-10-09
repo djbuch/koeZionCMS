@@ -1,5 +1,17 @@
 ﻿<versions>
 	<version>
+		<name>Version du 09/10/2013</name>
+		<num>20131009.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS">
+				ALTER TABLE `websites` ADD `txt_after_form_contact` LONGTEXT NOT NULL AFTER `txt_mail_newsletter`;
+				ALTER TABLE `websites` ADD `txt_after_form_comments` LONGTEXT NOT NULL AFTER `txt_after_form_contact`;
+				ALTER TABLE `websites` ADD `txt_after_newsletter` LONGTEXT NOT NULL AFTER `txt_after_form_comments`;
+			</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 08/10/2013</name>
 		<num>20131008.001</num>
 		<supervisor>KoéZionCMS</supervisor>
