@@ -1,5 +1,22 @@
 ﻿<versions>
 	<version>
+		<name>Version du 15/10/2013</name>
+		<num>20131015.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Oublie de commit du fichier versions.xml</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 15/10/2013</name>
+		<num>20131015.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Correction d'un bug sur la gestion du serveur SOAP</task>
+			<task author="KoéZionCMS" type="code">Correction de code suite à la mise à jour du fonctionnement des plugins</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 09/10/2013</name>
 		<num>20131009.002</num>
 		<supervisor>KoéZionCMS</supervisor>
