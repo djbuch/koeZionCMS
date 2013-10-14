@@ -881,7 +881,7 @@ class AppController extends Controller {
 				$controller = $this->request->controller;
 				$action = $this->request->action;
 				if(isset($this->request->prefix) && !empty($this->request->prefix)) { $action = $this->request->prefix.'_'.$action; }				
-				$this->load_component('Acls', PLUGINS.DS.'acls'.DS.'class'.DS.'components');
+				$this->load_component('Acls', PLUGINS.DS.'acls'.DS.'controllers'.DS.'components');
 				$isAuth = $this->components['Acls']->is_auth($controller, $action);
 				
 			} else {

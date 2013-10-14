@@ -153,32 +153,49 @@ class DashboardController extends AppController {
 			
 		} else {
 			
-			try {
-				
-				$clientSOAP = new SoapClient( null,
+			$clientSOAP = new SoapClient(
+				null,
 				array (
 					'uri' => 'http://www.koezion-cms.com/__WEBSERVICES__/webservices.php',
 					'location' => 'http://www.koezion-cms.com/__WEBSERVICES__/webservices.php',
 					'trace' => 1,
 					'exceptions' => 0
-				));
-		
-				$localVersion = $this->_check_local_version('versions_bdd.xml');
-				$bddVersion = $clientSOAP->__call('get_version', array('file' => 'versions_bdd.xml', 'localVersion' => $localVersion));
-				$this->set('bddVersion', $bddVersion);
-				
-				$localVersion = $this->_check_local_version('versions.xml');
-				$cmsVersion = $clientSOAP->__call('get_version', array('file' => 'versions.xml', 'localVersion' => $localVersion));
-				$this->set('cmsVersion', $cmsVersion);
-				
-				$cmsMessage = $clientSOAP->__call('get_messages', array());
-				$this->set('cmsMessage', $cmsMessage);
-			}
-			catch(SoapFault $f) {
-				
-				$this->set('soapErrorMessage', $f);
+				)
+			);
 			
-			}
+			//
+			$localVersion = $this->_check_local_version('versions_bdd.xml');
+			$bddVersion = array('localVersion' => $localVersion, 'remoteVersion' => 'inconnu');
+			try {
+				
+				$bddVersionTemp = $clientSOAP->__soapCall('get_version', array('file' => 'versions_bdd.xml', 'localVersion' => $localVersion), null, null, $output);				
+				if(!is_soap_fault($bddVersionTemp)) { $bddVersion = $bddVersionTemp; }
+				
+			} catch(SoapFault $soapFault) { $this->set('soapErrorMessage', $soapFault); }
+			$this->set('bddVersion', $bddVersion);
+			
+			//
+			$localVersion = $this->_check_local_version('versions.xml');
+			$cmsVersion = array('localVersion' => $localVersion, 'remoteVersion' => 'inconnu');
+			try {
+				
+				$cmsVersionTemp = $clientSOAP->__soapCall('get_version', array('file' => 'versions.xml', 'localVersion' => $localVersion), null, null, $output);			
+				if(!is_soap_fault($cmsVersionTemp)) { $cmsVersion = $cmsVersionTemp; }
+				
+			} catch(SoapFault $soapFault) { $this->set('soapErrorMessage', $soapFault); }
+			$this->set('cmsVersion', $cmsVersion);
+			
+			//
+			$cmsMessage = array('Pas de nouveaux messages');
+			try {
+				
+				$cmsMessageTemp = $clientSOAP->__soapCall('get_messages', array(), null, null, $output);
+								
+				if(!is_soap_fault($cmsMessageTemp)) { $cmsMessage = $cmsMessageTemp; } 
+				else { /*ERREUR*/ }
+				
+			} catch(SoapFault $soapFault) { $this->set('soapErrorMessage', $soapFault); }
+			$this->set('cmsMessage', $cmsMessage);
 		}
 		
 		if(isset($this->request->data['update_bdd']) && $this->request->data['update_bdd']) {

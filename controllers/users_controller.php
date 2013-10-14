@@ -111,7 +111,7 @@ class UsersController extends AppController {
 								//GESTION DU PLUGIN ACLS//
 								if(isset($this->plugins['Acls'])) {
 									
-									$this->load_component('Acls', PLUGINS.DS.'acls'.DS.'class'.DS.'components');
+									$this->load_component('Acls', PLUGINS.DS.'acls'.DS.'controllers'.DS.'components');
 									$session['Acl'] = $this->components['Acls']->get_auth_functions($user['users_group_id']);
 								}				
 								

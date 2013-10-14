@@ -51,6 +51,7 @@ define('CORE', ROOT.DS.'core'); //Chemin vers le coeur de l'application
 	define('PEAR', CORE.DS.'Pear'); //Chemin vers les librairies de Pear
 	define('SWIFTMAILER', CORE.DS.'SwiftMailer'); //Chemin vers les librairies de SwiftMailer
 
+define('INSTALL_FILES', ROOT.DS.'install'.DS.'files'); //Chemin vers le dossier des traductions
 //define('LOCALE', ROOT.DS.'locale'); //Chemin vers le dossier des traductions
 
 define('MODELS', ROOT.DS.'models'); //Chemin vers le dossier des modèles
@@ -100,15 +101,17 @@ if(!file_exists(CONFIGS.DS.'files'.DS.'database.ini')) {
 
 //08/10/2013 - Afin d'avoir un historique des installations et de pouvoir contacter les webmaster pour leur faire une page sur le site on va vérifier si l'installation est correctement finalisée
 //Pour cela on va vérifier que l'on est pas en local et l'existance du fichier installed
-if(!in_array($_SERVER["HTTP_HOST"], array('localhost', '127.0.0.1')) && !file_exists(CONFIGS.DS.'files'.DS.'database.ini')) {
+//if(!in_array($_SERVER["HTTP_HOST"], array('localhost', '127.0.0.1')) && !file_exists(CONFIGS.DS.'files'.DS.'database.ini')) {
+if(!in_array($_SERVER["HTTP_HOST"], array('localhost', '127.0.0.1')) && file_exists(CONFIGS.DS.'files'.DS.'database.ini') && !file_exists(CONFIGS.DS.'files'.DS.'installed')) {
 	
 	$to      = 'contact@koezion-cms.com';
 	$subject = '..:: Nouveau Site KoéZion Installé ::..';
 	$message = 'Un nouveau site koéZion vient d\'être installé à l\'adresse suivante : '.$_SERVER["HTTP_HOST"].' (Penser à demander la description au webmaster pour insertion dans le portfolio)';
 	$headers = 'From: contact@koezion-cms.com'."\r\n".'Reply-To: contact@koezion-cms.com' . "\r\n".'X-Mailer: PHP/' . phpversion();
-	mail($to, $subject, $message, $headers);
+	$checkSendMail = @mail($to, $subject, $message, $headers);
+	if($checkSendMail) { FileAndDir::fcopy(INSTALL_FILES.DS.'installed', CONFIGS_FILES.DS.'installed'); }
+	else{}
 	
-	FileAndDir::fcopy(INSTALL_FILES.DS.'installed', CONFIGS_FILES.DS.'installed');
 }
 
 new Dispatcher(); //On créé une instance de Dispatcher
