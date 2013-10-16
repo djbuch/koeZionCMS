@@ -30,6 +30,7 @@ define('WEBROOT', dirname(__FILE__)); //Chemin vers le dossier webroot
 	define('FILES', WEBROOT.DS.'files'); //Chemin vers le dossier files
 	define('IMG', WEBROOT.DS.'img'); //Chemin vers le dossier img
 	define('JS', WEBROOT.DS.'js'); //Chemin vers le dossier js
+	define('WEBROOT_PLUGINS', ROOT.DS.'webroot'.DS.'plugins'); //Chemin vers le dossier plugins 
 	define('UPLOAD', WEBROOT.DS.'upload'); //Chemin vers le dossier upload
 
 define('ROOT', dirname(WEBROOT)); //Chemin vers le dossier racine du site

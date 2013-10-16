@@ -1,5 +1,15 @@
 ﻿<versions>
 	<version>
+		<name>Version du 16/10/2013</name>
+		<num>20131016.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="KoéZionCMS" type="code">Rajout du dossier plugins dans webroot, il va contenir l'ensemble des fichiers publiques des plugins (css, js, img, etc)</task>
+			<task author="KoéZionCMS" type="code">Modification du helper HTML</task>
+			<task author="KoéZionCMS" type="code">Modification procédure d'installation pour intégrer l'ajout du nouveau dossier</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 15/10/2013</name>
 		<num>20131015.002</num>
 		<supervisor>KoéZionCMS</supervisor>

@@ -58,6 +58,11 @@ $folders = array(
 		'check'			=> 'chmod'			
 	),
 	array(
+		'checkFolder' 	=> WEBROOT_PLUGINS,
+		'txtFolder' 	=> DS.'webroot'.DS.'plugins',
+		'check'			=> 'chmod'			
+	),
+	array(
 		'checkFolder' 	=> WEBROOT_UPLOAD,
 		'txtFolder' 	=> DS.'webroot'.DS.'upload',
 		'check'			=> 'chmod'

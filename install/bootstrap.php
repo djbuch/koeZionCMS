@@ -23,6 +23,7 @@ define('BEHAVIORS', MODELS.DS.'behaviors');						//Chemin vers le dossier des co
 define('TMP', ROOT.DS.'tmp'); 									//Chemin vers le dossier tmp
 
 define('WEBROOT_FILES', ROOT.DS.'webroot'.DS.'files'); 			//Chemin vers le dossier files de webroot
+define('WEBROOT_PLUGINS', ROOT.DS.'webroot'.DS.'plugins'); 			//Chemin vers le dossier plugins de webroot
 define('WEBROOT_UPLOAD', ROOT.DS.'webroot'.DS.'upload'); 		//Chemin vers le dossier upload de webroot
 
 //CONSTANTES DE LA PROCEDURE D'INSTALLATION
