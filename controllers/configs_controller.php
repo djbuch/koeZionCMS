@@ -120,7 +120,16 @@ class ConfigsController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 23/01/2013 by FI
  */
-	function backoffice_delete_cache_result() {}	
+	function backoffice_delete_cache_result() {}
+	
+/**
+ * Cette fonction permet l'affichage de phpinfo
+ *
+ * @access	public
+ * @author	koéZionCMS
+ * @version 0.1 - 19/10/2013 by FI
+ */
+	function backoffice_phpinfo() {}	
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //										FONCTIONS PRIVEES										//

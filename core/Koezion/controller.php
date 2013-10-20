@@ -52,6 +52,7 @@ class Controller extends Object {
  * @version 0.2 - 13/04/2012 by FI - Rajout du booléen $beforeFilter afin d'indiquer ou non si il faut lancer la fonction beforeFilter lors de la création de l'objet
  * @version 0.3 - 20/04/2012 by FI - Rajout dans les paramètres du nom de l'action
  * @version 0.4 - 07/09/2012 by FI - Chargement systématique du model
+ * @version 0.5 - 20/10/2013 by AB - Rajout de la gestion du dossier du plugin
  */
 	function __construct($request = null, $beforeFilter = true) {
 		
@@ -60,7 +61,7 @@ class Controller extends Object {
 		
 		$controllerName = str_replace('PluginController', '', get_class($this)); //Nom du contrôleur
 		$controllerName = str_replace('Controller', '', $controllerName); //Nom du contrôleur
-
+		
 		$modelName = Inflector::singularize($controllerName); //Création du nom du model		
 		
 		//$this->loadModel($modelName);		
@@ -71,7 +72,13 @@ class Controller extends Object {
 		$this->params['controllerName'] = $controllerName; //Affectation du nom de la classe
 		$this->params['controllerFileName'] = Inflector::underscore($controllerName); //Affectation du nom du fichier 
 		$this->params['controllerVarName'] = Inflector::variable($controllerName); //Affectation du nom de la variable pour la factorisation de code dans le backoffice  
-		if(isset($this->request->action)) { $this->params['action'] = $this->request->action; } //Affectation du nom de l'action à lancer  
+		if(isset($this->request->action)) { $this->params['action'] = $this->request->action; } //Affectation du nom de l'action à lancer
+
+		// affectation du nom du dossier du plugin (s'il existe)
+		if(isset($request->pluginFolder) && !empty($request->pluginFolder)){
+			$this->params['pluginFolder'] = $request->pluginFolder;
+			unset($request->pluginFolder);
+		}
 				
 		//Chargement des composants
 		foreach($this->components as $k => $v) {

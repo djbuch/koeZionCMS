@@ -30,7 +30,7 @@ define('WEBROOT', dirname(__FILE__)); //Chemin vers le dossier webroot
 	define('FILES', WEBROOT.DS.'files'); //Chemin vers le dossier files
 	define('IMG', WEBROOT.DS.'img'); //Chemin vers le dossier img
 	define('JS', WEBROOT.DS.'js'); //Chemin vers le dossier js
-	define('WEBROOT_PLUGINS', ROOT.DS.'webroot'.DS.'plugins'); //Chemin vers le dossier plugins 
+	define('WEBROOT_PLUGINS', WEBROOT.DS.'plugins'); //Chemin vers le dossier plugins 
 	define('UPLOAD', WEBROOT.DS.'upload'); //Chemin vers le dossier upload
 
 define('ROOT', dirname(WEBROOT)); //Chemin vers le dossier racine du site
@@ -107,7 +107,7 @@ if(!in_array($_SERVER["HTTP_HOST"], array('localhost', '127.0.0.1')) && file_exi
 	
 	$to      = 'contact@koezion-cms.com';
 	$subject = '..:: Nouveau Site KoéZion Installé ::..';
-	$message = 'Un nouveau site koéZion vient d\'être installé à l\'adresse suivante : '.$_SERVER["HTTP_HOST"].' (Penser à demander la description au webmaster pour insertion dans le portfolio)';
+	$message = 'Adresse : '.$_SERVER["HTTP_HOST"].' (Penser a demander la description au webmaster pour insertion dans le portfolio)';
 	$headers = 'From: contact@koezion-cms.com'."\r\n".'Reply-To: contact@koezion-cms.com' . "\r\n".'X-Mailer: PHP/' . phpversion();
 	$checkSendMail = @mail($to, $subject, $message, $headers);
 	if($checkSendMail) { FileAndDir::fcopy(INSTALL_FILES.DS.'installed', CONFIGS_FILES.DS.'installed'); }

@@ -153,8 +153,9 @@ class View extends Object {
  * @version 0.4 - 17/01/2013 by FI - Modification du chemin de récupération des éléments suite à la modification du chemin de stockage des éléments des layout pour le frontoffice
  * @version 0.5 - 17/01/2013 by FI - Mise en place de hooks permettant de redéfinir le chemin des éléments à la volée (cf fichiers dans le dossier hook)
  * @version 0.6 - 05/06/2013 by FI - Correction inclusion éléments
+ * @version 0.7 - 20/10/2013 by AB - Rajout de la gestion du dossier du plugin
  */
-    public function element($element, $vars = null, $inElementsFolder = true) {
+    public function element($element, $vars = null, $inElementsFolder = true, $sPluginFolder = '') {
 
     	////////////////////////////////////////////////////////////
     	//VERIFICATION SI UN HOOK EST DISPONIBLE POUR LES ELEMENTS//
@@ -185,7 +186,14 @@ class View extends Object {
     		
     		foreach($vars as $k => $v) { $this->vars[$k] = $v; } 
     	}    	
-    	extract($this->vars);    
+    	extract($this->vars);   
+    	 
+    	//pr($element);
+    	
+    	// gestion de l'insertion des elements des plugins
+    	if(!empty($sPluginFolder) && strpos($element, PLUGINS) === false){
+    		$element = PLUGINS.'/'.$sPluginFolder.'/views/elements/'.$element;
+    	}
     	
     	$element = str_replace('/', DS, $element);
     	//if($element[0] != DS) { $element = ELEMENTS.DS.$element; }
@@ -200,6 +208,9 @@ class View extends Object {
     		else { $element = ELEMENTS.DS.$element.'.php'; }   		
     		
     	} else { $element = $element.'.php'; }*/
+    	
+    	
+    	//pr($element);
     	
     	$element = $element.'.php';
     	if(file_exists($element)) { require $element; } //Cas le plus simple on donne tous le chemin de l'élément
@@ -223,10 +234,16 @@ class View extends Object {
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 06/03/2012 by FI
+ * @version 0.2 - 20/10/2013 by AB - Rajout de la gestion du dossier du plugin
  */
     function request($controller, $action, $parameters = array()) {
     	
-    	$fileNameBase = strtolower(Inflector::underscore($controller));
+    	// creation objet request : sera passé au constructeur du controller : par défaut vide, sinon peut contenir le nom du dossier du plugin
+    	$request = new Request();
+    	
+    	// $sFolderPlugin : récupération du nom du dossier du plugin (et aussi le nom du répertoire contenant le plugin - avec ou sans connectors)
+    	
+    	$sFolderPlugin = $fileNameBase = strtolower(Inflector::underscore($controller));
     	
     	$file_name_default = strtolower($fileNameBase.'_controller'); //On récupère dans une variable le nom du controller    	
     	$file_path_default = CONTROLLERS.DS.$file_name_default.'.php'; //On récupère dans une variable le chemin du controller
@@ -239,18 +256,25 @@ class View extends Object {
     	$pluginsConnectors = get_plugins_connectors();
     	if(isset($pluginsConnectors[$fileNameBase])) {
     	
-    		$connectorController = $pluginsConnectors[$fileNameBase];
+    		$sFolderPlugin = $connectorController = $pluginsConnectors[$fileNameBase];
     		$file_path_plugin = PLUGINS.DS.$connectorController.DS.'controller.php';
     	}
     	//////////////////////////////////////////////    	
-    	if(file_exists($file_path_plugin)) { $file_path = $file_path_plugin; $file_name = $file_name_plugin; } //Sinon on teste si il y a un plugin
+    	if(file_exists($file_path_plugin)) { 
+
+    		$file_path = $file_path_plugin; $file_name = $file_name_plugin; 
+    		
+    		// ajout dans le request du nom du dossiers du plugins : soit le nom du controller , soit le nom du controllers connectors
+    		$request->pluginFolder = $sFolderPlugin;
+    		
+    	} //Sinon on teste si il y a un plugin
     	else if(file_exists($file_path_default)) { $file_path = $file_path_default; $file_name = $file_name_default; } //Si le controller par défaut existe
     	    	
     	//$fileName = strtolower(Inflector::underscore($controller).'_controller'); //On récupère dans une variable le nom du controller
     	//$filePath = CONTROLLERS.DS.$fileName.'.php'; //On récupère dans une variable le chemin du controller
     	require_once $file_path; //Inclusion de ce fichier si il existe
     	$controllerName = Inflector::camelize($file_name); //On transforme le nom du fichier pour récupérer le nom du controller
-    	$c = new $controllerName(new Request(), false); //Création d'une instance du controller souhaité
+    	$c = new $controllerName($request, false); //Création d'une instance du controller souhaité
     	
     	//Appel de la fonction dans le contrôlleur
     	return call_user_func_array(array($c, $action), $parameters);

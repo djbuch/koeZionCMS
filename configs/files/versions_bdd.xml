@@ -4,7 +4,7 @@
 		<num>20131009.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">
+			<task author="FI">
 				ALTER TABLE `websites` ADD `txt_after_form_contact` LONGTEXT NOT NULL AFTER `txt_mail_newsletter`;
 				ALTER TABLE `websites` ADD `txt_after_form_comments` LONGTEXT NOT NULL AFTER `txt_after_form_contact`;
 				ALTER TABLE `websites` ADD `txt_after_newsletter` LONGTEXT NOT NULL AFTER `txt_after_form_comments`;
@@ -16,7 +16,7 @@
 		<num>20131008.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">
+			<task author="FI">
 				UPDATE `modules` SET `modules_type_id`=7,`name`='Statistiques de visites',`controller_name`='dashboard',`action_name`='statistiques',`order_by`=2,`online`=1 WHERE `id`=12;
 				INSERT INTO `modules` SET `modules_type_id`=7,`name`='Tableau de bord',`controller_name`='dashboard',`action_name`='version',`order_by`=1,`online`='1',`created`='2012-11-30 09:27:47';
 			</task>
@@ -27,7 +27,7 @@
 		<num>20130926.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">
+			<task author="FI">
 				ALTER TABLE `websites` ADD `connect_background` LONGTEXT NOT NULL AFTER `js_hack` ,
 				ADD `connect_text` LONGTEXT NOT NULL AFTER `connect_background` ,
 				ADD `connect_css` LONGTEXT NOT NULL AFTER `connect_text` ,
@@ -41,7 +41,7 @@
 		<num>20130629.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">ALTER TABLE `websites` CHANGE `url` `url` LONGTEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL;</task>
+			<task author="FI">ALTER TABLE `websites` CHANGE `url` `url` LONGTEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL;</task>
 		</tasks>	
 	</version>
 	<version>
@@ -49,7 +49,7 @@
 		<num>20130624.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">ALTER TABLE `modules` ADD `action_name` VARCHAR( 255 ) NOT NULL AFTER `controller_name`;</task>
+			<task author="FI">ALTER TABLE `modules` ADD `action_name` VARCHAR( 255 ) NOT NULL AFTER `controller_name`;</task>
 		</tasks>	
 	</version>
 	<version>
@@ -57,7 +57,7 @@
 		<num>20130622.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">
+			<task author="FI">
 				DROP TABLE IF EXISTS `posts_right_buttons`;
 				CREATE TABLE IF NOT EXISTS `posts_right_buttons` (
 				  `post_id` int(11) NOT NULL,
@@ -66,8 +66,8 @@
 				  PRIMARY KEY (`post_id`,`right_button_id`)
 				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 			</task>
-			<task author="KoéZionCMS">ALTER TABLE `posts`  ADD `title_colonne_droite` VARCHAR(255) NOT NULL AFTER `img_path`,  ADD `display_children` INT NOT NULL AFTER `title_colonne_droite`,  ADD `display_brothers` INT NOT NULL AFTER `display_children`;</task>
-			<task author="KoéZionCMS">ALTER TABLE `posts`  ADD `display_posts_types` INT NOT NULL AFTER `display_home_page`;</task>
+			<task author="FI">ALTER TABLE `posts`  ADD `title_colonne_droite` VARCHAR(255) NOT NULL AFTER `img_path`,  ADD `display_children` INT NOT NULL AFTER `title_colonne_droite`,  ADD `display_brothers` INT NOT NULL AFTER `display_children`;</task>
+			<task author="FI">ALTER TABLE `posts`  ADD `display_posts_types` INT NOT NULL AFTER `display_home_page`;</task>
 		</tasks>	
 	</version>
 	<version>
@@ -75,7 +75,7 @@
 		<num>20130530.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">
+			<task author="FI">
 				DROP TABLE IF EXISTS `configs`;
 				CREATE TABLE IF NOT EXISTS `configs` (
 				  `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -91,7 +91,7 @@
 		<num>20130516.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">ALTER TABLE `websites`  ADD `ga_login` VARCHAR(255) NOT NULL AFTER `ga_code`,  ADD `ga_password` VARCHAR(255) NOT NULL AFTER `ga_login`,  ADD `ga_id` VARCHAR(255) NOT NULL AFTER `ga_password`;</task>
+			<task author="FI">ALTER TABLE `websites`  ADD `ga_login` VARCHAR(255) NOT NULL AFTER `ga_code`,  ADD `ga_password` VARCHAR(255) NOT NULL AFTER `ga_login`,  ADD `ga_id` VARCHAR(255) NOT NULL AFTER `ga_password`;</task>
 		</tasks>	
 	</version>
 	<version>
@@ -99,7 +99,7 @@
 		<num>20130317</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">ALTER TABLE `modules` ADD `display_in_menu` INT NOT NULL AFTER `controller_name`;</task>
+			<task author="FI">ALTER TABLE `modules` ADD `display_in_menu` INT NOT NULL AFTER `controller_name`;</task>
 		</tasks>	
 	</version>
 	<version>
@@ -107,7 +107,7 @@
 		<num>20130302</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">
+			<task author="FI">
 				DROP TABLE IF EXISTS `users_websites`;
 				CREATE TABLE IF NOT EXISTS `users_websites` (
 				  `user_id` int(11) NOT NULL,
@@ -115,10 +115,10 @@
 				  PRIMARY KEY (`user_id`,`website_id`)
 				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 			</task>
-			<task author="KoéZionCMS">ALTER TABLE `users_groups` ADD `is_deletable` INT NOT NULL DEFAULT '1' AFTER `online`;</task>
-			<task author="KoéZionCMS">ALTER TABLE `users` DROP `role`;</task>
-			<task author="KoéZionCMS">ALTER TABLE `users` ADD `created` DATETIME NOT NULL AFTER `online`, ADD `modified` DATETIME NOT NULL AFTER `created`;</task>
-			<task author="KoéZionCMS">ALTER TABLE `users_groups` ADD `role_id` INT NOT NULL;</task>
+			<task author="FI">ALTER TABLE `users_groups` ADD `is_deletable` INT NOT NULL DEFAULT '1' AFTER `online`;</task>
+			<task author="FI">ALTER TABLE `users` DROP `role`;</task>
+			<task author="FI">ALTER TABLE `users` ADD `created` DATETIME NOT NULL AFTER `online`, ADD `modified` DATETIME NOT NULL AFTER `created`;</task>
+			<task author="FI">ALTER TABLE `users_groups` ADD `role_id` INT NOT NULL;</task>
 		</tasks>	
 	</version>
 	<version>
@@ -126,8 +126,8 @@
 		<num>20130127</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">UPDATE `templates` SET `version` = 'Basic';</task>
-			<task author="KoéZionCMS">ALTER TABLE `templates` ADD `version` VARCHAR( 255 ) NOT NULL AFTER `layout`;</task>
+			<task author="FI">UPDATE `templates` SET `version` = 'Basic';</task>
+			<task author="FI">ALTER TABLE `templates` ADD `version` VARCHAR( 255 ) NOT NULL AFTER `layout`;</task>
 		</tasks>	
 	</version>
 	<version>
@@ -135,8 +135,8 @@
 		<num>20130119</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">ALTER TABLE `websites` ADD `txt_secure` LONGTEXT NOT NULL AFTER `txt_mail_newsletter`;</task>
-			<task author="KoéZionCMS">ALTER TABLE `websites` ADD `js_hack` LONGTEXT NOT NULL AFTER `css_hack`;</task>
+			<task author="FI">ALTER TABLE `websites` ADD `txt_secure` LONGTEXT NOT NULL AFTER `txt_mail_newsletter`;</task>
+			<task author="FI">ALTER TABLE `websites` ADD `js_hack` LONGTEXT NOT NULL AFTER `css_hack`;</task>
 		</tasks>	
 	</version>
 	<version>
@@ -144,8 +144,8 @@
 		<num>20130117</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">UPDATE `websites` SET `tpl_layout` = 'koezion' WHERE `tpl_layout` = 'frontoffice';</task>
-			<task author="KoéZionCMS">UPDATE `templates` SET `layout` = 'koezion' WHERE `layout` = 'frontoffice';</task>
+			<task author="FI">UPDATE `websites` SET `tpl_layout` = 'koezion' WHERE `tpl_layout` = 'frontoffice';</task>
+			<task author="FI">UPDATE `templates` SET `layout` = 'koezion' WHERE `layout` = 'frontoffice';</task>
 		</tasks>	
 	</version>
 	<version>
@@ -153,7 +153,7 @@
 		<num>20130101</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">ALTER TABLE `websites` ADD `footer_addthis` LONGTEXT NOT NULL AFTER `footer_bottom`;</task>
+			<task author="FI">ALTER TABLE `websites` ADD `footer_addthis` LONGTEXT NOT NULL AFTER `footer_bottom`;</task>
 		</tasks>	
 	</version>
 	<version>
@@ -161,7 +161,7 @@
 		<num>20121221</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">INSERT INTO `templates` (`id`, `name`, `layout`, `code`, `color`, `online`, `created`) VALUES (NULL, 'Chesterfield', 'frontoffice', 'chesterfield', '292929', '1', '2012-01-06 03:03:44');</task>
+			<task author="FI">INSERT INTO `templates` (`id`, `name`, `layout`, `code`, `color`, `online`, `created`) VALUES (NULL, 'Chesterfield', 'frontoffice', 'chesterfield', '292929', '1', '2012-01-06 03:03:44');</task>
 		</tasks>	
 	</version>
 	<version>
@@ -169,7 +169,7 @@
 		<num>20121218</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">ALTER TABLE `websites` ADD `slider_type` INT NOT NULL DEFAULT '1' AFTER `css_hack`;</task>
+			<task author="FI">ALTER TABLE `websites` ADD `slider_type` INT NOT NULL DEFAULT '1' AFTER `css_hack`;</task>
 		</tasks>	
 	</version>
 	<version>
@@ -177,8 +177,8 @@
 		<num>20121119</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">ALTER TABLE `posts_comments` ADD `message_backoffice` LONGTEXT NOT NULL AFTER `message`;</task>
-			<task author="KoéZionCMS">ALTER TABLE `contacts` ADD `message_backoffice` LONGTEXT NOT NULL AFTER `message`;</task>
+			<task author="FI">ALTER TABLE `posts_comments` ADD `message_backoffice` LONGTEXT NOT NULL AFTER `message`;</task>
+			<task author="FI">ALTER TABLE `contacts` ADD `message_backoffice` LONGTEXT NOT NULL AFTER `message`;</task>
 		</tasks>	
 	</version>
 	<version>
@@ -186,7 +186,7 @@
 		<num>20121106</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="KoéZionCMS">INSERT INTO `templates` (`id`, `name`, `layout`, `code`, `color`, `online`, `created`) VALUES (37, 'Dark V2', 'frontoffice', 'dark_v2', '292929', 1, '2012-01-06 03:03:44');</task>
+			<task author="FI">INSERT INTO `templates` (`id`, `name`, `layout`, `code`, `color`, `online`, `created`) VALUES (37, 'Dark V2', 'frontoffice', 'dark_v2', '292929', 1, '2012-01-06 03:03:44');</task>
 		</tasks>	
 	</version>
 </versions>

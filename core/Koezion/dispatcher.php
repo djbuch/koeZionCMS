@@ -88,24 +88,31 @@ class Dispatcher {
 			case 5: 	$controller->{$action}($params[0], $params[1], $params[2], $params[3], $params[4]); 	break;
 			default: 	call_user_func_array(array($controller, $action), $params); 							break;
 		}
-	}	
+	}		
 	
 /**
  * Cette fonction va charger le fichier contenant la classe d'un controller
- * @return $name Objet correspondant au type de controller souhaité
+ *
+ * @param 	varchar	$controllerToLoad Contrôleur à charger
+ * @return 	$name 	Objet correspondant au type de controller souhaité
+ * @access	public
+ * @author	koéZionCMS
+ * @version 0.1 - 23/12/2011
+ * @version 0.2 - 20/10/2013 by AB - Rajout de la gestion du dossier du plugin 
  */
 	function loadControllerFile($controllerToLoad = null) {
 		
 		if(isset($controllerToLoad) && !empty($controllerToLoad)) { $this->request->controller = $controllerToLoad; }
 		
 		$pluginControllerToLoad = $this->request->controller; //Sert pour verifier si un plugin est installé ou pas
+		$sFolderPlugin = $pluginControllerToLoad; // récupération du dossier du plugin (par defaut le meme que le controller principal du plugin)
 		
 		$file_name_default = strtolower($this->request->controller.'_controller'); //On récupère dans une variable le nom du controller		
 		$file_path_default = CONTROLLERS.DS.$file_name_default.'.php'; //On récupère dans une variable le chemin du controller
 		
 		$file_name_plugin = strtolower($this->request->controller.'_plugin_controller'); //On récupère dans une variable le nom du controller
 		$file_path_plugin = PLUGINS.DS.$this->request->controller.DS.'controller.php'; //On récupère dans une variable le chemin du controller pour le plugin
-					
+		
 		//////////////////////////////////////////////
 		//   RECUPERATION DES CONNECTEURS PLUGINS   //
 		//Les connecteurs sont utilisés pour la correspondance entre les plugins et les dossiers des plugins
@@ -114,12 +121,16 @@ class Dispatcher {
 			
 			$pluginControllerToLoad = $connectorController = $pluginsConnectors[$this->request->controller];
 			$file_path_plugin = PLUGINS.DS.$connectorController.DS.'controller.php';
+			
+			$sFolderPlugin = $connectorController; // récupération du dossier du plugin si le controller appellé est dans un connector d'un plugin
 		}
 		//////////////////////////////////////////////
+	
 	
 		//Par défaut on va contrôler si le plugin existe en premier
 		//Cela permet de pouvoir réécrire les fonctionnalités du CMS (et mêmes celles déjà existentes)		
 		if(file_exists($file_path_plugin)) { 
+		
 			
 			//On doit contrôler si le plugin est installé en allant lire le fichiers
 			$pluginsList = Cache::exists_cache_file(TMP.DS.'cache'.DS.'variables'.DS.'Plugins'.DS, "plugins");			
@@ -130,6 +141,9 @@ class Dispatcher {
 
 				$file_name = $file_name_plugin;
 				$file_path = $file_path_plugin;
+				
+				// ajout dans le request du nom du dossiers du plugins : soit le nom du controller , soit le nom du controllers connectors
+				$this->request->pluginFolder = $sFolderPlugin;
 				
 			//Si il n'est pas installé on va vérifier si un contrôleur n'existe pas dans le dossier par défaut
 			} else if(file_exists($file_path_default)) { 
