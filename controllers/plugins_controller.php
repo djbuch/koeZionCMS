@@ -115,6 +115,7 @@ class PluginsController extends AppController {
 
 /**
  * Cette fonction permet de désinstaller un plugin
+ * 
  * 	Pour ce faire, elle va chercher directement dans la classe du fichier plugin.php les variables qui contiennent les informations nécessaires :
  * 		$plugin->filesCopy			La variable qui contient à la base la liste des fichiers à copier
  *		$plugin->sourceFolder		Détermine le dossier source des fichiers à copier. Le plus souvent, c'est " dirname(__FILE__).DS.'install' ", mais cela peut changer
@@ -209,14 +210,20 @@ class PluginsController extends AppController {
 		return true;
 	}
 	
-	function _check_plugins() {
+/**
+ * Cette fonction permet de contrôler les plugins qui ne sont pas encore insérés dans la base de données
+ *
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 17/01/2012 by FI
+ */	
+	protected function _check_plugins() {
 		
 		$pluginsDirectoryContent = FileAndDir::directoryContent(PLUGINS);
 		foreach($pluginsDirectoryContent as $pluginDirectory) {
 
-			if($pluginDirectory != "_") {
+			if(is_dir(PLUGINS.DS.$pluginDirectory) && $pluginDirectory != "_") {
 		
-				$pluginDirectoryContent = FileAndDir::directoryContent(PLUGINS.DS.$pluginDirectory);
 				if(file_exists(PLUGINS.DS.$pluginDirectory.DS.'description.xml')) {
 			
 					$xParsedXml = simplexml_load_file(PLUGINS.DS.$pluginDirectory.DS.'description.xml');
@@ -240,22 +247,6 @@ class PluginsController extends AppController {
 								'installed' => 0
 							);
 							$this->Plugin->save($insertPlugin);
-														
-							/*
-							//Supprimé le 26/02/2013 suite à la nouvelle gestion de l'installation des plugins
-							if($xParsedXml['display_in_menu']) {
-							
-								//On va également le rajouter dans la gestion des menus
-								$moduleDatas = array(
-									'name' => $xParsedXml['name'],
-									'controller_name' => $xParsedXml['code'],
-									'online' => 0, //Le plugin n'est pas activé donc idem pour le module
-									'modules_type_id' => 6, //Type de module plugin
-									'plugin_id' => $this->Plugin->id
-								);
-								$this->Module->save($moduleDatas);
-							}
-							*/
 						}					
 					}
 				}

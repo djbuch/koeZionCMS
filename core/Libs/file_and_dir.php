@@ -94,7 +94,7 @@ class FileAndDir {
 		
 		while($file = readdir($dir)) {
 			
-			if($file != '.' && $file != '..' && $file != 'empty' && !is_dir($directory.$file)) {
+			if($file != '.' && $file != '..' && $file != 'empty') { //&& !is_dir($directory.DS.$file)) {
 				
 				//$directory.$file
 				$files[] = $file;
