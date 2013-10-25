@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 25/10/2013</name>
+		<num>20131025.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise en place du fichier .ovhconfig pour les hébergements mutualisés car il y a des incompatibilités entre KoéZion et PHP-FPM</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 23/10/2013</name>
 		<num>20131023.001</num>
 		<supervisor>KoéZionCMS</supervisor>
