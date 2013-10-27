@@ -1,5 +1,22 @@
 ﻿<versions>
 	<version>
+		<name>Version du 27/10/2013</name>
+		<num>20131027.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Commit de versions.xml</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 27/10/2013</name>
+		<num>20131027.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la gestion de l'insertion des éléments pour les plugins</task>
+			<task author="FI" type="code">Mise en place d'une configuration par défaut lors de la création d'un formulaire</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 25/10/2013</name>
 		<num>20131025.001</num>
 		<supervisor>KoéZionCMS</supervisor>
