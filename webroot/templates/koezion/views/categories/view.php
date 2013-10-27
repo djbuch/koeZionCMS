@@ -8,7 +8,7 @@ $contentPage = $this->vars['components']['Text']->format_content_text($category[
 
 if(isset($sliders) && count($sliders) > 0) { $this->element('slider'); } //Plugin Sliders Catégories
 if(isset($focus) && count($focus) > 0) { $this->element('focus'); } //Plugin Focus Catégories
-if(isset($googleMapAPI) && $mapPosition == 'topPage') { $this->element(PLUGINS.DS.'gmaps/views/elements/gmaps/frontoffice/map', null, false); } //Plugin Google Maps
+if(isset($googleMapAPI) && $mapPosition == 'topPage') { $this->element(PLUGINS.DS.'gmaps/views/elements/gmaps/frontoffice/map'); } //Plugin Google Maps
 ?>
 <div id="category<?php echo $category['id']; ?>" class="container_omega">
 	<?php	
@@ -16,25 +16,25 @@ if(isset($googleMapAPI) && $mapPosition == 'topPage') { $this->element(PLUGINS.D
 	if(count($children) == 0 && count($brothers) == 0 && count($postsTypes) == 0 && count($rightButtons) == 0) { 
 		
 		echo $contentPage;
-		if(isset($googleMapAPI) && $mapPosition == 'afterTxt') { $this->element(PLUGINS.DS.'gmaps/views/elements/gmaps/frontoffice/map', null, false); } //Plugin Google Maps
+		if(isset($googleMapAPI) && $mapPosition == 'afterTxt') { $this->element(PLUGINS.DS.'gmaps/views/elements/gmaps/frontoffice/map'); } //Plugin Google Maps
 		
 		if(isset($displayCatalogues) && $displayCatalogues) {
 			
-			$this->element(PLUGINS.DS.'catalogues/views/elements/catalogues/frontoffice/list', null, false);
+			$this->element(PLUGINS.DS.'catalogues/views/elements/catalogues/frontoffice/list');
 			$this->element('pagination');
 		}
 
 		if(isset($displayWinesearchers) && $displayWinesearchers) {
 		
-			$this->element(PLUGINS.DS.'winesearchers/views/elements/winesearchers/frontoffice/list', null, false);
+			$this->element(PLUGINS.DS.'winesearchers/views/elements/winesearchers/frontoffice/list');
 			$this->element('pagination');
 		}
 
-		if(isset($portfolio) && !empty($portfolio)) { $this->element(PLUGINS.DS.'portfolios/views/elements/portfolios/frontoffice/portfolio', array('fullPage' => true), false); }
+		if(isset($portfolio) && !empty($portfolio)) { $this->element(PLUGINS.DS.'portfolios/views/elements/portfolios/frontoffice/portfolio', array('fullPage' => true)); }
 		
 		if($category['display_form']) {
 			
-			if(isset($formPlugin)) { $this->element(PLUGINS.DS.'formulaires/views/elements/formulaires/frontoffice/formulaire', null, false); }
+			if(isset($formPlugin)) { $this->element(PLUGINS.DS.'formulaires/views/elements/formulaires/frontoffice/formulaire'); }
 			else { $this->element('formulaires/formulaire_contact'); } 
 		}	
 		
@@ -47,13 +47,13 @@ if(isset($googleMapAPI) && $mapPosition == 'topPage') { $this->element(PLUGINS.D
 			<div class="gs_8 omega">
 				<?php		
 				echo $contentPage;
-				if(isset($googleMapAPI) && $mapPosition == 'afterTxt') { $this->element(PLUGINS.DS.'gmaps/views/elements/gmaps/frontoffice/map', null, false); } //Plugin Google Maps
+				if(isset($googleMapAPI) && $mapPosition == 'afterTxt') { $this->element(PLUGINS.DS.'gmaps/views/elements/gmaps/frontoffice/map'); } //Plugin Google Maps
 								
-				if(isset($portfolio) && !empty($portfolio)) { $this->element(PLUGINS.DS.'portfolios/views/elements/frontoffice/portfolio', array('fullPage' => false), false); }
+				if(isset($portfolio) && !empty($portfolio)) { $this->element(PLUGINS.DS.'portfolios/views/elements/frontoffice/portfolio', array('fullPage' => false)); }
 				
 				if($category['display_form']) { 
 			
-					if(isset($formPlugin)) { $this->element(PLUGINS.DS.'formulaires/views/elements/formulaires/frontoffice/formulaire', null, false); }
+					if(isset($formPlugin)) { $this->element(PLUGINS.DS.'formulaires/views/elements/formulaires/frontoffice/formulaire'); }
 					else { $this->element('formulaires/formulaire_contact'); } 
 				}
 				?>
@@ -67,7 +67,7 @@ if(isset($googleMapAPI) && $mapPosition == 'topPage') { $this->element(PLUGINS.D
 	<div class="clearfix"></div>
 </div>
 <?php 
-if(isset($googleMapAPI) && $mapPosition == 'bottomPage') { $this->element(PLUGINS.DS.'gmaps/views/elements/gmaps/frontoffice/map', null, false); } //Plugin Google Maps	
+if(isset($googleMapAPI) && $mapPosition == 'bottomPage') { $this->element(PLUGINS.DS.'gmaps/views/elements/gmaps/frontoffice/map'); } //Plugin Google Maps	
 	 
 //On contrôle la nécessité de l'utilisation de la coloration syntaxique
 if(substr_count($contentPage, '<pre class="brush')) {

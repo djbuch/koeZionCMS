@@ -56,7 +56,7 @@ else { $rightColumn = true; }
 	if($post['display_form']) { 
 		
 		//$this->element('formulaire', array('formulaire' => $formulaire, 'formInfos' => $formInfos));
-		if(isset($formPlugin)) { $this->element(PLUGINS.DS.'formulaires/views/elements/formulaires/frontoffice/formulaire', null, false); } 
+		if(isset($formPlugin)) { $this->element(PLUGINS.DS.'formulaires/views/elements/formulaires/frontoffice/formulaire'); } 
 		else { $this->element('formulaires/formulaire_commentaires'); } 
 	}
  		

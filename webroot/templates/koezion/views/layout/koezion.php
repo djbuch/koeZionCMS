@@ -42,7 +42,7 @@
 	</head>
 	<body>
 	
-		<?php if(isset($plugin_ads)) { $this->element(PLUGINS.DS.'ads/views/elements/ads/frontoffice/ads', null, false); } ?>
+		<?php if(isset($plugin_ads)) { $this->element(PLUGINS.DS.'ads/views/elements/ads/frontoffice/ads'); } ?>
 		<div class="wrap_content header">
 			<?php $this->element('header'); ?>
 			<?php $this->element('menu_general'); ?>		

@@ -142,9 +142,9 @@ class View extends Object {
 /**
  * Cette fonction permet de charger dans une vue une page html
  *
- * @param 	varchar $element 			Elément à charger
- * @param 	array 	$vars 				Variables que l'on souhaite faire passer (en plus) à l'élément
- * @param 	boolean $inElementsFolder 	Cette variable indique à l'objet View si l'élément à inclure à rendre se trouve dans le dossier elements 
+ * @param 	varchar $element 	Elément à charger
+ * @param 	array 	$vars 		Variables que l'on souhaite faire passer (en plus) à l'élément
+ * @param 	boolean $isPlugin 	Cette variable indique à l'objet View si l'élément à inclure fait partie d'un plugin 
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 23/12/2011
@@ -154,9 +154,10 @@ class View extends Object {
  * @version 0.5 - 17/01/2013 by FI - Mise en place de hooks permettant de redéfinir le chemin des éléments à la volée (cf fichiers dans le dossier hook)
  * @version 0.6 - 05/06/2013 by FI - Correction inclusion éléments
  * @version 0.7 - 20/10/2013 by AB - Rajout de la gestion du dossier du plugin
+ * @version 0.8 - 27/10/2013 by FI - Changement du nom de la variable inElementFolder par isPlugin
  */
-    public function element($element, $vars = null, $inElementsFolder = true, $sPluginFolder = '') {
-
+    public function element($element, $vars = null, $isPlugin = false) {
+	
     	////////////////////////////////////////////////////////////
     	//VERIFICATION SI UN HOOK EST DISPONIBLE POUR LES ELEMENTS//
     	//Ce hook permet de redéfinir à la volée le chemin de certains éléments
@@ -188,40 +189,22 @@ class View extends Object {
     	}    	
     	extract($this->vars);   
     	 
-    	//pr($element);
+    	/////////////////////
+		// CAS DES PLUGINS //
+    	//On est dans le cas d'un plugin si la variable $this->controller->params['pluginFolder'] existe
+    	if($isPlugin && isset($this->controller->params['pluginFolder']) && !empty($this->controller->params['pluginFolder'])) {
+		
+    		$element = PLUGINS.'/'.$this->controller->params['pluginFolder'].'/views/elements/'.$this->controller->params['controllerFileName'].'/'.$element;
     	
-    	// gestion de l'insertion des elements des plugins
-    	if(!empty($sPluginFolder) && strpos($element, PLUGINS) === false){
-    		$element = PLUGINS.'/'.$sPluginFolder.'/views/elements/'.$element;
-    	}
+		}
     	
-    	$element = str_replace('/', DS, $element);
-    	//if($element[0] != DS) { $element = ELEMENTS.DS.$element; }
-    	//$element .= '.php'; //On rajoute l'extension
-    	
-    	//pr($element);    	   	
-    	/*if($inElementsFolder) { 
-    		
-    		//Si la variable existe (Elle n'existe que pour le front)
-    		//Redéfinition du chemin des éléments en fonction du template
-    		if(isset($this->vars['websiteParams'])) { $element = ELEMENTS.DS.'layout'.DS.$element.'.php'; }
-    		else { $element = ELEMENTS.DS.$element.'.php'; }   		
-    		
-    	} else { $element = $element.'.php'; }*/
-    	
-    	
-    	//pr($element);
-    	
+    	$element = str_replace('/', DS, $element);    	
     	$element = $element.'.php';
     	if(file_exists($element)) { require $element; } //Cas le plus simple on donne tous le chemin de l'élément
     	//else if(isset($this->vars['websiteParams']) && file_exists(LAYOUT_VIEWS.DS.'elements'.DS.$element)) { require LAYOUT_VIEWS.DS.'elements'.DS.$element; } //Chemin d'un élément d'un layout
     	else if(defined('LAYOUT_VIEWS') && file_exists(LAYOUT_VIEWS.DS.'elements'.DS.$element)) { require LAYOUT_VIEWS.DS.'elements'.DS.$element; } //Chemin d'un élément d'un layout
     	else if(file_exists(ELEMENTS.DS.$element)) { require ELEMENTS.DS.$element; } //Cas basique
     	else { require ELEMENTS.DS.'backoffice'.DS.'missing_element.php'; } 
-    	
-    	/*
-    	if(!file_exists($element)) { require ELEMENTS.DS.'backoffice'.DS.'missing_element.php'; } //Si le fichier n'existe pas on affiche un message d'erreur 
-    	else { require $element; } //Sinon on le charge*/
     }
     
 /**

@@ -55,9 +55,17 @@ class Form {
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 20/01/2012 by FI
+ * @version 0.2 - 26/10/2013 by FI - Mise en place d'options par défaut
  */
 	function create($options) {
 
+		//Liste des options par défaut
+		$defaultOptions = array(
+			'method' => 'post	',
+			'enctype' => 'multipart/form-data'
+		);
+		$options = array_merge($defaultOptions, $options); //Génération du tableau d'options utilisé dans la fonction
+		
 		$html = '<form';
 		foreach($options as $k => $v) { $html .= ' '.$k.'="'.$v.'"'; } //Parcours des options
 		$html .= '>';
