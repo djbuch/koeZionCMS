@@ -184,10 +184,11 @@ class PostsController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 17/01/2012 by FI
  * @version 0.2 - 21/06/2013 by FI - Rajout de la récupération des boutons colonnes de doite --> C'est le jour le plus long de l'année
+ * @version 0.3 - 03/11/2013 by FI - Modification de la fonction de transformation des dates
  */	
 	function backoffice_add() {
 
-		$this->_transform_date('fr2Sql'); //Transformation de la date FR en date SQL	
+		$this->_transform_date('fr2Sql', 'publication_date'); //Transformation de la date FR en date SQL	
 		$parentAdd = parent::backoffice_add(false); //On fait appel à la fonction d'ajout parente
 		
 		if($this->request->data) {
@@ -203,7 +204,7 @@ class PostsController extends AppController {
 			}
 		}
 		
-		$this->_transform_date('sql2Fr'); //Transformation de la date SQL en date FR		
+		$this->_transform_date('sql2Fr', 'publication_date'); //Transformation de la date SQL en date FR		
 		$this->_init_categories();
 		$this->_init_posts_types();
 		$this->_init_right_buttons();
@@ -217,10 +218,11 @@ class PostsController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 17/01/2012 by FI
  * @version 0.2 - 21/06/2013 by FI - Rajout de la récupération des boutons colonnes de doite --> C'est le jour le plus long de l'année
+ * @version 0.3 - 03/11/2013 by FI - Modification de la fonction de transformation des dates
  */	
 	function backoffice_edit($id = null) {
 				
-		$this->_transform_date('fr2Sql'); //Transformation de la date FR en date SQL
+		$this->_transform_date('fr2Sql', 'publication_date'); //Transformation de la date FR en date SQL
 		$parentEdit = parent::backoffice_edit($id, false); //On fait appel à la fonction d'édition parente
 		
 		if($this->request->data) {
@@ -236,7 +238,7 @@ class PostsController extends AppController {
 			}
 		}
 		
-		$this->_transform_date('sql2Fr'); //Transformation de la date SQL en date FR
+		$this->_transform_date('sql2Fr', 'publication_date'); //Transformation de la date SQL en date FR
 		$this->_init_categories();
 		$this->_init_posts_types();
 		$this->_init_right_buttons();
@@ -630,35 +632,6 @@ class PostsController extends AppController {
 				}
 			}
 		}*/		
-	}
-
-/**
- * Cette fonction permet de transformer une date FR en date SQL et inversement
- * 
- * @param 	varchar $mode Mode de transformation FR --> SQL ou SQL --> FR
- * @access 	protected
- * @author 	koéZionCMS
- * @version 0.1 - 25/10/2012 by FI
- */	
-	protected function _transform_date($mode) {
-		
-		if($mode == 'fr2Sql') {
-			
-			//Transformation de la date FR en date SQL
-			if(isset($this->request->data['publication_date']) && !empty($this->request->data['publication_date'])) {
-			
-				$dateArray = $this->components['Text']->date_human_to_array($this->request->data['publication_date']);
-				$this->request->data['publication_date'] = $dateArray['a'].'-'.$dateArray['m'].'-'.$dateArray['j'];
-			}
-		} else if($mode == 'sql2Fr') {
-			
-			//Transformation de la date SQL en date FR
-			if(isset($this->request->data['publication_date']) && !empty($this->request->data['publication_date'])) {
-			
-				$dateArray = $this->components['Text']->date_human_to_array($this->request->data['publication_date'], '-', 'i');
-				$this->request->data['publication_date'] = $dateArray[2].'.'.$dateArray[1].'.'.$dateArray[0];
-			}
-		}		
 	}
     
 /**

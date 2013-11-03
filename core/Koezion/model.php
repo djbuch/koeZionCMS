@@ -799,6 +799,7 @@ class Model extends Object {
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 04/03/2013 by FI
+ * @version 0.2 - 29/10/2013 by FI - Rajout d'un test pour supprimer du tableau les tables des plugins désinstallés 
  */
 	function table_list_in_database() {		
 				
@@ -807,14 +808,14 @@ class Model extends Object {
 		
 		$tablesList = Cache::exists_cache_file($cacheFolder, $cacheFile);		
 		
-		if(!$tablesList) { 
+		if(!$tablesList) {
 		
 			$tablesList = array();
 			$sql = 'SHOW TABLES FROM `'.$this->database.'`;';
 			foreach($this->query($sql, true) as $k => $v) {
 				
 				$value = array_values($v);
-				$tablesList[] = $value[0];
+				if($value[0]{0} != '_') { $tablesList[] = $value[0]; } //Si le premier caractère n'est pas un underscore
 			}
 			
 			Cache::create_cache_file($cacheFolder, $cacheFile, $tablesList);

@@ -1,5 +1,17 @@
 ﻿<versions>
 	<version>
+		<name>Version du 03/11/2013</name>
+		<num>20131103.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de AppController pour y intégrer la fonction de gestion des dates</task>
+			<task author="FI" type="code">Modification du composant email</task>
+			<task author="FI" type="code">Reprise complète de la fonction de désinstallation d'un plugin</task>
+			<task author="FI" type="code">Ajustement de PostsController suite à la mise à jour de AppController</task>
+			<task author="FI" type="code">Suppression des tables qui commencent par _ de la liste</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 27/10/2013</name>
 		<num>20131027.002</num>
 		<supervisor>KoéZionCMS</supervisor>

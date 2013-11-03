@@ -943,4 +943,34 @@ class AppController extends Controller {
 		}
 		return $leftMenus;    	   	
     } 
+
+/**
+ * Cette fonction permet de transformer une date FR en date SQL et inversement
+ * 
+ * @param 	varchar $mode Mode de transformation FR --> SQL ou SQL --> FR
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 25/10/2012 by FI
+ * @version 0.2 - 03/11/2013 by FI - Déplacée du contrôleur posts vers le contrôleur app
+ */	
+	protected function _transform_date($mode, $requestField) {
+		
+		if($mode == 'fr2Sql') {
+			
+			//Transformation de la date FR en date SQL
+			if(isset($this->request->data[$requestField]) && !empty($this->request->data[$requestField])) {
+			
+				$dateArray = $this->components['Text']->date_human_to_array($this->request->data[$requestField]);
+				$this->request->data[$requestField] = $dateArray['a'].'-'.$dateArray['m'].'-'.$dateArray['j'];
+			}
+		} else if($mode == 'sql2Fr') {
+			
+			//Transformation de la date SQL en date FR
+			if(isset($this->request->data[$requestField]) && !empty($this->request->data[$requestField])) {
+			
+				$dateArray = $this->components['Text']->date_human_to_array($this->request->data[$requestField], '-', 'i');
+				$this->request->data[$requestField] = $dateArray[2].'.'.$dateArray[1].'.'.$dateArray[0];
+			}
+		}		
+	}
 }

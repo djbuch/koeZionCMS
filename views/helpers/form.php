@@ -61,7 +61,7 @@ class Form {
 
 		//Liste des options par défaut
 		$defaultOptions = array(
-			'method' => 'post	',
+			'method' => 'post',
 			'enctype' => 'multipart/form-data'
 		);
 		$options = array_merge($defaultOptions, $options); //Génération du tableau d'options utilisé dans la fonction

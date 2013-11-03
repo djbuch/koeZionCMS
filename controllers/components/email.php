@@ -116,11 +116,12 @@ class EmailComponent extends Object {
 			$view->element($datas['element'], $controller->request->data); //On récupère l'élément à envoyer
 			$content_for_layout = ob_get_clean(); //On récupère le rendu
 	
+			$type = isset($datas['type']) ? $datas['type'] : 'text/html'; //Récupération du type du message
 			//Création du message
 			$message = Swift_Message::newInstance()
 				->setSubject($datas['subject']) //Mise en place du sujet
 				->setFrom(array($this->mailSetFromEmail => $this->mailSetFromName)) //Mise en place de l'adresse de l'expéditeur								
-				->addPart($content_for_layout, 'text/html'); // And optionally an alternative body
+				->addPart($content_for_layout, $type); // And optionally an alternative body
 			
 			//Si on a des fichiers joints
 			if(isset($datas['filesToUpload']) && !empty($datas['filesToUpload'])) {
