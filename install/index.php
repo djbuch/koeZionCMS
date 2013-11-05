@@ -1,13 +1,6 @@
 <?php 
 require_once('bootstrap.php'); //Fichier chargé de loader les librairies et initialiser les constantes 
 
-//03/12/2012 - Si le site est paramétré on ne refait pas l'install
-if(file_exists(CONFIGS_FILES.DS.'installed')) {
-
-	header("Location: ".Router::url('/', ''));
-	die();
-}
-
 //Si on récupère la page à afficher dans l'url, par défaut on charge la page de configuration des dossiers
 if(!isset($_GET['step'])) { $step = 'folders'; }
 else { $step = $_GET['step']; }
@@ -17,9 +10,7 @@ $stepTitle = array(
 	'database_params' => '- Configuration de la base de données ',	
 	'database_tables' => '- Import des tables ',	
 	'database_datas' => '- Import des données ',	
-	'database_datas_default' => '- Import des données de démo ',	
 	'website' => '- Configuration du site Internet ',	
-	'smtp' => '- Configuration du serveur SMTP ',	
 	'final' => '- Récapitulatif '		
 );
 ?>
@@ -45,7 +36,6 @@ $stepTitle = array(
 					<li <?php echo $step == 'folders' ? 'class="active"' : ''; ?>><a>DOSSIERS</a></li>
 					<li <?php echo in_array($step, array('database_params', 'database_tables', 'database_datas')) ? 'class="active"' : ''; ?>><a>BASE DE DONNEES</a></li>
 					<li <?php echo $step == 'website' ? 'class="active"' : ''; ?>><a>SITE INTERNET</a></li>
-					<?php /* ?><li <?php echo $step == 'smtp' ? 'class="active"' : ''; ?>><a>SERVEUR SMTP</a></li><?php */ ?>
 					<li <?php echo $step == 'final' ? 'class="active"' : ''; ?>><a>RECAP</a></li>
 				</ul>
 			</div>

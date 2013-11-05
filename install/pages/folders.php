@@ -129,7 +129,6 @@ $folders = array(
 					
 					FileAndDir::fcopy(INSTALL_FILES.DS.'posts.ini', CONFIGS_FILES.DS.'posts.ini');
 					FileAndDir::fcopy(INSTALL_FILES.DS.'routes.ini', CONFIGS_FILES.DS.'routes.ini');
-					//FileAndDir::fcopy(INSTALL_FILES.DS.'exports.ini', CONFIGS_FILES.DS.'exports.ini');
 									
 					$httpHost = $_SERVER["HTTP_HOST"];
 					if($httpHost == 'localhost' || $httpHost == '127.0.0.1') { $section = 'localhost'; } else { $section = 'online'; }
