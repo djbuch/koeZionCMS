@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 05/11/2013</name>
+		<num>20131105.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Correction désinstallation plugin</task>
+			<task author="FI" type="code">Modification processus installation</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 03/11/2013</name>
 		<num>20131103.001</num>
 		<supervisor>KoéZionCMS</supervisor>

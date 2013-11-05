@@ -161,10 +161,12 @@ class PluginsController extends AppController {
 				
 				//On va parcourir la liste des tables de la base de données pour en extraire les tables associées au plugin
 				//Elles seront ensuite renommées en vue d'une suppression manuelle par le gestionnaire de la BDD
+				$sql = '';				
 				foreach($databaseTables as $databaseTable) {
 				
 					if(substr_count($databaseTable, $databasePluginTablesPrefix)) { $sql .= "RENAME TABLE `".$databaseTable."` TO `_".$databaseTable."_".date("Ymd_His")."`;"; }
 				}
+				$this->Plugin->query($sql);
 
 				//////////////////////////////////
 				//		ACTIONS FICHIERS		//

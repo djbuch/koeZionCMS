@@ -110,9 +110,7 @@ if(!in_array($_SERVER["HTTP_HOST"], array('localhost', '127.0.0.1')) && file_exi
 	$message = 'Adresse : '.$_SERVER["HTTP_HOST"].' (Penser a demander la description au webmaster pour insertion dans le portfolio)';
 	$headers = 'From: contact@koezion-cms.com'."\r\n".'Reply-To: contact@koezion-cms.com' . "\r\n".'X-Mailer: PHP/' . phpversion();
 	$checkSendMail = @mail($to, $subject, $message, $headers);
-	if($checkSendMail) { FileAndDir::fcopy(INSTALL_FILES.DS.'installed', CONFIGS_FILES.DS.'installed'); }
-	else{}
-	
+	copy(INSTALL_FILES.DS.'installed', CONFIGS_FILES.DS.'installed');
 }
 
 new Dispatcher(); //On créé une instance de Dispatcher
