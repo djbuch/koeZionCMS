@@ -100,18 +100,5 @@ if(!file_exists(CONFIGS.DS.'files'.DS.'database.ini')) {
 	die();
 }
 
-//08/10/2013 - Afin d'avoir un historique des installations et de pouvoir contacter les webmaster pour leur faire une page sur le site on va vérifier si l'installation est correctement finalisée
-//Pour cela on va vérifier que l'on est pas en local et l'existance du fichier installed
-//if(!in_array($_SERVER["HTTP_HOST"], array('localhost', '127.0.0.1')) && !file_exists(CONFIGS.DS.'files'.DS.'database.ini')) {
-if(!in_array($_SERVER["HTTP_HOST"], array('localhost', '127.0.0.1')) && file_exists(CONFIGS.DS.'files'.DS.'database.ini') && !file_exists(CONFIGS.DS.'files'.DS.'installed')) {
-	
-	$to      = 'contact@koezion-cms.com';
-	$subject = '..:: Nouveau Site KoéZion Installé ::..';
-	$message = 'Adresse : '.$_SERVER["HTTP_HOST"].' (Penser a demander la description au webmaster pour insertion dans le portfolio)';
-	$headers = 'From: contact@koezion-cms.com'."\r\n".'Reply-To: contact@koezion-cms.com' . "\r\n".'X-Mailer: PHP/' . phpversion();
-	$checkSendMail = @mail($to, $subject, $message, $headers);
-	copy(INSTALL_FILES.DS.'installed', CONFIGS_FILES.DS.'installed');
-}
-
 new Dispatcher(); //On créé une instance de Dispatcher
 //if(Configure::read('debug') > 0) { Configure::write('timerExec', round(microtime(true) - $debut, 5)); }
