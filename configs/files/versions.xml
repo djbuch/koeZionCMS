@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 06/11/2013</name>
+		<num>20131106.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise en place de correctifs pour la gestion des flux RSS</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 05/11/2013</name>
 		<num>20131105.003</num>
 		<supervisor>KoéZionCMS</supervisor>
