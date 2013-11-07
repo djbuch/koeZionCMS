@@ -94,6 +94,7 @@ class EmailComponent extends Object {
  * @author 	koéZionCMS
  * @version 0.1 - 06/02/2012 by FI
  * @version 0.2 - 02/08/2012 by FI - Customisation des messages
+ * @version 0.3 - 07/11/2013 by FI - Mise en place de la possibilité de ne pas envoyer de bcc
  */
 	function send($datas, $controller, $file = null) {
 		
@@ -131,12 +132,18 @@ class EmailComponent extends Object {
 
 					$message->attach(Swift_Attachment::fromPath($fieldInfosToUpload['path'].DS.$fieldInfosToUpload['uploaded_name']));
 				}				
+			}		
+			
+			//Par défaut on rajoute toujours la valeur bcc --> !isset($datas['noBcc'])
+			//Si l'index existe et que sa valeur est vrai on le rajout aussi
+			//Dans le cas contraire on ne fait rien pas de copie envoyée
+			if(!isset($datas['noBcc']) || (isset($datas['noBcc']) && !$datas['noBcc'])) { 
+			
+				$bcc = array();
+				if(!empty($this->bccEmail)) { $bcc[] = $this->bccEmail; } //Gestion éventuelle de l'envoi en copie cachée via le fichier de conf			
+				if(isset($datas['bcc']) && !empty($datas['bcc'])) { $bcc[] = $datas['bcc']; } //Gestion éventuelle de l'envoi en copie cachée via le formulaire directement	
+				if(count($bcc)) { $message->setBcc($bcc); } 
 			}
-	
-			$bcc = array();
-			if(!empty($this->bccEmail)) { $bcc[] = $this->bccEmail; } //Gestion éventuelle de l'envoi en copie cachée via le fichier de conf			
-			if(isset($datas['bcc']) && !empty($datas['bcc'])) { $bcc[] = $datas['bcc']; } //Gestion éventuelle de l'envoi en copie cachée via le formulaire directement			
-			if(count($bcc)) { $message->setBcc($bcc); }
 									
 			if(is_array($datas['to'])) {
 								

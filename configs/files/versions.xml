@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 07/11/2013</name>
+		<num>20131107.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification du composant Email pour donner la possibilité de ne pas envoyer de mail avec bcc</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 06/11/2013</name>
 		<num>20131106.001</num>
 		<supervisor>KoéZionCMS</supervisor>
