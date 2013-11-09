@@ -12,12 +12,10 @@
 		<num>20131109.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FI">
-				INSERT INTO `templates` (`id`, `name`, `layout`, `version`, `code`, `color`, `online`, `created`) VALUES (NULL, 'Brown chocolate', 'koezion', 'Chocolate', 'chocolate_brown', '000000', '1', '2013-11-09 03:03:44');
-				INSERT INTO `templates` (`id`, `name`, `layout`, `version`, `code`, `color`, `online`, `created`) VALUES (NULL, 'Néon blue chocolate', 'koezion', 'Chocolate', 'chocolate_neonblue', '000000', '1', '2013-11-09 03:03:44');
-				INSERT INTO `templates` (`id`, `name`, `layout`, `version`, `code`, `color`, `online`, `created`) VALUES (NULL, 'Purple chocolate', 'koezion', 'Chocolate', 'chocolate_purple', '000000', '1', '2013-11-09 03:03:44');
-				INSERT INTO `templates` (`id`, `name`, `layout`, `version`, `code`, `color`, `online`, `created`) VALUES (NULL, 'Red chocolate', 'koezion', 'Chocolate', 'chocolate_red', '000000', '1', '2013-11-09 03:03:44');
-			</task>
+			<task author="FI">INSERT INTO `templates` (`id`, `name`, `layout`, `version`, `code`, `color`, `online`, `created`) VALUES (NULL, 'Brown chocolate', 'koezion', 'Chocolate', 'chocolate_brown', '000000', '1', '2013-11-09 03:03:44');</task>
+			<task author="FI">INSERT INTO `templates` (`id`, `name`, `layout`, `version`, `code`, `color`, `online`, `created`) VALUES (NULL, 'Néon blue chocolate', 'koezion', 'Chocolate', 'chocolate_neonblue', '000000', '1', '2013-11-09 03:03:44');</task>
+			<task author="FI">INSERT INTO `templates` (`id`, `name`, `layout`, `version`, `code`, `color`, `online`, `created`) VALUES (NULL, 'Purple chocolate', 'koezion', 'Chocolate', 'chocolate_purple', '000000', '1', '2013-11-09 03:03:44');</task>
+			<task author="FI">INSERT INTO `templates` (`id`, `name`, `layout`, `version`, `code`, `color`, `online`, `created`) VALUES (NULL, 'Red chocolate', 'koezion', 'Chocolate', 'chocolate_red', '000000', '1', '2013-11-09 03:03:44');</task>
 		</tasks>	
 	</version>
 	<version>
