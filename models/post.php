@@ -21,6 +21,11 @@ class Post extends Model {
 			'rule' => array('minLength', 2),
 			'message' => 'Post.name'
 		),
+		'redirect_to' => array(
+			'rule' => array('url', true),
+			'message' => 'Post.redirect_to',
+			'allowEmpty' => true
+		),
 		'prefix' => array(
 			'rule1' => array(
 				'rule' => array('minLength', 3),

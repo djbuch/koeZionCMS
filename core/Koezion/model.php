@@ -633,6 +633,7 @@ class Model extends Object {
  * @version 0.3 - 03/04/2012 - Modification de la gestion des messages d'erreurs suite à l'ajout de gettext
  * @version 0.4 - 20/04/2012 - Mise en place des validations par callback 
  * @version 0.5 - 25/06/2013 - Changement du include_once en include pour le chargement des messages d'erreurs car dans le cas de validations multiples le fichier n'était pas chargé  
+ * @version 0.6 - 09/11/2013 - Rajout d'un nouveau paramètre aux règles de validation permettant de paramétrer une règle mais de ne l'appliquer que si le champ n'est pas vide  
  */	
 	function validates($datas) {
 				
@@ -658,23 +659,34 @@ class Model extends Object {
 						
 						//On va donc les parcourir
 						foreach($v as $kRule => $vRule) { 
-													
-							$isValid = $validation->check($datas[$k], $vRule['rule']);
-							if(!$isValid) { 
+							
+							if(!isset($vRule['allowEmpty'])) { $vRule['allowEmpty'] = false; } //Par défaut si l'index allowEmpty n'existe pas on le rajoute
+							
+							$isValid = $validation->check($datas[$k], $vRule['rule']); //Lancement de la règle
+							$allowEmpty = $vRule['allowEmpty'] && empty($datas[$k]); //Génération du booléen allowEmpty
+							
+							//On injecte le message en cas d'erreur
+							if(!$isValid && !$allowEmpty) { 
 								
 								if(Set::check($Errorsmessages, $vRule['message'])) { $errors[$k] = Set::classicExtract($Errorsmessages, $vRule['message']); }
 								else { $errors[$k] = $vRule['message']; }
 								 
-							} //On injecte le message						
+							}	
 						}	
 					} else { 
-						$isValid = $validation->check($datas[$k], $v['rule']); 
-						if(!$isValid) { 
+						
+						if(!isset($v['allowEmpty'])) { $v['allowEmpty'] = false; } //Par défaut si l'index allowEmpty n'existe pas on le rajoute
+							
+						$isValid = $validation->check($datas[$k], $v['rule']); //Lancement de la règle
+						$allowEmpty = $v['allowEmpty'] && empty($datas[$k]); //Génération du booléen allowEmpty
+
+						//On injecte le message en cas d'erreur
+						if(!$isValid && !$allowEmpty) { 
 								
 							if(Set::check($Errorsmessages, $v['message'])) { $errors[$k] = Set::classicExtract($Errorsmessages, $v['message']); }
 							else { $errors[$k] = $v['message']; }
 								 
-						} //On injecte le message
+						} 						
 					}
 				}
 			}

@@ -1,5 +1,22 @@
 ﻿<versions>
 	<version>
+		<name>Version du 09/11/2013</name>
+		<num>20131109.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Evolution du module Posts pour permettre la mise en place d'une redirection de l'article vers une url libre</task>
+			<task author="FI" type="code">Modification de la gestion des règles de validation pour permettre la mise en place d'une règle qui n'est validée que si le champ n'est pas vide allowEmpty</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 09/11/2013</name>
+		<num>20131109.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Intégration de 4 nouvelles chartes pour le template par défaut (Thks CC)</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 07/11/2013</name>
 		<num>20131107.001</num>
 		<supervisor>KoéZionCMS</supervisor>

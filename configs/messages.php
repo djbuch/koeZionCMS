@@ -23,6 +23,7 @@ $Errorsmessages['Post']['category_id'] = _('Vous devez sélectionner une catégo
 $Errorsmessages['Post']['name'] = _('La valeur de ce champ est de 2 caractères minimum.');
 $Errorsmessages['Post']['slug']['rule1'] = _('La valeur de ce champ est de 3 caractères minimum.');
 $Errorsmessages['Post']['slug']['rule2'] = _('Il y a des caractères non autorisés dans ce champ.');
+$Errorsmessages['Post']['redirect_to'] = _("L'url de redirection que vous avez indiqué n'est pas correcte.");
 $Errorsmessages['Post']['prefix']['rule1'] = _('La valeur de ce champ est de 3 caractères minimum.');
 $Errorsmessages['Post']['prefix']['rule2'] = _('Il y a des caractères non autorisés dans ce champ.');
 

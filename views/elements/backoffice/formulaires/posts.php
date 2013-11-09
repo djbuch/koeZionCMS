@@ -64,6 +64,7 @@
 		<div class="content nopadding">
 			<?php 
 			echo $helpers['Form']->input('short_content', 'Descriptif court', array('type' => 'textarea', 'wysiswyg' => true, 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge', 'tooltip' => "Saisissez ici le descriptif court de votre article, n'hésitez pas à utiliser les modèles de pages pour vous aider"));
+			echo $helpers['Form']->input('redirect_to', 'Url de redirection', array('tooltip' => "Remplissez ce champ si souhaitez, à partir de cet article, faire une redirection vers une url de votre choix, il ne vous sera alors pas nécessaire de saisir le descriptif long"));			
 			echo $helpers['Form']->input('content', 'Descriptif long', array('type' => 'textarea', 'wysiswyg' => true, 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge', 'tooltip' => "Saisissez ici le descriptif long de votre article, n'hésitez pas à utiliser les modèles de pages pour vous aider"));
 			?>
 		</div>
