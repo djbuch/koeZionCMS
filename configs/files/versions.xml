@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 09/11/2013</name>
+		<num>20131109.008</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Correction gestion alias pour les websites et mise en place du nouveau code en prévision du développement de la fonctionnalité</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 09/11/2013</name>
 		<num>20131109.007</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

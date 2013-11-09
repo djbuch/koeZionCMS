@@ -70,7 +70,7 @@ $currentWebsite = Session::read('Backoffice.Websites.current');
 					</div>
 					<?php
 					//On va contrôler à la fois la version locale (celle du fichier) et celle de la bdd qui est mise à jour lorsqu'un update est effectué 
-					if( ($bddVersion['localVersion'] < $bddVersion['remoteVersion']) || ($lastKnowVersionBdd < $bddVersion['remoteVersion'])) { 
+					if( ($bddVersion['localVersion'] < $bddVersion['remoteVersion']) || (isset($lastKnowVersionBdd) && ($lastKnowVersionBdd < $bddVersion['remoteVersion']))) { 
 						
 						$displayUpdate = true;
 						?><div class="system error">Votre base de données nécessite une mise à jour.</div><?php 

@@ -51,4 +51,5 @@ $Errorsmessages['UsersGroup']['role_id'] = _('Vous devez sélectionner une valeu
 
 $Errorsmessages['Website']['name'] = _('La valeur de ce champ est de 2 caractères minimum.');
 $Errorsmessages['Website']['url'] = _('Vous devez indiquer une url valide.');
+//$Errorsmessages['Website']['url_alias'] = _('Vous devez indiquer une url valide pour les alias.');
 $Errorsmessages['Website']['template'] = _('Vous devez indiquer sélectionner un template.');

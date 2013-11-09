@@ -18,9 +18,13 @@ class Website extends Model {
 			'message' => 'Website.name'
 		),
 		'url' => array(
-			'rule' => array('url', true, true),
+			'rule' => array('url', true),
 			'message' => 'Website.url'
 		),
+		/*'url_alias' => array(
+			'rule' => array('url', true, true),
+			'message' => 'Website.url_alias'
+		),*/
 		'template_id' => array(
 			'rule' => 'notEmpty',
 			'message' => 'Website.template'

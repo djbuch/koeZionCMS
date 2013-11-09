@@ -16,7 +16,8 @@
 		<div class="content nopadding">
 			<?php 
 			echo $helpers['Form']->input('name', '<i>(*)</i> Titre', array('tooltip' => "Indiquez le titre du site Internet"));
-			echo $helpers['Form']->input('url', '<i>(*)</i> Url', array('type' => 'textarea', 'rows' => 1, 'cols' => 10, 'class' => 'xxlarge', 'tooltip' => "Indiquez l'url complète du site Internet (avec http:// et sans le / à la fin), sautez une ligne entre chaque domaine."));
+			echo $helpers['Form']->input('url', '<i>(*)</i> Url', array('tooltip' => "Indiquez l'url complète du site Internet (avec http:// et sans le / à la fin), sautez une ligne entre chaque domaine."));
+			//echo $helpers['Form']->input('url_alias', 'Alias du domaine', array('type' => 'textarea', 'rows' => 1, 'cols' => 10, 'class' => 'xxlarge', 'tooltip' => "Indiquez ici le ou les alias de ce domaine (url complète avec http:// et sans le / à la fin), sautez une ligne entre chaque domaine."));
 			echo $helpers['Form']->input('online', 'En ligne', array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour diffuser ce site Internet"));
 			?>
 		</div>
