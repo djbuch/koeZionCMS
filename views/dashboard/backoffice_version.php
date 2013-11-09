@@ -161,7 +161,7 @@ $currentWebsite = Session::read('Backoffice.Websites.current');
 						<br />Cette extension est nécessaire pour récupérer les messages de KoéZionCMS
 					</div>
 				<?php } else { ?>
-					<ul><?php foreach($cmsMessage as $k => $v) { ?><li><?php echo $v; ?></li><?php } ?></ul>
+					<?php foreach($cmsMessage as $k => $v) { echo $v;  } ?>
 				<?php } ?>	
 			</div>
 		</div>

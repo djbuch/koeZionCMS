@@ -194,7 +194,7 @@ class DashboardController extends AppController {
 			$cmsMessage = array('Pas de nouveaux messages');
 			try {
 				
-				$cmsMessageTemp = $clientSOAP->__soapCall('get_messages', array(), null, null, $output);
+				$cmsMessageTemp = $clientSOAP->__soapCall('get_messages', array('host' => $_SERVER["HTTP_HOST"]), null, null, $output);
 								
 				if(!is_soap_fault($cmsMessageTemp)) { $cmsMessage = $cmsMessageTemp; } 
 				else { /*ERREUR*/ }
