@@ -163,7 +163,7 @@ class DashboardController extends AppController {
 				)
 			);
 			
-			//
+			//Version BDD
 			$localVersion = $this->_check_local_version('versions_bdd.xml');
 			$bddVersion = array('localVersion' => $localVersion, 'remoteVersion' => 'inconnu');
 			try {
@@ -174,7 +174,12 @@ class DashboardController extends AppController {
 			} catch(SoapFault $soapFault) { $this->set('soapErrorMessage', $soapFault); }
 			$this->set('bddVersion', $bddVersion);
 			
-			//
+			//Récupération de la dernière version connue de la base de données
+			$this->loadModel('Config');
+			$lastKnowVersionBdd = $this->Config->findFirst(array('conditions' => array('code' => 'numVersion')));
+			if(!empty($lastKnowVersionBdd) && !empty($lastKnowVersionBdd['value'])) { $this->set('lastKnowVersionBdd', $lastKnowVersionBdd['value']); }
+			
+			//Version Code
 			$localVersion = $this->_check_local_version('versions.xml');
 			$cmsVersion = array('localVersion' => $localVersion, 'remoteVersion' => 'inconnu');
 			try {
@@ -185,7 +190,7 @@ class DashboardController extends AppController {
 			} catch(SoapFault $soapFault) { $this->set('soapErrorMessage', $soapFault); }
 			$this->set('cmsVersion', $cmsVersion);
 			
-			//
+			//Message KOEZION
 			$cmsMessage = array('Pas de nouveaux messages');
 			try {
 				
@@ -200,7 +205,8 @@ class DashboardController extends AppController {
 		
 		if(isset($this->request->data['update_bdd']) && $this->request->data['update_bdd']) {
 						
-			$sql = Session::read('Update.sql');
+			$sql = Session::read('Update.sql'); //Récupération des données
+			Session::delete('Update.sql'); //Suppression des données 
 			$this->loadModel('Config');
 			$this->Config->query($sql);
 			

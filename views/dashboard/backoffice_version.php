@@ -68,15 +68,24 @@ $currentWebsite = Session::read('Backoffice.Websites.current');
 						Version locale de la base de données : <b><?php echo $bddVersion['localVersion']; ?></b><br />
 						Version distante de la base de données : <b><?php echo $bddVersion['remoteVersion']; ?></b> 
 					</div>
-					<?php if($bddVersion['localVersion'] < $bddVersion['remoteVersion']) { ?>
-						<div class="system error">Votre base de données nécessite une mise à jour.</div>
-					<?php } else { ?>
-						<div class="system succes">Votre base de données ne nécessite aucune mise à jour.</div>
-					<?php } ?>		
+					<?php
+					//On va contrôler à la fois la version locale (celle du fichier) et celle de la bdd qui est mise à jour lorsqu'un update est effectué 
+					if( ($bddVersion['localVersion'] < $bddVersion['remoteVersion']) || ($lastKnowVersionBdd < $bddVersion['remoteVersion'])) { 
+						
+						$displayUpdate = true;
+						?><div class="system error">Votre base de données nécessite une mise à jour.</div><?php 
+						
+					} else { 
+						
+						$displayUpdate = false;
+						?><div class="system succes">Votre base de données ne nécessite aucune mise à jour.</div><?php 
+						
+					} 
+					?>		
 				<?php } ?>		
 			</div>
 		</div>
-		<?php if(isset($bddVersion['updates']) && !empty($bddVersion['updates'])) { ?>
+		<?php if($displayUpdate && isset($bddVersion['updates']) && !empty($bddVersion['updates'])) { ?>
 			<div class="box">
 				<div class="title">
 					<h2>REQUETES DE MISE A JOUR</h2>
