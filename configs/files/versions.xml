@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 09/11/2013</name>
+		<num>20131109.009</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Suite modifications sur la gestion de la mise à jour de la BDD</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 09/11/2013</name>
 		<num>20131109.008</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

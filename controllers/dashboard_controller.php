@@ -172,12 +172,15 @@ class DashboardController extends AppController {
 				if(!is_soap_fault($bddVersionTemp)) { $bddVersion = $bddVersionTemp; }
 				
 			} catch(SoapFault $soapFault) { $this->set('soapErrorMessage', $soapFault); }
-			$this->set('bddVersion', $bddVersion);
 			
 			//Récupération de la dernière version connue de la base de données
 			$this->loadModel('Config');
 			$lastKnowVersionBdd = $this->Config->findFirst(array('conditions' => array('code' => 'numVersion')));
-			if(!empty($lastKnowVersionBdd) && !empty($lastKnowVersionBdd['value'])) { $this->set('lastKnowVersionBdd', $lastKnowVersionBdd['value']); }
+			if(!empty($lastKnowVersionBdd) && isset($lastKnowVersionBdd['value']) && !empty($lastKnowVersionBdd['value'])) {
+				
+				if($bddVersion['localVersion'] < $lastKnowVersionBdd['value']) { $bddVersion['localVersion'] = $lastKnowVersionBdd['value']; }
+			}			
+			$this->set('bddVersion', $bddVersion);			
 			
 			//Version Code
 			$localVersion = $this->_check_local_version('versions.xml');
