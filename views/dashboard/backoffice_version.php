@@ -83,8 +83,10 @@ $currentWebsite = Session::read('Backoffice.Websites.current');
 				</div>
 				<div class="content">					
 					<pre>
-					<?php ob_start(); ?>
 					<?php 
+					echo "\n";
+					ob_start(); 
+					
 					foreach($bddVersion['updates'] as $update) { 
 						
 						$update = trim($update);									
@@ -109,7 +111,7 @@ $currentWebsite = Session::read('Backoffice.Websites.current');
 					echo $helpers['Form']->create($formOptions);
 					echo $helpers['Form']->input('update_bdd', '', array('type' => 'hidden', 'value' => 1));
 					?>
-						<div class="row" style="text-align: right; padding-right: 0; padding-bottom: 0; border-top: none;"><button class="medium grey" type="submit"><span>Exécuter automatiquement la mise à jour</span></button></div>
+						<div class="row" style="text-align: right; padding-right: 0; padding-bottom: 0; border-top: none;"><button class="medium grey" type="submit"><span>Exécuter automatiquement la mise à jour et vider le cache automatiquement</span></button></div>
 					<?php echo $helpers['Form']->end(false); ?>								
 				</div>
 			</div>

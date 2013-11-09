@@ -203,6 +203,9 @@ class DashboardController extends AppController {
 			$sql = Session::read('Update.sql');
 			$this->loadModel('Config');
 			$this->Config->query($sql);
+			
+			$redirectUrl = "backoffice/configs/delete_cache";
+			$this->redirect($redirectUrl, 301); //On lance la redirection
 		}
 	}
 	
