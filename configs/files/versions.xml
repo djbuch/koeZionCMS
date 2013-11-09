@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 09/11/2013</name>
+		<num>20131109.007</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Correction de l'élément chargé de générer les flux RSS</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 09/11/2013</name>
 		<num>20131109.006</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
