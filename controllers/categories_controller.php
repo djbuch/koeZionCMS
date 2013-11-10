@@ -277,6 +277,36 @@ class CategoriesController extends AppController {
 			'fields' => array('id', 'name', 'lft', 'rgt', 'level', 'online', 'type'), 
 			'order' => 'lft'
 		);
+		
+		
+		
+		
+		if(isset($this->request->data['Search'])) {
+		
+			$searchConditions = array();
+			foreach($this->request->data['Search'] as $k => $v) {
+		
+				if(trim($v) != "") { //Système de poulie lié au fait que empty(0) retourne faux
+		
+					if($k == 'id') { $searchConditions[] = $k."='".$v."'"; }
+					else { $searchConditions[] = $k." LIKE '%".$v."%'"; }
+				}
+			}
+		
+			if(count($searchConditions) > 0) { $conditions['conditions'] .= " AND ".implode(' AND ', $searchConditions); }
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		$datas['categories'] = $this->Category->find($conditions);		
 		$this->pager['totalElements'] = $this->Category->findCount('type != 3');				
 		$this->set($datas);

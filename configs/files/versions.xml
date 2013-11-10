@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 10/11/2013</name>
+		<num>20131110.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la fonction de gestion des dates dans AppController</task>
+			<task author="FI" type="code">Rajout d'un moteur de recherche dans tous les modules</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 09/11/2013</name>
 		<num>20131109.009</num>
 		<supervisor>KoéZionCMS</supervisor>

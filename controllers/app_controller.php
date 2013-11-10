@@ -174,9 +174,9 @@ class AppController extends Controller {
     	
     		$searchConditions = array();
     		foreach($this->request->data['Search'] as $k => $v) {
-
-    			if(!empty($v)) {
-
+    			
+    			if(trim($v) != "") { //Système de poulie lié au fait que empty(0) retourne faux
+    				
     				if($k == 'id') { $searchConditions[] = $k."='".$v."'"; }
     				else { $searchConditions[] = $k." LIKE '%".$v."%'"; }
     			}
@@ -952,8 +952,9 @@ class AppController extends Controller {
  * @author 	koéZionCMS
  * @version 0.1 - 25/10/2012 by FI
  * @version 0.2 - 03/11/2013 by FI - Déplacée du contrôleur posts vers le contrôleur app
+ * @version 0.3 - 10/11/2013 by FI - Modification de la fonction pour qu'elle prenne en compte les tableaux avec des index multiples
  */	
-	protected function _transform_date($mode, $requestField) {
+	/*protected function _transform_date($mode, $requestField) {
 		
 		if($mode == 'fr2Sql') {
 			
@@ -970,6 +971,47 @@ class AppController extends Controller {
 			
 				$dateArray = $this->components['Text']->date_human_to_array($this->request->data[$requestField], '-', 'i');
 				$this->request->data[$requestField] = $dateArray[2].'.'.$dateArray[1].'.'.$dateArray[0];
+			}
+		}		
+	}*/
+	
+	protected function _transform_date($mode, $field) {
+		
+		if($this->request->data) {
+			
+			if($mode == 'fr2Sql') {
+				
+				//Transformation de la date FR en date SQL
+				if(!empty($field)) {
+				
+					$date = Set::classicExtract($this->request->data, $field);
+					if($date != 'dd.mm.yy') {
+						
+						$dateArray = $this->components['Text']->date_human_to_array($date);
+						$this->request->data = Set::insert($this->request->data, $field, $dateArray['a'].'-'.$dateArray['m'].'-'.$dateArray['j']);
+						
+					} else {
+						
+						$this->request->data = Set::insert($this->request->data, $field, '');
+					}
+				}
+			} else if($mode == 'sql2Fr') {
+				
+				//Transformation de la date SQL en date FR
+				if(!empty($field)) {
+				
+					$date = Set::classicExtract($this->request->data, $field);
+					if($date != '') {
+						
+						$dateArray = $this->components['Text']->date_human_to_array($date, '-', 'i');
+						$this->request->data = Set::insert($this->request->data, $field, $dateArray[2].'.'.$dateArray[1].'.'.$dateArray[0]);
+						
+					} else {
+						
+						$this->request->data = Set::insert($this->request->data, $field, 'dd.mm.yy');
+						
+					}
+				}
 			}
 		}		
 	}
