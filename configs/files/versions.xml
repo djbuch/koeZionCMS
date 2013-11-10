@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 10/11/2013</name>
+		<num>20131110.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Corrections sur le CategoriesController</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 10/11/2013</name>
 		<num>20131110.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

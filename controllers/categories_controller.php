@@ -276,10 +276,7 @@ class CategoriesController extends AppController {
 			'conditions' => 'type != 3',
 			'fields' => array('id', 'name', 'lft', 'rgt', 'level', 'online', 'type'), 
 			'order' => 'lft'
-		);
-		
-		
-		
+		);		
 		
 		if(isset($this->request->data['Search'])) {
 		
@@ -295,17 +292,6 @@ class CategoriesController extends AppController {
 		
 			if(count($searchConditions) > 0) { $conditions['conditions'] .= " AND ".implode(' AND ', $searchConditions); }
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		$datas['categories'] = $this->Category->find($conditions);		
 		$this->pager['totalElements'] = $this->Category->findCount('type != 3');				
