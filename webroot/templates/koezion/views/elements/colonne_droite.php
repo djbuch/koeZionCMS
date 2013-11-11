@@ -15,7 +15,7 @@
 	<div class="widget">		
 		<?php foreach($children as $columnTitle => $childrenValues) { ?>
 						
-			<?php if(!empty($columnTitle)) { ?><h2 class="widgettitle"><?php echo $columnTitle; ?></h2><?php } ?>
+			<?php if(!empty($columnTitle)) { ?><h2 class="widgettitle"><?php echo $category['name']; ?></h2><?php } ?>
 			<ul class="nobordertop">
 				<?php 
 				foreach($childrenValues as $k => $v) {

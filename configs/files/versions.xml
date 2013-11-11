@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 11/11/2013</name>
+		<num>20131111.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Correctif sur la gestion des titres de la colonne de droite</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 10/11/2013</name>
 		<num>20131110.002</num>
 		<supervisor>KoéZionCMS</supervisor>

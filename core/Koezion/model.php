@@ -32,6 +32,7 @@ class Model extends Object {
  * @version 0.5 - 07/09/2012 by FI - Rajout de la variable database si la connexion existe déjà
  * @version 0.6 - 14/12/2012 by FI - Rajout de la variable $refererUrl dans le constructeur pour les logs bdd
  * @version 0.7 - 05/07/2013 by FI - Gestion de l'alias
+ * @version 0.8 - 11/11/2013 by FI - Rajout de la source en variable en prévision de futures évolutions
  */
 	public function __construct($refererUrl = null) {
 
@@ -47,6 +48,7 @@ class Model extends Object {
 		require_once(LIBS.DS.'config_magik.php'); //Import de la librairie de gestion des fichiers de configuration 
 		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'database.ini', true, true); //Création d'une instance
 		$conf = $cfg->keys_values($section); //Récupération des configurations en fonction du nom de domaine (Ancienne version : $conf = $cfg->keys_values($_SERVER["HTTP_HOST"], 1);)
+		$conf['source'] = "mysql";
 		
 		//Si le nom de la table n'est pas défini on va l'initialiser automatiquement
 		//Par convention le nom de la table sera le nom de la classe en minuscule avec un s à la fin
@@ -65,7 +67,7 @@ class Model extends Object {
 			$this->db = Model::$connections[$this->conf];	
 			$this->database = $conf['database'];
 			$this->shema = $this->shema();
-			return true;             
+			return true;
 		}
         
 		//On va tenter de se connecter à la base de données
@@ -73,7 +75,7 @@ class Model extends Object {
             
 			//Création d'un objet PDO
 			$pdo = new PDO(
-				'mysql:host='.$conf['host'].';dbname='.$conf['database'], 
+				$conf['source'].':host='.$conf['host'].';dbname='.$conf['database'], 
 				$conf['login'], 
 				$conf['password'], 
 				array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8')
