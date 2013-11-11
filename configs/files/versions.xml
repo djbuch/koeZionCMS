@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 11/11/2013</name>
+		<num>20131111.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Corrections apportées à la procédure d'installation</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 11/11/2013</name>
 		<num>20131111.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

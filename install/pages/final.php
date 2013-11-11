@@ -14,7 +14,7 @@ if(isset($_GET['action']) && $_GET['action'] == 'sendmail') {
 	
 	foreach($urls as $url) { $message .= trim($url).", "; }	
 	$message = substr($message, 0, strlen($message) - 2).'.';
-	$message .= '<br />Penser a demander la description au webmaster pour insertion dans le portfolio';
+	$message .= "\n".'Penser a demander la description au webmaster pour insertion dans le portfolio';
 	
 	$to      = 'contact@koezion-cms.com';
 	$subject = '..:: Nouveau Site KoéZion Installé ::..';
