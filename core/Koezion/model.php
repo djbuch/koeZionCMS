@@ -922,6 +922,7 @@ class Model extends Object {
  * @access	private
  * @author	koéZionCMS
  * @version 0.1 - 24/08/2012 by FI
+ * @version 0.1 - 13/11/2013 by FI - Rajout du code permettant la gestion de l'option de modification de la date de modification
  */	
 	function _prepare_save_query($datasShema, $forceInsert, $escapeUpload) {
 					
@@ -959,16 +960,23 @@ class Model extends Object {
 		}
 		
 		//Génération des chammps supplémentaires
-		if(!in_array('modified', $datasShema) && in_array('modified', $shema)) { 
+		//On ne traite le modified que si le champ dont_change_modified_date n'existe pas ou si il n'existe mais que sa valeur est fausse
+		if(
+			!isset($this->datas['dont_change_modified_date']) || 
+			(isset($this->datas['dont_change_modified_date']) && !$this->datas['dont_change_modified_date'])
+		) {
 			
-			$datasShema[] = 'modified'; 
-			$moreDatasToSave[':modified'] = date('Y-m-d H:i:s');
-		}
-		if(!in_array('modified_by', $datasShema) && in_array('modified_by', $shema)) { 
-			
-			$datasShema[] = 'modified_by';
-			$moreDatasToSave[':modified_by'] = Session::read('Backoffice.User.id');
-		}						
+			if(!in_array('modified', $datasShema) && in_array('modified', $shema)) { 
+				
+				$datasShema[] = 'modified'; 
+				$moreDatasToSave[':modified'] = date('Y-m-d H:i:s');
+			}
+			if(!in_array('modified_by', $datasShema) && in_array('modified_by', $shema)) { 
+				
+				$datasShema[] = 'modified_by';
+				$moreDatasToSave[':modified_by'] = Session::read('Backoffice.User.id');
+			}	
+		}					
 		
 		if(!in_array('website_id', $datasShema) && in_array('website_id', $shema) && $this->manageWebsiteId) { //get_class($this) != 'UsersGroupsWebsite') { 
 			

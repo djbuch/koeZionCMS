@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 13/11/2013</name>
+		<num>20131113.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise en place de l'option de conservation de la date de modification</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 13/11/2013</name>
 		<num>20131113.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
