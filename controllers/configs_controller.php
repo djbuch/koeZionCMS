@@ -98,6 +98,15 @@ class ConfigsController extends AppController {
  * @version 0.1 - 10/09/2012 by FI
  */
 	function backoffice_security_code_liste() { $this->_proceed_datas_ini(CONFIGS.DS.'files'.DS.'security_code.ini', 'backoffice/configs/security_code_liste'); }	
+	
+/**
+ * Cette fonction va permettre l'affichage des paramétrages du coeur de KoéZionCMS
+ *
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 12/11/2013 by FI
+ */
+	function backoffice_core_liste() { $this->_proceed_datas_ini(CONFIGS.DS.'files'.DS.'core.ini', 'backoffice/configs/core_liste'); }	
 
 /**
  * Cette fonction va permettre de supprimer les fichiers de cache

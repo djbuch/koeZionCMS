@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 13/11/2013</name>
+		<num>20131113.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise en place d'un module permettant de gérer l'activation ou non des logs SQL et PHP</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 11/11/2013</name>
 		<num>20131111.002</num>
 		<supervisor>KoéZionCMS</supervisor>

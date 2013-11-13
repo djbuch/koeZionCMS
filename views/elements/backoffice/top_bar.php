@@ -33,8 +33,9 @@
 		</li>
 		<?php if(Session::getRole() == 1) { ?>
 			<li>
-				<img src="<?php echo BASE_URL; ?>/img/backoffice/icon-settings.png" alt="Settings" /> <?php echo _("Paramètres"); ?>
+				<img src="<?php echo BASE_URL; ?>/img/backoffice/icon-settings.png" alt="Settings" /> <?php echo _("Configurations"); ?>
 				<ul>
+					<li><a href="<?php echo Router::url('backoffice/configs/core_liste'); ?>"><?php echo _("Coeur du système"); ?></a></li>			
 					<li><a href="<?php echo Router::url('backoffice/configs/database_liste'); ?>"><?php echo _("Base de données"); ?></a></li>			
 					<li><a href="<?php echo Router::url('backoffice/configs/mailer_liste'); ?>"><?php echo _("Envoi de mails"); ?></a></li>			
 					<li><a href="<?php echo Router::url('backoffice/configs/router_liste'); ?>"><?php echo _("Gestion des routes"); ?></a></li>			

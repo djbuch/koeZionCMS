@@ -1051,20 +1051,27 @@ class Model extends Object {
 	
 	protected function _trace_sql($function, $query) {
 			
-		$date = date('Y-m-d');
-		$traceSql = 
-			date('Y-m-d H:i:s').
-			"|#|".
-			get_class($this).
-			"|#|".
-			$this->refererUrl.
-			"|#|".
-			$function.
-			"|#|".
-			$query.
-			"\n";
+		require_once(LIBS.DS.'config_magik.php');
+		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
+		$conf = $cfg->keys_values();
 		
-		FileAndDir::put(TMP.DS.'logs'.DS.'models'.DS.$date.'.log', $traceSql, FILE_APPEND);
+		if($conf['log_sql']) {
+			
+			$date = date('Y-m-d');
+			$traceSql = 
+				date('Y-m-d H:i:s').
+				"|#|".
+				get_class($this).
+				"|#|".
+				$this->refererUrl.
+				"|#|".
+				$function.
+				"|#|".
+				$query.
+				"\n";
+			
+			FileAndDir::put(TMP.DS.'logs'.DS.'models'.DS.$date.'.log', $traceSql, FILE_APPEND);
+		}
 	}
 }
 

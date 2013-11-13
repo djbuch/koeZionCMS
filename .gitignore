@@ -11,6 +11,7 @@ _*/
 EXPORT_PDF/
 installed
 configs/files/*.ini
+!configs/files/core.ini
 configs/hooks/*.php
 /configs/plugins/
 !/configs/plugins/empty
