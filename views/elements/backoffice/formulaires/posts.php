@@ -136,6 +136,7 @@
 
 			if(!isset($formulaires)) { $formulaires = array (2 => 'Formulaire commentaire article'); } 
 			echo $helpers['Form']->input('display_form', 'Formulaire', array('type' => 'select', 'datas' => $formulaires, 'tooltip' => "Indiquez le formulaire que vous souhaitez afficher sur la page", 'firstElementList' => "Sélectionnez un formulaire"));					
+			echo $helpers['Form']->input('shooting_time', "Durée de réalisation", array('tooltip' => "Indiquez la durée de réalisation de ce qui sera présenté dans cet article"));
 			?>
 		</div>		
 	</div>

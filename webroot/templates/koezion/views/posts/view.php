@@ -27,9 +27,12 @@ else { $rightColumn = true; }
 		$postDate = $this->vars['components']['Text']->date_sql_to_human($post['modified']);
 		echo '<a href="'.$postBaseRoute.'?date='.$postDate['sql'].'">'.$postDate['txt'].'</a>';
 			
-		$nbComments = $this->request('PostsComments', 'get_nb_comments', array($post['id']));
-		if($nbComments == 0) { $nbCommentsTxt = _('aucun'); } else { $nbCommentsTxt = $nbComments; }				
-		echo '|'.$nbCommentsTxt.' commentaire(s)';
+		if($post['display_form']) {
+			
+			$nbComments = $this->request('PostsComments', 'get_nb_comments', array($post['id']));
+			if($nbComments == 0) { $nbCommentsTxt = _('aucun'); } else { $nbCommentsTxt = $nbComments; }				
+			echo '|'.$nbCommentsTxt.' commentaire(s)';
+		}
 						
 		$writer = $this->request('Users', 'get_user_libelle', array($post['created_by']));				
 		echo '| '._('par').' '.'<a href="'.$postBaseRoute.'?writer='.$writer['id'].'">'.$writer['name'].'</a>';				

@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 14/11/2013</name>
+		<num>20131114.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la gestion de l'affichage des commentaires pour les articles</task>
+			<task author="FI" type="code">Rajout de la durée de réalisation pour les articles, pour les tutoriels par exemple (rajout d'un champ BDD)</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 13/11/2013</name>
 		<num>20131113.002</num>
 		<supervisor>KoéZionCMS</supervisor>

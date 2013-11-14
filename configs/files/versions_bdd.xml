@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 14/11/2013</name>
+		<num>20131114.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI">ALTER TABLE `posts` ADD `shooting_time` VARCHAR( 255 ) NOT NULL AFTER `code` ;</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 09/11/2013</name>
 		<num>20131109.003</num>
 		<supervisor>KoéZionCMS</supervisor>

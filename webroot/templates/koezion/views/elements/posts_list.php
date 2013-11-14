@@ -27,10 +27,12 @@
 					$postDate = $this->vars['components']['Text']->date_sql_to_human($v['modified']);
 					echo '<a href="'.$postBaseRoute.'?date='.$postDate['sql'].'">'.$postDate['txt'].'</a>';
 						
-					$nbComments = $this->request('PostsComments', 'get_nb_comments', array($v['id']));
-					if($nbComments == 0) { $nbCommentsTxt = _('aucun'); } else { $nbCommentsTxt = $nbComments; }				
-					echo '|'.$nbCommentsTxt.' commentaire(s)';
-									
+					if($v['display_form']) {
+						
+						$nbComments = $this->request('PostsComments', 'get_nb_comments', array($v['id']));
+						if($nbComments == 0) { $nbCommentsTxt = _('aucun'); } else { $nbCommentsTxt = $nbComments; }				
+						echo '|'.$nbCommentsTxt.' commentaire(s)';
+					}		
 					$writer = $this->request('Users', 'get_user_libelle', array($v['created_by']));				
 					echo '| '._('par').' '.'<a href="'.$postBaseRoute.'?writer='.$writer['id'].'">'.$writer['name'].'</a>';				
 					
@@ -45,6 +47,11 @@
 					}
 					
 					echo '| '._('dans').' '.'<a href="'.$postBaseRoute.'">'.$categoryName.'</a>';	
+					
+					if(!empty($v['shooting_time'])) {
+						
+						echo '| '.$helpers['Html']->img('koezion/img/watch_time.png').' '.$v['shooting_time'];	
+					}
 					?>
 				</p>
 				<div class="hr"></div>
