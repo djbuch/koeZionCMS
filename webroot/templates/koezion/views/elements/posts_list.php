@@ -50,7 +50,7 @@
 					
 					if(!empty($v['shooting_time'])) {
 						
-						echo '| '.$helpers['Html']->img('koezion/img/watch_time.png').' '.$v['shooting_time'];	
+						echo '| '.$helpers['Html']->img('koezion/img/watch_time.png', array('style' => "position:relative;top:2px;")).' '.$v['shooting_time'];	
 					}
 					?>
 				</p>

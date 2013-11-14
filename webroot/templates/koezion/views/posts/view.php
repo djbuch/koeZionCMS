@@ -48,6 +48,11 @@ else { $rightColumn = true; }
 		}
 		
 		echo '| '._('dans').' '.'<a href="'.$postBaseRoute.'">'.$categoryName.'</a>';
+					
+		if(!empty($post['shooting_time'])) {
+			
+			echo '| '.$helpers['Html']->img('koezion/img/watch_time.png', array('style' => "position:relative;top:2px;")).' '.$post['shooting_time'];	
+		}
 		?>
 	</p>	
 	<div class="hr"><div class="inner_hr">&nbsp;</div></div>
