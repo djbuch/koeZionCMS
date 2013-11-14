@@ -121,16 +121,17 @@ CREATE TABLE IF NOT EXISTS `plugins` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-
 DROP TABLE IF EXISTS `posts`;
 CREATE TABLE IF NOT EXISTS `posts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `short_content` longtext COLLATE utf8_unicode_ci NOT NULL,
   `content` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `redirect_to` longtext COLLATE utf8_unicode_ci NOT NULL,
   `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `prefix` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `shooting_time` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `page_title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `page_description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `page_keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
