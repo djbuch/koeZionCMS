@@ -636,6 +636,7 @@ class Model extends Object {
  * @version 0.4 - 20/04/2012 - Mise en place des validations par callback 
  * @version 0.5 - 25/06/2013 - Changement du include_once en include pour le chargement des messages d'erreurs car dans le cas de validations multiples le fichier n'était pas chargé  
  * @version 0.6 - 09/11/2013 - Rajout d'un nouveau paramètre aux règles de validation permettant de paramétrer une règle mais de ne l'appliquer que si le champ n'est pas vide  
+ * @version 0.7 - 14/11/2013 - Mise en place de la validation des champs construit avec des tableaux multidimensionnels  
  */	
 	function validates($datas) {
 				
@@ -643,12 +644,13 @@ class Model extends Object {
 			
 			$errors = array(); //Tableau d'erreurs qui sera retourné
 			include(CONFIGS.DS.'messages.php'); //Inclusion des éventuels messages d'erreurs
-						
+
 			foreach($this->validate as $k => $v) { //On va parcourir tous les champs à valider
 				
 				//Par défaut si le champ est présent dans les données à valider 
 				//mais pas dans les données envoyées par le formulaire on génère une erreur
-				if(isset($datas[$k])) { 
+				//if(isset($datas[$k])) { 
+				if(Set::check($datas, $k)) { 
 					
 					$this->datas = $datas; //On va rajouter les données à contrôler dans le model dans le cas ou nous en ayons besoin lors de l'utilisation des callback
 					$validation = new Validation($this);					
@@ -664,32 +666,36 @@ class Model extends Object {
 							
 							if(!isset($vRule['allowEmpty'])) { $vRule['allowEmpty'] = false; } //Par défaut si l'index allowEmpty n'existe pas on le rajoute
 							
-							$isValid = $validation->check($datas[$k], $vRule['rule']); //Lancement de la règle
-							$allowEmpty = $vRule['allowEmpty'] && empty($datas[$k]); //Génération du booléen allowEmpty
+							$dataToCheck = Set::classicExtract($datas, $k);
+							$isValid = $validation->check($dataToCheck, $vRule['rule']); //Lancement de la règle
+							$allowEmpty = $vRule['allowEmpty'] && empty($dataToCheck); //Génération du booléen allowEmpty
 							
 							//On injecte le message en cas d'erreur
 							if(!$isValid && !$allowEmpty) { 
 								
 								if(Set::check($Errorsmessages, $vRule['message'])) { $errors[$k] = Set::classicExtract($Errorsmessages, $vRule['message']); }
-								else { $errors[$k] = $vRule['message']; }
-								 
+								else { $errors[$k] = $vRule['message']; }								 
 							}	
 						}	
 					} else { 
 						
 						if(!isset($v['allowEmpty'])) { $v['allowEmpty'] = false; } //Par défaut si l'index allowEmpty n'existe pas on le rajoute
-							
-						$isValid = $validation->check($datas[$k], $v['rule']); //Lancement de la règle
-						$allowEmpty = $v['allowEmpty'] && empty($datas[$k]); //Génération du booléen allowEmpty
+
+						$dataToCheck = Set::classicExtract($datas, $k);
+						$isValid = $validation->check($dataToCheck, $v['rule']); //Lancement de la règle
+						$allowEmpty = $v['allowEmpty'] && empty($dataToCheck); //Génération du booléen allowEmpty
 
 						//On injecte le message en cas d'erreur
 						if(!$isValid && !$allowEmpty) { 
 								
 							if(Set::check($Errorsmessages, $v['message'])) { $errors[$k] = Set::classicExtract($Errorsmessages, $v['message']); }
-							else { $errors[$k] = $v['message']; }
-								 
+							else { $errors[$k] = $v['message']; }								 
 						} 						
 					}
+				} else {
+					
+					if(Set::check($Errorsmessages, $v['message'])) { $errors[$k] = Set::classicExtract($Errorsmessages, $v['message']); }
+					else { $errors[$k] = $v['message']; }
 				}
 			}
 			

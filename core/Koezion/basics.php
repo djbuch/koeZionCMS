@@ -28,7 +28,7 @@ function debug($var, $die = 0) {
  * Print_r convenience function, which prints out <PRE> tags around
  * the output of given array. Similar to debug().
  */
-	function pr($var) {
+	function pr($var, $start = null, $end = null) {
 		
 		if (Configure::read('debug') > 0) {
 			
@@ -37,7 +37,9 @@ function debug($var, $die = 0) {
 			print_r('[FILE] : '.$debug[0]['file']."\n");
 			print_r('[LINE] : '.$debug[0]['line']."\n\n");
 			print_r('[RESULTAT] : '."\n");
+			if(isset($start)) { print_r($start."\n"); }
 			print_r($var);
+			if(isset($end)) { print_r("\n".$end); }
 			echo '</pre>';
 		}
 	}
