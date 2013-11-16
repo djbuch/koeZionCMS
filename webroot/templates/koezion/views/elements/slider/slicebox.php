@@ -24,8 +24,12 @@ if(isset($sliders) && count($sliders) > 0) {
 
 				require_once(LIBS.DS.'simple_html_dom.php');
 				
-				$sliderImg = str_get_html($v['image']);
-				$sliderImg->find('img', 0)->style = 'width: 918px;';				
+				if(!empty($v['image'])) {
+					
+					$sliderImg = str_get_html($v['image']);
+					$sliderImg->find('img', 0)->style = 'width: 918px;';
+				
+				} else { $sliderImg = ''; }				
 				?>
 				<li>
 					<?php 
