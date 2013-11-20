@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 20/11/2013</name>
+		<num>20131120.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification fichier SQL de création des tables</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 16/11/2013</name>
 		<num>20131116.001</num>
 		<supervisor>KoéZionCMS</supervisor>
