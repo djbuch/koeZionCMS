@@ -127,6 +127,7 @@ $folders = array(
 					);
 					foreach($foldersToCreate as $folder) { FileAndDir::createPath($folder); }
 					
+					FileAndDir::fcopy(INSTALL_FILES.DS.'core.ini', CONFIGS_FILES.DS.'core.ini');
 					FileAndDir::fcopy(INSTALL_FILES.DS.'posts.ini', CONFIGS_FILES.DS.'posts.ini');
 					FileAndDir::fcopy(INSTALL_FILES.DS.'routes.ini', CONFIGS_FILES.DS.'routes.ini');
 									

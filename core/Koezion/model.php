@@ -36,12 +36,9 @@ class Model extends Object {
  */
 	public function __construct($refererUrl = null) {
 
-		//ANCIENNE VERSION DE RECUPERATION DE LA CONFIGURATION DE LA BASE DE DONNEES
-		//if($_SERVER["HTTP_HOST"] != 'localhost') { $this->conf = 'online'; } //On va tester si on est en local ou pas		        		
-		//$conf = Database::$databases[$this->conf]; //Récupération de la configuration de la base de données
-
 		$this->refererUrl = $refererUrl;
 		
+		//Récupération de la configuration de connexion à la base de données
 		$httpHost = $_SERVER["HTTP_HOST"];
 		if($httpHost == 'localhost' || $httpHost == '127.0.0.1') { $section = 'localhost'; } else { $section = 'online'; }
 		
@@ -135,121 +132,7 @@ class Model extends Object {
 			else { return true; } //On retourne vrai sinon
 		} else { return false; } //Si la requête ne s'est pas bien déroulée on retourne faux
 	}	
-	
-/**
- * Fonction permettant d'effectuer des recherches dans la base de données
- * 
- * $req peut être composé des index suivants :
- * 	- fields (optionnel) : liste des champs à récupérer. Cet index peut être une chaine de caractères ou un tableau, si il est laissé vide la requête récupèrera l'ensemble des colonnes de la table.
- * 	- conditions (optionnel) : ensemble des conditions de recherche à mettre en place. Cet index peut être une chaine de caractères ou un tableau.
- * 	- moreConditions (optionnel) : cet index est une chaine de caractères et permet lorsqu'il est renseigné de rajouter des conditions de recherche particulières.
- * 	- order (optionnel) : cet index est une chaine de caractères et permet lorsqu'il est renseigné d'effectuer un tri sur les éléments retournés.
- * 	- limit (optionnel) : cet index est un entier et permet lorsqu'il est renseigné de limiter le nombre de résultats retournés.
- *  - allLocales (optionnel) : cet index est un booléen qui permet lors de la récupération d'un élément d'indiquer si il faut ou non récupérer l'ensemble des champs traduits
- * 
- * @param 	array 	$req 	Tableau de conditions et paramétrages de la requete
- * @param 	object 	$type 	Indique le type de retour de PDO dans notre cas un tableau dont les index sont les colonnes de la table
- * @return 	array 	Tableau contenant les éléments récupérés lors de la requête  
- * @version 0.1 - 28/12/2011 by FI
- * @version 0.2 - 02/05/2012 by FI - Mise en place de la conditions de récupérations selon l'identifiant du site
- */    
-	/*public function find($req = array(), $type = PDO::FETCH_ASSOC) {
-		
-		$shema = $this->shema;
-		$sql = 'SELECT '; //Requete sql
-        
-		///////////////////////
-		//   CHAMPS FIELDS   //		
-		if(!isset($req['fields'])) {
-			
-			//Si aucun champ n'est demandé on va récupérer le shéma de la table et récupérer ces champs
-			//Dans le cas de table traduite on va également récupérer les champs traduits ainsi que la langue associée
-			$req['fields'] = $shema;
-		}	
-		
-		if(is_array($req['fields'])) { $sql .= implode(', ', $req['fields']); } //Si il s'agit d'un tableau		
-		else { $sql .= $req['fields']; } //Si il s'agit d'une chaine de caractères 
-		
-		$sql .= ' FROM '.$this->table.' AS '.get_class($this).' '; //Mise en place du from
 
-		///////////////////////////////////////////////////////////
-		//   CONDITIONS DE RECHERCHE SUR L'IDENTIFIANT DU SITE   //
-		//Si dans le shema de la table on a une colonne website_id		
-		if(in_array('website_id', $shema) && !in_array(get_class($this), array('UsersWebsite', 'UsersGroupsWebsite'))) {
-		
-			//Si on a pas de conditions de recherche particulières
-			if(!isset($req['conditions'])) { $req['conditions']['website_id'] = CURRENT_WEBSITE_ID; }
-			else {
-				
-				//Sinon on va tester si il s'agit d'un tableau ou d'une chaine de caractères
-				if(is_array($req['conditions'])) { $req['conditions']['website_id'] = CURRENT_WEBSITE_ID; } 
-				else { $req['conditions'] .= " AND website_id=".CURRENT_WEBSITE_ID; }
-			}			
-		}
-		///////////////////////////////////////////////////////////
-		
-		///////////////////////////
-		//   CHAMPS CONDITIONS   //
-		if(isset($req['conditions'])) { //Si on a des conditions
-			
-			$conditions = 'WHERE ';	//Mise en variable des conditions	
-			
-			//On teste si conditions est un tableau
-			//Sinon on est dans le cas d'une requête personnalisée
-			if(!is_array($req['conditions'])) {
-                
-				$conditions .= $req['conditions']; //On les ajoute à la requete
-			
-			//Si c'est un tableau on va rajouter les valeurs
-			} else {
-				
-				$cond = array();
-				foreach($req['conditions'] as $k => $v) {
-					
-					if(!is_numeric($v)) {
-						
-						$v = $this->db->quote($v); //Equivalement de mysql_real_escape_string
-						//$v = '"'.mysql_escape_string($v).'"'; //Equivalement de mysql_real_escape_string
-					}
-					
-					$k = get_class($this).".".$k; //On rajoute le nom de la classe devant le nom de la colonne
-					$cond[] = "$k=$v";
-				}
-				$conditions .= implode(' AND ', $cond);
-			}
-			
-			$sql .= $conditions; //On rajoute les conditions à la requête
-		}
-		
-		////////////////////////////////
-		//   CHAMPS MORE CONDITIONS   //
-		if(isset($req['moreConditions']) && !empty($req['moreConditions'])) { 
-			
-			if(isset($req['conditions'])) { $sql .= ' AND '; } else { $sql .= ' WHERE '; }			
-			$sql .= $req['moreConditions']; 
-		}
-		
-		//////////////////////
-		//   CHAMPS GROUP BY   //
-		if(isset($req['groupBy'])) { $sql .= ' '.$req['groupBy']; }
-		
-		//////////////////////
-		//   CHAMPS ORDER   //
-		if(isset($req['order'])) { $sql .= ' ORDER BY '.$req['order']; }
-		
-		//////////////////////
-		//   CHAMPS LIMIT   //
-		if(isset($req['limit'])) { $sql .= ' LIMIT '.$req['limit']; }
-		
-		//if($this->trace_sql) { pr($sql); }
-		
-		$preparedQuery = $this->db->prepare($sql);
-		$preparedQuery->execute();
-		
-		$this->_trace_sql('function find', $preparedQuery->queryString); //Récupération de la requête
-		
-        return $preparedQuery->fetchAll($type);        
-    }*/
 /**
  * Fonction permettant d'effectuer des recherches dans la base de données
  * 
@@ -992,8 +875,6 @@ class Model extends Object {
 		
 		if(in_array('slug', $shema) && (!in_array('slug', $datasShema))) { $datasShema[] = 'slug'; } 
 		if(in_array('page_title', $shema) 	&& (!in_array('page_title', $datasShema))) 	{ $datasShema[] = 'page_title'; } 
-		
-		//if(in_array('password', $datasShema)) { $datasShema[] = 'password'; }
 						
 		//On contrôle que la clé primaire ne soit pas dans le tableau si on a demandé de forcer l'ajout
 		if(in_array($primaryKey, $datasShema) && !$forceInsert) {
@@ -1042,7 +923,10 @@ class Model extends Object {
 		$datasToSave = array(); //Tableau utilisé lors de la préparation de la requête
 		if(isset($datas[$primaryKey]) && !empty($datas[$primaryKey]) && !$forceInsert) { $datasToSave[":$primaryKey"] = $datas[$primaryKey]; }
 		
-		//if(in_array('password', $datasShema)) { $datas['password'] = sha1($datas['password']); } //On procède à la mise à jour du champ password si il existe				
+		require_once(LIBS.DS.'config_magik.php');
+		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
+		$coreConfs = $cfg->keys_values();
+		if(in_array('password', $datasShema) && $coreConfs['hash_password']) { $datas['password'] = sha1($datas['password']); } //On procède à la mise à jour du champ password si il existe				
 		
 		if(in_array('slug', $shema) && (!in_array('slug', $datasShema) || empty($datas['slug']))) { $datas['slug'] = strtolower(Inflector::slug($datas['name'], '-')); } //On procède à la mise à jour du champ slug si celui ci n'est pas rempli ou non présent dans le formulaire mais présent dans la table
 		if(in_array('page_title', $shema) && (!in_array('page_title', $datasShema) || empty($datas['page_title']))) { $datas['page_title'] = $datas['name']; } //On procède à la mise à jour du champ page_title si celui ci n'est pas rempli ou non présent dans le formulaire mais présent dans la table
@@ -1067,9 +951,9 @@ class Model extends Object {
 			
 		require_once(LIBS.DS.'config_magik.php');
 		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
-		$conf = $cfg->keys_values();
+		$coreConfs = $cfg->keys_values();
 		
-		if($conf['log_sql']) {
+		if($coreConfs['log_sql']) {
 			
 			$date = date('Y-m-d');
 			$traceSql = 
@@ -1088,19 +972,3 @@ class Model extends Object {
 		}
 	}
 }
-
-/**
- * Model sans base de données
- */
-/*class ModelStd extends Object {
-
-	static $connections = array();
-	public $conf = 'localhost'; //Paramètres de connexion par défaut
-	public $table = false; //Nom de la table
-	public $db; //Variable contenant la connexion à la base de données
-	public $primaryKey = 'id';  //Valeur par défaut de la clé primaire
-	public $id; //Variable qui va contenir la valeur de la clé primaire après isert ou update
-	public $errors = array(); //Par défaut pas d'erreurs
-	public $trace_sql = false; //Permet d'afficher la requête exécutée cf fonction find
-	public $schema = array(); //Shéma de la table
-}*/

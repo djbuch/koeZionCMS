@@ -34,7 +34,11 @@ class UsersController extends AppController {
 		if($this->request->data) {
 			
 			$data = $this->request->data; //Mise en variable des données postées			
-			//$data['password'] = sha1($data['password']); //Cryptage du mot de passe
+			
+			require_once(LIBS.DS.'config_magik.php');
+			$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
+			$coreConfs = $cfg->keys_values();			
+			if($coreConfs['hash_password']) { $data['password'] = sha1($data['password']); } //Cryptage du mot de passe
 			
 			//Récupération du login et du mot de passe dans des variables
 			$postLogin = $data['login'];

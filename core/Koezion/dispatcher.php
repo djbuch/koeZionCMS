@@ -191,9 +191,9 @@ class Dispatcher {
         
 		require_once(LIBS.DS.'config_magik.php');
 		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
-		$conf = $cfg->keys_values();
+		$coreConfs = $cfg->keys_values();
 		
-		if($conf['log_php']) {
+		if($coreConfs['log_php']) {
 
 			//Rajout le 02/04/2013
 			$date = date('Y-m-d');

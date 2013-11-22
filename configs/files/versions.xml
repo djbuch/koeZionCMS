@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 22/11/2013</name>
+		<num>20131122.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise en place pour l'administrateur de la possibilité de hasher les mots de passe stockés en base de données</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 20/11/2013</name>
 		<num>20131120.002</num>
 		<supervisor>KoéZionCMS</supervisor>
