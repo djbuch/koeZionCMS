@@ -20,20 +20,19 @@ if(isset($sliders) && count($sliders) > 0) {
 			<?php 
 			foreach($sliders as $k => $v) {	
 
-				require_once(LIBS.DS.'simple_html_dom.php');
-				
-				if(!empty($v['image'])) {
-				
+				if(!empty($v['image'])) {	
+					
+					require_once(LIBS.DS.'simple_html_dom.php');					
 					$sliderImg = str_get_html($v['image']);
-					$sliderImg->find('img', 0)->style = 'width: 918px;';
-				
-				} else { $sliderImg = ''; }								
-				?><li><?php 
-					echo $sliderImg;
-					if(isset($v['content']) && !empty($v['content'])) { 
-						echo '<div class="bx-caption">'.$v['content'].'</div>';
-					} 
-				?></li><?php 	
+					$sliderImg->find('img', 0)->style = 'width: 918px;';													
+					?><li><?php 
+						echo $sliderImg;
+						if(isset($v['content']) && !empty($v['content'])) {
+							 
+							echo '<div class="bx-caption">'.$v['content'].'</div>';
+						} 
+					?></li><?php 	
+				}
 			}	
 			?>
 		</ul>

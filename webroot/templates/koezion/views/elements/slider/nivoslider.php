@@ -20,23 +20,21 @@ if(isset($sliders) && count($sliders) > 0) {
 			$captions = ''; 
 			foreach($sliders as $k => $v) {
 								
-				require_once(LIBS.DS.'simple_html_dom.php');
-				
 				if(!empty($v['image'])) {
-					
+				
+					require_once(LIBS.DS.'simple_html_dom.php');					
 					$sliderImg = str_get_html($v['image']);
-					$sliderImg->find('img', 0)->style = 'width: 918px;';
-					
-				} else { $sliderImg = ''; }
+					$sliderImg->find('img', 0)->style = 'width: 918px;';				
 				
-				if(isset($v['content']) && !empty($v['content'])) {
+					if(isset($v['content']) && !empty($v['content'])) {
+						
+						if(!empty($v['image'])) { $sliderImg->find('img', 0)->title = '#htmlcaption-'.$v['id']; }
+						$captions .= '<div id="htmlcaption-'.$v['id'].'" class="nivo-html-caption">'.$v['content'].'</div>'."\n";
+					}
 					
-					if(!empty($v['image'])) { $sliderImg->find('img', 0)->title = '#htmlcaption-'.$v['id']; }
-					$captions .= '<div id="htmlcaption-'.$v['id'].'" class="nivo-html-caption">'.$v['content'].'</div>'."\n";
-				}
-				
-				echo $sliderImg;
-				echo "\n";			
+					echo $sliderImg;
+					echo "\n";	
+				}		
 			}
 			?>
 		</div>		

@@ -22,27 +22,25 @@ if(isset($sliders) && count($sliders) > 0) {
 			$cpt = 0;
 			foreach($sliders as $k => $v) {	
 
-				require_once(LIBS.DS.'simple_html_dom.php');
-				
 				if(!empty($v['image'])) {
 					
+					require_once(LIBS.DS.'simple_html_dom.php');					
 					$sliderImg = str_get_html($v['image']);
-					$sliderImg->find('img', 0)->style = 'width: 918px;';
-				
-				} else { $sliderImg = ''; }				
-				?>
-				<li>
+					$sliderImg->find('img', 0)->style = 'width: 918px;';					
+					?>
+					<li>
+						<?php 
+						echo $sliderImg;
+						if(isset($v['content']) && !empty($v['content'])) { 
+							?><div class="sb-description"><?php echo $v['content']; ?></div><?php 
+						} 
+						?>						
+					</li>				
 					<?php 
-					echo $sliderImg;
-					if(isset($v['content']) && !empty($v['content'])) { 
-						?><div class="sb-description"><?php echo $v['content']; ?></div><?php 
-					} 
-					?>						
-				</li>				
-				<?php 
-				if($cpt == 0) { $nav .= '<span class="nav-dot-current"></span>'; }
-				else { $nav .= '<span></span>'; } 
-				$cpt++;
+					if($cpt == 0) { $nav .= '<span class="nav-dot-current"></span>'; }
+					else { $nav .= '<span></span>'; } 
+					$cpt++;
+				}
 			}
 			$nav .= '</div>';
 			?>

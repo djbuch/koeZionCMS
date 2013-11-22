@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 23/11/2013</name>
+		<num>20131123.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification sur la gestion de l'affichage des sliders</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 22/11/2013</name>
 		<num>20131122.001</num>
 		<supervisor>KoéZionCMS</supervisor>
