@@ -92,14 +92,26 @@ class Html extends BackofficeHtml {
 			$css = am($css, $this->css); //On récupère les les éventuels CSS qui sont dans la variable de classe			
 			$html = ''; //Code HTML qui sera retourné
 			foreach($css as $v) { //Parcours de l'ensemble des fichiers
-				// Test : si le chemin commence par '/' alors le chemin est celui par défaut
-				// sinon on cherche dans le dossier templates
-				$cssFile = $v{0} == '/' ? '/css'.$v : '/templates/'.$v; //Chemin par défaut du fichier
-				if($plugin) { $cssFile = '/plugins/'.$v; }
+								
+				$firstChar = $v{0};
+				switch($firstChar) {
+									
+					case 'P': //Plugin
+						$cssFile = '/plugins/'.str_replace('P/', '', $v);
+					break;					
+					
+					case '/': //Normal						
+						$cssFile = '/css/'.$v;						
+					break;
+					
+					default: //Front						
+						$cssFile = '/templates/'.$v;						
+					break;
+				}
+				
 				if(!substr_count($v, '.css')) { $cssFile.='.css'; }	//On teste si l'extension n'est pas déjà renseignée sinon on la rajoute			
 				$cssPath = Router::webroot($cssFile); //On génère le chemin vers le fichier
-				$html .= "\t\t".'<link href="'.$cssPath.'" rel="stylesheet" type="text/css" />'."\n"; //On génère la balise de chargement		
-				
+				$html .= "\t\t".'<link href="'.$cssPath.'" rel="stylesheet" type="text/css" />'."\n"; //On génère la balise de chargement						
 			}
 			$html .= "\n"; //Rajout d'un saut de ligne
 			return $html; //On retourne le code HTML
@@ -145,8 +157,22 @@ class Html extends BackofficeHtml {
 			$html = ''; //Code HTML qui sera retourné
 			foreach($js as $v) { //Parcours de l'ensemble des fichiers
 				
-				$jsFile = $v{0} == '/' ? 'js'.$v : 'templates/'.$v; //Chemin par défaut du fichier
-				if($plugin) { $jsFile = '/plugins/'.$v; }
+				$firstChar = $v{0};
+				switch($firstChar) {
+									
+					case 'P': //Plugin
+						$jsFile = '/plugins/'.str_replace('P/', '', $v);
+					break;					
+					
+					case '/': //Normal						
+						$jsFile = '/js/'.$v;						
+					break;
+					
+					default: //Front						
+						$jsFile = '/templates/'.$v;						
+					break;
+				}
+				
 				if(!substr_count($v, '.js')) { $jsFile.='.js'; } //On teste si l'extension n'est pas déjà renseignée sinon on la rajoute
 				$jsPath = Router::webroot($jsFile); //On génère le chemin vers le fichier
 				$html .= "\t\t".'<script src="'.$jsPath.'" type="text/javascript"></script>'."\n"; //On génère la balise de chargement			

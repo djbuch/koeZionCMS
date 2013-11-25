@@ -156,18 +156,68 @@ class Paginator {
 		}
 		
 		$moreParams = '';
-		if(count($datas) > 0) {
-		
-			//Parcours des paramètres passés en GET
-			foreach($datas as $k => $v) { 
+		if(count($datas) > 0) { $moreParams = $this->_recursive_params($datas); }
+		return $moreParams;
+	}
+
+/**
+ * function _recursive_params
+ *
+ * @param 	array 	$datas		Données passées en GET
+ * @param 	varchar $parent		Valeur du parent
+ * @param 	integer $loop	 	Niveau d'imbrication
+ * @access	protected
+ * @author	koéZionCMS
+ * @return 	varchar Chaine de caractère contenant les paramètres à passer au lien de la pagination
+ * @version 0.1 - 25/11/2013 by FI
+ */	
+	
+	protected function _recursive_params($datas, $parent = '', $loop = 1) {
 				
-				if(!is_array($v)) { $moreParams .= '&'.$k.'='.$v; }
-				else {
-					
-					foreach($v as $k1 => $v1) { $moreParams .= '&'.$k.'['.$k1.']='.$v1; }
+		//Parcours des paramètres passés en GET
+		/*
+		//ANCIENNE VERSION BIEN CRADE AVEC 3 FOREACH IMBRIQUES
+		foreach($datas as $k => $v) {
+		
+			if(!is_array($v)) {
+				$moreParams .= '&'.$k.'='.$v;
+			}
+			else {
+				foreach($v as $k1 => $v1) {
+		
+					if(!is_array($v1)) {
+						$moreParams .= '&'.$k.'['.$k1.']='.$v1;
+					}
+					else {
+		
+						foreach($v1 as $k2 => $v2) {
+							$moreParams .= '&'.$k.'['.$k1.']['.$k2.']='.$v2;
+						}
+		
+					}
 				}
 			}
 		}
+		*/
+		
+		//25/11/2013
+		//NOUVELLE VERSION RECURSIVE, A VOIR SI POSSIBILITE DE L'AMELIORER
+		//JE SUIS PAS SUPER CONCENTRE AJD CF PAPA DE LESLIE
+		$moreParams = '';
+		foreach($datas as $k => $v) {
+			
+			if(!is_array($v)) { 
+				
+				if($loop > 2) { $moreParams .= '&'.$parent.'['.$k.']='.$v; }
+				else { $moreParams .= '&'.$parent.$k.'='.$v; }  
+			
+			} else { 
+				
+				if($loop < 2) { $moreParams .= $this->_recursive_params($v, $k, $loop+1); }
+				else { $moreParams .= $this->_recursive_params($v, $parent.'['.$k.']', $loop+1); }
+			}
+		}
+		
 		return $moreParams;
 	}
 }

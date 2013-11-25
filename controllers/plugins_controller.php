@@ -144,20 +144,19 @@ class PluginsController extends AppController {
 
 				//////////////////////////////////
 				//			ACTIONS BDD			//
-				//////////////////////////////////
-												
+				//////////////////////////////////												
 				//On va récupérer l'identifiant du type de module à supprimer
 				$modulesTypeIdResult = current($this->Plugin->query("SELECT DISTINCT(`modules_type_id`) FROM `modules` WHERE `plugin_id` = ".$id.";", true));
 				$modulesTypeId = $modulesTypeIdResult['modules_type_id'];				
 				
 				$this->Plugin->query('DELETE FROM `modules` WHERE `plugin_id` = '.$id.';'); //On supprime tous les modules associés à ce plugin
 				$this->Plugin->query('DELETE FROM `plugins` WHERE `id` = '.$id.';'); //On supprime le plugin dans la base de données
-				$this->Plugin->query('DELETE FROM `modules_types` WHERE `id` = '.$modulesTypeId.';'); //On supprime le type de module associé à ce plugin
+				if($modulesTypeId != 6) { $this->Plugin->query('DELETE FROM `modules_types` WHERE `id` = '.$modulesTypeId.';'); } //On supprime le type de module associé à ce plugin
 								
 				//ON VA RECUPERER, SI IL Y EN A, LA LISTE DES TABLES ASSOCIEES AU PLUGIN EN COURS DE SUPPRESSION
 				$databaseTables = $this->Plugin->table_list_in_database(); //Liste des tables de la BDD
 				$databasePluginTables = array(); //Liste des tables du plugin
-				$databasePluginTablesPrefix = 'plugins_'.$plugin['code'].'_'; //Préfix des tables du plugin
+				$databasePluginTablesPrefix = 'plugins_'.$plugin['code']; //Préfix des tables du plugin
 				
 				//On va parcourir la liste des tables de la base de données pour en extraire les tables associées au plugin
 				//Elles seront ensuite renommées en vue d'une suppression manuelle par le gestionnaire de la BDD
@@ -171,13 +170,13 @@ class PluginsController extends AppController {
 				//////////////////////////////////
 				//		ACTIONS FICHIERS		//
 				//////////////////////////////////
-				
 				//Si des fichiers doivent être supprimés, on les récupère dans le plugin
-				if(isset($pluginClass->filesCopy)) {
-
+				//A REPRENDRE VOIR EVENTUELLEMENT SI ON SUPPRIME PAS LA CLASSE FileAndDir???
+				/*if(isset($pluginClass->filesCopy)) {
+					
 					foreach($pluginClass->filesCopy as $fileDelete) {
 
-						if(isset($fileDelete['sourceName']) && isset($fileDelete['destinationName'])) {
+					if(isset($fileDelete['sourceName']) && isset($fileDelete['destinationName'])) {
 
 							//Dans le cas ou on un seul fichier à supprimer
 							$fileToDelete = $fileDelete['destinationPath'].DS.$fileDelete['destinationName']; //Chemin du fichier de destination
@@ -204,7 +203,7 @@ class PluginsController extends AppController {
 						$this->redirect('backoffice/plugins/index'); //On retourne sur la page de listing
 						
 					}
-				}				
+				}*/		
 				
 			} else {
 				

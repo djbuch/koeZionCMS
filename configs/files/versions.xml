@@ -1,5 +1,15 @@
 ﻿<versions>
 	<version>
+		<name>Version du 25/11/2013</name>
+		<num>20131125.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la gestion de la désinstallation des plugins</task>
+			<task author="FI" type="code">Mise en place de la configuration d'ajout des css et des js pour les plugins</task>
+			<task author="FI" type="code">Correction de la gestion des paramètres dans la pagination</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 23/11/2013</name>
 		<num>20131123.001</num>
 		<supervisor>KoéZionCMS</supervisor>
