@@ -15,8 +15,10 @@ img{border:0}
 #left ul li li a,#left ul li li a:link,#left #left ul li li a:active,#left #left ul li li a:visited{display:block;background:0;padding:9px 3px 9px 10px;color:#848484;text-decoration:none;width:183px;height:auto}
 #left ul ul li a:hover{background:0;background:#f9f9f9}
 #left ul ul li.active a,#left ul ul li.active a:link,#left ul ul li.active a:active,#left ul ul li.active a:visited{background:none #f9f9f9;color:#000}
-#left #social{display:block;/*margin:13px 20px 0 0;*/padding-left:10px;font-size:11px;text-align:center;color:#949494}
-#left #credits{display:block;/*margin:13px 20px 0 0;*/padding:0 0 13px 0;font-size:11px;text-align:center;color:#949494}
+#left #social{display:block;/*margin:13px 20px 0 0;*/padding-left:10px;font-size:11px;text-align:center;color:#949494;}
+#left #social .facebook{float: left;}
+#left #social .twitter{float: right;width: 100px;}
+#left #credits{display:block;/*margin:13px 20px 0 0;*/padding:0 0 13px 0;font-size:11px;text-align:center;color:#949494;margin-top: 20px;float: left;padding: 0 10px;}
 /*#right{position:absolute;top:0;left:200px;background:url(../../img/backoffice/back-right.png) repeat-y right top;border-left:1px solid #e5e5e5;padding:0 3px 0 0;width:79.4%;height:auto!important;height:100%;min-height:100%}*/
 #right{background:url(../../img/backoffice/back-right.png) repeat-y right top;border-left:1px solid #e5e5e5;border-bottom:1px solid #e5e5e5;padding:0; margin-left: 220px;}
 /*#right #top-bar{display:block;background:#1c1c1c;height:30px}

@@ -1,5 +1,15 @@
 ﻿<versions>
 	<version>
+		<name>Version du 29/11/2013</name>
+		<num>20131129.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Suppression temporaire du partage réseau sociaux dans le backoffice --> GROS RALENTISSEMENTS</task>
+			<task author="FI" type="code">Correction du passage de paramètres dans le helper paginator</task>
+			<task author="FI" type="code">Rajout d'un champ manquant dans le formulaire d'édition des commentaires articles</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 25/11/2013</name>
 		<num>20131125.001</num>
 		<supervisor>KoéZionCMS</supervisor>

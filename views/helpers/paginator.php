@@ -208,7 +208,7 @@ class Paginator {
 			
 			if(!is_array($v)) { 
 				
-				if($loop > 2) { $moreParams .= '&'.$parent.'['.$k.']='.$v; }
+				if($loop >= 2) { $moreParams .= '&'.$parent.'['.$k.']='.$v; }
 				else { $moreParams .= '&'.$parent.$k.'='.$v; }  
 			
 			} else { 
