@@ -4,7 +4,7 @@
  *
  * @toto mutualiser la generation de l'id avec le helper html pour la mise en place de ckeditor
  */
-class Form {
+class FormHelper {
 
 /**
  * Variable contenant un entier qui servira à afficher des input radio associés ensembles
@@ -35,7 +35,7 @@ class Form {
  * @author 	koéZionCMS
  * @version 0.1 - 20/01/2012 by FI
  */
-	var $escapeAttributes = array('type', 'displayError', 'label', 'div', 'divright', 'datas', 'value', 'divRowBorderTop', 'tooltip', 'fulllabelerror');
+	var $escapeAttributes = array('type', 'displayError', 'label', 'datas', 'value', 'divRowBorderTop', 'tooltip');
 
 /**
  * Constructeur de la classe
@@ -73,47 +73,16 @@ class Form {
 	}
 
 /**
- * Cette fonction va créer le formulaire avec les options indiquées
  *
- * @param 	boolean $full Booléen indiquant si on ne retourne que le bouton ou le bouton plus une div autour
  * @return	varchar Chaine de caractères contenant la balise de fin de formulaire
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 20/01/2012 by FI
  */
-	function end($full = false, $extraClass = '') {
+	function end() {
 
-		$html = '</form>';
-		if($full) {
-
-			//Rajout de la div autour du bouton
-			$htmlFull = '<div class="row '.$extraClass.'" style="text-align: right;">';
-			$htmlFull .= '<button class="medium grey" type="submit" style="opacity: 1;"><span>'._("Envoyer").'</span></button>';
-			$htmlFull .= '</div>';
-
-			$html = $htmlFull.$html;
-		}
-
-		return $html;
+		return '</form>';
 	}
-
-/**
- * Cette fonction va créer uniquement le bouton du formulaire
- *
- * @return	varchar Chaine de caractères contenant la balise de fin de formulaire
- * @access	public
- * @author	koéZionCMS
- * @version 0.1 - 12/10/2012 by FI
- */
-	function button($text = "", $more = '', $extraClass = '') {
-
-		if(empty($text)) { $text = _("Envoyer"); }
-		$html = '<div class="row '.$extraClass.'" style="text-align: right;">';
-		$html .= '<button class="medium grey" type="submit" style="opacity: 1;" '.$more.'><span>'.$text.'</span></button>';
-		$html .= '</div>';
-		return $html;
-	}
-
 
 /**
  * Cette fonction permet la mise en place des champs input dans les formulaires
@@ -138,239 +107,7 @@ class Form {
 
 			} else { return $this->_input($name, $label, $options); }
 		} else { return $this->_input($name, $label, $options); }*/
-	}
-
-/**
- * Enter description here...
- *
- * @param unknown_type $input
- * @return unknown
- *
- */
-	function ckeditor($input, $toolbar = null) {
-
-		if(!is_array($input)) $input = array($input);
-
-		ob_start();
-		?>
-		<script type="text/javascript">
-			<?php
-			foreach($input as $k => $v) {
-
-				$inputIdText = 'input_'.$v;
-				$inputIdText = str_replace('[', ' ', $inputIdText);
-				$inputIdText = str_replace(']', ' ', $inputIdText);
-				$inputIdText = Inflector::camelize(Inflector::variable($inputIdText));
-
-				if(!isset($toolbar)) { ?>var ck_<?php echo $inputIdText; ?>_editor = CKEDITOR.replace('<?php echo $inputIdText; ?>');<?php }
-				else if($toolbar == "image") { ?>var ck_<?php echo $inputIdText; ?>_editor = CKEDITOR.replace('<?php echo $inputIdText; ?>', {toolbar:[{name:'document',items:['Source']},{name:'insert',items:['Image', 'Flash', 'Iframe']},{name:'links',items:['Link','Unlink']}]});<?php }
-				else if($toolbar == "empty") { ?>var ck_<?php echo $inputIdText; ?>_editor = CKEDITOR.replace('<?php echo $inputIdText; ?>', {toolbar:[{name:'document',items:['Source']}]});<?php }
-				else if($toolbar == "onlyHtml") { ?>var ck_<?php echo $inputIdText; ?>_editor = CKEDITOR.replace('<?php echo $inputIdText; ?>', {toolbar:[{name:'document',items:['Source']},{name:'basicstyles',items:['Bold','Italic','Underline','Strike','Subscript','Superscript','RemoveFormat']},{name:'paragraph',items:['NumberedList','BulletedList','-','Outdent','Indent','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock']},{name:'styles',items:['Font','FontSize']},{name:'colors',items:['TextColor','BGColor']}]});<?php }
-				/*else if($toolbar == "onlyHtml") { ?>var ck_<?php echo $inputIdText; ?>_editor = CKEDITOR.replace('<?php echo $inputIdText; ?>', {toolbar:[{name:'document',items:['Source','Templates']},{name:'basicstyles',items:['Bold','Italic','Underline','Strike','Subscript','Superscript','RemoveFormat']},{name:'paragraph',items:['NumberedList','BulletedList','-','Outdent','Indent','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock']},{name:'styles',items:['Font','FontSize']},{name:'colors',items:['TextColor','BGColor']}]});<?php }*/
-				?>CKFinder.setupCKEditor(ck_<?php echo $inputIdText; ?>_editor, '<?php echo Router::webroot('/js/ckfinder/'); ?>');<?php
-			}
-			?>
-		</script>
-		<?php
-		return ob_get_clean();
-	}
-
-/**
- * Enter description here...
- *
- * @param unknown_type $input
- * @return unknown
- *
- */
-	function upload_files($field, $params = null) {
-
-		if(!isset($params) || empty($params)) {
-
-			$params['label'] = "Fichier à importer";
-			$params['tooltip'] = "Sélectionnez le fichier à importer";
-			$params['button_value'] = "Sélectionnez le fichier";
-		} else {
-
-			if(!isset($params['label'])) { $params['label'] = "Fichier à importer"; }
-			if(!isset($params['tooltip'])) { $params['tooltip'] = "Sélectionnez le fichier à importer"; }
-			if(!isset($params['button_value'])) { $params['button_value'] = "Sélectionnez le fichier"; }
-		}
-
-		$inputFieldId = $this->_set_input_id($field);
-		ob_start();
-		?>
-		<script type="text/javascript">
-			function BrowseServer<?php echo $inputFieldId; ?>() {
-
-				// You can use the "CKFinder" class to render CKFinder in a page:
-				var finder = new CKFinder();
-				finder.basePath = './js/ckfinder/';	// The path for the installation of CKFinder (default = "/ckfinder/").
-				finder.selectActionFunction = SetFileField<?php echo $inputFieldId; ?>;
-				finder.popup();
-
-				// It can also be done in a single line, calling the "static"
-				// popup( basePath, width, height, selectFunction ) function:
-				// CKFinder.popup( '../', null, null, SetFileField ) ;
-				//
-				// The "popup" function can also accept an object as the only argument.
-				// CKFinder.popup( { basePath : '../', selectActionFunction : SetFileField } ) ;
-			}
-
-			// This is a sample function which is called when a file is selected in CKFinder.
-			function SetFileField<?php echo $inputFieldId; ?>(fileUrl) { document.getElementById("<?php echo $inputFieldId; ?>").value = fileUrl; }
-		</script>
-		<div class="row">
-			<label>
-				<?php echo $params['label']; ?>
-				<img original-title="<?php echo $params['tooltip']; ?>" class="tip-w" style="float: left; margin-right: 5px; cursor: pointer;" alt="tooltip" src="<?php echo BASE_URL; ?>/img/backoffice/tooltip.png">
-			</label>
-
-			<div class="rowright">
-				<?php
-				echo $this->input('select_file', '', array('type' => 'button', 'onclick' => 'BrowseServer'.$inputFieldId.'();', 'displayError' => false, 'label' => false, 'div' => false, 'tooltip' => false, 'value' => $params['button_value']));
-				echo $this->input($field, '', array('tooltip' => false, 'div' => false, 'label' => false, 'class' => 'upload_file'));
-				?>
-			</div>
-		</div>
-		<?php
-		return ob_get_clean();
-	}
-
-/**
- * Enter description here...
- *
- * @param unknown_type $input
- * @return unknown
- *
- */
-	/*function upload_files_multiple() {
-
-		ob_start();
-		?>
-		<script type="text/javascript">
-			function BrowseServer(startupPath, functionData) {
-				// You can use the "CKFinder" class to render CKFinder in a page:
-				var finder = new CKFinder();
-
-				// The path for the installation of CKFinder (default = "/ckfinder/").
-				finder.basePath = '../';
-
-				//Startup path in a form: "Type:/path/to/directory/"
-				finder.startupPath = startupPath;
-
-				// Name of a function which is called when a file is selected in CKFinder.
-				finder.selectActionFunction = SetFileField;
-
-				// Additional data to be passed to the selectActionFunction in a second argument.
-				// We'll use this feature to pass the Id of a field that will be updated.
-				finder.selectActionData = functionData;
-
-				// Launch CKFinder
-				finder.popup();
-			}
-
-			// This is a sample function which is called when a file is selected in CKFinder.
-			function SetFileField(fileUrl, data) { document.getElementById( data["selectActionData"] ).value = fileUrl; }
-		</script>
-		<div class="row">
-			<label>
-				Fiche technique
-				<img original-title="Sélectionnez le fichier à importer" class="tip-w" style="float: left; margin-right: 5px; cursor: pointer;" alt="tooltip" src="<?php echo BASE_URL; ?>/img/backoffice/tooltip.png">
-			</label>
-
-			<div class="rowright">
-				<?php
-				$id = $this->_set_input_id('doc');
-				echo $this->input('doc', '', array('tooltip' => false, 'div' => false, 'label' => false, 'class' => 'upload_file'));
-				echo $this->input('select_file', '', array('type' => 'button', 'onclick' => "BrowseServer('Files:/', '".$id."');", 'displayError' => false, 'label' => false, 'div' => false, 'tooltip' => false, 'value' => "Sélectionnez le fichier"));
-				?>
-			</div>
-		</div>
-		<div class="row">
-			<label>
-				Image
-				<img original-title="Sélectionnez le fichier à importer" class="tip-w" style="float: left; margin-right: 5px; cursor: pointer;" alt="tooltip" src="<?php echo BASE_URL; ?>/img/backoffice/tooltip.png">
-			</label>
-
-			<div class="rowright">
-				<?php
-				$id = $this->_set_input_id('img');
-				echo $this->input('img', '', array('tooltip' => false, 'div' => false, 'label' => false, 'class' => 'upload_file'));
-				echo $this->input('select_file', '', array('type' => 'button', 'onclick' => "BrowseServer('Images:/', '".$id."');", 'displayError' => false, 'label' => false, 'div' => false, 'tooltip' => false, 'value' => "Sélectionnez le fichier"));
-				?>
-			</div>
-		</div>
-		<?php
-		return ob_get_clean();
-	}*/
-
-/**
- * Enter description here...
- *
- * @param unknown_type $input
- * @return unknown
- *
- */
-	function upload_files_products() {
-
-		ob_start();
-		?>
-		<script type="text/javascript">
-			function BrowseServer(startupPath, functionData) {
-				// You can use the "CKFinder" class to render CKFinder in a page:
-				var finder = new CKFinder();
-
-				// The path for the installation of CKFinder (default = "/ckfinder/").
-				finder.basePath = '../';
-
-				//Startup path in a form: "Type:/path/to/directory/"
-				finder.startupPath = startupPath;
-
-				// Name of a function which is called when a file is selected in CKFinder.
-				finder.selectActionFunction = SetFileField;
-
-				// Additional data to be passed to the selectActionFunction in a second argument.
-				// We'll use this feature to pass the Id of a field that will be updated.
-				finder.selectActionData = functionData;
-
-				// Launch CKFinder
-				finder.popup();
-			}
-
-			// This is a sample function which is called when a file is selected in CKFinder.
-			function SetFileField(fileUrl, data) { document.getElementById( data["selectActionData"] ).value = fileUrl; }
-		</script>
-		<div class="row">
-			<label>
-				Fiche technique
-				<img original-title="Sélectionnez le fichier à importer" class="tip-w" style="float: left; margin-right: 5px; cursor: pointer;" alt="tooltip" src="<?php echo BASE_URL; ?>/img/backoffice/tooltip.png">
-			</label>
-
-			<div class="rowright">
-				<?php
-				$id = $this->_set_input_id('doc');
-				echo $this->input('select_file', '', array('type' => 'button', 'onclick' => "BrowseServer('Files:/', '".$id."');", 'displayError' => false, 'label' => false, 'div' => false, 'tooltip' => false, 'value' => "Sélectionnez le fichier"));
-				echo $this->input('doc', '', array('tooltip' => false, 'div' => false, 'label' => false, 'class' => 'upload_file'));
-				?>
-			</div>
-		</div>
-		<div class="row">
-			<label>
-				Image
-				<img original-title="Sélectionnez le fichier à importer" class="tip-w" style="float: left; margin-right: 5px; cursor: pointer;" alt="tooltip" src="<?php echo BASE_URL; ?>/img/backoffice/tooltip.png">
-			</label>
-
-			<div class="rowright">
-				<?php
-				$id = $this->_set_input_id('img');
-				echo $this->input('select_file', '', array('type' => 'button', 'onclick' => "BrowseServer('Images:/', '".$id."');", 'displayError' => false, 'label' => false, 'div' => false, 'tooltip' => false, 'value' => "Sélectionnez le fichier"));
-				echo $this->input('img', '', array('tooltip' => false, 'div' => false, 'label' => false, 'class' => 'upload_file'));
-				?>
-			</div>
-		</div>
-		<?php
-		return ob_get_clean();
-	}
+	}	
 
 /**
  * Cette fonction permet la création des champs input
@@ -378,14 +115,15 @@ class Form {
  * Les valeurs possibles pour le paramètre options sont :
  * - type : type de champ input --> hidden, text, textarea, checkbox, radio, file, password, select
  * - label : si vrai la valeur retournée contiendra le champ label
- * - div : si vrai la valeur retournée sera contenu dans une div
- * - divright : si vrai le champ input sera retourné dans un div
- * - displayError : si vrai affiche les erreurs sous les champs imput
+ * - displayError : si vrai affiche les erreurs sous les champs input
  * - value : Si renseignée cette valeur sera insérée dans le champ input
  * - tooltip : Si renseignée affichera un tooltip à coté du label
  * - wysiswyg : si renseigné et à vrai alors le code de l'éditeur sera généré
- * - fulllabelerror : si vrai l'affichage du message d'erreur se fera à part
+ * - toolbar : indique qu'elle barre à charger pour le wysiswyg
  * - modelToCheck : permet, si renseigné, de surcharger la récupération des messages d'erreurs dans un autre modèle que le modèle courant
+ * - multiple : indique si le select doit être multiple ou non
+ * - firstElementList : indique le premier élément d'un select (élément vide)
+ * - datas : indique les données à charger dans un select
  *
  * @param 	varchar $name 		Nom du champ input
  * @param 	varchar $label 		Label pour le champ input
@@ -397,10 +135,7 @@ class Form {
  * @version 0.2 - 22/02/2012 by FI - Modification de la gestion des options par défaut, utilisation de array_merge plus souple
  * @version 0.3 - 22/02/2012 by FI - Gestion de l'affichage du tooltip
  * @version 0.4 - 06/04/2012 by FI - Passage de la fonction en privée pour la gestion de l'internationnalisation
- * @version 0.5 - 09/12/2013 by FI - Reprise de la gestion des erreurs pour intégrer la notion de profondeur dans la récupération des erreurs
- * @version 0.6 - 09/12/2013 by FI - Rajout de l'option fulllabelerror
- * @version 0.7 - 09/12/2013 by FI - Mise en place d'une surcharge pour la récupération de message d'erreur hors du modèle courant
- * @version 0.8 - 17/12/2013 by FI - Reprise de la gestion des select pour pouvoir gérer optgroup
+ * @version 0.5 - 17/12/2013 by FI - Reprise de la gestion des select pour pouvoir gérer optgroup
  * @todo Input de type submit etc..., input radio
  * @todo Voir si utile de gérer en récursif la gestion de optgroup pour le select
  */
@@ -410,17 +145,13 @@ class Form {
 		$defaultOptions = array(
 			'type' => 'text',
 			'label' => true,
-			'div' => true,
-			'divright' => true,
 			'displayError' => true,
 			'value' => false,
-			'tooltip' => false,
-			'fulllabelerror' => false
+			'tooltip' => false
 		);
 		$options = array_merge($defaultOptions, $options); //Génération du tableau d'options utilisé dans la fonction
 
 		$error = false; 	//Par défaut on considère qu'il n'y a pas d'erreur
-		$classError = ''; 	//Par conséquent par défaut pas de classe css d'erreur
 
 		if($options['displayError']) {
 
@@ -435,7 +166,6 @@ class Form {
 
 			//$error = $errors[$name]; //La valeur de l'erreur est stockée
 			$error = Set::classicExtract($errors, $name); //La valeur de l'erreur est stockée
-			$classError = ' error'; //La classe est modifiée
 			//unset($this->view->controller->$modelName->errors[$name]);
 		}
 
@@ -451,7 +181,15 @@ class Form {
 
 		//Cas particulier : le champ hidden
 		//--> lorsque l'on est sur un champ de type hidden on va renvoyer directement la valeur
-		if($options['type'] == 'hidden') { return '<input type="hidden" id="'.$inputIdText.'" name="'.$inputNameText.'" value="'.$value.'" />'; }
+		if($options['type'] == 'hidden') { 
+		
+			return array(
+				'inputLabel' => '',
+				'inputElement' => '<input type="hidden" id="'.$inputIdText.'" name="'.$inputNameText.'" value="'.$value.'" />',
+				'inputError' => '',
+				'inputOptions' => $options
+			);
+		}
 
 		$inputReturn = ''; //Variable qui va contenir la chaine de caractère de l'input
 
@@ -570,7 +308,7 @@ class Form {
 
 			//   INPUT DE TYPE BUTTON   //
 			case 'button': $inputReturn .= '<input type="button" id="'.$inputIdText.'" name="'.$inputNameText.'" value="'.$value.'"'.$attributes.' />'; break;
-		}
+		}		
 
 		//Si on a une erreur et que l'on souhaite afficher les erreurs directement dans le champ input
 		$errorLabel = '';
@@ -584,20 +322,13 @@ class Form {
 
 			$errorLabel .= '</label>';
 		}
-
-		if($options['div']) {
-
-			if(isset($options['divRowBorderTop']) && !$options['divRowBorderTop']) { $styleDiv = ' style="border-top:none"'; } else { $styleDiv = ''; }
-
-			if($options['divright']) { 
-				if($options['fulllabelerror']) {
-					return '<div class="row'.$classError.'"'.$styleDiv.'>'.$labelReturn.'<div class="rowright">'.$inputReturn.'</div>'.$errorLabel.'</div>';				
-				} else {
-					return '<div class="row'.$classError.'"'.$styleDiv.'>'.$labelReturn.'<div class="rowright">'.$inputReturn.$errorLabel.'</div>'.'</div>';
-				} 
-			}
-			else { return '<div class="row'.$classError.'"'.$styleDiv.'>'.$labelReturn.$inputReturn.$errorLabel.'</div>'; }
-		} else { return $labelReturn.$inputReturn.$errorLabel; }
+		
+		return array(
+			'inputLabel' => $labelReturn,
+			'inputElement' => $inputReturn,
+			'inputError' => $errorLabel,
+			'inputOptions' => $options
+		);
 	}
 
 /**
@@ -660,33 +391,7 @@ class Form {
 
 		//Données postées
 		if(Set::check($this->view->controller->request->data, $name)) { return Set::classicExtract($this->view->controller->request->data, $name); } 
-		
 		//Données non postées
 		else if(!isset($this->view->controller->request->data[$name]) && $defaultValue) { return $defaultValue; }
-	}
-
-/**
- * A reprendre
- * @param unknown_type $name
- * @param unknown_type $value
- * @return string
- */
-	function radiobutton_templates($name, $value, $templateName, $templateLayout, $templateCode, $templateColor) {
-
-		$inputNameText = $this->_set_input_name($name); //Mise en variable du name de l'input
-		$inputIdText = $this->_set_input_id($inputNameText); //Mise en variable de l'id de l'input
-
-		$bddValue = Set::classicExtract($this->view->controller->request->data, $name);
-		if($value == $bddValue) {
-			$checked = 'checked="checked"';
-			$selected = ' class="selected"';
-		} else {
-			$checked = '';
-			$selected = '';
-		}
-
-		if(empty($templateColor)) { $thumb = '<img src="'.BASE_URL.'/img/backoffice/templates/'.$templateLayout.'/'.$templateCode.'/background.png" />'; } 
-		else { $thumb = '<img src="'.$templateColor.'" />'; }
-		return '<p '.$selected.'><input name="'.$inputNameText.'" id="'.$inputIdText.$value.'" value="'.$value.'" type="radio" '.$checked.' /><span>'.$templateName.'<br />'.$thumb.'</span></p>';
 	}
 }

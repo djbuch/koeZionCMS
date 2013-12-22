@@ -1,12 +1,8 @@
 <?php
-$aclsHelper = PLUGINS.DS.'acls'.DS.'views'.DS.'helpers'.DS.'acls'.DS.'backoffice_html.php';
-if(file_exists($aclsHelper)) { require_once($aclsHelper); } 
-else { require_once('backoffice_html.php'); }
-
 /**
  * @todo mutualiser la generation de lid pour ckeditor avec le helper form
  */
-class Html extends BackofficeHtml {
+class HtmlHelper {
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //										VARIABLES										//
@@ -83,7 +79,6 @@ class Html extends BackofficeHtml {
  * @version 0.2 - 03/06/2013 by TB : dossier "/templates/" par défaut ou "/css" si la chaîne commence par "/"
  * @version 0.3 - 16/10/2013 by FI : gestion des css pour les plugins
  * @version 0.4 - 11/12/2013 by FI : Suppression de la variable $plugin
- * @version 0.5 - 17/12/2013 by FI : Gestion des fichiers externes
  */	
 	public function css($css, $inline = false, $minified = false) {	
 		
@@ -153,7 +148,6 @@ class Html extends BackofficeHtml {
  * @version 0.2 - 03/06/2013 by TB : dossier "/templates" par défaut ou "/js" si la chaîne commence par "/"
  * @version 0.3 - 16/10/2013 by FI : gestion des js pour les plugins
  * @version 0.4 - 11/12/2013 by FI : Suppression de la variable $plugin
- * @version 0.5 - 17/12/2013 by FI : Gestion des fichiers externes
  */	
 	public function js($js, $inline = false, $minified = false) {
 		
