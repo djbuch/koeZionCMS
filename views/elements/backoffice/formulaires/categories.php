@@ -5,7 +5,7 @@
 		<li><a href="#buttons"><?php echo _("Boutons"); ?></a></li>
 		<li><a href="#seo"><?php echo _("SEO"); ?></a></li>
 		<li><a href="#options"><?php echo _("Options"); ?></a></li>
-		<li><a href="#tpl"><?php echo _("Template"); ?></a></li>
+		<?php /* ?><li><a href="#tpl"><?php echo _("Template"); ?></a></li><?php */ ?>
 		<li><a href="#secure"><?php echo _("Sécuriser la page"); ?></a></li>
 		
 		<?php 
@@ -74,16 +74,23 @@
 	<div id="options">
 		<div class="content nopadding">
 			<?php 
-			$categoriesList[0] = 'Pas de redirection';
+			/*$categoriesList[0] = 'Pas de redirection';
 			$categoriesList[-1] = "[&nbsp;&nbsp;&nbsp;Page d'accueil&nbsp;&nbsp;&nbsp;]";
-			echo $helpers['Form']->input('redirect_category_id', 'Rediriger vers', array('type' => 'select', 'datas' => $categoriesList, 'tooltip' => "Vous permet de rediriger cette page vers une autre de la liste"));			
-			echo $helpers['Form']->input('title_posts_list', 'Titre bloc article', array('tooltip' => "Indiquez le titre qui sera affiché au dessus de la liste des articles"));			
+			echo $helpers['Form']->input('redirect_category_id', 'Rediriger vers', array('type' => 'select', 'datas' => $categoriesList, 'tooltip' => "Vous permet de rediriger cette page vers une autre de la liste"));*/			
 			
+			//On va supprimer la catégorie racine
+			$racine = each($categoriesList);
+			unset($categoriesList[$racine['key']]);			
+			$categoriesList[-1] = "[&nbsp;&nbsp;&nbsp;Redirection vers la page d'accueil&nbsp;&nbsp;&nbsp;]";
+			echo $helpers['Form']->input('redirect_category_id', 'Rediriger vers', array('type' => 'select', 'datas' => $categoriesList, 'tooltip' => "Vous permet de rediriger cette page vers une autre de la liste", 'firstElementList' => "Pas de redirection"));			
+			
+			echo $helpers['Form']->input('title_posts_list', 'Titre bloc article', array('tooltip' => "Indiquez le titre qui sera affiché au dessus de la liste des articles"));			
 			if(!isset($formulaires)) { $formulaires = array (1 => 'Formulaire de contact'); } 
 			echo $helpers['Form']->input('display_form', 'Formulaire', array('type' => 'select', 'datas' => $formulaires, 'tooltip' => "Indiquez le formulaire que vous souhaitez afficher sur la page", 'firstElementList' => "Sélectionnez un formulaire"));
 			?>
 		</div>
 	</div>
+	<?php /* ?>
 	<div id="tpl">
 		<div class="content nopadding">
 			<div class="prettyRadiobuttons clearfix">
@@ -92,6 +99,7 @@
 			</div>
 		</div>
 	</div>
+	<?php */ ?>
 	<div id="secure">
 		<div class="content nopadding">
 			<?php 

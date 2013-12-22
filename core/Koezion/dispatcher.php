@@ -209,6 +209,7 @@ class Dispatcher {
 		}
 		
 		Session::write('redirectMessage', $message);
-		header("Location: ".Router::url('e404'));
+		header("Location: ".Router::url('e404'));		
+		die();
 	}
 }

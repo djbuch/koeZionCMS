@@ -80,10 +80,16 @@
 				</label>
 				<div class="rowright">
 					<?php 
-					foreach($postsTypes as $k => $v) {
-						?><span class="checkbox" style="float: left; display: block; margin: 0 20px 20px 0; width: 30%; line-height: 15px;"><?php
-						echo $helpers['Form']->input('posts_type_id.'.$v['id'], $v['name'].' (<i>dans '.$v['column_title'].'</i>)', array('type' => 'checkbox', 'div' => false));
-						?></span><?php
+					//pr($postsTypes);
+					foreach($postsTypes as $rubrique => $v) {
+						?><h3><b><?php echo $rubrique; ?></b></h3><?php
+						?><p style="overflow: hidden;"><?php 
+						foreach($v as $postsType) {
+							?><span class="checkbox" style="float: left; display: block; margin: 0 20px 20px 0; width: 30%; line-height: 15px;"><?php
+							echo $helpers['Form']->input('posts_type_id.'.$postsType['id'], $postsType['name'], array('type' => 'checkbox', 'div' => false));
+							?></span><?php
+						}
+						?></p><?php
 					}
 					?>
 				</div>

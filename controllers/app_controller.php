@@ -153,13 +153,61 @@ class AppController extends Controller {
  * @param 	boolean $return 	Indique si il faut ou non retourner les données récupérées
  * @param 	array 	$fields 	Indique les champs à récupérer dans la requête
  * @param 	varchar $order 		Tri des résultats
+ * @param 	array	$conditions Conditions de recherche par défaut
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 17/01/2012 by FI
  * @version 0.2 - 09/03/2012 by FI - Mise en place de la variable $fields
  * @version 0.3 - 29/05/2012 by FI - Mise en place de la variable $order
+ * @version 0.4 - 11/12/2013 by FI - Mise en place de la variable $conditions
  */    
-    function backoffice_index($return = false, $fields = null, $order = null) {
+    function backoffice_index($return = false, $fields = null, $order = null, $conditions = null) {
+    	    	
+    	$controllerVarName =  $this->params['controllerVarName']; //On récupère la valeur de la variable du contrôleur
+    	$modelName =  $this->params['modelName']; //On récupère la valeur du modèle
+    	$primaryKey = $this->$modelName->primaryKey;
+
+    	$tableShema = $this->$modelName->shema();
+    	if(in_array('order_by', $tableShema)) { $orderBy = 'order_by ASC, name ASC'; } else { $orderBy = $primaryKey.' ASC'; }
+    	
+    	$findConditions = array('conditions' => $conditions, 'fields' => $fields, 'order' => $orderBy);    	
+    	
+    	if(isset($this->request->data['Search'])) {
+    	
+    		$searchConditions = array();
+    		foreach($this->request->data['Search'] as $k => $v) {
+    			
+    			if(trim($v) != "") { //Système de poulie lié au fait que empty(0) retourne faux
+    				
+    				if($k == 'id') { $searchConditions[] = $k."='".$v."'"; }
+    				else { $searchConditions[] = $k." LIKE '%".$v."%'"; }
+    			}
+    		}
+    	
+    		if(count($searchConditions) > 0) { $this->searchConditions = $searchConditions; }
+    	}
+    	
+    	$datas['displayAll'] = false;
+    	if(!isset($this->request->data['displayall'])) { $findConditions['limit'] = $this->pager['limit'].', '.$this->pager['elementsPerPage']; } else { $datas['displayAll'] = true; }	
+    	if(isset($order)) { $findConditions['order'] = $order; }
+    	
+    	if(isset($this->searchConditions)) { $findConditions['conditions'] = am($findConditions['conditions'], $this->searchConditions); }
+    	$datas[$controllerVarName] = $this->$modelName->find($findConditions);    	
+    	   	
+    	//////////////////////////////////
+		//   GESTION DE LA PAGINATION   //
+    	if(isset($findConditions['conditions'])) { $this->pager['totalElements'] = $this->$modelName->findCount($findConditions['conditions']); }
+    	else { $this->pager['totalElements'] = $this->$modelName->findCount(); }
+    	//$this->pager['totalElements'] = $this->$modelName->findCount();
+    	if(!$datas['displayAll']) { $this->pager['totalPages'] = ceil($this->pager['totalElements'] / $this->pager['elementsPerPage']); }
+    	else { $this->pager['totalPages'] = 1; }
+    	//////////////////////////////////
+    	
+    	if($return) { return $datas; }
+    	else { $this->set($datas); }
+    }  
+    
+    /*function backoffice_index($return = false, $fields = null, $order = null) {
     	    	
     	$controllerVarName =  $this->params['controllerVarName']; //On récupère la valeur de la variable du contrôleur
     	$modelName =  $this->params['modelName']; //On récupère la valeur du modèle
@@ -203,7 +251,7 @@ class AppController extends Controller {
     	
     	if($return) { return $datas; }
     	else { $this->set($datas); }
-    }    
+    }*/    
     
 /**
  * Cette fonction permet l'ajout d'un élément
@@ -947,12 +995,15 @@ class AppController extends Controller {
 /**
  * Cette fonction permet de transformer une date FR en date SQL et inversement
  * 
- * @param 	varchar $mode Mode de transformation FR --> SQL ou SQL --> FR
+ * @param 	varchar $mode 	Mode de transformation FR --> SQL ou SQL --> FR
+ * @param 	varchar $field 	Champ à tester
+ * @param 	array 	$datas 	Si renseigné le test se fera dans cette variable au lieu de $this->request->data 
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 25/10/2012 by FI
  * @version 0.2 - 03/11/2013 by FI - Déplacée du contrôleur posts vers le contrôleur app
  * @version 0.3 - 10/11/2013 by FI - Modification de la fonction pour qu'elle prenne en compte les tableaux avec des index multiples
+ * @version 0.4 - 09/12/2013 by FI - Modification du champ et du tableau à tester
  */	
 	/*protected function _transform_date($mode, $requestField) {
 		
@@ -975,24 +1026,27 @@ class AppController extends Controller {
 		}		
 	}*/
 	
-	protected function _transform_date($mode, $field) {
+	protected function _transform_date($mode, $field, $datas = null) {
 		
-		if($this->request->data) {
+		if(!isset($datas)) { $datasToCheck = $this->request->data; }
+		else { $datasToCheck = $datas; }
+		
+		if($datasToCheck) {
 			
 			if($mode == 'fr2Sql') {
 				
 				//Transformation de la date FR en date SQL
 				if(!empty($field)) {
 				
-					$date = Set::classicExtract($this->request->data, $field);
-					if($date != 'dd.mm.yy') {
+					$date = Set::classicExtract($datasToCheck, $field);
+					if(!empty($date) && $date != 'dd.mm.yy') {
 						
 						$dateArray = $this->components['Text']->date_human_to_array($date);
-						$this->request->data = Set::insert($this->request->data, $field, $dateArray['a'].'-'.$dateArray['m'].'-'.$dateArray['j']);
+						$datasToCheck = Set::insert($datasToCheck, $field, $dateArray['a'].'-'.$dateArray['m'].'-'.$dateArray['j']);
 						
 					} else {
 						
-						$this->request->data = Set::insert($this->request->data, $field, '');
+						$datasToCheck = Set::insert($datasToCheck, $field, '');
 					}
 				}
 			} else if($mode == 'sql2Fr') {
@@ -1000,19 +1054,22 @@ class AppController extends Controller {
 				//Transformation de la date SQL en date FR
 				if(!empty($field)) {
 				
-					$date = Set::classicExtract($this->request->data, $field);
+					$date = Set::classicExtract($datasToCheck, $field);
 					if($date != '') {
 						
 						$dateArray = $this->components['Text']->date_human_to_array($date, '-', 'i');
-						$this->request->data = Set::insert($this->request->data, $field, $dateArray[2].'.'.$dateArray[1].'.'.$dateArray[0]);
+						$datasToCheck = Set::insert($datasToCheck, $field, $dateArray[2].'.'.$dateArray[1].'.'.$dateArray[0]);
 						
 					} else {
 						
-						$this->request->data = Set::insert($this->request->data, $field, 'dd.mm.yy');
+						$datasToCheck = Set::insert($datasToCheck, $field, 'dd.mm.yy');
 						
 					}
 				}
 			}
-		}		
+		}
+
+		if(!isset($datas)) { $this->request->data = $datasToCheck; }
+		else { return $datasToCheck; } 
 	}
 }

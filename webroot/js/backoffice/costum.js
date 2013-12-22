@@ -1,20 +1,32 @@
 $(document).ready(function() { 
 	
 	// HIDE BOXES
-	$('.title .hide').click( function() {
+	/*$('.title .hide').click( function() {
 		$(this).parent().next('.content').slideToggle(400);
+	});*/
+	$(".title .hide").livequery(function() { 
+		$(this).click( function() {
+			$(this).parent().next('.content').slideToggle(400);
+		});
 	});
 	
 	$('.title .hide.default').parent().next('.content').slideUp("fast");
 	
 	// SELECTBOXES
-	$(function() {
+	/*$(function() {
         $('.dataTables_length input, select').not("select.multiple").selectmenu({
             style: 'dropdown',
             transferClasses: true,
             width: null
         });
-    });
+    });*/	
+	$(".dataTables_length input, select").livequery(function() { 
+        $(this).not("select.multiple").selectmenu({
+            style: 'dropdown',
+            transferClasses: true,
+            width: null
+        });		
+	});
 
 	// FORM VALIDATION
 	/*$("form.valid").validate({
@@ -98,7 +110,7 @@ $(document).ready(function() {
 	$("input[type=radio], input[type=checkbox]").livequery(function() { 
 		
 		$(this).each(function() {
-	        if($(this).parents("table").length === 0) {
+	        if($(this).parents("table").length === 0 && !$(this).hasClass('nocustomjs')) {
 	            $(this).customInput();
 	        }
 	    });

@@ -15,19 +15,19 @@ class Template extends Model {
 	var $validate = array(
 		'name' => array(
 			'rule' => array('minLength', 2),
-			'message' => 'Color.name'
+			'message' => 'Template.name'
 		),
 		'layout' => array(
 			'rule' => array('minLength', 2),
-			'message' => 'Color.layout'
+			'message' => 'Template.layout'
+		),
+		'version' => array(
+			'rule' => array('minLength', 2),
+			'message' => 'Template.version'
 		),
 		'code' => array(
 			'rule' => array('minLength', 2),
-			'message' => 'Color.code'
-		),
-		'color' => array(
-			'rule' => array('minLength', 6),
-			'message' => 'Color.color'
+			'message' => 'Template.code'
 		)
 	);	
 }

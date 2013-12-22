@@ -76,15 +76,16 @@ class Html extends BackofficeHtml {
  * @param varchar $css		Chemin du fichier CSS à charger
  * @param boolean $inline 	Permet d'indiquer si il faut charger directement le css ou pas
  * @param boolean $minified	Permet d'indiquer à la fonction si il faut ou non compresser les CSS
- * @param boolean $plugin	Permet d'indiquer si il s'agit de CSS utilisé par un plugin
  * @return varchar Balises html permettant l'insertion des CSS
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 06/03/2012 by FI
  * @version 0.2 - 03/06/2013 by TB : dossier "/templates/" par défaut ou "/css" si la chaîne commence par "/"
  * @version 0.3 - 16/10/2013 by FI : gestion des css pour les plugins
+ * @version 0.4 - 11/12/2013 by FI : Suppression de la variable $plugin
+ * @version 0.5 - 17/12/2013 by FI : Gestion des fichiers externes
  */	
-	public function css($css, $inline = false, $minified = false, $plugin = false) {	
+	public function css($css, $inline = false, $minified = false) {	
 		
 		if($inline) { $this->css = am($this->css, $css); } //Si on ne doit pas charger directement le fichier on le stocke dans la variable de classe
 		else {
@@ -92,25 +93,30 @@ class Html extends BackofficeHtml {
 			$css = am($css, $this->css); //On récupère les les éventuels CSS qui sont dans la variable de classe			
 			$html = ''; //Code HTML qui sera retourné
 			foreach($css as $v) { //Parcours de l'ensemble des fichiers
-								
-				$firstChar = $v{0};
-				switch($firstChar) {
-									
-					case 'P': //Plugin
-						$cssFile = '/plugins/'.str_replace('P/', '', $v);
-					break;					
-					
-					case '/': //Normal						
-						$cssFile = '/css/'.$v;						
-					break;
-					
-					default: //Front						
-						$cssFile = '/templates/'.$v;						
-					break;
-				}
+
+				//On va vérifier si le css n'est pas externe
+				if(substr_count($v, 'http://')) { $cssPath = $v; }
+				else {
 				
-				if(!substr_count($v, '.css')) { $cssFile.='.css'; }	//On teste si l'extension n'est pas déjà renseignée sinon on la rajoute			
-				$cssPath = Router::webroot($cssFile); //On génère le chemin vers le fichier
+					$firstChar = $v{0};
+					switch($firstChar) {
+										
+						case 'P': //Plugin
+							$cssFile = '/plugins/'.str_replace('P/', '', $v);
+						break;					
+						
+						case '/': //Normal						
+							$cssFile = '/css/'.$v;						
+						break;
+						
+						default: //Front						
+							$cssFile = '/templates/'.$v;						
+						break;
+					}
+					
+					if(!substr_count($v, '.css')) { $cssFile.='.css'; }	//On teste si l'extension n'est pas déjà renseignée sinon on la rajoute			
+					$cssPath = Router::webroot($cssFile); //On génère le chemin vers le fichier
+				}
 				$html .= "\t\t".'<link href="'.$cssPath.'" rel="stylesheet" type="text/css" />'."\n"; //On génère la balise de chargement						
 			}
 			$html .= "\n"; //Rajout d'un saut de ligne
@@ -140,15 +146,16 @@ class Html extends BackofficeHtml {
  * @param varchar $js		Chemin du fichier JS à charger
  * @param boolean $inline 	Permet d'indiquer si il faut charger directement le js ou pas
  * @param boolean $minified	Permet d'indiquer à la fonction si il faut ou non compresser les JS
- * @param boolean $plugin	Permet d'indiquer si il s'agit de JS utilisé par un plugin
  * @return varchar Balises html permettant l'insertion des JS
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 06/03/2012 by FI
  * @version 0.2 - 03/06/2013 by TB : dossier "/templates" par défaut ou "/js" si la chaîne commence par "/"
  * @version 0.3 - 16/10/2013 by FI : gestion des js pour les plugins
+ * @version 0.4 - 11/12/2013 by FI : Suppression de la variable $plugin
+ * @version 0.5 - 17/12/2013 by FI : Gestion des fichiers externes
  */	
-	public function js($js, $inline = false, $minified = false, $plugin = false) {
+	public function js($js, $inline = false, $minified = false) {
 		
 		if($inline) { $this->js = am($this->js, $js); } //Si on ne doit pas charger directement le fichier on le stocke dans la variable de classe
 		else {
@@ -156,25 +163,30 @@ class Html extends BackofficeHtml {
 			$js = am($js, $this->js); //On récupère les les éventuels JS qui sont dans la variable de classe
 			$html = ''; //Code HTML qui sera retourné
 			foreach($js as $v) { //Parcours de l'ensemble des fichiers
+
+				//On va vérifier si le js n'est pas externe
+				if(substr_count($v, 'http://')) { $jsPath = $v; }
+				else {
 				
-				$firstChar = $v{0};
-				switch($firstChar) {
-									
-					case 'P': //Plugin
-						$jsFile = '/plugins/'.str_replace('P/', '', $v);
-					break;					
+					$firstChar = $v{0};
+					switch($firstChar) {
+										
+						case 'P': //Plugin
+							$jsFile = '/plugins/'.str_replace('P/', '', $v);
+						break;					
+						
+						case '/': //Normal						
+							$jsFile = '/js/'.$v;						
+						break;
+						
+						default: //Front						
+							$jsFile = '/templates/'.$v;						
+						break;
+					}
 					
-					case '/': //Normal						
-						$jsFile = '/js/'.$v;						
-					break;
-					
-					default: //Front						
-						$jsFile = '/templates/'.$v;						
-					break;
+					if(!substr_count($v, '.js')) { $jsFile.='.js'; } //On teste si l'extension n'est pas déjà renseignée sinon on la rajoute
+					$jsPath = Router::webroot($jsFile); //On génère le chemin vers le fichier
 				}
-				
-				if(!substr_count($v, '.js')) { $jsFile.='.js'; } //On teste si l'extension n'est pas déjà renseignée sinon on la rajoute
-				$jsPath = Router::webroot($jsFile); //On génère le chemin vers le fichier
 				$html .= "\t\t".'<script src="'.$jsPath.'" type="text/javascript"></script>'."\n"; //On génère la balise de chargement			
 			}	
 			$html .= "\n"; //Rajout d'un saut de ligne

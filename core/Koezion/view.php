@@ -155,6 +155,7 @@ class View extends Object {
  * @version 0.6 - 05/06/2013 by FI - Correction inclusion éléments
  * @version 0.7 - 20/10/2013 by AB - Rajout de la gestion du dossier du plugin
  * @version 0.8 - 27/10/2013 by FI - Changement du nom de la variable inElementFolder par isPlugin
+ * @version 0.9 - 18/12/2013 by FI - Modification de la gestion des hooks pour le chargement des fichiers
  */
     public function element($element, $vars = null, $isPlugin = false) {
 	
@@ -175,13 +176,10 @@ class View extends Object {
     	//		'backoffice/formulaires/categories' => 'backoffice/MON_DOSSIER/formulaires/categories'
     	//	);
     	//
-    	//Cette ligne nous permet donc de redéfinir le chemin de récupération du formulaire d'ajout des catégories vers un nouveau chemin
-    	if(file_exists(CONFIGS_HOOKS.DS.'elements.php')) {
-    		
-    		include(CONFIGS_HOOKS.DS.'elements.php');			
-    		if(isset($elementsHooks[$element])) { $element = $elementsHooks[$element]; }    		
-    	}     	
-    	////////////////////////////////////////////////////////////   	
+    	//Nous allons donc parcourir le dossier contenant les fichiers hook pour les charger et effectuer des tests sur l'existence d'une ligne pour l'élément courant
+    	foreach(FileAndDir::directoryContent(CONFIGS_HOOKS.DS.'elements') as $hookFile) { include(CONFIGS_HOOKS.DS.'elements'.DS.$hookFile); } //Chargement des fichier
+    	if(isset($elementsHooks[$element])) { $element = $elementsHooks[$element]; }
+    	////////////////////////////////////////////////////////////   	 	
     	
     	if(isset($vars) && !empty($vars)) { 
     		

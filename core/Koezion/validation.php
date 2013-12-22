@@ -102,6 +102,15 @@ class Validation {
 	function numeric($val) { return is_numeric($val); }
 
 /**
+ * Cette fonction va contrôler que la valeur passée en paramètre est un entier
+ *
+ * @param varchar $val Valeur à tester
+ * @return boolean
+ * @version 0.1 - 04/12/2013
+ */	
+	function  integer($val) { return(is_numeric($val) ? intval(0+$val) == $val : false); }
+
+/**
  * Cette fonction va contrôler que la valeur passée en paramètre ne contient pas plus de x caractères ou n'est pas supérieur à x
  *
  * @param mixed $val Valeur à tester
@@ -190,6 +199,7 @@ class Validation {
 		} else { return $this->_url($val, $strict); }
 		return true;
 	}		
+	
 	function _url($val, $strict = false) {
 		
 		$this->__populateIp();
@@ -287,7 +297,50 @@ class Validation {
 		if($val['size'] == 0) { return true; } //Si le fichier est vide
 		if($data['size']/1024 > $maxSize) { return false; }
 		return true;
-	}	
+	}
+
+/**
+ * Détermine si la chaîne de caractère est une date valide
+ * keys that expect full month, day and year will validate leap years
+ *
+ * @param string $check a valid date string
+ * @param string|array $format Use a string or an array of the keys below. Arrays should be passed as array('dmy', 'mdy', etc)
+ *          Keys: dmy 27-12-2006 or 27-12-06 separators can be a space, period, dash, forward slash
+ *          mdy 12-27-2006 or 12-27-06 separators can be a space, period, dash, forward slash
+ *          ymd 2006-12-27 or 06-12-27 separators can be a space, period, dash, forward slash
+ *          dMy 27 December 2006 or 27 Dec 2006
+ *          Mdy December 27, 2006 or Dec 27, 2006 comma is optional
+ *          My December 2006 or Dec 2006
+ *          my 12/2006 separators can be a space, period, dash, forward slash
+ *          ym 2006/12 separators can be a space, period, dash, forward slash
+ *          y 2006 just the year without any separators
+ * @param string $regex If a custom regular expression is used this is the only validation that will occur.
+ * @return boolean Success
+ * @access 	public
+ * @version 0.1 - 04/12/2013
+ * @see http://book.cakephp.org/2.0/fr/models/data-validation.html#regles-de-validation-incluses
+ */
+	function date($val, $format = 'ymd', $regex = null) {
+		
+		if ($regex !== null) { return $this->custom($val, $regex); }
+	
+		$regex['dmy'] = '%^(?:(?:31(\\/|-|\\.|\\x20)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.|\\x20)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.|\\x20)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.|\\x20)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$%';
+		$regex['mdy'] = '%^(?:(?:(?:0?[13578]|1[02])(\\/|-|\\.|\\x20)31)\\1|(?:(?:0?[13-9]|1[0-2])(\\/|-|\\.|\\x20)(?:29|30)\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:0?2(\\/|-|\\.|\\x20)29\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:(?:0?[1-9])|(?:1[0-2]))(\\/|-|\\.|\\x20)(?:0?[1-9]|1\\d|2[0-8])\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$%';
+		$regex['ymd'] = '%^(?:(?:(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00)))(\\/|-|\\.|\\x20)(?:0?2\\1(?:29)))|(?:(?:(?:1[6-9]|[2-9]\\d)?\\d{2})(\\/|-|\\.|\\x20)(?:(?:(?:0?[13578]|1[02])\\2(?:31))|(?:(?:0?[1,3-9]|1[0-2])\\2(29|30))|(?:(?:0?[1-9])|(?:1[0-2]))\\2(?:0?[1-9]|1\\d|2[0-8]))))$%';
+		$regex['dMy'] = '/^((31(?!\\ (Feb(ruary)?|Apr(il)?|June?|(Sep(?=\\b|t)t?|Nov)(ember)?)))|((30|29)(?!\\ Feb(ruary)?))|(29(?=\\ Feb(ruary)?\\ (((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)))))|(0?[1-9])|1\\d|2[0-8])\\ (Jan(uary)?|Feb(ruary)?|Ma(r(ch)?|y)|Apr(il)?|Ju((ly?)|(ne?))|Aug(ust)?|Oct(ober)?|(Sep(?=\\b|t)t?|Nov|Dec)(ember)?)\\ ((1[6-9]|[2-9]\\d)\\d{2})$/';
+		$regex['Mdy'] = '/^(?:(((Jan(uary)?|Ma(r(ch)?|y)|Jul(y)?|Aug(ust)?|Oct(ober)?|Dec(ember)?)\\ 31)|((Jan(uary)?|Ma(r(ch)?|y)|Apr(il)?|Ju((ly?)|(ne?))|Aug(ust)?|Oct(ober)?|(Sep)(tember)?|(Nov|Dec)(ember)?)\\ (0?[1-9]|([12]\\d)|30))|(Feb(ruary)?\\ (0?[1-9]|1\\d|2[0-8]|(29(?=,?\\ ((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)))))))\\,?\\ ((1[6-9]|[2-9]\\d)\\d{2}))$/';
+		$regex['My'] = '%^(Jan(uary)?|Feb(ruary)?|Ma(r(ch)?|y)|Apr(il)?|Ju((ly?)|(ne?))|Aug(ust)?|Oct(ober)?|(Sep(?=\\b|t)t?|Nov|Dec)(ember)?)[ /]((1[6-9]|[2-9]\\d)\\d{2})$%';
+		$regex['my'] = '%^((0[123456789]|10|11|12)([- /.])(([1][9][0-9][0-9])|([2][0-9][0-9][0-9])))$%';
+		$regex['ym'] = '%^((([1][9][0-9][0-9])|([2][0-9][0-9][0-9]))([- /.])(0[123456789]|10|11|12))$%';
+		$regex['y'] = '%^(([1][9][0-9][0-9])|([2][0-9][0-9][0-9]))$%';
+	
+		$format = (is_array($format)) ? array_values($format) : array($format);
+		foreach ($format as $key) {
+			
+			if($this->custom($val, $regex[$key]) === true) { return true; }
+		}
+		return false;
+	}		
 	
 /*
  * Lazily popualate the IP address patterns used for validations

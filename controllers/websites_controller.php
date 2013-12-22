@@ -164,6 +164,36 @@ class WebsitesController extends AppController {
 		Session::write('Backoffice.Websites.current', $id);
 		$this->redirect($_SERVER["HTTP_REFERER"]);
 	}	
+	
+/**
+ * Cette fonction permet de filtrer dynamiquement les templates lors de l'ajout ou de la modification d'un site
+ *
+ * @param 	varchar $filter Couple Layout, Version séparé par un pipe (|)
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 17/12/2013 by FI
+ * @todo reprendre un peu la fonction pour l'alléger
+ */
+	function backoffice_ajax_get_templates($filter) {
+	
+		$this->layout = 'ajax'; //Définition du layout à utiliser
+		
+		
+		$websiteDatas = Session::read('Backoffice.Websites.details');
+		$currentTemplateId = $websiteDatas[CURRENT_WEBSITE_ID]['template_id'];
+		$this->set('currentTemplateId', $currentTemplateId);
+		$this->request->data['template_id'] = $currentTemplateId;
+		
+		if(!empty($filter)) {
+			
+			$filter = explode('|', $filter); //Récupération des conditions de recherche		
+			$conditions = array("1 AND (online=1 AND layout='".$filter[0]."' AND version='".$filter[1]."') OR id=".$currentTemplateId);
+		} else { $conditions = array('online' => 1); }
+		
+		$this->loadModel('Template'); //Chargement du template
+		$templatesList = $this->Template->find(array('conditions' => $conditions, 'order' => 'name')); //Récupération des données
+		$this->set('templatesList', $templatesList);
+	}	
     
 //////////////////////////////////////////////////////////////////////////////////////////
 //									FONCTIONS PRIVEES									//
@@ -176,6 +206,7 @@ class WebsitesController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 02/05/2012 by FI
  * @version 0.2 - 07/06/2012 by FI - Modification de la gestion des couleurs on travaille maintenant avec des templates
+ * @version 0.3 - 17/12/2013 by FI - Modification de la récupération des templates suite à la mise en place de l'ajax dans le formulaire
  * @todo voir si on peut pas faire autrement que $this->templatesList
  */	
 	protected function _init_datas() {
@@ -183,10 +214,32 @@ class WebsitesController extends AppController {
 		$this->loadModel('Template');
 		$templatesListTMP = $this->Template->find(array('conditions' => array('online' => 1), 'order' => 'name'));
 		$templatesList = array();
-		foreach($templatesListTMP as $k => $v) { $templatesList[$v['id']] = $v; }
+		$templatesFilter = array();		
+		foreach($templatesListTMP as $k => $v) { 
+			
+			if(isset($templatesFilter[$v['layout']])) { //Si le layout n'est pas dans la liste
+				
+				if(!in_array($v['version'], $templatesFilter[$v['layout']])) { //Si la version n'est pas dans la liste
+					
+					$templatesFilter[$v['layout']][$v['layout'].'|'.$v['version']] = $v['version']; //On rajoute la version					
+				}
+			} else { 
+								
+				$templatesFilter[$v['layout']][$v['layout'].'|'.$v['version']] = $v['version']; //On rajoute le template (et la première version trouvée)
+			}
+			
+			$templatesList[$v['id']] = $v; 
+		}
+		
 		$this->templatesList = $templatesList;
-		$this->set('templatesList', $templatesList); //On les envois à la vue
-	}	
+		$this->set('templatesList', $templatesList); //On les envois à la vue		
+		$this->set('templatesFilter', $templatesFilter); //On les envois à la vue
+		
+		//Template actif - Pour le sortir de la liste
+		$websiteDatas = Session::read('Backoffice.Websites.details');
+		$currentTemplateId = $websiteDatas[CURRENT_WEBSITE_ID]['template_id'];
+		$this->set('currentTemplateId', $currentTemplateId);
+	}
 		
 /**
  * Cette fonction permet la création du menu racine du site Internet

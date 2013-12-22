@@ -31,11 +31,13 @@
 		</div>
 	</div>
 	<div id="tpl">
-		<div class="content nopadding">
-			<div class="prettyRadiobuttons clearfix">
-				<input type="hidden" id="InputTemplateId0" name="template_id" value="0" />
-				<?php foreach($templatesList as $k => $templateValue) { echo $helpers['Form']->radiobutton_templates('template_id', $templateValue['id'], $templateValue['name'], $templateValue['layout'], $templateValue['code']); } ?>
-			</div>
+		<div class="content nopadding">		
+			<?php 
+			if(count($templatesFilter) == 1) { $templatesFilter = current($templatesFilter); } //On à qu'un seul template on ne va afficher que les informations de ce template
+			echo $helpers['Form']->input('filter_template', 'Filtrer les templates', array('type' => 'select', 'datas' => $templatesFilter, 'firstElementList' => "Sélectionnez une version de template pour filtrer les résultats")); 
+			
+			$this->element('backoffice/formulaires/websites_templates');
+			?>
 		</div>
 	</div>
 	<div id="txt">
@@ -130,3 +132,23 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">			
+	$(document).ready(function() {		
+
+		$("#InputFilterTemplate").change(function() {
+		
+			var value = $(this).val();
+			var host = $.get_host(); //Récupération du host
+			var action = host + 'websites/ajax_get_templates/' + value + '.html'; //On génère l'url
+									
+			/*console.log('HOST --> ' + host);
+			console.log('numArticle --> ' + numArticle);
+			console.log('action --> ' + action);*/
+						
+			$.get(action, function(datas) { //On récupère les données en GET
+				
+				$("#tpl .prettyRadiobuttons").replaceWith(datas); //On rajoute une nouvelle ligne
+			});			
+		});
+	});
+</script>

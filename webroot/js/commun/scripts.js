@@ -79,7 +79,9 @@ $(document).ready(function() {
 			return  {
 				screenWidth: iScreenWidth, 
 				screenHeight: screen.height,
-				pageHeight: iPageHeight
+				pageHeight: iPageHeight,
+				windowHeight: $(window).height(),
+				windowWidth: $(window).width()	
 			};
 		},
 		same_height: function(oElement) {

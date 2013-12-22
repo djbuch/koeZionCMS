@@ -53,3 +53,8 @@ $Errorsmessages['Website']['name'] = _('La valeur de ce champ est de 2 caractèr
 $Errorsmessages['Website']['url'] = _('Vous devez indiquer une url valide.');
 //$Errorsmessages['Website']['url_alias'] = _('Vous devez indiquer une url valide pour les alias.');
 $Errorsmessages['Website']['template'] = _('Vous devez indiquer sélectionner un template.');
+
+$Errorsmessages['Template']['name'] = _('La valeur de ce champ est de 2 caractères minimum.');
+$Errorsmessages['Template']['layout'] = _('La valeur de ce champ est de 2 caractères minimum.');
+$Errorsmessages['Template']['version'] = _('La valeur de ce champ est de 2 caractères minimum.');
+$Errorsmessages['Template']['code'] = _('La valeur de ce champ est de 2 caractères minimum.');

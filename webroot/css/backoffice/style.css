@@ -84,6 +84,7 @@ img{border:0}
 #right .section{float:left;width:100%}
 #right .section+p.mentions{margin-left:20px;margin-top:20px;float:left;width:100%}
 #right .box{display:block;-moz-box-shadow:1px 1px 2px #f7f7f7;-webkit-box-shadow:1px 1px 2px #f7f7f7;box-shadow:1px 1px 2px #f7f7f7;-ms-filter:"progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=135, Color='#f7f7f7')";filter:progid:DXImageTransform.Microsoft.Shadow(Strength=2,Direction=135,Color='#f7f7f7');background:#fff;border:1px solid #e5e5e5;margin:10px 0 0 20px;*zoom:1}
+#right .box .box{margin:20px;}
 #right .tenth{float:left;width:10%}
 #right .quarter{float:left;width:25%}
 #right .half{float:left;width:50%}
@@ -95,13 +96,16 @@ img{border:0}
 #right .box .content{display:block;position:relative;padding:20px;overflow:hidden;}
 #right .box .content.nopadding{padding:0}
 #right .box .content.gallery{text-align:center;padding:15px 20px 18px 15px}
-#right .box .content .thumb{display:inline-block;position:relative;background:#FFF;border:1px solid #e5e5e5;margin:5px 0 0 5px;overflow:hidden;text-align:center}
-#right .box .content .thumb .hover{position:absolute;margin:30px 0 0;z-index:999;display:none;width:100%;height:50px}
+#right .box .content .thumb{display:inline-block;position:relative;background:#FFF;border:1px solid #e5e5e5;margin:5px 0 0 5px;overflow:hidden;text-align:center;}
+#right .box .content .thumb *{filter:alpha(opacity=50);opacity:.50;}
+#right .box .content .thumb:hover *{opacity:1;filter:alpha(opacity=100)}
+#right .box .content .thumb.active *{opacity:1;filter:alpha(opacity=100)}
+/*#right .box .content .thumb .hover{position:absolute;margin:30px 0 0;z-index:999;display:none;width:100%;height:50px}
 #right .box .content .thumb:hover .hover{display:block}
 #right .box .content .thumb:hover .hover img{border:0;opacity:1.0;filter:alpha(opacity=100) width:23px;height:23px}
-#right .box .content .thumb:hover .hover img:hover{opacity:.75;filter:alpha(opacity=75)}
-#right .box .content .thumb img{border:1px solid #fff;height:80px}
-#right .box .content .thumb:hover img{opacity:.60;filter:alpha(opacity=60)}
+#right .box .content .thumb:hover .hover img:hover{opacity:.75;filter:alpha(opacity=75)}*/
+#right .box .content .thumb img{border:1px solid #fff;height:80px;}
+/*#right .box .content .thumb:hover img{opacity:1;filter:alpha(opacity=100)}*/
 #right .box .content .progressbar-normal,#right .box .content .progressbar-count{background:url(../../img/backoffice/progressbar-back.gif) repeat-x left top transparent;border-right:1px solid #ccc;border-left:1px solid #5cadea;margin:10px 0 7px;height:10px}
 #right .box .content .progressbar-normal div,#right .box .content .progressbar-count div{display:block;background:url(../../img/backoffice/progressbar.gif) repeat-x left top transparent;border-right:1px solid #5cadea;height:100%}
 #right .box .content span.percent{float:right;position:relative;top:-15px;font:11px/1.0em Arial;font-weight:bold}

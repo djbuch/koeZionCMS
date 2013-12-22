@@ -707,6 +707,18 @@ CKEDITOR.addTemplates(
 				image:'image_zoom.gif',
 				description:'Image 264/111px',
 				html:'<img class="border_magic" alt="" src="" style="width: 187px; height: 100px; float: left; margin-right: 10px; margin-bottom: 10px;" /><p>&nbsp;</p>'
+			},
+			{
+				title:"Citer l'auteur",
+				image:'titre_sous_titre.gif',
+				description:'',
+				html:'<p><span style="font-size:8px;"><em>Source : <a href="/" class="blank">Source</a></em></span></p>'
+			},
+			{
+				title:"Mentions fin d'article",
+				image:'titre_sous_titre.gif',
+				description:'',
+				html:'<p class="information"><em>Une remarque, une suggestion, une question? Utilisez le formulaire ci-dessous.</em></p>'
 			}/*,
 			{
 				title:'Système d\'onglets ',

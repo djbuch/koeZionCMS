@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 22/12/2013</name>
+		<num>20131222.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Corrections et améliorations du CMS VERSION BETA</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 29/11/2013</name>
 		<num>20131129.001</num>
 		<supervisor>KoéZionCMS</supervisor>

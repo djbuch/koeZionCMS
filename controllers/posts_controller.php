@@ -161,9 +161,10 @@ class PostsController extends AppController {
 		//   RECUPERATION DES CONFIGURATIONS DES ARTICLES   //
 		require_once(LIBS.DS.'config_magik.php'); 										//Import de la librairie de gestion des fichiers de configuration des posts
 		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'posts.ini', false, false); 		//Création d'une instance
-		$postsConfigs = $cfg->keys_values();											//Récupération des configurations
+		$postsConfigs = $cfg->keys_values();	
 		
 		if($postsConfigs['order'] == 'modified') { $order = 'category_id ASC, modified DESC'; }
+		else if($postsConfigs['order'] == 'created') { $order = 'category_id ASC, created_by ASC'; }
 		else if($postsConfigs['order'] == 'order_by') { $order = 'category_id ASC, order_by ASC'; }
 		
 		$this->set('postsOrder', $postsConfigs['order']);
@@ -458,12 +459,16 @@ class PostsController extends AppController {
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 26/01/2012 by FI
+ * @version 0.2 - 04/12/2013 by FI - Classement des types par rubriques
  */	
 	protected function _init_posts_types() {
 		
 		$this->loadModel('PostsType'); //Chargement du modèle des types de posts
-		$postsTypes = $this->PostsType->find(array('conditions' => array('online' => 1), 'fields' => array('id', 'name', 'column_title'))); //On récupère les types de posts		
-		$this->unloadModel('PostsType'); //Déchargement du modèle des types de posts		
+		$postsTypesTMP = $this->PostsType->find(array('conditions' => array('online' => 1), 'fields' => array('id', 'name', 'column_title'))); //On récupère les types de posts		
+		$this->unloadModel('PostsType'); //Déchargement du modèle des types de posts
+
+		$postsTypes = array();
+		foreach($postsTypesTMP as $v) { $postsTypes[$v['column_title']][] = $v; }		
 		$this->set('postsTypes', $postsTypes); //On les envois à la vue
 	}
 	

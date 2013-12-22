@@ -13,7 +13,7 @@ class Model extends Object {
 	public $id; //Variable qui va contenir la valeur de la clé primaire après isert ou update
 	public $errors = array(); //Par défaut pas d'erreurs
 	public $trace_sql = false; //Permet d'afficher la requête exécutée cf fonction find
-	public $schema = array(); //Shéma de la table
+	public $shema = array(); //Shéma de la table
 	public $queryExecutionResult = false; //indique si la requete de save s'est bien passée 
 	public $refererUrl = ''; //Cette variable va contenir l'url de la page appelante
 	public $manageWebsiteId = true; //Permet d'éviter de prendre en compte la recherche basée sur le champ website_id ainsi que l'insertion automatique de ce champ
@@ -187,6 +187,7 @@ class Model extends Object {
  * @version 0.1 - 28/12/2011 by FI
  * @version 0.2 - 02/05/2012 by FI - Mise en place de la conditions de récupérations selon l'identifiant du site
  * @version 0.3 - 30/05/2012 by FI - Modification de la génération de la condition de recherche pour intégrer l'utilisation de tableau de condition sans index particulier ==> $condition = array('conditions' => array("name LIKE '%...%'"));
+ * @version 0.4 - 17/12/2013 by FI - Correction bug sur la gestiond des conditions de recherche (test sur le contenu des données)
  */    
 	public function find($req = array(), $type = PDO::FETCH_ASSOC) {
 		
@@ -245,6 +246,57 @@ class Model extends Object {
 		//   CHAMPS CONDITIONS   //
 		if(isset($req['conditions'])) { //Si on a des conditions
 			
+			$conditions = '';	//Mise en variable des conditions	
+			
+			//On teste si conditions est un tableau
+			//Sinon on est dans le cas d'une requête personnalisée
+			if(!is_array($req['conditions']) && !empty($req['conditions'])) {
+                
+				$conditions .= $req['conditions']; //On les ajoute à la requete
+			
+			//Si c'est un tableau on va rajouter les valeurs
+			} else {
+				
+				$cond = array();
+				foreach($req['conditions'] as $k => $v) {		
+					
+					if(!empty($v)) {
+						
+						//On va ensuite tester si la clé est une chaine de caractère
+						//On rajoute le nom de la classe devant le nom de la colonne
+						if(is_string($k)) { 
+	
+							//On va échaper les caractères spéciaux
+							//Equivalement de mysql_real_escape_string --> $v = '"'.mysql_escape_string($v).'"';
+							if(!is_numeric($v)) { $v = $this->db->quote($v); }
+							
+							$k = $this->alias.".".$k;
+							$cond[] = "$k=$v";
+							
+						} 
+						else { $cond[] = $v; } //Sinon on rajoute directement la condition dans le tableau
+					}
+				}
+				
+				if(!empty($cond)) { $conditions .= implode(' AND ', $cond); }
+			}
+			
+			if(!empty($conditions)) { $sql .= 'WHERE '.$conditions; } //On rajoute les conditions à la requête
+		}
+		
+		////////////////////////////////
+		//   CHAMPS MORE CONDITIONS   //
+		if(isset($req['moreConditions']) && !empty($req['moreConditions'])) { 
+			
+			if(isset($conditions) && !empty($conditions)) { $sql .= ' AND '; } else { $sql .= ' WHERE '; }			
+			$sql .= $req['moreConditions']; 
+		}
+		
+		/*
+		///////////////////////////
+		//   CHAMPS CONDITIONS   //
+		if(isset($req['conditions'])) { //Si on a des conditions
+			
 			$conditions = 'WHERE ';	//Mise en variable des conditions	
 			
 			//On teste si conditions est un tableau
@@ -287,7 +339,7 @@ class Model extends Object {
 			
 			if(isset($req['conditions'])) { $sql .= ' AND '; } else { $sql .= ' WHERE '; }			
 			$sql .= $req['moreConditions']; 
-		}
+		}*/
 		
 		//////////////////////
 		//   CHAMPS GROUP BY   //
@@ -359,18 +411,26 @@ class Model extends Object {
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 16/02/2012 by FI
+ * @version 0.2 - 04/12/2013 by FI - Rajout de la possibilité de passer un tableau pour la variable $field
  */	
 	public function findList($conditions = null, $field = 'name', $key = 'id') {
 	
-		$queryResult = $this->find($conditions);		
-		
+		$queryResult = $this->find($conditions);
 		//On formate les résultats
 		$result = array();
 		foreach($queryResult as $k => $v) { 
 			
 			if(empty($key)) { $result[$k] = $v[$field]; }
-			else { $result[$v[$key]] = $v[$field]; }			 
+			else { 
+				if(is_array($field)) {
+					
+					$fieldTMP = array();
+					foreach($field as $kField => $vField) { $fieldTMP[$kField] =  $v[$vField]; }
+					$result[$v[$key]] = implode(' ', $fieldTMP);
+				} else { $result[$v[$key]] = $v[$field]; } 
+			}			 
 		}
+		
 		return $result;
 	}
 	
@@ -456,7 +516,7 @@ class Model extends Object {
  */	
 	public function save($datas, $forceInsert = false, $escapeUpload = true) {
 					
-		$preparedInfos = $this->_prepare_save_query(array_keys($datas), $forceInsert, $escapeUpload); //Récupération des données de la préparation de la requête
+		$preparedInfos = $this->_prepare_save_query($datas, $forceInsert, $escapeUpload); //Récupération des données de la préparation de la requête
 		$datasToSave = $this->_prepare_save_datas($datas, $preparedInfos['moreDatasToSave'], $forceInsert, $escapeUpload); //Récupération des données à sauvegarder
 		
 		$queryExecutionResult = $preparedInfos['preparedQuery']->execute($datasToSave); //Exécution de la requête
@@ -488,7 +548,7 @@ class Model extends Object {
 		
 		if(!empty($datas)) {
 			
-			$preparedInfos = $this->_prepare_save_query(array_keys(current($datas)), $forceInsert, $escapeUpload);
+			$preparedInfos = $this->_prepare_save_query(current($datas), $forceInsert, $escapeUpload);
 			foreach($datas as $k => $v) { 
 				
 				$datasToSave = $this->_prepare_save_datas($v, $preparedInfos['moreDatasToSave'], $forceInsert, $escapeUpload);
@@ -509,7 +569,8 @@ class Model extends Object {
 /**
  * Cette fonction est en charge de la validation des données avant modification de la base de données
  *
- * @param 	array $datas Données à sauvegarder
+ * @param 	array 	$datas 			Données à sauvegarder
+ * @param 	varchar $insertErrorsTo Si renseigne l'index $insertErrorsTo sera utilisé pour l'ajout des erreurs dans le modèle
  * @return 	boolean Retourne vrai si la validation est correcte, faux sinon
  * @access	public
  * @author	koéZionCMS
@@ -520,8 +581,9 @@ class Model extends Object {
  * @version 0.5 - 25/06/2013 - Changement du include_once en include pour le chargement des messages d'erreurs car dans le cas de validations multiples le fichier n'était pas chargé  
  * @version 0.6 - 09/11/2013 - Rajout d'un nouveau paramètre aux règles de validation permettant de paramétrer une règle mais de ne l'appliquer que si le champ n'est pas vide  
  * @version 0.7 - 14/11/2013 - Mise en place de la validation des champs construit avec des tableaux multidimensionnels  
+ * @version 0.8 - 09/12/2013 - Rajout de l'index $insertErrorsTo pour la gestion des erreurs  
  */	
-	function validates($datas) {
+	function validates($datas, $insertErrorsTo = null) {
 				
 		if(isset($this->validate)) { //Si on a un tableau de validation dans la classe
 			
@@ -582,7 +644,10 @@ class Model extends Object {
 				}
 			}
 			
-			$this->errors = $errors;			
+			//Si un index particulier est renseigné on l'utilise
+			if(isset($insertErrorsTo) && !empty($insertErrorsTo)) { $this->errors = Set::insert($this->errors, $insertErrorsTo, $errors); } 
+			else { $this->errors = $errors; }			
+			
 			if(empty($errors)) { return true; } else { return false; }
 			
 		} else { return true; }
@@ -804,7 +869,7 @@ class Model extends Object {
 /**
  * Cette fonction permet la génération de la requête préparée
  * 
- * @param 	array	$datasShema 	Shéma des champs de la table
+ * @param 	array	$datas 			Données à sauvegarder
  * @param 	boolean	$forceInsert 	Indique si il faut forcer l'insert
  * @param 	boolean	$escapeUpload 	Indique si il faut ou non ne pas tenir compte des champs à uploader
  * @return	array	Tableau contenant les paramètres de la requête préparée
@@ -813,8 +878,9 @@ class Model extends Object {
  * @version 0.1 - 24/08/2012 by FI
  * @version 0.1 - 13/11/2013 by FI - Rajout du code permettant la gestion de l'option de modification de la date de modification
  */	
-	function _prepare_save_query($datasShema, $forceInsert, $escapeUpload) {
+	function _prepare_save_query($datas, $forceInsert, $escapeUpload) {
 					
+		$datasShema = array_keys($datas);
 		$shema = $this->shema; //Shema de la table		
 		$primaryKey = $this->primaryKey; //Récupération de la clé primaire
 		
@@ -873,8 +939,8 @@ class Model extends Object {
 			$moreDatasToSave[':website_id'] = CURRENT_WEBSITE_ID;
 		}
 		
-		if(in_array('slug', $shema) && (!in_array('slug', $datasShema))) { $datasShema[] = 'slug'; } 
-		if(in_array('page_title', $shema) 	&& (!in_array('page_title', $datasShema))) 	{ $datasShema[] = 'page_title'; } 
+		if(in_array('slug', $shema) && !empty($datas['name']) && (!in_array('slug', $datasShema))) { $datasShema[] = 'slug'; } 
+		if(in_array('page_title', $shema) && !empty($datas['name'])	&& (!in_array('page_title', $datasShema))) 	{ $datasShema[] = 'page_title'; } 
 						
 		//On contrôle que la clé primaire ne soit pas dans le tableau si on a demandé de forcer l'ajout
 		if(in_array($primaryKey, $datasShema) && !$forceInsert) {
@@ -928,8 +994,8 @@ class Model extends Object {
 		$coreConfs = $cfg->keys_values();
 		if(in_array('password', $datasShema) && $coreConfs['hash_password']) { $datas['password'] = sha1($datas['password']); } //On procède à la mise à jour du champ password si il existe				
 		
-		if(in_array('slug', $shema) && (!in_array('slug', $datasShema) || empty($datas['slug']))) { $datas['slug'] = strtolower(Inflector::slug($datas['name'], '-')); } //On procède à la mise à jour du champ slug si celui ci n'est pas rempli ou non présent dans le formulaire mais présent dans la table
-		if(in_array('page_title', $shema) && (!in_array('page_title', $datasShema) || empty($datas['page_title']))) { $datas['page_title'] = $datas['name']; } //On procède à la mise à jour du champ page_title si celui ci n'est pas rempli ou non présent dans le formulaire mais présent dans la table
+		if(in_array('slug', $shema) && !empty($datas['name']) && (!in_array('slug', $datasShema) || empty($datas['slug']))) { $datas['slug'] = strtolower(Inflector::slug($datas['name'], '-')); } //On procède à la mise à jour du champ slug si celui ci n'est pas rempli ou non présent dans le formulaire mais présent dans la table
+		if(in_array('page_title', $shema) && !empty($datas['name']) && (!in_array('page_title', $datasShema) || empty($datas['page_title']))) { $datas['page_title'] = $datas['name']; } //On procède à la mise à jour du champ page_title si celui ci n'est pas rempli ou non présent dans le formulaire mais présent dans la table
 				
 		if(isset($datas[$primaryKey]) && !$forceInsert) unset($datas[$primaryKey]); //Il faut supprimer du tableau des données la clé primaire si celle ci est définie
 				

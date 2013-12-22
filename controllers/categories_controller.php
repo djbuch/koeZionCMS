@@ -728,18 +728,19 @@ class CategoriesController extends AppController {
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 02/10/2012 by FI
+ * @version 0.2 - 18/12/2013 by FI - Suppression temporaire de la gestion des templates car pas forcément utile et utilisée
  */	
 	protected function _init_datas() {		
 		
 		$categoriesList = $this->Category->getTreeList(); //On récupère les catégories
 		$this->set('categoriesList', $categoriesList); //On les envois à la vue
 		
-		$this->loadModel('Template');
+		/*$this->loadModel('Template');
 		$templatesListTMP = $this->Template->find(array('conditions' => array('online' => 1), 'order' => 'name'));
 		$templatesList = array();
 		foreach($templatesListTMP as $k => $v) { $templatesList[$v['id']] = $v; }
 		$this->templatesList = $templatesList;
-		$this->set('templatesList', $templatesList); //On les envois à la vue
+		$this->set('templatesList', $templatesList); //On les envois à la vue*/
 		
 		$this->loadModel('RightButton'); //Chargement du modèle des types de posts
 		$rightButton = $this->RightButton->findList(array('conditions' => array('online' => 1))); //On récupère les types de posts

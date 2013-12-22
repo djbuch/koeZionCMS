@@ -31,7 +31,8 @@
 			//'/backoffice/wizard',			//Pour la mise en place des tabs avec des boutons next, prev
 			'/backoffice/smart_tab',			//Pour la mise en place des smarttabs
 			'/backoffice/hook',
-			'/backoffice/prettyradio'
+			'/backoffice/prettyradio',
+			'/backoffice/jquery-ui-1.10.3.custom'	//JqueryUI pour autocomplete
 		);
 		echo $helpers['Html']->css($css);
 

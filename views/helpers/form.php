@@ -35,7 +35,7 @@ class Form {
  * @author 	koéZionCMS
  * @version 0.1 - 20/01/2012 by FI
  */
-	var $escapeAttributes = array('type', 'displayError', 'label', 'div', 'datas', 'value', 'divRowBorderTop', 'tooltip');
+	var $escapeAttributes = array('type', 'displayError', 'label', 'div', 'divright', 'datas', 'value', 'divRowBorderTop', 'tooltip', 'fulllabelerror');
 
 /**
  * Constructeur de la classe
@@ -379,10 +379,13 @@ class Form {
  * - type : type de champ input --> hidden, text, textarea, checkbox, radio, file, password, select
  * - label : si vrai la valeur retournée contiendra le champ label
  * - div : si vrai la valeur retournée sera contenu dans une div
+ * - divright : si vrai le champ input sera retourné dans un div
  * - displayError : si vrai affiche les erreurs sous les champs imput
  * - value : Si renseignée cette valeur sera insérée dans le champ input
  * - tooltip : Si renseignée affichera un tooltip à coté du label
  * - wysiswyg : si renseigné et à vrai alors le code de l'éditeur sera généré
+ * - fulllabelerror : si vrai l'affichage du message d'erreur se fera à part
+ * - modelToCheck : permet, si renseigné, de surcharger la récupération des messages d'erreurs dans un autre modèle que le modèle courant
  *
  * @param 	varchar $name 		Nom du champ input
  * @param 	varchar $label 		Label pour le champ input
@@ -394,7 +397,12 @@ class Form {
  * @version 0.2 - 22/02/2012 by FI - Modification de la gestion des options par défaut, utilisation de array_merge plus souple
  * @version 0.3 - 22/02/2012 by FI - Gestion de l'affichage du tooltip
  * @version 0.4 - 06/04/2012 by FI - Passage de la fonction en privée pour la gestion de l'internationnalisation
+ * @version 0.5 - 09/12/2013 by FI - Reprise de la gestion des erreurs pour intégrer la notion de profondeur dans la récupération des erreurs
+ * @version 0.6 - 09/12/2013 by FI - Rajout de l'option fulllabelerror
+ * @version 0.7 - 09/12/2013 by FI - Mise en place d'une surcharge pour la récupération de message d'erreur hors du modèle courant
+ * @version 0.8 - 17/12/2013 by FI - Reprise de la gestion des select pour pouvoir gérer optgroup
  * @todo Input de type submit etc..., input radio
+ * @todo Voir si utile de gérer en récursif la gestion de optgroup pour le select
  */
 	function _input($name, $label, $options = array()) {
 
@@ -403,9 +411,11 @@ class Form {
 			'type' => 'text',
 			'label' => true,
 			'div' => true,
+			'divright' => true,
 			'displayError' => true,
 			'value' => false,
 			'tooltip' => false,
+			'fulllabelerror' => false
 		);
 		$options = array_merge($defaultOptions, $options); //Génération du tableau d'options utilisé dans la fonction
 
@@ -414,14 +424,17 @@ class Form {
 
 		if($options['displayError']) {
 
-			$modelName = $this->view->controller->params['modelName']; //Récupération du model courant
+			if(isset($options['modelToCheck'])) { $modelName = $options['modelToCheck']; } //Surcharge de la récupération du modèle courant
+			else { $modelName = $this->view->controller->params['modelName']; } //Récupération du model courant
 			if(isset($this->view->controller->$modelName->errors)) $errors = $this->view->controller->$modelName->errors; //Récupération des erreurs du formulaires
 		}
 
 		//On va contrôler si on a des erreurs
-		if(isset($errors[$name])) {
+		//if(isset($errors[$name])) {
+		if(isset($errors) && Set::check($errors, $name)) {
 
-			$error = $errors[$name]; //La valeur de l'erreur est stockée
+			//$error = $errors[$name]; //La valeur de l'erreur est stockée
+			$error = Set::classicExtract($errors, $name); //La valeur de l'erreur est stockée
 			$classError = ' error'; //La classe est modifiée
 			//unset($this->view->controller->$modelName->errors[$name]);
 		}
@@ -532,9 +545,21 @@ class Form {
 
 				//Parcours de l'ensemble des données du select
 				foreach($options['datas'] as $k => $v) {
-
-					if($value == $k) { $selected=' selected="selected"'; } else { $selected = ''; }
-					$inputReturn .= '<option value="'.$k.'"'.$selected.'>'.$v.'</option>';
+					
+					if(!is_array($v)) {
+						
+						if($value != '' && $value == $k) { $selected=' selected="selected"'; } else { $selected = ''; }
+						$inputReturn .= '<option value="'.$k.'"'.$selected.'>'.$v.'</option>';						
+					} else {
+						
+						$inputReturn .= '<optgroup label="'.$k.'">';
+						foreach($v as $k1 => $v1) {
+						
+							if($value != '' && $value == $k1) { $selected=' selected="selected"'; } else { $selected = ''; }
+							$inputReturn .= '<option value="'.$k1.'"'.$selected.'>'.$v1.'</option>';							
+						}
+						$inputReturn .= ' </optgroup>';						
+					}
 				}
 				if(count($options['datas']) == 0) { $inputReturn .= '<option></option>'; }
 				$inputReturn .= '</select>';
@@ -548,24 +573,31 @@ class Form {
 		}
 
 		//Si on a une erreur et que l'on souhaite afficher les erreurs directement dans le champ input
+		$errorLabel = '';
 		if($error && $options['displayError']) {
 
-			$inputReturn .= '<label for="'.$inputIdText.'" class="error">';
-
+			$errorLabel = '<label for="'.$inputIdText.'" class="error">';
 			if(is_array($error)) {
 
-				foreach($error as $k => $v) { $inputReturn .= $v.'<br />'; }
-			} else { $inputReturn .= $error; }
+				foreach($error as $k => $v) { $errorLabel .= $v.'<br />'; }
+			} else { $errorLabel .= $error; }
 
-			$inputReturn .= '</label>';
+			$errorLabel .= '</label>';
 		}
 
 		if($options['div']) {
 
 			if(isset($options['divRowBorderTop']) && !$options['divRowBorderTop']) { $styleDiv = ' style="border-top:none"'; } else { $styleDiv = ''; }
 
-			return '<div class="row'.$classError.'"'.$styleDiv.'>'.$labelReturn.'<div class="rowright">'.$inputReturn.'</div>'.'</div>';
-		} else { return $labelReturn.$inputReturn; }
+			if($options['divright']) { 
+				if($options['fulllabelerror']) {
+					return '<div class="row'.$classError.'"'.$styleDiv.'>'.$labelReturn.'<div class="rowright">'.$inputReturn.'</div>'.$errorLabel.'</div>';				
+				} else {
+					return '<div class="row'.$classError.'"'.$styleDiv.'>'.$labelReturn.'<div class="rowright">'.$inputReturn.$errorLabel.'</div>'.'</div>';
+				} 
+			}
+			else { return '<div class="row'.$classError.'"'.$styleDiv.'>'.$labelReturn.$inputReturn.$errorLabel.'</div>'; }
+		} else { return $labelReturn.$inputReturn.$errorLabel; }
 	}
 
 /**
@@ -626,11 +658,11 @@ class Form {
  */
 	function _get_input_value($name, $defaultValue) {
 
-		//Si les données n'ont jamais été postées
-		if(!isset($this->view->controller->request->data[$name]) && $defaultValue) { return $defaultValue; }
-
-		//Sinon on retourne celle postée
-		else { return Set::classicExtract($this->view->controller->request->data, $name); }
+		//Données postées
+		if(Set::check($this->view->controller->request->data, $name)) { return Set::classicExtract($this->view->controller->request->data, $name); } 
+		
+		//Données non postées
+		else if(!isset($this->view->controller->request->data[$name]) && $defaultValue) { return $defaultValue; }
 	}
 
 /**
@@ -639,7 +671,7 @@ class Form {
  * @param unknown_type $value
  * @return string
  */
-	function radiobutton_templates($name, $value, $templateName, $templateLayout, $templateCode) {
+	function radiobutton_templates($name, $value, $templateName, $templateLayout, $templateCode, $templateColor) {
 
 		$inputNameText = $this->_set_input_name($name); //Mise en variable du name de l'input
 		$inputIdText = $this->_set_input_id($inputNameText); //Mise en variable de l'id de l'input
@@ -653,6 +685,8 @@ class Form {
 			$selected = '';
 		}
 
-		return '<p '.$selected.'><input name="'.$inputNameText.'" id="'.$inputIdText.$value.'" value="'.$value.'" type="radio" '.$checked.' /><span>'.$templateName.'<br /><img src="'.BASE_URL.'/img/backoffice/templates/'.$templateLayout.'/'.$templateCode.'/background.png" /></span></p>';
+		if(empty($templateColor)) { $thumb = '<img src="'.BASE_URL.'/img/backoffice/templates/'.$templateLayout.'/'.$templateCode.'/background.png" />'; } 
+		else { $thumb = '<img src="'.$templateColor.'" />'; }
+		return '<p '.$selected.'><input name="'.$inputNameText.'" id="'.$inputIdText.$value.'" value="'.$value.'" type="radio" '.$checked.' /><span>'.$templateName.'<br />'.$thumb.'</span></p>';
 	}
 }

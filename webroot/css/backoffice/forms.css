@@ -5,10 +5,43 @@ label{float:left;padding:6px 0 0 0;margin:0;font-size:12px;color:#1c1c1c;cursor:
 #right .box .content label.error{display:block;float:none;background:url(../../img/backoffice/icon-error.png) no-repeat 10px 7px #fccac1;border:1px solid #e18b7c;margin:0 0 5px;padding:5px 6px 4px 6px;text-indent:26px;color:#c33820;font:12px/1.6em Arial;width:auto}
 #right .box .content label.error{margin:5px 0 0;width:100%}
 input{display:inline-block;border:1px solid #c5c5c5;outline:0;padding:6px;margin:0;font:12px/15px Arial;color:#1c1c1c;width:100%;height:15px}
+input.half-input{width:50%;}
+input.third-input{width:30%;}
+input.quarter-input{width:25%;}
 .row.error input,.row.error textarea{border:1px solid #e18b7c}
 .ui-selectmenu{display:inline-block;position:relative;background:url(../../img/backoffice/back-select.gif) no-repeat right top transparent;border:1px solid #c5c5c5;padding:0 32px 0 6px;margin:0 3px 0 0;text-decoration:none;overflow:hidden;outline:0;width:500px;height:27px}
+.box .content .section .third .ui-selectmenu{
+	width: -moz-calc(100% - 41px);
+	width: -webkit-calc(100% - 41px);
+	width: -o-calc(100% - 41px);
+	width: calc(100% - 41px);	
+}
+.box .content .section .third .rowright .ui-selectmenu{
+	width: -moz-calc(100% - 27px);
+	width: -webkit-calc(100% - 27px);
+	width: -o-calc(100% - 27px);
+	width: calc(100% - 27px);	
+}
+.box .content .section .third label.error{
+	width: -moz-calc(100% - 15px)!important;
+	width: -webkit-calc(100% - 15px)!important;
+	width: -o-calc(100% - 15px)!important;
+	width: calc(100% - 15px)!important;	
+}
+.box .content .section .third .rowright label.error{
+	width: 100%!important;	
+}
 a.ui-selectmenu{text-decoration:none}
-.ui-selectmenu-menu{position:absolute;display:none;top:0;z-index:9999;background-color:#fff;border:1px solid #c5c5c5;padding:0;margin:1px 0 0 0;list-style:none;overflow:auto;width:538px;max-height:175px}
+.ui-selectmenu-menu{position:absolute;display:none;top:0;z-index:9999;background-color:#fff;border:1px solid #c5c5c5;padding:0;margin:1px 0 0 0;list-style:none;overflow:auto;width:538px;max-height:500px/*max-height:175px*/}
+.ui-selectmenu-menu.select-thirdbox-submenu{width: 250px;}
+.ui-selectmenu-group-label{
+	background: #EBEBEB;
+	display: block;
+	font-weight: bold;
+	padding: 5px;	
+}
+.ui-selectmenu-group-label + ul { padding-left: 0; }
+.ui-selectmenu-group-label + ul li a { padding-left: 20px; }
 .ui-selectmenu-open{display:block}
 .ui-selectmenu-menu li{display:block;background:#fff;border-top:1px solid #e5e5e5;outline:0;padding:0;margin:0}
 .ui-selectmenu-menu li:first-child{border-top:0}
@@ -68,3 +101,103 @@ input.datepicker{width:64px}
 
 .upload_file{width: 70%}
 #InputSelectFile{height:29px;width:auto;margin-right:15px;float:left;}
+
+/**
+ * @see http://cssdeck.com/labs/css-checkbox-styles
+ * Custom slide checkbox
+ */
+.custom_chebox_slide input[type=checkbox] {
+	visibility: hidden;
+}
+.custom_chebox_slide {
+	width: 80px;
+	height: 30px;
+	float: right;
+	/*background: #333;
+	margin: 20px auto;*/
+
+	/*-webkit-border-radius: 50px;
+	-moz-border-radius: 50px;
+	border-radius: 50px;*/
+	position: relative;
+
+	/*-webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+	-moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+	box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);*/
+}
+.custom_chebox_slide:after {
+	content: '';
+	position: absolute;
+	top: 14px;
+	left: 14px;
+	height: 2px;
+	width: 52px;
+
+	-webkit-border-radius: 50px;
+	-moz-border-radius: 50px;
+	border-radius: 50px;
+	background: #111;
+
+	-webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+	-moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+	box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+}
+.custom_chebox_slide label {
+	margin: 0;
+	padding: 0;
+	
+	display: block;
+	width: 22px;
+	height: 22px;
+
+	-webkit-border-radius: 50px;
+	-moz-border-radius: 50px;
+	border-radius: 50px;
+
+	-webkit-transition: all .4s ease;
+	-moz-transition: all .4s ease;
+	-o-transition: all .4s ease;
+	-ms-transition: all .4s ease;
+	transition: all .4s ease;
+	cursor: pointer;
+	position: absolute;
+	top: 4px;
+	z-index: 1;
+	left: 4px;
+
+	-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+	-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+	box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+	background: #fcfff4;
+
+	background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+	background: -moz-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+	background: -o-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+	background: -ms-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+	background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfff4', endColorstr='#b3bead',GradientType=0 );
+}
+.custom_chebox_slide label:after {
+	content: '';
+	position: absolute;
+	width: 10px;
+	height: 10px;
+
+	-webkit-border-radius: 50px;
+	-moz-border-radius: 50px;
+	border-radius: 50px;
+	/*background: #333;*/
+	background: red;
+	left: 6px;
+	top: 6px;
+
+	-webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,1), 0px 1px 0px rgba(255,255,255,0.9);
+	-moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,1), 0px 1px 0px rgba(255,255,255,0.9);
+	box-shadow: inset 0px 1px 1px rgba(0,0,0,1), 0px 1px 0px rgba(255,255,255,0.9);
+}
+.custom_chebox_slide input[type=checkbox]:checked + label {
+	left: 54px;
+}
+.custom_chebox_slide input[type=checkbox]:checked + label:after {
+	background: #00bf00;
+}
