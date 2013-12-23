@@ -27,7 +27,10 @@ class Form extends FormHelper {
 		
 		$inputDatas = parent::input($name, $label, $options); //Appel fonction parente
 				
-		//====================    	TRAITEMENTS DES DONNEES    ====================//			
+		//====================    	TRAITEMENTS DES DONNEES    ====================//	
+		
+		if($inputDatas['inputOptions']['type'] == 'hidden') { return $inputDatas['inputElement']; } //Cas du champ caché	
+		
 		$classError = '';
 		if(!empty($inputDatas['inputError'])) { $classError = ' error'; }
 				

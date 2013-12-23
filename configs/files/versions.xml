@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 23/12/2013</name>
+		<num>20131223.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Restructuration de la gestion des helpers pour la version multi-templates - VERSION BETA</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 22/12/2013</name>
 		<num>20131222.002</num>
 		<supervisor>KoéZionCMS</supervisor>
