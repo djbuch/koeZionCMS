@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 24/12/2013</name>
+		<num>20131224.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Correction bug lors de la récupération des messages d'erreurs des formulaires les input du type MonModele.mon_champ ne marchaient pas - Thks AB - VERSION BETA</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 24/12/2013</name>
 		<num>20131224.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

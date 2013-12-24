@@ -162,10 +162,10 @@ class FormHelper {
 
 		//On va contrôler si on a des erreurs
 		//if(isset($errors[$name])) {
-		if(isset($errors) && Set::check($errors, $name)) {
+		if(isset($errors) && (Set::check($errors, $name) || isset($errors[$name]))) {
 
 			//$error = $errors[$name]; //La valeur de l'erreur est stockée
-			$error = Set::classicExtract($errors, $name); //La valeur de l'erreur est stockée
+			$error = isset($errors[$name]) ? $errors[$name] : Set::classicExtract($errors, $name); //La valeur de l'erreur est stockée
 			//unset($this->view->controller->$modelName->errors[$name]);
 		}
 
