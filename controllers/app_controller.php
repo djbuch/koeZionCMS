@@ -595,8 +595,30 @@ class AppController extends Controller {
     	
     	$this->_check_cache_configs();
     	$this->_delete_cache();
-    }	
+    }			
+		
+/**
+ * Cette fonction est utilisée lors de l'ajout d'un nouveau bouton dans la colonne de droite
+ *
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 16/12/2012 by FI
+ * @version 0.2 - 23/12/2013 by FI - Fonction déplacée des contrôleurs Categories et Posts car identique
+ */
+	public function backoffice_ajax_add_right_button($rightButtonId) {
 	
+		$this->layout = 'ajax'; //Définition du layout à utiliser		
+				
+		//Récupération des informations du bouton
+		$this->loadModel('RightButton'); //Chargement du modèle
+		$rightButton = $this->RightButton->findFirst(array('fields' => array('name'), 'conditions' => array('id' => $rightButtonId))); //On récupère les données
+		$this->unloadModel('RightButton'); //Déchargement du modèle
+		
+		$this->set('rightButtonId', $rightButtonId);
+		$this->set('rightButtonName', $rightButton['name']);
+		
+		$this->render('/elements/ajax/backoffice_ajax_add_right_button');
+	}
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //									FONCTIONS PRIVEES									//

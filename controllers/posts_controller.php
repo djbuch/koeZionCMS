@@ -285,8 +285,9 @@ class PostsController extends AppController {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 16/12/2012 by FI
+ * @version 0.2 - 23/12/2013 by FI - Fonction déplacée dans le contrôleur App
  */
-	public function backoffice_ajax_add_right_button($rightButtonId) {
+	/*public function backoffice_ajax_add_right_button($rightButtonId) {
 	
 		$this->layout = 'ajax'; //Définition du layout à utiliser		
 				
@@ -297,7 +298,7 @@ class PostsController extends AppController {
 		
 		$this->set('rightButtonId', $rightButtonId);
 		$this->set('rightButtonName', $rightButton['name']);
-	}	
+	}*/	
 	
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //										FONCTIONS PRIVEES										//

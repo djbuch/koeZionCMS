@@ -459,8 +459,9 @@ class CategoriesController extends AppController {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 16/12/2012 by FI
+ * @version 0.2 - 23/12/2013 by FI - Fonction déplacée dans le contrôleur App
  */
-	public function backoffice_ajax_add_right_button($rightButtonId) {
+	/*public function backoffice_ajax_add_right_button($rightButtonId) {
 	
 		$this->layout = 'ajax'; //Définition du layout à utiliser		
 				
@@ -471,7 +472,7 @@ class CategoriesController extends AppController {
 		
 		$this->set('rightButtonId', $rightButtonId);
 		$this->set('rightButtonName', $rightButton['name']);
-	}	
+	}*/	
 	
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //										FONCTIONS PRIVEES										//
@@ -902,6 +903,7 @@ class CategoriesController extends AppController {
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 02/10/2012 by FI
+ * @version 0.2 - 02/10/2012 by FI - Récupération de tous les champs
  */	
 	protected function _get_datas_category($id) {
 		
@@ -912,34 +914,8 @@ class CategoriesController extends AppController {
 		
 		if(!$category) {
 		
-			$conditions = array(
-				'fields' => array(
-					'id',
-					'name',
-					'page_title',
-					'page_description',
-					'page_keywords',
-					'slug',
-					'content',
-					'type',
-					'title_colonne_droite',
-					'display_brothers',
-					'display_children',
-					'parent_id',
-					'redirect_category_id',
-					'level',
-					'display_form',
-					'is_secure',
-					'txt_secure',
-					'title_posts_list',
-					'tpl_layout',
-					'tpl_code',
-					'template_id'
-				),
-				'conditions' => array('online' => 1, 'id' => $id)
-			);
-			$category = $this->Category->findFirst($conditions);
-		
+			$conditions = array('conditions' => array('online' => 1, 'id' => $id));
+			$category = $this->Category->findFirst($conditions);		
 			Cache::create_cache_file($cacheFolder, $cacheFile, $category);
 		}
 

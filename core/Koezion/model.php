@@ -188,6 +188,7 @@ class Model extends Object {
  * @version 0.2 - 02/05/2012 by FI - Mise en place de la conditions de récupérations selon l'identifiant du site
  * @version 0.3 - 30/05/2012 by FI - Modification de la génération de la condition de recherche pour intégrer l'utilisation de tableau de condition sans index particulier ==> $condition = array('conditions' => array("name LIKE '%...%'"));
  * @version 0.4 - 17/12/2013 by FI - Correction bug sur la gestiond des conditions de recherche (test sur le contenu des données)
+ * @version 0.5 - 23/12/2013 by FI - Mise en place de la possibilité de passer un tableau de données pour les valeurs de recherche par exemple array('conditions' => array('id' => array(1,5,7)))
  */    
 	public function find($req = array(), $type = PDO::FETCH_ASSOC) {
 		
@@ -268,10 +269,12 @@ class Model extends Object {
 	
 							//On va échaper les caractères spéciaux
 							//Equivalement de mysql_real_escape_string --> $v = '"'.mysql_escape_string($v).'"';
-							if(!is_numeric($v)) { $v = $this->db->quote($v); }
+							if(!is_numeric($v) && !is_array($v)) { $v = $this->db->quote($v); }
 							
 							$k = $this->alias.".".$k;
-							$cond[] = "$k=$v";
+							
+							if(is_array($v)) { $cond[] = $k." IN (".implode(',', $v).")"; }
+							else { $cond[] = $k."=".$v; }
 							
 						} 
 						else { $cond[] = $v; } //Sinon on rajoute directement la condition dans le tableau
@@ -443,16 +446,19 @@ class Model extends Object {
  * @author	koéZionCMS
  * @version 0.1 - 16/02/2012 by FI
  * @version 0.2 - 13/04/2012 by FI - Modification de la requête de suppression pour pouvoir passer en paramètre un tableau ou un entier
+ * @version 0.3 - 24/12/2013 by FI - Mise en place de la gestion multisites lors de la suppression
  */		
 	public function delete($id) {
 		
 		if(is_array($id)) { $idConditions = " IN (".implode(',', $id).')'; } else { $idConditions = " = ".$id; }		
-		$sql = "DELETE FROM ".$this->table." WHERE ".$this->primaryKey.$idConditions.";";  //Requête de suppression de l'élément			
-		//$queryResult = $this->db->query($sql);
-		$queryResult = $this->query($sql);
+		$sql = "DELETE FROM ".$this->table." WHERE ".$this->primaryKey.$idConditions.";";  //Requête de suppression de l'élément
 		
-		if(isset($this->searches_params)) { $this->delete_search_index($idConditions); } //Suppression de l'index dans la recherche
+		//CAS PARTICULIER : GESTION MULTISITE
+		if(in_array('website_id', $this->shema)) { $sql .= " AND website_id = ".CURRENT_WEBSITE_ID; }
 		
+		$sql .= ";";				
+		$queryResult = $this->query($sql);		
+		if(isset($this->searches_params)) { $this->delete_search_index($idConditions); } //Suppression de l'index dans la recherche		
 		return $queryResult;
 	}
 	
@@ -465,18 +471,21 @@ class Model extends Object {
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 16/02/2012 by FI
+ * @version 0.2 - 24/12/2013 by FI - Mise en place de la gestion multisites lors de la suppression
  */	
 	public function deleteByName($name, $value) {
 	
 		$oldPrimaryKey = $this->primaryKey; 
 		$this->primaryKey = $name;		
 		if(!is_numeric($value)) { $value = $this->db->quote($value); } //Equivalement de mysql_real_escape_string
-		$sql = "DELETE FROM {$this->table} WHERE {$this->primaryKey} = {$value}";
+		$sql = "DELETE FROM ".$this->table." WHERE ".$this->primaryKey." = ".$value;
+		
+		//CAS PARTICULIER : GESTION MULTISITE
+		if(in_array('website_id', $this->shema)) { $sql .= " AND website_id = ".CURRENT_WEBSITE_ID; }
+		
+		$sql .= ";";
 		$this->primaryKey = $oldPrimaryKey;		
-		
 		//if(isset($this->searches_params)) { $this->delete_search_index($id); } //Suppression de l'index dans la recherche
-		
-		//return $this->db->query($sql);
 		return $this->query($sql);
 	}	
 	

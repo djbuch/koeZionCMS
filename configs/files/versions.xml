@@ -1,5 +1,16 @@
 ﻿<versions>
 	<version>
+		<name>Version du 24/12/2013</name>
+		<num>20131224.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Reprise gestion ajax pour insersion des boutons - VERSION BETA</task>
+			<task author="FI" type="code">Modification gestion suppression dans le model principal - VERSION BETA</task>
+			<task author="FI" type="bdd">Rajout d'une nouvelle colonne dans la table categories le type secondaire permettra de gérer des types de pages différents plus simplement.</task>
+			<task author="FI" type="bdd">Rajout de deux nouvelles colonnes dans la table categories : redirect_to et activate_link qui pourront permettre de rediriger vers une url donnée ou de ne pas activer le lien sur un menu.</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 23/12/2013</name>
 		<num>20131223.001</num>
 		<supervisor>KoéZionCMS</supervisor>

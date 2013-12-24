@@ -1,4 +1,20 @@
-﻿<versions>
+﻿<versions> 
+	<version>
+		<name>Version du 24/12/2013</name>
+		<num>20131224.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI">ALTER TABLE `categories` ADD `redirect_to` LONGTEXT NOT NULL AFTER `content` ,ADD `activate_link` INT NOT NULL AFTER `redirect_to` ;</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 24/12/2013</name>
+		<num>20131224.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI">ALTER TABLE `categories` ADD `secondary_type` INT NOT NULL AFTER `type` ;</task>
+		</tasks>	
+	</version>
 	<version>
 		<name>Version du 14/11/2013</name>
 		<num>20131114.001</num>
