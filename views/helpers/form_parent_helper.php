@@ -4,7 +4,7 @@
  *
  * @toto mutualiser la generation de l'id avec le helper html pour la mise en place de ckeditor
  */
-class FormHelper {
+class FormParentHelper extends Helper {
 
 /**
  * Variable contenant un entier qui servira à afficher des input radio associés ensembles
@@ -179,13 +179,24 @@ class FormHelper {
 		$inputNameText = $this->_set_input_name($name); //Mise en variable du name de l'input
 		$inputIdText = $this->_set_input_id($inputNameText); //Mise en variable de l'id de l'input
 
+		///////////////////////////////
+		//   Gestion des attributs   //
+		$attributes = ''; //Création de la variables qui va contenir les attributs, par défaut elle est vide
+		foreach($options as $k => $v) { //Parcours de l'ensemble des options
+
+			//On va éviter d'ajouter dans les attributs des valeurs non conforme
+			if(!in_array($k, $this->escapeAttributes)) { $attributes .= ' '.$k.'="'.$v.'"'; }
+		}
+		///////////////////////////////
+
 		//Cas particulier : le champ hidden
 		//--> lorsque l'on est sur un champ de type hidden on va renvoyer directement la valeur
 		if($options['type'] == 'hidden') { 
 		
 			return array(
 				'inputLabel' => '',
-				'inputElement' => '<input type="hidden" id="'.$inputIdText.'" name="'.$inputNameText.'" value="'.$value.'" />',
+				'inputElement' => '<input type="hidden" id="'.$inputIdText.'" name="'.$inputNameText.'" value="'.$value.'"'.$attributes.' />',
+				'inputValue' => $value,
 				'inputError' => '',
 				'inputOptions' => $options
 			);
@@ -204,16 +215,6 @@ class FormHelper {
 			$labelReturn .= $label.'</label>';
 		}
 		else { $labelReturn = ''; }
-
-		///////////////////////////////
-		//   Gestion des attributs   //
-		$attributes = ''; //Création de la variables qui va contenir les attributs, par défaut elle est vide
-		foreach($options as $k => $v) { //Parcours de l'ensemble des options
-
-			//On va éviter d'ajouter dans les attributs des valeurs non conforme
-			if(!in_array($k, $this->escapeAttributes)) { $attributes .= ' '.$k.'="'.$v.'"'; }
-		}
-		///////////////////////////////
 
 		//Génération du champ input
 		switch($options['type']) {
@@ -247,10 +248,10 @@ class FormHelper {
 			case 'radio':
 
 				$requestvalue = Set::classicExtract($this->view->controller->request->data, $name);//On récupère la valeur dans request
-				$checked = $value == $requestvalue ? ' checked="checked"' : '';//Si la valeur dans request est la même que celle passée en paramètre, alors l'input est sélectionné
+				$checked = $options['value'] == $requestvalue ? ' checked="checked"' : '';//Si la valeur dans request est la même que celle passée en paramètre, alors l'input est sélectionné
 
 				$inputIdText .= $this->radio_count;//On concatène l'identifiant pour qu'il soit correctement indiqué sur le label et l'input
-				$inputReturn .= '<input type="radio" id="'.$inputIdText.'" name="'.$inputNameText.'" value="'.$value.'"'.$checked.' '.$attributes.' />';
+				$inputReturn .= '<input type="radio" id="'.$inputIdText.'" name="'.$inputNameText.'" value="'.$options['value'].'"'.$checked.' '.$attributes.' />';
 
 				//Gestion du label de l'input
 				//On recrée le label afin d'être sûrs de l'identifiant de celui-ci
@@ -326,6 +327,7 @@ class FormHelper {
 		return array(
 			'inputLabel' => $labelReturn,
 			'inputElement' => $inputReturn,
+			'inputValue' => $value,
 			'inputError' => $errorLabel,
 			'inputOptions' => $options
 		);

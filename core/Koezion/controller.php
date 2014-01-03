@@ -53,6 +53,7 @@ class Controller extends Object {
  * @version 0.3 - 20/04/2012 by FI - Rajout dans les paramètres du nom de l'action
  * @version 0.4 - 07/09/2012 by FI - Chargement systématique du model
  * @version 0.5 - 20/10/2013 by AB - Rajout de la gestion du dossier du plugin
+ * @version 0.6 - 02/01/2014 by FI - Mise en place du chargement multiple pour les composants (Idéal pour les plugins par exemple)
  */
 	function __construct($request = null, $beforeFilter = true) {
 		
@@ -81,11 +82,13 @@ class Controller extends Object {
 		}
 				
 		//Chargement des composants
+		if(isset($this->more_components)) { $this->components = am($this->components, $this->more_components); }
 		foreach($this->components as $k => $v) {
 		
 			$this->load_component($v);
 			unset($this->components[$k]);
 		}
+		
 		///////////////////////
 		//GESTION DES PLUGINS//
 		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Plugins'.DS;

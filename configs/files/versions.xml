@@ -1,5 +1,16 @@
 ﻿<versions>
 	<version>
+		<name>Version du 03/01/2014</name>
+		<num>20140103.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise en place des objets component et helper - VERSION BETA</task>
+			<task author="FI" type="code">Restructuration des helpers et des composants - VERSION BETA</task>
+			<task author="FI" type="code">Rajout d'une librairie de gestion des cookies - VERSION BETA</task>
+			<task author="FI" type="code">Rajout du color picker pour le backoffice - VERSION BETA</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 24/12/2013</name>
 		<num>20131224.002</num>
 		<supervisor>KoéZionCMS</supervisor>

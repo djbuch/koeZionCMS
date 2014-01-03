@@ -162,21 +162,23 @@ $(document).ready(function() {
 	});
 	
 	// COLORPICKER
-	/*$('.color').ColorPicker({
-		color: '#0000ff',
-		onShow: function(colpkr) {
-			$(colpkr).fadeIn(500);
-			return false;
-		},
-		onHide: function(colpkr) {
-			$(colpkr).fadeOut(500);
-			return false;
-		},
-		onChange: function(hsb, hex, rgb) {
-			$('.color div span').css('backgroundColor', '#' + hex);
-			$('.color input').val('#' + hex);
-		}
-	});*/     
+	$(".color").livequery(function() { 
+		$(this).ColorPicker({
+			color: '#0000ff',
+			onShow: function(colpkr) {
+				$(colpkr).fadeIn(500);
+				return false;
+			},
+			onHide: function(colpkr) {
+				$(colpkr).fadeOut(500);
+				return false;
+			},
+			onChange: function(hsb, hex, rgb) {
+				$('.color div span').css('backgroundColor', '#' + hex);
+				$('.color input').val('#' + hex);
+			}
+		});   
+	});  
 	
 	// PROGRESSBAR
 	/*$(".progressbar-normal").each(function() {

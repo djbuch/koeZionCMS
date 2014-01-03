@@ -1,6 +1,6 @@
 <?php
 require_once(HELPERS.DS.'paginator_helper.php');
-class Paginator extends PaginatorHelper {
+class PaginatorHelper extends PaginatorHelper {
 	
 	function paginate($totalPages, $currentPage, $adjacent = 3) {
 		

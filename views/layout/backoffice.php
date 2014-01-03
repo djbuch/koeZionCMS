@@ -27,7 +27,7 @@
 			//'/backoffice/prettify', 		//Pour l'affichage du code source
 			//'/backoffice/elfinder', 		//Pour la gestion du module de gestion de fichiers
 			//'/backoffice/pirebox', 		//Pour la mise en place de zoom sur les images
-			//'/backoffice/colorpicker', 	//Pour la mise en place de zone de sélection de couleurs
+			'/backoffice/colorpicker', 	//Pour la mise en place de zone de sélection de couleurs
 			//'/backoffice/wizard',			//Pour la mise en place des tabs avec des boutons next, prev
 			'/backoffice/smart_tab',			//Pour la mise en place des smarttabs
 			'/backoffice/hook',
@@ -56,7 +56,7 @@
 			//'/backoffice/prettify', 					//Pour l'affichage du code source
 			//'/backoffice/elfinder.min', 				//Pour la gestion du module de gestion de fichiers
 			//'/backoffice/jquery.jgrowl', 				//Pour l'affichage de message de notification 
-			//'/backoffice/colorpicker', 				//Pour la mise en place de zone de sélection de couleurs
+			'/backoffice/colorpicker', 				//Pour la mise en place de zone de sélection de couleurs
 			'/backoffice/jquery.tipsy', 					//Pour la mise en place des tooltips
 			//'/backoffice/fullcalendar.min', 			//Pour la gestion d'un calendrier
 			//'/backoffice/pirobox.extended.min', 		//Pour la mise en place de zoom sur les images

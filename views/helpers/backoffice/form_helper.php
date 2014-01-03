@@ -1,6 +1,6 @@
 <?php
-require_once(HELPERS.DS.'form_helper.php');
-class Form extends FormHelper {
+require_once(HELPERS.DS.'form_parent_helper.php');
+class FormHelper extends FormParentHelper {
 
 /**
  * Cette fonction va créer le formulaire avec les options indiquées
@@ -276,22 +276,27 @@ class Form extends FormHelper {
 		
 		//====================    PARAMETRAGES    ====================//
 
-		$escapeAttributes = array('div', 'divright', 'fulllabelerror');
+		$escapeAttributes = array('div', 'divright', 'fulllabelerror', 'colorpicker');
 		$this->escapeAttributes = am($escapeAttributes, $this->escapeAttributes);		
 		
 		//Liste des options par défaut
 		$defaultOptions = array(
 			'div' => true,
 			'divright' => true,
-			'fulllabelerror' => false
+			'fulllabelerror' => false,
+			'colorpicker' => false
 		);
 		$options = array_merge($defaultOptions, $options); //Génération du tableau d'options utilisé dans la fonction
 		
 		$inputDatas = parent::input($name, $label, $options); //Appel fonction parente
 				
 		//====================    	TRAITEMENTS DES DONNEES    ====================//	
-		
-		if($inputDatas['inputOptions']['type'] == 'hidden') { return $inputDatas['inputElement']; } //Cas du champ caché
+
+		//Cas du champ caché
+		if($inputDatas['inputOptions']['type'] == 'hidden') { return $inputDatas['inputElement']; } 		
+
+		//Cas du color picker
+		if($inputDatas['inputOptions']['colorpicker']) { $inputDatas['inputElement'] = '<div class="color"><div><span style="background-color: '.$inputDatas['inputValue'].'"></span></div>'.$inputDatas['inputElement'].'</div></div>'; }		
 				
 		$classError = '';
 		if(!empty($inputDatas['inputError'])) { $classError = ' error'; }

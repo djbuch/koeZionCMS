@@ -18,9 +18,6 @@
  * @version		0.1
  */
 //$debut = microtime(true);
-define('GENERATOR_META', 'koéZion CMS - CMS OPENSOURCE PHP');
-define('GENERATOR_LINK', '<p id="powered_by" style="position:absolute;width:20px;bottom:5px;right:5px;font-size:8px;margin-bottom:0;height:20px;opacity:.5"><a href="http://www.koezion-cms.com" title="koéZionCMS - CMS opensource PHP" style="width:20px;height:20px;text-indent:-9999px;display:block;background: url(./img/logo_koezion_mini.png) no-repeat top right transparent;">propulsé par koéZionCMS - CMS opensource PHP</a></p>');
-
 define('DS', DIRECTORY_SEPARATOR); //Définition du séparateur dans le cas ou l'on est sur windows ou linux
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -87,6 +84,9 @@ foreach($urlPath as $k => $v) {
 }
 define('BASE_URL', $baseUrl); //Chemin relatif vers le coeur de l'application
 /////////////////////////////////////////////////////////
+
+define('GENERATOR_META', 'koéZion CMS - CMS OPENSOURCE PHP');
+define('GENERATOR_LINK', '<p id="powered_by" style="position:absolute;width:20px;bottom:5px;right:5px;font-size:8px;margin-bottom:0;height:20px;opacity:.5"><a href="http://www.koezion-cms.com" title="koéZionCMS - CMS opensource PHP" style="width:20px;height:20px;text-indent:-9999px;display:block;background: url('.BASE_URL.'/img/logo_koezion_mini.png) no-repeat top right transparent;">propulsé par koéZionCMS - CMS opensource PHP</a></p>');
 
 require_once KOEZION.DS.'bootstrap.php'; //Premier fichier lancé par l'application
 

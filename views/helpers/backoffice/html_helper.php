@@ -1,5 +1,5 @@
 <?php
-require_once(HELPERS.DS.'html_helper.php');
+require_once(HELPERS.DS.'html_parent_helper.php');
 
 $aclsHelper = PLUGINS.DS.'acls'.DS.'views'.DS.'helpers'.DS.'acls'.DS.'html.php';
 if(file_exists($aclsHelper)) { require_once($aclsHelper); } 
@@ -8,7 +8,7 @@ else {
 	/**
 	 * @todo mutualiser la generation de lid pour ckeditor avec le helper form
 	 */
-	class Html extends HtmlHelper {
+	class HtmlHelper extends HtmlParentHelper {
 		
 	/**
 	 * Cette fonction est utilisée pour générer les boutons titres du backoffice

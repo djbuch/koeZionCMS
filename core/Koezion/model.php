@@ -143,43 +143,53 @@ class Model extends Object {
  * 	- order (optionnel) : cet index est une chaine de caractères et permet lorsqu'il est renseigné d'effectuer un tri sur les éléments retournés.
  * 	- limit (optionnel) : cet index est un entier et permet lorsqu'il est renseigné de limiter le nombre de résultats retournés.
  *  - allLocales (optionnel) : cet index est un booléen qui permet lors de la récupération d'un élément d'indiquer si il faut ou non récupérer l'ensemble des champs traduits
- *  - innerJoin (optionnel) : cet index permet d'effectuer une instruction "INNER JOIN" dans une requête, il contient un tableau qui doit lui-même contenir les index 'table' et 'pivot'. 
- *    L'index 'table' contient le nom de la table sur laquelle on va effectuer la recherche, et l'index 'pivot' contient la comparaison entre les deux tables. 
- *    L'utilisation de l'index 'fields' est obligatoire pour déterminer les éléments à récupérer dans les multiples tables.
+ *  - innerJoin, leftJoin, rightJoin (optionnel) : cet index permet d'effectuer une instruction "INNER|LEFT|RIGHT JOIN" dans une requête, il contient un tableau qui doit lui-même contenir les index model et pivot. 
+ *    L'index model contient le nom du model (et donc de la table) sur lequel on va effectuer la recherche.
+ *    L'index pivot contient le point de comparaison entre les deux tables. 
+ *    L'utilisation de l'index 'fields' est obligatoire pour déterminer les éléments à récupérer dans les différentes tables.
  * 		
- * 	  Exemple d'utilisation : On récupère des données à partir d'une table d'association. On souhaite également récupérer l'attribut "name" des éléments entrés dans cette table. 
- *    Mais vu que la table d'association ne contient que l'id, on va effectuer un "INNER JOIN" sur la table d'origine pour récupérer l'attribut "name" dans celle-ci.
+ * 	  Exemple d'utilisation : Une table produit liée à plusieurs tables comme par exemple un fournisseur et une marque.
+ * 	  On souhaite récupérer le champ name du fournisseur ainsi que le champ name de la marque.
  * 		
  *    Voici un exemple de code php :
- *    
- * 			$datas = $this->AssociationModel->find(array(									#On effectue l'action dans le modèle de la table d'association
- * 				'fields' => array(' AssociationModel.* ', ' `original_table`.name '),		#On définit les tables dans lesquelles on va chercher les données, ainsi que les champs (le champ 'name' en l'occurrence)
- * 				'innerJoin' => array(
- * 					'table' => ' `original_table` ',										#Dans le champ "table" on entre le nom de la table d'origine dans laquelle se trouve l'attribut "name" que l'on cherche
- * 					'pivot' => ' AssociationModel.`original_id` = `original_table`.`id` '	#Ceci est notre point de pivot : on compare l'id dans la table d'association avec l'id dans la table originale, afin de récupérer les bons éléments
- * 				)
- * 			));
- *	  Celui-ci ne concerne qu'une seule table et donc un seul "INNER JOIN", mais on peut récupérer également des infos sur plusieurs tables.
- * 	  Exemple concret : Notre table d'association contient l'id d'un livre et l'id d'un catalogue dans lequel ce livre est contenu. Un livre peut donc être dans plusieurs catalogues.
- * 	  Voici un exemple de code php qui va exécuter une requête qui va récupérer le nom du livre et le nom du catalogue, le tout à partir de la table d'association
- * 
- * 			$datas = $this->AssociationCataloguesLivres->find(array(								#On effectue l'action dans le modèle de la table d'association
- * 				'fields' => array(
- * 					' AssociationCataloguesLivres.* ', 
- * 					' table_livres.name as livre_name ', 
- * 					' table_catalogues.name as catalogue_name '
- * 				),																					#On définit les tables dans lesquelles on va chercher les données, ainsi que les champs (le champ 'name' en l'occurrence) et on met un alias pour que PHP trie correctement le tableau
- *				'innerJoin' => array(
- *					array(
- *						'table' => ' table_livres ',												#Nom de la table des livres
- *						'pivot' => ' AssociationCataloguesLivres.livre_id = table_livres.id '		#Point de pivot pour la table des livres
- *					),
- *					array(
- *						'table' => ' table_catalogues ',											#Nom de la table des catalogues
- *						'pivot' => ' AssociationCataloguesLivres.livre_id = table_catalogues.id '	#Point de pivot pour la table des catalogues
- *					),
+ * 		
+ *		$this->loadModel("Product");		
+ *		$product = $this->Product->findFirst(array(
+ *			"conditions" => array("id" => $productId),
+ *			"fields" => am($this->Product->shema, array("supplier_name" => "KzSupplier.name")),
+ *			"leftJoin" => array(
+ *				"model" => "Supplier",
+ *				"pivot" => "KzProduct.supplier_id = KzSupplier.id"				
+ *			)
+ *		));
+ *
+ *	  Cet exemple ne concerne qu'une seule table, mais il est possible de cumuler les joins.
+ * 		
+ *		$this->loadModel("Product");		
+ *		$product = $this->Product->findFirst(array(
+ *			"conditions" => array("id" => $productId),
+ *			"fields" => am(
+ *				$this->Product->shema, 
+ *				array( 
+ *					"supplier_name" => "KzSupplier.name"
+ *				), 
+ *				array( 
+ *					"products_mark_name" => "KzProductsMark.name"
  *				)
- *			));
+ *			),
+ *			"leftJoin" => array( 
+ *				array(
+ *					"model" => "Supplier",
+ *					"pivot" => "KzProduct.supplier_id = KzSupplier.id"				
+ *				),					
+ *				array(
+ *					"model" => "ProductsMark",
+ *					"pivot" => "KzProduct.products_mark_id = KzProductsMark.id"
+ *				)
+ *			)
+ *		));
+ *
+ *	  Ce principe de fonctionnement est identique pour les INNER et le RIGHT JOIN
  * 
  * @param 	array 	$req 	Tableau de conditions et paramétrages de la requete
  * @param 	object 	$type 	Indique le type de retour de PDO dans notre cas un tableau dont les index sont les colonnes de la table
@@ -187,8 +197,7 @@ class Model extends Object {
  * @version 0.1 - 28/12/2011 by FI
  * @version 0.2 - 02/05/2012 by FI - Mise en place de la conditions de récupérations selon l'identifiant du site
  * @version 0.3 - 30/05/2012 by FI - Modification de la génération de la condition de recherche pour intégrer l'utilisation de tableau de condition sans index particulier ==> $condition = array('conditions' => array("name LIKE '%...%'"));
- * @version 0.4 - 17/12/2013 by FI - Correction bug sur la gestiond des conditions de recherche (test sur le contenu des données)
- * @version 0.5 - 23/12/2013 by FI - Mise en place de la possibilité de passer un tableau de données pour les valeurs de recherche par exemple array('conditions' => array('id' => array(1,5,7)))
+ * @version 0.4 - 02/01/2014 by FI - Reprise de la gestion des INNER|LEFT|RIGHT JOIN
  */    
 	public function find($req = array(), $type = PDO::FETCH_ASSOC) {
 		
@@ -196,20 +205,81 @@ class Model extends Object {
 		$sql = 'SELECT '; //Requete sql
         
 		///////////////////////
-		//   CHAMPS FIELDS   //		
-		if(!isset($req['fields'])) {
+		//   CHAMPS FIELDS   //					
+		//Si aucun champ n'est demandé on va récupérer le shéma de la table et récupérer ces champs
+		//Dans le cas de table traduite on va également récupérer les champs traduits ainsi que la langue associée
+		if(!isset($req['fields'])) { $fields = $shema; } 
+		else { $fields = $req['fields']; }		
+		$sql .= $this->_get_fields($fields);
+		
+		$sql .= "\n".'FROM `'.$this->table.'` AS '.$this->alias.' ';
+		
+		///////////////////////////
+		//   CHAMPS LEFT JOIN   //
+		if(isset($req['leftJoin']) && !empty($req['leftJoin'])) {
 			
-			//Si aucun champ n'est demandé on va récupérer le shéma de la table et récupérer ces champs
-			//Dans le cas de table traduite on va également récupérer les champs traduits ainsi que la langue associée
-			$req['fields'] = $shema;
-		}	
+			if (!is_array($req['leftJoin'])) { $sql .= "\n".$req['leftJoin']; } //On ajoute à la requête s'il s'agit d'une chaîne 
+			else {
+				
+				if(isset($req['leftJoin'][0])) { //Si l'on a un tableau à index numérique, on peut avoir plusieurs join à la suite et sur plusieurs tables
+					
+					foreach ($req['leftJoin'] as $v) {
+						
+						$joinModel = $this->loadModel($v['model'], true);
+						$sql .= "\n".'LEFT JOIN '.$joinModel->table.' AS '.$joinModel->alias.' ON '.$v['pivot'].' '; //On ajoute à la requête
+					}					
+				} else { //Sinon, on n'a qu'un seul join
+					
+					$joinModel = $this->loadModel($req['leftJoin']['model'], true);
+					$sql .= "\n".'LEFT JOIN '.$joinModel->table.' AS '.$joinModel->alias.' ON '.$req['leftJoin']['pivot'].' '; //On ajoute à la requête					
+				}
+			}
+		}
 		
-		if(is_array($req['fields'])) { $sql .= '`'.implode('`, `', $req['fields']).'`'; } //Si il s'agit d'un tableau		
-		else { $sql .= $req['fields']; } //Si il s'agit d'une chaine de caractères 
+		///////////////////////////
+		//   CHAMPS RIGHT JOIN   //
+		if(isset($req['rightJoin']) && !empty($req['rightJoin'])) {
+			
+			if (!is_array($req['rightJoin'])) { $sql .= "\n".$req['rightJoin']; } //On ajoute à la requête s'il s'agit d'une chaîne 
+			else {
+				
+				if(isset($req['rightJoin'][0])) { //Si l'on a un tableau à index numérique, on peut avoir plusieurs join à la suite et sur plusieurs tables
+					
+					foreach ($req['rightJoin'] as $v) {
+						
+						$joinModel = $this->loadModel($v['model'], true);
+						$sql .= "\n".'RIGHT JOIN '.$joinModel->table.' AS '.$joinModel->alias.' ON '.$v['pivot'].' '; //On ajoute à la requête
+					}					
+				} else { //Sinon, on n'a qu'un seul join
+					
+					$joinModel = $this->loadModel($req['rightJoin']['model'], true);
+					$sql .= "\n".'RIGHT JOIN '.$joinModel->table.' AS '.$joinModel->alias.' ON '.$req['rightJoin']['pivot'].' '; //On ajoute à la requête					
+				}
+			}
+		}
 		
-		//$sql .= ' FROM '.$this->table.' AS '.get_class($this).' '; //Mise en place du from//Mise en place du from
-		$sql .= ' FROM `'.$this->table.'` AS '.$this->alias.' ';		
-		//if(get_class($this) != 'Order') { $sql .= 'AS '.get_class($this).' '; } //Hack spécial si on a un model Order
+		///////////////////////////
+		//   CHAMPS INNER JOIN   //
+		if(isset($req['innerJoin']) && !empty($req['innerJoin'])) {
+			
+			if (!is_array($req['innerJoin'])) { $sql .= "\n".$req['innerJoin']; } //On ajoute à la requête s'il s'agit d'une chaîne 
+			else {
+				
+				if(isset($req['innerJoin'][0])) {//Si l'on a un tableau à index numérique, on peut avoir plusieurs "join" à la suite et sur plusieurs tables
+					
+					foreach ($req['innerJoin'] as $k => $v) {
+
+						$joinModel = $this->loadModel($v['model'], true);
+						$sql .= "\n".'INNER JOIN '.$joinModel->table.' AS '.$joinModel->alias.' ON '.$v['pivot'].' ';//On ajoute à la requête
+					}
+					
+				} else { //Sinon, on n'a qu'un seul "join"
+					
+					$joinModel = $this->loadModel($req['innerJoin']['model'], true);
+					$sql .= "\n".'INNER JOIN '.$joinModel->table.' AS '.$joinModel->alias.' ON '.$req['innerJoin']['pivot'].' ';//On ajoute à la requête
+				}
+			}
+		}
 
 		///////////////////////////////////////////////////////////
 		//   CONDITIONS DE RECHERCHE SUR L'IDENTIFIANT DU SITE   //
@@ -226,22 +296,6 @@ class Model extends Object {
 			}			
 		}
 		///////////////////////////////////////////////////////////
-		
-		///////////////////////////
-		//   CHAMPS INNER JOIN   //
-		if(isset($req['innerJoin']) && !empty($req['innerJoin'])) {
-			if (!is_array($req['innerJoin'])) {
-				$sql .= $req['innerJoin'].' ';//On ajoute à la requête s'il s'agit d'une chaîne
-			} else {
-				if (isset($req['innerJoin'][0])) {//Si l'on a un tableau à index numérique, on peut avoir plusieurs "join" à la suite et sur plusieurs tables
-					foreach ($req['innerJoin'] as $k => $v) {
-						$sql .= ' INNER JOIN '.$v['table'].' ON '.$v['pivot'].' ';//On ajoute à la requête
-					}
-				} else {//Sinon, on n'a qu'un seul "join"
-					$sql .= ' INNER JOIN '.$req['innerJoin']['table'].' ON '.$req['innerJoin']['pivot'].' ';//On ajoute à la requête
-				}
-			}
-		}
 		
 		///////////////////////////
 		//   CHAMPS CONDITIONS   //
@@ -265,7 +319,7 @@ class Model extends Object {
 						
 						//On va ensuite tester si la clé est une chaine de caractère
 						//On rajoute le nom de la classe devant le nom de la colonne
-						if(is_string($k)) { 
+						if(is_string($k)) {
 	
 							//On va échaper les caractères spéciaux
 							//Equivalement de mysql_real_escape_string --> $v = '"'.mysql_escape_string($v).'"';
@@ -281,80 +335,31 @@ class Model extends Object {
 					}
 				}
 				
-				if(!empty($cond)) { $conditions .= implode(' AND ', $cond); }
+				if(!empty($cond)) { $conditions .= implode("\n".'AND ', $cond); }
 			}
 			
-			if(!empty($conditions)) { $sql .= 'WHERE '.$conditions; } //On rajoute les conditions à la requête
+			if(!empty($conditions)) { $sql .= "\n".'WHERE '.$conditions; } //On rajoute les conditions à la requête
 		}
 		
 		////////////////////////////////
 		//   CHAMPS MORE CONDITIONS   //
 		if(isset($req['moreConditions']) && !empty($req['moreConditions'])) { 
 			
-			if(isset($conditions) && !empty($conditions)) { $sql .= ' AND '; } else { $sql .= ' WHERE '; }			
+			if(isset($conditions) && !empty($conditions)) { $sql .= "\n".'AND '; } else { $sql .= "\n".'WHERE '; }			
 			$sql .= $req['moreConditions']; 
 		}
-		
-		/*
-		///////////////////////////
-		//   CHAMPS CONDITIONS   //
-		if(isset($req['conditions'])) { //Si on a des conditions
-			
-			$conditions = 'WHERE ';	//Mise en variable des conditions	
-			
-			//On teste si conditions est un tableau
-			//Sinon on est dans le cas d'une requête personnalisée
-			if(!is_array($req['conditions'])) {
-                
-				$conditions .= $req['conditions']; //On les ajoute à la requete
-			
-			//Si c'est un tableau on va rajouter les valeurs
-			} else {
-				
-				$cond = array();
-				foreach($req['conditions'] as $k => $v) {					
-					
-					
-					
-					//On va ensuite tester si la clé est une chaine de caractère
-					//On rajoute le nom de la classe devant le nom de la colonne
-					if(is_string($k)) { 
-
-						//On va échaper les caractères spéciaux
-						//Equivalement de mysql_real_escape_string --> $v = '"'.mysql_escape_string($v).'"';
-						if(!is_numeric($v)) { $v = $this->db->quote($v); }
-						
-						$k = $this->alias.".".$k;
-						$cond[] = "$k=$v";
-						
-					} 
-					else { $cond[] = $v; } //Sinon on rajoute directement la condition dans le tableau
-				}
-				$conditions .= implode(' AND ', $cond);
-			}
-			
-			$sql .= $conditions; //On rajoute les conditions à la requête
-		}
-		
-		////////////////////////////////
-		//   CHAMPS MORE CONDITIONS   //
-		if(isset($req['moreConditions']) && !empty($req['moreConditions'])) { 
-			
-			if(isset($req['conditions'])) { $sql .= ' AND '; } else { $sql .= ' WHERE '; }			
-			$sql .= $req['moreConditions']; 
-		}*/
 		
 		//////////////////////
 		//   CHAMPS GROUP BY   //
-		if(isset($req['groupBy'])) { $sql .= ' '.$req['groupBy']; }
+		if(isset($req['groupBy'])) { $sql .= "\n".$req['groupBy']; }
 		
 		//////////////////////
 		//   CHAMPS ORDER   //
-		if(isset($req['order'])) { $sql .= ' ORDER BY '.$req['order']; }
+		if(isset($req['order'])) { $sql .= "\n".'ORDER BY '.$req['order']; }
 		
 		//////////////////////
 		//   CHAMPS LIMIT   //
-		if(isset($req['limit'])) { $sql .= ' LIMIT '.$req['limit']; }
+		if(isset($req['limit'])) { $sql .= "\n".'LIMIT '.$req['limit']; }
 		
 		//if($this->trace_sql) { pr($sql); }
 		
@@ -1022,6 +1027,35 @@ class Model extends Object {
 		return array_merge($datasToSave, $moreDatasToSave);		
 	}	
 	
+/**
+ * Cette fonction permet la génération des champs à récupérer
+ * 
+ * @param 	array	$fields 			Liste des champs
+ * @return	varchar	Chaine de caractères contenant les champs à récupérer
+ * @access	private
+ * @author	koéZionCMS
+ * @version 0.1 - 02/01/2014 by FI
+ */		
+	protected function _get_fields($fields) {
+		
+		$sql = '';
+		if(is_array($fields)) { //Si il s'agit d'un tableau
+			
+			foreach($fields as $k => $field) {
+				
+				$field = explode('.', $field);
+				if(!is_int($k)) { $fieldAlias = " AS ".$k; } else { $fieldAlias = ''; } //Si la clé n'est pas numérique c'est qu'elle sert d'alias
+				if(count($field) == 1) { $fields[$k] = '`'.$this->alias.'`.`'.$field[0].'`'.$fieldAlias; }
+				else if(count($field) == 2) { $fields[$k] = '`'.$field[0].'`.`'.$field[1].'`'.$fieldAlias; }
+			}
+			
+			$sql .= "\n".implode(', '."\n", $fields); 
+		} 		
+		else { $sql .= "\n".$fields; } //Si il s'agit d'une chaine de caractères 
+		
+		return $sql;
+	}
+	
 	protected function _trace_sql($function, $query) {
 			
 		require_once(LIBS.DS.'config_magik.php');
@@ -1032,15 +1066,16 @@ class Model extends Object {
 			
 			$date = date('Y-m-d');
 			$traceSql = 
-				date('Y-m-d H:i:s').
-				"|#|".
-				get_class($this).
-				"|#|".
-				$this->refererUrl.
-				"|#|".
-				$function.
-				"|#|".
-				$query.
+				"========================================"."\n".
+				"Date : ".date('Y-m-d H:i:s').
+				"\n".
+				"Class : ".get_class($this).
+				"\n".
+				"Referer : ".$this->refererUrl.
+				"\n".
+				"Fonction : ".$function.
+				"\n".
+				"Query : "."\n".$query.
 				"\n";
 			
 			FileAndDir::put(TMP.DS.'logs'.DS.'models'.DS.$date.'.log', $traceSql, FILE_APPEND);

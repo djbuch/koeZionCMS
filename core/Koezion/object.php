@@ -79,7 +79,17 @@ class Object {
 		if(isset($this->$name)) { unset($this->$name); }
 	}
 	
-	function load_component($component, $path = null) {		
+	function load_component($component, $path = null) {	
+
+		//Test pour vérifier si le composant à charder n'est pas celui d'un plugin
+		//Si c'est le cas $component sera du type : 'P/ecommerce/Cart'
+		$startChars = substr($component, 0, 2);
+		if($startChars == 'P/') {
+			
+			$component = explode('/', $component);
+			$path = PLUGINS.DS.$component[1].DS.'controllers'.DS.'components';
+			$component = $component[2];
+		}
 		
 		$componentFileName = Inflector::underscore($component); //Nom du fichier
 		$componentObjectName = $component.'Component'; //Nom du fichier

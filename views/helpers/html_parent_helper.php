@@ -2,7 +2,7 @@
 /**
  * @todo mutualiser la generation de lid pour ckeditor avec le helper form
  */
-class HtmlHelper {
+class HtmlParentHelper extends Helper {
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //										VARIABLES										//
@@ -71,6 +71,7 @@ class HtmlHelper {
  *
  * @param varchar $css		Chemin du fichier CSS à charger
  * @param boolean $inline 	Permet d'indiquer si il faut charger directement le css ou pas
+ * @param boolean $merge 	Si vrai le tableau en paramètre de la fonction et celui de la classe seront "mergés"
  * @param boolean $minified	Permet d'indiquer à la fonction si il faut ou non compresser les CSS
  * @return varchar Balises html permettant l'insertion des CSS
  * @access 	public
@@ -79,13 +80,20 @@ class HtmlHelper {
  * @version 0.2 - 03/06/2013 by TB : dossier "/templates/" par défaut ou "/css" si la chaîne commence par "/"
  * @version 0.3 - 16/10/2013 by FI : gestion des css pour les plugins
  * @version 0.4 - 11/12/2013 by FI : Suppression de la variable $plugin
+ * @version 0.5 - 27/12/2013 by FI : Correction d'un bug lors du chargement en inline
+ * @version 0.6 - 27/12/2013 by FI : Mise en place la possibilité de charger directement un fichier
  */	
-	public function css($css, $inline = false, $minified = false) {	
+	public function css($css, $inline = false, $merge = true, $minified = false) {	
 		
 		if($inline) { $this->css = am($this->css, $css); } //Si on ne doit pas charger directement le fichier on le stocke dans la variable de classe
 		else {
 		
-			$css = am($css, $this->css); //On récupère les les éventuels CSS qui sont dans la variable de classe			
+			if($merge) {
+				
+				$css = am($css, $this->css); //On récupère les les éventuels CSS qui sont dans la variable de classe
+				$this->css = array(); //On vide le tableau dans le cas ou d'autres insertions seraient prévues
+			}
+			
 			$html = ''; //Code HTML qui sera retourné
 			foreach($css as $v) { //Parcours de l'ensemble des fichiers
 
@@ -140,6 +148,7 @@ class HtmlHelper {
  *
  * @param varchar $js		Chemin du fichier JS à charger
  * @param boolean $inline 	Permet d'indiquer si il faut charger directement le js ou pas
+ * @param boolean $merge 	Si vrai le tableau en paramètre de la fonction et celui de la classe seront "mergés"
  * @param boolean $minified	Permet d'indiquer à la fonction si il faut ou non compresser les JS
  * @return varchar Balises html permettant l'insertion des JS
  * @access 	public
@@ -148,16 +157,23 @@ class HtmlHelper {
  * @version 0.2 - 03/06/2013 by TB : dossier "/templates" par défaut ou "/js" si la chaîne commence par "/"
  * @version 0.3 - 16/10/2013 by FI : gestion des js pour les plugins
  * @version 0.4 - 11/12/2013 by FI : Suppression de la variable $plugin
+ * @version 0.5 - 27/12/2013 by FI : Correction d'un bug lors du chargement en inline
+ * @version 0.6 - 27/12/2013 by FI : Mise en place la possibilité de charger directement un fichier
  */	
-	public function js($js, $inline = false, $minified = false) {
+	public function js($js, $inline = false, $merge = true, $minified = false) {
 		
 		if($inline) { $this->js = am($this->js, $js); } //Si on ne doit pas charger directement le fichier on le stocke dans la variable de classe
 		else {
 		
-			$js = am($js, $this->js); //On récupère les les éventuels JS qui sont dans la variable de classe
+			if($merge) {
+				
+				$js = am($js, $this->js); //On récupère les les éventuels JS qui sont dans la variable de classe
+				$this->js = array(); //On vide le tableau dans le cas ou d'autres insertions seraient prévues
+			}
+			
 			$html = ''; //Code HTML qui sera retourné
 			foreach($js as $v) { //Parcours de l'ensemble des fichiers
-
+				
 				//On va vérifier si le js n'est pas externe
 				if(substr_count($v, 'http://')) { $jsPath = $v; }
 				else {

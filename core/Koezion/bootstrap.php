@@ -24,6 +24,8 @@ require_once KOEZION.DS.'object.php'; //Classe Object
 require_once KOEZION.DS.'model.php'; //Classe Model
 require_once KOEZION.DS.'view.php'; //Classe View
 require_once KOEZION.DS.'controller.php'; //Classe Controller
+require_once KOEZION.DS.'component.php'; //Classe Component
+require_once KOEZION.DS.'helper.php'; //Classe Helper
 
 require_once KOEZION.DS.'cache.php'; //
 require_once KOEZION.DS.'basics.php'; //Fichier contenant un certains nombres d'instructions utiles (debug, pr, etc)

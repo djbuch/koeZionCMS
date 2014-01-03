@@ -1,5 +1,5 @@
 <?php
-class Nav {
+class NavHelper extends Helper {
 	
 /**
  * Cette fonction est utilisée pour générer le menu frontoffice

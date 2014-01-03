@@ -1,6 +1,6 @@
 <?php
-require_once(HELPERS.DS.'form_helper.php');
-class Form extends FormHelper {
+require_once(HELPERS.DS.'form_parent_helper.php');
+class FormHelper extends FormParentHelper {
 	
 /**
  * 

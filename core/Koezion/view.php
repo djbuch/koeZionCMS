@@ -49,9 +49,10 @@ class View extends Object {
 			foreach($this->helpers as $k => $v) {
 	
 				$helper = low($v);
-				require_once HELPERS.DS.$helper.'.php';
+				require_once HELPERS.DS.$helper.'_helper.php';
 				unset($this->helpers[$k]);
-				$this->vars['helpers'][$v] = new $v($this);
+				$helperObjectName = $v.'Helper';	
+				$this->vars['helpers'][$v] = new $helperObjectName($this);
 			}
 		}
 		
@@ -64,10 +65,11 @@ class View extends Object {
 			foreach(FileAndDir::directoryContent($moreHelpers) as $moreHelper) {
 		
 				require_once($moreHelpers.DS.$moreHelper);
-				$helperClass = Inflector::camelize(str_replace('.php', '', $moreHelper));
-				$this->vars['helpers'][$helperClass] = new $helperClass($this);
+				$helperClass = Inflector::camelize(str_replace('_helper.php', '', $moreHelper));
+				$helperObjectName = $helperClass.'Helper';				
+				$this->vars['helpers'][$helperClass] = new $helperObjectName($this);
 			}
-		}	
+		}		
 		
 		$this->rendered = false;		
     }    

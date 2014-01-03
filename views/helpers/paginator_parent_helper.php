@@ -1,5 +1,5 @@
 <?php
-class PaginatorHelper {
+class PaginatorParentHelper extends Helper {
 		
 /**
  * function paginate
