@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 03/01/2014</name>
+		<num>20140103.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Correction d'une erreur sur l'insertion des helpers du backoffice - VERSION BETA</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 03/01/2014</name>
 		<num>20140103.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
