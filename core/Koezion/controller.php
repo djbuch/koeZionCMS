@@ -31,6 +31,7 @@ class Controller extends Object {
 	public $auto_load_model = true;
 	public $auto_render = true;
 	public $modelName = '';
+	var $moreModels = false;
 	
 	var $components = array(
 		'Email',
@@ -53,7 +54,7 @@ class Controller extends Object {
  * @version 0.3 - 20/04/2012 by FI - Rajout dans les paramètres du nom de l'action
  * @version 0.4 - 07/09/2012 by FI - Chargement systématique du model
  * @version 0.5 - 20/10/2013 by AB - Rajout de la gestion du dossier du plugin
- * @version 0.6 - 02/01/2014 by FI - Mise en place du chargement multiple pour les composants (Idéal pour les plugins par exemple)
+ * @version 0.6 - 04/01/2014 by FI - Mise en place du système de chargement des models supplémentaires
  */
 	function __construct($request = null, $beforeFilter = true) {
 		
@@ -62,12 +63,13 @@ class Controller extends Object {
 		
 		$controllerName = str_replace('PluginController', '', get_class($this)); //Nom du contrôleur
 		$controllerName = str_replace('Controller', '', $controllerName); //Nom du contrôleur
-		
+				
+		//    CHARGEMENT DU MODEL COURANT AINSI QUE DES EVENTUELS MODELS SUPPLEMENTAIRES    //
 		$modelName = Inflector::singularize($controllerName); //Création du nom du model		
-		
-		//$this->loadModel($modelName);		
 		if($this->auto_load_model) { $this->loadModel($modelName); } //Si la variable de chargement automatique du model est à vrai chargement du model
-		//else { $this->$modelName = new ModelStd(); }		
+		if($this->moreModels) { 
+			foreach($this->moreModels as $modelToLoad) { $this->loadModel($modelToLoad); }
+		}	
 		
 		$this->params['modelName'] = $modelName; //Affectation du nom du model		
 		$this->params['controllerName'] = $controllerName; //Affectation du nom de la classe
