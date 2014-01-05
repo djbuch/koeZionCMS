@@ -82,6 +82,7 @@ class View extends Object {
  * @author	koéZionCMS
  * @version 0.1 - 13/06/2012 by FI
  * @version 0.2 - 24/09/2012 by FI - Rajout du boolean $inViewsFolder pour indiquer si le dossier de stockage de la vue est dans views
+ * @version 0.3 - 05/01/2014 by FI - Mise en place de la récupération des vues plugins directement dans les dossiers des templates de façon automatique
  * @todo IMPORTANT essayer de voir pourquoi si on retire le file_exists($view) la fonction export du plugin formulaire ne marche plus!!!
  * @todo Essayer d'améliorer l'ajout de websitebaseurl dans le template car il est inséré juste après la récupération de la vue --> supprimé le 25/06/2013 rajouté directement dans le template
  */    
@@ -127,7 +128,12 @@ class View extends Object {
 	    	if(isset($pluginsList[$potentialPluginControllerName]) && $inViewsFolder) {
 	    		
 	    		$pluginInfos = $pluginsList[$potentialPluginControllerName];    		    		
-	    		$view = PLUGINS.DS.$pluginInfos['code'].DS.'views'.DS.$params['controllerFileName'].DS.$this->view.'.php';
+	    		
+				//$view = PLUGINS.DS.$pluginInfos['code'].DS.'views'.DS.$params['controllerFileName'].DS.$this->view.'.php'; //Ancienne versiong    		
+	    		//Si la variable existe (Elle n'existe que pour le front)
+	    		//Redéfinition du chemin des vues en fonction du template
+	    		if(isset($this->vars['websiteParams'])) {  $view = $alternativeView; } //Le travail est déjà fait plus haut
+	    		else { $view = PLUGINS.DS.$pluginInfos['code'].DS.'views'.DS.$params['controllerFileName'].DS.$this->view.'.php'; }
 	    	}	 
     	}
     	
