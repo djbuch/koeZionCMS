@@ -45,7 +45,7 @@ class Model extends Object {
 		require_once(LIBS.DS.'config_magik.php'); //Import de la librairie de gestion des fichiers de configuration 
 		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'database.ini', true, true); //Création d'une instance
 		$conf = $cfg->keys_values($section); //Récupération des configurations en fonction du nom de domaine (Ancienne version : $conf = $cfg->keys_values($_SERVER["HTTP_HOST"], 1);)
-		$conf['source'] = "mysql";
+		//$conf['source'] = "mysql"}
 		
 		//Si le nom de la table n'est pas défini on va l'initialiser automatiquement
 		//Par convention le nom de la table sera le nom de la classe en minuscule avec un s à la fin
@@ -69,10 +69,15 @@ class Model extends Object {
         
 		//On va tenter de se connecter à la base de données
 		try {
-            
+			
+			if(!empty($conf['socket'])) { $dsn = $conf['source'].':dbname='.$conf['database'].';unix_socket='.$conf['socket']; }
+			else { $dsn = $conf['source'].':dbname='.$conf['database'].';host='.$conf['host']; }
+			
+			if(!empty($conf['port'])) { $dsn .= ';port'.$conf['port']; }
+			
 			//Création d'un objet PDO
 			$pdo = new PDO(
-				$conf['source'].':host='.$conf['host'].';dbname='.$conf['database'], 
+				$dsn, 
 				$conf['login'], 
 				$conf['password'], 
 				array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8')
