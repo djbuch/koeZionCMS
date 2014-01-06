@@ -23,7 +23,12 @@ class Request {
  */    
 	public function __construct() {
 				
-		$this->url = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/'; //Affectation de l'url
+		//$this->url = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/'; //Affectation de l'url
+		if(isset($_SERVER['PATH_INFO'])) { $this->url = $_SERVER['PATH_INFO'];  } 
+		else if(isset($_SERVER['SCRIPT_URL'])) { $this->url = $_SERVER['SCRIPT_URL']; } //1and1 hack!!
+		else if(isset($_SERVER['ORIG_PATH_INFO'])) { $this->url = $_SERVER['ORIG_PATH_INFO']; } //1and1 hack!!
+		else {  $this->url = '/'; }
+		
 		$this->fullUrl = 'http://'.$_SERVER["HTTP_HOST"].Router::url($this->url, ''); //Affectation de l'url complète
 				
 		//Gestion de la pagination

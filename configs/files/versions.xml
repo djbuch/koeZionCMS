@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 06/01/2014</name>
+		<num>20140106.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise en place de HACKS pour 1AND1... (Request et envoi de mails)</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 06/01/2014</name>
 		<num>20140106.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

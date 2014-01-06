@@ -65,13 +65,21 @@ class EmailComponent extends Component {
 			
 			if(isset($conf['smtp_secure']) && $conf['smtp_secure']) { $encryption = 'ssl'; } else {  $encryption = null; }
 			
-			//Définition du transport smtp
-			$transport = Swift_SmtpTransport::newInstance()
-				->setHost($this->smtpHost) //Host
-				->setPort($this->smtpPort) //Port
-				->setEncryption($encryption)
-				->setUsername($this->smtpUserName) //Username
-				->setPassword($this->smtpPassword); //Mot de passe
+			//////////////////////
+			//    HACK 1AND1    //
+			//A tester pour voir si cela fonction sur l'ensemble de leurs mutualisés
+			//Pour le moment testé sur les serveurs dédiés clé en main
+			if(substr_count($_SERVER['DOCUMENT_ROOT'], '/kunden/')) { $transport = Swift_MailTransport::newInstance(); } 
+			else {
+				
+				//Définition du transport smtp
+				$transport = Swift_SmtpTransport::newInstance()
+					->setHost($this->smtpHost) //Host
+					->setPort($this->smtpPort) //Port
+					->setEncryption($encryption)
+					->setUsername($this->smtpUserName) //Username
+					->setPassword($this->smtpPassword); //Mot de passe
+			}
 		
 			$this->mailer = Swift_Mailer::newInstance($transport); //Création d'une nouvelle instance de mail
 		}
