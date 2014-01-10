@@ -9,7 +9,7 @@ class Model extends Object {
 	public $conf = 'localhost'; //Paramètres de connexion par défaut
 	public $table = false; //Nom de la table	
 	public $db; //Variable contenant la connexion à la base de données
-	public $primaryKey = 'id';  //Valeur par défaut de la clé primaire
+	public $primaryKey = 'id';  //Valeur par défaut de la clé primaire (Peut être un chaîne de caractère ou un tableau dans le cas de clés composées par exemple array('key1', 'key2'))
 	public $id; //Variable qui va contenir la valeur de la clé primaire après isert ou update
 	public $errors = array(); //Par défaut pas d'erreurs
 	public $trace_sql = false; //Permet d'afficher la requête exécutée cf fonction find
@@ -45,7 +45,7 @@ class Model extends Object {
 		require_once(LIBS.DS.'config_magik.php'); //Import de la librairie de gestion des fichiers de configuration 
 		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'database.ini', true, true); //Création d'une instance
 		$conf = $cfg->keys_values($section); //Récupération des configurations en fonction du nom de domaine (Ancienne version : $conf = $cfg->keys_values($_SERVER["HTTP_HOST"], 1);)
-		//$conf['source'] = "mysql"}
+		$conf['source'] = "mysql";
 		
 		//Si le nom de la table n'est pas défini on va l'initialiser automatiquement
 		//Par convention le nom de la table sera le nom de la classe en minuscule avec un s à la fin
@@ -69,15 +69,10 @@ class Model extends Object {
         
 		//On va tenter de se connecter à la base de données
 		try {
-			
-			if(!empty($conf['socket'])) { $dsn = $conf['source'].':dbname='.$conf['database'].';unix_socket='.$conf['socket']; }
-			else { $dsn = $conf['source'].':dbname='.$conf['database'].';host='.$conf['host']; }
-			
-			if(!empty($conf['port'])) { $dsn .= ';port'.$conf['port']; }
-			
+            
 			//Création d'un objet PDO
 			$pdo = new PDO(
-				$dsn, 
+				$conf['source'].':host='.$conf['host'].';dbname='.$conf['database'], 
 				$conf['login'], 
 				$conf['password'], 
 				array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8')
@@ -202,7 +197,6 @@ class Model extends Object {
  * @version 0.1 - 28/12/2011 by FI
  * @version 0.2 - 02/05/2012 by FI - Mise en place de la conditions de récupérations selon l'identifiant du site
  * @version 0.3 - 30/05/2012 by FI - Modification de la génération de la condition de recherche pour intégrer l'utilisation de tableau de condition sans index particulier ==> $condition = array('conditions' => array("name LIKE '%...%'"));
- * @version 0.4 - 02/01/2014 by FI - Reprise de la gestion des INNER|LEFT|RIGHT JOIN
  */    
 	public function find($req = array(), $type = PDO::FETCH_ASSOC) {
 		
@@ -401,12 +395,15 @@ class Model extends Object {
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 16/02/2012 by FI
+ * @version 0.2 - 10/01/2014 by FI - Gestion automatique du champ à compter (Le premier de la table)
  */	
 	public function findCount($conditions = null, $moreConditions = null) {
 		
+		//$field = current($this->shema());
+		$field = current($this->shema);
 		$res = $this->findFirst(
 			array(
-				'fields' => 'COUNT('.$this->alias.'.'.$this->primaryKey.') AS count',
+				'fields' => 'COUNT('.$this->alias.'.'.$field.') AS count',
 				'conditions' => $conditions,
 				'moreConditions' => $moreConditions
 			)
@@ -530,6 +527,7 @@ class Model extends Object {
  * @version 0.5 - 14/06/2012 by FI - Modification du test sur created, created_by, etc... car le in_array ne devait pas se faire sur $datas directement mais sur array_keys($datas)
  * @version 1.0 - 24/08/2012 by FI - Changement radical de la gestion des INSERT ou UPDATE afin d'utiliser pleinement la fonctionnalité des requêtes préparées
  * 									 on a divisé le process en 2 on récupère d'un coté les infos de la requête et de l'autre les données à sauvegarder avec des fonctions privées
+ * @version 1.1 - 10/01/2014 by FI - Gestion des primary key multiples
  * 
  * @todo mettre en place des try catch pour vérifier que la requete c'est bien exécutée 
  */	
@@ -543,8 +541,9 @@ class Model extends Object {
 		$this->_trace_sql('function save', $preparedInfos['preparedQuery']->queryString); //Récupération de la requête
 		
 		//Affectation de la valeur de la clé primaire à la variable de classe
-		if($preparedInfos['action'] == 'insert') { $this->id = $this->db->lastInsertId(); }
-		else { $this->id = $datas[$this->primaryKey]; }
+		if($preparedInfos['action'] == 'insert') { $this->id = $this->db->lastInsertId();}
+		else if(!is_array($this->primaryKey)) { $this->id = $datas[$this->primaryKey]; }
+		else { $this->id[] = 'multiple'; }
 		
 		$this->queryExecutionResult = $queryExecutionResult;
 		
@@ -562,6 +561,7 @@ class Model extends Object {
  * @author	koéZionCMS
  * @version 0.1 - 24/08/2012 by FI
  * @version 0.2 - 03/04/2013 by FI - Correction de l'affectation des ids
+ * @version 0.3 - 10/01/2014 by FI - Gestion des primary key multiples
  */	
 	function saveAll($datas, $forceInsert = false, $escapeUpload = true) {
 		
@@ -576,7 +576,8 @@ class Model extends Object {
 				$this->_trace_sql('function saveAll', $preparedInfos['preparedQuery']->queryString); //Récupération de la requête
 				
 				if($preparedInfos['action'] == 'insert') { $this->id[] = $this->db->lastInsertId();}
-				else { $this->id[] = $v['id']; }
+				else if(!is_array($this->primaryKey)) { $this->id[] = $v['id']; }
+				else { $this->id[] = 'multiple'; }
 				
 				$this->queryExecutionResult = $queryExecutionResult;
 				
@@ -895,7 +896,8 @@ class Model extends Object {
  * @access	private
  * @author	koéZionCMS
  * @version 0.1 - 24/08/2012 by FI
- * @version 0.1 - 13/11/2013 by FI - Rajout du code permettant la gestion de l'option de modification de la date de modification
+ * @version 0.2 - 13/11/2013 by FI - Rajout du code permettant la gestion de l'option de modification de la date de modification
+ * @version 0.3 - 10/01/2014 by FI - Gestion des primary key multiples
  */	
 	function _prepare_save_query($datas, $forceInsert, $escapeUpload) {
 					
@@ -907,8 +909,11 @@ class Model extends Object {
 		$moreDatasToSave = array(); //Tableau des données supplémentaires à sauvegarder (évite de les regénérer à chaque fois)
 		
 		//Permet de connaitre le type de requete à effectuer
-		//Dans ce cas on est sur de l'update				
-		if(in_array($primaryKey, $datasShema) && !$forceInsert) { $action = 'update'; } 
+		//Dans ce cas on est sur de l'update	
+		if(is_array($primaryKey)) { $isUpdate = (array_intersect($datasShema, $primaryKey) == $primaryKey) ? true : false; } 
+		else { $isUpdate = in_array($primaryKey, $datasShema); }
+					
+		if($isUpdate && !$forceInsert) { $action = 'update'; } 
 		else { 
 			
 			$action = 'insert'; //Définition de l'action
@@ -976,7 +981,18 @@ class Model extends Object {
 		}
 		
 		//On va tester l'existence de cette clé dans le tableau des datas
-		if($action == 'update') { $sql = 'UPDATE '.$this->table.' SET '.implode(',', $fieldsToSave).' WHERE '.$primaryKey.'=:'.$primaryKey.';'; } 
+		/*if($action == 'update') { $sql = 'UPDATE '.$this->table.' SET '.implode(',', $fieldsToSave).' WHERE '.$primaryKey.'=:'.$primaryKey.';'; } 
+		else { $sql = 'INSERT INTO '.$this->table.' SET '.implode(',', $fieldsToSave).';'; }*/
+		if($action == 'update') {
+			$sql = 'UPDATE '.$this->table.' SET '.implode(',', $fieldsToSave).' WHERE ';
+			if(is_array($primaryKey)) {
+				
+				foreach($primaryKey as $k => $v) { $primaryKey[$k] = $v.'=:'.$v; }
+				$sql .= implode(' AND ', $primaryKey);
+			}
+			else { $sql .= $primaryKey.'=:'.$primaryKey; }
+			$sql .= ';';
+		} 
 		else { $sql = 'INSERT INTO '.$this->table.' SET '.implode(',', $fieldsToSave).';'; }
 				
 		return array(
@@ -998,6 +1014,7 @@ class Model extends Object {
  * @access	private
  * @author	koéZionCMS
  * @version 0.1 - 24/08/2012 by FI
+ * @version 0.2 - 10/01/2014 by FI - Gestion des primary key multiples
  */		
 	function _prepare_save_datas($datas, $moreDatasToSave, $forceInsert, $escapeUpload) {
 		
@@ -1006,17 +1023,38 @@ class Model extends Object {
 		$primaryKey = $this->primaryKey; //Récupération de la clé primaire
 				
 		$datasToSave = array(); //Tableau utilisé lors de la préparation de la requête
-		if(isset($datas[$primaryKey]) && !empty($datas[$primaryKey]) && !$forceInsert) { $datasToSave[":$primaryKey"] = $datas[$primaryKey]; }
 		
+		//if(isset($datas[$primaryKey]) && !empty($datas[$primaryKey]) && !$forceInsert) { $datasToSave[":$primaryKey"] = $datas[$primaryKey]; }		
+		if(is_array($primaryKey)) {
+			
+			foreach($primaryKey as $v) {
+				
+				if(isset($datas[$v]) && !empty($datas[$v]) && !$forceInsert) { $datasToSave[":$v"] = $datas[$v]; }
+			}			
+		} else {		
+			
+			if(isset($datas[$primaryKey]) && !empty($datas[$primaryKey]) && !$forceInsert) { $datasToSave[":$primaryKey"] = $datas[$primaryKey]; }
+		}
+				
 		require_once(LIBS.DS.'config_magik.php');
 		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
 		$coreConfs = $cfg->keys_values();
-		if(in_array('password', $datasShema) && $coreConfs['hash_password']) { $datas['password'] = sha1($datas['password']); } //On procède à la mise à jour du champ password si il existe				
 		
+		if(in_array('password', $datasShema) && $coreConfs['hash_password']) { $datas['password'] = sha1($datas['password']); } //On procède à la mise à jour du champ password si il existe		
 		if(in_array('slug', $shema) && !empty($datas['name']) && (!in_array('slug', $datasShema) || empty($datas['slug']))) { $datas['slug'] = strtolower(Inflector::slug($datas['name'], '-')); } //On procède à la mise à jour du champ slug si celui ci n'est pas rempli ou non présent dans le formulaire mais présent dans la table
 		if(in_array('page_title', $shema) && !empty($datas['name']) && (!in_array('page_title', $datasShema) || empty($datas['page_title']))) { $datas['page_title'] = $datas['name']; } //On procède à la mise à jour du champ page_title si celui ci n'est pas rempli ou non présent dans le formulaire mais présent dans la table
 				
-		if(isset($datas[$primaryKey]) && !$forceInsert) unset($datas[$primaryKey]); //Il faut supprimer du tableau des données la clé primaire si celle ci est définie
+		//if(isset($datas[$primaryKey]) && !$forceInsert) unset($datas[$primaryKey]); //Il faut supprimer du tableau des données la clé primaire si celle ci est définie
+		if(is_array($primaryKey)) {
+			
+			foreach($primaryKey as $v) {
+				
+				if(isset($datas[$v]) && !$forceInsert) unset($datas[$v]); //Il faut supprimer du tableau des données la clé primaire si celle ci est définie
+			}			
+		} else {
+				
+			if(isset($datas[$primaryKey]) && !$forceInsert) unset($datas[$primaryKey]); //Il faut supprimer du tableau des données la clé primaire si celle ci est définie
+		}
 				
 		//On fait le parcours des données
 		foreach($datas as $k => $v) {

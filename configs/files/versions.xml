@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 10/01/2014</name>
+		<num>20140110.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Gestion des primary keys multiples dans le model</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 06/01/2014</name>
 		<num>20140106.003</num>
 		<supervisor>KoéZionCMS</supervisor>
