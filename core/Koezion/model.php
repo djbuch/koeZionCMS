@@ -591,6 +591,8 @@ class Model extends Object {
  *
  * @param 	array 	$datas 			Données à sauvegarder
  * @param 	varchar $insertErrorsTo Si renseigne l'index $insertErrorsTo sera utilisé pour l'ajout des erreurs dans le modèle
+ * @param 	boolean $validAllFields Permet d'indiquer si il faut effectuer une validation obligatoire sur tous les champs présents dans les règles de validation
+ * 									Il est possible dans certains cas que le formulaire posté contienne moins de champs que ceux présents dans les règles de validation
  * @return 	boolean Retourne vrai si la validation est correcte, faux sinon
  * @access	public
  * @author	koéZionCMS
@@ -602,8 +604,9 @@ class Model extends Object {
  * @version 0.6 - 09/11/2013 - Rajout d'un nouveau paramètre aux règles de validation permettant de paramétrer une règle mais de ne l'appliquer que si le champ n'est pas vide  
  * @version 0.7 - 14/11/2013 - Mise en place de la validation des champs construit avec des tableaux multidimensionnels  
  * @version 0.8 - 09/12/2013 - Rajout de l'index $insertErrorsTo pour la gestion des erreurs  
+ * @version 0.9 - 10/01/2014 - Rajout de $validAllFields pour indiquer si tous les champs des règles de validation sont obligatoires
  */	
-	function validates($datas, $insertErrorsTo = null) {
+	function validates($datas, $insertErrorsTo = null, $validAllFields = true) {
 				
 		if(isset($this->validate)) { //Si on a un tableau de validation dans la classe
 			
@@ -657,7 +660,7 @@ class Model extends Object {
 							else { $errors[$k] = $v['message']; }								 
 						} 						
 					}
-				} else {
+				} else if($validAllFields) { //Par défaut tous les champs dans le tableau de validation sont obligatoires
 					
 					if(Set::check($Errorsmessages, $v['message'])) { $errors[$k] = Set::classicExtract($Errorsmessages, $v['message']); }
 					else { $errors[$k] = $v['message']; }

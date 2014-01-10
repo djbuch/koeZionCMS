@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 10/01/2014</name>
+		<num>20140110.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise en place de la possibilité d'ignorer certaines règles de validation lors de la soumission de formulaires</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 10/01/2014</name>
 		<num>20140110.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

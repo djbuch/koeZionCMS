@@ -20,6 +20,7 @@ class Request {
  * Constructeur de la classe
  * 
  * 09/08/2012 --> Rajout de full URL
+ * 10/01/2014 --> Rajout du referer
  */    
 	public function __construct() {
 				
@@ -30,6 +31,8 @@ class Request {
 		else {  $this->url = '/'; }
 		
 		$this->fullUrl = 'http://'.$_SERVER["HTTP_HOST"].Router::url($this->url, ''); //Affectation de l'url complète
+		$this->referer = '';
+		if(isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER'])) { $this->referer = $_SERVER['HTTP_REFERER']; }
 				
 		//Gestion de la pagination
 		if(isset($_GET['page'])) {
