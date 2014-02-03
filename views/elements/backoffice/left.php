@@ -1,4 +1,5 @@
 <div id="left">
+	<span class="menu">Menu</span>
 	<ul>
 		<?php 
 		foreach($leftMenus as $k => $v) {
@@ -10,10 +11,28 @@
 					<?php if(!empty($v['libelle'])) { ?><a><?php echo $v['libelle']; ?></a><?php } ?>
 					<ul>
 						<?php 
-						foreach($v['menus'] as $leftMenus) {
+						foreach($v['menus'] as $key => $leftMenus) {
 
-							$action = !empty($leftMenus['action_name']) ? $leftMenus['action_name'] : 'index';						
-							?><li><a href="<?php echo Router::url('backoffice/'.$leftMenus['controller_name'].'/'.$action); ?>"><?php echo $leftMenus['name']; ?></a></li><?php 
+							if(!is_int($key)) { 
+								?>
+								<li>
+									<?php if(!empty($key)) { ?><a class="under_section"><?php echo $key; ?></a><?php } ?>
+									<ul>
+										<?php 
+										foreach($leftMenus as $leftMenu) {
+										
+											$action = !empty($leftMenu['action_name']) ? $leftMenu['action_name'] : 'index';
+											?><li><a href="<?php echo Router::url('backoffice/'.$leftMenu['controller_name'].'/'.$action); ?>"><?php echo $leftMenu['name']; ?></a></li><?php
+										}
+										?>
+									</ul>
+								</li>
+								<?php 								
+							} else {
+							
+								$action = !empty($leftMenus['action_name']) ? $leftMenus['action_name'] : 'index';						
+								?><li><a href="<?php echo Router::url('backoffice/'.$leftMenus['controller_name'].'/'.$action); ?>"><?php echo $leftMenus['name']; ?></a></li><?php
+							} 
 						} 
 						?>
 					</ul>

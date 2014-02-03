@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 03/02/2014</name>
+		<num>20140203.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Reprise du fonctionnement du menu backoffice</task>
+			<task author="FI" type="code">Correction moteur de recherche backoffice</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 10/01/2014</name>
 		<num>20140110.002</num>
 		<supervisor>KoéZionCMS</supervisor>

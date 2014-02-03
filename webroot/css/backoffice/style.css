@@ -2,25 +2,47 @@ html,body{margin:0;padding:0;background:url(../../img/backoffice/background.gif)
 img{border:0}
 /*#wrapper{position:relative;margin:0 auto;max-width:90%;min-width:980px;height:auto!important;height:100%;min-height:100%}*/
 /*#left{width:203px}*/
-#left{width:220px;float:left}
+#wrapper{margin-top: 30px;}
+#left{width:250px;float:left;/*display:none;*/position:fixed;top: 30px;background: white;z-index:1000;left:-250px;}
+#left span.menu{
+	display:block;
+	width:20px;
+	height:20px;
+	background:url(../../img/backoffice/icons/check-none.png) no-repeat 4px 4px #5a5a5a;
+	cursor:pointer;
+	text-indent:-9999px;
+	position:absolute;
+	right:-30px;
+	top:60px;
+	padding:5px;
+	border-radius: 0px 5px 5px 0px;
+	-moz-border-radius: 0px 5px 5px 0px;
+	-webkit-border-radius: 0px 5px 5px 0px;
+}
 #left h1 a,#left h1 a:link,#left h1 a:active,#left h1 a:visited{color:#000;text-decoration:none}
 #left h1 a:hover{color:#727272;text-decoration:none}
-#left ul{display:block;margin:0;padding:10px;list-style:none}
+#left ul{display:block;margin:0;padding:10px;list-style:none;overflow:auto;}
 #left ul li{display:block;font:13px/36px 'MyriadProRegular',Arial;color:#848484;text-transform:uppercase}
-#left ul li a,#left ul li a:link,#left ul li a:active,#left ul li a:visited{display:block;background:url(../../img/backoffice/back-menu.png) no-repeat left top;outline:0;padding:0 3px 0 22px;color:#848484;text-decoration:none;height:34px}
-#left ul li a:hover{background:url(../../img/backoffice/back-menu.png) no-repeat left bottom}
+#left ul li a,#left ul li a:link,#left ul li a:active,#left ul li a:visited{display:block;/*background:url(../../img/backoffice/back-menu.png) no-repeat left top;*/outline:0;padding:0;color:white;text-decoration:none;height:34px;text-align: center;background: #a2a0a0;font-weight: bold;}
+/*#left ul li a:hover{background:url(../../img/backoffice/back-menu.png) no-repeat left bottom}*/
 #left ul li.active a,#left ul li.active a:link,#left ul li.active a:active,#left ul li.active a:visited{background:url(../../img/backoffice/back-menu.png) no-repeat left bottom;color:#000}
-#left ul ul{display:block;background:url(../../img/backoffice/back-right.png) repeat-y right top;border-left:1px solid #e5e5e5;margin:-2px 0 2px 1px;padding:0;list-style:none;width:199px}
-#left ul li li{display:block;background:0;border-bottom:1px solid #e5e5e5;border-top:1px solid #e5e5e5;font:11px/1.0em Arial;color:#848484;text-transform:none;width:196px;height:auto}
-#left ul li li a,#left ul li li a:link,#left #left ul li li a:active,#left #left ul li li a:visited{display:block;background:0;padding:9px 3px 9px 10px;color:#848484;text-decoration:none;width:183px;height:auto}
+#left ul ul{display:block;/*background:url(../../img/backoffice/back-right.png) repeat-y right top;border-left:1px solid #e5e5e5;margin:-2px 0 2px 1px;*/padding:0;list-style:none;/*width:199px*/}
+#left ul ul ul{margin:0;padding:0;border:0;}
+#left ul li li{display:block;background:0;border:1px solid #e5e5e5;/*border-top:1px solid #e5e5e5;*/font:11px/1.0em Arial;color:#848484;text-transform:none;/*width:196px;*/height:auto}
+#left ul li li a,#left ul li li a:link,#left ul li li a:active,#left ul li li a:visited{display:block;background:0;padding:9px 3px 9px 10px;color:#848484;text-decoration:none;/*width:183px;*/height:auto;text-align: left;font-weight: normal;}
+#left ul li li a.under_section + ul a,
+#left ul li li a.under_section:link + ul a,
+#left ul li li a.under_section:active + ul a,
+#left ul li li a.under_section:visited + ul a{padding-left:20px;}
 #left ul ul li a:hover{background:0;background:#f9f9f9}
 #left ul ul li.active a,#left ul ul li.active a:link,#left ul ul li.active a:active,#left ul ul li.active a:visited{background:none #f9f9f9;color:#000}
+#left ul ul li a.under_section{background-color: #EBEBEB;}
 #left #social{display:block;/*margin:13px 20px 0 0;*/padding-left:10px;font-size:11px;text-align:center;color:#949494;}
 #left #social .facebook{float: left;}
 #left #social .twitter{float: right;width: 100px;}
-#left #credits{display:block;/*margin:13px 20px 0 0;*/padding:0 0 13px 0;font-size:11px;text-align:center;color:#949494;margin-top: 20px;float: left;padding: 0 10px;}
+#left #credits{display:block;font-size:11px;text-align:center;color:#949494;float: left;margin:20px 0 10px;width:100%;height:20px;}
 /*#right{position:absolute;top:0;left:200px;background:url(../../img/backoffice/back-right.png) repeat-y right top;border-left:1px solid #e5e5e5;padding:0 3px 0 0;width:79.4%;height:auto!important;height:100%;min-height:100%}*/
-#right{background:url(../../img/backoffice/back-right.png) repeat-y right top;border-left:1px solid #e5e5e5;border-bottom:1px solid #e5e5e5;padding:0; margin-left: 220px;}
+#right{/*background:url(../../img/backoffice/back-right.png) repeat-y right top;*/background:white;/*border-left:1px solid #e5e5e5;*/border-bottom:1px solid #e5e5e5;padding:0;/*margin-left: 220px;*/}
 /*#right #top-bar{display:block;background:#1c1c1c;height:30px}
 #right #top-bar ul{float:right;margin:0;padding:0;list-style:none;width:auto}
 #right #top-bar ul li{float:left;position:relative;border-left:1px solid #444;padding:8px 10px 8px;font:11px/14px Arial;color:#cacaca;height:14px;cursor:pointer}
@@ -46,7 +68,7 @@ img{border:0}
 #right #top-bar ul li li a,#right #top-bar ul li li a:link,#right #top-bar ul li li a:active,#right #top-bar ul li li a:visited{display:block;color:#cacaca;text-decoration:none}
 #right #top-bar ul li li a:hover{display:block;color:#807f7f;text-decoration:none}
 #right #top-bar ul li li b{padding:0;font:11px/18px Arial;font-weight:bold;color:#fff}*/
-#top-bar{display:block;background:#1c1c1c;height:30px}
+#top-bar{display:block;background:#1c1c1c;height:30px;position:fixed;width:100%;top:0;z-index:1000;}
 #top-bar ul{float:right;margin:0;padding:0;list-style:none;width:auto}
 #top-bar ul li{float:left;position:relative;border-left:1px solid #444;padding:8px 10px 8px;font:11px/14px Arial;color:#cacaca;height:14px;cursor:pointer}
 #top-bar ul li.browse_website{padding:8px 0 8px 10px;}
@@ -111,3 +133,11 @@ img{border:0}
 #right .box .content span.percent{float:right;position:relative;top:-15px;font:11px/1.0em Arial;font-weight:bold}
 #right .box .content .icon{padding:10px}
 .ui-widget-overlay{position:absolute;top:0;background:#1c1c1c;opacity:.5;filter:alpha(opacity=50)}
+
+/**
+ *
+ * LOADER
+ *
+ */
+.loader {position: absolute;top: 0;left: 0;background: grey;filter:alpha(opacity=50);opacity:.50;z-index: 2;}
+.loader span {text-indent:-9999px;display:block;background:url("../../img/backoffice/wait.gif") no-repeat center;width:214px;height:15px;position:fixed;}

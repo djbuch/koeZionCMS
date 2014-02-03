@@ -284,7 +284,8 @@ class FormHelper extends FormParentHelper {
 			'div' => true,
 			'divright' => true,
 			'fulllabelerror' => false,
-			'colorpicker' => false
+			'colorpicker' => false,
+			'onlyInput' => false
 		);
 		$options = array_merge($defaultOptions, $options); //Génération du tableau d'options utilisé dans la fonction
 		
@@ -297,7 +298,8 @@ class FormHelper extends FormParentHelper {
 
 		//Cas du color picker
 		if($inputDatas['inputOptions']['colorpicker']) { $inputDatas['inputElement'] = '<div class="color"><div><span style="background-color: '.$inputDatas['inputValue'].'"></span></div>'.$inputDatas['inputElement'].'</div></div>'; }		
-				
+		if($inputDatas['inputOptions']['onlyInput']) { return $inputDatas['inputElement']; }		
+		
 		$classError = '';
 		if(!empty($inputDatas['inputError'])) { $classError = ' error'; }
 				

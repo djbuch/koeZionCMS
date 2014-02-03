@@ -191,7 +191,12 @@ class AppController extends Controller {
     	if(!isset($this->request->data['displayall'])) { $findConditions['limit'] = $this->pager['limit'].', '.$this->pager['elementsPerPage']; } else { $datas['displayAll'] = true; }	
     	if(isset($order)) { $findConditions['order'] = $order; }
     	
-    	if(isset($this->searchConditions)) { $findConditions['conditions'] = am($findConditions['conditions'], $this->searchConditions); }
+    	if(isset($this->searchConditions)) { 
+    		
+    		if(!empty($findConditions['conditions'])) { $findConditions['conditions'] = am($findConditions['conditions'], $this->searchConditions); }
+    		else { $findConditions['conditions'] = $this->searchConditions; } 
+    	}
+    	
     	$datas[$controllerVarName] = $this->$modelName->find($findConditions);    	
     	   	
     	//////////////////////////////////
@@ -1004,12 +1009,42 @@ class AppController extends Controller {
 				$acls = $session['Acl'];
 				if(isset($acls[$moduleControllerName]) && isset($leftMenus[$v['modules_type_id']]) && in_array('backoffice_index', $acls[$moduleControllerName])) {
 					
+					$name = explode('|', $v['name']);
+					if(count($name) == 1) { $leftMenus[$v['modules_type_id']]['menus'][] = $v; }
+					else {
+						
+						$v['name'] = $name[1];
+						$leftMenus[$v['modules_type_id']]['menus'][$name[0]][] = $v;
+					} 
+					//$leftMenus[$v['modules_type_id']]['menus'][] = $v;
+				}
+			} else {
+			
+				if(isset($leftMenus[$v['modules_type_id']])) { 
+					
+					$name = explode('|', $v['name']);
+					if(count($name) == 1) { $leftMenus[$v['modules_type_id']]['menus'][] = $v; }
+					else {
+						
+						$v['name'] = $name[1];
+						$leftMenus[$v['modules_type_id']]['menus'][$name[0]][] = $v;
+					} 
+				}
+			}
+			
+			/*//GESTION DU PLUGIN ACLS//
+			if(isset($this->plugins['Acls']) && $session['UsersGroup']['id'] > 1) {
+			
+				$moduleControllerName = $v['controller_name'];
+				$acls = $session['Acl'];
+				if(isset($acls[$moduleControllerName]) && isset($leftMenus[$v['modules_type_id']]) && in_array('backoffice_index', $acls[$moduleControllerName])) {
+					
 					 $leftMenus[$v['modules_type_id']]['menus'][] = $v;
 				}
 			} else {
 			
 				if(isset($leftMenus[$v['modules_type_id']])) { $leftMenus[$v['modules_type_id']]['menus'][] = $v; }
-			} 
+			}*/ 
 		}
 		return $leftMenus;    	   	
     } 

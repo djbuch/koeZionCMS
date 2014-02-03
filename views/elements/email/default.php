@@ -7,7 +7,6 @@
 		<?php } ?>
 	</head>
 	<body>
-		<p>TEMPLATE DE MAIL PAR DEFAUT</p>
 		<?php echo $messageContent; ?>
 	</body>
 </html>

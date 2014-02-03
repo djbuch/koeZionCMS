@@ -314,7 +314,7 @@ class Model extends Object {
 				$cond = array();
 				foreach($req['conditions'] as $k => $v) {		
 					
-					if(!empty($v)) {
+					//if(!empty($v)) {
 						
 						//On va ensuite tester si la clé est une chaine de caractère
 						//On rajoute le nom de la classe devant le nom de la colonne
@@ -331,7 +331,7 @@ class Model extends Object {
 							
 						} 
 						else { $cond[] = $v; } //Sinon on rajoute directement la condition dans le tableau
-					}
+					//}
 				}
 				
 				if(!empty($cond)) { $conditions .= implode("\n".'AND ', $cond); }
@@ -447,18 +447,27 @@ class Model extends Object {
 /**
  * Cette fonction est chargée de supprimer un élément de la table
  * 
- * @param 	mixed $id Identifiant(s) à supprimer (Ce paramètre peut être un tableau ou un entier)
+ * @param 	mixed $id 			Identifiant(s) à supprimer (Ce paramètre peut être un tableau ou un entier)
+ * @param 	array $moreControls Permet la mise en place d'un contrôle supplémentaire lors de la suppression
  * @return  objet Objet PDO
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 16/02/2012 by FI
  * @version 0.2 - 13/04/2012 by FI - Modification de la requête de suppression pour pouvoir passer en paramètre un tableau ou un entier
  * @version 0.3 - 24/12/2013 by FI - Mise en place de la gestion multisites lors de la suppression
+ * @version 0.4 - 17/01/2014 by FI - Mise en place de la variable $moreControls
  */		
-	public function delete($id) {
+	public function delete($id, $moreControls = null) {
 		
 		if(is_array($id)) { $idConditions = " IN (".implode(',', $id).')'; } else { $idConditions = " = ".$id; }		
 		$sql = "DELETE FROM ".$this->table." WHERE ".$this->primaryKey.$idConditions.";";  //Requête de suppression de l'élément
+		
+		//Permet de rajouter une condition supplémentaire lors de la suppression
+		if(isset($moreControls)) {
+			
+			if(!is_numeric($moreControls['value'])) { $moreControls['value'] = $this->db->quote($moreControls['value']); }
+			$sql .= " AND ".$moreControls['field']." = ".$moreControls['value'];
+		}
 		
 		//CAS PARTICULIER : GESTION MULTISITE
 		if(in_array('website_id', $this->shema)) { $sql .= " AND website_id = ".CURRENT_WEBSITE_ID; }

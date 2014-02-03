@@ -73,10 +73,9 @@
 	</head>
 
 	<body>
+		<?php $this->element('backoffice/top_bar'); ?>
+		<?php $this->element('backoffice/left'); ?>		
 		<div id="wrapper">
-			<?php $this->element('backoffice/top_bar'); ?>
-			<?php $this->element('backoffice/left'); ?>
-			
 			<div id="right">				
 				<?php //$this->element('backoffice/breadcrumbs'); ?>				
 				<div id="main">

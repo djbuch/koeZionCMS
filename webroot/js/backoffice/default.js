@@ -99,4 +99,13 @@ $(document).ready(function(){
 			jAlert("Attention en cochant cette case vous allez envoyer un email à l'ensemble des utilisateurs pour les informer de la modification"); 
 		}
 	});
+	
+	var leftHeight  = $(window).height() - 30;
+	var leftUlHeight  = leftHeight - 70;
+	$('#left').css({height:leftHeight});
+	$('#left > ul').css({height:leftUlHeight});
+	$('#left span.menu').toggle(
+		function() { $('#left').animate({left: '+=250'}, 'slow'); },
+		function() { $('#left').animate({left: '-=250'}, 'slow'); }
+	);
 });

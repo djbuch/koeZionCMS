@@ -17,6 +17,16 @@ class FormParentHelper extends Helper {
 	private $radio_count = 0;
 
 /**
+ * Variable contenant le champ name du dernier input radio
+ *
+ * @var 	varchar
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 11/01/2014 by FI
+ */
+	private $radio_name = null;
+
+/**
  * Variable contenant l'objet vue ayant fait appel au formulaire
  * On va faire correspondre la vue avec cette classe pour renseigner automatiquement les champs lors d'éventuelles erreurs
  *
@@ -35,7 +45,7 @@ class FormParentHelper extends Helper {
  * @author 	koéZionCMS
  * @version 0.1 - 20/01/2012 by FI
  */
-	var $escapeAttributes = array('type', 'displayError', 'label', 'datas', 'value', 'divRowBorderTop', 'tooltip');
+	var $escapeAttributes = array('type', 'displayError', 'label', 'datas', 'value', 'divRowBorderTop', 'tooltip', 'modelToCheck');
 
 /**
  * Constructeur de la classe
@@ -146,7 +156,7 @@ class FormParentHelper extends Helper {
 			'type' => 'text',
 			'label' => true,
 			'displayError' => true,
-			'value' => false,
+			'value' => null,
 			'tooltip' => false
 		);
 		$options = array_merge($defaultOptions, $options); //Génération du tableau d'options utilisé dans la fonction
@@ -185,7 +195,7 @@ class FormParentHelper extends Helper {
 		foreach($options as $k => $v) { //Parcours de l'ensemble des options
 
 			//On va éviter d'ajouter dans les attributs des valeurs non conforme
-			if(!in_array($k, $this->escapeAttributes)) { $attributes .= ' '.$k.'="'.$v.'"'; }
+			if(!in_array($k, $this->escapeAttributes) && !empty($v)) { $attributes .= ' '.$k.'="'.$v.'"'; }
 		}
 		///////////////////////////////
 
@@ -246,6 +256,9 @@ class FormParentHelper extends Helper {
 			// Pour l'input radio, il faut toujours utiliser l'attribut "value" pour les différencier lors de l'envoi du formulaire
 			// 03/05/2013 by AA
 			case 'radio':
+				
+				if(!isset($this->radio_name)) { $this->radio_name = $name; }
+				if($name != $this->radio_name) { $this->radio_count = 0; } //On réinitialise le compteur des inputs radio
 
 				$requestvalue = Set::classicExtract($this->view->controller->request->data, $name);//On récupère la valeur dans request
 				$checked = $options['value'] == $requestvalue ? ' checked="checked"' : '';//Si la valeur dans request est la même que celle passée en paramètre, alors l'input est sélectionné
@@ -264,7 +277,8 @@ class FormParentHelper extends Helper {
 				} else {
 					$labelReturn = '';
 				}
-				$this->radio_count++;//On incrémente le label, de cette façon, au prochain input créé, l'id sera différent du précédent.
+				
+				if($name == $this->radio_name) { $this->radio_count++; } //On incrémente le label, de cette façon, au prochain input créé, l'id sera différent du précédent.
 			break;
 
 			//   INPUT DE TYPE FILE   //
@@ -390,10 +404,15 @@ class FormParentHelper extends Helper {
  * @version 0.1 - 25/01/2012 by FI
  */
 	function _get_input_value($name, $defaultValue) {
-
+	
 		//Données postées
 		if(Set::check($this->view->controller->request->data, $name)) { return Set::classicExtract($this->view->controller->request->data, $name); } 
 		//Données non postées
-		else if(!isset($this->view->controller->request->data[$name]) && $defaultValue) { return $defaultValue; }
+		else if(isset($defaultValue)) { return $defaultValue; }
+
+		/*//Données postées
+		if(Set::check($this->view->controller->request->data, $name)) { return Set::classicExtract($this->view->controller->request->data, $name); } 
+		//Données non postées
+		else if(!isset($this->view->controller->request->data[$name]) && $defaultValue) { return $defaultValue; }*/
 	}
 }
