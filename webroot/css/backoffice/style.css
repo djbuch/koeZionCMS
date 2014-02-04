@@ -3,12 +3,12 @@ img{border:0}
 /*#wrapper{position:relative;margin:0 auto;max-width:90%;min-width:980px;height:auto!important;height:100%;min-height:100%}*/
 /*#left{width:203px}*/
 #wrapper{margin-top: 30px;}
-#left{width:250px;float:left;/*display:none;*/position:fixed;top: 30px;background: white;z-index:1000;left:-250px;}
+#left{width:250px;float:left;/*display:none;*/position:fixed;top: 30px;background: white;z-index:1000;left:-250px;border-right: 5px solid black;}
 #left span.menu{
 	display:block;
 	width:20px;
 	height:20px;
-	background:url(../../img/backoffice/icons/check-none.png) no-repeat 4px 4px #5a5a5a;
+	background:url(../../img/backoffice/icons/check-none.png) no-repeat 6px 4px black;
 	cursor:pointer;
 	text-indent:-9999px;
 	position:absolute;
@@ -23,7 +23,7 @@ img{border:0}
 #left h1 a:hover{color:#727272;text-decoration:none}
 #left ul{display:block;margin:0;padding:10px;list-style:none;overflow:auto;}
 #left ul li{display:block;font:13px/36px 'MyriadProRegular',Arial;color:#848484;text-transform:uppercase}
-#left ul li a,#left ul li a:link,#left ul li a:active,#left ul li a:visited{display:block;/*background:url(../../img/backoffice/back-menu.png) no-repeat left top;*/outline:0;padding:0;color:white;text-decoration:none;height:34px;text-align: center;background: #a2a0a0;font-weight: bold;}
+#left ul li a,#left ul li a:link,#left ul li a:active,#left ul li a:visited{display:block;/*background:url(../../img/backoffice/back-menu.png) no-repeat left top;*/outline:0;padding:0;color:white;text-decoration:none;height:34px;text-align: center;background: #5A5A5A;font-weight: bold;}
 /*#left ul li a:hover{background:url(../../img/backoffice/back-menu.png) no-repeat left bottom}*/
 #left ul li.active a,#left ul li.active a:link,#left ul li.active a:active,#left ul li.active a:visited{background:url(../../img/backoffice/back-menu.png) no-repeat left bottom;color:#000}
 #left ul ul{display:block;/*background:url(../../img/backoffice/back-right.png) repeat-y right top;border-left:1px solid #e5e5e5;margin:-2px 0 2px 1px;*/padding:0;list-style:none;/*width:199px*/}

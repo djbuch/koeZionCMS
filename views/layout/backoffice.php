@@ -72,7 +72,7 @@
 		?>
 	</head>
 
-	<body>
+	<body data-baseurl="<?php echo BASE_URL; ?>">
 		<?php $this->element('backoffice/top_bar'); ?>
 		<?php $this->element('backoffice/left'); ?>		
 		<div id="wrapper">
@@ -86,6 +86,5 @@
 				</div>
 			</div>
 		</div>
-		<span class="websitebaseurl" style="display:none;"><?php echo BASE_URL; ?></span>
 	</body>
 </html>
