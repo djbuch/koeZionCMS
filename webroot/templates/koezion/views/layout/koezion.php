@@ -40,7 +40,7 @@
 		if(!empty($websiteParams['css_hack'])) { ?><style type="text/css"><?php echo $websiteParams['css_hack']; ?></style><?php }		
 		?>
 	</head>
-	<body>
+	<body data-baseurl="<?php echo BASE_URL; ?>">
 	
 		<?php if(isset($plugin_ads)) { $this->element(PLUGINS.DS.'ads/views/elements/ads/frontoffice/ads'); } ?>
 		<div class="wrap_content header">
@@ -101,6 +101,5 @@
 				});
 			});
 		</script>
-		<span class="websitebaseurl" style="display:none;"><?php echo BASE_URL; ?></span>
 	</body>
 </html>

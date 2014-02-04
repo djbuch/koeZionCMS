@@ -16,9 +16,8 @@ class Model extends Object {
 	public $shema = array(); //Shéma de la table
 	public $queryExecutionResult = false; //indique si la requete de save s'est bien passée 
 	public $refererUrl = ''; //Cette variable va contenir l'url de la page appelante
-	public $manageWebsiteId = true; //Permet d'éviter de prendre en compte la recherche basée sur le champ website_id ainsi que l'insertion automatique de ce champ
-	
-	protected $alias = false; //Alias de la table
+	public $manageWebsiteId = true; //Permet d'éviter de prendre en compte la recherche basée sur le champ website_id ainsi que l'insertion automatique de ce champ	
+	public $alias = false; //Alias de la table
     
 /**
  * Constructeur de la classe

@@ -9,7 +9,7 @@ $(document).ready(function() {
 		$(this).html("<a href=\"mailto:" + sEmail + "\">" + sEmail + "</a>");
 	});
 	
-	var baseurl = $('span.websitebaseurl').text(); //A REPRENDRE PAS SUPER TOP
+	var baseurl = $('body').data('baseurl');
 	
 	jQuery.extend({
 		

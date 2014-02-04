@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 04/02/2014</name>
+		<num>20140204.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Correction portée d'une variable dans la class model</task>
+			<task author="FI" type="code">Changement de procédure pour la récupération javascript de la variable baseurl</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 03/02/2014</name>
 		<num>20140203.001</num>
 		<supervisor>KoéZionCMS</supervisor>
