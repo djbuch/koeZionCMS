@@ -20,13 +20,13 @@ $(document).ready(function() {
             width: null
         });
     });*/	
-	$(".dataTables_length input, select").livequery(function() { 
+	/*$(".dataTables_length input, select").livequery(function() { 
         $(this).not("select.multiple").selectmenu({
             style: 'dropdown',
             transferClasses: true,
             width: null
         });		
-	});
+	});*/
 
 	// FORM VALIDATION
 	/*$("form.valid").validate({
@@ -157,8 +157,13 @@ $(document).ready(function() {
     $('.smarttabs').smartTab({tabContainerClass:'smarttabs', keyNavigation:false});
 	
 	// DATEPICKER
-	$(".datepicker").datepicker({
+	/*$(".datepicker").datepicker({
 		dateFormat: 'dd.mm.yy'
+	});*/    
+	$(".datepicker").livequery(function() { 
+		$(this).datepicker({
+			dateFormat: 'dd.mm.yy'
+		});
 	});
 	
 	// COLORPICKER
@@ -178,7 +183,7 @@ $(document).ready(function() {
 				$('.color input').val('#' + hex);
 			}
 		});   
-	});  
+	});
 	
 	// PROGRESSBAR
 	/*$(".progressbar-normal").each(function() {
