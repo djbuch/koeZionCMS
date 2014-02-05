@@ -1,4 +1,4 @@
-<div style="border:1px solid #E5E5E5;margin-bottom:30px;">
+<div style="border:1px solid #E5E5E5;margin-bottom:30px;" class="intern_search">
 	<div class="title">
 		<h2>Moteur de recherche</h2>
 		<?php 
