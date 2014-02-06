@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 06/02/2014</name>
+		<num>20140206.004</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Reprise du helper parent en charge de la gestion de la pagination pour y rajouter un tableau d'options</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 06/02/2014</name>
 		<num>20140206.003</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
