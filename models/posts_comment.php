@@ -14,20 +14,38 @@ class PostsComment extends Model {
  */
 	var $validate = array(
 		'name' => array(
-			'rule' => array('notEqualsTo', 'Indiquez votre nom'),
-			'message' => 'PostsComment.name'				
+			array(
+				'rule' => array('notEqualsTo', 'Indiquez votre nom'),
+				'message' => 'PostsComment.name'
+			),
+			array(
+				'rule' => array('minLength', 2),
+				'message' => 'PostsComment.name'
+			)				
 		),
 		'email' => array(
 			'rule' => 'email',
 			'message' => 'PostsComment.email'
 		),
 		'cpostal' => array(
-			'rule' => array('notEqualsTo', 'Indiquez votre code postal'),
-			'message' => 'PostsComment.cpostal'
+			array(
+				'rule' => array('notEqualsTo', 'Indiquez votre code postal'),
+				'message' => 'PostsComment.cpostal'
+			),
+			array(
+				'rule' => array('minLength', 5),
+				'message' => 'PostsComment.cpostal'
+			)
 		),
 		'message' => array(
-			'rule' => array('notEqualsTo', 'Indiquez votre message'),
-			'message' => 'PostsComment.message'
-		),
+			array(
+				'rule' => array('notEqualsTo', 'Indiquez votre message'),
+				'message' => 'PostsComment.message'
+			),
+			array(
+				'rule' => array('minLength', 10),
+				'message' => 'PostsComment.message'
+			)
+		)
 	);
 }
