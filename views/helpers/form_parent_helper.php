@@ -322,7 +322,11 @@ class FormParentHelper extends Helper {
 			case 'submit': $inputReturn .= '<input type="submit" id="'.$inputIdText.'" name="'.$inputNameText.'" value="'.$value.'"'.$attributes.' />'; break;
 
 			//   INPUT DE TYPE BUTTON   //
-			case 'button': $inputReturn .= '<input type="button" id="'.$inputIdText.'" name="'.$inputNameText.'" value="'.$value.'"'.$attributes.' />'; break;
+			case 'button':				
+				$buttonType = 'button';
+				if(isset($options['buttonType'])) { $buttonType = $options['buttonType']; }
+				$inputReturn .= '<button id="'.$inputIdText.'" name="'.$inputNameText.'" type="'.$buttonType.'" value="'.$value.'"'.$attributes.'>'.$label.'</button>';
+			break;
 		}		
 
 		//Si on a une erreur et que l'on souhaite afficher les erreurs directement dans le champ input
