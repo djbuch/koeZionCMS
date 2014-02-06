@@ -77,10 +77,9 @@ class PostsController extends AppController {
 			$this->loadModel('PostsComment'); //Chargement du modèle
 			$postsCommentsConditions = array('online' => 1, 'post_id' => $id); //Uniquement les éléments actifs
 			$datas['postsComments'] = $this->PostsComment->find(array(
-					'fields' => array('name', 'message'),
-					'conditions' => $postsCommentsConditions,
-					'order' => 'id DESC',
-					'limit' => '0, 20'
+				'conditions' => $postsCommentsConditions,
+				'order' => 'id DESC',
+				'limit' => '0, 20'
 			));
 			$this->unloadModel('PostsComment'); //Déchargement du modèle
 		//}
