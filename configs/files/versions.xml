@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 06/02/2014</name>
+		<num>20140206.007</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification du composant Text</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 06/02/2014</name>
 		<num>20140206.006</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

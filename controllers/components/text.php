@@ -59,6 +59,7 @@ class TextComponent extends Component {
 			'sql' => $dateTemp[0].'-'.$dateTemp[1],
 			'date' => array(
 				'fullNumber' => $day.'.'.$dateTemp[1].'.'.$year,
+				'fullTxt' => $day.' '.$this->months['short'][$month]." ".$year
 			),
 			'time' => array(
 				'h' => '',
