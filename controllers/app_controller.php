@@ -843,7 +843,7 @@ class AppController extends Controller {
 				$this->set('message', $message);
 			}
 			
-			$this->unloadModel('Contact');
+			//$this->unloadModel('Contact');
 		}
     }      
     
@@ -919,7 +919,7 @@ class AppController extends Controller {
     			$this->set('message', $message);
     		}
     		
-    		$this->unloadModel('PostsComment'); //Déchargement du modèle
+    		//$this->unloadModel('PostsComment'); //Déchargement du modèle
     	}
     	//////////////////////////////////////////
     }
