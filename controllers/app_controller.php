@@ -817,7 +817,10 @@ class AppController extends Controller {
 				//   SAUVEGARDE DANS LA BASE DE DONNEES   //				
 				$this->Contact->save($this->request->data); 
 				$message = '<p class="confirmation">Votre demande a bien été prise en compte</p>';
+				$messageOk = '<p>Votre demande a bien été prise en compte</p>';
+				
 				$this->set('message', $message);
+				$this->set('messageOk', $messageOk);
 				////////////////////////////////////////////
 				
 				//Si le plugin mailing est installé on va alors procéder à l'ajout 
@@ -840,7 +843,12 @@ class AppController extends Controller {
 				$message = '<p class="error">Merci de corriger vos informations';
 				foreach($this->Contact->errors as $k => $v) { $message .= '<br />'.$v; }
 				$message .= '</p>';
+				$messageKo = '<p>Merci de corriger vos informations';
+				foreach($this->Contact->errors as $k => $v) { $messageKo .= '<br />'.$v; }
+				$messageKo .= '</p>';
+				
 				$this->set('message', $message);
+				$this->set('messageKo', $messageKo);
 			}
 			
 			//$this->unloadModel('Contact');
@@ -894,7 +902,10 @@ class AppController extends Controller {
     			$this->request->data['post_id'] = $vars['post']['id'];
     			$this->PostsComment->save($this->request->data);
     			$message = '<p class="confirmation">Votre commentaire a bien été prise en compte, il sera diffusé après validation par notre modérateur</p>';
+    			$messageOk = '<p>Votre commentaire a bien été prise en compte, il sera diffusé après validation par notre modérateur</p>';
+    			
     			$this->set('message', $message);
+    			$this->set('messageOk', $messageOk);
 				////////////////////////////////////////////
 				
 				//Si le plugin mailing est installé on va alors procéder à l'ajout 
@@ -916,7 +927,12 @@ class AppController extends Controller {
     			$message = '<p class="error">Merci de corriger vos informations';
     			foreach($this->PostsComment->errors as $k => $v) { $message .= '<br />'.$v; }
     			$message .= '</p>';
+    			$messageKo = '<p>Merci de corriger vos informations';
+    			foreach($this->PostsComment->errors as $k => $v) { $messageKo .= '<br />'.$v; }
+    			$messageKo .= '</p>';
+    			
     			$this->set('message', $message);
+    			$this->set('messageKo', $messageKo);
     		}
     		
     		//$this->unloadModel('PostsComment'); //Déchargement du modèle

@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 06/02/2014</name>
+		<num>20140206.005</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Gestion des messages de confirmation et d'erreurs lors de la validation des formulaires contact et commentaire</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 06/02/2014</name>
 		<num>20140206.004</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
