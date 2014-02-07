@@ -69,9 +69,12 @@ class Model extends Object {
 		//On va tenter de se connecter à la base de données
 		try {
             
+			$dsn = $conf['source'].':host='.$conf['host'].';dbname='.$conf['database'];
+			if(!empty($conf['socket'])) { $dsn = $conf['source'].':unix_socket='.$conf['socket'].';dbname='.$conf['database'].';port='.$conf['port']; }
+			
 			//Création d'un objet PDO
 			$pdo = new PDO(
-				$conf['source'].':host='.$conf['host'].';dbname='.$conf['database'], 
+				$dsn, 
 				$conf['login'], 
 				$conf['password'], 
 				array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8')

@@ -1,6 +1,15 @@
 ﻿<versions>
 	<version>
 		<name>Version du 07/02/2014</name>
+		<num>20140207.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la connexion à la bdd</task>
+			<task author="FI" type="code">Gestion des liens externes en JS</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 07/02/2014</name>
 		<num>20140207.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
