@@ -17,6 +17,8 @@
 				);
 				echo $helpers['Form']->input('order', _('Trier par'), array('type' => 'select', 'datas' => $orderType, 'tooltip' => _("Indiquer le tri à mettre en place pour l'affichage des articles dans les pages")));
 				
+				echo $helpers['Form']->input('home_page_limit', _('Limite articles home page'), array('tooltip' => _("Indiquez ici le nombre d'articles maximum à récupérer sur la page d'accueil")));
+				
 			echo $helpers['Form']->end(true); 
 			?>
 		</div>

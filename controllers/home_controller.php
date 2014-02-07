@@ -88,11 +88,6 @@ class HomeController extends AppController {
 		$posts = Cache::exists_cache_file($cacheFolder, $cacheFile);
 		
 		if(!$posts) {	
-			
-			$postsQuery = array(
-				'conditions' => array('online' => 1, 'display_home_page' => 1),
-				'limit' => '0, 5'
-			);	
 		
 			//////////////////////////////////////////////////////
 			//   RECUPERATION DES CONFIGURATIONS DES ARTICLES   //
@@ -100,6 +95,11 @@ class HomeController extends AppController {
 			$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'posts.ini', false, false); 		//Création d'une instance
 			$postsConfigs = $cfg->keys_values();											//Récupération des configurations
 			//////////////////////////////////////////////////////
+			
+			$postsQuery = array(
+				'conditions' => array('online' => 1, 'display_home_page' => 1),
+				'limit' => '0, '.$postsConfigs['home_page_limit']
+			);	
 		
 			if($postsConfigs['order'] == 'modified') { $postsQuery['order'] = 'modified DESC'; }
 			else if($postsConfigs['order'] == 'created') { $postsQuery['order'] = 'created DESC'; }
