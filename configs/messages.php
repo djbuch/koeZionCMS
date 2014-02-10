@@ -58,3 +58,13 @@ $Errorsmessages['Template']['name'] = _('La valeur de ce champ est de 2 caractè
 $Errorsmessages['Template']['layout'] = _('La valeur de ce champ est de 2 caractères minimum.');
 $Errorsmessages['Template']['version'] = _('La valeur de ce champ est de 2 caractères minimum.');
 $Errorsmessages['Template']['code'] = _('La valeur de ce champ est de 2 caractères minimum.');
+
+////////////////////////////////////////////
+//   MESSAGES D'ERREURS SUPPLEMENTAIRES   //
+$moreMessages = CONFIGS.DS.'plugins'.DS.'errors_messages';
+if(is_dir($moreMessages)) {
+
+	foreach(FileAndDir::directoryContent($moreMessages) as $moreMessage) {
+		require_once($moreMessages.DS.$moreMessage);
+	}
+}

@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 10/02/2014</name>
+		<num>20140210.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise en place de la récupération des messages d'erreurs plugins par un code</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 07/02/2014</name>
 		<num>20140207.002</num>
 		<supervisor>KoéZionCMS</supervisor>
