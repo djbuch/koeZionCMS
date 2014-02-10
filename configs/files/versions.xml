@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 10/02/2014</name>
+		<num>20140210.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Réactivation du processus d'upload de fichiers dans le cas ou celui-ci soit nécessaire en front</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 10/02/2014</name>
 		<num>20140210.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

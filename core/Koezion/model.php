@@ -696,7 +696,7 @@ class Model extends Object {
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 28/12/2011
- * @deprecated since 24/08/2012 - On passe par ckfinder pour les upload plus simple et plus léger
+ * @version 0.2 - 10/02/2014 - Reprise de la fonction dans le cas ou l'upload de fichiers en front soit nécessaire
  */	
 	function upload_files($datas, $id) {
 		
@@ -708,8 +708,15 @@ class Model extends Object {
 				$handle = new Upload($datas[$k]);
 				if($handle->uploaded) {
 					
-					if(isset($v['path']) && $v['path']) { $filePath = $v['path']; }
-					else { $filePath = WEBROOT.DS."upload".DS.get_class($this); }
+					if(isset($v['path']) && $v['path']) {
+						 
+						$filePath = $v['path']; 
+						$filePathBdd = $v['path']; 
+					} else {
+						 
+						$filePath = WEBROOT.DS."upload".DS.get_class($this).DS.$id; 
+						$filePathBdd = BASE_URL."/upload/".DS.get_class($this).'/'.$id; 
+					}
 					
 					$handle->Process($filePath);					
 					$fileName = $handle->file_dst_name;
@@ -725,7 +732,13 @@ class Model extends Object {
 						$update[$primaryKey] = $id;
 						$update[$k] = $fileName;						
 						
-						$sql = "UPDATE ".$this->table." SET ".$k." = '".$fileName."' WHERE ".$primaryKey." = ".$id;
+						$sql = "
+						UPDATE ".$this->table." 
+						SET 
+							".$k."_name = '".$fileName."', 
+							".$k."_path = '".$filePathBdd."' 
+							
+						WHERE ".$primaryKey." = ".$id;
 						$this->query($sql);
 					}
 					
