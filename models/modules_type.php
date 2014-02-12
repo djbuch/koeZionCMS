@@ -16,11 +16,6 @@ class ModulesType extends Model {
 		'name' => array(
 			'rule' => array('minLength', 2),
 			'message' => 'Module.name'
-		),
-			
-		'controller_name' => array(
-			'rule' => array('minLength', 2),
-			'message' => 'Module.controller_name'
 		)
 	);
 }

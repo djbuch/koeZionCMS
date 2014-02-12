@@ -1,5 +1,15 @@
 ﻿<versions>
 	<version>
+		<name>Version du 12/02/2014</name>
+		<num>20140212.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Logo KoéZion plus discret</task>
+			<task author="FI" type="code">Modification récupération des données à échapper dans la pagination</task>
+			<task author="FI" type="code">Suppression règle de validation dans le modèle ModulesType</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 10/02/2014</name>
 		<num>20140210.002</num>
 		<supervisor>KoéZionCMS</supervisor>

@@ -1,6 +1,8 @@
 <?php
 class PaginatorParentHelper extends Helper {
 		
+	var $excepts = array();
+	
 /**
  * function paginate
  *
@@ -157,7 +159,7 @@ class PaginatorParentHelper extends Helper {
 		$datas = $_GET;
 		
 		//On va parcourir les exemptions
-		foreach($excepts as $except) {
+		foreach($this->excepts as $except) {
 			
 			if(Set::check($_GET, $except)) { 
 				
