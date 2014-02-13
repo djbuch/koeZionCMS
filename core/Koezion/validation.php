@@ -224,6 +224,7 @@ class Validation {
  * @return 	boolean Success
  * @access 	public
  * @version 0.1 - 20/04/2012
+ * @version 0.2 - 13/02/2014 - Modification du tri sur le tableau callback pour ordonner selon la clé
  */	
 	function callback($val, $callback) {
 
@@ -239,7 +240,8 @@ class Validation {
 			if(method_exists($this->model, $action)) {
 								
 				$callback[0] = $val; //On affecte en premier index la valeur à tester
-				asort($callback); //On réorganise le tableau en triant les index
+				//asort($callback); //On réorganise le tableau en triant les index
+				ksort($callback); //On réorganise le tableau en triant les index
 				
 				return call_user_func_array(array($this->model, $action), $callback); //On fait appel à la fonction
 								
