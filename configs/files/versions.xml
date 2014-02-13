@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 13/02/2014</name>
+		<num>20140213.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Gestion automatique du layout lors de requêtes AJAX (core/Koezion/view.php)</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 12/02/2014</name>
 		<num>20140212.001</num>
 		<supervisor>KoéZionCMS</supervisor>

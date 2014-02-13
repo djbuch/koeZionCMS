@@ -83,6 +83,7 @@ class View extends Object {
  * @version 0.1 - 13/06/2012 by FI
  * @version 0.2 - 24/09/2012 by FI - Rajout du boolean $inViewsFolder pour indiquer si le dossier de stockage de la vue est dans views
  * @version 0.3 - 05/01/2014 by FI - Mise en place de la récupération des vues plugins directement dans les dossiers des templates de façon automatique
+ * @version 0.4 - 13/02/2014 by FI - Gestion automatique du layout lors de requêtes AJAX
  * @todo IMPORTANT essayer de voir pourquoi si on retire le file_exists($view) la fonction export du plugin formulaire ne marche plus!!!
  * @todo Essayer d'améliorer l'ajout de websitebaseurl dans le template car il est inséré juste après la récupération de la vue --> supprimé le 25/06/2013 rajouté directement dans le template
  */    
@@ -90,7 +91,10 @@ class View extends Object {
     	
     	if($this->rendered) { return false; } //Si la vue est déjà rendue on retourne faux
     
-    	extract($this->vars); //On récupère les variables	
+    	extract($this->vars); //On récupère les variables		
+    	
+    	//AJAX : si on trouve ajax_ dans le nom de la vue par défaut on change la valeur du layout
+    	if(substr($this->view, 0, 5) == 'ajax_') { $this->layout = 'ajax'; }
     	
     	//Si on désire rendre une vue particulière celle
     	if(strpos($this->view, '/') === 0 && $inViewsFolder) { $view = VIEWS.$this->view.'.php'; }
