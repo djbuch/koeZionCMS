@@ -34,6 +34,7 @@ define('ROOT', dirname(WEBROOT)); //Chemin vers le dossier racine du site
 
 define('CONFIGS', ROOT.DS.'configs'); //Chemin vers le dossier config
 	define('CONFIGS_FILES', CONFIGS.DS.'files'); //Chemin vers le dossier des .ini
+	define('CONFIGS_VERSIONS', CONFIGS.DS.'versions'); //Chemin vers le dossier des fichiers de versions
 	define('CONFIGS_HOOKS', CONFIGS.DS.'hooks'); //Chemin vers le dossier des hooks
 	define('CONFIGS_LAYOUT', CONFIGS.DS.'layout'); //Chemin vers le dossier des layout
 	define('CONFIGS_PLUGINS', CONFIGS.DS.'plugins'); //Chemin vers le dossier des plugins

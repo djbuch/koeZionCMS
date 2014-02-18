@@ -291,7 +291,7 @@ class DashboardController extends AppController {
  */
 	protected function _check_local_version($file) {
 		
-		$localBddXML = simplexml_load_file(CONFIGS_FILES.DS.$file);
+		$localBddXML = simplexml_load_file(CONFIGS_VERSIONS.DS.$file);
 		$localVersion = (float)$localBddXML->version[0]->num;
 		return $localVersion;
 	}

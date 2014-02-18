@@ -277,9 +277,7 @@ class Validation {
  */	
 	function checkType($val, $allowedMime = false) {
 		
-		if($val['error'] > 0) { return true; } //Si on a un code erreur
-		if($val['size'] == 0) { return true; } //Si le fichier est vide
-		if(!in_array($data['type'], $allowedMime)) { return false; }		
+		if(!in_array($val['type'], $allowedMime)) { return false; }		
 		return true;
 	}	
 	
@@ -287,18 +285,16 @@ class Validation {
  * Cette fonction est chargée de contrôler la taille maximale du fichier
  *
  * @param 	array 	$val		Value to check
- * @param 	integer $maxSize 	Taille maximale (par défaut faux pour aucune limite)
+ * @param 	integer $maxSize 	Taille maximale en Mo
  * @return 	boolean Success
  * @access 	public
  * @version 0.1 - 13/11/2012
  * @see http://stackoverflow.com/questions/3185603/validation-on-a-input-file-in-cakephp pour la base de départ
  */		
 	function checkSize($val, $maxSize = false) {
-		
-		if($val['error'] > 0) { return true; } //Si on a un code erreur
-		if($val['size'] == 0) { return true; } //Si le fichier est vide
-		if($data['size']/1024 > $maxSize) { return false; }
-		return true;
+				
+		if($maxSize && $val['size'] < ($maxSize * 1048576)) { return true; }
+		return false;
 	}
 
 /**
