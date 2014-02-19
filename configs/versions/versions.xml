@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 19/02/2014</name>
+		<num>20140219.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification récupération url internes dans l'éditeur de texte</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 18/02/2014</name>
 		<num>20140218.001</num>
 		<supervisor>KoéZionCMS</supervisor>

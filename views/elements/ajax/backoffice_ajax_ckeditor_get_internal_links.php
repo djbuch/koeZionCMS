@@ -5,14 +5,18 @@ $aUrlList = array();
 foreach($categories as $k => $v) { 
 	
 	$aUrlList['[ ==== '._("Pages catégories").' ==== ]'] = ''; 
-	$aUrlList[str_repeat('___', $v['level'] + 1).$v['name']] = Router::url('categories/view/id:'.$v['id'].'/slug:'.$v['slug']); 
+	$url = Router::url('categories/view/id:'.$v['id'].'/slug:'.$v['slug']);	
+	if(isset($v['redirect_to']) && !empty($v['redirect_to'])) { $url = Router::url($v['redirect_to']); }
+	$aUrlList[str_repeat('___', $v['level'] + 1).$v['name']] = $url;
 }
 
 //Réorganisation de la liste des articles
 foreach($posts as $k => $v) {
 
 	$aUrlList['[ ==== '._("Articles").' ==== ]'] = '';
-	$aUrlList['___'.$v['name']] = Router::url('posts/view/id:'.$v['id'].'/slug:'.$v['slug'].'/prefix:'.$v['prefix']);
+	$url = Router::url('posts/view/id:'.$v['id'].'/slug:'.$v['slug'].'/prefix:'.$v['prefix']);
+	if(isset($v['redirect_to']) && !empty($v['redirect_to'])) { $url = Router::url($v['redirect_to']); }
+	$aUrlList['___'.$v['name']] = $url;
 }
 
 /////////////////////////////////////////////////////////////////////////////
