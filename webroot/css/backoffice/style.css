@@ -40,7 +40,7 @@ img{border:0}
 #left ul li li a.under_section:visited + ul a{padding-left:20px;}
 #left ul ul li a:hover{background:0;background:#f9f9f9}
 #left ul ul li.active a,#left ul ul li.active a:link,#left ul ul li.active a:active,#left ul ul li.active a:visited{background:none #f9f9f9;color:#000}
-#left ul ul li a.under_section{background-color: #EBEBEB;}
+#left ul ul li a.under_section{background-color: #EBEBEB;text-transform: uppercase;font-weight: bold;}
 #left #social{display:block;/*margin:13px 20px 0 0;*/padding-left:10px;font-size:11px;text-align:center;color:#949494;}
 #left #social .facebook{float: left;}
 #left #social .twitter{float: right;width: 100px;}

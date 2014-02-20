@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 20/02/2014</name>
+		<num>20140220.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Corrections CSS backoffice</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 19/02/2014</name>
 		<num>20140219.001</num>
 		<supervisor>KoéZionCMS</supervisor>
