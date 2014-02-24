@@ -199,6 +199,7 @@ class Model extends Object {
  * @version 0.1 - 28/12/2011 by FI
  * @version 0.2 - 02/05/2012 by FI - Mise en place de la conditions de récupérations selon l'identifiant du site
  * @version 0.3 - 30/05/2012 by FI - Modification de la génération de la condition de recherche pour intégrer l'utilisation de tableau de condition sans index particulier ==> $condition = array('conditions' => array("name LIKE '%...%'"));
+ * @version 0.4 - 24/02/2014 by FI - Mise en place de la vérification de la présente ou non de l'alias dans les champs des conditions de recherche
  */    
 	public function find($req = array(), $type = PDO::FETCH_ASSOC) {
 		
@@ -326,7 +327,11 @@ class Model extends Object {
 							//Equivalement de mysql_real_escape_string --> $v = '"'.mysql_escape_string($v).'"';
 							if(!is_numeric($v) && !is_array($v)) { $v = $this->db->quote($v); }
 							
-							$k = $this->alias.".".$k;
+							//On recherche si un point est présent dans la valeur du champ ce qui voudrait dire que l'alias est déjà renseigné
+							//auquel cas on ne le rajoute pas
+							//$k = $this->alias.".".$k;														
+							$kExplode = explode('.', $k);
+							if(count($kExplode) == 1) { $k = $this->alias.".".$kExplode[0]; }
 							
 							if(is_array($v)) { $cond[] = $k." IN (".implode(',', $v).")"; }
 							else { $cond[] = $k."=".$v; }
