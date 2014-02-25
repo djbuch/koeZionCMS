@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 25/02/2014</name>
+		<num>20140225.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la gestion du label dans le helper form</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 24/02/2014</name>
 		<num>20140224.001</num>
 		<supervisor>KoéZionCMS</supervisor>

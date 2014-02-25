@@ -45,7 +45,7 @@ class FormParentHelper extends Helper {
  * @author 	koéZionCMS
  * @version 0.1 - 20/01/2012 by FI
  */
-	var $escapeAttributes = array('type', 'displayError', 'label', 'datas', 'value', 'divRowBorderTop', 'tooltip', 'modelToCheck');
+	var $escapeAttributes = array('type', 'displayError', 'label', 'datas', 'value', 'divRowBorderTop', 'tooltip', 'modelToCheck', 'labelClass', 'labelStyle');
 
 /**
  * Constructeur de la classe
@@ -157,7 +157,9 @@ class FormParentHelper extends Helper {
 			'label' => true,
 			'displayError' => true,
 			'value' => null,
-			'tooltip' => false
+			'tooltip' => false,
+			'labelClass' => false,
+			'labelStyle' => false
 		);
 		$options = array_merge($defaultOptions, $options); //Génération du tableau d'options utilisé dans la fonction
 
@@ -217,7 +219,11 @@ class FormParentHelper extends Helper {
 		//Gestion du label de l'input
 		if($options['label']) {
 
-			$labelReturn = '<label for="'.$inputIdText.'">';
+			$labelReturn = '<label for="'.$inputIdText.'"';
+			if($options['labelClass']) { $labelReturn .= ' class="'.$options['labelClass'].'"'; }			
+			if($options['labelStyle']) { $labelReturn .= ' style="'.$options['labelStyle'].'"'; }			
+			$labelReturn .= '>';
+			
 			if($options['tooltip']) {
 
 				$labelReturn .= '<img src="'.BASE_URL.'/img/backoffice/tooltip.png" alt="tooltip" style="float: left; margin-right: 5px; cursor: pointer;" class="tip-w" original-title="'.$options['tooltip'].'" />';
@@ -269,7 +275,12 @@ class FormParentHelper extends Helper {
 				//Gestion du label de l'input
 				//On recrée le label afin d'être sûrs de l'identifiant de celui-ci
 				if($options['label']) {
-					$labelReturn = '<label for="'.$inputIdText.'">'.$label;
+					
+					$labelReturn = '<label for="'.$inputIdText.'"';
+					if($options['labelClass']) { $labelReturn .= ' class="'.$options['labelClass'].'"'; }		
+					if($options['labelStyle']) { $labelReturn .= ' style="'.$options['labelStyle'].'"'; }				
+					$labelReturn .= '>'.$label;
+					
 					if($options['tooltip']) {
 						$labelReturn .= '<img src="'.BASE_URL.'/img/backoffice/tooltip.png" alt="tooltip" style="float: left; margin-right: 5px; cursor: pointer;" class="tip-w" original-title="'.$options['tooltip'].'" />';
 					}
