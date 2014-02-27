@@ -1,46 +1,36 @@
 <?php
-function debug($var, $die = 0) {
-	
-	if(Configure::read('debug') > 0) {
-	
-		//Affichage de la ligne ayant fait appel au debug
-		$debug = debug_backtrace();
-		echo '<p style="background-color: #EBEBEB; border: 1px dashed black; padding: 10px;"><a href="#" onclick="$(this).parent().next(\'ol\').slideToggle(); return false;"><strong>'.$debug[0]['file'].'</strong> ligne '.$debug[0]['line'].'</a></p>';
-		
-		echo '<ol style="display:none; background-color: #EBEBEB; border: 1px dashed black; padding: 10px;">';
-		foreach($debug as $k => $v) {
-			if($k > 0) {
-				
-				echo '<li><strong>'.$v['file'].'</strong> ligne '.$v['line'].'</li>';
-			}		
-		}
-		echo '</ol>';
-		
-		
-		//Affichage du debug
-		pr($var);
-		
-		if($die) { die(); }
-	}
-}
-
 /**
  * Print_r convenience function, which prints out <PRE> tags around
  * the output of given array. Similar to debug().
  */
-	function pr($var, $start = null, $end = null) {
+	function pr($var, $start = null, $end = null, $die = 0) {
 		
-		if (Configure::read('debug') > 0) {
+		if (Configure::read('debug') > 0) {			
 			
 			$debug = debug_backtrace();
-			echo '<pre style="background-color: #EBEBEB; border: 1px dashed black; padding: 10px;">';			
-			print_r('[FILE] : '.$debug[0]['file']."\n");
-			print_r('[LINE] : '.$debug[0]['line']."\n\n");
-			print_r('[RESULTAT] : '."\n");
-			if(isset($start)) { print_r($start."\n"); }
-			print_r($var);
-			if(isset($end)) { print_r("\n".$end); }
-			echo '</pre>';
+			
+			echo '<div style="background-color: #EBEBEB; border: 1px dashed black; padding: 10px;">';
+			
+				echo '<pre style="background-color:#F0F0F0;border:1px solid #E3E3E3;color:#606362;font-size:12px;padding:10px;">';		
+					print_r('[FILE] : '.$debug[0]['file']."\n");
+					print_r('[LINE] : '.$debug[0]['line']."\n\n");
+					print_r('[RESULTAT] : '."\n");
+					if(isset($start)) { print_r($start."\n"); }
+					print_r($var);
+					if(isset($end)) { print_r("\n".$end); }
+				echo '</pre>';
+				
+				//DEBUG BACKTRACE
+				echo '<p><a href="#" onclick="$(this).parent().next(\'ol\').slideToggle(); return false;"><strong>Debug backtrace</strong></a></p>';			
+				echo '<ol style="display:none;margin-left:20px;">';
+				foreach($debug as $k => $v) {
+				
+					echo '<li style="margin-bottom:5px;"><strong>[FILE] : </strong>'.$v['file'].'<strong><br />[LINE] : </strong> '.$v['line'].'</li>';
+				}
+				echo '</ol>';
+			echo '</div>';
+			
+			if($die) { die(); }
 		}
 	}
 	
