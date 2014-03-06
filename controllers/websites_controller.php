@@ -354,14 +354,14 @@ class WebsitesController extends AppController {
  */	
 	protected function _update_txt_mails($websiteId, $datas) {
 			
-		$txtMails = $this->components['Text']->format_for_mailing(
+		$txtMails = $this->components['Email']->replace_links(
 			array(
 				'txt_mail_contact' => $datas['txt_mail_contact'],
 				'txt_mail_comments' => $datas['txt_mail_comments'],
 				'txt_mail_newsletter' => $datas['txt_mail_newsletter'],				
 			),
 			$datas['url']
-		); //On fait appel au composant Text pour formater les textes des mails
+		); //On fait appel au composant Email pour formater les textes des mails
 		
 		$datas = array(
 			'id' => $websiteId, 

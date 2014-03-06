@@ -30,6 +30,7 @@ class TextComponent extends Component {
 		'short' => array(1 => "Janv.", 2 => "Févr.", 3 => "Mars", 4 => "Avr.", 5 => "Mai", 6 => "Juin", 7 => "Juil.", 8 => "Août", 9 => "Sept.", 10 => "Oct.", 11 => "Nov.", 12 => "Déc."),
 		'long' => array(1 => "Janvier", 2 => "Février", 3 => "Mars", 4 => "Avril", 5 => "Mai", 6 => "Juin", 7 => "Juillet", 8 => "Août", 9 => "Septembre", 10 => "Octobre", 11 => "Novembre", 12 => "Décembre"),			
 	);
+	
 //////////////////////////////////////////////////////////////////////////////////////////
 //								FONCTIONS PUBLIQUES										//
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -165,56 +166,6 @@ class TextComponent extends Component {
 	}
 	
 /**
- * Cette fonction va retourner des chaines de caractères dont les liens auront étés transformés en url absolues
- *
- * @param 	array  		$datas 		Tableau à convertir
- * @param 	varchar  	$url2Use 	Url à remplacer dans les liens
- * @return 	array	Tableau converti
- * @access 	public
- * @author 	koéZionCMS
- * @version 0.1 - 02/08/2012 by FI
- */		
-	function format_for_mailing($datas, $url2Use) {
-		
-		require_once(LIBS.DS.'simple_html_dom.php'); //Chargement de la librairie
-				
-		//Modification des données
-		foreach($datas as $field => $data) {
-		
-			$html = str_get_html($data);
-		
-			if(!empty($html)) {
-			
-				//Modification des liens vers les images
-				foreach($html->find('img') as $k => $v) {
-			
-					$scr = $v->src;
-					if(!substr_count($scr, $url2Use) && !substr_count($scr, 'http://')) { 
-						
-						if(!substr_count($url2Use, "http://")) { $v->src = 'http://'.$url2Use.$v->src; } 
-						else { $v->src = $url2Use.$v->src; }
-					}
-				}
-			
-				//Modification des liens
-				foreach($html->find('a') as $k => $v) {
-			
-					$href = $v->href;
-					if(!substr_count($href, "http://")) { 
-						
-						if(!substr_count($url2Use, "http://")) { $v->href = 'http://'.$url2Use.$v->href; } 
-						else { $v->href = $url2Use.$v->href; } 
-					}				
-					//if(!substr_count($href, "http://")) { $v->href = 'http://'.$url2Use.$v->href; }
-				}
-				$datas[$field] = $html->outertext;
-			}
-		}		
-		
-		return $datas;
-	}
-	
-/**
  * Cette fonction va retourner le texte en remplaçant certains caractères par d'autres
  *
  * @param 	varchar $content 	Texte source
@@ -227,9 +178,7 @@ class TextComponent extends Component {
 		
 		$content = str_replace('&brvbar;', '&#92;', $content);		
 		return $content;
-	}
-	
-	
+	}	
 	
 /**
  * Cette fonction va convertir les < (inférieur à) en &lt; et les > (supérieur à) en &gt; 
@@ -245,8 +194,7 @@ class TextComponent extends Component {
 		$content = str_replace('<', '&lt;', $content);
 		$content = str_replace('>', '&gt;', $content);
 		return $content;
-	}	
-	
+	}		
 
 /**
  * Supprimer les accents
@@ -272,9 +220,5 @@ class TextComponent extends Component {
 	
 		if($toLower) { $str = strtolower($str); }
 		return $str;
-	}	
-	
-//////////////////////////////////////////////////////////////////////////////////////////
-//								FONCTIONS PRIVEES										//
-//////////////////////////////////////////////////////////////////////////////////////////	
+	}
 }

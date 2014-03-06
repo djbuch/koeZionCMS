@@ -204,4 +204,88 @@ class EmailComponent extends Component {
 		
 		return $numSent;	
 	}
+	
+/**
+ * Cette fonction va retourner des chaines de caractères dont les liens auront étés transformés en url absolues
+ *
+ * @param 	array  	$datas 			Tableau à convertir
+ * @param 	varchar $url2Use 		Url à remplacer dans les liens
+ * @param 	array 	$replacement 	Si renseigné ce tableau permettra d'effectuer les remplacements de chaines
+ * @return 	array	Tableau converti
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 02/08/2012 by FI
+ * @version 0.2 - 06/03/2014 by FI - Rajout de $replacement
+ */		
+	function replace_links($datas, $url2Use, $replacement = null) {
+		
+		require_once(LIBS.DS.'simple_html_dom.php'); //Chargement de la librairie
+				
+		//Modification des données
+		foreach($datas as $field => $data) {
+		
+			$html = str_get_html($data);
+		
+			if(!empty($html)) {
+			
+				//Modification des liens vers les images
+				foreach($html->find('img') as $k => $v) {
+			
+					$scr = $v->src;
+					if(!substr_count($scr, $url2Use) && !substr_count($scr, 'http://')) { 
+						
+						if(!substr_count($url2Use, "http://")) { $v->src = 'http://'.$url2Use.$v->src; } 
+						else { $v->src = $url2Use.$v->src; }
+					}
+				}
+			
+				//Modification des liens
+				foreach($html->find('a') as $k => $v) {
+			
+					$href = $v->href;
+					if(!substr_count($href, "http://")) { 
+						
+						if(!substr_count($url2Use, "http://")) { $v->href = 'http://'.$url2Use.$v->href; } 
+						else { $v->href = $url2Use.$v->href; } 
+					}				
+					//if(!substr_count($href, "http://")) { $v->href = 'http://'.$url2Use.$v->href; }
+				}
+				
+				$content = $html->outertext;
+				if(isset($replacement)) { $content = $this->replace_content($content, $replacement); }				
+				$datas[$field] = $content;
+			}
+		}		
+		
+		return $datas;
+	}
+
+/**
+ * Cette fonction permet d'effectuer le rempmlace des données contenues dans un text
+ * Dans $content si on trouve un texte du style [Customer.name] et que l'index est présent dans $replacement alors le texte sera remplacé par sa veleur dans le tableau 
+ * @param 	varchar $content 		Texte dans lequel il faut chercher
+ * @param 	array 	$replacement	Données de remplacement
+ * @return 	varchar	Contenu modifié
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 06/03/2014 by FI
+ */		
+	public function replace_content($content, $replacement) {
+		
+		preg_match_all("/\[(.+?)\]/", $content, $result);
+		
+		//$result contient 
+		// - dans le premier index (0) les chaines trouvés dans le texte avec les crochets
+		// - dans le second (1) les chaines trouvés dans le texte sans les crochets
+		if(!empty($result[1])) {
+			
+			foreach($result[1] as $key => $path) {
+				
+				$value = Set::classicExtract($replacement, $path);
+				if($value) { $content = str_replace($result[0][$key], $value, $content); }			
+			}			
+		}
+		
+		return $content;
+	}
 }

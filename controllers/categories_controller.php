@@ -703,10 +703,10 @@ class CategoriesController extends AppController {
 						$currentWebsite = Session::read('Backoffice.Websites.current'); //Récupération du site courant
 						$urlWebsite = Session::read('Backoffice.Websites.details.'.$currentWebsite.'.url'); //Récupération du site courant 						
 						
-						$txtMails = $this->components['Text']->format_for_mailing(
+						$txtMails = $this->components['Email']->replace_links(
 							array('message_mail' => $datas['message_mail']),
 							$urlWebsite
-						); //On fait appel au composant Text pour formater les textes des mails
+						); //On fait appel au composant Email pour formater les textes des mails
 						
 						$emailC = new Email();
 						$mailDatas = array(
