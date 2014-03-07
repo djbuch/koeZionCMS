@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 07/03/2014</name>
+		<num>20140307.003</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la récupération des erreurs dans le Helper Form</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 07/03/2014</name>
 		<num>20140307.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

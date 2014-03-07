@@ -171,15 +171,23 @@ class FormParentHelper extends Helper {
 			else { $modelName = $this->view->controller->params['modelName']; } //Récupération du model courant
 			if(isset($this->view->controller->$modelName->errors)) $errors = $this->view->controller->$modelName->errors; //Récupération des erreurs du formulaires
 		}
+		
+		//On va contrôler si on a des erreurs
+		if(isset($errors) && (isset($errors[$name]) || Set::check($errors, $name) || Set::check($errors, $modelName.'.'.$name))) {
+
+			if(isset($errors[$name])) { $error = $errors[$name]; }
+			else if(Set::check($errors, $name)) { $error = Set::classicExtract($errors, $name); }
+			else if(Set::check($errors, $modelName.'.'.$name)) { $error = Set::classicExtract($errors, $modelName.'.'.$name); }
+		}		
 
 		//On va contrôler si on a des erreurs
 		//if(isset($errors[$name])) {
-		if(isset($errors) && (Set::check($errors, $name) || isset($errors[$name]))) {
+		/*if(isset($errors) && (Set::check($errors, $name) || isset($errors[$name]))) {
 
 			//$error = $errors[$name]; //La valeur de l'erreur est stockée
 			$error = isset($errors[$name]) ? $errors[$name] : Set::classicExtract($errors, $name); //La valeur de l'erreur est stockée
 			//unset($this->view->controller->$modelName->errors[$name]);
-		}
+		}*/
 
 		$value = $this->_get_input_value($name, $options['value']);
 
