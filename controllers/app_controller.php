@@ -840,10 +840,10 @@ class AppController extends Controller {
 			} else {
 		
 				//Gestion des erreurs
-				$message = '<p class="error">Merci de corriger vos informations';
+				$message = '<p class="error"><strong>Merci de corriger vos informations</strong>';
 				foreach($this->Contact->errors as $k => $v) { $message .= '<br />'.$v; }
 				$message .= '</p>';
-				$messageKo = '<p>Merci de corriger vos informations';
+				$messageKo = '<p><strong>Merci de corriger vos informations</strong>';
 				foreach($this->Contact->errors as $k => $v) { $messageKo .= '<br />'.$v; }
 				$messageKo .= '</p>';
 				
@@ -924,10 +924,10 @@ class AppController extends Controller {
 				
     		} else {
     	
-    			$message = '<p class="error">Merci de corriger vos informations';
+    			$message = '<p class="error"><strong>Merci de corriger vos informations</strong>';
     			foreach($this->PostsComment->errors as $k => $v) { $message .= '<br />'.$v; }
     			$message .= '</p>';
-    			$messageKo = '<p>Merci de corriger vos informations';
+    			$messageKo = '<p><strong>Merci de corriger vos informations</strong>';
     			foreach($this->PostsComment->errors as $k => $v) { $messageKo .= '<br />'.$v; }
     			$messageKo .= '</p>';
     			

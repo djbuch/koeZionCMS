@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 07/03/2014</name>
+		<num>20140307.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de l'affichage des messages d'erreurs et de confirmation</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 06/03/2014</name>
 		<num>20140306.001</num>
 		<supervisor>KoéZionCMS</supervisor>
