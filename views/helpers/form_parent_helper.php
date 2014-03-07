@@ -146,6 +146,7 @@ class FormParentHelper extends Helper {
  * @version 0.3 - 22/02/2012 by FI - Gestion de l'affichage du tooltip
  * @version 0.4 - 06/04/2012 by FI - Passage de la fonction en privée pour la gestion de l'internationnalisation
  * @version 0.5 - 17/12/2013 by FI - Reprise de la gestion des select pour pouvoir gérer optgroup
+ * @version 0.6 - 07/03/2014 by FI - Reprise de la gestion de la récupération des erreurs
  * @todo Input de type submit etc..., input radio
  * @todo Voir si utile de gérer en récursif la gestion de optgroup pour le select
  */
@@ -173,6 +174,11 @@ class FormParentHelper extends Helper {
 		}
 		
 		//On va contrôler si on a des erreurs
+		//Puis on va vérifier si pour l'input en cours on récupère un message
+		//Les cas suivants sont traités : 
+		//1 - On contrôle si l'index name est présent dans le tableau
+		//2 - On contrôle via la librairie Set si l'index name est dans le tableau par exempel Model.field
+		//3 - On contrôle via la librairie Set si l'index Model.name est dans le tableau
 		if(isset($errors) && (isset($errors[$name]) || Set::check($errors, $name) || Set::check($errors, $modelName.'.'.$name))) {
 
 			if(isset($errors[$name])) { $error = $errors[$name]; }
