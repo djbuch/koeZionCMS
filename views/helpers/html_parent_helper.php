@@ -46,6 +46,16 @@ class HtmlParentHelper extends Helper {
  */	
 	private $js = array();
 	
+/**
+ * Variable contenant les différentes variables a envoyer aux fichiers
+ *
+ * @var 	array
+ * @access 	private
+ * @author 	koéZionCMS
+ * @version 0.1 - 07/03/2014 by FI
+ */	
+	private $jsParams = array();
+	
 //////////////////////////////////////////////////////////////////////////////////////////
 //								FONCTIONS PUBLIQUES										//
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -95,7 +105,7 @@ class HtmlParentHelper extends Helper {
 			}
 			
 			$html = ''; //Code HTML qui sera retourné
-			foreach($css as $v) { //Parcours de l'ensemble des fichiers
+			foreach($css as $k => $v) { //Parcours de l'ensemble des fichiers
 
 				//On va vérifier si le css n'est pas externe
 				if(substr_count($v, 'http://')) { $cssPath = $v; }
@@ -145,6 +155,35 @@ class HtmlParentHelper extends Helper {
 	
 /**
  * Cette fonction permet le chargement des fichiers javascript utilisés dans le CMS (Front et Back)
+ * 
+ * --> pour envoyer des variables depuis PHP aux fichier JS procéder comme suit
+ * 
+ * 1/ Charger les variables
+ * 
+ * $helpers['Html']->set_js_params(
+ * 		array(
+ * 			'INDEX1' => array(
+ * 				'varName' => 'value',
+ * 				'varName' => 'value',
+ * 				...
+ * 			),
+ * 			'INDEX2' => array(
+ * 				'varName' => 'value',
+ * 				'varName' => 'value',
+ * 				...
+ * 			),
+ * 			...
+ * 		)
+ * );
+ * 
+ * 2/ Charger les fichiers
+ * 
+ * $js = array(
+ * 		'INDEX1' => 'PATH_TO_FILE',
+ * 		'INDEX2' => 'PATH_TO_FILE',
+ * 		...
+ * );
+ * echo $helpers['Html']->js($js, true);
  *
  * @param varchar $js		Chemin du fichier JS à charger
  * @param boolean $inline 	Permet d'indiquer si il faut charger directement le js ou pas
@@ -159,6 +198,7 @@ class HtmlParentHelper extends Helper {
  * @version 0.4 - 11/12/2013 by FI : Suppression de la variable $plugin
  * @version 0.5 - 27/12/2013 by FI : Correction d'un bug lors du chargement en inline
  * @version 0.6 - 27/12/2013 by FI : Mise en place la possibilité de charger directement un fichier
+ * @version 0.7 - 07/03/2014 by FI : Mise en place la possibilité de charger des variables pour les fichiers
  */	
 	public function js($js, $inline = false, $merge = true, $minified = false) {
 		
@@ -172,7 +212,7 @@ class HtmlParentHelper extends Helper {
 			}
 			
 			$html = ''; //Code HTML qui sera retourné
-			foreach($js as $v) { //Parcours de l'ensemble des fichiers
+			foreach($js as $k => $v) { //Parcours de l'ensemble des fichiers
 				
 				//On va vérifier si le js n'est pas externe
 				if(substr_count($v, 'http://')) { $jsPath = $v; }
@@ -196,6 +236,15 @@ class HtmlParentHelper extends Helper {
 					
 					if(!substr_count($v, '.js')) { $jsFile.='.js'; } //On teste si l'extension n'est pas déjà renseignée sinon on la rajoute
 					$jsPath = Router::webroot($jsFile); //On génère le chemin vers le fichier
+				}				
+				
+				//On contrôle si il faut charger d'éventuels paramètres au fichier courant
+				//On charge les données avant le fichier
+				if(!empty($this->jsParams) && isset($this->jsParams[$k])) {
+					
+					$html .= "\t\t".'<script type="text/javascript">';
+					foreach($this->jsParams[$k] as $paramName => $paramValue) { $html .= 'var '.$paramName.' = '.$paramValue.';'."\n"; }
+					$html .= '</script>'."\n"; //On génère la balise de chargement
 				}
 				$html .= "\t\t".'<script src="'.$jsPath.'" type="text/javascript"></script>'."\n"; //On génère la balise de chargement			
 			}	
@@ -205,47 +254,16 @@ class HtmlParentHelper extends Helper {
 	}
 	
 /**
- * Cette fonction est utilisée pour générer le menu frontoffice
- * Cette fonction est récursive
- * Elle ne retourne aucune données
- *
- * @param array $categories		Liste des catégories qui composent le menu
- * @param array $breadcrumbs	Fil d'ariane utilisé pour sélectionner la catégorie courante
- * @param array $moreElements	Permet de rajouter des menus qui ne sont pas dans la table des catégories
+ * Cette fonction permet la mise à jour du tableau de paramètres a passer aux fichiers JS
+ * @param array $jsParams Tableaux des paramètres
  * @access 	public
  * @author 	koéZionCMS
- * @version 0.1 - 06/03/2012 by FI
- * @version 0.2 - 28/05/2013 by TB	ajout de l'id "mainMenu" pour la liste du menu
- * @deprecated since 05/06/2013 Cette fonction est maintenant dans le helper nav qui se trouve dans le dossier du template
+ * @version 0.1 - 07/03/2014 by FI
  */	
-	/*public function generateMenu($categories, $breadcrumbs, $moreElements = null) {
+	public function set_js_params($jsParams) {
 		
-		if(count($categories) > 0) {		
-			
-			if(!empty($breadcrumbs)) { $iParentCategory = $breadcrumbs[0]['id']; } else { $iParentCategory = 0; }
-			?><ul id="mainMenu"><?php			
-			foreach($categories as $k => $v) {
-				
-				?>
-				<li>
-					<?php if($v['level'] == 1 && $iParentCategory == $v['id']) { $sCssMenu = ' class="menu_selected_bg"'; } else { $sCssMenu = ''; } ?>
-					<a href="<?php echo Router::url('categories/view/id:'.$v['id'].'/slug:'.$v['slug']); ?>"<?php echo $sCssMenu; ?>><?php echo $v['name']; ?></a>
-					<?php if(isset($v['children'])) { $this->generateMenu($v['children'], $breadcrumbs); }; ?>
-				</li>
-				<?php
-			}
-
-			if(isset($moreElements) && !empty($moreElements)) { 
-				
-				foreach($moreElements as $k => $v) {
-					?>
-					<li<?php if(isset($v['class'])) { ?> class="<?php echo $v['class']; ?>"<?php } ?>><a href="<?php echo $v['link']; ?>"><?php echo $v['name']; ?></a></li>
-					<?php 
-				}
-			}
-			?></ul><?php
-		}		
-	}*/
+		$this->jsParams = am($this->jsParams, $jsParams);		
+	}
 	
 /**
  * Cette fonction est utilisée pour afficher des images

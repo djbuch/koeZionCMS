@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 07/03/2014</name>
+		<num>20140307.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise en place de la possibilité de passer des paramètres aux fichiers JS via le Helper HTML</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 07/03/2014</name>
 		<num>20140307.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
