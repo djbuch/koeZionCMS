@@ -104,12 +104,16 @@ $jsContextMenu = array();
 	
 	<script type="text/javascript">	
 	$(document).ready(function() { 
+	   	   
+	   var screenSurface = $.get_surface_ecran();
+	   var mainHeight = screenSurface.windowHeight - 52;
+	   $('#wrapper #right #main').css('height', mainHeight);
 	   
 	    /**************************************************
 	     * Context-Menu with Sub-Menu
 	     **************************************************/
 	    $.contextMenu({
-	        selector: '#wrapper',
+	        selector: '#wrapper #right #main',
 	        items: <?php echo json_encode($jsContextMenu); ?>
 	    });
 	});
