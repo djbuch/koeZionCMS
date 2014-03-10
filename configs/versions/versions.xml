@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 10/03/2014</name>
+		<num>20140310.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise en place dans le BO d'un menu contextuel sur le clic droit de la souris</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 07/03/2014</name>
 		<num>20140307.004</num>
 		<supervisor>KoéZionCMS</supervisor>

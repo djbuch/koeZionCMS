@@ -1,14 +1,58 @@
+<?php 
+/*
+Format du tableau utilisé pour la génération du menu sur le clic droit
+Reprendre cette partie car le code n'est pas optimisé
+Dans un besoin de rapidité il a été monté rapidement pour être vite fonctionnel
+Prévoir peut être de la récursivité
+$jsContextMenu = array(
+	"edit" => array("name" => "Edit", "icon" => "edit", 'url' => 'test'),
+    "cut" => array("name" => "Cut", "icon" => "cut"),
+    "sep1" => "---------",
+    "quit" => array("name" => "Quit", "icon" => "quit"),
+    "sep2" => "---------",
+    "fold1" => array(
+    	"name" => "Sub group", 
+        "items" => array(
+        	"fold1-key1" => array("name" => "Foo bar"),
+            "fold2" => array(
+            	"name" => "Sub group 2", 
+                "items" => array(
+                	"fold2-key1" => array("name" => "alpha"),
+                    "fold2-key2" => array("name" => "bravo"),
+                    "fold2-key3" => array("name" => "charlie")
+				)
+			),
+            "fold1-key3" => array("name" => "delta")
+		)
+	),
+    "fold1a" => array(
+    	"name" => "Other group", 
+        "items" => array(
+        	"fold1a-key1" => array("html" => '<a href="http://www.google.fr" >TEST LINK</a>', "type" => "html"),
+            "fold1a-key2" => array("html" => '<a href="http://www.google.fr" >TEST LINK</a>', "type" => "html"),
+            "fold1a-key3" => array("html" => '<a href="http://www.google.fr" >TEST LINK</a>', "type" => "html")
+		)
+	)
+);
+*/
+$jsContextMenu = array();
+?>
 <div id="left">
 	<span class="menu">Menu</span>
 	<ul>
 		<?php 
+		$cpt = 0;
 		foreach($leftMenus as $k => $v) {
-
-			if(count($v['menus'])) {		
-					
+			
+			if(count($v['menus'])) {
 				?>
 				<li>
-					<?php if(!empty($v['libelle'])) { ?><a><?php echo $v['libelle']; ?></a><?php } ?>
+					<?php 
+					if(!empty($v['libelle'])) { ?><a><?php echo $v['libelle']; ?></a><?php } 
+					$folderIdA = 'fold'.$cpt;
+					$cpt++;
+					$jsContextMenu[$folderIdA]['name'] = $v['libelle']; 
+					?>
 					<ul>
 						<?php 
 						foreach($v['menus'] as $key => $leftMenus) {
@@ -16,22 +60,37 @@
 							if(!is_int($key)) { 
 								?>
 								<li>
-									<?php if(!empty($key)) { ?><a class="under_section"><?php echo $key; ?></a><?php } ?>
+									<?php 
+									if(!empty($key)) { ?><a class="under_section"><?php echo $key; ?></a><?php } 
+									$folderIdB = 'fold'.$cpt;
+									$cpt++;
+									$jsContextMenu[$folderIdA]['items'][$folderIdB]['name'] = $key;
+									?>
 									<ul>
 										<?php 
 										foreach($leftMenus as $leftMenu) {
-										
+
+											$folderIdC = 'fold'.$cpt;
+											$cpt++;
+											
 											$action = !empty($leftMenu['action_name']) ? $leftMenu['action_name'] : 'index';
-											?><li><a href="<?php echo Router::url('backoffice/'.$leftMenu['controller_name'].'/'.$action); ?>"><?php echo $leftMenu['name']; ?></a></li><?php
+											$link = '<a href="'.Router::url('backoffice/'.$leftMenu['controller_name'].'/'.$action).'">'.$leftMenu['name'].'</a>'; 
+											?><li><?php echo $link; ?></li><?php
+											$jsContextMenu[$folderIdA]['items'][$folderIdB]['items'][$folderIdC] = array('type' => 'html', 'html' => $link);
 										}
 										?>
 									</ul>
 								</li>
 								<?php 								
 							} else {
+
+								$folderIdD = 'fold'.$cpt;
+								$cpt++;
 							
-								$action = !empty($leftMenus['action_name']) ? $leftMenus['action_name'] : 'index';						
-								?><li><a href="<?php echo Router::url('backoffice/'.$leftMenus['controller_name'].'/'.$action); ?>"><?php echo $leftMenus['name']; ?></a></li><?php
+								$action = !empty($leftMenus['action_name']) ? $leftMenus['action_name'] : 'index';		
+								$link = '<a href="'.Router::url('backoffice/'.$leftMenus['controller_name'].'/'.$action).'">'.$leftMenus['name'].'</a>';				
+								?><li><?php echo $link; ?></li><?php								
+								$jsContextMenu[$folderIdA]['items'][$folderIdD] = array('type' => 'html', 'html' => $link);
 							} 
 						} 
 						?>
@@ -42,6 +101,19 @@
 		} 
 		?>
 	</ul>
+	
+	<script type="text/javascript">	
+	$(document).ready(function() { 
+	   
+	    /**************************************************
+	     * Context-Menu with Sub-Menu
+	     **************************************************/
+	    $.contextMenu({
+	        selector: '#wrapper',
+	        items: <?php echo json_encode($jsContextMenu); ?>
+	    });
+	});
+	</script>		
 	
 	<?php /* ?>
 	<div id="social">
