@@ -79,7 +79,7 @@ class Object {
 		if(isset($this->$name)) { unset($this->$name); }
 	}
 	
-	function load_component($component, $path = null) {	
+	function load_component($component, $path = null, $componentController = null) {	
 
 		//Test pour vérifier si le composant à charder n'est pas celui d'un plugin
 		//Si c'est le cas $component sera du type : 'P/ecommerce/Cart'
@@ -96,6 +96,7 @@ class Object {
 		if(!isset($path)) { $componentPath = COMPONENTS; }
 		else { $componentPath = $path; } 
 		require_once $componentPath.DS.$componentFileName.'.php'; //Inclusion du fichier
+		if(isset($componentController)) { $controller = $componentController; } else { $controller = $this; }
 		$this->components[$component] = new $componentObjectName($this); //Et on insère l'objet
 	}		
 }

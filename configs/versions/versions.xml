@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 11/03/2014</name>
+		<num>20140311.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la fonction d'import de composants</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 10/03/2014</name>
 		<num>20140310.003</num>
 		<supervisor>KoéZionCMS</supervisor>
