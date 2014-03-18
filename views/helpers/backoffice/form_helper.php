@@ -99,7 +99,7 @@ class FormHelper extends FormParentHelper {
 			if(!isset($params['tooltip'])) { $params['tooltip'] = "Sélectionnez le fichier à importer"; }
 			if(!isset($params['button_value'])) { $params['button_value'] = "Sélectionnez le fichier"; }
 		}
-
+		
 		$inputFieldId = $this->_set_input_id($field);
 		ob_start();
 		?>
@@ -131,7 +131,7 @@ class FormHelper extends FormParentHelper {
 
 			<div class="rowright">
 				<?php
-				echo $this->input('select_file', '', array('type' => 'button', 'onclick' => 'BrowseServer'.$inputFieldId.'();', 'displayError' => false, 'label' => false, 'div' => false, 'tooltip' => false, 'value' => $params['button_value']));
+				echo $this->input('select_file', '<span>'.$params['button_value'].'</span>', array('type' => 'button', 'onclick' => 'BrowseServer'.$inputFieldId.'();', 'displayError' => false, 'label' => false, 'div' => false, 'tooltip' => false, 'class' => 'medium black'));
 				echo $this->input($field, '', array('tooltip' => false, 'div' => false, 'label' => false, 'class' => 'upload_file'));
 				?>
 			</div>
