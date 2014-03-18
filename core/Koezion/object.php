@@ -44,6 +44,10 @@ class Object {
 					
 				$connectorModel = $pluginsConnectors[$pluginUnderscoreName];
 				$file_path_plugin = PLUGINS.DS.$connectorModel.DS.'models'.DS.$file_name;	
+				
+				//Cahrgement de l'éventuel fichier supplémentaire pour les models
+				$pluginModelBoostrap = PLUGINS.DS.$connectorModel.DS.'model.php';
+				if(file_exists($pluginModelBoostrap)) { require_once($pluginModelBoostrap); }
 			}
 			//////////////////////////////////////////////		
 			

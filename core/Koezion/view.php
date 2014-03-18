@@ -32,7 +32,7 @@ class View extends Object {
  * @version 0.2 - 05/06/2013 by FI - Mise en place du chargement des helpers template
  * @version 0.2 - 05/06/2013 by FI - Modification de la gestion des Helpers, par défaut on charge de façon distincte les helpers du backoffice et du frontoffice pour plus de souplesse dans la gestion des templates
  */	
-	function __construct($view, $controller) {
+	public function __construct($view, $controller) {
 		
 		$this->view = $view;
 		$this->controller = $controller;
@@ -232,7 +232,21 @@ class View extends Object {
  * @author	koéZionCMS
  * @version 0.1 - 06/03/2012 by FI
  * @version 0.2 - 20/10/2013 by AB - Rajout de la gestion du dossier du plugin
+ * @version 0.3 - 18/03/2014 by FI - Modification gestion appel uniformisation avec la méthode du dispatcher rajout de la fonction loadControllerFile
  */
+    public function request($controller, $action, $parameters = array()) {
+    	
+    	// creation objet request : sera passé au constructeur du controller : par défaut vide, sinon peut contenir le nom du dossier du plugin
+    	$request = new Request();    	
+    	$file_name = $this->loadControllerFile($controller);    	
+    	$controller_name = Inflector::camelize($file_name); //On transforme le nom du fichier pour récupérer le nom du controller
+    	$c =  new $controller_name($request, false); //Création d'une instance du controller souhaité dans lequel on injecte la request
+    	//Appel de la fonction dans le contrôlleur
+    	return call_user_func_array(array($c, $action), $parameters);
+    }
+	
+	/*
+	ANCIENNE VERSION AU CAS OU 	
     function request($controller, $action, $parameters = array()) {
     	
     	// creation objet request : sera passé au constructeur du controller : par défaut vide, sinon peut contenir le nom du dossier du plugin
@@ -276,7 +290,7 @@ class View extends Object {
     	//Appel de la fonction dans le contrôlleur
     	return call_user_func_array(array($c, $action), $parameters);
     }
-    
+    */
 /**
  * Cette fonction permet de tester l'existence d'une fonction dans un controler depuis une vue
  * Utilisée surtout pour les plugins
@@ -288,7 +302,7 @@ class View extends Object {
  * @author	koéZionCMS
  * @version 0.1 - 01/10/2012 by FI
  */
-    function backoffice_index_for_plugin($controller, $action) {
+    public function backoffice_index_for_plugin($controller, $action) {
     	
     	$file_name_default = strtolower(Inflector::underscore($controller).'_controller'); //On récupère dans une variable le nom du controller    	
     	$file_path_default = CONTROLLERS.DS.$file_name_default.'.php'; //On récupère dans une variable le chemin du controller
@@ -312,4 +326,53 @@ class View extends Object {
     	if(!isset($c->index_view_for_backoffice)) { return true; }
     	else { return $c->index_view_for_backoffice; }
     }
+    
+/*FONCTION QUASI IDENTIQUE QUE CELLE DU DISPATCHER*/	
+	public function loadControllerFile($controllerToLoad) {		
+		
+		$controllerName = Inflector::underscore($controllerToLoad);			
+		$controller_path = CONTROLLERS.DS.$controllerName.'_controller.php'; //On récupère dans une variable le chemin du controller
+		
+		//////////////////////////////////////////////
+		//   RECUPERATION DES CONNECTEURS PLUGINS   //
+		//Les connecteurs sont utilisés pour la correspondance entre les plugins et les dossiers des plugins
+		$pluginsConnectors = get_plugins_connectors();
+		if(isset($pluginsConnectors[$controllerName])) {
+			
+			$this->request->pluginFolder = $sFolderPlugin = $pluginsConnectors[$controllerName]; //Récupération du dossier du plugin si le controller appellé est dans un connector d'un plugin
+			$controller_path = PLUGINS.DS.$sFolderPlugin.DS.'controllers'.DS.$controllerName.'_controller.php';
+			$controller_name = strtolower($controllerName.'_plugin_controller');
+		} else { $controller_name = strtolower($controllerName.'_controller'); }
+		//////////////////////////////////////////////
+		
+		if(file_exists($controller_path)) { 
+			
+			if(isset($sFolderPlugin)) {
+
+				//On doit contrôler si le plugin est installé en allant lire le fichiers
+				$pluginsList = Cache::exists_cache_file(TMP.DS.'cache'.DS.'variables'.DS.'Plugins'.DS, "plugins");
+				$pluginControllerToLoad = Inflector::camelize($sFolderPlugin);
+				if(!isset($pluginsList[$pluginControllerToLoad])) {
+				
+					Session::write('redirectMessage', $message);
+					$this->redirect('home/e404');
+					die();
+				}
+				
+				$pluginControllerBoostrap = PLUGINS.DS.$sFolderPlugin.DS.'controller.php';
+				if(file_exists($pluginControllerBoostrap)) { require_once($pluginControllerBoostrap); }
+			}
+			
+			require_once $controller_path; //Inclusion de ce fichier si il existe
+			return $controller_name;
+			
+		} else { 
+
+			if(isset($sFolderPlugin)) { $message = "Le controller du plugin ".$controllerToLoad." n'existe pas"." dans le fichier dispatcher ou n'est pas correctement installé"; }
+			else { $message = "Le controller ".$controllerToLoad." n'existe pas"." dans le fichier dispatcher"; }
+			Session::write('redirectMessage', $message);			
+			$this->redirect('home/e404');
+			die();
+		}
+	}
 }

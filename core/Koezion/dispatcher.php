@@ -99,7 +99,59 @@ class Dispatcher {
  * @author	koéZionCMS
  * @version 0.1 - 23/12/2011
  * @version 0.2 - 20/10/2013 by AB - Rajout de la gestion du dossier du plugin 
+ * @version 0.3 - 18/03/2014 by FI - Allègement de la gestion du chargement du fichier du controller 
  */
+	function loadControllerFile($controllerToLoad = null) {
+		
+		if(isset($controllerToLoad) && !empty($controllerToLoad)) { $this->request->controller = $controllerToLoad; }
+		
+		$controller_name = strtolower($this->request->controller.'_controller'); //On récupère dans une variable le nom du controller	
+		$controller_path = CONTROLLERS.DS.$controller_name.'.php'; //On récupère dans une variable le chemin du controller
+		
+		//////////////////////////////////////////////
+		//   RECUPERATION DES CONNECTEURS PLUGINS   //
+		//Les connecteurs sont utilisés pour la correspondance entre les plugins et les dossiers des plugins
+		$pluginsConnectors = get_plugins_connectors();
+		if(isset($pluginsConnectors[$this->request->controller])) {
+			
+			$this->request->pluginFolder = $sFolderPlugin = $pluginsConnectors[$this->request->controller]; //Récupération du dossier du plugin si le controller appellé est dans un connector d'un plugin
+			$controller_path = PLUGINS.DS.$sFolderPlugin.DS.'controllers'.DS.$controller_name.'.php';
+			$controller_name = strtolower($this->request->controller.'_plugin_controller');
+		}
+		//////////////////////////////////////////////
+	
+		if(file_exists($controller_path)) { 
+			
+			if(isset($sFolderPlugin)) {
+
+				//On doit contrôler si le plugin est installé en allant lire le fichiers
+				$pluginsList = Cache::exists_cache_file(TMP.DS.'cache'.DS.'variables'.DS.'Plugins'.DS, "plugins");
+				$pluginControllerToLoad = Inflector::camelize($sFolderPlugin);
+				if(!isset($pluginsList[$pluginControllerToLoad])) {
+				
+					$message = "Le controller du plugin ".$this->request->controller." n'existe pas"." dans le fichier dispatcher ou n'est pas correctement installé";
+					$this->error($message);
+					die();
+				}
+				
+				$pluginControllerBoostrap = PLUGINS.DS.$sFolderPlugin.DS.'controller.php';
+				if(file_exists($pluginControllerBoostrap)) { require_once($pluginControllerBoostrap); }
+			}
+			
+			require_once $controller_path; //Inclusion de ce fichier si il existe
+			return $controller_name;
+			
+		} else { 
+
+			if(isset($sFolderPlugin)) { $message = "Le controller du plugin ".$this->request->controller." n'existe pas"." dans le fichier dispatcher ou n'est pas correctement installé"; }
+			else { $message = "Le controller ".$this->request->controller." n'existe pas"." dans le fichier dispatcher"; }
+			$this->error($message);
+			die();	
+		}
+	}	
+	
+	/*
+	ANCIENNE VERSION AU CAS OU 
 	function loadControllerFile($controllerToLoad = null) {
 		
 		if(isset($controllerToLoad) && !empty($controllerToLoad)) { $this->request->controller = $controllerToLoad; }
@@ -174,6 +226,7 @@ class Dispatcher {
 		require_once $file_path; //Inclusion de ce fichier si il existe	
 		return $file_name;
 	}
+	*/
 	
 /**
  * Cette fonction va charger un controller
