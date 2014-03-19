@@ -1,5 +1,15 @@
 ﻿<versions>
 	<version>
+		<name>Version du 19/03/2014</name>
+		<num>20140319.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise en place de la possibilité de charger des fichiers CSS et JS supplémentaires dans le formulaire Websites</task>
+			<task author="FI" type="code">Modification du Helper HTML afin de rajouter la fonction permettant la gestion des ces nouveaux fichiers</task>
+			<task author="FI" type="code">Rajout de cette nouvelle fonction dans le layout principal</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 18/03/2014</name>
 		<num>20140318.003</num>
 		<supervisor>KoéZionCMS</supervisor>

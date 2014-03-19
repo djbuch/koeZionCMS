@@ -93,11 +93,13 @@ class FormHelper extends FormParentHelper {
 			$params['label'] = "Fichier à importer";
 			$params['tooltip'] = "Sélectionnez le fichier à importer";
 			$params['button_value'] = "Sélectionnez le fichier";
+			$params['display_input'] = true;
 		} else {
 
 			if(!isset($params['label'])) { $params['label'] = "Fichier à importer"; }
 			if(!isset($params['tooltip'])) { $params['tooltip'] = "Sélectionnez le fichier à importer"; }
 			if(!isset($params['button_value'])) { $params['button_value'] = "Sélectionnez le fichier"; }
+			if(!isset($params['display_input'])) { $params['display_input'] = true; }
 		}
 		
 		$inputFieldId = $this->_set_input_id($field);
@@ -130,9 +132,9 @@ class FormHelper extends FormParentHelper {
 			</label>
 
 			<div class="rowright">
-				<?php
+				<?php				
+				if($params['display_input']) { echo $this->input($field, '', array('tooltip' => false, 'div' => false, 'label' => false, 'class' => 'upload_file')); }
 				echo $this->input('select_file', '<span>'.$params['button_value'].'</span>', array('type' => 'button', 'onclick' => 'BrowseServer'.$inputFieldId.'();', 'displayError' => false, 'label' => false, 'div' => false, 'tooltip' => false, 'class' => 'medium black'));
-				echo $this->input($field, '', array('tooltip' => false, 'div' => false, 'label' => false, 'class' => 'upload_file'));
 				?>
 			</div>
 		</div>

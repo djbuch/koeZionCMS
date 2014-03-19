@@ -36,7 +36,8 @@
 			$websiteParams['tpl_layout'].'/css/theme_responsive',
 			$websiteParams['tpl_layout'].'/css/font-awsome'
 		);			
-		echo $helpers['Html']->css($css);		
+		echo $helpers['Html']->css($css);	
+		echo $helpers['Html']->upload_additional_files('CSS');		
 		if(!empty($websiteParams['css_hack'])) { ?><style type="text/css"><?php echo $websiteParams['css_hack']; ?></style><?php }		
 		?>
 	</head>
@@ -88,7 +89,8 @@
 			$websiteParams['tpl_layout'].'/js/theme',
 			$websiteParams['tpl_layout'].'/js/fittext/jquery.fittext'
 		);
-		echo $helpers['Html']->js($js);		
+		echo $helpers['Html']->js($js);	
+		echo $helpers['Html']->upload_additional_files('JS');	
 		if(!empty($websiteParams['js_hack'])) { ?><script type="text/javascript"><?php echo $websiteParams['js_hack']; ?></script><?php }
 		
 		echo $helpers['Html']->analytics($websiteParams['ga_code']); 

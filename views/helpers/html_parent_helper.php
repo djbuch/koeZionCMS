@@ -132,7 +132,8 @@ class HtmlParentHelper extends Helper {
 				}
 				$html .= "\t\t".'<link href="'.$cssPath.'" rel="stylesheet" type="text/css" />'."\n"; //On génère la balise de chargement						
 			}
-			$html .= "\n"; //Rajout d'un saut de ligne
+			
+			$html .= "\n"; //Rajout d'un saut de ligne			
 			return $html; //On retourne le code HTML
 		}
 			
@@ -247,7 +248,8 @@ class HtmlParentHelper extends Helper {
 					$html .= '</script>'."\n"; //On génère la balise de chargement
 				}
 				$html .= "\t\t".'<script src="'.$jsPath.'" type="text/javascript"></script>'."\n"; //On génère la balise de chargement			
-			}	
+			}			
+			
 			$html .= "\n"; //Rajout d'un saut de ligne
 			return $html; //On retourne le code HTML
 		}
@@ -263,6 +265,52 @@ class HtmlParentHelper extends Helper {
 	public function set_js_params($jsParams) {
 		
 		$this->jsParams = am($this->jsParams, $jsParams);		
+	}
+	
+/**
+ * Cette fonction permet l'insertion de fichier CSS ou JS supplémentaire directement depuis le dossier upload
+ * 
+ * @param	varchar $type 	CSS ou JS
+ * @param	array 	$except Tableau contenant la liste des fichiers à ignorer
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 19/03/2014 by FI
+ */	
+	public function upload_additional_files($type, $except = null) {
+				
+		$html = '';
+		if($type == 'CSS') {
+			
+			$moreCSSPath = UPLOAD.DS.'files'.DS.'css';
+			if(is_dir($moreCSSPath)) {
+			
+				foreach(FileAndDir::directoryContent($moreCSSPath) as $moreCSS) {
+					
+					if(!isset($except) || (isset($except) && !in_array($moreCSS, $except))) { 
+
+						//On génère la balise de chargement
+						$html .= "\t\t".'<link href="'.Router::webroot('/upload/files/css/'.$moreCSS).'" rel="stylesheet" type="text/css" />'."\n";
+					} 
+				}
+			}			
+			
+		} else if($type == 'JS') {
+			
+			$moreJSPath = UPLOAD.DS.'files'.DS.'js';
+			if(is_dir($moreJSPath)) {
+			
+				foreach(FileAndDir::directoryContent($moreJSPath) as $moreJS) {
+					
+					if(!isset($except[$moreJS])) {
+						
+						//On génère la balise de chargement
+						$html .= "\t\t".'<script src="'.Router::webroot('/upload/files/js/'.$moreJS).'" type="text/javascript"></script>'."\n";
+					}
+				}
+			}			
+		}	
+
+		return $html;
 	}
 	
 /**
