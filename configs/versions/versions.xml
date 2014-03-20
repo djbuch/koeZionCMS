@@ -1,6 +1,15 @@
 ﻿<versions>
 	<version>
 		<name>Version du 20/03/2014</name>
+		<num>20140320.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Corrections de la gestion des règles de validations dans le modèle principal</task>
+			<task author="FI" type="code">Corrections sur la gestion des messages pour l'inscription à la newsletter</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 20/03/2014</name>
 		<num>20140320.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

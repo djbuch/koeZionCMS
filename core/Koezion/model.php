@@ -18,6 +18,7 @@ class Model extends Object {
 	public $refererUrl = ''; //Cette variable va contenir l'url de la page appelante
 	public $manageWebsiteId = true; //Permet d'éviter de prendre en compte la recherche basée sur le champ website_id ainsi que l'insertion automatique de ce champ	
 	public $alias = false; //Alias de la table
+	public $validAllFields = false; //Indique si il faut ou non valider l'ensemble des champs de la table ou uniquement ceux envoyés
     
 /**
  * Constructeur de la classe
@@ -604,11 +605,11 @@ class Model extends Object {
 	
 /**
  * Cette fonction est en charge de la validation des données avant modification de la base de données
+ * $this->validAllFields Permet d'indiquer si il faut effectuer une validation obligatoire sur tous les champs présents dans les règles de validation
+ *						 Il est possible dans certains cas que le formulaire posté contienne moins de champs que ceux présents dans les règles de validation
  *
  * @param 	array 	$datas 			Données à sauvegarder
  * @param 	varchar $insertErrorsTo Si renseigne l'index $insertErrorsTo sera utilisé pour l'ajout des erreurs dans le modèle
- * @param 	boolean $validAllFields Permet d'indiquer si il faut effectuer une validation obligatoire sur tous les champs présents dans les règles de validation
- * 									Il est possible dans certains cas que le formulaire posté contienne moins de champs que ceux présents dans les règles de validation
  * @return 	boolean Retourne vrai si la validation est correcte, faux sinon
  * @access	public
  * @author	koéZionCMS
@@ -621,8 +622,10 @@ class Model extends Object {
  * @version 0.7 - 14/11/2013 - Mise en place de la validation des champs construit avec des tableaux multidimensionnels  
  * @version 0.8 - 09/12/2013 - Rajout de l'index $insertErrorsTo pour la gestion des erreurs  
  * @version 0.9 - 10/01/2014 - Rajout de $validAllFields pour indiquer si tous les champs des règles de validation sont obligatoires
+ * @version 1.0 - 20/03/2014 - Modification récupération des erreurs dans le cas ou tous les champs doivent obligatoirement être validés
+ * @version 1.1 - 20/03/2014 - Suppression de la variable $validAllFields comme paramètre de la fonction pour la passer en variable de classe
  */	
-	function validates($datas, $insertErrorsTo = null, $validAllFields = true) {
+	function validates($datas, $insertErrorsTo = null) {
 				
 		if(isset($this->validate)) { //Si on a un tableau de validation dans la classe
 			
@@ -676,8 +679,9 @@ class Model extends Object {
 							else { $errors[$k] = $v['message']; }								 
 						} 						
 					}
-				} else if($validAllFields) { //Par défaut tous les champs dans le tableau de validation sont obligatoires
+				} else if($this->validAllFields) { //Par défaut on n'impose pas la validation de tous les champs
 					
+					if(!isset($v['rule'])) { $v = current($v); } //Dans le cas ou on a plusieurs règles de validation on récupère la première
 					if(Set::check($Errorsmessages, $v['message'])) { $errors[$k] = Set::classicExtract($Errorsmessages, $v['message']); }
 					else { $errors[$k] = $v['message']; }
 				}

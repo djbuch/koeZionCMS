@@ -56,25 +56,35 @@ class ContactsController extends AppController {
 				
 				$this->Contact->save($this->request->data);	//On procède à la sauvegarde des données
 				
-				if(isset($this->request->data['id'])) { 
+				if(isset($this->request->data['id'])) {
 					
-					$message = '<p class="confirmation">Votre demande a bien été prise en compte.</p>'; 
+					$message = '<p class="confirmation">Votre demande a bien été prise en compte.</p>';
+					$messageOk = '<p>Votre demande a bien été prise en compte.</p>';					
 					$this->request->data = false;
-				} 
-				else { 
 					
-					$message = '<p class="confirmation">Votre demande a bien été prise en compte. <br /> Vous pouvez compléter vos informations si vous le souhaitez</p>'; 
+				} else { 
+					
+					$message = '<p class="confirmation">Votre demande a bien été prise en compte. <br /> Vous pouvez compléter vos informations si vous le souhaitez.</p>';
+					$messageOk = '<p>Votre demande a bien été prise en compte. <br /> Vous pouvez compléter vos informations si vous le souhaitez.</p>';					
 					$this->set('newsletter_id', $this->Contact->id);
+					
 				}
 				
-				$this->set('message', $message);				
-			} else {
-				
-				//Gestion des erreurs
-				$message = '<p class="error">Merci de corriger vos informations';
-				foreach($this->Contact->errors as $k => $v) { $message .= '<br />'.$v; }
-				$message .= '</p>';		
 				$this->set('message', $message);
+				$this->set('messageOk', $messageOk);
+				 			
+			} else {
+		
+				//Gestion des erreurs
+				$message = '<p class="error"><strong>Merci de corriger vos informations</strong>';
+				foreach($this->Contact->errors as $k => $v) { $message .= '<br />'.$v; }
+				$message .= '</p>';
+				$messageKo = '<p><strong>Merci de corriger vos informations</strong>';
+				foreach($this->Contact->errors as $k => $v) { $messageKo .= '<br />'.$v; }
+				$messageKo .= '</p>';
+				
+				$this->set('message', $message);
+				$this->set('messageKo', $messageKo);
 				
 				if(isset($this->request->data['id'])) { $this->set('newsletter_id', $this->request->data['id']); }
 			}	
