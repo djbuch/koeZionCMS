@@ -473,7 +473,7 @@ class Tree extends Model {
 
     	$this->_recursive($req, $parentId);
     	return $this->displayTree;    	
-    }    
+    }  
 	
 /**
  * Cette fonction permet de récupérer les enfants de l'élément dont l'identifiant est passé en paramètre
@@ -488,6 +488,7 @@ class Tree extends Model {
  * @author	koéZionCMS
  * @version 0.1 - 01/01/2012 by FI
  * @version 0.2 - 28/02/2012 by FI - Rajout du niveau à retourner
+ * @version 0.3 - 20/03/2014 by FI - Correction pour retourner également le parent lors du test sur le niveau
  */    
     function getChildren($id, $withParent = false, $reverse = true, $level = null, $conditions = array()){
 		
@@ -511,7 +512,7 @@ class Tree extends Model {
         
         if(isset($level)) {
         	
-        	foreach($childs as $k => $node) { if($node['level'] != $level) unset($childs[$k]); }
+        	foreach($childs as $k => $node) { if($node['id'] != $parent['id'] && $node['level'] != $level) unset($childs[$k]); }
         }        
         
         if($reverse) { return array_reverse($childs); }
