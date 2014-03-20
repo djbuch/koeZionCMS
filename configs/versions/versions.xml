@@ -1,10 +1,19 @@
 ﻿<versions>
 	<version>
+		<name>Version du 20/03/2014</name>
+		<num>20140320.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Corrections erreurs dans le fichier de versions</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 19/03/2014</name>
 		<num>20140319.003</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="FI" type="code">Modification du .gitignore pour que le dossier hooks ne soit pas versionné</task>
+		</tasks>
 	</version>
 	<version>
 		<name>Version du 19/03/2014</name>
@@ -12,6 +21,7 @@
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="FI" type="code">Ajout du dossier hooks</task>
+		</tasks>
 	</version>
 	<version>
 		<name>Version du 19/03/2014</name>
