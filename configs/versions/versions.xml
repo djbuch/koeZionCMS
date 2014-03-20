@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 20/03/2014</name>
+		<num>20140320.003</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification gestion colonne de droite</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 20/03/2014</name>
 		<num>20140320.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

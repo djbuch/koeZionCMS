@@ -931,6 +931,7 @@ class CategoriesController extends AppController {
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 20/12/2012 by FI
+ * @version 0.2 - 20/03/2014 by FI - Modification formatage du tableau
  */	
 	protected function _get_children_category($datas) {
 		
@@ -949,7 +950,7 @@ class CategoriesController extends AppController {
 				
 				//Cas particulier pour les catégories "frères" le titre de la colonne de droite peut varier en fonction des besoins
 				//On va donc parcourir le résultat et réorganiser le tout
-				foreach($children as $k => $v) { $childrenCategory[$datas['category']['title_colonne_droite']][] = $v; }
+				foreach($children as $k => $v) { $childrenCategory[$datas['category']['title_children']][] = $v; }
 			
 				Cache::create_cache_file($cacheFolder, $cacheFile, $childrenCategory);
 			}
@@ -968,6 +969,7 @@ class CategoriesController extends AppController {
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 20/12/2012 by FI
+ * @version 0.2 - 20/03/2014 by FI - Modification formatage du tableau
  */	
 	protected function _get_brothers_category($datas) {
 						
@@ -986,7 +988,8 @@ class CategoriesController extends AppController {
 			
 				//Cas particulier pour les catégories "frères" le titre de la colonne de droite peut varier en fonction des besoins
 				//On va donc parcourir le résultat et réorganiser le tout
-				foreach($brothers as $k => $v) { $brothersCategory[$v['title_colonne_droite']][] = $v; }
+				//foreach($brothers as $k => $v) { $brothersCategory[$v['title_brothers']][] = $v; }
+				foreach($brothers as $k => $v) { $brothersCategory[$datas['category']['title_brothers']][] = $v; }
 				
 				Cache::create_cache_file($cacheFolder, $cacheFile, $brothersCategory);
 			}
