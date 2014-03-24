@@ -1,3 +1,4 @@
+a.btn.btnselect{margin-bottom: -7px;cursor: pointer;}
 a.btn,a.btn:link,a.btn:active,a.btn:visited{display:inline-block;margin:0 3px 0 0;text-decoration:none;width:auto;height:23px}
 a.btn.medium,a.btn.medium:link,a.btn.medium:active,a.btn.medium:visited{height:31px}
 a.btn:hover{opacity:.75;filter:alpha(opacity=75)}

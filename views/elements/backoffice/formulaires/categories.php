@@ -48,7 +48,7 @@
 			<div class="content">
 			<p>Précisez ici le ou les boutons à rajouter à cette page.</p>
 			<?php echo $helpers['Form']->input('rightButtonsListId', '', array('type' => 'select', 'datas' => $rightButton, 'label' => false, 'div' => false, 'displayError' => false, 'firstElementList' => "Sélectionnez un bouton")); ?>
-			<a id="addRightButton" class="btn blue" style="cursor:pointer;margin-bottom:3px;"><span><?php echo _("Rajouter ce bouton"); ?></span></a>
+			<a id="addRightButton" class="btn blue btnselect"><span><?php echo _("Rajouter ce bouton"); ?></span></a>
 		</div>		
 		<?php
 		if(isset($this->controller->request->data['right_button_id'])) {
