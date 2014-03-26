@@ -101,17 +101,19 @@ class FormHelper extends FormParentHelper {
 			if(!isset($params['button_value'])) { $params['button_value'] = "Sélectionnez le fichier"; }
 			if(!isset($params['display_input'])) { $params['display_input'] = true; }
 		}
+				
+		$inputNameText = $this->_set_input_name($field); //Mise en variable du name de l'input
+		$inputIdText = $this->_set_input_id($inputNameText); //Mise en variable de l'id de l'input
 		
-		$inputFieldId = $this->_set_input_id($field);
 		ob_start();
 		?>
 		<script type="text/javascript">
-			function BrowseServer<?php echo $inputFieldId; ?>() {
+			function BrowseServer<?php echo $inputIdText; ?>() {
 
 				// You can use the "CKFinder" class to render CKFinder in a page:
 				var finder = new CKFinder();
 				finder.basePath = './js/ckfinder/';	// The path for the installation of CKFinder (default = "/ckfinder/").
-				finder.selectActionFunction = SetFileField<?php echo $inputFieldId; ?>;
+				finder.selectActionFunction = SetFileField<?php echo $inputIdText; ?>;
 				finder.popup();
 
 				// It can also be done in a single line, calling the "static"
@@ -123,7 +125,7 @@ class FormHelper extends FormParentHelper {
 			}
 
 			// This is a sample function which is called when a file is selected in CKFinder.
-			function SetFileField<?php echo $inputFieldId; ?>(fileUrl) { document.getElementById("<?php echo $inputFieldId; ?>").value = fileUrl; }
+			function SetFileField<?php echo $inputIdText; ?>(fileUrl) { document.getElementById("<?php echo $inputIdText; ?>").value = fileUrl; }
 		</script>
 		<div class="row">
 			<label>
@@ -134,7 +136,7 @@ class FormHelper extends FormParentHelper {
 			<div class="rowright">
 				<?php				
 				if($params['display_input']) { echo $this->input($field, '', array('tooltip' => false, 'div' => false, 'label' => false, 'class' => 'upload_file')); }
-				echo $this->input('select_file', '<span>'.$params['button_value'].'</span>', array('type' => 'button', 'onclick' => 'BrowseServer'.$inputFieldId.'();', 'displayError' => false, 'label' => false, 'div' => false, 'tooltip' => false, 'class' => 'medium black'));
+				echo $this->input('select_file', '<span>'.$params['button_value'].'</span>', array('type' => 'button', 'onclick' => 'BrowseServer'.$inputIdText.'();', 'displayError' => false, 'label' => false, 'div' => false, 'tooltip' => false, 'class' => 'medium black'));
 				?>
 			</div>
 		</div>

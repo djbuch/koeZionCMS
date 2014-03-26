@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 26/03/2014</name>
+		<num>20140326.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Corrections de la fonction upload dans le helper form du BO</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 24/03/2014</name>
 		<num>20140324.001</num>
 		<supervisor>KoéZionCMS</supervisor>
