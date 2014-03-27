@@ -17,6 +17,7 @@ class Model extends Object {
 	public $queryExecutionResult = false; //indique si la requete de save s'est bien passée 
 	public $refererUrl = ''; //Cette variable va contenir l'url de la page appelante
 	public $manageWebsiteId = true; //Permet d'éviter de prendre en compte la recherche basée sur le champ website_id ainsi que l'insertion automatique de ce champ	
+	public $manageActivateField = true; //Permet d'éviter de prendre en compte la recherche basée sur le champ activate ainsi que l'insertion automatique de ce champ	
 	public $alias = false; //Alias de la table
 	public $validAllFields = false; //Indique si il faut ou non valider l'ensemble des champs de la table ou uniquement ceux envoyés
     
@@ -299,6 +300,22 @@ class Model extends Object {
 			}			
 		}
 		///////////////////////////////////////////////////////////
+
+		///////////////////////////////////////////////////////
+		//   CONDITIONS DE RECHERCHE SUR LE CHAMP ACTIVATE   //
+		//Si dans le shema de la table on a une colonne website_id		
+		if($this->manageActivateField && in_array('activate', $shema)) {
+		
+			//Si on a pas de conditions de recherche particulières
+			if(!isset($req['conditions'])) { $req['conditions']['activate'] = 1; }
+			else {
+				
+				//Sinon on va tester si il s'agit d'un tableau ou d'une chaine de caractères
+				if(is_array($req['conditions'])) { $req['conditions']['activate'] = 1; } 
+				else { $req['conditions'] .= " AND activate=1"; }
+			}			
+		}
+		///////////////////////////////////////////////////////
 		
 		///////////////////////////
 		//   CHAMPS CONDITIONS   //
@@ -997,6 +1014,12 @@ class Model extends Object {
 			
 			$datasShema[] = 'website_id';
 			$moreDatasToSave[':website_id'] = CURRENT_WEBSITE_ID;
+		}				
+		
+		if(!in_array('activate', $datasShema) && in_array('activate', $shema) && $this->manageActivateField) { 
+			
+			$datasShema[] = 'activate';
+			$moreDatasToSave[':activate'] = 1;
 		}
 		
 		if(in_array('slug', $shema) && !empty($datas['name']) && (!in_array('slug', $datasShema))) { $datasShema[] = 'slug'; } 

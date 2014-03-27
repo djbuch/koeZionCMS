@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 27/03/2014</name>
+		<num>20140327.003</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Rajout de la gestion automatique de la présence ou non du champ activate en BDD, si celui-ci est présent il permet de désactiver l'affichage de données dans le BO sans suppression de la ligne dans la table</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 27/03/2014</name>
 		<num>20140327.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
