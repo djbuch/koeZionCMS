@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 27/03/2014</name>
+		<num>20140327.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Suppression automatique du cache lors de l'ajout ou de l'édition d'un élément</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 26/03/2014</name>
 		<num>20140326.001</num>
 		<supervisor>KoéZionCMS</supervisor>

@@ -277,7 +277,10 @@ class AppController extends Controller {
         			
     			$this->$modelName->save($this->request->data, $forceInsert); //On les sauvegarde 			    			
     			Session::setFlash('Le contenu a bien été ajouté'); //Message de confirmation
-    			    			
+    			    			    			
+    			$this->_check_cache_configs();
+    			$this->_delete_cache();
+    			
     			if($redirect) {
     				
 					$this->redirect('backoffice/'.$this->params['controllerFileName'].'/index'); //Redirection sur la page de listing
@@ -316,6 +319,9 @@ class AppController extends Controller {
     
     			$this->$modelName->save($this->request->data); //On les sauvegarde    			
     			Session::setFlash('Le contenu a bien été modifié'); //Message de confirmation
+    			    			
+    			$this->_check_cache_configs();
+    			$this->_delete_cache();
     			
     			if($redirect) {
     				
