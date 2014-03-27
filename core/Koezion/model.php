@@ -202,6 +202,7 @@ class Model extends Object {
  * @version 0.2 - 02/05/2012 by FI - Mise en place de la conditions de récupérations selon l'identifiant du site
  * @version 0.3 - 30/05/2012 by FI - Modification de la génération de la condition de recherche pour intégrer l'utilisation de tableau de condition sans index particulier ==> $condition = array('conditions' => array("name LIKE '%...%'"));
  * @version 0.4 - 24/02/2014 by FI - Mise en place de la vérification de la présente ou non de l'alias dans les champs des conditions de recherche
+ * @version 0.5 - 27/03/2014 by FI - Gestion du champ activate
  */    
 	public function find($req = array(), $type = PDO::FETCH_ASSOC) {
 		
@@ -951,6 +952,7 @@ class Model extends Object {
  * @version 0.1 - 24/08/2012 by FI
  * @version 0.2 - 13/11/2013 by FI - Rajout du code permettant la gestion de l'option de modification de la date de modification
  * @version 0.3 - 10/01/2014 by FI - Gestion des primary key multiples
+ * @version 0.4 - 27/03/2014 by FI - Gestion du champ activate
  */	
 	function _prepare_save_query($datas, $forceInsert, $escapeUpload) {
 					
@@ -1074,6 +1076,7 @@ class Model extends Object {
  * @author	koéZionCMS
  * @version 0.1 - 24/08/2012 by FI
  * @version 0.2 - 10/01/2014 by FI - Gestion des primary key multiples
+ * @version 0.3 - 27/03/2014 by FI - Gestion du champ activate
  */		
 	function _prepare_save_datas($datas, $moreDatasToSave, $forceInsert, $escapeUpload) {
 		
@@ -1102,7 +1105,8 @@ class Model extends Object {
 		if(in_array('password', $datasShema) && $coreConfs['hash_password']) { $datas['password'] = sha1($datas['password']); } //On procède à la mise à jour du champ password si il existe		
 		if(in_array('slug', $shema) && !empty($datas['name']) && (!in_array('slug', $datasShema) || empty($datas['slug']))) { $datas['slug'] = strtolower(Inflector::slug($datas['name'], '-')); } //On procède à la mise à jour du champ slug si celui ci n'est pas rempli ou non présent dans le formulaire mais présent dans la table
 		if(in_array('page_title', $shema) && !empty($datas['name']) && (!in_array('page_title', $datasShema) || empty($datas['page_title']))) { $datas['page_title'] = $datas['name']; } //On procède à la mise à jour du champ page_title si celui ci n'est pas rempli ou non présent dans le formulaire mais présent dans la table
-				
+		if(in_array('activate', $shema) && !$datas['activate'] && in_array('online', $datasShema)) { $datas['online'] = 0; } //On procède à la mise à jour du champ online si le champ activate est présent et que celui-ci est à 0		
+		
 		//if(isset($datas[$primaryKey]) && !$forceInsert) unset($datas[$primaryKey]); //Il faut supprimer du tableau des données la clé primaire si celle ci est définie
 		if(is_array($primaryKey)) {
 			
