@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 28/03/2014</name>
+		<num>20140328.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Déplacement du dossier de stockage des produits CkEditor et CkFinder</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 27/03/2014</name>
 		<num>20140327.005</num>
 		<supervisor>KoéZionCMS</supervisor>

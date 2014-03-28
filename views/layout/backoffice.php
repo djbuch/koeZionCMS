@@ -67,8 +67,8 @@
 			//'/backoffice/jquery.metadata', 						//Utile pour pouvoir passer des paramètres au javascript directement dans les attributs de l'élément html
 			'/backoffice/costum', 									//Appel des différents plugins
 			'/backoffice/default', 									//Fonctions personnalisées
-			'/ckeditor/ckeditor', 									//Librairie CKEditor
-			'/ckfinder/ckfinder', 									//Librairie CKFinder
+			'/../ck/ckeditor/ckeditor', 									//Librairie CKEditor
+			'/../ck/ckfinder/ckfinder', 									//Librairie CKFinder
 			'/backoffice/prettyradio' 								//
 		);
 		echo $helpers['Html']->js($js);
