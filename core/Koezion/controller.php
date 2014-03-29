@@ -36,6 +36,7 @@ class Controller extends Object {
 	var $components = array(
 		'Email',
 		'Text',
+		'Website'
 	);
 	
 	var $view = false;

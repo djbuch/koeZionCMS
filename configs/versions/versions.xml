@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 29/03/2014</name>
+		<num>20140329.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise en place d'un composant Website pour effectuer des opérations sur le site courant</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 28/03/2014</name>
 		<num>20140328.003</num>
 		<supervisor>KoéZionCMS</supervisor>
