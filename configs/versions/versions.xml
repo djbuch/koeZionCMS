@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 29/03/2014</name>
+		<num>20140329.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Déplacement de la fonction redirect de la classe Object vers la classe Controller</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 29/03/2014</name>
 		<num>20140329.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

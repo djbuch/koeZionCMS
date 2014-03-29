@@ -149,5 +149,70 @@ class Object {
 		require_once $componentPath.DS.$componentFileName.'.php'; //Inclusion du fichier
 		if(isset($componentController)) { $controller = $componentController; } else { $controller = $this; }
 		$this->components[$component] = new $componentObjectName($this); //Et on insère l'objet
-	}		
+	}	
+
+/**
+ * Cette fonction permet de faire une redirection de page
+ *
+ * @param varchar $url Url de redirection
+ * @param boolean $extension Indique si il faut ou non mettre l'extension html
+ * @param unknown_type $code
+ * @version 0.1 - 23/12/2011
+ * @version 0.2 - 02/05/2012 - Test sur l'url pour savoir si il y a http:// dedans 
+ * @version 0.3 - 06/11/2012 - Rajout de la possibilité de passer des paramètres 
+ * @version 0.4 - 29/03/2014 - Déplacement de cette fonction de la classe Controller vers la classe Object
+ */
+	function redirect($url, $code = null, $params = null) {
+		 
+		//Code de redirection possibles
+		$http_codes = array(
+				100 => 'Continue',
+				101 => 'Switching Protocols',
+				200 => 'OK',
+				201 => 'Created',
+				202 => 'Accepted',
+				203 => 'Non-Authoritative Information',
+				204 => 'No Content',
+				205 => 'Reset Content',
+				206 => 'Partial Content',
+				300 => 'Multiple Choices',
+				301 => 'Moved Permanently',
+				302 => 'Found',
+				303 => 'See Other',
+				304 => 'Not Modified',
+				305 => 'Use Proxy',
+				307 => 'Temporary Redirect',
+				400 => 'Bad Request',
+				401 => 'Unauthorized',
+				402 => 'Payment Required',
+				403 => 'Forbidden',
+				404 => 'Not Found',
+				405 => 'Method Not Allowed',
+				406 => 'Not Acceptable',
+				407 => 'Proxy Authentication Required',
+				408 => 'Request Time-out',
+				409 => 'Conflict',
+				410 => 'Gone',
+				411 => 'Length Required',
+				412 => 'Precondition Failed',
+				413 => 'Request Entity Too Large',
+				414 => 'Request-URI Too Large',
+				415 => 'Unsupported Media Type',
+				416 => 'Requested range not satisfiable',
+				417 => 'Expectation Failed',
+				500 => 'Internal Server Error',
+				501 => 'Not Implemented',
+				502 => 'Bad Gateway',
+				503 => 'Service Unavailable',
+				504 => 'Gateway Time-out'
+		);
+		 
+		if(isset($code)) { header("HTTP/1.0 ".$code." ".$http_codes[$code]); } //Si un code est passé on l'indique dans le header				
+		if(!substr_count($url, 'http://')) { $url = Router::url($url); }
+
+		if(isset($params)) {$url .= '?'.$params; }
+		header("Location: ".$url);
+		
+		die(); //Pour éviter que les fonctions ne continues
+	}	
 }
