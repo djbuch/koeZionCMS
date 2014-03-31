@@ -431,13 +431,20 @@ class FormParentHelper extends Helper {
  * @access	private
  * @author	koéZionCMS
  * @version 0.1 - 25/01/2012 by FI
+ * @version 0.2 - 31/03/2014 by FI - Modification de la récupération de la valeur par défaut
  */
 	function _get_input_value($name, $defaultValue) {
+		
+		$currentValue = '';
+		if(Set::check($this->view->controller->request->data, $name)) { $currentValue = Set::classicExtract($this->view->controller->request->data, $name); }
+				
+		if($currentValue == '' && isset($defaultValue)) { return $defaultValue; }
+		else { return $currentValue; }
 	
-		//Données postées
+		/*//Données postées
 		if(Set::check($this->view->controller->request->data, $name)) { return Set::classicExtract($this->view->controller->request->data, $name); } 
 		//Données non postées
-		else if(isset($defaultValue)) { return $defaultValue; }
+		else if(isset($defaultValue)) { return $defaultValue; }*/
 
 		/*//Données postées
 		if(Set::check($this->view->controller->request->data, $name)) { return Set::classicExtract($this->view->controller->request->data, $name); } 
