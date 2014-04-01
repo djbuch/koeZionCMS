@@ -65,6 +65,6 @@ $moreMessages = CONFIGS.DS.'plugins'.DS.'errors_messages';
 if(is_dir($moreMessages)) {
 
 	foreach(FileAndDir::directoryContent($moreMessages) as $moreMessage) {
-		require_once($moreMessages.DS.$moreMessage);
+		include($moreMessages.DS.$moreMessage);
 	}
 }

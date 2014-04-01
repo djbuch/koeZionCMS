@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 01/04/2014</name>
+		<num>20140401.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la récupération des messages d'erreurs dans le BO</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 31/03/2014</name>
 		<num>20140331.001</num>
 		<supervisor>KoéZionCMS</supervisor>
