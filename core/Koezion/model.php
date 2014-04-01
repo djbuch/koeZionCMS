@@ -482,6 +482,7 @@ class Model extends Object {
  * @version 0.2 - 13/04/2012 by FI - Modification de la requête de suppression pour pouvoir passer en paramètre un tableau ou un entier
  * @version 0.3 - 24/12/2013 by FI - Mise en place de la gestion multisites lors de la suppression
  * @version 0.4 - 17/01/2014 by FI - Mise en place de la variable $moreControls
+ * @version 0.5 - 01/04/2014 by FI - Evolution mise en place de la gestion multisites
  */		
 	public function delete($id, $moreControls = null) {
 		
@@ -496,7 +497,7 @@ class Model extends Object {
 		}
 		
 		//CAS PARTICULIER : GESTION MULTISITE
-		if(in_array('website_id', $this->shema)) { $sql .= " AND website_id = ".CURRENT_WEBSITE_ID; }
+		if($this->manageWebsiteId && in_array('website_id', $this->shema)) { $sql .= " AND website_id = ".CURRENT_WEBSITE_ID; }
 		
 		$sql .= ";";				
 		$queryResult = $this->query($sql);		
@@ -514,6 +515,7 @@ class Model extends Object {
  * @author	koéZionCMS
  * @version 0.1 - 16/02/2012 by FI
  * @version 0.2 - 24/12/2013 by FI - Mise en place de la gestion multisites lors de la suppression
+ * @version 0.3 - 01/04/2014 by FI - Evolution mise en place de la gestion multisites
  */	
 	public function deleteByName($name, $value) {
 	
@@ -523,7 +525,7 @@ class Model extends Object {
 		$sql = "DELETE FROM ".$this->table." WHERE ".$this->primaryKey." = ".$value;
 		
 		//CAS PARTICULIER : GESTION MULTISITE
-		if(in_array('website_id', $this->shema)) { $sql .= " AND website_id = ".CURRENT_WEBSITE_ID; }
+		if($this->manageWebsiteId && in_array('website_id', $this->shema)) { $sql .= " AND website_id = ".CURRENT_WEBSITE_ID; }
 		
 		$sql .= ";";
 		$this->primaryKey = $oldPrimaryKey;		
@@ -1012,7 +1014,7 @@ class Model extends Object {
 			}	
 		}					
 		
-		if(!in_array('website_id', $datasShema) && in_array('website_id', $shema) && $this->manageWebsiteId) { //get_class($this) != 'UsersGroupsWebsite') { 
+		if($this->manageWebsiteId && !in_array('website_id', $datasShema) && in_array('website_id', $shema)) { //get_class($this) != 'UsersGroupsWebsite') { 
 			
 			$datasShema[] = 'website_id';
 			$moreDatasToSave[':website_id'] = CURRENT_WEBSITE_ID;

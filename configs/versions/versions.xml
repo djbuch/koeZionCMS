@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 01/04/2014</name>
+		<num>20140401.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Evolution de la gestion multisites lors de la suppression</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 01/04/2014</name>
 		<num>20140401.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
