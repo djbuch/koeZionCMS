@@ -159,7 +159,10 @@ class Model extends Object {
  * 		
  *		$this->loadModel("Product");		
  *		$product = $this->Product->findFirst(array(
- *			"conditions" => array("id" => $productId),
+ *			"conditions" => array(
+ * 				'OR' => array('id' => $id, 'product_id' => $id),
+ *				online' => 1
+ *			),
  *			"fields" => am($this->Product->shema, array("supplier_name" => "KzSupplier.name")),
  *			"leftJoin" => array(
  *				"model" => "Supplier",
@@ -203,6 +206,7 @@ class Model extends Object {
  * @version 0.3 - 30/05/2012 by FI - Modification de la génération de la condition de recherche pour intégrer l'utilisation de tableau de condition sans index particulier ==> $condition = array('conditions' => array("name LIKE '%...%'"));
  * @version 0.4 - 24/02/2014 by FI - Mise en place de la vérification de la présente ou non de l'alias dans les champs des conditions de recherche
  * @version 0.5 - 27/03/2014 by FI - Gestion du champ activate
+ * @version 0.5 - 02/04/2014 by FI - Mise en place de la gestion du OR dans les conditions de recherche
  */    
 	public function find($req = array(), $type = PDO::FETCH_ASSOC) {
 		
@@ -334,9 +338,25 @@ class Model extends Object {
 			} else {
 				
 				$cond = array();
-				foreach($req['conditions'] as $k => $v) {		
+				foreach($req['conditions'] as $k => $v) {			
 					
-					//if(!empty($v)) {
+					//if(!empty($v)) {						
+						//On va ensuite tester si la clé est une chaine de caractère
+						//On rajoute le nom de la classe devant le nom de la colonne
+						if(is_string($k)) {							
+							
+							if($k == "OR") {
+								
+								$orCond = array();
+								foreach($v as $orField => $orValue) { $orCond = $this->_get_conditions($orCond, $orField, $orValue); }								
+								$cond[] = '('.implode(' OR ', $orCond).')';
+							} 
+							else { $cond = $this->_get_conditions($cond, $k, $v); }							
+						} 
+						else { $cond[] = $v; } //Sinon on rajoute directement la condition dans le tableau
+					//}	
+					
+					/*//if(!empty($v)) {
 						
 						//On va ensuite tester si la clé est une chaine de caractère
 						//On rajoute le nom de la classe devant le nom de la colonne
@@ -357,7 +377,7 @@ class Model extends Object {
 							
 						} 
 						else { $cond[] = $v; } //Sinon on rajoute directement la condition dans le tableau
-					//}
+					//}*/
 				}
 				
 				if(!empty($cond)) { $conditions .= implode("\n".'AND ', $cond); }
@@ -568,7 +588,7 @@ class Model extends Object {
  * 
  * @todo mettre en place des try catch pour vérifier que la requete c'est bien exécutée 
  */	
-	public function save($datas, $forceInsert = false, $escapeUpload = true) {
+	public public function save($datas, $forceInsert = false, $escapeUpload = true) {
 					
 		$preparedInfos = $this->_prepare_save_query($datas, $forceInsert, $escapeUpload); //Récupération des données de la préparation de la requête
 		$datasToSave = $this->_prepare_save_datas($datas, $preparedInfos['moreDatasToSave'], $forceInsert, $escapeUpload); //Récupération des données à sauvegarder
@@ -600,7 +620,7 @@ class Model extends Object {
  * @version 0.2 - 03/04/2013 by FI - Correction de l'affectation des ids
  * @version 0.3 - 10/01/2014 by FI - Gestion des primary key multiples
  */	
-	function saveAll($datas, $forceInsert = false, $escapeUpload = true) {
+	public function saveAll($datas, $forceInsert = false, $escapeUpload = true) {
 		
 		if(!empty($datas)) {
 			
@@ -645,7 +665,7 @@ class Model extends Object {
  * @version 1.0 - 20/03/2014 - Modification récupération des erreurs dans le cas ou tous les champs doivent obligatoirement être validés
  * @version 1.1 - 20/03/2014 - Suppression de la variable $validAllFields comme paramètre de la fonction pour la passer en variable de classe
  */	
-	function validates($datas, $insertErrorsTo = null) {
+	public function validates($datas, $insertErrorsTo = null) {
 				
 		if(isset($this->validate)) { //Si on a un tableau de validation dans la classe
 			
@@ -727,7 +747,7 @@ class Model extends Object {
  * @version 0.1 - 28/12/2011
  * @version 0.2 - 10/02/2014 - Reprise de la fonction dans le cas ou l'upload de fichiers en front soit nécessaire
  */	
-	function upload_files($datas, $id) {
+	public function upload_files($datas, $id) {
 		
 		require_once(BEHAVIORS.DS.'upload.php');		
 		foreach($this->files_to_upload as $k => $v) {
@@ -788,7 +808,7 @@ class Model extends Object {
  * @version 0.2 - 07/09/2012 by FI - Test pour vérifier si la table existe dans le cas de model sans table
  * @version 0.3 - 08/05/2013 by FI - Modification de la fonction pour y intégrer la possibilité de récupérer le shéma d'une table passée en paramètre
  */
-	function shema($table = null) {		
+	public function shema($table = null) {		
 		
 		$shema = array();
 		if(!isset($table)) { $table = $this->table; }
@@ -813,7 +833,7 @@ class Model extends Object {
 /**
  * Cette fonction permet de récuperer les informations liées à la table 
  */	
-	function table_status() {
+	public function table_status() {
 		
 		$sql = "SHOW TABLE STATUS LIKE '".$this->table."';";
 		$result = $this->query($sql, true);
@@ -830,7 +850,7 @@ class Model extends Object {
  * @version 0.1 - 07/09/2012 by FI
  * @version 0.2 - 04/03/2013 by FI - Suppression de la variable database et récupération de celle-ci de la variable de classe
  */
-	function exist_table_in_database($table) {		
+	public function exist_table_in_database($table) {		
 				
 		$tablesList = $this->table_list_in_database();		
 		return in_array($table, $tablesList);
@@ -845,7 +865,7 @@ class Model extends Object {
  * @version 0.1 - 04/03/2013 by FI
  * @version 0.2 - 29/10/2013 by FI - Rajout d'un test pour supprimer du tableau les tables des plugins désinstallés 
  */
-	function table_list_in_database() {		
+	public function table_list_in_database() {		
 				
 		$cacheFolder 	= TMP.DS.'cache'.DS.'models'.DS;
 		$cacheFile 		= "tables_list";	
@@ -882,7 +902,7 @@ class Model extends Object {
  * @author	koéZionCMS
  * @version 0.1 - 26/08/2012 by FI
  */
-	function make_search_index($datasToSave, $id, $action) {
+	public function make_search_index($datasToSave, $id, $action) {
 				
 		$searchesParams = $this->searches_params; //Paramètres des champs à indexer
 		$fieldsToIndex = $searchesParams['fields']; //Liste des champs à indexes
@@ -932,7 +952,7 @@ class Model extends Object {
  * @author	koéZionCMS
  * @version 0.1 - 26/08/2012 by FI
  */
-	function delete_search_index($id) {	
+	public function delete_search_index($id) {	
 						
 		$sql = "DELETE From searches WHERE model = '".get_class($this)."' AND model_id = ".$id;
 		$this->query($sql);		
@@ -949,14 +969,14 @@ class Model extends Object {
  * @param 	boolean	$forceInsert 	Indique si il faut forcer l'insert
  * @param 	boolean	$escapeUpload 	Indique si il faut ou non ne pas tenir compte des champs à uploader
  * @return	array	Tableau contenant les paramètres de la requête préparée
- * @access	private
+ * @access	protected
  * @author	koéZionCMS
  * @version 0.1 - 24/08/2012 by FI
  * @version 0.2 - 13/11/2013 by FI - Rajout du code permettant la gestion de l'option de modification de la date de modification
  * @version 0.3 - 10/01/2014 by FI - Gestion des primary key multiples
  * @version 0.4 - 27/03/2014 by FI - Gestion du champ activate
  */	
-	function _prepare_save_query($datas, $forceInsert, $escapeUpload) {
+	protected function _prepare_save_query($datas, $forceInsert, $escapeUpload) {
 					
 		$datasShema = array_keys($datas);
 		$shema = $this->shema; //Shema de la table		
@@ -1074,13 +1094,13 @@ class Model extends Object {
  * @param 	boolean	$forceInsert 		Indique si il faut forcer l'insert
  * @param 	boolean	$escapeUpload 		Indique si il faut ou non ne pas tenir compte des champs à uploader
  * @return	array	Tableau contenant les paramètres des données à sauvegarder
- * @access	private
+ * @access	protected
  * @author	koéZionCMS
  * @version 0.1 - 24/08/2012 by FI
  * @version 0.2 - 10/01/2014 by FI - Gestion des primary key multiples
  * @version 0.3 - 27/03/2014 by FI - Gestion du champ activate
  */		
-	function _prepare_save_datas($datas, $moreDatasToSave, $forceInsert, $escapeUpload) {
+	protected function _prepare_save_datas($datas, $moreDatasToSave, $forceInsert, $escapeUpload) {
 		
 		$shema = $this->shema; //Shéma de la table 
 		$datasShema = array_keys($datas); //Shéma des données à sauvegarder
@@ -1133,7 +1153,36 @@ class Model extends Object {
 		}
 		
 		return array_merge($datasToSave, $moreDatasToSave);		
-	}	
+	}	    
+    
+/**
+ * Cette fonction permet l'insertion des conditions de recherche dans le tableau prévu à cet effet
+ * 
+ * @param array 	$cond 	Tableau de conditions
+ * @param varchar 	$field 	Champ sur lequel effectuer la recherche
+ * @param mixed 	$value 	Valeur à rechercher
+ * @return array
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 02/04/2014 by FI
+ */   
+    protected function _get_conditions($cond, $field, $value) {
+    	
+    	//On va échaper les caractères spéciaux
+    	//Equivalement de mysql_real_escape_string --> $v = '"'.mysql_escape_string($v).'"';
+    	if(!is_numeric($value) && !is_array($value)) { $value = $this->db->quote($value); }
+    	
+    	//On recherche si un point est présent dans la valeur du champ ce qui voudrait dire que l'alias est déjà renseigné
+    	//auquel cas on ne le rajoute pas
+    	//$k = $this->alias.".".$k;
+    	$fieldExplode = explode('.', $field);
+    	if(count($fieldExplode) == 1) { $field = $this->alias.".".$fieldExplode[0]; }
+    	
+    	if(is_array($value)) { $cond[] = $field." IN (".implode(',', $value).")"; }
+    	else { $cond[] = $field."=".$value; }
+    	
+    	return $cond;    	
+    }
 	
 /**
  * Cette fonction permet la génération des champs à récupérer
