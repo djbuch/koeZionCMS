@@ -1186,7 +1186,13 @@ class Model extends Object {
 				"\n".
 				"[DEBUG BACKTRACE] : "."\n";
 			
-				foreach($debug as $k => $v) { $traceSql .= "\t\t\t\t\t".'[FILE] : '.$v['file'].' --> [LINE] : '.$v['line']."\n"; }
+				foreach($debug as $k => $v) { 
+					
+					if(isset($v['file']) && !empty($v['file']) && isset($v['line']) && !empty($v['line'])) {
+															
+						$traceSql .= "\t\t\t\t\t".'[FILE] : '.$v['file'].' --> [LINE] : '.$v['line']."\n";
+					} 
+				}
 			
 			$traceSql .=
 				"[FUNCTION] : \t\t".$function.

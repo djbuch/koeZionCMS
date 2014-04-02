@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 02/04/2014</name>
+		<num>20140402.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la fonction trace_sql dans le Model principal</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 02/04/2014</name>
 		<num>20140402.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
