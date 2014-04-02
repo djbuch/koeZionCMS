@@ -348,7 +348,6 @@ class Model extends Object {
 							
 							if($k == "OR") {
 								
-								pr('OR');
 								$orCond = array();
 								foreach($v as $orField => $orValue) { $orCond = $this->_get_query_conditions($orCond, $orField, $orValue); }								
 								$cond[] = '('.implode(' OR ', $orCond).')';
