@@ -206,7 +206,7 @@ class Model extends Object {
  * @version 0.3 - 30/05/2012 by FI - Modification de la génération de la condition de recherche pour intégrer l'utilisation de tableau de condition sans index particulier ==> $condition = array('conditions' => array("name LIKE '%...%'"));
  * @version 0.4 - 24/02/2014 by FI - Mise en place de la vérification de la présente ou non de l'alias dans les champs des conditions de recherche
  * @version 0.5 - 27/03/2014 by FI - Gestion du champ activate
- * @version 0.5 - 02/04/2014 by FI - Mise en place de la gestion du OR dans les conditions de recherche
+ * @version 0.6 - 02/04/2014 by FI - Mise en place de la gestion du OR dans les conditions de recherche
  */    
 	public function find($req = array(), $type = PDO::FETCH_ASSOC) {
 		
@@ -338,23 +338,26 @@ class Model extends Object {
 			} else {
 				
 				$cond = array();
-				foreach($req['conditions'] as $k => $v) {			
+				foreach($req['conditions'] as $k => $v) {		
 					
-					//if(!empty($v)) {						
+					//if(!empty($v)) {
+						
 						//On va ensuite tester si la clé est une chaine de caractère
 						//On rajoute le nom de la classe devant le nom de la colonne
-						if(is_string($k)) {							
+						if(is_string($k)) {					
 							
 							if($k == "OR") {
 								
+								pr('OR');
 								$orCond = array();
-								foreach($v as $orField => $orValue) { $orCond = $this->_get_conditions($orCond, $orField, $orValue); }								
+								foreach($v as $orField => $orValue) { $orCond = $this->_get_query_conditions($orCond, $orField, $orValue); }								
 								$cond[] = '('.implode(' OR ', $orCond).')';
 							} 
-							else { $cond = $this->_get_conditions($cond, $k, $v); }							
+							else { $cond = $this->_get_query_conditions($cond, $k, $v); }
+							
 						} 
 						else { $cond[] = $v; } //Sinon on rajoute directement la condition dans le tableau
-					//}	
+					//}
 					
 					/*//if(!empty($v)) {
 						
@@ -588,7 +591,7 @@ class Model extends Object {
  * 
  * @todo mettre en place des try catch pour vérifier que la requete c'est bien exécutée 
  */	
-	public public function save($datas, $forceInsert = false, $escapeUpload = true) {
+	public function save($datas, $forceInsert = false, $escapeUpload = true) {
 					
 		$preparedInfos = $this->_prepare_save_query($datas, $forceInsert, $escapeUpload); //Récupération des données de la préparation de la requête
 		$datasToSave = $this->_prepare_save_datas($datas, $preparedInfos['moreDatasToSave'], $forceInsert, $escapeUpload); //Récupération des données à sauvegarder
@@ -969,7 +972,7 @@ class Model extends Object {
  * @param 	boolean	$forceInsert 	Indique si il faut forcer l'insert
  * @param 	boolean	$escapeUpload 	Indique si il faut ou non ne pas tenir compte des champs à uploader
  * @return	array	Tableau contenant les paramètres de la requête préparée
- * @access	protected
+ * @access	protected 
  * @author	koéZionCMS
  * @version 0.1 - 24/08/2012 by FI
  * @version 0.2 - 13/11/2013 by FI - Rajout du code permettant la gestion de l'option de modification de la date de modification
@@ -1094,7 +1097,7 @@ class Model extends Object {
  * @param 	boolean	$forceInsert 		Indique si il faut forcer l'insert
  * @param 	boolean	$escapeUpload 		Indique si il faut ou non ne pas tenir compte des champs à uploader
  * @return	array	Tableau contenant les paramètres des données à sauvegarder
- * @access	protected
+ * @access	protected 
  * @author	koéZionCMS
  * @version 0.1 - 24/08/2012 by FI
  * @version 0.2 - 10/01/2014 by FI - Gestion des primary key multiples
@@ -1153,43 +1156,14 @@ class Model extends Object {
 		}
 		
 		return array_merge($datasToSave, $moreDatasToSave);		
-	}	    
-    
-/**
- * Cette fonction permet l'insertion des conditions de recherche dans le tableau prévu à cet effet
- * 
- * @param array 	$cond 	Tableau de conditions
- * @param varchar 	$field 	Champ sur lequel effectuer la recherche
- * @param mixed 	$value 	Valeur à rechercher
- * @return array
- * @access 	protected
- * @author 	koéZionCMS
- * @version 0.1 - 02/04/2014 by FI
- */   
-    protected function _get_conditions($cond, $field, $value) {
-    	
-    	//On va échaper les caractères spéciaux
-    	//Equivalement de mysql_real_escape_string --> $v = '"'.mysql_escape_string($v).'"';
-    	if(!is_numeric($value) && !is_array($value)) { $value = $this->db->quote($value); }
-    	
-    	//On recherche si un point est présent dans la valeur du champ ce qui voudrait dire que l'alias est déjà renseigné
-    	//auquel cas on ne le rajoute pas
-    	//$k = $this->alias.".".$k;
-    	$fieldExplode = explode('.', $field);
-    	if(count($fieldExplode) == 1) { $field = $this->alias.".".$fieldExplode[0]; }
-    	
-    	if(is_array($value)) { $cond[] = $field." IN (".implode(',', $value).")"; }
-    	else { $cond[] = $field."=".$value; }
-    	
-    	return $cond;    	
-    }
+	}	
 	
 /**
  * Cette fonction permet la génération des champs à récupérer
  * 
  * @param 	array	$fields 			Liste des champs
  * @return	varchar	Chaine de caractères contenant les champs à récupérer
- * @access	private
+ * @access	protected 
  * @author	koéZionCMS
  * @version 0.1 - 02/01/2014 by FI
  */		
@@ -1211,7 +1185,36 @@ class Model extends Object {
 		else { $sql .= "\n".$fields; } //Si il s'agit d'une chaine de caractères 
 		
 		return $sql;
-	}
+	}    
+    
+/**
+ * Cette fonction permet l'insertion des conditions de recherche dans le tableau prévu à cet effet
+ * 
+ * @param array 	$cond 	Tableau de conditions
+ * @param varchar 	$field 	Champ sur lequel effectuer la recherche
+ * @param mixed 	$value 	Valeur à rechercher
+ * @return array
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 02/04/2014 by FI
+ */   
+    protected function _get_query_conditions($cond, $field, $value) {
+    	
+    	//On va échaper les caractères spéciaux
+    	//Equivalement de mysql_real_escape_string --> $v = '"'.mysql_escape_string($v).'"';
+    	if(!is_numeric($value) && !is_array($value)) { $value = $this->db->quote($value); }
+    	
+    	//On recherche si un point est présent dans la valeur du champ ce qui voudrait dire que l'alias est déjà renseigné
+    	//auquel cas on ne le rajoute pas
+    	//$k = $this->alias.".".$k;
+    	$fieldExplode = explode('.', $field);
+    	if(count($fieldExplode) == 1) { $field = $this->alias.".".$fieldExplode[0]; }
+    	
+    	if(is_array($value)) { $cond[] = $field." IN (".implode(',', $value).")"; }
+    	else { $cond[] = $field."=".$value; }
+    	
+    	return $cond;    	
+    }
 	
 	protected function _trace_sql($function, $query) {
 			
