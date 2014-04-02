@@ -1173,17 +1173,25 @@ class Model extends Object {
 		if($coreConfs['log_sql']) {
 			
 			$date = date('Y-m-d');
+			
+			$debug = debug_backtrace();
+			
 			$traceSql = 
-				"========================================"."\n".
-				"Date : ".date('Y-m-d H:i:s').
+				"================================================================================"."\n".
+				"[DATE] : \t\t\t".date('Y-m-d H:i:s').
 				"\n".
-				"Class : ".get_class($this).
+				"[CLASS] : \t\t\t".get_class($this).
 				"\n".
-				"Referer : ".$this->refererUrl.
+				"[REFERER] : \t\t".$this->refererUrl.
 				"\n".
-				"Fonction : ".$function.
+				"[DEBUG BACKTRACE] : "."\n";
+			
+				foreach($debug as $k => $v) { $traceSql .= "\t\t\t\t\t".'[FILE] : '.$v['file'].' --> [LINE] : '.$v['line']."\n"; }
+			
+			$traceSql .=
+				"[FUNCTION] : \t\t".$function.
 				"\n".
-				"Query : "."\n".$query.
+				"[QUERY] : "."\n".$query.
 				"\n";
 			
 			FileAndDir::put(TMP.DS.'logs'.DS.'models'.DS.$date.'.log', $traceSql, FILE_APPEND);
