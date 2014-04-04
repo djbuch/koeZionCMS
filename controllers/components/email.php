@@ -275,6 +275,7 @@ class EmailComponent extends Component {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 06/03/2014 by FI
+ * @version 0.2 - 04/04/2014 by FI - Modification de la récupération de la valeur à remplacer
  */		
 	public function replace_content($content, $replacement) {
 		
@@ -287,8 +288,11 @@ class EmailComponent extends Component {
 			
 			foreach($result[1] as $key => $path) {
 				
-				$value = Set::classicExtract($replacement, $path);
-				if($value) { $content = str_replace($result[0][$key], $value, $content); }			
+				if(Set::check($replacement, $path)) {
+					
+					$value = Set::classicExtract($replacement, $path);
+					$content = str_replace($result[0][$key], $value, $content);
+				}	
 			}			
 		}
 		

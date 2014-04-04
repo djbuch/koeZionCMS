@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 04/04/2014</name>
+		<num>20140404.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la récupération de la valeur à remplacer dans la fonction replace_content du composant Email</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 02/04/2014</name>
 		<num>20140402.005</num>
 		<supervisor>KoéZionCMS</supervisor>
