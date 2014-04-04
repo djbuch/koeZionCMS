@@ -220,15 +220,15 @@ class Controller extends Object {
 		}		
 	}
 	
-	protected function _check_cache_configs() {
+	protected function _check_cache_configs($actions = array()) {		
+		
+		$defaultActions = array('add', 'edit', 'delete', 'statut', 'move2prev', 'move2next', 'ajax_order_by');
+		$actions = array_merge($defaultActions, $actions);
 		
 		/////////////////////////////////////////////////
 		//PARAMETRAGE DE LA GESTION EVENTUELLE DU CACHE//
 		//A revoir quand plus de temps
-		if(
-				method_exists($this, '_init_caching') &&
-				in_array($this->params['action'], array('add', 'edit', 'delete', 'statut', 'move2prev', 'move2next', 'ajax_order_by'))
-		) {
+		if(method_exists($this, '_init_caching') && in_array($this->params['action'], $actions)) {
 		
 			//Dans le cas de l'édition, de la suppression, du changement de status d'un élément on passe l'id pour l'initialisation
 			//au cas ou on ait un fichier de cache pour cet élément
