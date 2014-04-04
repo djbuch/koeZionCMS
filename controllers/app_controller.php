@@ -51,6 +51,8 @@ class AppController extends Controller {
     	//Si on est dans le backoffice    	
 		if($prefix == 'backoffice') {
 			
+			define('INTERFACE_USED', 'backoffice');
+			
 			$adminRole = Session::getRole(); //Récupération du rôle de l'utilisateur connecté			
 			if(!Session::isLogged() && !$adminRole) { $this->redirect('users/login'); } //Si pas loggé ou que l'on ne récupère pas de rôle			
 			$this->_check_acls($adminRole); //Contrôle des droits utilisateurs
@@ -85,6 +87,8 @@ class AppController extends Controller {
 			
 		//Si on est dans le frontoffice			
 		} else {
+			
+			define('INTERFACE_USED', 'frontoffice');
 			
 			//////////////////////////////////////////////////
 			//   RECUPERATION DES DONNEES DU SITE COURANT   //
