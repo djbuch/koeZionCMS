@@ -94,7 +94,7 @@ class View extends Object {
     	extract($this->vars); //On récupère les variables		
     	
     	//AJAX : si on trouve ajax_ dans le nom de la vue par défaut on change la valeur du layout
-    	if(substr($this->view, 0, 5) == 'ajax_') { $this->layout = 'ajax'; }
+    	if(substr($this->view, 0, 5) == 'ajax_' || substr($this->view, 0, 16) == 'backoffice_ajax_') { $this->layout = 'ajax'; }
     	
     	//Si on désire rendre une vue particulière celle
     	if(strpos($this->view, '/') === 0 && $inViewsFolder) { $view = VIEWS.$this->view.'.php'; }

@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 07/04/2014</name>
+		<num>20140407.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Gestion automatique du layout ajax en backoffice</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 04/04/2014</name>
 		<num>20140404.003</num>
 		<supervisor>KoéZionCMS</supervisor>
