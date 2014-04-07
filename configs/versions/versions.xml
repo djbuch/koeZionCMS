@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 07/04/2014</name>
+		<num>20140407.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise en place de la suppression dans les modèles associés via $this->checkOnDelete</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 07/04/2014</name>
 		<num>20140407.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

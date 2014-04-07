@@ -20,6 +20,22 @@ class Model extends Object {
 	public $manageActivateField = true; //Permet d'éviter de prendre en compte la recherche basée sur le champ activate ainsi que l'insertion automatique de ce champ	
 	public $alias = false; //Alias de la table
 	public $validAllFields = false; //Indique si il faut ou non valider l'ensemble des champs de la table ou uniquement ceux envoyés
+	
+/**
+ * Tableau contenant l'ensemble des models à tester lors de la suppression
+ * 
+ * Un exemple de configuration pourrait être
+ * var $checkOnDelete = array(
+ *		'FirstModel' => 'first_model_field_id',
+ *		'SecondModel' => 'second_model_field_id'		
+ *	);
+ *
+ * @var 	boolean/array
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 07/04/2014 by FI
+ */
+	var $checkOnDelete = false;
     
 /**
  * Constructeur de la classe
@@ -505,11 +521,12 @@ class Model extends Object {
  * @version 0.3 - 24/12/2013 by FI - Mise en place de la gestion multisites lors de la suppression
  * @version 0.4 - 17/01/2014 by FI - Mise en place de la variable $moreControls
  * @version 0.5 - 01/04/2014 by FI - Evolution mise en place de la gestion multisites
+ * @version 0.6 - 07/04/2014 by FI - Mise en place de la suppression dans les modèles associés via $this->checkOnDelete
  */		
 	public function delete($id, $moreControls = null) {
 		
 		if(is_array($id)) { $idConditions = " IN (".implode(',', $id).')'; } else { $idConditions = " = ".$id; }		
-		$sql = "DELETE FROM ".$this->table." WHERE ".$this->primaryKey.$idConditions.";";  //Requête de suppression de l'élément
+		$sql = "DELETE FROM ".$this->table." WHERE ".$this->primaryKey.$idConditions;  //Requête de suppression de l'élément
 		
 		//Permet de rajouter une condition supplémentaire lors de la suppression
 		if(isset($moreControls)) {
@@ -522,6 +539,18 @@ class Model extends Object {
 		if($this->manageWebsiteId && in_array('website_id', $this->shema)) { $sql .= " AND website_id = ".CURRENT_WEBSITE_ID; }
 		
 		$sql .= ";";				
+		
+		//On contrôle si des modèles associés sont renseignés
+		//Cela permet d'effectuer les suppressions croisées plus simplement
+		if($this->checkOnDelete) {
+			
+			foreach($this->checkOnDelete as $model => $pivot) {
+				
+				$modelObject = $this->loadModel($model, true);
+				$sql .= "\n"."DELETE FROM ".$modelObject->table." WHERE ".$pivot." = ".$id.";";
+			}			
+		}
+		
 		$queryResult = $this->query($sql);		
 		if(isset($this->searches_params)) { $this->delete_search_index($idConditions); } //Suppression de l'index dans la recherche		
 		return $queryResult;
