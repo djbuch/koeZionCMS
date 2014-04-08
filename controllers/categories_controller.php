@@ -730,6 +730,7 @@ class CategoriesController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 02/10/2012 by FI
  * @version 0.2 - 18/12/2013 by FI - Suppression temporaire de la gestion des templates car pas forcément utile et utilisée
+ * @version 0.3 - 08/04/2014 by FI - Gestion des pages volantes
  */	
 	protected function _init_datas() {		
 		
@@ -747,6 +748,8 @@ class CategoriesController extends AppController {
 		$rightButton = $this->RightButton->findList(array('conditions' => array('online' => 1))); //On récupère les types de posts
 		$this->unloadModel('RightButton'); //Déchargement du modèle des types de posts
 		$this->set('rightButton', $rightButton); //On les envois à la vue
+		
+		$this->set('typesOfPage', $this->Category->typesOfPage); //On les envois à la vue
 	} 
 
 /**
@@ -932,6 +935,7 @@ class CategoriesController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 20/12/2012 by FI
  * @version 0.2 - 20/03/2014 by FI - Modification formatage du tableau
+ * @version 0.3 - 08/04/2014 by FI - Gestion des pages volantes
  */	
 	protected function _get_children_category($datas) {
 		
@@ -946,7 +950,7 @@ class CategoriesController extends AppController {
 			
 			if(!$childrenCategory) {
 			
-				$children = $this->Category->getChildren($datas['category']['id'], false, false, $datas['category']['level']+1, array('conditions' => array('online' => 1))); //On récupère les enfants de la catégorie parente
+				$children = $this->Category->getChildren($datas['category']['id'], false, false, $datas['category']['level']+1, array('conditions' => array('online' => 1, 'type!=4'))); //On récupère les enfants de la catégorie parente
 				
 				//Cas particulier pour les catégories "frères" le titre de la colonne de droite peut varier en fonction des besoins
 				//On va donc parcourir le résultat et réorganiser le tout
@@ -970,6 +974,7 @@ class CategoriesController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 20/12/2012 by FI
  * @version 0.2 - 20/03/2014 by FI - Modification formatage du tableau
+ * @version 0.3 - 08/04/2014 by FI - Gestion des pages volantes
  */	
 	protected function _get_brothers_category($datas) {
 						
@@ -984,7 +989,7 @@ class CategoriesController extends AppController {
 			
 			if(!$brothersCategory) {
 		
-				$brothers = $this->Category->getChildren($datas['category']['parent_id'], false, false, $datas['category']['level'], array('conditions' => array('online' => 1))); //On récupère les enfants de la catégorie parente
+				$brothers = $this->Category->getChildren($datas['category']['parent_id'], false, false, $datas['category']['level'], array('conditions' => array('online' => 1, 'type!=4'))); //On récupère les enfants de la catégorie parente
 			
 				//Cas particulier pour les catégories "frères" le titre de la colonne de droite peut varier en fonction des besoins
 				//On va donc parcourir le résultat et réorganiser le tout

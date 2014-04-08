@@ -31,6 +31,20 @@ class Category extends Tree {
 	);
 	
 /**
+ * Tableau contenant les types de pages disponibles
+ * @var 	array
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 08/04/2014 by FI
+ */	
+	var $typesOfPage = array(
+		1 => "Page catégorie (Intégrée dans le menu principal)", 
+		2 => "Page évènement (Non intégrée dans le menu principal)",
+		4 => "Page volante (Gestion indépendante du reste des pages)"
+	);
+	
+	
+/**
  * Tableau contenant l'ensemble des champs intégrer dans l'index de recherche
  *
  * @var 	array

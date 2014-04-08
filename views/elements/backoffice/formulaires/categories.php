@@ -24,8 +24,7 @@
 		<div class="content nopadding">
 			<?php 
 			echo $helpers['Form']->input('parent_id', 'Page parente', array('type' => 'select', 'datas' => $categoriesList, 'tooltip' => "Indiquez la page parente de cette page (Racine du site par défaut)"));
-			$typeList = array(1 => "Page catégorie (Intégrée dans le menu)", 2 => "Page évènement (Non intégrée dans le menu)");
-			echo $helpers['Form']->input('type', 'Type de page', array('type' => 'select', 'datas' => $typeList, 'tooltip' => "Une page évènement n'est pas intégrée dans le menu général, vous pourrez faire des liens vers celle-ci via l'éditeur WYSIWYG"));
+			echo $helpers['Form']->input('type', 'Type de page', array('type' => 'select', 'datas' => $typesOfPage, 'tooltip' => "Une page évènement n'est pas intégrée dans le menu général, vous pourrez faire des liens vers celle-ci via l'éditeur WYSIWYG"));
 			echo $helpers['Form']->input('name', '<i>(*)</i> Titre', array('tooltip' => "Indiquez le titre de la page. Ce champ sera utilisé (par défaut) comme titre de page dans les moteurs de recherche, 70 caractères maximum recommandé"));
 			echo $helpers['Form']->input('content', 'Contenu', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge', 'tooltip' => "Saisissez ici le contenu de votre page, n'hésitez pas à utiliser les modèles de pages pour vous aider"));
 			echo $helpers['Form']->input('online', 'En ligne', array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour diffuser cette page"));
