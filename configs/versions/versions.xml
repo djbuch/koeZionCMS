@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 11/04/2014</name>
+		<num>20140411.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Correction bug #36 - Ajustement correction</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 11/04/2014</name>
 		<num>20140411.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
