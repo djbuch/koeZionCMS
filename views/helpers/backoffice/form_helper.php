@@ -263,8 +263,11 @@ class FormHelper extends FormParentHelper {
 			$selected = '';
 		}
 
-		if(empty($templateColor)) { $thumb = '<img src="'.BASE_URL.'/img/backoffice/templates/'.$templateLayout.'/'.$templateCode.'/background.png" />'; } 
-		else { $thumb = '<img src="'.$templateColor.'" />'; }
+		$imgFile = WEBROOT.DS.'img'.DS.'backoffice'.DS.'templates'.DS.$templateLayout.DS.$templateCode.DS.'background.png';
+		if(!file_exists($imgFile)) { $thumb = '<img src="'.BASE_URL.'/img/backoffice/templates/'.$templateLayout.'/'.$templateCode.'/background.png" />'; } 
+		else if(!empty($templateColor)) { $thumb = '<span style="display:block;width:80px;height:72px;padding:0;margin:0 5px;background:#'.$templateColor.'">&nbsp</span>'; }
+		else { $thumb = ''; }
+		
 		return '<p '.$selected.'><input name="'.$inputNameText.'" id="'.$inputIdText.$value.'" value="'.$value.'" type="radio" '.$checked.' /><span>'.$templateName.'<br />'.$thumb.'</span></p>';
 	}
 	
