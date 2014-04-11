@@ -268,7 +268,7 @@ class FormHelper extends FormParentHelper {
 		else if(!empty($templateColor)) { 
 			
 			$firstChar = $templateColor{0};
-			if($firstChar == "#") { $thumb = '<span style="display:block;width:80px;height:72px;padding:0;margin:0 5px;background:#'.$templateColor.'">&nbsp</span>'; }
+			if($firstChar == "#") { $thumb = '<span style="display:block;width:80px;height:72px;padding:0;margin:0 5px;background:'.$templateColor.'">&nbsp</span>'; }
 			else { $thumb = '<img src="'.$templateColor.'" />'; } 
 		}
 		else { $thumb = ''; }
