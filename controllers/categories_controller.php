@@ -313,7 +313,7 @@ class CategoriesController extends AppController {
 		$parentAdd = parent::backoffice_add(false); //On fait appel à la fonction d'ajout parente
 		if($parentAdd) { 
 			
-			$this->_update_template($this->Category->id, $this->request->data['template_id']);
+			//$this->_update_template($this->Category->id, $this->request->data['template_id']);
 			$this->_save_assoc_datas($this->Category->id);
 			$this->_check_send_mail($this->request->data);
 			$this->redirect('backoffice/categories/index'); 
@@ -365,7 +365,7 @@ class CategoriesController extends AppController {
 		if($parentEdit) { 
 			
 			$this->_update_children_statut($id, $this->request->data['online']);	
-			$this->_update_template($this->Category->id, $this->request->data['template_id']);
+			//$this->_update_template($this->Category->id, $this->request->data['template_id']);
 			$this->_save_assoc_datas($id, true);
 			$this->_check_send_mail($this->request->data);
 			$this->redirect('backoffice/categories/index'); //On retourne sur la page de listing 
