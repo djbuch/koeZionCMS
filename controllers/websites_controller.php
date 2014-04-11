@@ -28,19 +28,33 @@ class WebsitesController extends AppController {
  * @version 0.1 - 01/05/2012 by FI
  * @version 0.2 - 03/05/2012 by FI - Lors de la création d'un site il faut également créer la catégorie parente et mettre à jour la variable de session
  * @version 0.3 - 07/06/2012 by FI - Modification de la gestion des couleurs on travaille maintenant avec des templates
+ * @version 0.4 - 11/04/2014 by FI - Reprise de la fonction pour alléger le nombre de requêtes
  */
 	function backoffice_add() {
 			
 		$this->_init_datas();
-		$parentAdd = parent::backoffice_add(false); //On fait appel à la fonction d'ajout parente
-		if($parentAdd) {
-				
-			$this->_init_category();
-			$this->_edit_session();
-			$this->_update_template($this->Website->id, $this->request->data['template_id']);
-			$this->_update_txt_mails($this->Website->id, $this->request->data);
-			$this->redirect('backoffice/websites/index');
-		}	
+    	
+		//Si des données sont postées
+    	if($this->request->data) { 
+			
+			//Mise à jour des informations
+			$this->request->data = $this->_update_template($this->request->data);
+			$this->request->data = $this->_update_txt_mails($this->request->data);
+    		
+			//Si elles sont valides
+    		if($this->Website->validates($this->request->data)) { 
+        			
+    			$this->Website->save($this->request->data); //On les sauvegarde 			    			
+    			Session::setFlash('Le contenu a bien été ajouté'); //Message de confirmation
+
+    			$this->_init_category();
+    			
+    			$this->_check_cache_configs();
+    			$this->_delete_cache();
+    			$this->_edit_session();
+    			$this->redirect('backoffice/websites/index');
+    		} else { Session::setFlash('Merci de corriger vos informations', 'error'); }
+    	}	
 	}	
 	
 /**
@@ -52,19 +66,34 @@ class WebsitesController extends AppController {
  * @version 0.1 - 17/01/2012 by FI
  * @version 0.2 - 23/03/2012 by FI - Lors de la modification d'une catégorie, si le champ online de celle-ci est égal à 0 on va mettre à jour l'ensemble des champs online des catégories filles
  * @version 0.3 - 07/06/2012 by FI - Modification de la gestion des couleurs on travaille maintenant avec des templates
+ * @version 0.4 - 11/04/2014 by FI - Reprise de la fonction pour alléger le nombre de requêtes
  */
 	function backoffice_edit($id) {
 	
+		$this->set('id', $id);
 		$this->_init_datas();
 		
-		$parentEdit = parent::backoffice_edit($id, false); //On fait appel à la fonction d'édition parente		
-		if($parentEdit) {
+		//Si des données sont postées
+		if($this->request->data) {
 			
-			$this->_edit_session();			
-			$this->_update_template($id, $this->request->data['template_id']);
-			$this->_update_txt_mails($id, $this->request->data);
-			$this->redirect('backoffice/websites/index');
-		}
+			//Mise à jour des informations
+			$this->request->data = $this->_update_template($this->request->data);
+			$this->request->data = $this->_update_txt_mails($this->request->data);
+    
+    		//Si elles sont valides
+    		if($this->Website->validates($this->request->data)) {
+    
+    			$this->Website->save($this->request->data); //On les sauvegarde    			
+    			Session::setFlash('Le contenu a bien été modifié'); //Message de confirmation
+    			    			
+    			$this->_check_cache_configs();
+    			$this->_delete_cache();
+    			$this->_edit_session();
+    			$this->redirect('backoffice/websites/index');
+    			
+    		} else { Session::setFlash('Merci de corriger vos informations', 'error'); }
+			
+		} else { $this->request->data = $this->Website->findFirst(array('conditions' => array('id' => $id))); }
 	}	
 
 /**
@@ -98,51 +127,6 @@ class WebsitesController extends AppController {
 					$this->unloadModel($modelName); //Déchargement du modèle
 				}
 			}
-						
-			/*//Suppression des catégories
-			$this->loadModel('Category');
-			$this->Category->deleteByName('website_id', $id);
-			$this->unloadModel('Category');
-			
-			//Suppression des contacts
-			$this->loadModel('Contact');
-			$this->Contact->deleteByName('website_id', $id);
-			$this->unloadModel('Contact');
-			
-			//Suppression des focus
-			$this->loadModel('Focus');
-			$this->Focus->deleteByName('website_id', $id);
-			$this->unloadModel('Focus');
-			
-			//Suppression des posts
-			$this->loadModel('Post');
-			$this->Post->deleteByName('website_id', $id);
-			$this->unloadModel('Post');
-			
-			//Suppression des commentaires posts
-			$this->loadModel('PostsComment');
-			$this->PostsComment->deleteByName('website_id', $id);
-			$this->unloadModel('PostsComment');
-			
-			//Suppression de l'association entre les posts et les types
-			$this->loadModel('PostsPostsType');
-			$this->PostsPostsType->deleteByName('website_id', $id);
-			$this->unloadModel('PostsPostsType');
-			
-			//Suppression des types de posts
-			$this->loadModel('PostsType');
-			$this->PostsType->deleteByName('website_id', $id);
-			$this->unloadModel('PostsType');
-			
-			//Suppression des sliders
-			$this->loadModel('Slider');
-			$this->Slider->deleteByName('website_id', $id);
-			$this->unloadModel('Slider');
-						
-			//Suppression de l'association entre le site et les groupes d'utilisateurs
-			$this->loadModel('UsersGroupsWebsite');
-			$this->UsersGroupsWebsite->deleteByName('website_id', $id);
-			$this->unloadModel('UsersGroupsWebsite');*/
 			
 			$this->_edit_session();
 			
@@ -174,10 +158,7 @@ class WebsitesController extends AppController {
  * @version 0.1 - 17/12/2013 by FI
  * @todo reprendre un peu la fonction pour l'alléger
  */
-	function backoffice_ajax_get_templates($filter) {
-	
-		$this->layout = 'ajax'; //Définition du layout à utiliser
-		
+	function backoffice_ajax_get_templates($filter) {		
 		
 		$websiteDatas = Session::read('Backoffice.Websites.details');
 		$currentTemplateId = $websiteDatas[CURRENT_WEBSITE_ID]['template_id'];
@@ -333,14 +314,15 @@ class WebsitesController extends AppController {
  * @access 	protected 
  * @author 	koéZionCMS
  * @version 0.1 - 07/06/2012 by FI
+ * @version 0.2 - 11/04/2014 by FI - Suppression de la requête
  */	
-	protected function _update_template($websiteId, $templateId) {
+	protected function _update_template($datas) {
 		
+		$templateId = $datas['template_id']; //Récupération de l'identifiant du template		
 		$templateDatas = $this->templatesList[$templateId];
-		$templateLayout = $templateDatas['layout'];
-		$templateCode = $templateDatas['code'];		
-		$datas = array('id' => $websiteId, 'tpl_layout' => $templateLayout, 'tpl_code' => $templateCode);
-		$this->Website->save($datas);
+		$datas['tpl_layout'] = $templateDatas['layout'];
+		$datas['tpl_code'] = $templateDatas['code'];	
+		return $datas;
 	}
 
 /**
@@ -351,8 +333,9 @@ class WebsitesController extends AppController {
  * @access 	protected 
  * @author 	koéZionCMS
  * @version 0.1 - 02/08/2012 by FI
+ * @version 0.2 - 11/04/2014 by FI - Suppression de la requête
  */	
-	protected function _update_txt_mails($websiteId, $datas) {
+	protected function _update_txt_mails($datas) {
 			
 		$txtMails = $this->components['Email']->replace_links(
 			array(
@@ -363,13 +346,10 @@ class WebsitesController extends AppController {
 			$datas['url']
 		); //On fait appel au composant Email pour formater les textes des mails
 		
-		$datas = array(
-			'id' => $websiteId, 
-			'txt_mail_contact' => $txtMails['txt_mail_contact'], 
-			'txt_mail_comments' => $txtMails['txt_mail_comments'], 
-			'txt_mail_newsletter' => $txtMails['txt_mail_newsletter']
-		);
-		$this->Website->save($datas);
+		$datas['txt_mail_contact'] = $txtMails['txt_mail_contact']; 
+		$datas['txt_mail_comments'] = $txtMails['txt_mail_comments'];
+		$datas['txt_mail_newsletter'] = $txtMails['txt_mail_newsletter'];
+		return $datas;
 	}
     
 /**

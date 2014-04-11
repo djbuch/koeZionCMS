@@ -121,7 +121,8 @@ class UsersController extends AppController {
 								}				
 								
 								Session::write('Backoffice', $session); //On insère dans la variable de session les données de l'utilisateur
-								$this->redirect($routesConfigs['backoffice_prefix']); //On redirige vers la page d'accueil du backoffice					
+								$redirect = (isset($coreConfs['backoffice_home_page']) && !empty($coreConfs['backoffice_home_page'])) ? $coreConfs['backoffice_home_page'] : $routesConfigs['backoffice_prefix']; //On check qu'elle url de redirection utiliser
+								$this->redirect($redirect); //On redirige vers la page d'accueil du backoffice					
 								
 							} else { Session::setFlash(_("Désolé mais votre accès au backoffice n'est pas autorisé (Aucun site administrable)"), 'error'); } //Sinon on génère le message d'erreur			
 							
