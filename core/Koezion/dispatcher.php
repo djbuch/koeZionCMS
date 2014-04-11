@@ -261,8 +261,10 @@ class Dispatcher {
 			FileAndDir::put(TMP.DS.'logs'.DS.'php'.DS.'e404_'.$date.'.log', $traceSql, FILE_APPEND);
 		}
 		
+		$url = Router::url('e404');
+		$url .= "?e404=".$this->request->url;
 		Session::write('redirectMessage', $message);
-		header("Location: ".Router::url('e404'));		
+		header("Location: ".$url);		
 		die();
 	}
 }

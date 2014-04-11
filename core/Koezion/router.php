@@ -191,7 +191,11 @@ class Router {
 		}
 		
 		$url = str_replace('//', '/', '/'.$url);
-		if($url != '/' && !empty($extension)) { $url .= '.'.$extension; } //Cas ou on est pas sur la racine du site
+		//On check 
+		//	que l'url ne commence pas par /
+		//	que l'extension n'est pas vide
+		//	et que l'url ne contient pas déhà l'extension
+		if($url != '/' && !empty($extension) && !substr_count($url, '.'.$extension)) { $url .= '.'.$extension; } //Cas ou on est pas sur la racine du site
 		
 		if($fullUrl) { $url2Return = 'http://'.$_SERVER['HTTP_HOST'].BASE_URL.$url; }
 		else { $url2Return = BASE_URL.$url; }

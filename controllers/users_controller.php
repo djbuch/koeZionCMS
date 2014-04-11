@@ -80,10 +80,11 @@ class UsersController extends AppController {
 								'User' => $user,
 								'UsersGroup' => $usersGroup,
 								'Websites' => $this->_init_websites_datas()
-							);
-														
+							);						
+							
 							Session::write('Backoffice', $session); //On insère dans la variable de session les données de l'utilisateur
-							$this->redirect($routesConfigs['backoffice_prefix']); //On redirige vers la page d'accueil du backoffice													
+							$redirect = (isset($coreConfs['backoffice_home_page']) && !empty($coreConfs['backoffice_home_page'])) ? $coreConfs['backoffice_home_page'] : $routesConfigs['backoffice_prefix']; //On check qu'elle url de redirection utiliser
+							$this->redirect($redirect); //On redirige vers la page d'accueil du backoffice													
 						
 						//UTILISATEUR BACKOFFICE//
 						} else if($bddRole == 2) {

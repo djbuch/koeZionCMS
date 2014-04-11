@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 11/04/2014</name>
+		<num>20140411.005</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Rajout de la possibilité de choisir la page d'accueil du backoffice</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 11/04/2014</name>
 		<num>20140411.004</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
