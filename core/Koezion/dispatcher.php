@@ -101,6 +101,7 @@ class Dispatcher {
  * @version 0.2 - 20/10/2013 by AB - Rajout de la gestion du dossier du plugin 
  * @version 0.3 - 18/03/2014 by FI - Allègement de la gestion du chargement du fichier du controller 
  * @version 0.4 - 12/04/2014 by FI - Suppression de _plugin dans le nom d'un controller de plugin 
+ * @version 0.5 - 12/04/2014 by FI - Annulation suppression de _plugin dans le nom d'un controller de plugin car un plugin peut potentiellement avoir le même nom qu'un controller existant 
  */
 	function loadControllerFile($controllerToLoad = null) {
 		
@@ -117,8 +118,7 @@ class Dispatcher {
 			
 			$this->request->pluginFolder = $sFolderPlugin = $pluginsConnectors[$this->request->controller]; //Récupération du dossier du plugin si le controller appellé est dans un connector d'un plugin
 			$controller_path = PLUGINS.DS.$sFolderPlugin.DS.'controllers'.DS.$controller_name.'.php';
-			//$controller_name = strtolower($this->request->controller.'_plugin_controller');
-			$controller_name = strtolower($this->request->controller.'_controller');
+			$controller_name = strtolower($this->request->controller.'_plugin_controller');
 		}
 		//////////////////////////////////////////////
 	
