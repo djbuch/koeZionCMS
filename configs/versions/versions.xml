@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 12/04/2014</name>
+		<num>20140412.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Suppression de _plugin dans le nom d'un controller de plugin</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 12/04/2014</name>
 		<num>20140412.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
