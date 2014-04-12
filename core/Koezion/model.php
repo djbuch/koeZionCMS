@@ -626,7 +626,7 @@ class Model extends Object {
 		
 		$queryExecutionResult = $preparedInfos['preparedQuery']->execute($datasToSave); //Exécution de la requête
 		
-		$this->_trace_sql('function save', $preparedInfos['preparedQuery']->queryString); //Récupération de la requête
+		$this->_trace_sql('function save', $preparedInfos['preparedQuery']->queryString, $datasToSave); //Récupération de la requête
 		
 		//Affectation de la valeur de la clé primaire à la variable de classe
 		if($preparedInfos['action'] == 'insert') { $this->id = $this->db->lastInsertId();}
@@ -661,7 +661,7 @@ class Model extends Object {
 				$datasToSave = $this->_prepare_save_datas($v, $preparedInfos['moreDatasToSave'], $forceInsert, $escapeUpload);
 				$queryExecutionResult = $preparedInfos['preparedQuery']->execute($datasToSave);
 				
-				$this->_trace_sql('function saveAll', $preparedInfos['preparedQuery']->queryString); //Récupération de la requête
+				$this->_trace_sql('function saveAll', $preparedInfos['preparedQuery']->queryString, $datasToSave); //Récupération de la requête
 				
 				if($preparedInfos['action'] == 'insert') { $this->id[] = $this->db->lastInsertId();}
 				else if(!is_array($this->primaryKey)) { $this->id[] = $v['id']; }
@@ -1244,7 +1244,7 @@ class Model extends Object {
     	return $cond;    	
     }
 	
-	protected function _trace_sql($function, $query) {
+	protected function _trace_sql($function, $query, $datasToSave = null) {
 			
 		require_once(LIBS.DS.'config_magik.php');
 		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
@@ -1279,6 +1279,13 @@ class Model extends Object {
 				"\n".
 				"[QUERY] : "."\n".$query.
 				"\n";
+			
+			if(isset($datasToSave)) {
+				
+				$traceSql .=
+				"[DATAS] : \n".var_export($datasToSave, true).
+				"\n";
+			}
 			
 			FileAndDir::put(TMP.DS.'logs'.DS.'models'.DS.$date.'.log', $traceSql, FILE_APPEND);
 		}
