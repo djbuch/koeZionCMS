@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 14/04/2014</name>
+		<num>20140414.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la fonction findFirst dans le model principal</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 12/04/2014</name>
 		<num>20140412.004</num>
 		<supervisor>KoéZionCMS</supervisor>

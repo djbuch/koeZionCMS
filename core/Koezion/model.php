@@ -443,7 +443,7 @@ class Model extends Object {
  * @author 	koéZionCMS
  * @version 0.1 - 16/02/2012 by FI
  */    
-	public function findFirst($req) { 
+	public function findFirst($req = array()) { 
 		
 		$request = $this->find($req); //On lance la requête
 		return current($request); //Par défaut on va retourne le premier élément du tableau 
