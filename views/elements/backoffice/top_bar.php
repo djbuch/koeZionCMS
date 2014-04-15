@@ -43,7 +43,7 @@
 					<li><a href="<?php echo Router::url('backoffice/configs/security_code_liste'); ?>"><?php echo _("Code sécurité tâches CRON"); ?></a></li>
 					<li><a href="<?php echo Router::url('backoffice/configs/delete_cache'); ?>"><?php echo _("Supprimer le cache"); ?></a></li>
 					<li><a href="<?php echo Router::url('backoffice/configs/phpinfo'); ?>"><?php echo _("PHPINFO"); ?></a></li>
-					<li class="nolink center">-------- <?php echo _("GESTIONS DES MODULES"); ?> --------</li>
+					<li class="nolink center"><?php echo _("GESTIONS DES MODULES"); ?></li>
 					<li><a href="<?php echo Router::url('backoffice/modules/index'); ?>"><?php echo _("Modules"); ?></a></li>			
 					<li><a href="<?php echo Router::url('backoffice/modules_types/index'); ?>"><?php echo _("Types de modules"); ?></a></li>
 				</ul>
