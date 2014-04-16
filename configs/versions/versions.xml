@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 16/04/2014</name>
+		<num>20140416.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Redéfinition de la fonction data de jQuery qui pose certains problèmes lors du set</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 15/04/2014</name>
 		<num>20140415.001</num>
 		<supervisor>KoéZionCMS</supervisor>

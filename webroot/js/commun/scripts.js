@@ -1,3 +1,21 @@
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//    REDEFINITION DE LA FONCTION DATA QUI NE FONCTIONNE PAS CORRECTEMENT PAR MOMENT SURTOUT POUR LE SET    //	
+(function($){
+
+	$.fn.getdata = function(attr){
+		
+		var dataAttr = 'data-' + attr;
+    	return $(this).attr(dataAttr);
+	};	
+	
+	$.fn.setdata = function(attr, value){
+		
+		var dataAttr = 'data-' + attr;
+    	return $(this).attr(dataAttr, value);
+	};
+	
+})(jQuery);
+	
 $(document).ready(function() {
 		
 	$('a').filter(function() { return this.hostname && this.hostname !== location.hostname; }).attr("target", "_blank");
@@ -10,7 +28,7 @@ $(document).ready(function() {
 		$(this).html("<a href=\"mailto:" + sEmail + "\">" + sEmail + "</a>");
 	});
 	
-	var baseurl = $('body').data('baseurl');
+	var baseurl = $('body').getdata('baseurl');
 	
 	jQuery.extend({
 		
@@ -93,7 +111,8 @@ $(document).ready(function() {
 			var iMaxHeight = Math.max.apply(null, aHeights);
 			$(oElement).css( {'height': iMaxHeight + 'px'} );
 		}
-	});	
+	});		
+	
 });
 Array.prototype.unset = function(val){
     var index = this.indexOf(val)
