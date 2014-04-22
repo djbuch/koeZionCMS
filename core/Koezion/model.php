@@ -1013,7 +1013,7 @@ class Model extends Object {
 		$shema = $this->shema; //Shema de la table		
 		$primaryKey = $this->primaryKey; //Récupération de la clé primaire
 		
-		$fieldsToSaveToSave = array(); //Tableau des champs de la table à sauvegarder
+		$fieldsToSave = array(); //Tableau des champs de la table à sauvegarder
 		$moreDatasToSave = array(); //Tableau des données supplémentaires à sauvegarder (évite de les regénérer à chaque fois)
 		
 		//Permet de connaitre le type de requete à effectuer
