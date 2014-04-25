@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 25/04/2014</name>
+		<num>20140425.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la gestion des checkbox dans le helper form pour gérer des valeurs personnalisées</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 22/04/2014</name>
 		<num>20140422.001</num>
 		<supervisor>KoéZionCMS</supervisor>

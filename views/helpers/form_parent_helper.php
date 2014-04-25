@@ -267,9 +267,14 @@ class FormParentHelper extends Helper {
 			//   INPUT DE TYPE CHECKBOX   //
 			case 'checkbox':
 
+				if(empty($value)) { $value = 1; }
+				
+				$requestvalue = Set::classicExtract($this->view->controller->request->data, $name);//On récupère la valeur dans request				
+				$checked = ($value == $requestvalue) ? ' checked="checked"' : '';//Si la valeur dans request est la même que celle passée en paramètre, alors l'input est sélectionné
+				
 				//Par défaut le champ hidden permettra de mettre à 0 la valeur du champ si la case n'est pas cochée
 				$inputReturn .= '<input type="hidden" id="'.$inputIdText.'hidden" name="'.$inputNameText.'" value="0" />';
-				$inputReturn .= '<input type="checkbox" id="'.$inputIdText.'" name="'.$inputNameText.'" value="1" '.(empty($value) ? '' : 'checked').' '.$attributes.' />';
+				$inputReturn .= '<input type="checkbox" id="'.$inputIdText.'" name="'.$inputNameText.'" value="'.$value.'" '.$checked.' '.$attributes.' />';
 			break;
 
 			//   INPUT DE TYPE RADIO   //
@@ -281,7 +286,7 @@ class FormParentHelper extends Helper {
 				if($name != $this->radio_name) { $this->radio_count = 0; } //On réinitialise le compteur des inputs radio
 
 				$requestvalue = Set::classicExtract($this->view->controller->request->data, $name);//On récupère la valeur dans request
-				$checked = $options['value'] == $requestvalue ? ' checked="checked"' : '';//Si la valeur dans request est la même que celle passée en paramètre, alors l'input est sélectionné
+				$checked = ($options['value'] == $requestvalue) ? ' checked="checked"' : '';//Si la valeur dans request est la même que celle passée en paramètre, alors l'input est sélectionné
 
 				$inputIdText .= $this->radio_count;//On concatène l'identifiant pour qu'il soit correctement indiqué sur le label et l'input
 				$inputReturn .= '<input type="radio" id="'.$inputIdText.'" name="'.$inputNameText.'" value="'.$options['value'].'"'.$checked.' '.$attributes.' />';
