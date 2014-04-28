@@ -414,7 +414,7 @@ class Model extends Object {
 		
 		//////////////////////
 		//   CHAMPS GROUP BY   //
-		if(isset($req['groupBy'])) { $sql .= "\n".$req['groupBy']; }
+	if(isset($req['groupBy'])) { $sql .= "\n".'GROUP BY '.$req['groupBy']; }
 		
 		//////////////////////
 		//   CHAMPS ORDER   //
