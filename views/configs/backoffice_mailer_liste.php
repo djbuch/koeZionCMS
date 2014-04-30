@@ -12,7 +12,7 @@
 				echo $helpers['Form']->input('smtp_password', _('Mot de passe'), array('tooltip' => _("indiquez ici le mot de passe du compte"), 'type' => 'password'));			 
 				echo $helpers['Form']->input('mail_set_from_email', _('Email expéditeur'), array('tooltip' => _("Indiquez ici l'adresse email qui apparaitra dans l'expéditeur")));	
 				echo $helpers['Form']->input('mail_set_from_name', _('Nom expéditeur'), array('tooltip' => _("Indiquez ici le nom qui apparaitra dans l'expéditeur")));	
-				echo $helpers['Form']->input('bcc_email', _('Copie cachée à'), array('tooltip' => _("Indiquez un email dans lequel vous recevrez une copie")));
+				echo $helpers['Form']->input('bcc_email', _('Copie cachée à'), array('tooltip' => _("Indiquez un email dans lequel vous recevrez une copie (Si plusieurs emails les séparer par des ;)")));
 				
 				$streamGetTransports = stream_get_transports(); //retourne un tableau indexé contenant les noms des transports de sockets disponibles pour le système. cf : http://php.net/manual/fr/function.stream-get-transports.php
 				if(in_array('ssl', $streamGetTransports)) {

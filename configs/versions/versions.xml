@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 30/04/2014</name>
+		<num>20140430.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification du composant Email pour gérer les Bcc multiples</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 28/04/2014</name>
 		<num>20140428.001</num>
 		<supervisor>KoéZionCMS</supervisor>

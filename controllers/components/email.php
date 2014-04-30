@@ -152,7 +152,7 @@ class EmailComponent extends Component {
 			if(!isset($datas['noBcc']) || (isset($datas['noBcc']) && !$datas['noBcc'])) { 
 			
 				$bcc = array();
-				if(!empty($this->bccEmail)) { $bcc[] = $this->bccEmail; } //Gestion éventuelle de l'envoi en copie cachée via le fichier de conf			
+				if(!empty($this->bccEmail)) { $bcc= explode(';', $this->bccEmail); } //Gestion éventuelle de l'envoi en copie cachée via le fichier de conf			
 
 				//Gestion éventuelle de l'envoi en copie cachée via le formulaire directement
 				if(isset($datas['bcc']) && !empty($datas['bcc'])) {
