@@ -27,26 +27,28 @@ class WebsiteComponent extends Component {
  * @version 0.4 - 02/04/2014 by FI - Mise en place d'un passage de paramètre en GET pour pouvoir changer le host du site en local
  */
 	public function get_website_datas() {
-	
-		$httpHost = $_SERVER["HTTP_HOST"]; //Récupération de l'url
-		if(isset($_GET['hack_ws_host'])) { $httpHost = $_GET['hack_ws_host']; }
-	
+				
+		if(isset($_GET['hack_ws_host'])) { Session::write('Frontoffice.hack_ws_host', $_GET['hack_ws_host']); }
+		$hackWsHost = Session::read('Frontoffice.hack_ws_host');
+		
+		$httpHost = !empty($hackWsHost) ? $hackWsHost : $_SERVER["HTTP_HOST"]; //Récupération de l'url		
+		
 		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Websites'.DS;
-		$cacheFile 		= $httpHost;
-	
+		$cacheFile 		= $httpHost;	
+		
 		$website = Cache::exists_cache_file($cacheFolder, $cacheFile);
 	
 		if(!$website) {
-	
+			
 			$this->loadModel('Website'); //Chargement du modèle
 	
 			//HACK SPECIAL LOCAL POUR CHANGER DE SITE pour permettre la passage de l'identifiant du site en paramètre
 			if(isset($_GET['hack_ws_id'])) { Session::write('Frontoffice.hack_ws_id', $_GET['hack_ws_id']); }
-			$hackCurrentWebsiteId = Session::read('Frontoffice.hack_ws_id');
+			$hackWsId = Session::read('Frontoffice.hack_ws_id');
 	
 			if($httpHost == 'localhost' || $httpHost == '127.0.0.1') {
 	
-				if($hackCurrentWebsiteId) { $websiteId = $hackCurrentWebsiteId; }
+				if($hackWsId) { $websiteId = $hackWsId; }
 				else {
 	
 					$websites = $this->Website->findList(array('order' => 'id ASC'));
@@ -57,10 +59,10 @@ class WebsiteComponent extends Component {
 	
 			} else {
 	
-				if($hackCurrentWebsiteId) { $websiteConditions = array('conditions' => array('id' => $hackCurrentWebsiteId, 'online' => 1)); }
-				else { $websiteConditions = array('conditions' => "url LIKE '%".$_SERVER['HTTP_HOST']."%' AND online = 1"); }
+				if($hackWsId) { $websiteConditions = array('conditions' => array('id' => $hackWsId, 'online' => 1)); }
+				else { $websiteConditions = array('conditions' => "url LIKE '%".$httpHost."%' AND online = 1"); }
 			}
-	
+			
 			$website = $this->Website->findFirst($websiteConditions);
 	
 			Cache::create_cache_file($cacheFolder, $cacheFile, $website);
