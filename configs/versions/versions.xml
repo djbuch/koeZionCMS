@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 02/05/2014</name>
+		<num>20140502.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise en place d'un passage de paramètre en GET pour pouvoir changer le host du site en local dans le component Website</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 30/04/2014</name>
 		<num>20140430.001</num>
 		<supervisor>KoéZionCMS</supervisor>
