@@ -29,7 +29,7 @@ class UsersController extends AppController {
  */
 	function login() {
 		
-		$this->layout = 'connect'; //Définition du layout
+		$this->layout = 'connect'; //Définition du layout	
 			
 		if($this->request->data) {
 			

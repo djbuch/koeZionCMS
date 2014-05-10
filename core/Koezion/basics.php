@@ -143,3 +143,19 @@
 		
 		return $pluginsConnectors;
 	}
+	
+/*
+	
+
+		$debug = debug_backtrace();
+		$txt = '[FILE] : '.$debug[0]['file']."\n";
+		$txt .= '[LINE] : '.$debug[0]['line']."\n";
+		$txt .= '[CONTROLLER] : '.get_class($this)."\n";
+		
+		foreach($debug as $k => $v) {
+		
+			$txt .= '[FILE] : '.$v['file']."\n".'[LINE] : '.$v['line']."\n";
+		}
+		$txt .= '======================================================================='."\n";
+		file_put_contents( TMP.DS.'controllers.log', $txt."\n", FILE_APPEND);	
+*/

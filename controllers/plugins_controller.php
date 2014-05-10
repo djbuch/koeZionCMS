@@ -60,18 +60,20 @@ class PluginsController extends AppController {
 			$pluginName = Inflector::camelize($plugin['code']).'Plugin'; //Génération du nom du plugin			
 			$pluginFile = PLUGINS.DS.$plugin['code'].DS.'plugin.php'; //Chemin vers le fichier d'installation du plugin
 			
+			$isInstalled = true; //Par défaut on considère que le plugin est installé
 			if(FileAndDir::fexists($pluginFile)) { //Si le fichier existe
 						
 				require_once($pluginFile); //Chargement du fichier
-				$pluginClass = new $pluginName(); //Création d'un objet plugin
+				$pluginClass = new $pluginName(); //Création d'un objet plugin				
+				$isInstalled = $pluginClass->install($this); //on lance le process d'installation
 				
-				if(method_exists($pluginClass, '_install')) { //On teste si le plugin possède une méthode d'installation
+				/*if(method_exists($pluginClass, 'install')) { //On teste si le plugin possède une méthode d'installation
 					
-					if($pluginClass->_install($this)) { $isInstalled = true; } //Si oui on la lance
+					if($pluginClass->install($this)) { $isInstalled = true; } //Si oui on la lance
 				} 
-				else { $isInstalled = true; } //Si non on considère qu'il est installé
+				else { $isInstalled = true; } //Si non on considère qu'il est installé*/
 				
-			} else { $isInstalled = true; } //Si non on considère qu'il est installé
+			} /*else { $isInstalled = true; }*/ //Si non on considère qu'il est installé
 			
 			//Si le plugin est installé on va le sauvegarder en bdd
 			if($isInstalled) {
@@ -141,69 +143,95 @@ class PluginsController extends AppController {
 
 				require_once($pluginFile); //Chargement du fichier
 				$pluginClass = new $pluginName(); //Création d'un objet plugin
-
+				
 				//////////////////////////////////
 				//			ACTIONS BDD			//
-				//////////////////////////////////												
-				//On va récupérer l'identifiant du type de module à supprimer
-				$modulesTypeIdResult = current($this->Plugin->query("SELECT DISTINCT(`modules_type_id`) FROM `modules` WHERE `plugin_id` = ".$id.";", true));
-				$modulesTypeId = $modulesTypeIdResult['modules_type_id'];				
-				
-				$this->Plugin->query('DELETE FROM `modules` WHERE `plugin_id` = '.$id.';'); //On supprime tous les modules associés à ce plugin
-				$this->Plugin->query('DELETE FROM `plugins` WHERE `id` = '.$id.';'); //On supprime le plugin dans la base de données
-				if($modulesTypeId != 6) { $this->Plugin->query('DELETE FROM `modules_types` WHERE `id` = '.$modulesTypeId.';'); } //On supprime le type de module associé à ce plugin
+				//////////////////////////////////
+																			
+					$sql[] = 'DELETE FROM `modules` WHERE `plugin_id` = '.$id.';'; //Requête de suppression des modules
+					$sql[] = 'DELETE FROM `plugins` WHERE `id` = '.$id.';'; //Requête de suppression du plugin
+														
+					//ON VA RECUPERER, SI IL Y EN A, LA LISTE DES TABLES ASSOCIEES AU PLUGIN EN COURS DE SUPPRESSION
+					$databaseTables 			= $this->Plugin->table_list_in_database(); //Liste des tables de la BDD
+					$databasePluginTables 		= array(); //Liste des tables du plugin
+					$databasePluginTablesPrefix = 'plugins_'.$plugin['code']; //Préfix des tables du plugin
+					
+					//On va parcourir la liste des tables de la base de données pour en extraire les tables associées au plugin
+					//Elles seront ensuite renommées en vue d'une suppression manuelle par le gestionnaire de la BDD									
+					foreach($databaseTables as $databaseTable) {
+					
+						if(substr_count($databaseTable, $databasePluginTablesPrefix)) { 
+							
+							$sql[] = "RENAME TABLE `".$databaseTable."` TO `_".$databaseTable."_".date("Ymd_His")."`;"; 
+						}
+					}					
+	
+					//Si on a des requêtes supplémentaires à exécuter
+					//Prévu pour supprimer les types de modules par exemple
+					if($pluginClass->fileSqlDelete) { $sql[] = $pluginClass->fileSqlDelete; }
+					
+					//On va récupérer l'identifiant du type de module à supprimer
+					//$modulesTypeIdResult = current($this->Plugin->query("SELECT DISTINCT(`modules_type_id`) FROM `modules` WHERE `plugin_id` = ".$id.";", true));
+					//$modulesTypeId = $modulesTypeIdResult['modules_type_id'];	
+					//if($modulesTypeId != 6) { $this->Plugin->query('DELETE FROM `modules_types` WHERE `id` = '.$modulesTypeId.';'); } //On supprime le type de module associé à ce plugin
+										
+					$sql = implode("\n", $sql);
+					$this->Plugin->query($sql);
 								
-				//ON VA RECUPERER, SI IL Y EN A, LA LISTE DES TABLES ASSOCIEES AU PLUGIN EN COURS DE SUPPRESSION
-				$databaseTables = $this->Plugin->table_list_in_database(); //Liste des tables de la BDD
-				$databasePluginTables = array(); //Liste des tables du plugin
-				$databasePluginTablesPrefix = 'plugins_'.$plugin['code']; //Préfix des tables du plugin
-				
-				//On va parcourir la liste des tables de la base de données pour en extraire les tables associées au plugin
-				//Elles seront ensuite renommées en vue d'une suppression manuelle par le gestionnaire de la BDD
-				$sql = '';				
-				foreach($databaseTables as $databaseTable) {
-				
-					if(substr_count($databaseTable, $databasePluginTablesPrefix)) { $sql .= "RENAME TABLE `".$databaseTable."` TO `_".$databaseTable."_".date("Ymd_His")."`;"; }
-				}
-				$this->Plugin->query($sql);
-
 				//////////////////////////////////
 				//		ACTIONS FICHIERS		//
 				//////////////////////////////////
 				//Si des fichiers doivent être supprimés, on les récupère dans le plugin
 				//A REPRENDRE VOIR EVENTUELLEMENT SI ON SUPPRIME PAS LA CLASSE FileAndDir???
-				/*if(isset($pluginClass->filesCopy)) {
+					if(isset($pluginClass->filesCopy)) {
+						
+						//Création du dossier de backup des fichiers de configuration du plugin
+						if($pluginClass->path) { 
+							
+							$deletePath = $pluginClass->path.DS.'delete'.DS.date("Ymd_His");
+							FileAndDir::createPath($deletePath); 
+						}						
 					
-					foreach($pluginClass->filesCopy as $fileDelete) {
-
-					if(isset($fileDelete['sourceName']) && isset($fileDelete['destinationName'])) {
-
-							//Dans le cas ou on un seul fichier à supprimer
-							$fileToDelete = $fileDelete['destinationPath'].DS.$fileDelete['destinationName']; //Chemin du fichier de destination
-							$processResult = FileAndDir::remove($fileToDelete); //Suppression du fichier
-							
-						} else if(isset($fileDelete['sourcePath']) && isset($fileDelete['destinationPath'])) {
-							
-							//Dans le cas ou on a le contenu d'un dossier, il faut supprimer tous les fichiers qui ont été créés
-							$sourcePathContent = FileAndDir::directoryContent($fileDelete['sourcePath']);
-							foreach($sourcePathContent as $v) {
-
-								$processResult = FileAndDir::remove($fileDelete['destinationPath'].DS.$v); //Suppression du fichier
+						foreach($pluginClass->filesCopy as $fileDelete) {
+	
+							if(isset($fileDelete['sourceName'])) {
+				
+								//On récupère le nom du fichier de destination (par défaut ce sera le même que la source)
+								$destinationName = isset($fileDelete['destinationName']) ? $fileDelete['destinationName'] : $fileDelete['sourceName'];
+								$fileToDelete = $fileDelete['destinationPath'].DS.$destinationName; //Chemin du fichier de destination
+								
+								if(isset($deletePath)) { FileAndDir::fcopy($fileToDelete, $deletePath.DS.$destinationName); } //Sauvegarde du fichier								
+								$processResult = FileAndDir::remove($fileToDelete); //Suppression du fichier
+								
+								if(!$processResult) { $errors[] = $fileToDelete; }
+								
+							} else {
+								
+								//Dans le cas ou on a le contenu d'un dossier, il faut supprimer tous les fichiers qui ont été créés
+								$sourcePathContent = FileAndDir::directoryContent($fileDelete['sourcePath']);
+								foreach($sourcePathContent as $v) {
+	
+									$fileToDelete = $fileDelete['destinationPath'].DS.$v;
+								
+									if(isset($deletePath)) { FileAndDir::fcopy($fileToDelete, $deletePath.DS.$v); } //Sauvegarde du fichier	
+									$processResult = FileAndDir::remove($fileToDelete); //Suppression du fichier
+									
+									if(!$processResult) { $errors[] = $fileToDelete; }
+								}
 							}
+							
+							//Si l'index removePath est défini à true, alors on supprime le dossier en plus du fichier
+							if(isset($fileDelete['removePath']) && $fileDelete['removePath'] == true) { FileAndDir::remove_directory($fileDelete['destinationPath']); }
+							
 						}
 						
-						//Si l'index removePath est défini à true, alors on supprime le dossier en plus du fichier
-						if(isset($fileDelete['removePath']) && $fileDelete['removePath'] == true) { FileAndDir::remove_directory($fileDelete['destinationPath']); }
-						
-						if(!$processResult) { $errors[] = $fileDelete['destinationName']; }
+						if(!empty($errors)) {
+							
+							Session::setFlash('Une erreur est survenue lors de la suppression de certains fichiers :<br />'.implode('<br />* ', $errors), 'error');
+							$this->redirect('backoffice/plugins/index'); //On retourne sur la page de listing
+							
+						}
 					}
-					if(!empty($errors)) {
-						
-						Session::setFlash('Une erreur est survenue lors de la suppression de certains fichiers :<br />'.implode('<br />* ', $errors), 'error');
-						$this->redirect('backoffice/plugins/index'); //On retourne sur la page de listing
-						
-					}
-				}*/		
 				
 			} else {
 				
