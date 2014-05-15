@@ -45,7 +45,7 @@ class FormParentHelper extends Helper {
  * @author 	koéZionCMS
  * @version 0.1 - 20/01/2012 by FI
  */
-	var $escapeAttributes = array('type', 'displayError', 'label', 'datas', 'value', 'divRowBorderTop', 'tooltip', 'modelToCheck', 'labelClass', 'labelStyle');
+	var $escapeAttributes = array('type', 'displayError', 'label', 'datas', 'value', 'divRowBorderTop', 'tooltip', 'modelToCheck', 'labelClass', 'labelStyle', 'isChecked');
 
 /**
  * Constructeur de la classe
@@ -268,9 +268,10 @@ class FormParentHelper extends Helper {
 			case 'checkbox':
 
 				if(empty($value)) { $value = 1; }
+				$isChecked = isset($options['isChecked']) && $options['isChecked'] ? true : false;
 				
 				$requestvalue = Set::classicExtract($this->view->controller->request->data, $name);//On récupère la valeur dans request				
-				$checked = ($value == $requestvalue) ? ' checked="checked"' : '';//Si la valeur dans request est la même que celle passée en paramètre, alors l'input est sélectionné
+				$checked = (($value == $requestvalue) || $isChecked) ? ' checked="checked"' : '';//Si la valeur dans request est la même que celle passée en paramètre, alors l'input est sélectionné
 				
 				//Par défaut le champ hidden permettra de mettre à 0 la valeur du champ si la case n'est pas cochée
 				$inputReturn .= '<input type="hidden" id="'.$inputIdText.'hidden" name="'.$inputNameText.'" value="0" />';
@@ -284,9 +285,10 @@ class FormParentHelper extends Helper {
 				
 				if(!isset($this->radio_name)) { $this->radio_name = $name; }
 				if($name != $this->radio_name) { $this->radio_count = 0; } //On réinitialise le compteur des inputs radio
+				$isChecked = isset($options['isChecked']) && $options['isChecked'] ? true : false;
 
 				$requestvalue = Set::classicExtract($this->view->controller->request->data, $name);//On récupère la valeur dans request
-				$checked = ($options['value'] == $requestvalue) ? ' checked="checked"' : '';//Si la valeur dans request est la même que celle passée en paramètre, alors l'input est sélectionné
+				$checked = (($options['value'] == $requestvalue) || $isChecked) ? ' checked="checked"' : '';//Si la valeur dans request est la même que celle passée en paramètre, alors l'input est sélectionné
 
 				$inputIdText .= $this->radio_count;//On concatène l'identifiant pour qu'il soit correctement indiqué sur le label et l'input
 				$inputReturn .= '<input type="radio" id="'.$inputIdText.'" name="'.$inputNameText.'" value="'.$options['value'].'"'.$checked.' '.$attributes.' />';

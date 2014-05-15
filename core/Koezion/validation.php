@@ -60,6 +60,16 @@ class Validation {
  * @version 0.1 - 04/02/2011
  */
 	function notEqualsTo($val, $ref) { return $val != $ref; }	
+	
+/**
+ * Cette fonction va contrôler que la valeur passée en paramètre est  égale à la valeur de référence
+ *
+ * @param mixed $val Valeur à tester
+ * @param mixed $ref Valeur de référence
+ * @return boolean
+ * @version 0.1 - 14/05/2014
+ */
+	function equalsTo($val, $ref) { return $val == $ref; }	
 
 /**
  * Cette fonction va contrôler que la valeur passée en paramètre est bien un email

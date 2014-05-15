@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 15/05/2014</name>
+		<num>20140515.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification du helper form pour permettre la gestion du checked pour les checkbox et les radios boutons</task>
+			<task author="FI" type="code">Rajout de la règle de validation equalsTo dans core/Koezion/validation.php</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 10/05/2014</name>
 		<num>20140510.001</num>
 		<supervisor>KoéZionCMS</supervisor>
