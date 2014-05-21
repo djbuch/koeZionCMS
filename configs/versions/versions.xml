@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 21/05/2014</name>
+		<num>20140521.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la fonction get_website_datas() du Component Website - Mise en place d'un passage de paramètre dans la fonction pour pouvoir changer le host du site</task>
+			<task author="FI" type="code">Modification de la fonction getPath() du Behavior Tree - Mise en place d'un contrôle pour vérifier que $children ne soit pas vide auquel cas rien ne sert de continuer</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 15/05/2014</name>
 		<num>20140515.001</num>
 		<supervisor>KoéZionCMS</supervisor>

@@ -25,13 +25,17 @@ class WebsiteComponent extends Component {
  * @version 0.2 - 14/06/2012 by FI - Modification de la récupération du site pour la boucle locale - On récupère le premier site de la liste et plus celui avec l'id 1 pour éviter les éventuelles erreurs
  * @version 0.3 - 04/09/2012 by FI - Mise en place d'un passage de paramètre en GET pour pouvoir changer de site en local
  * @version 0.4 - 02/04/2014 by FI - Mise en place d'un passage de paramètre en GET pour pouvoir changer le host du site en local
+ * @version 0.5 - 21/05/2014 by FI - Mise en place d'un passage de paramètre dans la fonction pour pouvoir changer le host du site
  */
-	public function get_website_datas() {
+	public function get_website_datas($hackWsHost = null) {
 				
+		//Si un hack du host est passé dans l'url on le stocke dans la variable de session
 		if(isset($_GET['hack_ws_host'])) { Session::write('Frontoffice.hack_ws_host', $_GET['hack_ws_host']); }
-		$hackWsHost = Session::read('Frontoffice.hack_ws_host');
 		
-		$httpHost = !empty($hackWsHost) ? $hackWsHost : $_SERVER["HTTP_HOST"]; //Récupération de l'url		
+		//On va contrôler que le hack du host n'est pas passé en paramètre de la fonction si c'est le cas il prendra le dessus sur celui dans la variable de session
+		$hackWsHost = isset($hackWsHost) ? $hackWsHost : Session::read('Frontoffice.hack_ws_host');
+		
+		$httpHost = (isset($hackWsHost) && !empty($hackWsHost)) ? $hackWsHost : $_SERVER["HTTP_HOST"]; //Récupération de l'url		
 		
 		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Websites'.DS;
 		$cacheFile 		= $httpHost;	

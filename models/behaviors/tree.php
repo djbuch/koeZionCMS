@@ -531,40 +531,45 @@ class Tree extends Model {
  * @version 0.1 - 01/01/2012 by FI
  * @version 0.2 - 13/04/2012 by FI - Modification des conditions de recherche
  * @version 0.3 - 16/05/2012 by FI - Modification de la récupération des catégories suite à la mise en place de la gestion des sites - On ne récupère pas les catégories de type 3
+ * @version 0.4 - 21/05/2014 by FI - Mise en place d'un contrôle pour vérifier que $children ne soit pas vide auquel cas rien ne sert de continuer
  */    
     function getPath($childrenId, $type = 'array') {
     	
     	$children = $this->getTree(array('conditions' => array('id' => $childrenId))); //Récupération de l'enfant    	
-		$children = $children[$childrenId]; //Récupération de l'enfant
-
-		$req = array('moreConditions' => "lft<".$children['lft']." AND rgt>".$children['rgt']." AND type != 3"); //Conditions de recherche
-    	$node = $this->getTree($req); //On va récupérer les menus
     	
-    	if($type == 'array') {
-    		
-    		if(!empty($node)) return am($node, array($childrenId => $children));
-    		else return array(0 => $children);
-    		
-		//Utilisé pour la génération de la fonction récursive pour la mise en place de l'arbre    		
-    	} else if($type == 'varchar') {
-
-    		if(!empty($node)) {
-    			
-    			$path = am($node, array($childrenId => $children)); //Path du noeud
-    			$return = ''; //Variable de retour
-    			foreach($path as $k => $v) { //Parcours des noeuds
-
-    				if($v['level'] > 1) { $return .= 'children.'; } //Si le level est > 0 on est sur un noeud enfant
-    				$return .= $v['id'].'.'; 
-    			}
-    			
-    			$return = substr($return, 0, strlen($return) - 1); //Suppression du dernier .
-    			return $return; //On retourne les données
-    		} else {
-    			
-    			return $childrenId; //On retourne l'identifiant du noeud par défaut
-    		} 
-    	}
+    	if(!empty($children)) {
+			
+    		$children = $children[$childrenId]; //Récupération de l'enfant
+	
+			$req = array('moreConditions' => "lft<".$children['lft']." AND rgt>".$children['rgt']." AND type != 3"); //Conditions de recherche
+	    	$node = $this->getTree($req); //On va récupérer les menus
+	    	
+	    	if($type == 'array') {
+	    		
+	    		if(!empty($node)) return am($node, array($childrenId => $children));
+	    		else return array(0 => $children);
+	    		
+			//Utilisé pour la génération de la fonction récursive pour la mise en place de l'arbre    		
+	    	} else if($type == 'varchar') {
+	
+	    		if(!empty($node)) {
+	    			
+	    			$path = am($node, array($childrenId => $children)); //Path du noeud
+	    			$return = ''; //Variable de retour
+	    			foreach($path as $k => $v) { //Parcours des noeuds
+	
+	    				if($v['level'] > 1) { $return .= 'children.'; } //Si le level est > 0 on est sur un noeud enfant
+	    				$return .= $v['id'].'.'; 
+	    			}
+	    			
+	    			$return = substr($return, 0, strlen($return) - 1); //Suppression du dernier .
+	    			return $return; //On retourne les données
+	    		} else {
+	    			
+	    			return $childrenId; //On retourne l'identifiant du noeud par défaut
+	    		} 
+	    	}
+    	} else { return array(); }
     }
     
 /**
