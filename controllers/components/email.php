@@ -184,14 +184,90 @@ class EmailComponent extends Component {
 	}
 	
 /**
+ * Cette fonction permet d'envoyer un mail "libre"
+ *
+ * @param	array	$params Paramètres utilisés pour l'envoi du mail
+ * @return 	integer Nombre de message(s) envoyé(s)
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 22/05/2014 by FI
+ */	
+	function send_free($datas = null) {
+				
+		if(!isset($file) && empty($file)) { $file = CONFIGS.DS.'files'.DS.'mailer.ini'; }
+		$this->init($file);
+		$numSent = 0;
+		
+		if($this->mailer) {
+			
+			$subject = isset($datas['subject']) ? $datas['subject'] : '[subject]'; 
+			$from = array($this->mailSetFromEmail => $this->mailSetFromName);
+			$mailContent = isset($datas['mailContent']) ? $datas['mailContent'] : '[mailContent]'; 
+			$mailType = isset($datas['mailType']) ? $datas['mailType'] : 'text/html'; 
+			
+			///////////////////////////////
+			//    CREATION DU MESSAGE    //
+			$message = Swift_Message::newInstance()
+				->setSubject($subject) //Mise en place du sujet
+				->setFrom($from) //Mise en place de l'adresse de l'expéditeur
+				->addPart($mailContent, $mailType); // And optionally an alternative body	
+			
+			//////////////////////////////////////
+			//    GESTION DES COPIES CACHEES    //
+			//Par défaut on rajoute toujours la valeur bcc --> !isset($datas['noBcc'])
+			//Si l'index existe et que sa valeur est vrai on le rajout aussi
+			//Dans le cas contraire on ne fait rien pas de copie envoyée
+			if(!isset($datas['noBcc']) || (isset($datas['noBcc']) && !$datas['noBcc'])) { 
+			
+				$bcc = array();
+				if(!empty($this->bccEmail)) { $bcc= explode(';', $this->bccEmail); } //Gestion éventuelle de l'envoi en copie cachée via le fichier de conf			
+
+				//Gestion éventuelle de l'envoi en copie cachée via le formulaire directement
+				if(isset($datas['bcc']) && !empty($datas['bcc'])) {
+										
+					if(!is_array($datas['bcc'])) { $bcc[] = $datas['bcc']; } 
+					else { $bcc = array_merge($bcc, $datas['bcc']); }					
+				} 	
+				if(count($bcc)) { $message->setBcc($bcc); } 
+			}
+									
+			
+			//////////////////////////////////////////////
+			//    DESTINATAIRE(S) ET ENVOI DU MESSAGE   //
+			if(isset($datas['to'])) {
+				
+				if(is_array($datas['to'])) {
+									
+					// And specify a time in seconds to pause for (30 secs)
+					$this->mailer->registerPlugin(new Swift_Plugins_AntiFloodPlugin(100, 30));
+					
+					foreach($datas['to'] as $k => $to) {
+						
+						$message->setTo(array($to));
+						$numSent += $this->mailer->send($message); //On envoi le message
+					}				
+				}
+				else { //Mise en place de l'adresse du destinataire
+					
+					$message->setTo(array($datas['to']));
+					$numSent += $this->mailer->send($message); //On envoi le message			
+				}
+			}
+		}
+		
+		return $numSent;	
+	}
+	
+/**
  * Cette fonction va envoyer un mail de test
  *
  * @return 	integer Nombre de message(s) envoyé(s)
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 06/02/2012 by FI
+ * @version 0.2 - 22/05/2014 by FI - Suppression de la variable $controller qui ne sert pas dans la fonction
  */	
-	function send_test($controller) {
+	function send_test() {
 		
 		$this->init(CONFIGS.DS.'files'.DS.'mailer.ini');
 		$numSent = 0;

@@ -15,5 +15,8 @@
  */
 class Component extends Object {
 
-	function __construct($controller) { $this->controller = $controller; }
+	function __construct($controller = null) { 
+		
+		if(isset($controller)) { $this->controller = $controller; } 
+	}
 }

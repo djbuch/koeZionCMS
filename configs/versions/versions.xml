@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 22/05/2014</name>
+		<num>20140522.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la classe Component - Passage de la variable $controller optionnelle</task>
+			<task author="FI" type="code">Modification de la classe EmailComponent - Rajout d'une fonction permettant l'envoi de mail "libre"</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 21/05/2014</name>
 		<num>20140521.001</num>
 		<supervisor>KoéZionCMS</supervisor>
