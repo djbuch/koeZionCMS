@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 27/05/2014</name>
+		<num>20140527.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de le gestion automatique du target blank en JS</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 22/05/2014</name>
 		<num>20140522.001</num>
 		<supervisor>KoéZionCMS</supervisor>
