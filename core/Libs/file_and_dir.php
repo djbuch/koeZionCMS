@@ -125,7 +125,7 @@ class FileAndDir {
 				}
 			}
 			closedir($sq);
-			rmdir($chemin); // sup le répertoire
+			@rmdir($chemin); // sup le répertoire
 		}
 		elseif(is_file($chemin)) { 
 			

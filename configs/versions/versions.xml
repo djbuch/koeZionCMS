@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 30/05/2014</name>
+		<num>20140530.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Suppression de l'affichage d'erreur lors de la suppression de dossier dans la librairie FileAndDir</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 27/05/2014</name>
 		<num>20140527.001</num>
 		<supervisor>KoéZionCMS</supervisor>
