@@ -82,6 +82,7 @@
 			unset($categoriesList[$racine['key']]);			
 			$categoriesList[-1] = "[&nbsp;&nbsp;&nbsp;Redirection vers la page d'accueil&nbsp;&nbsp;&nbsp;]";
 			echo $helpers['Form']->input('redirect_category_id', 'Rediriger vers', array('type' => 'select', 'datas' => $categoriesList, 'tooltip' => "Vous permet de rediriger cette page vers une autre de la liste", 'firstElementList' => "Pas de redirection"));			
+			echo $helpers['Form']->input('redirect_to', 'Redirection personnalisée', array('tooltip' => "Saisissez l'url de redirection"));
 			
 			echo $helpers['Form']->input('title_posts_list', 'Titre bloc article', array('tooltip' => "Indiquez le titre qui sera affiché au dessus de la liste des articles"));			
 			if(!isset($formulaires)) { $formulaires = array (1 => 'Formulaire de contact'); } 

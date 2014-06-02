@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 02/06/2014</name>
+		<num>20140602.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Rajout d'un champ dans la gestion du formulaire des catégories en backoffice</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 30/05/2014</name>
 		<num>20140530.001</num>
 		<supervisor>KoéZionCMS</supervisor>
