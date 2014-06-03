@@ -16,12 +16,31 @@ class Object {
 
 /**
  * Cette fonction permet le chargement d'un model
+ * 
+ * Appel possible dans un contrôleur : 
+ * 
+ * 		$databaseConfigs = array(
+ * 			'host' => "localhost",
+ * 			'login' => "root",
+ * 			'password' => "",
+ * 			'database' => "koezion_madatabase",
+ * 			'prefix' => "",
+ * 			'socket' => "",
+ * 			'port' => "",
+ * 			'source' => "mysql"
+ * 		);
+ * 		$externalSlider = $this->loadModel('Slider', true, $databaseConfigs);
+ * 		pr($externalSlider->find());
  *
- * @param varchar $name Nom du model à charger
+ * @param varchar 	$name 				Nom du model à charger
+ * @param boolean 	$return 			Indique si il faut ou non retourner l'objet
+ * @param array 	$databaseConfigs 	Configuration de connexion différentes de celles par défaut
+ * @return Objet ou rien
  * @version 0.1 - 23/12/2011
  * @version 0.2 - 18/03/2014 - Reprise du chargement des modèles des plugins
+ * @version 0.3 - 03/06/2014 - Rajout de la variable $databaseConfigs permettant la connexion à une autre BDD
  */
-	function loadModel($name, $return = false) {
+	function loadModel($name, $return = false, $databaseConfigs = null) {
 		
 		//En premier lieu on test si le model n'est pas déjà instancié
 		//et si il ne l'est pas on procède à son intenciation
@@ -64,8 +83,8 @@ class Object {
 			require_once($file_path); //Inclusion du fichier
 			
 			if(isset($this->request->fullUrl)) { $url = $this->request->fullUrl; } else { $url = null; }			
-			if($return) { return new $name($url); }
-			else { $this->$name = new $name($url); } //Création d'un objet Model de type $name que l'on va instancier dans la classe
+			if($return) { return new $name($url, $databaseConfigs); }
+			else { $this->$name = new $name($url, $databaseConfigs); } //Création d'un objet Model de type $name que l'on va instancier dans la classe
 		}
 	}
 	

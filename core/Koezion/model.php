@@ -50,8 +50,9 @@ class Model extends Object {
  * @version 0.6 - 14/12/2012 by FI - Rajout de la variable $refererUrl dans le constructeur pour les logs bdd
  * @version 0.7 - 05/07/2013 by FI - Gestion de l'alias
  * @version 0.8 - 11/11/2013 by FI - Rajout de la source en variable en prévision de futures évolutions
+ * @version 0.9 - 03/06/2014 by FI - Rajout de la variable $databaseConfigs pour permettre à un modèle de se connecter à une BDD autre que celle par défaut, le format doit être identique à celui retourné par le fichier configs/files/database.ini
  */
-	public function __construct($refererUrl = null) {
+	public function __construct($refererUrl = null, $databaseConfigs = null) {
 
 		$this->refererUrl = $refererUrl;
 		
@@ -59,9 +60,18 @@ class Model extends Object {
 		$httpHost = $_SERVER["HTTP_HOST"];
 		if($httpHost == 'localhost' || $httpHost == '127.0.0.1') { $section = 'localhost'; } else { $section = 'online'; }
 		
-		require_once(LIBS.DS.'config_magik.php'); //Import de la librairie de gestion des fichiers de configuration 
-		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'database.ini', true, true); //Création d'une instance
-		$conf = $cfg->keys_values($section); //Récupération des configurations en fonction du nom de domaine (Ancienne version : $conf = $cfg->keys_values($_SERVER["HTTP_HOST"], 1);)
+		if(isset($databaseConfigs) && !empty($databaseConfigs)) {
+			
+			$conf = $databaseConfigs;
+			Model::$connections = array();
+			
+		} else { 
+			
+			require_once(LIBS.DS.'config_magik.php'); //Import de la librairie de gestion des fichiers de configuration 
+			$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'database.ini', true, true); //Création d'une instance
+			$conf = $cfg->keys_values($section); //Récupération des configurations en fonction du nom de domaine (Ancienne version : $conf = $cfg->keys_values($_SERVER["HTTP_HOST"], 1);)
+		}
+		
 		$conf['source'] = "mysql";
 		
 		//Si le nom de la table n'est pas défini on va l'initialiser automatiquement

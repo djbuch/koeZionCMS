@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 03/06/2014</name>
+		<num>20140603.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de /core/Koezion/model.php et /core/Koezion/object.php pour intégrer la possibilité pour un modèle de se connecter à une BDD autre que celle par défaut</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 02/06/2014</name>
 		<num>20140602.001</num>
 		<supervisor>KoéZionCMS</supervisor>
