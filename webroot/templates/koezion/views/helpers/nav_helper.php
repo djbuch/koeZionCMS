@@ -21,11 +21,22 @@ class NavHelper extends Helper {
 			if(!empty($breadcrumbs)) { $iParentCategory = $breadcrumbs[0]['id']; } else { $iParentCategory = 0; }
 			?><ul id="mainMenu"><?php			
 			foreach($categories as $k => $v) {
+					
+				$sCssMenu = '';
+				if(!empty($v['redirect_to'])) { 
+					
+					$url = Router::url($v['redirect_to']);
+					$shortUrl = str_replace(BASE_URL, '', $url); //On supprime le BASE_URL avant la comparaison
+					if($v['level'] == 1 && $shortUrl == $this->view->controller->request->url) { $sCssMenu = ' class="active"'; }
 				
+				} else { 
+					
+					$url = Router::url('categories/view/id:'.$v['id'].'/slug:'.$v['slug']); 
+					if($v['level'] == 1 && $iParentCategory == $v['id']) { $sCssMenu = ' class="active"'; }
+				}				
 				?>
 				<li>
-					<?php if($v['level'] == 1 && $iParentCategory == $v['id']) { $sCssMenu = ' class="menu_selected_bg"'; } else { $sCssMenu = ''; } ?>
-					<a href="<?php echo Router::url('categories/view/id:'.$v['id'].'/slug:'.$v['slug']); ?>"<?php echo $sCssMenu; ?>><?php echo $v['name']; ?></a>
+					<a href="<?php echo $url; ?>"<?php echo $sCssMenu; ?>><?php echo $v['name']; ?></a>
 					<?php if(isset($v['children'])) { $this->generateMenu($v['children'], $breadcrumbs); }; ?>
 				</li>
 				<?php

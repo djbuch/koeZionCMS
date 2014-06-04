@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 04/06/2014</name>
+		<num>20140604.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification du helper nav pour intégrer la gestion des redirection personnalisées dans la génération du menu</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 03/06/2014</name>
 		<num>20140603.001</num>
 		<supervisor>KoéZionCMS</supervisor>
