@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 05/06/2014</name>
+		<num>20140605.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Correction dans le helper form parent</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 04/06/2014</name>
 		<num>20140604.001</num>
 		<supervisor>KoéZionCMS</supervisor>

@@ -45,7 +45,7 @@ class FormParentHelper extends Helper {
  * @author 	koéZionCMS
  * @version 0.1 - 20/01/2012 by FI
  */
-	var $escapeAttributes = array('type', 'displayError', 'label', 'datas', 'value', 'divRowBorderTop', 'tooltip', 'modelToCheck', 'labelClass', 'labelStyle', 'isChecked');
+	var $escapeAttributes = array('type', 'displayError', 'label', 'datas', 'value', 'tooltip', 'modelToCheck', 'labelClass', 'labelStyle', 'isChecked');
 
 /**
  * Constructeur de la classe
