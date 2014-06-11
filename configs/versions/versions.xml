@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 11/06/2014</name>
+		<num>20140611.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Rajout du dossier vendors</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 09/06/2014</name>
 		<num>20140609.001</num>
 		<supervisor>KoéZionCMS</supervisor>
