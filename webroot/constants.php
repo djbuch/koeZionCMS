@@ -61,6 +61,8 @@ define('TMP', ROOT.DS.'tmp'); //Chemin vers le dossier temporaire
 	define('CACHE', TMP.DS.'cache'); //Chemin vers le dossier cache
 	define('LOGS', TMP.DS.'logs'); //Chemin vers le dossier logs
 
+define('VENDORS', ROOT.DS.'vendors'); //Chemin vers le dossier vendors
+
 define('VIEWS', ROOT.DS.'views'); //Chemin vers le dossier des vues
 	define('ELEMENTS', VIEWS.DS.'elements'); //Chemin vers le dossier des élements
 	define('HELPERS', VIEWS.DS.'helpers'); //Chemin vers le dossier des helpers
