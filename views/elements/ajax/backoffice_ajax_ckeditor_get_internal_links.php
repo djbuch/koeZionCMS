@@ -73,7 +73,7 @@ if(!function_exists('json_encode')) {
 	unset($oJson);
 } else {
 
-	$sContenuPage = json_encode($aUrlList);
+	$sContenuPage = $helpers['Json']->encode($aUrlList);
 }
 
 echo $sContenuPage;

@@ -114,7 +114,7 @@ $jsContextMenu = array();
 	     **************************************************/
 	    $.contextMenu({
 	        selector: '#wrapper #right #main',
-	        items: <?php echo json_encode($jsContextMenu); ?>
+	        items: <?php echo $helpers['Json']->encode($jsContextMenu); ?>
 	    });
 	});
 	</script>		

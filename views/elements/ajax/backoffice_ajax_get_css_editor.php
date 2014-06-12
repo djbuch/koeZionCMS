@@ -12,6 +12,6 @@ if(!function_exists('json_encode')) {
 	$contenuPage = $oJson->encode($cssLayoutUrlEditor);
 	unset($oJson);
 
-} else { $contenuPage = json_encode($cssLayoutUrlEditor); }
+} else { $contenuPage = $helpers['Json']->encode($cssLayoutUrlEditor); }
 echo str_replace("\\", "", $contenuPage);
 ?>
