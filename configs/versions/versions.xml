@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 13/06/2014</name>
+		<num>20140613.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise en place de la possibilité de changer le dossier de stockage des variables de session pour un stockage local (fonctionnalité utile lorsque le site est hébergé sur un serveur avec du load balancing)</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 12/06/2014</name>
 		<num>20140612.001</num>
 		<supervisor>KoéZionCMS</supervisor>

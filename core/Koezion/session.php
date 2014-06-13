@@ -8,6 +8,8 @@ class Session {
 /**
  * Cette fonction permet l'initialisation de la variable de session
  *
+ * @access	static
+ * @author	koéZionCMS
  * @version 0.1 - 20/04/2012
  * @version 0.2 - 31/07/2012 - Suppression de la récupération des données de la variable de session par un fichier
  * @version 0.3 - 09/11/2012 - Rajout du test pour savoir si les classes Inflector et Set sont chargées
@@ -17,7 +19,16 @@ class Session {
 		if(!class_exists('Inflector')) { require_once(CAKEPHP.DS.'inflector.php'); }
 		if(!class_exists('Set')) { require_once(CAKEPHP.DS.'set.php'); }
 		
-		$sessionName = Inflector::variable(Inflector::slug('koeZion '.$_SERVER['HTTP_HOST'])); 	//Récupération du nom de la variable de session																
+		$sessionName = Inflector::variable(Inflector::slug('koeZion '.$_SERVER['HTTP_HOST'])); 	//Récupération du nom de la variable de session		
+		
+		//Récupération des configuration du coeur de l'application pour détermine le mode de stockage des variables de sessions
+		//Soit on utilise le comportement natif de PHP
+		//Soit on stocke les sessions en local dans le dossier TMP
+		require_once(LIBS.DS.'config_magik.php');
+		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
+		$coreConfs = $cfg->keys_values();		
+		if(isset($coreConfs['local_storage_session']) && $coreConfs['local_storage_session']) { ini_set('session.save_path', TMP.DS.'sessions'); }
+		
 		ini_set('session.use_trans_sid', 0);													//Evite de passe l'id de la session dans l'url
 		session_name($sessionName); 															//On affecte le nom
 		session_start(); 																		//On démarre la session
@@ -32,6 +43,8 @@ class Session {
  *
  * @param varchar $key Variable à tester
  * @return boolean Vrai si la variable est dans la variable de session, faux sinon
+ * @access	static
+ * @author	koéZionCMS
  * @version 0.1 - 30/12/2011 
  * @see /Koezion/lib/set.php
  */
@@ -48,6 +61,8 @@ class Session {
  * @param varchar $key Clée de la donnée
  * @param mixed $value Donnée à écrire
  * @return boolean Vrai si la valeur est insérée, faux sinon
+ * @access	static
+ * @author	koéZionCMS
  * @version 0.1 - 30/12/2011
  * @see /Koezion/lib/set.php
  */	
@@ -63,6 +78,8 @@ class Session {
  *
  * @param varchar $key Clée de la donnée (Peut être composée de . pour les niveaux)
  * @return mixed Valeur de la donnée, faux si la donnée n'est pas dans la variable de session
+ * @access	static
+ * @author	koéZionCMS
  * @version 0.1 - 30/12/2011
  * @see /Koezion/lib/set.php
  */		
@@ -78,6 +95,8 @@ class Session {
  *
  * @param varchar $key Clée de la donnée (Peut être composée de . pour les niveaux)
  * @return boolean Vrai si la valeur est supprimée, faux sinon
+ * @access	static
+ * @author	koéZionCMS
  * @version 0.1 - 30/12/2011
  * @see /Koezion/lib/set.php
  */			
@@ -90,6 +109,8 @@ class Session {
 /**
  * Permet de supprimer la variable de session lors de la deconnexion
  *
+ * @access	static
+ * @author	koéZionCMS
  * @version 0.1 - 20/04/2012
  * @see http://www.php.net/manual/fr/function.session-destroy.php
  */	
@@ -117,6 +138,8 @@ class Session {
  *
  * @param varchar $message Message à afficher
  * @param varchar $type Type du message
+ * @access	static
+ * @author	koéZionCMS
  * @version 0.1 - 30/12/2011
  */	
 	static function setFlash($message, $type = 'succes') {
@@ -155,6 +178,18 @@ class Session {
 			else { return false; } //On retourne faux sinon
 		}
 		return false;
+	}
+	
+/**
+ * Cette fonction permet de récupérer la valeur de l'identifiant de la variable de session
+ * 
+ * @access	static
+ * @author	koéZionCMS
+ * @version 0.1 - 13/06/2014 by FI 
+ */
+	static function get_id() {
+
+		return session_id();
 	}
 	
 	/*static function user($key) {
