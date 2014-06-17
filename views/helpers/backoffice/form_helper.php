@@ -288,7 +288,7 @@ class FormHelper extends FormParentHelper {
 		
 		//====================    PARAMETRAGES    ====================//
 
-		$escapeAttributes = array('div', 'divright', 'fulllabelerror', 'colorpicker');
+		$escapeAttributes = array('div', 'divright', 'fulllabelerror', 'colorpicker', 'inputDatas');
 		$this->escapeAttributes = am($escapeAttributes, $this->escapeAttributes);		
 		
 		//Liste des options par défaut
@@ -297,7 +297,8 @@ class FormHelper extends FormParentHelper {
 			'divright' => true,
 			'fulllabelerror' => false,
 			'colorpicker' => false,
-			'onlyInput' => false
+			'onlyInput' => false,
+			'inputDatas' => false
 		);
 		$options = array_merge($defaultOptions, $options); //Génération du tableau d'options utilisé dans la fonction
 		
@@ -311,6 +312,7 @@ class FormHelper extends FormParentHelper {
 		//Cas du color picker
 		if($inputDatas['inputOptions']['colorpicker']) { $inputDatas['inputElement'] = '<div class="color"><div><span style="background-color: '.$inputDatas['inputValue'].'"></span></div>'.$inputDatas['inputElement'].'</div></div>'; }		
 		if($inputDatas['inputOptions']['onlyInput']) { return $inputDatas['inputElement']; }		
+		if($inputDatas['inputOptions']['inputDatas']) { return $inputDatas; }		
 		
 		$classError = '';
 		if(!empty($inputDatas['inputError'])) { $classError = ' error'; }

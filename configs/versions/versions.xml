@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 17/06/2014</name>
+		<num>20140617.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise en place de la possibilité de récupérer le tableau complet de génération d'un input dans le helper form du backoffice via le paramètre inputDatas</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 13/06/2014</name>
 		<num>20140613.001</num>
 		<supervisor>KoéZionCMS</supervisor>
