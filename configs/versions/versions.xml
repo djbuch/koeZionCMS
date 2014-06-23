@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 23/06/2014</name>
+		<num>20140623.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Rajout dans la gestion des types de module de l'association avec un plugin pour faciliter la gestion de la suppression d'un plugin</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 17/06/2014</name>
 		<num>20140617.001</num>
 		<supervisor>KoéZionCMS</supervisor>

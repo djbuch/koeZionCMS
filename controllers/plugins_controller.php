@@ -149,6 +149,7 @@ class PluginsController extends AppController {
 				//////////////////////////////////
 																			
 					$sql[] = 'DELETE FROM `modules` WHERE `plugin_id` = '.$id.';'; //Requête de suppression des modules
+					$sql[] = 'DELETE FROM `modules_types` WHERE `plugin_id` = '.$id.';'; //Requête de suppression du type de module
 					$sql[] = 'DELETE FROM `plugins` WHERE `id` = '.$id.';'; //Requête de suppression du plugin
 														
 					//ON VA RECUPERER, SI IL Y EN A, LA LISTE DES TABLES ASSOCIEES AU PLUGIN EN COURS DE SUPPRESSION

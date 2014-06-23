@@ -105,6 +105,7 @@ CREATE TABLE IF NOT EXISTS `modules_types` (
   `created` datetime DEFAULT NULL,
   `modified` datetime NOT NULL,
   `modified_by` int(11) NOT NULL,
+  `plugin_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
