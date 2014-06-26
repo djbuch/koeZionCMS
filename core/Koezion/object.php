@@ -167,7 +167,7 @@ class Object {
 		else { $componentPath = $path; } 
 		require_once $componentPath.DS.$componentFileName.'.php'; //Inclusion du fichier
 		if(isset($componentController)) { $controller = $componentController; } else { $controller = $this; }
-		$this->components[$component] = new $componentObjectName($this); //Et on insère l'objet
+		$this->components[$component] = new $componentObjectName($controller); //Et on insère l'objet
 	}	
 
 /**

@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 26/06/2014</name>
+		<num>20140626.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Correction lors du chargement d'un composant et de la redéfinition de son contrôleur</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 23/06/2014</name>
 		<num>20140623.001</num>
 		<supervisor>KoéZionCMS</supervisor>
