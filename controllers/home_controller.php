@@ -40,24 +40,91 @@ class HomeController extends AppController {
 	function index() {
 		
 		//////////////////////////////////
-		//   RECUPERATION DES SLIDERS   //		
-		$sliders = $this->_get_sliders();
+		//   RECUPERATION DES SLIDERS   //
+		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Sliders'.DS;
+		$cacheFile 		= "website_".CURRENT_WEBSITE_ID;
+		
+		$sliders = Cache::exists_cache_file($cacheFolder, $cacheFile);
+		
+		if(!$sliders) {
+		
+			$this->loadModel('Slider');
+			$sliders = $this->Slider->find(array(
+				'conditions' => array('online' => 1), 
+				'order' => 'order_by ASC, name ASC'
+			));
+		
+			Cache::create_cache_file($cacheFolder, $cacheFile, $sliders);
+		}
 		$datas['sliders'] = $sliders;		
 		
 		
 		////////////////////////////////
-		//   RECUPERATION DES FOCUS   //	
-		$focus = $this->_get_focus();
+		//   RECUPERATION DES FOCUS   //
+		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Focus'.DS;
+		$cacheFile 		= "website_".CURRENT_WEBSITE_ID;
+		
+		$focus = Cache::exists_cache_file($cacheFolder, $cacheFile);
+		
+		if(!$focus) {
+			
+			$this->loadModel('Focus');
+			$focus = $this->Focus->find(array(
+				'conditions' => array('online' => 1), 
+				'order' => 'order_by ASC, name ASC'
+			));
+		
+			Cache::create_cache_file($cacheFolder, $cacheFile, $focus);
+		}
 		$datas['focus'] = $focus; 
 		
 		///////////////////////////////////
 		//   RECUPERATION DES ARTICLES   //
-		$posts = $this->_get_posts();
-		$datas['posts'] = $posts;				
+		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS;
+		$cacheFile 		= "home_page_website_".CURRENT_WEBSITE_ID;
+		
+		$posts = Cache::exists_cache_file($cacheFolder, $cacheFile);
+		
+		if(!$posts) {	
+		
+			//////////////////////////////////////////////////////
+			//   RECUPERATION DES CONFIGURATIONS DES ARTICLES   //
+			require_once(LIBS.DS.'config_magik.php'); 										//Import de la librairie de gestion des fichiers de configuration des posts
+			$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'posts.ini', false, false); 		//Création d'une instance
+			$postsConfigs = $cfg->keys_values();											//Récupération des configurations
+			//////////////////////////////////////////////////////
+			
+			$postsQuery = array(
+				'conditions' => array('online' => 1, 'display_home_page' => 1),
+				'limit' => '0, '.$postsConfigs['home_page_limit']
+			);	
+		
+			if($postsConfigs['order'] == 'modified') { $postsQuery['order'] = 'modified DESC'; }
+			else if($postsConfigs['order'] == 'created') { $postsQuery['order'] = 'created DESC'; }
+			else if($postsConfigs['order'] == 'order_by') { $postsQuery['order'] = 'order_by ASC'; }			
+			
+			$this->loadModel('Post');		
+			$posts = $this->Post->find($postsQuery);
+		
+			Cache::create_cache_file($cacheFolder, $cacheFile, $posts);
+		}
+		$datas['posts'] = $posts;
+				
 		
 		///////////////////////////////////////////
 		//   RECUPERATION DES TYPES D'ARTICLES   //
-		$postsTypes = $this->_get_posts_types();
+		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'PostsTypes'.DS;
+		$cacheFile 		= "home_page_website_".CURRENT_WEBSITE_ID;
+		
+		$postsTypes = Cache::exists_cache_file($cacheFolder, $cacheFile);
+		
+		if(!$postsTypes) {			
+			
+			$this->loadModel('PostsType');
+			$postsTypes = $this->PostsType->get_for_front();
+		
+			Cache::create_cache_file($cacheFolder, $cacheFile, $postsTypes);
+		}
 		$datas['postsTypes'] = $postsTypes;		
 		 
 		
