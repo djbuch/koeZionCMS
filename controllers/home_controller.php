@@ -51,7 +51,6 @@ class HomeController extends AppController {
 			$this->loadModel('Slider');
 			$sliders = $this->Slider->find(array(
 				'conditions' => array('online' => 1), 
-				'fields' => array('id', 'name', 'image', 'content'),
 				'order' => 'order_by ASC, name ASC'
 			));
 		
@@ -72,7 +71,6 @@ class HomeController extends AppController {
 			$this->loadModel('Focus');
 			$focus = $this->Focus->find(array(
 				'conditions' => array('online' => 1), 
-				'fields' => array('id', 'name', 'content'),
 				'order' => 'order_by ASC, name ASC'
 			));
 		

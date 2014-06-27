@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 27/06/2014</name>
+		<num>20140627.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification des données récupérées sur la home page</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 26/06/2014</name>
 		<num>20140626.001</num>
 		<supervisor>KoéZionCMS</supervisor>
