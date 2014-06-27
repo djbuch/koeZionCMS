@@ -42,7 +42,7 @@ class AppController extends Controller {
  * @todo améliorer la récupération des configs...
  * @todo améliorer la récupération du menu général pour le moment une mise en cache qui me semble améliorable...
  */	
-	function beforeFilter() {
+	public function beforeFilter() {
 		
 		parent::beforeFilter();
 				
@@ -135,7 +135,7 @@ class AppController extends Controller {
 		//////////////////////////////////
     }
     
-    function beforeRender() {
+    public function beforeRender() {
     	
     	parent::beforeRender();
     	
@@ -172,7 +172,7 @@ class AppController extends Controller {
  * @version 0.3 - 29/05/2012 by FI - Mise en place de la variable $order
  * @version 0.4 - 11/12/2013 by FI - Mise en place de la variable $conditions
  */    
-    function backoffice_index($return = false, $fields = null, $order = null, $conditions = null) {
+    public function backoffice_index($return = false, $fields = null, $order = null, $conditions = null) {
     	    	
     	$controllerVarName =  $this->params['controllerVarName']; //On récupère la valeur de la variable du contrôleur
     	$modelName =  $this->params['modelName']; //On récupère la valeur du modèle
@@ -278,7 +278,7 @@ class AppController extends Controller {
  * @author 	koéZionCMS
  * @version 0.1 - 17/01/2012 by FI
  */
-    function backoffice_add($redirect = true, $forceInsert = false) {
+    public function backoffice_add($redirect = true, $forceInsert = false) {
     
     	$modelName = $this->params['modelName']; //On récupère la valeur du modèle
     	
@@ -315,7 +315,7 @@ class AppController extends Controller {
  * @author 	koéZionCMS
  * @version 0.1 - 17/01/2012 by FI
  */    
-    function backoffice_edit($id, $redirect = true) {
+    public function backoffice_edit($id, $redirect = true) {
     	    	
     	$modelName =  $this->params['modelName']; //On récupère la valeur du modèle
     	$primaryKey = $this->$modelName->primaryKey;
@@ -364,7 +364,7 @@ class AppController extends Controller {
  * @version 0.1 - 17/01/2012 by FI
  * @version 0.2 - 16/04/2012 by FI - Mise en place d'un test supplémentaire pour savoir si l'élément est suppressible ou non
  */   
-    function backoffice_delete($id, $redirect = true) {    	
+    public function backoffice_delete($id, $redirect = true) {    	
     	
     	$this->auto_render = false;
     	$modelName =  $this->params['modelName']; //On récupère la valeur du modèle
@@ -398,7 +398,7 @@ class AppController extends Controller {
  * @author 	koéZionCMS
  * @version 0.1 - 26/01/2012 by FI
  */    
-    function backoffice_massive_delete() {
+    public function backoffice_massive_delete() {
     	
     	$this->auto_render = false;
     	
@@ -428,7 +428,7 @@ class AppController extends Controller {
  * @author 	koéZionCMS
  * @version 0.1 - 23/03/2012 by FI
  */
-    function backoffice_statut($id, $redirect = true) {
+    public function backoffice_statut($id, $redirect = true) {
     
     	$this->auto_render = false; //Pas de vue    	
     	$modelName =  $this->params['modelName']; //On récupère la valeur du modèle    	
@@ -463,7 +463,7 @@ class AppController extends Controller {
  * @author 	koéZionCMS
  * @version 0.1 - 12/03/2012 by FI
  */
-    function backoffice_rebuild_search_index() {    	
+    public function backoffice_rebuild_search_index() {    	
     	
     	set_time_limit(0);
     	ini_set("memory_limit" , "256M");
@@ -603,7 +603,7 @@ class AppController extends Controller {
  * @version 0.1 - 31/05/2012 by FI
  * @version 0.2 - 01/08/2012 by FI - Modification de la requête on passe par un query au lieu d'un save
  */
-    function backoffice_ajax_order_by() {
+    public function backoffice_ajax_order_by() {
     	
     	$this->auto_render = false; //On ne fait pas de rendu de la vue
     	$modelName =  $this->params['modelName']; //Récupération du nom du modèle    	
@@ -640,6 +640,132 @@ class AppController extends Controller {
 		$this->set('rightButtonName', $rightButton['name']);
 		
 		$this->render('/elements/ajax/backoffice_ajax_add_right_button');
+	}
+	
+/**
+ * Cette fonction permet de récupérer les sliders
+ *
+ * @return	array Liste des sliders
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 27/06/2014 by FI
+ */	
+	public function _get_sliders() {
+		
+		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Sliders'.DS;
+		$cacheFile 		= "website_".CURRENT_WEBSITE_ID;
+		
+		$sliders = Cache::exists_cache_file($cacheFolder, $cacheFile);
+		
+		if(!$sliders) {
+		
+			$this->loadModel('Slider');
+			$sliders = $this->Slider->find(array(
+				'conditions' => array('online' => 1), 
+				'order' => 'order_by ASC, name ASC'
+			));
+		
+			Cache::create_cache_file($cacheFolder, $cacheFile, $sliders);
+		}
+		
+		return $sliders;
+	}
+	
+/**
+ * Cette fonction permet de récupérer les focus
+ *
+ * @return	array Liste des focus
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 27/06/2014 by FI
+ */	
+	public function _get_focus() {
+		
+		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Focus'.DS;
+		$cacheFile 		= "website_".CURRENT_WEBSITE_ID;
+		
+		$focus = Cache::exists_cache_file($cacheFolder, $cacheFile);
+		
+		if(!$focus) {
+			
+			$this->loadModel('Focus');
+			$focus = $this->Focus->find(array(
+				'conditions' => array('online' => 1), 
+				'order' => 'order_by ASC, name ASC'
+			));
+		
+			Cache::create_cache_file($cacheFolder, $cacheFile, $focus);
+		}
+		
+		return $focus;
+	}
+	
+/**
+ * Cette fonction permet de récupérer les articles
+ *
+ * @return	array Liste des articles
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 27/06/2014 by FI
+ */	
+	public function _get_posts() {
+		
+		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS;
+		$cacheFile 		= "home_page_website_".CURRENT_WEBSITE_ID;
+		
+		$posts = Cache::exists_cache_file($cacheFolder, $cacheFile);
+		
+		if(!$posts) {	
+		
+			//////////////////////////////////////////////////////
+			//   RECUPERATION DES CONFIGURATIONS DES ARTICLES   //
+			require_once(LIBS.DS.'config_magik.php'); 										//Import de la librairie de gestion des fichiers de configuration des posts
+			$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'posts.ini', false, false); 		//Création d'une instance
+			$postsConfigs = $cfg->keys_values();											//Récupération des configurations
+			//////////////////////////////////////////////////////
+			
+			$postsQuery = array(
+				'conditions' => array('online' => 1, 'display_home_page' => 1),
+				'limit' => '0, '.$postsConfigs['home_page_limit']
+			);	
+		
+			if($postsConfigs['order'] == 'modified') { $postsQuery['order'] = 'modified DESC'; }
+			else if($postsConfigs['order'] == 'created') { $postsQuery['order'] = 'created DESC'; }
+			else if($postsConfigs['order'] == 'order_by') { $postsQuery['order'] = 'order_by ASC'; }			
+			
+			$this->loadModel('Post');		
+			$posts = $this->Post->find($postsQuery);
+		
+			Cache::create_cache_file($cacheFolder, $cacheFile, $posts);
+		}
+		
+		return $posts;
+	}
+	
+/**
+ * Cette fonction permet de récupérer les types d'articles
+ *
+ * @return	array Liste des types d'articles
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 27/06/2014 by FI
+ */	
+	public function _get_posts_types() {
+		
+		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'PostsTypes'.DS;
+		$cacheFile 		= "home_page_website_".CURRENT_WEBSITE_ID;
+		
+		$postsTypes = Cache::exists_cache_file($cacheFolder, $cacheFile);
+		
+		if(!$postsTypes) {			
+			
+			$this->loadModel('PostsType');
+			$postsTypes = $this->PostsType->get_for_front();
+		
+			Cache::create_cache_file($cacheFolder, $cacheFile, $postsTypes);
+		}
+		
+		return $postsTypes;
 	}
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -1086,131 +1212,5 @@ class AppController extends Controller {
 
 		if(!isset($datas)) { $this->request->data = $datasToCheck; }
 		else { return $datasToCheck; } 
-	}
-	
-/**
- * Cette fonction permet de récupérer les sliders
- *
- * @return	array Liste des sliders
- * @access 	protected
- * @author 	koéZionCMS
- * @version 0.1 - 27/06/2014 by FI
- */	
-	protected function _get_sliders() {
-		
-		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Sliders'.DS;
-		$cacheFile 		= "website_".CURRENT_WEBSITE_ID;
-		
-		$sliders = Cache::exists_cache_file($cacheFolder, $cacheFile);
-		
-		if(!$sliders) {
-		
-			$this->loadModel('Slider');
-			$sliders = $this->Slider->find(array(
-				'conditions' => array('online' => 1), 
-				'order' => 'order_by ASC, name ASC'
-			));
-		
-			Cache::create_cache_file($cacheFolder, $cacheFile, $sliders);
-		}
-		
-		return $sliders;
-	}
-	
-/**
- * Cette fonction permet de récupérer les focus
- *
- * @return	array Liste des focus
- * @access 	protected
- * @author 	koéZionCMS
- * @version 0.1 - 27/06/2014 by FI
- */	
-	protected function _get_focus() {
-		
-		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Focus'.DS;
-		$cacheFile 		= "website_".CURRENT_WEBSITE_ID;
-		
-		$focus = Cache::exists_cache_file($cacheFolder, $cacheFile);
-		
-		if(!$focus) {
-			
-			$this->loadModel('Focus');
-			$focus = $this->Focus->find(array(
-				'conditions' => array('online' => 1), 
-				'order' => 'order_by ASC, name ASC'
-			));
-		
-			Cache::create_cache_file($cacheFolder, $cacheFile, $focus);
-		}
-		
-		return $focus;
-	}
-	
-/**
- * Cette fonction permet de récupérer les articles
- *
- * @return	array Liste des articles
- * @access 	protected
- * @author 	koéZionCMS
- * @version 0.1 - 27/06/2014 by FI
- */	
-	protected function _get_posts() {
-		
-		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS;
-		$cacheFile 		= "home_page_website_".CURRENT_WEBSITE_ID;
-		
-		$posts = Cache::exists_cache_file($cacheFolder, $cacheFile);
-		
-		if(!$posts) {	
-		
-			//////////////////////////////////////////////////////
-			//   RECUPERATION DES CONFIGURATIONS DES ARTICLES   //
-			require_once(LIBS.DS.'config_magik.php'); 										//Import de la librairie de gestion des fichiers de configuration des posts
-			$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'posts.ini', false, false); 		//Création d'une instance
-			$postsConfigs = $cfg->keys_values();											//Récupération des configurations
-			//////////////////////////////////////////////////////
-			
-			$postsQuery = array(
-				'conditions' => array('online' => 1, 'display_home_page' => 1),
-				'limit' => '0, '.$postsConfigs['home_page_limit']
-			);	
-		
-			if($postsConfigs['order'] == 'modified') { $postsQuery['order'] = 'modified DESC'; }
-			else if($postsConfigs['order'] == 'created') { $postsQuery['order'] = 'created DESC'; }
-			else if($postsConfigs['order'] == 'order_by') { $postsQuery['order'] = 'order_by ASC'; }			
-			
-			$this->loadModel('Post');		
-			$posts = $this->Post->find($postsQuery);
-		
-			Cache::create_cache_file($cacheFolder, $cacheFile, $posts);
-		}
-		
-		return $posts;
-	}
-	
-/**
- * Cette fonction permet de récupérer les types d'articles
- *
- * @return	array Liste des types d'articles
- * @access 	protected
- * @author 	koéZionCMS
- * @version 0.1 - 27/06/2014 by FI
- */	
-	protected function _get_posts_types() {
-		
-		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'PostsTypes'.DS;
-		$cacheFile 		= "home_page_website_".CURRENT_WEBSITE_ID;
-		
-		$postsTypes = Cache::exists_cache_file($cacheFolder, $cacheFile);
-		
-		if(!$postsTypes) {			
-			
-			$this->loadModel('PostsType');
-			$postsTypes = $this->PostsType->get_for_front();
-		
-			Cache::create_cache_file($cacheFolder, $cacheFile, $postsTypes);
-		}
-		
-		return $postsTypes;
 	}
 }

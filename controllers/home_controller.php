@@ -42,8 +42,7 @@ class HomeController extends AppController {
 		//////////////////////////////////
 		//   RECUPERATION DES SLIDERS   //		
 		$sliders = $this->_get_sliders();
-		$datas['sliders'] = $sliders;		
-		
+		$datas['sliders'] = $sliders;				
 		
 		////////////////////////////////
 		//   RECUPERATION DES FOCUS   //	

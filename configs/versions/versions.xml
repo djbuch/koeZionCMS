@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 27/06/2014</name>
+		<num>20140627.003</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la visibilité des fonctions</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 27/06/2014</name>
 		<num>20140627.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
