@@ -1040,28 +1040,7 @@ class AppController extends Controller {
  * @version 0.2 - 03/11/2013 by FI - Déplacée du contrôleur posts vers le contrôleur app
  * @version 0.3 - 10/11/2013 by FI - Modification de la fonction pour qu'elle prenne en compte les tableaux avec des index multiples
  * @version 0.4 - 09/12/2013 by FI - Modification du champ et du tableau à tester
- */	
-	/*protected function _transform_date($mode, $requestField) {
-		
-		if($mode == 'fr2Sql') {
-			
-			//Transformation de la date FR en date SQL
-			if(isset($this->request->data[$requestField]) && !empty($this->request->data[$requestField])) {
-			
-				$dateArray = $this->components['Text']->date_human_to_array($this->request->data[$requestField]);
-				$this->request->data[$requestField] = $dateArray['a'].'-'.$dateArray['m'].'-'.$dateArray['j'];
-			}
-		} else if($mode == 'sql2Fr') {
-			
-			//Transformation de la date SQL en date FR
-			if(isset($this->request->data[$requestField]) && !empty($this->request->data[$requestField])) {
-			
-				$dateArray = $this->components['Text']->date_human_to_array($this->request->data[$requestField], '-', 'i');
-				$this->request->data[$requestField] = $dateArray[2].'.'.$dateArray[1].'.'.$dateArray[0];
-			}
-		}		
-	}*/
-	
+ */		
 	protected function _transform_date($mode, $field, $datas = null) {
 		
 		if(!isset($datas)) { $datasToCheck = $this->request->data; }

@@ -58,8 +58,7 @@ class HomeController extends AppController {
 		///////////////////////////////////////////
 		//   RECUPERATION DES TYPES D'ARTICLES   //
 		$postsTypes = $this->_get_posts_types();
-		$datas['postsTypes'] = $postsTypes;		
-		 
+		$datas['postsTypes'] = $postsTypes;				 
 		
 		$datas['breadcrumbs'] = array(); 				
 		
