@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 01/07/2014</name>
+		<num>20140701.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise en place dans le helper Form (parent) de la possibilité de rajouter du texte avant et après l'input</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 27/06/2014</name>
 		<num>20140627.003</num>
 		<supervisor>KoéZionCMS</supervisor>

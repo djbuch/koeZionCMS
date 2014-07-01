@@ -45,7 +45,21 @@ class FormParentHelper extends Helper {
  * @author 	koéZionCMS
  * @version 0.1 - 20/01/2012 by FI
  */
-	var $escapeAttributes = array('type', 'displayError', 'label', 'datas', 'value', 'tooltip', 'modelToCheck', 'labelClass', 'labelStyle', 'isChecked', 'buttonType');
+	var $escapeAttributes = array(
+		'type', 
+		'displayError', 
+		'label', 
+		'datas', 
+		'value', 
+		'tooltip', 
+		'modelToCheck', 
+		'labelClass', 
+		'labelStyle', 
+		'isChecked', 
+		'buttonType',
+		'txtBeforeInput',
+		'txtAfterInput'
+	);
 
 /**
  * Constructeur de la classe
@@ -160,7 +174,10 @@ class FormParentHelper extends Helper {
 			'value' => null,
 			'tooltip' => false,
 			'labelClass' => false,
-			'labelStyle' => false
+			'labelStyle' => false,
+			'txtBeforeInput' => '',
+			'txtAfterInput' => ''
+			
 		);
 		$options = array_merge($defaultOptions, $options); //Génération du tableau d'options utilisé dans la fonction
 
@@ -373,6 +390,9 @@ class FormParentHelper extends Helper {
 
 			$errorLabel .= '</label>';
 		}
+		
+		if(!empty($options['txtBeforeInput'])) { $inputReturn = $options['txtBeforeInput'].$inputReturn; }
+		if(!empty($options['txtAfterInput'])) { $inputReturn = $inputReturn.$options['txtAfterInput'];  }
 		
 		return array(
 			'inputLabel' => $labelReturn,
