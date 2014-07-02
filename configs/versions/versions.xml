@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 02/07/2014</name>
+		<num>20140702.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Rajout de CSS pour la mise en forme des formulaires en BO</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 01/07/2014</name>
 		<num>20140701.001</num>
 		<supervisor>KoéZionCMS</supervisor>

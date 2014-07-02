@@ -105,6 +105,17 @@ input.datepicker{width:64px}
 #InputSelectFile{margin-right:15px;margin-top: 0;}
 .upload_file + #InputSelectFile{float:left;}
 
+h3.form-title{
+	padding: 15px 20px;
+	text-transform: uppercase;
+	font-weight: bold;
+	border-top: 1px solid #e5e5e5;
+	background: #e5e5e5;
+}
+h3.form-title.black-border{
+	border-top: 1px solid black;
+}
+
 /**
  * @see http://cssdeck.com/labs/css-checkbox-styles
  * Custom slide checkbox
