@@ -74,7 +74,7 @@ class TextComponent extends Component {
 				'm' => $month,	
 				'Y' => $year,	
 				'h' => '',
-				'm' => '',
+				'i' => '',
 				's' => '',
 			)
 		);
@@ -90,7 +90,7 @@ class TextComponent extends Component {
 			);
 			
 			$return['full']['h'] = $heureTemp[0];
-			$return['full']['m'] = $heureTemp[1];
+			$return['full']['i'] = $heureTemp[1];
 			$return['full']['s'] = $heureTemp[2];
 		}
 		
