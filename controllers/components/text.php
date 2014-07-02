@@ -89,11 +89,9 @@ class TextComponent extends Component {
 				'full' => $splitHeure[1]
 			);
 			
-			$return['full'] = array(
-				'h' => $heureTemp[0],
-				'm' => $heureTemp[1],
-				's' => $heureTemp[2]
-			);
+			$return['full']['h'] = $heureTemp[0];
+			$return['full']['m'] = $heureTemp[1];
+			$return['full']['s'] = $heureTemp[2];
 		}
 		
 		return $return;
