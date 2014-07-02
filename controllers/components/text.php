@@ -44,7 +44,7 @@ class TextComponent extends Component {
  * @author 	koéZionCMS
  * @version 0.1 - 06/03/2012 by FI
  */
-	function date_sql_to_human($date) {
+	public function date_sql_to_human($date) {
 				
 		$splitHeure = explode(' ', $date); //pour enlever les heures dans le cas datetime (sql)			
 		$dateTemp = explode('-', $splitHeure[0]); //On récupère la date et on génère un tableau
@@ -95,7 +95,7 @@ class TextComponent extends Component {
  * @version 0.1 - 23/07/2012 by FI
  * @version 0.1 - 25/10/2012 by FI - Rajout d'une option permettant de choisir si on retourne les valeurs dans un tablau avec des index en chiffres ou en lettres
  */
-	function date_human_to_array($date, $separateur = '.', $retour = 'c') {
+	public function date_human_to_array($date, $separateur = '.', $retour = 'c') {
 		
 		$dateTmp = explode($separateur, $date);
 		
@@ -130,7 +130,7 @@ class TextComponent extends Component {
  * @author Az
  * @version 0.1 - 09/03/2011 by AB
  */
-	function get_first_day_of_month($iMonth = '', $iYear = ''){
+	public function get_first_day_of_month($iMonth = '', $iYear = ''){
 		
 		if(empty($iMonth)) $iMonth = date('m');
 		if(empty($iYear)) $iYear = date('Y');
@@ -153,7 +153,7 @@ class TextComponent extends Component {
  * @author Az
  * @version 0.1 - 09/03/2011 by AB
  */	
-	function get_last_day_of_month($iMonth = '', $iYear = ''){
+	public function get_last_day_of_month($iMonth = '', $iYear = ''){
 		
 		if(empty($iMonth)) $iMonth = date('m');
 		if(empty($iYear)) $iYear = date('Y');
@@ -174,7 +174,7 @@ class TextComponent extends Component {
  * @author 	koéZionCMS
  * @version 0.1 - 21/08/2012 by FI
  */		
-	function format_content_text($content) {
+	public function format_content_text($content) {
 		
 		$content = str_replace('&brvbar;', '&#92;', $content);		
 		return $content;
@@ -189,7 +189,7 @@ class TextComponent extends Component {
  * @author 	koéZionCMS
  * @version 0.1 - 06/11/2012 by FI
  */
-	function convert_lt_gt($content) {
+	public function convert_lt_gt($content) {
 	
 		$content = str_replace('<', '&lt;', $content);
 		$content = str_replace('>', '&gt;', $content);
@@ -203,7 +203,7 @@ class TextComponent extends Component {
  * @param string $encoding encodage du texte (exemple : utf-8, ISO-8859-1 ...)
  * @see http://www.infowebmaster.fr/tutoriel/php-enlever-accents
  */	
-	function suppr_accents($str, $encoding = 'utf-8', $toLower = false) {
+	public function suppr_accents($str, $encoding = 'utf-8', $toLower = false) {
 		
 		// transformer les caractères accentués en entités HTML
 		$str = htmlentities($str, ENT_NOQUOTES, $encoding);
@@ -220,5 +220,25 @@ class TextComponent extends Component {
 	
 		if($toLower) { $str = strtolower($str); }
 		return $str;
+	}
+	
+/**
+ * Cette fonction permet de générer un code aléatoire
+ * 
+ * @param 	interger $length Nombre de caractères qui composeront le code
+ * @return 	varchar Code
+ * @access 	public 
+ * @author 	koéZionCMS
+ * @version 0.1 - 02/07/2014 by FI
+ */		
+	public function random_code($length = 10) {		
+		
+		$characts   = 'abcdefghijklmnopqrstuvwxyz';
+		$characts   .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$characts   .= '1234567890';
+		$code 		= '';
+		
+		for($i=0;$i<$length;$i++) { $code .= substr($characts, rand()%(strlen($characts)), 1); }
+		return $code;
 	}
 }
