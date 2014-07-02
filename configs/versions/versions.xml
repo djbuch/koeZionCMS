@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 02/07/2014</name>
+		<num>20140702.003</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Rajout de données dans la fonction date_sql_to_human dans le composant Text</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 02/07/2014</name>
 		<num>20140702.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

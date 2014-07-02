@@ -59,7 +59,7 @@ class TextComponent extends Component {
 			'txt' => $this->months['short'][$month]." ".$year,
 			'sql' => $dateTemp[0].'-'.$dateTemp[1],
 			'date' => array(
-				'fullNumber' => $day.'.'.$dateTemp[1].'.'.$year,
+				'fullNumber' => $day.'.'.$month.'.'.$year,
 				'fullTxt' => $day.' '.$this->months['short'][$month]." ".$year
 			),
 			'time' => array(
@@ -68,6 +68,14 @@ class TextComponent extends Component {
 				's' => '',
 				'hm' => '',
 				'full' => ''
+			),
+			'full' => array(
+				'd' => $day,	
+				'm' => $month,	
+				'Y' => $year,	
+				'h' => '',
+				'm' => '',
+				's' => '',
 			)
 		);
 		
@@ -79,6 +87,12 @@ class TextComponent extends Component {
 				's' => $heureTemp[2],
 				'hm' => $heureTemp[0].':'.$heureTemp[1],
 				'full' => $splitHeure[1]
+			);
+			
+			$return['full'] = array(
+				'h' => $heureTemp[0],
+				'm' => $heureTemp[1],
+				's' => $heureTemp[2]
 			);
 		}
 		
