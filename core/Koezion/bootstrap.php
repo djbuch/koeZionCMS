@@ -1,19 +1,32 @@
 <?php
-//GESTION DES ERREURS --> http://www.ficgs.com/Comment-montrer-les-erreur-PHP-f1805.html
+///////////////////////////////
+//    GESTION DES ERREURS    // 
+//--> http://www.ficgs.com/Comment-montrer-les-erreur-PHP-f1805.html
 //ini_set( 'magic_quotes_gpc', 0 );
-$logFile = TMP.DS.'logs'.DS.'php'.DS.date('Y-m-d').'.log'; //Chemin du fichier de logs
-$httpHost = $_SERVER["HTTP_HOST"];
-if($httpHost == 'localhost' || $httpHost == '127.0.0.1') { $displayErrors = 1; } else { $displayErrors = 0; }
-ini_set('display_errors', $displayErrors); //Affichage des erreurs
-//error_reporting(E_ALL); //On report toutes les erreurs ou error_reporting(E_ALL);
+
+//Récupération de la configuration du coeur
+require_once(LIBS.DS.'config_magik.php');
+$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
+$coreConfs = $cfg->keys_values();
+if(!isset($coreConfs['display_php_error'])) {
+	
+	//Si la données n'est pas dans la liste (Cas pour d'anciennes versions)
+	$httpHost = $_SERVER["HTTP_HOST"];
+	if($httpHost == 'localhost' || $httpHost == '127.0.0.1') { $displayErrors = 1; } else { $displayErrors = 0; }
+	
+} 
+else { $displayErrors = $coreConfs['display_php_error']; }
+ini_set('display_errors', $displayErrors); //Affichage ou non des erreurs
+
 //Rapporte les erreurs d'exécution de script
-//Rapporter les E_NOTICE peut vous aider à améliorer vos scripts
-//(variables non initialisées, variables mal orthographiées..)
+//Rapporter les E_NOTICE peut vous aider à améliorer vos scripts (variables non initialisées, variables mal orthographiées..)
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
-ini_set('log_errors', 1); //Log des erreurs
+ini_set('log_errors', 1); //Log des erreurs dans un fichier
+$logFile = TMP.DS.'logs'.DS.'php'.DS.date('Y-m-d').'.log'; //Chemin du fichier de logs
 ini_set('error_log', $logFile); //Définition du chemin du fichier de logs
-//echo phpinfo();
-/////////////////////////////
+
+///////////////////////////////////////////////////////////////////
+//    MISE EN PLACE DES LIENS VERS LES DIFFERENTES LIBRAIRIES    //
 require_once CAKEPHP.DS.'inflector.php'; //Classe Object permettant le respect de certaines conventions
 
 require_once KOEZION.DS.'session.php'; //On charge le composant permettant la gestion des sessions

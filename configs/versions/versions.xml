@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 07/07/2014</name>
+		<num>20140702.003</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la gestion de l'affichage des erreurs pour permettre l'activation ou non depuis le backoffice</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 07/07/2014</name>
 		<num>20140702.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
