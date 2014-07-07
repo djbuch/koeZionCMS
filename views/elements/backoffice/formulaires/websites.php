@@ -88,7 +88,7 @@
 		<div class="content nopadding">
 			<?php 
 			$positionList = array('header' => "Dans le header", 'menu' => "Dans le menu");
-			echo $helpers['Form']->input('search_engine_position', 'Position du moteur de recherche', array('type' => 'select', 'datas' => $positionList));			
+			echo $helpers['Form']->input('search_engine_position', 'Position du moteur de recherche', array('type' => 'select', 'datas' => $positionList, 'firstElementList' => "Pas de moteur de recherche"));			
 			$sliderTypesList = array(
 				1 => "Slider simple", 
 				2 => "Slider 3D", 
