@@ -13,6 +13,7 @@ class NavHelper extends Helper {
  * @author 	koéZionCMS
  * @version 0.1 - 06/03/2012 by FI
  * @version 0.2 - 28/05/2013 by TB	ajout de l'id "mainMenu" pour la liste du menu
+ * @version 0.3 - 07/07/2014 by FI	Gestion des redirections externes dans le champ redirect_to
  */	
 	public function generateMenu($categories, $breadcrumbs, $moreElements = null) {
 		
@@ -25,10 +26,15 @@ class NavHelper extends Helper {
 				$sCssMenu = '';
 				if(!empty($v['redirect_to'])) { 
 					
-					$url = Router::url($v['redirect_to']);
-					$shortUrl = str_replace(BASE_URL, '', $url); //On supprime le BASE_URL avant la comparaison
-					if($v['level'] == 1 && $shortUrl == $this->view->controller->request->url) { $sCssMenu = ' class="active"'; }
-				
+					//On teste s'il s'agit d'une url interne ou externe
+					if(substr_count($v['redirect_to'], 'http://', 0, 7)) { $url = $v['redirect_to']; }
+					else {
+					
+						$url = Router::url($v['redirect_to']);
+						$shortUrl = str_replace(BASE_URL, '', $url); //On supprime le BASE_URL avant la comparaison
+						if($v['level'] == 1 && $shortUrl == $this->view->controller->request->url) { $sCssMenu = ' class="active"'; }
+					}
+					
 				} else { 
 					
 					$url = Router::url('categories/view/id:'.$v['id'].'/slug:'.$v['slug']); 
