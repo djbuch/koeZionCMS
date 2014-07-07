@@ -189,7 +189,7 @@ class PaginatorParentHelper extends Helper {
 	protected function _recursive_params($datas, $parent = '', $loop = 1) {
 				
 		//Parcours des paramètres passés en GET
-		/*
+		$moreParams = '';
 		//ANCIENNE VERSION BIEN CRADE AVEC 3 FOREACH IMBRIQUES
 		foreach($datas as $k => $v) {
 		
@@ -212,11 +212,12 @@ class PaginatorParentHelper extends Helper {
 				}
 			}
 		}
-		*/
 		
+		/*
 		//25/11/2013
 		//NOUVELLE VERSION RECURSIVE, A VOIR SI POSSIBILITE DE L'AMELIORER
 		//JE SUIS PAS SUPER CONCENTRE AJD CF PAPA DE LESLIE
+		//07/07/2014 Supprimée car trop aléatoire
 		$moreParams = '';
 		foreach($datas as $k => $v) {
 			
@@ -230,7 +231,7 @@ class PaginatorParentHelper extends Helper {
 				if($loop < 2) { $moreParams .= $this->_recursive_params($v, $k, $loop+1); }
 				else { $moreParams .= $this->_recursive_params($v, $parent.'['.$k.']', $loop+1); }
 			}
-		}
+		}*/
 		
 		return $moreParams;
 	}
