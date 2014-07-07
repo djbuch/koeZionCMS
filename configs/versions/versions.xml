@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 07/07/2014</name>
+		<num>20140702.004</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de l'objet View pour corriger une erreur de type Warning</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 07/07/2014</name>
 		<num>20140702.003</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

@@ -31,6 +31,7 @@ class View extends Object {
  * @version 0.1 - 13/06/2012 by FI
  * @version 0.2 - 05/06/2013 by FI - Mise en place du chargement des helpers template
  * @version 0.2 - 05/06/2013 by FI - Modification de la gestion des Helpers, par défaut on charge de façon distincte les helpers du backoffice et du frontoffice pour plus de souplesse dans la gestion des templates
+ * @version 0.3 - 07/07/2014 by FI - Rajout de $this->request = new stdClass(); pour corriger l'erreur suivante Warning: Creating default object from empty value in /core/Koezion/view.php on line 342 
  */	
 	public function __construct($view, $controller) {
 		
@@ -40,6 +41,7 @@ class View extends Object {
 		$this->vars = $controller->get('vars');
 		$this->vars['components'] = $controller->components;	
 		$this->params = $controller->params;
+		$this->request = new stdClass();
 		
 		//Si on a des helpers à charger
 		//Il s'agit ici de helpers commun à l'ensemble des templates backoffice et frontoffice uniquement
