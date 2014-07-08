@@ -4,7 +4,7 @@
 		<num>20140708.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FI">ALTER TABLE  `categories` ADD  `js_file` LONGTEXT NOT NULL AFTER  `css_file``;</task>
+			<task author="FI">ALTER TABLE  `categories` ADD  `js_file` LONGTEXT NOT NULL AFTER  `css_file`;</task>
 		</tasks>	
 	</version>
 	<version>
