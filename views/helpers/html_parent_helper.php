@@ -92,6 +92,7 @@ class HtmlParentHelper extends Helper {
  * @version 0.4 - 11/12/2013 by FI : Suppression de la variable $plugin
  * @version 0.5 - 27/12/2013 by FI : Correction d'un bug lors du chargement en inline
  * @version 0.6 - 27/12/2013 by FI : Mise en place la possibilité de charger directement un fichier
+ * @version 0.7 - 08/07/2014 by FI : Mise en place la possibilité de charger des fichiers libremement via le code F
  */	
 	public function css($css, $inline = false, $merge = true, $minified = false) {	
 		
@@ -116,7 +117,11 @@ class HtmlParentHelper extends Helper {
 										
 						case 'P': //Plugin
 							$cssFile = '/plugins/'.str_replace('P/', '', $v);
-						break;					
+						break;	
+										
+						case 'F': //Free, chargement libre
+							$cssFile = str_replace('F/', '', $v);
+						break;				
 						
 						case '/': //Normal						
 							$cssFile = '/css/'.$v;						
@@ -200,6 +205,7 @@ class HtmlParentHelper extends Helper {
  * @version 0.5 - 27/12/2013 by FI : Correction d'un bug lors du chargement en inline
  * @version 0.6 - 27/12/2013 by FI : Mise en place la possibilité de charger directement un fichier
  * @version 0.7 - 07/03/2014 by FI : Mise en place la possibilité de charger des variables pour les fichiers
+ * @version 0.8 - 08/07/2014 by FI : Mise en place la possibilité de charger des fichiers libremement via le code F
  */	
 	public function js($js, $inline = false, $merge = true, $minified = false) {
 		
@@ -224,7 +230,11 @@ class HtmlParentHelper extends Helper {
 										
 						case 'P': //Plugin
 							$jsFile = '/plugins/'.str_replace('P/', '', $v);
-						break;					
+						break;	
+										
+						case 'F': //Free, chargement libre
+							$jsFile = str_replace('F/', '', $v);
+						break;				
 						
 						case '/': //Normal						
 							$jsFile = '/js/'.$v;						

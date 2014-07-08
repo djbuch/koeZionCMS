@@ -1,7 +1,15 @@
 ﻿<versions>
 	<version>
+		<name>Version du 08/07/2014</name>
+		<num>20140708.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la BDD des catégories pour y intégrer la possibilité d'y ajouter un fichier css et js spécifique, Modification du formulaire en BO, Modification de la vue en FO et Modification du Helper HTML</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 07/07/2014</name>
-		<num>20140702.005</num>
+		<num>20140707.005</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="FI" type="code">Modification du helper paginator parent</task>
@@ -9,7 +17,7 @@
 	</version>
 	<version>
 		<name>Version du 07/07/2014</name>
-		<num>20140702.004</num>
+		<num>20140707.004</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="FI" type="code">Modification de l'objet View pour corriger une erreur de type Warning</task>
@@ -17,7 +25,7 @@
 	</version>
 	<version>
 		<name>Version du 07/07/2014</name>
-		<num>20140702.003</num>
+		<num>20140707.003</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="FI" type="code">Modification de la gestion de l'affichage des erreurs pour permettre l'activation ou non depuis le backoffice</task>
@@ -25,7 +33,7 @@
 	</version>
 	<version>
 		<name>Version du 07/07/2014</name>
-		<num>20140702.002</num>
+		<num>20140707.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="FI" type="code">Modification du formulaire websites pour permettre l'option pas de moteur de recherche</task>
@@ -33,7 +41,7 @@
 	</version>
 	<version>
 		<name>Version du 07/07/2014</name>
-		<num>20140702.001</num>
+		<num>20140707.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="FI" type="code">Modification du Helper Nav pour la gestion des redirections externes</task>

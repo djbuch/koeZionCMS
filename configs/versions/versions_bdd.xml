@@ -1,5 +1,21 @@
 ﻿<versions> 
 	<version>
+		<name>Version du 08/07/2014</name>
+		<num>20140708.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI">ALTER TABLE  `categories` ADD  `js_file` LONGTEXT NOT NULL AFTER  `css_file``;</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 08/07/2014</name>
+		<num>20140708.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI">ALTER TABLE  `categories` ADD  `css_file` LONGTEXT NOT NULL AFTER  `tpl_code`;</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 23/06/2014</name>
 		<num>20140623.001</num>
 		<supervisor>KoéZionCMS</supervisor>

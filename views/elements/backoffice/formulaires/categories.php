@@ -87,6 +87,9 @@
 			echo $helpers['Form']->input('title_posts_list', 'Titre bloc article', array('tooltip' => "Indiquez le titre qui sera affiché au dessus de la liste des articles"));			
 			if(!isset($formulaires)) { $formulaires = array (1 => 'Formulaire de contact'); } 
 			echo $helpers['Form']->input('display_form', 'Formulaire', array('type' => 'select', 'datas' => $formulaires, 'tooltip' => "Indiquez le formulaire que vous souhaitez afficher sur la page", 'firstElementList' => "Sélectionnez un formulaire"));
+			
+			echo $helpers['Form']->upload_files('css_file', array('label' => "Fichier css", 'button_value' => 'Sélectionner un fichier CSS', 'tooltip' => "Vous pouvez uploader un fichier CSS supplémentaire si besoin. Attention ce fichier ne sera pris en compte que lors de l'affichage de cette page."));
+			echo $helpers['Form']->upload_files('js_file', array('label' => "Fichier javascript", 'button_value' => 'Sélectionner un fichier JS', 'tooltip' => "Vous pouvez uploader un fichier JS supplémentaire si besoin. Attention ce fichier ne sera pris en compte que lors de l'affichage de cette page."));
 			?>
 		</div>
 	</div>

@@ -4,6 +4,23 @@ $title_for_layout = $category['page_title'];
 $description_for_layout = $category['page_description'];
 $keywords_for_layout = $category['page_keywords'];
 
+////////////////////////////////////////////////////////////
+//    SI ON DOIT CHARGER DES CSS ET DES JS SPECIFIQUES    //
+//CSS
+if(!empty($category['css_file'])) {
+
+	$css = array('F'.str_replace(BASE_URL, '', $category['css_file']));
+	$helpers['Html']->css($css, true);
+}
+
+//JS
+if(!empty($category['js_file'])) {
+
+	$js = array('F'.str_replace(BASE_URL, '', $category['js_file']));
+	$helpers['Html']->js($js, true);
+}
+////////////////////////////////////////////////////////////
+
 $contentPage = $this->vars['components']['Text']->format_content_text($category['content']);
 
 if(isset($sliders) && count($sliders) > 0) { $this->element('slider'); } //Plugin Sliders Catégories
