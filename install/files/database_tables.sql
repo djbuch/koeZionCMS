@@ -23,6 +23,8 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `message_mail` longtext COLLATE utf8_unicode_ci NOT NULL,
   `tpl_layout` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `tpl_code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `css_file` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `js_file` longtext COLLATE utf8_unicode_ci NOT NULL,
   `online` int(11) NOT NULL,
   `lft` int(11) NOT NULL,
   `rgt` int(11) NOT NULL,
@@ -37,6 +39,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   KEY `parent_id` (`parent_id`),
   KEY `type_2` (`type`,`online`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 
 DROP TABLE IF EXISTS `categories_right_buttons`;
 CREATE TABLE IF NOT EXISTS `categories_right_buttons` (

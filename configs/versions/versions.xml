@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 08/07/2014</name>
+		<num>20140708.003</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification du fichier d'installation de la bdd</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 08/07/2014</name>
 		<num>20140708.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
