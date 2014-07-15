@@ -56,7 +56,7 @@ class ContactsController extends AppController {
 				
 				$this->Contact->save($this->request->data);	//On procède à la sauvegarde des données
 				
-				if(isset($this->request->data['id'])) {
+				if(isset($this->request->data['id']) && isset($this->request->data['name'])) {
 					
 					$message = '<p class="confirmation">Votre demande a bien été prise en compte.</p>';
 					$messageOk = '<p>Votre demande a bien été prise en compte.</p>';					

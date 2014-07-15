@@ -263,6 +263,7 @@ CREATE TABLE IF NOT EXISTS `templates` (
   `version` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `color` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `picture` longtext COLLATE utf8_unicode_ci NOT NULL,
   `online` int(11) NOT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)

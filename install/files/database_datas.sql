@@ -74,4 +74,5 @@ INSERT INTO `templates` (`id`, `name`, `layout`, `version`, `code`, `color`, `on
 (39, 'Brown chocolate', 'koezion', 'Chocolate', 'chocolate_brown', '000000', 1, '2013-11-09 03:03:44'),
 (40, 'Néon blue chocolate', 'koezion', 'Chocolate', 'chocolate_neonblue', '000000', 1, '2013-11-09 03:03:44'),
 (41, 'Purple chocolate', 'koezion', 'Chocolate', 'chocolate_purple', '000000', 1, '2013-11-09 03:03:44'),
-(42, 'Red chocolate', 'koezion', 'Chocolate', 'chocolate_red', '000000', 1, '2013-11-09 03:03:44');
+(42, 'Red chocolate', 'koezion', 'Chocolate', 'chocolate_red', '000000', 1, '2013-11-09 03:03:44'),
+(43, 'Empty', 'empty', 'empty', 'empty', '000000', 1, '2014-07-15 03:03:44');

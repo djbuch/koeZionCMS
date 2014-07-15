@@ -1,5 +1,14 @@
 ﻿<versions> 
 	<version>
+		<name>Version du 15/07/2014</name>
+		<num>20140715.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI">INSERT INTO `koezion_localhost_developpement`.`templates` (`id`, `name`, `layout`, `version`, `code`, `color`, `online`, `created`) VALUES (NULL, 'Empty', 'empty', 'empty', 'empty', '000000', '1', '2014-07-15 03:03:44');</task>
+			<task author="FI">ALTER TABLE  `templates` ADD  `picture` LONGTEXT NOT NULL AFTER  `color`;</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 08/07/2014</name>
 		<num>20140708.002</num>
 		<supervisor>KoéZionCMS</supervisor>
