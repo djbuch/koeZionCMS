@@ -31,9 +31,90 @@ class TextComponent extends Component {
 		'long' => array(1 => "Janvier", 2 => "Février", 3 => "Mars", 4 => "Avril", 5 => "Mai", 6 => "Juin", 7 => "Juillet", 8 => "Août", 9 => "Septembre", 10 => "Octobre", 11 => "Novembre", 12 => "Décembre"),			
 	);
 	
-//////////////////////////////////////////////////////////////////////////////////////////
-//								FONCTIONS PUBLIQUES										//
-//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+//									FONCTIONS PUBLIQUES GENERIQUES										//
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+/**
+ * Cette fonction va retourner le texte en remplaçant certains caractères par d'autres
+ *
+ * @param 	varchar $content 	Texte source
+ * @return 	varchar Texte modifié
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 21/08/2012 by FI
+ */		
+	public function format_content_text($content) {
+		
+		$content = str_replace('&brvbar;', '&#92;', $content);		
+		return $content;
+	}	
+	
+/**
+ * Cette fonction va convertir les < (inférieur à) en &lt; et les > (supérieur à) en &gt; 
+ *
+ * @param 	varchar $content 	Texte source
+ * @return 	varchar Texte modifié
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 06/11/2012 by FI
+ */
+	public function convert_lt_gt($content) {
+	
+		$content = str_replace('<', '&lt;', $content);
+		$content = str_replace('>', '&gt;', $content);
+		return $content;
+	}		
+
+/**
+ * Supprimer les accents
+ *
+ * @param string $str chaîne de caractères avec caractères accentués
+ * @param string $encoding encodage du texte (exemple : utf-8, ISO-8859-1 ...)
+ * @see http://www.infowebmaster.fr/tutoriel/php-enlever-accents
+ */	
+	public function suppr_accents($str, $encoding = 'utf-8', $toLower = false) {
+		
+		// transformer les caractères accentués en entités HTML
+		$str = htmlentities($str, ENT_NOQUOTES, $encoding);
+	
+		// remplacer les entités HTML pour avoir juste le premier caractères non accentués
+		// Exemple : "&ecute;" => "e", "&Ecute;" => "E", "Ã " => "a" ...
+		$str = preg_replace('#&([A-za-z])(?:acute|grave|cedil|circ|orn|ring|slash|th|tilde|uml);#', '\1', $str);
+	
+		// Remplacer les ligatures tel que : Œ, Æ ...
+		// Exemple "Å“" => "oe"
+		$str = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $str);
+		// Supprimer tout le reste
+		$str = preg_replace('#&[^;]+;#', '', $str);
+	
+		if($toLower) { $str = strtolower($str); }
+		return $str;
+	}
+	
+/**
+ * Cette fonction permet de générer un code aléatoire
+ * 
+ * @param 	interger $length Nombre de caractères qui composeront le code
+ * @return 	varchar Code
+ * @access 	public 
+ * @author 	koéZionCMS
+ * @version 0.1 - 02/07/2014 by FI
+ */		
+	public function random_code($length = 10) {		
+		
+		$characts   = 'abcdefghijklmnopqrstuvwxyz';
+		$characts   .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$characts   .= '1234567890';
+		$code 		= '';
+		
+		for($i=0;$i<$length;$i++) { $code .= substr($characts, rand()%(strlen($characts)), 1); }
+		return $code;
+	}
+	
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//									FONCTIONS PUBLIQUES SUR LES DATES										//
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 /**
  * Retourne une date formaté en fonction d'un datetime SQL
@@ -131,9 +212,7 @@ class TextComponent extends Component {
 	}
 	
 /**
- * fuction get_first_day_of_month
- *
- * fonction qui permet de recuperer la date du premier jour du mois
+ * Fonction qui permet de recuperer la date du premier jour du mois
  * 
  * @param integer $iMonth	mois en cours
  * @param integer $iYear	année
@@ -155,9 +234,8 @@ class TextComponent extends Component {
 	}
 
 /**
- * function get_last_day_of_month
- *
- * fonction qui permet de recuperer le dernier jour du mois
+ * Fonction qui permet de recuperer le dernier jour du mois
+ * 
  * @param integer $iMonth	mois en cours
  * @param integer $iYear	année
  * @return date
@@ -176,81 +254,21 @@ class TextComponent extends Component {
 		
 		return $dLastDayMonth;
 	}
-	
-/**
- * Cette fonction va retourner le texte en remplaçant certains caractères par d'autres
- *
- * @param 	varchar $content 	Texte source
- * @return 	varchar Texte modifié
- * @access 	public
- * @author 	koéZionCMS
- * @version 0.1 - 21/08/2012 by FI
- */		
-	public function format_content_text($content) {
-		
-		$content = str_replace('&brvbar;', '&#92;', $content);		
-		return $content;
-	}	
-	
-/**
- * Cette fonction va convertir les < (inférieur à) en &lt; et les > (supérieur à) en &gt; 
- *
- * @param 	varchar $content 	Texte source
- * @return 	varchar Texte modifié
- * @access 	public
- * @author 	koéZionCMS
- * @version 0.1 - 06/11/2012 by FI
- */
-	public function convert_lt_gt($content) {
-	
-		$content = str_replace('<', '&lt;', $content);
-		$content = str_replace('>', '&gt;', $content);
-		return $content;
-	}		
 
 /**
- * Supprimer les accents
- *
- * @param string $str chaîne de caractères avec caractères accentués
- * @param string $encoding encodage du texte (exemple : utf-8, ISO-8859-1 ...)
- * @see http://www.infowebmaster.fr/tutoriel/php-enlever-accents
- */	
-	public function suppr_accents($str, $encoding = 'utf-8', $toLower = false) {
-		
-		// transformer les caractères accentués en entités HTML
-		$str = htmlentities($str, ENT_NOQUOTES, $encoding);
-	
-		// remplacer les entités HTML pour avoir juste le premier caractères non accentués
-		// Exemple : "&ecute;" => "e", "&Ecute;" => "E", "Ã " => "a" ...
-		$str = preg_replace('#&([A-za-z])(?:acute|grave|cedil|circ|orn|ring|slash|th|tilde|uml);#', '\1', $str);
-	
-		// Remplacer les ligatures tel que : Œ, Æ ...
-		// Exemple "Å“" => "oe"
-		$str = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $str);
-		// Supprimer tout le reste
-		$str = preg_replace('#&[^;]+;#', '', $str);
-	
-		if($toLower) { $str = strtolower($str); }
-		return $str;
-	}
-	
-/**
- * Cette fonction permet de générer un code aléatoire
+ * Fonction permettant de tester si une date est valide
  * 
- * @param 	interger $length Nombre de caractères qui composeront le code
- * @return 	varchar Code
- * @access 	public 
+ * @param 	varchar $date Date au format US
+ * @return 	boolean
+ * @access 	public
  * @author 	koéZionCMS
- * @version 0.1 - 02/07/2014 by FI
- */		
-	public function random_code($length = 10) {		
+ * @version 0.1 - 16/07/2014 by FI
+ */	
+	public function check_date($date){
 		
-		$characts   = 'abcdefghijklmnopqrstuvwxyz';
-		$characts   .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-		$characts   .= '1234567890';
-		$code 		= '';
-		
-		for($i=0;$i<$length;$i++) { $code .= substr($characts, rand()%(strlen($characts)), 1); }
-		return $code;
+		//On utilise la règle de validation prévue à cet effet
+		require_once(KOEZION.DS.'validation.php');
+		$validation = new Validation();
+		return $validation->date($date);
 	}
 }
