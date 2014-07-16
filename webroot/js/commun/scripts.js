@@ -107,7 +107,7 @@ $(document).ready(function() {
 			
 			//Appel $.same_height()
 			var aHeights = [];
-			$(oElement).each(function(){ aHeights.push( $(this).height() ); });
+			$(oElement).each(function(){ aHeights.push( $(this).innerHeight() ); });
 			var iMaxHeight = Math.max.apply(null, aHeights);
 			$(oElement).css( {'height': iMaxHeight + 'px'} );
 		}
