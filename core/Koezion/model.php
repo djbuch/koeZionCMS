@@ -233,6 +233,7 @@ class Model extends Object {
  * @version 0.4 - 24/02/2014 by FI - Mise en place de la vérification de la présente ou non de l'alias dans les champs des conditions de recherche
  * @version 0.5 - 27/03/2014 by FI - Gestion du champ activate
  * @version 0.6 - 02/04/2014 by FI - Mise en place de la gestion du OR dans les conditions de recherche
+ * @version 0.7 - 17/07/2014 by FI - Modification de la gestion du champ fields 
  */    
 	public function find($req = array(), $type = PDO::FETCH_ASSOC) {
 		
@@ -243,8 +244,9 @@ class Model extends Object {
 		//   CHAMPS FIELDS   //					
 		//Si aucun champ n'est demandé on va récupérer le shéma de la table et récupérer ces champs
 		//Dans le cas de table traduite on va également récupérer les champs traduits ainsi que la langue associée
-		if(!isset($req['fields'])) { $fields = $shema; } 
-		else { $fields = $req['fields']; }		
+		if(!isset($req['fields']) && !empty($shema)) { $fields = $shema; } 
+		if(isset($req['fields'])) { $fields = $req['fields']; } 
+		else { $fields = '*'; }		
 		$sql .= $this->_get_fields($fields);
 		
 		$sql .= "\n".'FROM `'.$this->table.'` AS '.$this->alias.' ';
