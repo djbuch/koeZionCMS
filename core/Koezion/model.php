@@ -842,6 +842,7 @@ class Model extends Object {
 	
 /**
  * Cette fonction permet d'afficher le shéma d'une table
+ * Uniquement une table de la BDD locale
  *
  * @param 	varchar $table Nom de la table dont on souhaite récupérer le shéma (Par défaut $this->table sera utilisé)
  * @return 	array 	Tableau contenant les colonnes de la table
@@ -863,15 +864,32 @@ class Model extends Object {
 			
 			if(!$shema) { 
 			
-				$sql = "SHOW COLUMNS FROM `".$table.'`;';			
-				$result = $this->query($sql, true);
-				foreach($result as $k => $v) { $shema[] = $v['Field']; }
-				
+				$shema = $this->_get_shema($table);				
 				Cache::create_cache_file($cacheFolder, $cacheFile, $shema);
 			}
 		}		
 		return $shema;
 	}
+	
+/**
+ * Cette fonction permet d'afficher le shéma d'une table
+ * Cette table peut ne pas être forcément locale à la base
+ *
+ * @param 	varchar $table Nom de la table dont on souhaite récupérer le shéma (Par défaut $this->table sera utilisé)
+ * @return 	array 	Tableau contenant les colonnes de la table
+ * @access	public
+ * @author	koéZionCMS
+ * @version 0.1 - 17/07/2014 by FI
+ */	
+	public function _get_shema($table = null) {
+				
+		$shema = array();
+		if(!isset($table)) { $table = $this->table; }
+		$sql = "SHOW COLUMNS FROM `".$table.'`;';			
+		$result = $this->query($sql, true);
+		foreach($result as $k => $v) { $shema[] = $v['Field']; }
+		return $shema;
+	}			
 	
 /**
  * Cette fonction permet de récuperer les informations liées à la table 
@@ -1225,7 +1243,7 @@ class Model extends Object {
 		else { $sql .= "\n".$fields; } //Si il s'agit d'une chaine de caractères 
 		
 		return $sql;
-	}    
+	}
     
 /**
  * Cette fonction permet l'insertion des conditions de recherche dans le tableau prévu à cet effet
