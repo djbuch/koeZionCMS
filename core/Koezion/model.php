@@ -72,7 +72,7 @@ class Model extends Object {
 			$conf = $cfg->keys_values($section); //Récupération des configurations en fonction du nom de domaine (Ancienne version : $conf = $cfg->keys_values($_SERVER["HTTP_HOST"], 1);)
 		}
 		
-		$conf['source'] = "mysql";
+		//$conf['source'] = "mysql";
 		
 		//Si le nom de la table n'est pas défini on va l'initialiser automatiquement
 		//Par convention le nom de la table sera le nom de la classe en minuscule avec un s à la fin
