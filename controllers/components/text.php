@@ -258,17 +258,19 @@ class TextComponent extends Component {
 /**
  * Fonction permettant de tester si une date est valide
  * 
- * @param 	varchar $date Date au format US
+ * @param 	varchar $date 	Date
+ * @param 	varchar $format format 
  * @return 	boolean
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 16/07/2014 by FI
+ * @version 0.2 - 21/07/2014 by FI - Rajout du format
  */	
-	public function check_date($date){
+	public function check_date($date, $format = 'ymd'){
 		
 		//On utilise la règle de validation prévue à cet effet
 		require_once(KOEZION.DS.'validation.php');
 		$validation = new Validation();
-		return $validation->date($date);
+		return $validation->date($date, $format);
 	}
 }

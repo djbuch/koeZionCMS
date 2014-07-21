@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 21/07/2014</name>
+		<num>20140721.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Rajout du format dans la fonction check_date du composant Text</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 17/07/2014</name>
 		<num>20140717.003</num>
 		<supervisor>KoéZionCMS</supervisor>
