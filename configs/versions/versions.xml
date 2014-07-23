@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 23/07/2014</name>
+		<num>20140723.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Correction erreur dans le fichier versions_bdd.xml</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 22/07/2014</name>
 		<num>20140722.001</num>
 		<supervisor>KoéZionCMS</supervisor>

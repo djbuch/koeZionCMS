@@ -1,7 +1,7 @@
 ﻿<versions> 
 	<version>
 		<name>Version du 22/07/2014</name>
-		<num>20140715.001</num>
+		<num>20140722.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="FI">ALTER TABLE  `categories_right_buttons` ADD  `position` INT NOT NULL AFTER  `right_button_id`;</task>
