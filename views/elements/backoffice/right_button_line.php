@@ -7,8 +7,11 @@
 			?>
 		</label>
 		<div class="rowright">
-			<span class="checkbox" style="float: left; display: block; width: 30%; line-height: 15px;"><?php
-			echo $helpers['Form']->input('right_button_id.'.$rightButtonId, "Activer ce bouton", array('type' => 'checkbox', 'div' => false, 'value' => 1));
+			<span class="checkbox" style="float: left; display: block; width: 240px; line-height: 15px;"><?php
+			echo $helpers['Form']->input('right_button_id.'.$rightButtonId.'.top', "Positionner en haut de la colonne", array('type' => 'checkbox', 'div' => false, 'value' => 1));
+			?></span>	
+			<span class="checkbox" style="float: left; display: block; width: 240px; line-height: 15px;"><?php
+			echo $helpers['Form']->input('right_button_id.'.$rightButtonId.'.activate', "Activer ce bouton", array('type' => 'checkbox', 'div' => false, 'value' => 1));
 			?></span>		
 		</div>
 	</div>					

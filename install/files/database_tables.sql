@@ -45,6 +45,7 @@ DROP TABLE IF EXISTS `categories_right_buttons`;
 CREATE TABLE IF NOT EXISTS `categories_right_buttons` (
   `category_id` int(11) NOT NULL,
   `right_button_id` int(11) NOT NULL,
+  `position` int(11) NOT NULL,
   `order_by` int(11) NOT NULL,
   PRIMARY KEY (`category_id`,`right_button_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -194,6 +195,7 @@ DROP TABLE IF EXISTS `posts_right_buttons`;
 CREATE TABLE IF NOT EXISTS `posts_right_buttons` (
   `post_id` int(11) NOT NULL,
   `right_button_id` int(11) NOT NULL,
+  `position` int(11) NOT NULL,
   `order_by` int(11) NOT NULL,
   PRIMARY KEY (`post_id`,`right_button_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

@@ -269,14 +269,11 @@ class CategoriesController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 17/01/2012 by FI
  * @version 0.2 - 21/05/2012 by FI - Rajout d'une condition sur la récupération des catégories
+ * @version 0.3 - 22/07/2014 by FI - Suppression des champs (on récupère tous les champs)
  */	
 	public function backoffice_index() {		
 				
-		$conditions = array(
-			'conditions' => 'type != 3',
-			'fields' => array('id', 'name', 'lft', 'rgt', 'level', 'online', 'type'), 
-			'order' => 'lft'
-		);		
+		$conditions = array('conditions' => 'type != 3', 'order' => 'lft');		
 		
 		if(isset($this->request->data['Search'])) {
 		
@@ -516,6 +513,7 @@ class CategoriesController extends AppController {
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 26/01/2012 by FI
+ * @version 0.2 - 22/07/2014 by FI - Modification de la gestion de l'insertion des boutons colonne de droite dans les catégories
  */	
 	protected function _save_assoc_datas($categoryId, $deleteAssoc = false) {
 		
@@ -523,17 +521,18 @@ class CategoriesController extends AppController {
 
 		if($deleteAssoc) { $this->CategoriesRightButton->deleteByName('category_id', $categoryId); }
 		
-		if(isset($this->request->data['right_button_id'])) { $rightButtonId = $this->request->data['right_button_id']; }
-		else { $rightButtonId = array(); }
+		if(isset($this->request->data['right_button_id'])) { $rightButtonIds = $this->request->data['right_button_id']; }
+		else { $rightButtonIds = array(); }
 		
 		$order = 0;
-		foreach($rightButtonId as $k => $v) {
+		foreach($rightButtonIds as $rightButtonId => $rightButtonDatas) {
 		
-			if($v) {
+			if($rightButtonDatas['activate']) {
 		
 				$this->CategoriesRightButton->save(array(
 					'category_id' => $categoryId,
-					'right_button_id'	=> $k,
+					'right_button_id'	=> $rightButtonId,
+					'position'	=> $rightButtonDatas['top'],
 					'order_by' => $order
 				));
 				
@@ -558,7 +557,11 @@ class CategoriesController extends AppController {
 		$this->unloadModel('CategoriesRightButton'); //Déchargement du modèle
 		
 		//On va les rajouter dans la variable $this->request->data
-		foreach($rightButtons as $k => $v) { $this->request->data['right_button_id'][$v['right_button_id']] = 1; }
+		foreach($rightButtons as $k => $v) { 
+			
+			$this->request->data['right_button_id'][$v['right_button_id']]['top'] = $v['position']; 
+			$this->request->data['right_button_id'][$v['right_button_id']]['activate'] = 1; 
+		}
 	}
     
 /**
@@ -887,7 +890,7 @@ class CategoriesController extends AppController {
 				$rightButtonsList = $this->CategoriesRightButton->find(array('conditions' => $rightButtonsConditions, 'order' => 'order_by ASC'));
 				foreach($rightButtonsList as $k => $rightButton) {
 					
-					$rightButtonsCategory[] = $this->RightButton->findFirst(array('conditions' => array('id' => $rightButton['right_button_id'])));
+					$rightButtonsCategory[$rightButton['position']][] = $this->RightButton->findFirst(array('conditions' => array('id' => $rightButton['right_button_id'])));
 				}
 				
 				Cache::create_cache_file($cacheFolder, $cacheFile, $rightButtonsCategory);

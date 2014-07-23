@@ -40,7 +40,7 @@ class Dispatcher {
 /**
  * Fonction chargée de faire les appels des bons fichiers
  */	
-	function dispatch() {
+	public function dispatch() {
 		
 		Router::parse($this->request->url, $this->request); //Parsing de l'url
 		$controller = $this->loadController(); //Chargement du controller
@@ -77,7 +77,7 @@ class Dispatcher {
 		if($controller->auto_render) { $controller->render($action); } //AUTO RENDER
 	}	
 	
-	function dispatchMethod($controller, $action, $params = array()) {
+	public function dispatchMethod($controller, $action, $params = array()) {
 				
 		switch (count($params)) {
 			case 0: 	$controller->{$action}(); 																break;
@@ -103,7 +103,7 @@ class Dispatcher {
  * @version 0.4 - 12/04/2014 by FI - Suppression de _plugin dans le nom d'un controller de plugin 
  * @version 0.5 - 12/04/2014 by FI - Annulation suppression de _plugin dans le nom d'un controller de plugin car un plugin peut potentiellement avoir le même nom qu'un controller existant 
  */
-	function loadControllerFile($controllerToLoad = null) {
+	public function loadControllerFile($controllerToLoad = null) {
 		
 		if(isset($controllerToLoad) && !empty($controllerToLoad)) { $this->request->controller = $controllerToLoad; }
 		
@@ -140,7 +140,7 @@ class Dispatcher {
 				if(file_exists($pluginControllerBoostrap)) { require_once($pluginControllerBoostrap); }
 			}
 			
-			require_once $controller_path; //Inclusion de ce fichier si il existe
+			require_once($controller_path); //Inclusion de ce fichier si il existe
 			return $controller_name;
 			
 		} else { 
@@ -152,97 +152,19 @@ class Dispatcher {
 		}
 	}	
 	
-	/*
-	ANCIENNE VERSION AU CAS OU 
-	function loadControllerFile($controllerToLoad = null) {
-		
-		if(isset($controllerToLoad) && !empty($controllerToLoad)) { $this->request->controller = $controllerToLoad; }
-		
-		$pluginControllerToLoad = $this->request->controller; //Sert pour verifier si un plugin est installé ou pas
-		$sFolderPlugin = $pluginControllerToLoad; // récupération du dossier du plugin (par defaut le meme que le controller principal du plugin)
-		
-		$file_name_default = strtolower($this->request->controller.'_controller'); //On récupère dans une variable le nom du controller		
-		$file_path_default = CONTROLLERS.DS.$file_name_default.'.php'; //On récupère dans une variable le chemin du controller
-		
-		$file_name_plugin = strtolower($this->request->controller.'_plugin_controller'); //On récupère dans une variable le nom du controller
-		$file_path_plugin = PLUGINS.DS.$this->request->controller.DS.'controller.php'; //On récupère dans une variable le chemin du controller pour le plugin
-		
-		//////////////////////////////////////////////
-		//   RECUPERATION DES CONNECTEURS PLUGINS   //
-		//Les connecteurs sont utilisés pour la correspondance entre les plugins et les dossiers des plugins
-		$pluginsConnectors = get_plugins_connectors();
-		if(isset($pluginsConnectors[$this->request->controller])) {
-			
-			$pluginControllerToLoad = $connectorController = $pluginsConnectors[$this->request->controller];
-			$file_path_plugin = PLUGINS.DS.$connectorController.DS.'controller.php';
-			
-			$sFolderPlugin = $connectorController; // récupération du dossier du plugin si le controller appellé est dans un connector d'un plugin
-		}
-		//////////////////////////////////////////////
-	
-	
-		//Par défaut on va contrôler si le plugin existe en premier
-		//Cela permet de pouvoir réécrire les fonctionnalités du CMS (et mêmes celles déjà existentes)		
-		if(file_exists($file_path_plugin)) { 
-		
-			
-			//On doit contrôler si le plugin est installé en allant lire le fichiers
-			$pluginsList = Cache::exists_cache_file(TMP.DS.'cache'.DS.'variables'.DS.'Plugins'.DS, "plugins");			
-			$pluginControllerToLoad = Inflector::camelize($pluginControllerToLoad);
-			
-			//Si le plugin est installé
-			if(isset($pluginsList[$pluginControllerToLoad])) {
-
-				$file_name = $file_name_plugin;
-				$file_path = $file_path_plugin;
-				
-				// ajout dans le request du nom du dossiers du plugins : soit le nom du controller , soit le nom du controllers connectors
-				$this->request->pluginFolder = $sFolderPlugin;
-				
-			//Si il n'est pas installé on va vérifier si un contrôleur n'existe pas dans le dossier par défaut
-			} else if(file_exists($file_path_default)) { 
-			
-				$file_name = $file_name_default;
-				$file_path = $file_path_default;
-			 
-			//Dans le cas contraire on génère une erreur
-			} else {
-
-				$this->error("Le controller du plugin ".$pluginControllerToLoad." n'existe pas"." dans le fichier dispatcher ou n'est pas correctement installé");
-				die();				
-			}		
-
-		//On contrôle si le contrôleur existe bien dans le dossier par défaut
-		} else if(file_exists($file_path_default)) { 
-			
-			$file_name = $file_name_default;
-			$file_path = $file_path_default;
-			 
-		//Sinon on affiche une erreur
-		} else { 
-
-			$this->error("Le controller ".$this->request->controller." n'existe pas"." dans le fichier dispatcher");
-			die();	
-		}
-		
-		require_once $file_path; //Inclusion de ce fichier si il existe	
-		return $file_name;
-	}
-	*/
-	
 /**
  * Cette fonction va charger un controller
  * @return $name Objet correspondant au type de controller souhaité
  */
-	function loadController() {
+	public function loadController() {
 	
 		$file_name = $this->loadControllerFile();
-		$controller_name = Inflector::camelize($file_name); //On transforme le nom du fichier pour récupérer le nom du controller		
+		$controller_name = Inflector::camelize($file_name); //On transforme le nom du fichier pour récupérer le nom du controller	
 		$controller =  new $controller_name($this->request); //Création d'une instance du controller souhaité dans lequel on injecte la request		
 		return $controller;
 	}	
     
-	function error($message) {
+	public function error($message) {
         
 		require_once(LIBS.DS.'config_magik.php');
 		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);

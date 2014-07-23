@@ -1,10 +1,19 @@
 ﻿<versions> 
 	<version>
+		<name>Version du 22/07/2014</name>
+		<num>20140715.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI">ALTER TABLE  `categories_right_buttons` ADD  `position` INT NOT NULL AFTER  `right_button_id`;</task>
+			<task author="FI">ALTER TABLE  `posts_right_buttons` ADD  `position` INT NOT NULL AFTER  `right_button_id`;</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 15/07/2014</name>
 		<num>20140715.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FI">INSERT INTO `koezion_localhost_developpement`.`templates` (`id`, `name`, `layout`, `version`, `code`, `color`, `online`, `created`) VALUES (NULL, 'Empty', 'empty', 'empty', 'empty', '000000', '1', '2014-07-15 03:03:44');</task>
+			<task author="FI">INSERT INTO `templates` (`id`, `name`, `layout`, `version`, `code`, `color`, `online`, `created`) VALUES (NULL, 'Empty', 'empty', 'empty', 'empty', '000000', '1', '2014-07-15 03:03:44');</task>
 			<task author="FI">ALTER TABLE  `templates` ADD  `picture` LONGTEXT NOT NULL AFTER  `color`;</task>
 		</tasks>	
 	</version>

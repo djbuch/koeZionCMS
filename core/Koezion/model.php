@@ -1160,6 +1160,7 @@ class Model extends Object {
  * @version 0.1 - 24/08/2012 by FI
  * @version 0.2 - 10/01/2014 by FI - Gestion des primary key multiples
  * @version 0.3 - 27/03/2014 by FI - Gestion du champ activate
+ * @version 0.4 - 22/07/2014 by FI - Suppression des caractères HTML lors de la gestion automatique du slug et du page_title
  */		
 	protected function _prepare_save_datas($datas, $moreDatasToSave, $forceInsert, $escapeUpload) {
 		
@@ -1186,8 +1187,8 @@ class Model extends Object {
 		$coreConfs = $cfg->keys_values();
 		
 		if(in_array('password', $datasShema) && $coreConfs['hash_password']) { $datas['password'] = sha1($datas['password']); } //On procède à la mise à jour du champ password si il existe		
-		if(in_array('slug', $shema) && !empty($datas['name']) && (!in_array('slug', $datasShema) || empty($datas['slug']))) { $datas['slug'] = strtolower(Inflector::slug($datas['name'], '-')); } //On procède à la mise à jour du champ slug si celui ci n'est pas rempli ou non présent dans le formulaire mais présent dans la table
-		if(in_array('page_title', $shema) && !empty($datas['name']) && (!in_array('page_title', $datasShema) || empty($datas['page_title']))) { $datas['page_title'] = $datas['name']; } //On procède à la mise à jour du champ page_title si celui ci n'est pas rempli ou non présent dans le formulaire mais présent dans la table
+		if(in_array('slug', $shema) && !empty($datas['name']) && (!in_array('slug', $datasShema) || empty($datas['slug']))) { $datas['slug'] = strtolower(Inflector::slug(strip_tags($datas['name']), '-')); } //On procède à la mise à jour du champ slug si celui ci n'est pas rempli ou non présent dans le formulaire mais présent dans la table
+		if(in_array('page_title', $shema) && !empty($datas['name']) && (!in_array('page_title', $datasShema) || empty($datas['page_title']))) { $datas['page_title'] = strip_tags($datas['name']); } //On procède à la mise à jour du champ page_title si celui ci n'est pas rempli ou non présent dans le formulaire mais présent dans la table
 		if(in_array('activate', $shema) && isset($datas['activate']) && !$datas['activate'] && in_array('online', $datasShema)) { $datas['online'] = 0; } //On procède à la mise à jour du champ online si le champ activate est présent et que celui-ci est à 0		
 		
 		//if(isset($datas[$primaryKey]) && !$forceInsert) unset($datas[$primaryKey]); //Il faut supprimer du tableau des données la clé primaire si celle ci est définie

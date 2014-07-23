@@ -10,24 +10,41 @@
  */
 ?>
 <div class="gs_4 omega sidebar">
+	
+	<?php 
+	//$rightButtons[1] va contenir les éléments à positionner en haut de la page
+	if(isset($rightButtons[1]) && !empty($rightButtons[1])) { 
+		?>
+		<div class="widget right_buttons">
+			<ul>
+			<?php foreach($rightButtons[1] as $order => $rightButtonValues) { ?>
+			
+				<li><?php echo $rightButtonValues['content']; ?></li>
+				
+			<?php } ?>
+			</ul>
+		</div>	
+		<?php 
+	} 
+	?>
 
 	<?php if(isset($children) && !empty($children)) { ?>
-	<div class="widget">		
-		<?php foreach($children as $columnTitle => $childrenValues) { ?>
-						
-			<?php if(!empty($columnTitle)) { ?><h2 class="widgettitle"><?php echo $category['name']; ?></h2><?php } ?>
-			<ul class="nobordertop">
-				<?php 
-				foreach($childrenValues as $k => $v) {
-	
-					$classLi = '';
-					if($category['id'] == $v['id']) { $classLi = ' class="selected"'; }
-					?><li<?php echo $classLi; ?>><a href="<?php echo Router::url('categories/view/id:'.$v['id'].'/slug:'.$v['slug']); ?>"><?php echo $v['name']; ?></a></li><?php 
-				} 
-				?>
-			</ul>
-		<?php } ?>
-	</div>
+		<div class="widget">		
+			<?php foreach($children as $columnTitle => $childrenValues) { ?>
+							
+				<?php if(!empty($columnTitle)) { ?><h2 class="widgettitle"><?php echo $category['name']; ?></h2><?php } ?>
+				<ul class="nobordertop">
+					<?php 
+					foreach($childrenValues as $k => $v) {
+		
+						$classLi = '';
+						if($category['id'] == $v['id']) { $classLi = ' class="selected"'; }
+						?><li<?php echo $classLi; ?>><a href="<?php echo Router::url('categories/view/id:'.$v['id'].'/slug:'.$v['slug']); ?>"><?php echo $v['name']; ?></a></li><?php 
+					} 
+					?>
+				</ul>
+			<?php } ?>
+		</div>
 	<?php } ?>
 
 	<?php if(isset($brothers) && !empty($brothers)) { ?>
@@ -49,17 +66,22 @@
 	</div>
 	<?php } ?>
 	
-	<?php if(isset($rightButtons) && !empty($rightButtons)) { ?>
+	<?php 
+	//$rightButtons[0] va contenir les éléments à positionner en bas de la page
+	if(isset($rightButtons[0]) && !empty($rightButtons[0])) { 
+		?>
 		<div class="widget right_buttons">
 			<ul>
-			<?php foreach($rightButtons as $order => $rightButtonValues) { ?>
+			<?php foreach($rightButtons[0] as $order => $rightButtonValues) { ?>
 			
 				<li><?php echo $rightButtonValues['content']; ?></li>
 				
 			<?php } ?>
 			</ul>
 		</div>	
-	<?php } ?>
+		<?php 
+	} 
+	?>
 
 	<?php 
 	if(isset($postsTypes) && !empty($postsTypes)) { ?>

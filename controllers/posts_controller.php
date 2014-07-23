@@ -32,7 +32,7 @@ class PostsController extends AppController {
  * @version 0.3 - 09/03/2012 by FI - Mise en place du préfixe pour les url des articles 
  * @version 0.4 - 01/80/2012 by FI - Récupération des commentaires uniquement si l'option est cochée, rajout du formulaire de contact dans l'affichage
  */	
-	function view($id, $slug, $prefix) {
+	public function view($id, $slug, $prefix) {
 		
 		//Conditions de recherche
 		$conditions = array('conditions' => array('online' => 1, 'id' => $id));
@@ -118,7 +118,7 @@ class PostsController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 25/10/2012 by FI
  */	
-	function update_publication_date() {
+	public function update_publication_date() {
 		
 		$this->layout = 'empty'; //Définition du layout à utiliser
 		$datas['type'] = 'xml';
@@ -154,7 +154,7 @@ class PostsController extends AppController {
 //										BACKOFFICE										//
 //////////////////////////////////////////////////////////////////////////////////////////
 
-	function backoffice_index() {
+	public function backoffice_index() {
 		
 		//////////////////////////////////////////////////////
 		//   RECUPERATION DES CONFIGURATIONS DES ARTICLES   //
@@ -186,7 +186,7 @@ class PostsController extends AppController {
  * @version 0.2 - 21/06/2013 by FI - Rajout de la récupération des boutons colonnes de doite --> C'est le jour le plus long de l'année
  * @version 0.3 - 03/11/2013 by FI - Modification de la fonction de transformation des dates
  */	
-	function backoffice_add() {
+	public function backoffice_add() {
 
 		$this->_transform_date('fr2Sql', 'publication_date'); //Transformation de la date FR en date SQL	
 		$parentAdd = parent::backoffice_add(false); //On fait appel à la fonction d'ajout parente
@@ -220,7 +220,7 @@ class PostsController extends AppController {
  * @version 0.2 - 21/06/2013 by FI - Rajout de la récupération des boutons colonnes de doite --> C'est le jour le plus long de l'année
  * @version 0.3 - 03/11/2013 by FI - Modification de la fonction de transformation des dates
  */	
-	function backoffice_edit($id = null) {
+	public function backoffice_edit($id = null) {
 				
 		$this->_transform_date('fr2Sql', 'publication_date'); //Transformation de la date FR en date SQL
 		$parentEdit = parent::backoffice_edit($id, false); //On fait appel à la fonction d'édition parente
@@ -254,7 +254,7 @@ class PostsController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 23/03/2012 by FI
  */
-	function backoffice_delete($id, $redirect = true) {
+	public function backoffice_delete($id, $redirect = true) {
 	
 		$parentDelete = parent::backoffice_delete($id, false); //On fait appel à la fonction d'édition parente
 		if($parentDelete) {
@@ -334,12 +334,12 @@ class PostsController extends AppController {
 				$rightButtonsList = $this->PostsRightButton->find(array('conditions' => $rightButtonsConditions, 'order' => 'order_by ASC'));
 				foreach($rightButtonsList as $k => $rightButton) {
 					
-					$rightButtonsPost[] = $this->RightButton->findFirst(array('conditions' => array('id' => $rightButton['right_button_id'])));
+					$rightButtonsPost[$rightButton['position']][] = $this->RightButton->findFirst(array('conditions' => array('id' => $rightButton['right_button_id'])));
 				}
 				
 				Cache::create_cache_file($cacheFolder, $cacheFile, $rightButtonsPost);
 			} else { $rightButtonsPost = array(); }			
-		}		
+		}
 		
 		$datas['rightButtons'] = $rightButtonsPost;		
 		return $datas;
@@ -354,7 +354,7 @@ class PostsController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 22/06/2013 by FI
  */		
-	protected function _get_posts_types($datas) {
+	public function _get_posts_types($datas) {
 
 		if($datas['post']['display_posts_types']) {
 			
@@ -510,7 +510,11 @@ class PostsController extends AppController {
 		$this->unloadModel('PostsRightButton'); //Déchargement du modèle
 		
 		//On va les rajouter dans la variable $this->request->data
-		foreach($rightButtons as $k => $v) { $this->request->data['right_button_id'][$v['right_button_id']] = 1; }
+		foreach($rightButtons as $k => $v) {			
+			
+			$this->request->data['right_button_id'][$v['right_button_id']]['top'] = $v['position'];
+			$this->request->data['right_button_id'][$v['right_button_id']]['activate'] = 1; 
+		}
 	}
 	
 /**
@@ -558,17 +562,18 @@ class PostsController extends AppController {
 
 		if($deleteAssoc) { $this->PostsRightButton->deleteByName('post_id', $postId); }
 		
-		if(isset($this->request->data['right_button_id'])) { $rightButtonId = $this->request->data['right_button_id']; }
-		else { $rightButtonId = array(); }
+		if(isset($this->request->data['right_button_id'])) { $rightButtonIds = $this->request->data['right_button_id']; }
+		else { $rightButtonIds = array(); }
 		
 		$order = 0;
-		foreach($rightButtonId as $k => $v) {
+		foreach($rightButtonIds as $rightButtonId => $rightButtonDatas) {
 		
-			if($v) {
+			if($rightButtonDatas['activate']) {
 		
 				$this->PostsRightButton->save(array(
 					'post_id' => $postId,
-					'right_button_id'	=> $k,
+					'right_button_id'	=> $rightButtonId,
+					'position'	=> $rightButtonDatas['top'],
 					'order_by' => $order
 				));
 				
@@ -661,6 +666,6 @@ class PostsController extends AppController {
 				TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS."post_".$this->request->data['id'].'_children.cache',
 				TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS."post_".$this->request->data['id'].'_right_buttons.cache'
 			);
-		}		
+		}
 	}
 }
