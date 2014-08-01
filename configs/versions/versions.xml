@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 01/08/2014</name>
+		<num>20140801.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Rajout de css dans le BO</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 31/07/2014</name>
 		<num>20140731.001</num>
 		<supervisor>KoéZionCMS</supervisor>
