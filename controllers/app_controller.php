@@ -179,7 +179,7 @@ class AppController extends Controller {
     	$primaryKey = $this->$modelName->primaryKey;
 
     	$tableShema = $this->$modelName->shema();
-    	if(in_array('order_by', $tableShema)) { $orderBy = 'order_by ASC, name ASC'; } else { $orderBy = $primaryKey.' ASC'; }
+    	if(in_array('order_by', $tableShema)) { $orderBy = 'order_by ASC'; } else { $orderBy = $primaryKey.' ASC'; }
     	
     	$findConditions = array('conditions' => $conditions, 'fields' => $fields, 'order' => $orderBy);    	
     	

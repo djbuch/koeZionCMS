@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 02/08/2014</name>
+		<num>20140802.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification order_by dans app_controller</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 02/08/2014</name>
 		<num>20140802.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
