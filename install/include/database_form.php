@@ -41,6 +41,16 @@
 		}
 		?>
 	</div>
+	<div class="row">
+		<label>Source</label>
+		<div class="rowright"><input type="text" value="<?php echo isset($datas['source']) ? $datas['source'] : 'mysql' ?>" name="source" /></div>
+		<?php 
+		if(isset($formerrors['source']) && !empty($formerrors['source'])) {
+			
+			?><div class="system error"><?php foreach($formerrors['source'] as $rule => $error) { echo $error.'<br />'; } ?></div><?php
+		}
+		?>
+	</div>
 	<?php /* ?>
 	<div class="row">
 		<label>Table prefix</label>
