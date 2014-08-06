@@ -75,16 +75,21 @@ class UsersController extends AppController {
 						
 						//ADMINISTRATEUR BACKOFFICE//
 						if($bddRole == 1) {
-														
+							
 							$session = array(
 								'User' => $user,
 								'UsersGroup' => $usersGroup,
 								'Websites' => $this->_init_websites_datas()
 							);						
 							
+							//////////////////////////////////////////
+							//    DEFINITION DE L'URL DE LA HOME    // 
+							if(isset($usersGroup['default_home']) && !empty($usersGroup['default_home'])) { $redirectUrl = $usersGroup['default_home']; }
+							else if(isset($coreConfs['backoffice_home_page']) && !empty($coreConfs['backoffice_home_page'])) { $redirectUrl = $coreConfs['backoffice_home_page']; }
+							else { $redirectUrl = $routesConfigs['backoffice_prefix']; } 
+							
 							Session::write('Backoffice', $session); //On insère dans la variable de session les données de l'utilisateur
-							$redirect = (isset($coreConfs['backoffice_home_page']) && !empty($coreConfs['backoffice_home_page'])) ? $coreConfs['backoffice_home_page'] : $routesConfigs['backoffice_prefix']; //On check qu'elle url de redirection utiliser
-							$this->redirect($redirect); //On redirige vers la page d'accueil du backoffice													
+							$this->redirect($redirectUrl); //On redirige vers la page d'accueil du backoffice													
 						
 						//UTILISATEUR BACKOFFICE//
 						} else if($bddRole == 2) {
@@ -118,11 +123,16 @@ class UsersController extends AppController {
 									
 									$this->load_component('Acls', PLUGINS.DS.'acls'.DS.'controllers'.DS.'components');
 									$session['Acl'] = $this->components['Acls']->get_auth_functions($user['users_group_id']);
-								}				
+								}										
+							
+								//////////////////////////////////////////
+								//    DEFINITION DE L'URL DE LA HOME    // 
+								if(isset($usersGroup['default_home']) && !empty($usersGroup['default_home'])) { $redirectUrl = $usersGroup['default_home']; }
+								else if(isset($coreConfs['backoffice_home_page']) && !empty($coreConfs['backoffice_home_page'])) { $redirectUrl = $coreConfs['backoffice_home_page']; }
+								else { $redirectUrl = $routesConfigs['backoffice_prefix']; } 
 								
 								Session::write('Backoffice', $session); //On insère dans la variable de session les données de l'utilisateur
-								$redirect = (isset($coreConfs['backoffice_home_page']) && !empty($coreConfs['backoffice_home_page'])) ? $coreConfs['backoffice_home_page'] : $routesConfigs['backoffice_prefix']; //On check qu'elle url de redirection utiliser
-								$this->redirect($redirect); //On redirige vers la page d'accueil du backoffice					
+								$this->redirect($redirectUrl); //On redirige vers la page d'accueil du backoffice					
 								
 							} else { Session::setFlash(_("Désolé mais votre accès au backoffice n'est pas autorisé (Aucun site administrable)"), 'error'); } //Sinon on génère le message d'erreur			
 							

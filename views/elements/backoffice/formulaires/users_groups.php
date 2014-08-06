@@ -13,7 +13,8 @@
 				3 => 'Utilisateur frontoffice'
 			);
 			echo $helpers['Form']->input('role_id', "<i>(*)</i> Type de profil", array('type' => 'select', 'datas' => $rolesId, 'firstElementList' => _("Sélectionnez un type de profil"), 'tooltip' => "Indiquez le type de profil de ce groupe d'utilisateurs"));			
-			echo $helpers['Form']->input('online', 'En ligne', array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour diffuser ce groupe d'utilisateurs"));
+			echo $helpers['Form']->input('default_home', "Url de la home page", array('tooltip' => "Indiquez l'url de la home page (backoffice/controller/action/params), laissez vide pour ne pas modifier l'url par défaut"));
+			echo $helpers['Form']->input('online', 'En ligne', array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour diffuser ce groupe d'utilisateurs"));			
 			?>
 		</div>
 	</div>

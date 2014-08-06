@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 06/08/2014</name>
+		<num>20140806.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise en place de l'url de la home backoffice paramétrable par groupe d'utilisateur</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 02/08/2014</name>
 		<num>20140802.002</num>
 		<supervisor>KoéZionCMS</supervisor>
