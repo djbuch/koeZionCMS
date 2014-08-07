@@ -12,13 +12,15 @@ EXPORT_PDF/
 installed
 configs/files/*.ini
 configs/hooks/*.php
-/configs/plugins/
+/configs/plugins/*
 !/configs/plugins/empty
 /plugins/
 tmp/backup_bdd/*.sql
 tmp/sessions/*
 !tmp/sessions/empty
-/views/elements/hooks/
+/views/hooks/*
+!/views/hooks/empty
+/views/elements/hooks/*
 !/views/elements/hooks/empty
 webroot/css/plugins/*
 webroot/files/*

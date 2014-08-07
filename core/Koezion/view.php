@@ -86,6 +86,7 @@ class View extends Object {
  * @version 0.2 - 24/09/2012 by FI - Rajout du boolean $inViewsFolder pour indiquer si le dossier de stockage de la vue est dans views
  * @version 0.3 - 05/01/2014 by FI - Mise en place de la récupération des vues plugins directement dans les dossiers des templates de façon automatique
  * @version 0.4 - 13/02/2014 by FI - Gestion automatique du layout lors de requêtes AJAX
+ * @version 0.5 - 07/08/2014 by FI - Mise en place des hooks pour les vues
  * @todo IMPORTANT essayer de voir pourquoi si on retire le file_exists($view) la fonction export du plugin formulaire ne marche plus!!!
  * @todo Essayer d'améliorer l'ajout de websitebaseurl dans le template car il est inséré juste après la récupération de la vue --> supprimé le 25/06/2013 rajouté directement dans le template
  */    
@@ -134,22 +135,42 @@ class View extends Object {
 	    	if(isset($pluginsList[$potentialPluginControllerName]) && $inViewsFolder) {
 	    		
 	    		$pluginInfos = $pluginsList[$potentialPluginControllerName];    		    		
-	    		
-				//$view = PLUGINS.DS.$pluginInfos['code'].DS.'views'.DS.$params['controllerFileName'].DS.$this->view.'.php'; //Ancienne versiong    		
+	    		    		
 	    		//Si la variable existe (Elle n'existe que pour le front)
 	    		//Redéfinition du chemin des vues en fonction du template
 	    		if(isset($this->vars['websiteParams'])) {  $view = $alternativeView; } //Le travail est déjà fait plus haut
 	    		else { $view = PLUGINS.DS.$pluginInfos['code'].DS.'views'.DS.$params['controllerFileName'].DS.$this->view.'.php'; }
 	    	}	 
     	}
-    	
+	
+    	////////////////////////////////////////////////////////
+    	//VERIFICATION SI UN HOOK EST DISPONIBLE POUR LES VUES//
+    	//Ce hook permet de redéfinir à la volée le chemin de certaines vues
+    	//Cela s'avère pratique dans le cas de template particulier n'ayant pas besoin de l'ensemble des fonctionnalités disponible dans la version de base
+    	//
+    	//La structure du fichier views.php est :
+    	//
+    	//	$viewsHooks = array(
+    	//		'VUE_INITIALEMENT_SOUHAITEE' => 'VUE_REELLEMENT_SOUHAITEE'
+    	//	);
+    	//
+    	//Par exemple :
+    	//
+    	//	$viewsHooks = array(
+    	//		'products/view' => VIEWS.DS.'hooks'.DS.'products_view.php'
+    	//	);
+    	//
+    	//La vue initialement souhaitée est de la forme nom_du_controleur/nom_de_la_vue
+    	//
+    	//Nous allons donc parcourir le dossier contenant les fichiers hook pour les charger et effectuer des tests sur l'existence d'une ligne pour la vue courante    	
+    	foreach(FileAndDir::directoryContent(CONFIGS_HOOKS.DS.'views') as $hookFile) { include(CONFIGS_HOOKS.DS.'views'.DS.$hookFile); } //Chargement des fichier
+    	if(isset($viewsHooks[$params['controllerVarName'].'/'.$params['action']])) { $view = $viewsHooks[$params['controllerVarName'].'/'.$params['action']]; }
+    	    	
     	ob_start(); //On va récupérer dans une variable le contenu de la vue pour l'affichage dans la variable layout_for_content
     	if(file_exists($view)) require_once($view); //Chargement de la vue
     	$content_for_layout = ob_get_clean(); //On stocke dans cette variable le contenu de la vue   	
     	
     	$alternativeLayoutFolder = substr_count($this->layout, DS) + substr_count($this->layout, '/');
-
-    	//pr($alternativeLayoutFolder);
     	
     	if($alternativeLayoutFolder) { require_once $this->layout.'.php'; }
     	else if(defined('LAYOUT_VIEWS') && file_exists(LAYOUT_VIEWS.DS.'layout'.DS.$this->layout.'.php')) { require LAYOUT_VIEWS.DS.'layout'.DS.$this->layout.'.php'; } //Chemin d'un élément d'un layout
