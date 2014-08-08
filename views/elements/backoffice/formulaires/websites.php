@@ -99,6 +99,7 @@
 			echo $helpers['Form']->input('secure_activ', $txtSecure, array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour activer la sécurité sur le site"));			
 			$txtLog = "Logger les utilisateurs. <i>Attention cette option ne fonctionne que dans le cas de sites sécurisés.</i>";
 			echo $helpers['Form']->input('log_users_activ', $txtLog, array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour activer le log des utilisateurs. La mise en place de cette option peut ralentir l'affichage des pages"));
+			echo $helpers['Form']->upload_files('favicon', array('label' => "Icône du site"));
 			?>
 		</div>
 	</div>

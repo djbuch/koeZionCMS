@@ -1,5 +1,13 @@
 ﻿<versions> 
 	<version>
+		<name>Version du 08/08/2014</name>
+		<num>20140808.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI">ALTER TABLE  `websites` ADD  `favicon` TEXT NOT NULL AFTER  `slider_type`;</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 06/08/2014</name>
 		<num>20140806.001</num>
 		<supervisor>KoéZionCMS</supervisor>
