@@ -51,10 +51,12 @@ class Model extends Object {
  * @version 0.7 - 05/07/2013 by FI - Gestion de l'alias
  * @version 0.8 - 11/11/2013 by FI - Rajout de la source en variable en prévision de futures évolutions
  * @version 0.9 - 03/06/2014 by FI - Rajout de la variable $databaseConfigs pour permettre à un modèle de se connecter à une BDD autre que celle par défaut, le format doit être identique à celui retourné par le fichier configs/files/database.ini
+ * @version 1.0 - 08/08/2014 by FI - Modification du premier paramètre passé au constructeur pour y ajouter de nouvelles données (la donnée controller_action)
  */
-	public function __construct($refererUrl = null, $databaseConfigs = null) {
+	public function __construct($modelParams = null, $databaseConfigs = null) {
 
-		$this->refererUrl = $refererUrl;
+		$this->refererUrl 			= $modelParams['url'];
+		$this->controller_action 	= $modelParams['controller_action'];
 		
 		//Récupération de la configuration de connexion à la base de données
 		$httpHost = $_SERVER["HTTP_HOST"];
@@ -964,45 +966,62 @@ class Model extends Object {
  * @version 0.1 - 26/08/2012 by FI
  */
 	public function make_search_index($datasToSave, $id, $action) {
+		
+		/**
+		 * La variable $searches_params peut être du format suivant : 
+		 * escape_url est optionnel, cette données (tableau) permet d'indiquer s'il faut ou non ignorer certaines urls lors de l'enrgistrement des données.
+		 * 
+		 * var $searches_params = array(
+		 * 		'fields' => array('name', 'short_content', 'content', 'slug', 'page_title', 'page_description', 'page_keywords'),
+		 * 		'url' => array(
+		 * 			'url' => 'controller/action/id::id/slug::slug',
+		 * 			'params' => array('slug')
+		 * 		),
+		 * 		'escape_url' => array('controller/action')
+		 * );
+		 */
 				
-		$searchesParams = $this->searches_params; //Paramètres des champs à indexer
-		$fieldsToIndex = $searchesParams['fields']; //Liste des champs à indexes
-		$urlParams = $searchesParams['url']; //Paramètres de l'url
+		$searchesParams 	= $this->searches_params; //Paramètres des champs à indexer
+		$fieldsToIndex 		= $searchesParams['fields']; //Liste des champs à indexes
+		$urlParams 			= $searchesParams['url']; //Paramètres de l'url		
 		
-		$datasToSaveKeys = array_keys($datasToSave); //Liste des clés des champs du model
-		$searchesDatas = ''; //Données de recherche
+		if(!isset($searchesParams['escape_url']) || (isset($searchesParams['escape_url']) && !in_array($this->controller_action, $searchesParams['escape_url']))) {
 		
-		//On parcours les champs à indexer
-		foreach($fieldsToIndex as $v) {
+			$datasToSaveKeys = array_keys($datasToSave); //Liste des clés des champs du model
+			$searchesDatas = ''; //Données de recherche
 			
-			//Si la clé à indexer est dans le tableau des données à sauvegarder on concatène à la chaine	
-			if(in_array(':'.$v, $datasToSaveKeys)) { $searchesDatas .= ' '.$datasToSave[':'.$v]; }
+			//On parcours les champs à indexer
+			foreach($fieldsToIndex as $v) {
+				
+				//Si la clé à indexer est dans le tableau des données à sauvegarder on concatène à la chaine	
+				if(in_array(':'.$v, $datasToSaveKeys)) { $searchesDatas .= ' '.$datasToSave[':'.$v]; }
+			}
+			
+			///////////////////////
+			//Génération de l'url//
+			$url = $urlParams['url'];
+			$url = str_replace(':id', $id, $url);
+			foreach($urlParams['params'] as $v) { $url = str_replace(':'.$v, $datasToSave[':'.$v], $url); }
+			$url = Router::url($url);
+			
+			//En cas de mise à jour on supprime l'ancienne valeur
+			if($action == "update") { $this->delete_search_index($id); }
+			
+			///////////////////////////////////////
+			//Sauvegarde des données de recherche//
+			$searchDatas = array(
+				'model' => get_class($this),
+				'title' => $datasToSave[':page_title'],
+				'description' => $datasToSave[':page_description'],
+				'datas' => strip_tags($searchesDatas),
+				'url' => $url,
+				'model_id' => $id				
+			);		
+			require_once(MODELS.DS.'search.php'); //Chargement du model
+			$search = new Search();		
+			$search->save($searchDatas);
+			unset($search); //Déchargement du model
 		}
-		
-		///////////////////////
-		//Génération de l'url//
-		$url = $urlParams['url'];
-		$url = str_replace(':id', $id, $url);
-		foreach($urlParams['params'] as $v) { $url = str_replace(':'.$v, $datasToSave[':'.$v], $url); }
-		$url = Router::url($url);
-		
-		//En cas de mise à jour on supprime l'ancienne valeur
-		if($action == "update") { $this->delete_search_index($id); }
-		
-		///////////////////////////////////////
-		//Sauvegarde des données de recherche//
-		$searchDatas = array(
-			'model' => get_class($this),
-			'title' => $datasToSave[':page_title'],
-			'description' => $datasToSave[':page_description'],
-			'datas' => strip_tags($searchesDatas),
-			'url' => $url,
-			'model_id' => $id				
-		);		
-		require_once(MODELS.DS.'search.php'); //Chargement du model
-		$search = new Search();		
-		$search->save($searchDatas);
-		unset($search); //Déchargement du model
 	}	
 	
 /**

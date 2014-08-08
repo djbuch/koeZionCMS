@@ -39,6 +39,7 @@ class Object {
  * @version 0.1 - 23/12/2011
  * @version 0.2 - 18/03/2014 - Reprise du chargement des modèles des plugins
  * @version 0.3 - 03/06/2014 - Rajout de la variable $databaseConfigs permettant la connexion à une autre BDD
+ * @version 0.4 - 08/08/2014 - Modification des données envoyées au constructeur, création de la variable $modelParams
  */
 	function loadModel($name, $return = false, $databaseConfigs = null) {
 		
@@ -82,9 +83,14 @@ class Object {
 			
 			require_once($file_path); //Inclusion du fichier
 			
-			if(isset($this->request->fullUrl)) { $url = $this->request->fullUrl; } else { $url = null; }			
-			if($return) { return new $name($url, $databaseConfigs); }
-			else { $this->$name = new $name($url, $databaseConfigs); } //Création d'un objet Model de type $name que l'on va instancier dans la classe
+			$modelParams = null;
+			if(isset($this->request)) { 
+				
+				$modelParams['url'] = $this->request->fullUrl;
+				$modelParams['controller_action'] = isset($this->request->controller) && isset($this->request->action) ? $this->request->controller.'/'.$this->request->action : '';				 
+			}
+			if($return) { return new $name($modelParams, $databaseConfigs); }
+			else { $this->$name = new $name($modelParams, $databaseConfigs); } //Création d'un objet Model de type $name que l'on va instancier dans la classe
 		}
 	}
 	
