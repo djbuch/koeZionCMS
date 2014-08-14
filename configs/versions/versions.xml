@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 14/08/2014</name>
+		<num>20140814.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification gestion ajout et modification des modules pour y intégrer plugin_id</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 13/08/2014</name>
 		<num>20140813.001</num>
 		<supervisor>KoéZionCMS</supervisor>

@@ -48,9 +48,17 @@ class ModulesController extends AppController {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 17/01/2012 by FI
+ * @version 0.2 - 14/08/2014 by FI - Mise en place de la gestion du champ plugin_id
  */	
 	function backoffice_add() {
-
+		
+		if($this->request->data && $this->request->data['modules_type_id']) {
+			
+			//Récupération de l'identifiant du plugin
+			$this->loadModel('ModulesType');
+			$module = $this->ModulesType->findFirst(array('conditions' => array('id' => $this->request->data['modules_type_id'])));
+			if($module) { $this->request->data['plugin_id'] = $module['plugin_id']; }			
+		}
 		parent::backoffice_add(); //On fait appel à la fonction d'ajout parente
 		$this->_init_modules_types();
 	}
@@ -62,9 +70,17 @@ class ModulesController extends AppController {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 17/01/2012 by FI
+ * @version 0.2 - 14/08/2014 by FI - Mise en place de la gestion du champ plugin_id
  */	
 	function backoffice_edit($id = null) {
-				
+		
+		if($this->request->data && $this->request->data['modules_type_id']) {
+			
+			//Récupération de l'identifiant du plugin
+			$this->loadModel('ModulesType');
+			$module = $this->ModulesType->findFirst(array('conditions' => array('id' => $this->request->data['modules_type_id'])));
+			if($module) { $this->request->data['plugin_id'] = $module['plugin_id']; }			
+		}
 		parent::backoffice_edit($id); //On fait appel à la fonction d'édition parente
 		$this->_init_modules_types();
 	}
