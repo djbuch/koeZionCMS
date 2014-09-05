@@ -219,6 +219,8 @@ CREATE TABLE IF NOT EXISTS `right_buttons` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `content` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `display_home_page` int(11) NOT NULL,
+  `order_by` int(11) NOT NULL,
   `online` int(11) NOT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime NOT NULL,

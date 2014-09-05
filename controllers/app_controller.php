@@ -701,6 +701,30 @@ class AppController extends Controller {
 	}
 	
 /**
+ * Cette fonction permet de récupérer les boutons colonne de droite
+ *
+ * @param	array Tableau de paramètres
+ * @return	array Liste des boutons
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 05/09/2014 by FI
+ */	
+	public function _get_right_buttons($params) {
+						
+		$rightButtonsConditions = array(
+			'conditions' => array('online' => 1), 
+			'order' => 'order_by ASC, name ASC'
+		);
+		
+		if(isset($params['homePage']) && $params['homePage']) { $rightButtonsConditions['conditions']['display_home_page'] = 1; }
+		
+		$this->loadModel('RightButton');
+		$rightButtons = $this->RightButton->find($rightButtonsConditions);
+		
+		return $rightButtons;
+	}
+	
+/**
  * Cette fonction permet de récupérer les articles
  *
  * @return	array Liste des articles

@@ -1,5 +1,14 @@
 ﻿<versions> 
 	<version>
+		<name>Version du 05/09/2014</name>
+		<num>20140905.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI">ALTER TABLE  `right_buttons` CHANGE  `display_home_mage`  `display_home_page` INT( 11 ) NOT NULL;</task>
+			<task author="FI">ALTER TABLE  `right_buttons` ADD  `order_by` INT NOT NULL AFTER  `display_home_page`;</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 04/09/2014</name>
 		<num>20140904.001</num>
 		<supervisor>KoéZionCMS</supervisor>

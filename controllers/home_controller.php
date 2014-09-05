@@ -47,7 +47,12 @@ class HomeController extends AppController {
 		////////////////////////////////
 		//   RECUPERATION DES FOCUS   //	
 		$focus = $this->_get_focus();
-		$datas['focus'] = $focus; 
+		$datas['focus'] = $focus; 		
+		
+		////////////////////////////////////////////////////
+		//   RECUPERATION DES BOUTONS COLONNE DE DROITE   //	
+		$rightButtons = $this->_get_right_buttons(array('homePage' => true));
+		$datas['rightButtons'] = $rightButtons; 
 		
 		///////////////////////////////////
 		//   RECUPERATION DES ARTICLES   //
