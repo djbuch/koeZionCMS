@@ -30,7 +30,8 @@ class Request {
 		else if(isset($_SERVER['ORIG_PATH_INFO'])) { $this->url = $_SERVER['ORIG_PATH_INFO']; } //1and1 hack!!
 		else {  $this->url = '/'; }
 		
-		$this->fullUrl = 'http://'.$_SERVER["HTTP_HOST"].Router::url($this->url, ''); //Affectation de l'url complète
+		$this->fullUrl = 'http://'.$_SERVER["HTTP_HOST"].Router::url($this->url, ''); //Affectation de l'url complète		
+		$this->queryString = $_SERVER['QUERY_STRING'];
 		$this->referer = '';
 		if(isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER'])) { $this->referer = $_SERVER['HTTP_REFERER']; }
 				

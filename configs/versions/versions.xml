@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 09/09/2014</name>
+		<num>20140909.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Rajout de queryString dans l'objet Request</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 05/09/2014</name>
 		<num>20140905.002</num>
 		<supervisor>KoéZionCMS</supervisor>
