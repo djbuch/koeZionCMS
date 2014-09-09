@@ -58,7 +58,8 @@ class FormParentHelper extends Helper {
 		'isChecked', 
 		'buttonType',
 		'txtBeforeInput',
-		'txtAfterInput'
+		'txtAfterInput',
+		'defaultSelect' //Permet de forcer l'élément à sélectionner par défaut dans un select
 	);
 
 /**
@@ -161,6 +162,7 @@ class FormParentHelper extends Helper {
  * @version 0.4 - 06/04/2012 by FI - Passage de la fonction en privée pour la gestion de l'internationnalisation
  * @version 0.5 - 17/12/2013 by FI - Reprise de la gestion des select pour pouvoir gérer optgroup
  * @version 0.6 - 07/03/2014 by FI - Reprise de la gestion de la récupération des erreurs
+ * @version 0.7 - 09/09/2014 by FI - Rajout de defaultSelect dans les options du select
  * @todo Input de type submit etc..., input radio
  * @todo Voir si utile de gérer en récursif la gestion de optgroup pour le select
  */
@@ -350,14 +352,14 @@ class FormParentHelper extends Helper {
 					
 					if(!is_array($v)) {
 						
-						if($value != '' && $value == $k) { $selected=' selected="selected"'; } else { $selected = ''; }
+						if(($value != '' && $value == $k) || (isset($options['defaultSelect']) && $options['defaultSelect'] == $k)) { $selected=' selected="selected"'; } else { $selected = ''; }
 						$inputReturn .= '<option value="'.$k.'"'.$selected.'>'.$v.'</option>';						
 					} else {
 						
 						$inputReturn .= '<optgroup label="'.$k.'">';
 						foreach($v as $k1 => $v1) {
 						
-							if($value != '' && $value == $k1) { $selected=' selected="selected"'; } else { $selected = ''; }
+							if(($value != '' && $value == $k1) || (isset($options['defaultSelect']) && $options['defaultSelect'] == $k1)) { $selected=' selected="selected"'; } else { $selected = ''; }
 							$inputReturn .= '<option value="'.$k1.'"'.$selected.'>'.$v1.'</option>';							
 						}
 						$inputReturn .= ' </optgroup>';						

@@ -144,6 +144,65 @@
 		return $pluginsConnectors;
 	}
 	
+/**
+ * http://blog.studiovitamine.com/actualite,107,fr/php-ajouter-ou-modifier-un-parametre-get-dans-l-url,304,fr.html?id=214
+ * A voir pour améliorer
+ * @param unknown_type $url
+ * @param unknown_type $paramNom
+ * @param unknown_type $paramValeur
+ */	
+	function ajouter_parametre_get($url, $paramNom, $paramValeur) {
+		
+		$urlFinal = "";
+		if($paramNom=="") { $urlFinal = $url; }
+		else { 
+			$t_url = explode("?", $url); 
+			if(count($t_url) == 1) {
+				
+				//Pas de queryString
+				$urlFinal .= $url;
+				if(substr($url, strlen($url)-1, strlen($url)) != "/") {
+					
+					$t_url2 = explode("/", $url);
+					if(preg_match("/./", $t_url2[count($t_url2)-1]) == false){ $urlFinal .= "/"; }
+				}
+				$urlFinal .= "?".$paramNom."=".$paramValeur;
+				
+			} else if(count($t_url) == 2) {
+				
+				//Il y a une queryString
+				$paramAAjouterPresentDansQueryString = "non";
+				$t_queryString = explode("&", $t_url[1]);
+				
+				foreach($t_queryString as $cle => $coupleNomValeur) {
+					
+					$t_param = explode("=", $coupleNomValeur);
+					if($t_param[0] == $paramNom) { $paramAAjouterPresentDansQueryString = "oui"; }
+				}
+				
+				if($paramAAjouterPresentDansQueryString == "non") {
+					
+					//Le parametre à ajouter n'existe pas encore dans la queryString
+					$urlFinal = $url."&".$paramNom."=".$paramValeur;
+					
+				} else if($paramAAjouterPresentDansQueryString == "oui") {
+					
+					//Le parametre à ajouter existe déjà dans la queryString
+					//Donc on va reconstruire l'URL
+					$urlFinal = $t_url[0]."?";
+					foreach($t_queryString as $cle => $coupleNomValeur) {
+						
+						if($cle > 0) { $urlFinal .= "&"; }
+						$t_coupleNomValeur = explode("=", $coupleNomValeur);
+						if($t_coupleNomValeur[0] == $paramNom) { $urlFinal .= $paramNom."=".$paramValeur; }
+						else{ $urlFinal .= $t_coupleNomValeur[0]."=".$t_coupleNomValeur[1]; }
+					}
+				}
+			}
+		}
+		return $urlFinal;
+	}
+	
 /*
 	
 

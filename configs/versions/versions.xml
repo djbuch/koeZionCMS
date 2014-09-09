@@ -1,6 +1,15 @@
 ﻿<versions>
 	<version>
 		<name>Version du 09/09/2014</name>
+		<num>20140909.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Rajout du paramètre defaultSelect dans le helper parent Form</task>
+			<task author="FI" type="code">Rajout d'une fonction permettant l'ajout de paramètres GET à une url dans le fichier basics.php</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 09/09/2014</name>
 		<num>20140909.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
