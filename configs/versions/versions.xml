@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 12/09/2014</name>
+		<num>20140912.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Correction du nom d'une fonction dans le contrôleur Posts car elle entrait en conflit avec une autre</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 09/09/2014</name>
 		<num>20140909.002</num>
 		<supervisor>KoéZionCMS</supervisor>

@@ -99,7 +99,7 @@ class PostsController extends AppController {
 		
 		/////////////////////////////
 		//   GESTION DES BOUTONS   //
-		$datas = $this->_get_right_buttons($datas);	
+		$datas = $this->_get_right_buttons_posts($datas);	
 		
 		//////////////////////////////////////
 		//   GESTION DES TYPES D'ARTICLES   //
@@ -312,7 +312,7 @@ class PostsController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 21/06/2013 by FI
  */		
-	protected function _get_right_buttons($datas) {
+	protected function _get_right_buttons_posts($datas) {
 					
 		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS;
 		$cacheFile 		= "post_".$datas['post']['id']."_right_buttons";
