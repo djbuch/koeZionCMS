@@ -1,7 +1,7 @@
 <?php
 require_once(HELPERS.DS.'html_parent_helper.php');
 
-$aclsHelper = PLUGINS.DS.'acls'.DS.'views'.DS.'helpers'.DS.'acls'.DS.'html.php';
+$aclsHelper = PLUGINS.DS.'acls'.DS.'views'.DS.'helpers'.DS.'acls'.DS.'backoffice_html.php';
 if(file_exists($aclsHelper)) { require_once($aclsHelper); } 
 else { 
 
