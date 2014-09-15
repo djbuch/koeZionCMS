@@ -378,6 +378,8 @@ class FormParentHelper extends Helper {
 				if(isset($options['buttonType'])) { $buttonType = $options['buttonType']; }
 				$inputReturn .= '<button id="'.$inputIdText.'" name="'.$inputNameText.'" type="'.$buttonType.'" value="'.$value.'"'.$attributes.'>'.$label.'</button>';
 			break;
+			
+			default: $inputReturn .= '<input type="'.$options['type'].'" id="'.$inputIdText.'" name="'.$inputNameText.'" value="'.$value.'"'.$attributes.' />'; break;
 		}		
 
 		//Si on a une erreur et que l'on souhaite afficher les erreurs directement dans le champ input
