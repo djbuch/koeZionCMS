@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 15/09/2014</name>
+		<num>20140915.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la gestion des erreurs dans le fichier BOOTSTRAP</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 12/09/2014</name>
 		<num>20140912.002</num>
 		<supervisor>KoéZionCMS</supervisor>

@@ -20,7 +20,7 @@ ini_set('display_errors', $displayErrors); //Affichage ou non des erreurs
 
 //Rapporte les erreurs d'exécution de script
 //Rapporter les E_NOTICE peut vous aider à améliorer vos scripts (variables non initialisées, variables mal orthographiées..)
-error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
+error_reporting(E_ALL);
 ini_set('log_errors', 1); //Log des erreurs dans un fichier
 $logFile = TMP.DS.'logs'.DS.'php'.DS.date('Y-m-d').'.log'; //Chemin du fichier de logs
 ini_set('error_log', $logFile); //Définition du chemin du fichier de logs
