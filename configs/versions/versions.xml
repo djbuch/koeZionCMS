@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 17/09/2014</name>
+		<num>20140917.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la fonction random_code du composant Text : Possibilité de déterminer les caractères à prendre en compte</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 17/09/2014</name>
 		<num>20140917.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

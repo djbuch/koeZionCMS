@@ -100,12 +100,16 @@ class TextComponent extends Component {
  * @access 	public 
  * @author 	koéZionCMS
  * @version 0.1 - 02/07/2014 by FI
+ * @version 0.2 - 17/09/2014 by FI - Possibilité de déterminer les caractères à prendre en compte
  */		
-	public function random_code($length = 10) {		
+	public function random_code($length = 10, $characts = null) {		
 		
-		$characts   = 'abcdefghijklmnopqrstuvwxyz';
-		$characts   .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-		$characts   .= '1234567890';
+		if(!isset($characts)) { 
+			
+			$characts   = 'abcdefghijklmnopqrstuvwxyz';
+			$characts   .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+			$characts   .= '1234567890';
+		}
 		$code 		= '';
 		
 		for($i=0;$i<$length;$i++) { $code .= substr($characts, rand()%(strlen($characts)), 1); }
