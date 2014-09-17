@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 17/09/2014</name>
+		<num>20140917.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">html_parent_helper : Rajout de la possibilité de modifier les attributs rel, type et media</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 15/09/2014</name>
 		<num>20140915.004</num>
 		<supervisor>KoéZionCMS</supervisor>

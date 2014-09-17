@@ -93,6 +93,7 @@ class HtmlParentHelper extends Helper {
  * @version 0.5 - 27/12/2013 by FI : Correction d'un bug lors du chargement en inline
  * @version 0.6 - 27/12/2013 by FI : Mise en place la possibilité de charger directement un fichier
  * @version 0.7 - 08/07/2014 by FI : Mise en place la possibilité de charger des fichiers libremement via le code F
+ * @version 0.8 - 17/09/2014 by FI : Rajout de la possibilité de modifier les attributs rel, type et media
  */	
 	public function css($css, $inline = false, $merge = true, $minified = false) {	
 		
@@ -108,55 +109,54 @@ class HtmlParentHelper extends Helper {
 			$html = ''; //Code HTML qui sera retourné
 			foreach($css as $k => $v) { //Parcours de l'ensemble des fichiers
 
+				$cssRel = 'stylesheet';
+				$cssType = 'text/css';
+				$cssMedia = 'all';
+				if(is_array($v)) {
+					
+					$cssHref = $v['href'];
+					if(isset($v['rel'])) { $cssRel = $v['rel']; } 
+					if(isset($v['type'])) { $cssType = $v['type']; } 
+					if(isset($v['media'])) { $cssMedia = $v['media']; }					
+				} else {
+					
+					$cssHref = $v;
+				}
+				
+				
 				//On va vérifier si le css n'est pas externe
-				if(substr_count($v, 'http://')) { $cssPath = $v; }
+				if(substr_count($cssHref, 'http://')) { $cssPath = $cssHref; }
 				else {
 				
-					$firstChar = $v{0};
+					$firstChar = $cssHref{0};
 					switch($firstChar) {
 										
 						case 'P': //Plugin
-							$cssFile = '/plugins/'.str_replace('P/', '', $v);
+							$cssFile = '/plugins/'.str_replace('P/', '', $cssHref);
 						break;	
 										
 						case 'F': //Free, chargement libre
-							$cssFile = str_replace('F/', '', $v);
+							$cssFile = str_replace('F/', '', $cssHref);
 						break;				
 						
 						case '/': //Normal						
-							$cssFile = '/css/'.$v;						
+							$cssFile = '/css/'.$cssHref;						
 						break;
 						
 						default: //Front						
-							$cssFile = '/templates/'.$v;						
+							$cssFile = '/templates/'.$cssHref;						
 						break;
 					}
 					
-					if(!substr_count($v, '.css')) { $cssFile.='.css'; }	//On teste si l'extension n'est pas déjà renseignée sinon on la rajoute			
+					if(!substr_count($cssHref, '.css')) { $cssFile.='.css'; }	//On teste si l'extension n'est pas déjà renseignée sinon on la rajoute			
 					$cssPath = Router::webroot($cssFile); //On génère le chemin vers le fichier
 				}
-				$html .= "\t\t".'<link href="'.$cssPath.'" rel="stylesheet" type="text/css" />'."\n"; //On génère la balise de chargement						
+				$html .= "\t\t".'<link href="'.$cssPath.'" rel="'.$cssRel.'" type="'.$cssType.'" media="'.$cssMedia.'" />'."\n"; //On génère la balise de chargement						
 			}
 			
 			$html .= "\n"; //Rajout d'un saut de ligne			
 			return $html; //On retourne le code HTML
 		}
-			
-		/*if(!$minified) {
-		} else {
-			
-			$html = '';
-			foreach($css as $v) {
-			
-				$v = str_replace('/', DS, $v);
-				$cssFile = CSS.DS.$v.'.css';
-				$cssContent = CssMin::minify(file_get_contents($cssFile));
-				$cssContent = str_replace('../', '', $cssContent);
-				$html .= $cssContent."\n";
-			}			
-			
-			return '<link href="css.php" rel="stylesheet" type="text/css" />'."\n";
-		}*/
 	}
 	
 /**
