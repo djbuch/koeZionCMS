@@ -539,7 +539,8 @@ class Model extends Object {
  */		
 	public function delete($id, $moreControls = null) {
 		
-		if(is_array($id)) { $idConditions = " IN (".implode(',', $id).')'; } else { $idConditions = " = ".$id; }		
+		if(is_array($id)) { $idConditions = " IN (".implode(',', $id).')'; } 
+		else { $idConditions = " = ".$id; }		
 		$sql = "DELETE FROM ".$this->table." WHERE ".$this->primaryKey.$idConditions;  //Requête de suppression de l'élément
 		
 		//Permet de rajouter une condition supplémentaire lors de la suppression
@@ -566,7 +567,7 @@ class Model extends Object {
 		}
 		
 		$queryResult = $this->query($sql);		
-		if(isset($this->searches_params)) { $this->delete_search_index($idConditions); } //Suppression de l'index dans la recherche		
+		if(isset($this->searches_params)) { $this->delete_search_index($id); } //Suppression de l'index dans la recherche		
 		return $queryResult;
 	}
 	
@@ -1031,10 +1032,14 @@ class Model extends Object {
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 26/08/2012 by FI
+ * @version 0.2 - 18/09/2014 by FI - Modification gestion de l'id
  */
 	public function delete_search_index($id) {	
+		
+		if(is_array($id)) { $idConditions = " IN (".implode(',', $id).')'; } 
+		else { $idConditions = " = ".$id; }
 						
-		$sql = "DELETE From searches WHERE model = '".get_class($this)."' AND model_id = ".$id;
+		$sql = "DELETE From searches WHERE model = '".get_class($this)."' AND model_id".$idConditions;
 		$this->query($sql);		
 	}
 	
