@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 19/09/2014</name>
+		<num>20140919.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification du helper html pour le backoffice</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 19/09/2014</name>
 		<num>20140919.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
