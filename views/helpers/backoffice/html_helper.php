@@ -16,14 +16,18 @@ else {
 	 * @param 	varchar $controller 	Controller de l'url
 	 * @param 	varchar $action 		Action de l'url
 	 * @param 	varchar $title 			Titre du bouton
+	 * @param 	varchar $params 		Paramètres supplémentaires à passer dans l'url
 	 * @return 	varchar Code HTML du bouton
 	 * @access 	public
 	 * @author 	koéZionCMS
 	 * @version 0.1 - 10/03/2013 by FI
+	 * @version 0.2 - 19/09/2014 by FI - Rajout de la variable $params
 	 */	
-		public function backoffice_button_title($controller, $action, $title) {
+		public function backoffice_button_title($controller, $action, $title, $params = null) {
 			
-			return '<a class="btn black" href="'.Router::url("backoffice/".$controller."/".$action).'" style="float: right; margin-top: 3px;"><span>'.$title.'</span></a>';
+			$url = "backoffice/".$controller."/".$action;
+			if(isset($params)) { $url .= $params; }
+			return '<a class="btn black" href="'.Router::url($url).'" style="float: right; margin-top: 3px;"><span>'.$title.'</span></a>';
 		}				
 		
 	/**
