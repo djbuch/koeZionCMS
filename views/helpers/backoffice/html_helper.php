@@ -73,16 +73,19 @@ else {
 	 * @param 	varchar $pictoOn 		Url du picto actif
 	 * @param 	integer $id 			Identifiant de l'élément
 	 * @param 	varchar $pictoOff 		Url du picto inactif
+	 * @param 	varchar $extension 		Paramètres supplémentaires + Paramètres supplémentaires pour modifier l'extension de l'url
 	 * @return 	varchar Code HTML du picto
 	 * @access 	public
 	 * @author 	koéZionCMS
 	 * @version 0.1 - 17/03/2013 by FI
+	 * @version 0.2 - 22/09/2014 by FI - Rajout de la variable $extension
 	 */	
-		public function backoffice_picto($controller, $action, $pictoOn, $id = null, $pictoOff = null) {
+		public function backoffice_picto($controller, $action, $pictoOn, $id = null, $pictoOff = null, $params = null, $extension = 'html') {
 			
 			$url = 'backoffice/'.$controller.'/'.$action;
 			if(isset($id)) { $url .= '/'.$id; }
-			return '<a href="'.Router::url($url).'"><img src="'.BASE_URL.$pictoOn.'" /></a>';
+			if(isset($params)) { $url .= $params; }
+			return '<a href="'.Router::url($url, $extension).'"><img src="'.BASE_URL.$pictoOn.'" /></a>';
 		}			
 		
 	/**
