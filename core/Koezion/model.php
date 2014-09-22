@@ -500,8 +500,9 @@ class Model extends Object {
  * @author	koéZionCMS
  * @version 0.1 - 16/02/2012 by FI
  * @version 0.2 - 04/12/2013 by FI - Rajout de la possibilité de passer un tableau pour la variable $field
+ * @version 0.3 - 22/09/2014 by FI - Rajout de la possibilité de sélectionner le séparateur
  */	
-	public function findList($conditions = null, $field = 'name', $key = 'id') {
+	public function findList($conditions = null, $field = 'name', $key = 'id', $separator = ' ') {
 	
 		$queryResult = $this->find($conditions);
 		//On formate les résultats
@@ -514,7 +515,7 @@ class Model extends Object {
 					
 					$fieldTMP = array();
 					foreach($field as $kField => $vField) { $fieldTMP[$kField] =  $v[$vField]; }
-					$result[$v[$key]] = implode(' ', $fieldTMP);
+					$result[$v[$key]] = implode($separator, $fieldTMP);
 				} else { $result[$v[$key]] = $v[$field]; } 
 			}			 
 		}

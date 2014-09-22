@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 22/09/2014</name>
+		<num>20140922.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la fonction findList du modèle principal</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 22/09/2014</name>
 		<num>20140922.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
