@@ -59,7 +59,8 @@ class FormParentHelper extends Helper {
 		'buttonType',
 		'txtBeforeInput',
 		'txtAfterInput',
-		'defaultSelect' //Permet de forcer l'élément à sélectionner par défaut dans un select
+		'defaultSelect', //Permet de forcer l'élément à sélectionner par défaut dans un select
+		'onlyInput'
 	);
 
 /**

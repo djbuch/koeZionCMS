@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 23/09/2014</name>
+		<num>20140923.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Rajout d'un nouvel attribut à échaper dans le helper form parent</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 22/09/2014</name>
 		<num>20140922.002</num>
 		<supervisor>KoéZionCMS</supervisor>
