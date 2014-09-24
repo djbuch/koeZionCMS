@@ -95,7 +95,18 @@ Examples:
 
 ATTENTION: The trailing slash is required.
 */
-$baseUrl = dirname(dirname(dirname(dirname(dirname(dirname($_SERVER['SCRIPT_NAME'])))))).'/upload/'; //Chemin relatif vers le dossier upload
+//Mise en place d'un dossier particulier dans le cas d'administrateur de site
+if(Session::read('Backoffice.UsersGroup.role_id') == 1) {
+	
+	$baseUrl = dirname(dirname(dirname(dirname(dirname(dirname($_SERVER['SCRIPT_NAME'])))))).'/upload/'; //Chemin relatif vers le dossier upload
+	
+} else {
+	
+	$userPath = Inflector::slug(Session::read('Backoffice.User.id').' '.Session::read('Backoffice.User.name'), '-');
+	$baseUrl = dirname(dirname(dirname(dirname(dirname(dirname($_SERVER['SCRIPT_NAME'])))))).'/upload/'.$userPath.'/'; //Chemin relatif vers le dossier upload
+	
+}
+//$baseUrl = dirname(dirname(dirname(dirname(dirname(dirname($_SERVER['SCRIPT_NAME'])))))).'/upload/'; //Chemin relatif vers le dossier upload
 //$baseUrl = str_replace('webroot/', '', $baseUrlTMP); //On supprime le dossier webroot pour qu'il n'apparaisse pas lors de l'ajout des images
 
 /*echo '<pre>';

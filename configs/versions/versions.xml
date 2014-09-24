@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 24/09/2014</name>
+		<num>20140924.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification du fichier config de ckFinder pour gérer des dossiers dédiées selon le type d'utilisateur connecté</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 23/09/2014</name>
 		<num>20140923.001</num>
 		<supervisor>KoéZionCMS</supervisor>
