@@ -31,7 +31,7 @@ else {
 			
 			$url = "backoffice/".$controller."/".$action;
 			if(isset($params)) { $url .= $params; }
-			return '<a class="btn black. '.$css.'" href="'.Router::url($url, $extension).'" style="float: right; margin-top: 3px;"><span>'.$title.'</span></a>';
+			return '<a class="btn black '.$css.'" href="'.Router::url($url, $extension).'" style="float: right; margin-top: 3px;"><span>'.$title.'</span></a>';
 		}				
 		
 	/**
