@@ -19,6 +19,7 @@ else {
 	 * @param 	varchar $params 		Paramètres supplémentaires à passer dans l'url
 	 * @param 	varchar $extension 		Paramètres supplémentaires pour modifier l'extension de l'url
 	 * @param 	varchar $css 			Paramètres supplémentaires pour rajouter une ou plusieurs classes CSS supplémentaires
+	 * @param 	varchar $moreAttributes	Paramètres supplémentaires (libre)
 	 * @return 	varchar Code HTML du bouton
 	 * @access 	public
 	 * @author 	koéZionCMS
@@ -26,12 +27,13 @@ else {
 	 * @version 0.2 - 19/09/2014 by FI - Rajout de la variable $params
 	 * @version 0.3 - 19/09/2014 by FI - Rajout de la variable $extension
 	 * @version 0.4 - 26/09/2014 by FI - Rajout de la variable $css
+	 * @version 0.5 - 26/09/2014 by FI - Rajout de la variable $moreAttributes
 	 */	
-		public function backoffice_button_title($controller, $action, $title, $params = null, $extension = 'html', $css = '') {
+		public function backoffice_button_title($controller, $action, $title, $params = null, $extension = 'html', $css = '', $moreAttributes = '') {
 			
 			$url = "backoffice/".$controller."/".$action;
 			if(isset($params)) { $url .= $params; }
-			return '<a class="btn black '.$css.'" href="'.Router::url($url, $extension).'" style="float: right; margin-top: 3px;"><span>'.$title.'</span></a>';
+			return '<a class="btn black '.$css.'" href="'.Router::url($url, $extension).'" style="float: right; margin-top: 3px;" '.$moreAttributes.'><span>'.$title.'</span></a>';
 		}				
 		
 	/**
