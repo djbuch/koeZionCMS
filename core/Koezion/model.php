@@ -632,28 +632,32 @@ class Model extends Object {
  * @version 1.0 - 24/08/2012 by FI - Changement radical de la gestion des INSERT ou UPDATE afin d'utiliser pleinement la fonctionnalité des requêtes préparées
  * 									 on a divisé le process en 2 on récupère d'un coté les infos de la requête et de l'autre les données à sauvegarder avec des fonctions privées
  * @version 1.1 - 10/01/2014 by FI - Gestion des primary key multiples
+ * @version 1.2 - 27/09/2014 by FI - Test sur la variable $datas pour vérifier qu'elle ne soit pas vide (auquel cas cela ne sert à rien de lancer le processus)
  * 
  * @todo mettre en place des try catch pour vérifier que la requete c'est bien exécutée 
  */	
 	public function save($datas, $forceInsert = false, $escapeUpload = true) {
-					
-		$preparedInfos = $this->_prepare_save_query($datas, $forceInsert, $escapeUpload); //Récupération des données de la préparation de la requête
-		$datasToSave = $this->_prepare_save_datas($datas, $preparedInfos['moreDatasToSave'], $forceInsert, $escapeUpload); //Récupération des données à sauvegarder
-		
-		$queryExecutionResult = $preparedInfos['preparedQuery']->execute($datasToSave); //Exécution de la requête
-		
-		$this->_trace_sql('function save', $preparedInfos['preparedQuery']->queryString, $datasToSave); //Récupération de la requête
-		
-		//Affectation de la valeur de la clé primaire à la variable de classe
-		if($preparedInfos['action'] == 'insert') { $this->id = $this->db->lastInsertId();}
-		else if(!is_array($this->primaryKey)) { $this->id = $datas[$this->primaryKey]; }
-		else { $this->id[] = 'multiple'; }
-		
-		$this->queryExecutionResult = $queryExecutionResult;
-		
-		//if(isset($this->files_to_upload) && $proceedUpload) { $this->upload_files($datas, $this->id); } //Sauvegarde éventuelle des images
-		if(isset($this->files_to_upload)) { $this->upload_files($datas, $this->id); } //Sauvegarde éventuelle des images
-		if(isset($this->searches_params)) { $this->make_search_index($datasToSave, $this->id, $preparedInfos['action']); } //On génère le fichier d'index de recherche
+
+		if(!empty($datas)) {
+			
+			$preparedInfos = $this->_prepare_save_query($datas, $forceInsert, $escapeUpload); //Récupération des données de la préparation de la requête
+			$datasToSave = $this->_prepare_save_datas($datas, $preparedInfos['moreDatasToSave'], $forceInsert, $escapeUpload); //Récupération des données à sauvegarder
+			
+			$queryExecutionResult = $preparedInfos['preparedQuery']->execute($datasToSave); //Exécution de la requête
+			
+			$this->_trace_sql('function save', $preparedInfos['preparedQuery']->queryString, $datasToSave); //Récupération de la requête
+			
+			//Affectation de la valeur de la clé primaire à la variable de classe
+			if($preparedInfos['action'] == 'insert') { $this->id = $this->db->lastInsertId();}
+			else if(!is_array($this->primaryKey)) { $this->id = $datas[$this->primaryKey]; }
+			else { $this->id[] = 'multiple'; }
+			
+			$this->queryExecutionResult = $queryExecutionResult;
+			
+			//if(isset($this->files_to_upload) && $proceedUpload) { $this->upload_files($datas, $this->id); } //Sauvegarde éventuelle des images
+			if(isset($this->files_to_upload)) { $this->upload_files($datas, $this->id); } //Sauvegarde éventuelle des images
+			if(isset($this->searches_params)) { $this->make_search_index($datasToSave, $this->id, $preparedInfos['action']); } //On génère le fichier d'index de recherche
+		}
 	}
 
 /**

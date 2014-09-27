@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 27/09/2014</name>
+		<num>20140927.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Model --> fonction save : Test sur la variable $datas pour vérifier qu'elle ne soit pas vide (auquel cas cela ne sert à rien de lancer le processus)</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 26/09/2014</name>
 		<num>20140926.003</num>
 		<supervisor>KoéZionCMS</supervisor>
