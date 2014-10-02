@@ -21,6 +21,7 @@ class Request {
  * 
  * 09/08/2012 --> Rajout de full URL
  * 10/01/2014 --> Rajout du referer
+ * 02/10/2014 --> Modification gestion variable page
  */    
 	public function __construct() {
 				
@@ -46,7 +47,7 @@ class Request {
 				}
 			}
 
-			unset($_GET['page']);
+			//unset($_GET['page']);
 		}
 		
 		if(!empty($_GET)) {
@@ -54,9 +55,12 @@ class Request {
 			if(!$this->data) { $this->data = array(); }
 			foreach($_GET as $k => $v) { 
 
-				if(!is_array($v)) { $v = stripslashes($v); } //Hack OVH hébergement perso
-				$this->data[$k] = $v; 
-				$this->get[$k] = $v; 
+				if($k != 'page') { //On ne traite pas la variable page passé en GET
+
+					if(!is_array($v)) { $v = stripslashes($v); } //Hack OVH hébergement perso
+					$this->data[$k] = $v; 
+					$this->get[$k] = $v; 
+				}
 			}
 		}
 		

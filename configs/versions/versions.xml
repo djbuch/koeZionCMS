@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 02/10/2014</name>
+		<num>20141002.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Request --> Modification de la gestion de la variable GET page</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 27/09/2014</name>
 		<num>20140927.001</num>
 		<supervisor>KoéZionCMS</supervisor>
