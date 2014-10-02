@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 02/10/2014</name>
+		<num>20141002.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Paginator parent helper fonction get_more_params --> Modification de la gestion de la variable GET page</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 02/10/2014</name>
 		<num>20141002.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

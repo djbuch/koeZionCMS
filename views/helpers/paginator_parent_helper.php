@@ -157,9 +157,10 @@ class PaginatorParentHelper extends Helper {
 	function get_more_params($excepts = array()) {
 				
 		$datas = $_GET;
+		$excepts = am($this->excepts, array('page'));
 		
 		//On va parcourir les exemptions
-		foreach($this->excepts as $except) {
+		foreach($excepts as $except) {
 			
 			if(Set::check($_GET, $except)) { 
 				
