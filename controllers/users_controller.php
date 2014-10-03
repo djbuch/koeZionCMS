@@ -220,8 +220,12 @@ class UsersController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 17/01/2012 by FI
  * @version 0.2 - 21/05/2012 by FI - Rajout d'une condition sur la récupération des catégories
+ * @version 0.3 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  */	
-	function backoffice_index() { parent::backoffice_index(false, array('id', 'name', 'second_name', 'online', 'users_group_id')); }
+	function backoffice_index($return = false, $fields = null, $order = null, $conditions = null) { 
+		
+		parent::backoffice_index(false, array('id', 'name', 'second_name', 'online', 'users_group_id')); 
+	}
 	
 /**
  * Cette fonction permet l'ajout d'un élément
@@ -229,8 +233,9 @@ class UsersController extends AppController {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 18/05/2012 by FI
+ * @version 0.2 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  */
-	function backoffice_add() {
+	function backoffice_add($redirect = true, $forceInsert = false) {
 	
 		$parentAdd = parent::backoffice_add(false); //On fait appel à la fonction d'ajout parente
 		
@@ -259,8 +264,9 @@ class UsersController extends AppController {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 18/05/2012 by FI
+ * @version 0.2 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  */
-	function backoffice_edit($id) {
+	function backoffice_edit($id, $redirect = true) {
 	
 		$parentEdit = parent::backoffice_edit($id, false); //On fait appel à la fonction d'édition parente
 	

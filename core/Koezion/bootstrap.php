@@ -1,13 +1,18 @@
 <?php
-///////////////////////////////
-//    GESTION DES ERREURS    // 
-//--> http://www.ficgs.com/Comment-montrer-les-erreur-PHP-f1805.html
 //ini_set( 'magic_quotes_gpc', 0 );
-
 //Récupération de la configuration du coeur
 require_once(LIBS.DS.'config_magik.php');
 $cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
 $coreConfs = $cfg->keys_values();
+
+////////////////////
+//    TIMEZONE    //
+if(!isset($coreConfs['date_default_timezone'])) { date_default_timezone_set('Europe/Paris'); } //Par défaut EUrope/Paris
+else { date_default_timezone_set($coreConfs['date_default_timezone']); } //Sinon le timezone saisi en backoffice
+
+///////////////////////////////
+//    GESTION DES ERREURS    //
+//--> http://www.ficgs.com/Comment-montrer-les-erreur-PHP-f1805.html
 if(!isset($coreConfs['display_php_error'])) {
 	
 	//Si la données n'est pas dans la liste (Cas pour d'anciennes versions)

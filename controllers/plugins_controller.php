@@ -22,16 +22,35 @@ class PluginsController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 17/01/2012 by FI
  * @version 0.2 - 21/05/2012 by FI - Rajout d'une condition sur la récupération des catégories
+ * @version 0.3 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  */
-	function backoffice_index() {
+	function backoffice_index($return = false, $fields = null, $order = null, $conditions = null) {
 	
 		$this->_check_plugins();
 		parent::backoffice_index();
 	}
 	
-	function backoffice_edit() { $this->redirect('backoffice/plugins/index'); }	
-	function backoffice_delete() { $this->redirect('backoffice/plugins/index'); }	
+/**
+ * Cette fonction permet l'édition d'un élément
+ *
+ * @param 	integer $id Identifiant de l'élément à modifier
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 17/01/2012 by FI
+ * @version 0.3 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
+ */	
+	function backoffice_edit($id = null, $redirect = true) { $this->redirect('backoffice/plugins/index'); }	
 	
+/**
+ * Cette fonction permet la suppression d'un élément
+ *
+ * @param 	integer $id Identifiant de l'élément à modifier
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 17/01/2012 by FI
+ * @version 0.3 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
+ */	
+	function backoffice_delete($id, $redirect = true) { $this->redirect('backoffice/plugins/index'); }
 	
 /**
  * Cette fonction permet la mise à jour du statut d'un élement directement depuis le listing
@@ -40,9 +59,10 @@ class PluginsController extends AppController {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 24/09/2012 by FI
- * @version 0.1 - 26/02/2013 by FI - Modification de la gestion de l'installation des plugins
+ * @version 0.2 - 26/02/2013 by FI - Modification de la gestion de l'installation des plugins
+ * @version 0.3 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  */
-	function backoffice_statut($id) {
+	function backoffice_statut($id, $redirect = true) {
 	
 		$elementStatus = parent::backoffice_statut($id, false); //On fait appel à la fonction d'édition parente		
 

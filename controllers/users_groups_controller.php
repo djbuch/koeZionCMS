@@ -25,8 +25,9 @@ class UsersGroupsController extends AppController {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 05/06/2012 by FI
+ * @version 0.2 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  */
-	function backoffice_add() {
+	function backoffice_add($redirect = true, $forceInsert = false) {
 	
 		$parentAdd = parent::backoffice_add(false); //On fait appel à la fonction d'ajout parente
 		
@@ -49,8 +50,9 @@ class UsersGroupsController extends AppController {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 05/06/2012 by FI
+ * @version 0.2 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  */
-	function backoffice_edit($id) {
+	function backoffice_edit($id, $redirect = true) {
 	
 		$parentEdit = parent::backoffice_edit($id, false); //On fait appel à la fonction d'édition parente
 	

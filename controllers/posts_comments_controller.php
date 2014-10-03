@@ -43,8 +43,12 @@ class PostsCommentsController extends AppController {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 16/04/2012 by FI
+ * @version 0.2 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  */
-	function backoffice_index() { parent::backoffice_index(false, array('id', 'name', 'email', 'online', 'created'), 'created DESC, name ASC'); }	
+	function backoffice_index($return = false, $fields = null, $order = null, $conditions = null) { 
+		
+		parent::backoffice_index(false, array('id', 'name', 'email', 'online', 'created'), 'created DESC, name ASC'); 
+	}	
 	
 /**
  * Cette fonction permet l'ajout d'un élément
@@ -52,8 +56,9 @@ class PostsCommentsController extends AppController {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 06/02/2012 by FI
+ * @version 0.2 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  */
-	function backoffice_add() {
+	function backoffice_add($redirect = true, $forceInsert = false) {
 	
 		parent::backoffice_add(); //On fait appel à la fonction d'ajout parente
 		$this->_init_posts();
@@ -66,8 +71,9 @@ class PostsCommentsController extends AppController {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 06/02/2012 by FI
+ * @version 0.2 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  */
-	function backoffice_edit($id = null) {	
+	function backoffice_edit($id = null, $redirect = true) {	
 	
 		parent::backoffice_edit($id); //On fait appel à la fonction d'édition parente
 		$this->_init_posts();

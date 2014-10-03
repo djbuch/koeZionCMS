@@ -270,8 +270,9 @@ class CategoriesController extends AppController {
  * @version 0.1 - 17/01/2012 by FI
  * @version 0.2 - 21/05/2012 by FI - Rajout d'une condition sur la récupération des catégories
  * @version 0.3 - 22/07/2014 by FI - Suppression des champs (on récupère tous les champs)
+ * @version 0.4 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  */	
-	public function backoffice_index() {		
+	public function backoffice_index($return = false, $fields = null, $order = null, $conditions = null) {		
 				
 		$conditions = array('conditions' => 'type != 3', 'order' => 'lft');		
 		
@@ -302,8 +303,9 @@ class CategoriesController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 17/01/2012 by FI
  * @version 0.2 - 02/10/2012 by FI - Gestion de la personnalisation des templetes par pages
+ * @version 0.3 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  */	
-	public function backoffice_add() {
+	public function backoffice_add($redirect = true, $forceInsert = false) {
 		
 		$this->_init_datas();
 		
@@ -352,8 +354,9 @@ class CategoriesController extends AppController {
  * @version 0.1 - 17/01/2012 by FI
  * @version 0.2 - 23/03/2012 by FI - Lors de la modification d'une catégorie, si le champ online de celle-ci est égal à 0 on va mettre à jour l'ensemble des champs online des catégories filles
  * @version 0.2 - 02/10/2012 by FI - Gestion de la personnalisation des templetes par pages
+ * @version 0.3 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  */	
-	public function backoffice_edit($id) {
+	public function backoffice_edit($id, $redirect = true) {
 		
 		$this->_init_datas();
 			
@@ -377,8 +380,9 @@ class CategoriesController extends AppController {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 23/03/2012 by FI
+ * @version 0.2 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  */
-	public function backoffice_statut($id) {
+	public function backoffice_statut($id, $redirect = true) {
 	
 		$parentStatut = parent::backoffice_statut($id, false); //On fait appel à la fonction d'édition parente
 		if($parentStatut) {

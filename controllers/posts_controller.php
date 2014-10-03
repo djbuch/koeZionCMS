@@ -153,8 +153,16 @@ class PostsController extends AppController {
 //////////////////////////////////////////////////////////////////////////////////////////	
 //										BACKOFFICE										//
 //////////////////////////////////////////////////////////////////////////////////////////
-
-	public function backoffice_index() {
+	
+/**
+ * Cette fonction permet l'affichage de la liste des éléments
+ *
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 17/01/2012 by FI
+ * @version 0.2 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
+ */
+	public function backoffice_index($return = false, $fields = null, $order = null, $conditions = null) {
 		
 		//////////////////////////////////////////////////////
 		//   RECUPERATION DES CONFIGURATIONS DES ARTICLES   //
@@ -185,8 +193,9 @@ class PostsController extends AppController {
  * @version 0.1 - 17/01/2012 by FI
  * @version 0.2 - 21/06/2013 by FI - Rajout de la récupération des boutons colonnes de doite --> C'est le jour le plus long de l'année
  * @version 0.3 - 03/11/2013 by FI - Modification de la fonction de transformation des dates
+ * @version 0.4 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  */	
-	public function backoffice_add() {
+	public function backoffice_add($redirect = true, $forceInsert = false) {
 
 		$this->_transform_date('fr2Sql', 'publication_date'); //Transformation de la date FR en date SQL	
 		$parentAdd = parent::backoffice_add(false); //On fait appel à la fonction d'ajout parente
@@ -219,8 +228,9 @@ class PostsController extends AppController {
  * @version 0.1 - 17/01/2012 by FI
  * @version 0.2 - 21/06/2013 by FI - Rajout de la récupération des boutons colonnes de doite --> C'est le jour le plus long de l'année
  * @version 0.3 - 03/11/2013 by FI - Modification de la fonction de transformation des dates
+ * @version 0.4 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  */	
-	public function backoffice_edit($id = null) {
+	public function backoffice_edit($id = null, $redirect = true) {
 				
 		$this->_transform_date('fr2Sql', 'publication_date'); //Transformation de la date FR en date SQL
 		$parentEdit = parent::backoffice_edit($id, false); //On fait appel à la fonction d'édition parente

@@ -27,8 +27,9 @@ class ModulesTypesController extends AppController {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 29/05/2012 by FI
+ * @version 0.2 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  */
-	function backoffice_index() {
+	function backoffice_index($return = false, $fields = null, $order = null, $conditions = null) {
 	
 		$datas = parent::backoffice_index(true, array('id', 'name', 'online'), 'order_by ASC');
 		$this->set($datas);
@@ -40,8 +41,9 @@ class ModulesTypesController extends AppController {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 23/06/2014 by FI
+ * @version 0.2 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  */	
-	function backoffice_add() {
+	function backoffice_add($redirect = true, $forceInsert = false) {
 
 		parent::backoffice_add(); //On fait appel à la fonction d'ajout parente
 		$this->_init_plugins();
@@ -54,8 +56,9 @@ class ModulesTypesController extends AppController {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 23/06/2014 by FI
+ * @version 0.2 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  */	
-	function backoffice_edit($id = null) {
+	function backoffice_edit($id = null, $redirect = true) {
 				
 		parent::backoffice_edit($id); //On fait appel à la fonction d'édition parente
 		$this->_init_plugins();

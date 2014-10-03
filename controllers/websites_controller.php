@@ -29,8 +29,9 @@ class WebsitesController extends AppController {
  * @version 0.2 - 03/05/2012 by FI - Lors de la création d'un site il faut également créer la catégorie parente et mettre à jour la variable de session
  * @version 0.3 - 07/06/2012 by FI - Modification de la gestion des couleurs on travaille maintenant avec des templates
  * @version 0.4 - 11/04/2014 by FI - Reprise de la fonction pour alléger le nombre de requêtes
+ * @version 0.5 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  */
-	function backoffice_add() {
+	function backoffice_add($redirect = true, $forceInsert = false) {
 			
 		$this->_init_datas();
     	
@@ -67,8 +68,9 @@ class WebsitesController extends AppController {
  * @version 0.2 - 23/03/2012 by FI - Lors de la modification d'une catégorie, si le champ online de celle-ci est égal à 0 on va mettre à jour l'ensemble des champs online des catégories filles
  * @version 0.3 - 07/06/2012 by FI - Modification de la gestion des couleurs on travaille maintenant avec des templates
  * @version 0.4 - 11/04/2014 by FI - Reprise de la fonction pour alléger le nombre de requêtes
+ * @version 0.5 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  */
-	function backoffice_edit($id) {
+	function backoffice_edit($id, $redirect = true) {
 	
 		$this->set('id', $id);
 		$this->_init_datas();

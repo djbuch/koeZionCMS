@@ -23,8 +23,9 @@ class DashboardController extends AppController {
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 08/10/2013 by FI
+ * @version 0.2 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  */
-	function backoffice_index() {
+	function backoffice_index($return = false, $fields = null, $order = null, $conditions = null) {
 	
 		$redirectUrl = "backoffice/dashboard/version";		
 		$this->redirect($redirectUrl, 301); //On lance la redirection		

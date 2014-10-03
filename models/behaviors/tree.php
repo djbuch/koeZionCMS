@@ -46,8 +46,9 @@ class Tree extends Model {
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 28/12/2011 by FI
+ * @version 0.2 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  */	
-	function save($datas) {
+	function save($datas, $forceInsert = false, $escapeUpload = true) {
 		
 		//Si la clé id est présente dans les données à sauvegarder il s'agit d'un update
 		if(isset($datas['id'])) { $this->edit($datas); } 
@@ -163,8 +164,9 @@ class Tree extends Model {
  * @author	koéZionCMS
  * @return 	boolean Vrai si la suppression s'est correctement déroulée, faux sinon
  * @version 0.1 - 28/12/2011 by FI
+ * @version 0.2 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  */
-	function delete($id) {
+	function delete($id, $moreControls = null) {
     	
         $id = (int)$id; //On fait un cast sur l'id
         $tree = $this->getTree(); //Récupération de l'arbre        
