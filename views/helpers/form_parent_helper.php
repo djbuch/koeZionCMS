@@ -164,7 +164,6 @@ class FormParentHelper extends Helper {
  * @version 0.5 - 17/12/2013 by FI - Reprise de la gestion des select pour pouvoir gérer optgroup
  * @version 0.6 - 07/03/2014 by FI - Reprise de la gestion de la récupération des erreurs
  * @version 0.7 - 09/09/2014 by FI - Rajout de defaultSelect dans les options du select
- * @version 0.8 - 09/10/2014 by FI - Modification de la gestion du select pour gérer la mise en place d'attributs sur le champ option (disabled par exemple)
  * @todo Input de type submit etc..., input radio
  * @todo Voir si utile de gérer en récursif la gestion de optgroup pour le select
  */
@@ -352,42 +351,17 @@ class FormParentHelper extends Helper {
 				//Parcours de l'ensemble des données du select
 				foreach($options['datas'] as $k => $v) {
 					
-					if(!is_array($v) || (is_array($v) && isset($v['attributes']))) {
-						
-						if(is_array($v)) {
-							
-							$optionValue = $v['value'];
-							$optionAttributes = ' '.$v['attributes'];
-							
-						} else {
-							
-							$optionValue = $v;
-							$optionAttributes = '';
-							
-						}
+					if(!is_array($v)) {
 						
 						if(($value != '' && $value == $k) || (isset($options['defaultSelect']) && $options['defaultSelect'] == $k)) { $selected=' selected="selected"'; } else { $selected = ''; }
-						$inputReturn .= '<option value="'.$k.'"'.$selected.$optionAttributes.'>'.$optionValue.'</option>';	
-											
+						$inputReturn .= '<option value="'.$k.'"'.$selected.'>'.$v.'</option>';						
 					} else {
 						
 						$inputReturn .= '<optgroup label="'.$k.'">';
 						foreach($v as $k1 => $v1) {
 						
-							if(is_array($v1)) {
-								
-								$optionValue = $v1['value'];
-								$optionAttributes = ' '.$v1['attributes'];
-								
-							} else {
-								
-								$optionValue = $v1;
-								$optionAttributes = '';
-								
-							}
-						
 							if(($value != '' && $value == $k1) || (isset($options['defaultSelect']) && $options['defaultSelect'] == $k1)) { $selected=' selected="selected"'; } else { $selected = ''; }
-							$inputReturn .= '<option value="'.$k1.'"'.$selected.$optionAttributes.'>'.$optionValue.'</option>';							
+							$inputReturn .= '<option value="'.$k1.'"'.$selected.'>'.$v1.'</option>';							
 						}
 						$inputReturn .= ' </optgroup>';						
 					}
