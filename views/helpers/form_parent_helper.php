@@ -351,17 +351,42 @@ class FormParentHelper extends Helper {
 				//Parcours de l'ensemble des données du select
 				foreach($options['datas'] as $k => $v) {
 					
-					if(!is_array($v)) {
+					if(!is_array($v) || (is_array($v) && isset($v['attributes']))) {
+						
+						if(is_array($v)) {
+							
+							$optionValue = $v['value'];
+							$optionAttributes = ' '.$v['attributes'];
+							
+						} else {
+							
+							$optionValue = $v;
+							$optionAttributes = '';
+							
+						}
 						
 						if(($value != '' && $value == $k) || (isset($options['defaultSelect']) && $options['defaultSelect'] == $k)) { $selected=' selected="selected"'; } else { $selected = ''; }
-						$inputReturn .= '<option value="'.$k.'"'.$selected.'>'.$v.'</option>';						
+						$inputReturn .= '<option value="'.$k.'"'.$selected.$optionAttributes.'>'.$optionValue.'</option>';	
+											
 					} else {
 						
 						$inputReturn .= '<optgroup label="'.$k.'">';
 						foreach($v as $k1 => $v1) {
 						
+							if(is_array($v1)) {
+								
+								$optionValue = $v1['value'];
+								$optionAttributes = ' '.$v1['attributes'];
+								
+							} else {
+								
+								$optionValue = $v1;
+								$optionAttributes = '';
+								
+							}
+						
 							if(($value != '' && $value == $k1) || (isset($options['defaultSelect']) && $options['defaultSelect'] == $k1)) { $selected=' selected="selected"'; } else { $selected = ''; }
-							$inputReturn .= '<option value="'.$k1.'"'.$selected.'>'.$v1.'</option>';							
+							$inputReturn .= '<option value="'.$k1.'"'.$selected.$optionAttributes.'>'.$optionValue.'</option>';							
 						}
 						$inputReturn .= ' </optgroup>';						
 					}

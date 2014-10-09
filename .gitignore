@@ -27,3 +27,6 @@ webroot/files/*
 webroot/img/plugins/*
 webroot/js/plugins/*
 webroot/upload/*
+webroot/templates/*
+!webroot/templates/koezion
+!webroot/templates/empty

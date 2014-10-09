@@ -1,5 +1,22 @@
 ﻿<versions>
 	<version>
+		<name>Version du 09/10/2014</name>
+		<num>20141009.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification gestion du select dans le helper form</task>
+			<task author="FI" type="code">Modification Gitignore</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 09/10/2014</name>
+		<num>20141009.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">ERREUR GIT</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 03/10/2014</name>
 		<num>20141003.001</num>
 		<supervisor>KoéZionCMS</supervisor>
