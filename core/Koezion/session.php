@@ -167,13 +167,14 @@ class Session {
  * @access	static
  * @author	koéZionCMS
  * @version 0.1 - 02/03/2013 by FI 
+ * @version 0.1 - 10/10/2014 by FI - Modification de la données retournée on passe de role_id à id 
  */
 	static function getRole() {
 
 		//Si session
 		if(Session::read('Backoffice.UsersGroup')) {
 			
-			$role = Session::read('Backoffice.UsersGroup.role_id'); //Récupération de la valeur
+			$role = Session::read('Backoffice.UsersGroup.id'); //Récupération de la valeur
 			if($role) { return $role; } //Si la valeur est valide on la retourne
 			else { return false; } //On retourne faux sinon
 		}

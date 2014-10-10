@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 10/10/2014</name>
+		<num>20141010.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification fonction getRole dans la librairie Session</task>
+			<task author="FI" type="code">Rajout gestion ACLS lors de la connexion si Adm Général</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 09/10/2014</name>
 		<num>20141009.002</num>
 		<supervisor>KoéZionCMS</supervisor>

@@ -80,7 +80,14 @@ class UsersController extends AppController {
 								'User' => $user,
 								'UsersGroup' => $usersGroup,
 								'Websites' => $this->_init_websites_datas()
-							);						
+							);				
+
+							//GESTION DU PLUGIN ACLS//
+							if(isset($this->plugins['Acls'])) {
+								
+								$this->load_component('Acls', PLUGINS.DS.'acls'.DS.'controllers'.DS.'components');
+								$session['Acl'] = $this->components['Acls']->get_auth_functions($user['users_group_id']);
+							}						
 							
 							//////////////////////////////////////////
 							//    DEFINITION DE L'URL DE LA HOME    // 
