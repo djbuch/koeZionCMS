@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 11/10/2014</name>
+		<num>20141011.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Rajout de $this->files dans l'objet Request</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 10/10/2014</name>
 		<num>20141010.001</num>
 		<supervisor>KoéZionCMS</supervisor>

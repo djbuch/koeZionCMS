@@ -15,6 +15,7 @@ class Request {
     public $data = false; //Permet de récupérer l'ensemble des données postés par l'utilisateur
     public $get = false; //Permet de récupérer l'ensemble des données postés en GET par l'utilisateur
     public $post = false; //Permet de récupérer l'ensemble des données postés en POST par l'utilisateur
+    public $files = false; //Permet de récupérer l'ensemble des fichiers postés via un formulaire
     
 /**
  * Constructeur de la classe
@@ -22,6 +23,7 @@ class Request {
  * 09/08/2012 --> Rajout de full URL
  * 10/01/2014 --> Rajout du referer
  * 02/10/2014 --> Modification gestion variable page
+ * 11/10/2014 --> Rajout de $this->files
  */    
 	public function __construct() {
 				
@@ -78,7 +80,10 @@ class Request {
 			//Gestion des fichiers
 			if(!empty($_FILES)) {
 				
-				foreach($_FILES as $k => $v) { $this->data[$k] = $_FILES[$k]; }
+				foreach($_FILES as $k => $v) { 
+					$this->data[$k] = $_FILES[$k]; 
+					$this->files[$k] = $_FILES[$k]; 
+				}
 			}
 		}
 	}    
