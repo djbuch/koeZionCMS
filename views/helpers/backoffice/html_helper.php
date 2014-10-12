@@ -42,15 +42,17 @@ else {
 	 * @param 	varchar $controller 	Controller de l'url
 	 * @param 	integer $id 			Identifiant de l'élément
 	 * @param 	varchar $action 		Action de l'url
+	 * @param 	varchar $css 			Paramètres supplémentaires pour rajouter une ou plusieurs classes CSS supplémentaires
 	 * @return 	varchar Code HTML du picto
 	 * @access 	public
 	 * @author 	koéZionCMS
 	 * @version 0.1 - 11/03/2013 by FI
+	 * @version 0.2 - 12/10/2014 by FI - Rajout de la variable $css
 	 */	
-		public function backoffice_statut_link($controller, $id, $online, $action = 'statut') {
+		public function backoffice_statut_link($controller, $id, $online, $action = 'statut', $css = '') {
 			
 			$onlineCss = ($online == 1) ? 'success' : 'error';
-			return '<a href="'.Router::url('backoffice/'.$controller.'/'.$action.'/'.$id).'"><span class="label '.$onlineCss.' chgstatut">&nbsp;</span></a>';
+			return '<a href="'.Router::url('backoffice/'.$controller.'/'.$action.'/'.$id).'" class="'.$css.'"><span class="label '.$onlineCss.' chgstatut">&nbsp;</span></a>';
 		}		
 		
 	/**
@@ -59,14 +61,16 @@ else {
 	 * @param 	varchar $controller 	Controller de l'url
 	 * @param 	integer $id 			Identifiant de l'élément
 	 * @param 	varchar $action 		Action de l'url
+	 * @param 	varchar $css 			Paramètres supplémentaires pour rajouter une ou plusieurs classes CSS supplémentaires
 	 * @return 	varchar Code HTML du picto
 	 * @access 	public
 	 * @author 	koéZionCMS
 	 * @version 0.1 - 11/03/2013 by FI
+	 * @version 0.2 - 12/10/2014 by FI - Rajout de la variable $css
 	 */	
-		public function backoffice_edit_link($controller, $id, $name, $action = 'edit') {
+		public function backoffice_edit_link($controller, $id, $name, $action = 'edit', $css = '') {
 		
-			return '<a href="'.Router::url('backoffice/'.$controller.'/'.$action.'/'.$id).'" class="edit_link">'.$name.'</a>';
+			return '<a href="'.Router::url('backoffice/'.$controller.'/'.$action.'/'.$id).'" class="edit_link '.$css.'">'.$name.'</a>';
 		}			
 		
 	/**
@@ -78,18 +82,20 @@ else {
 	 * @param 	integer $id 			Identifiant de l'élément
 	 * @param 	varchar $pictoOff 		Url du picto inactif
 	 * @param 	varchar $extension 		Paramètres supplémentaires + Paramètres supplémentaires pour modifier l'extension de l'url
+	 * @param 	varchar $css 			Paramètres supplémentaires pour rajouter une ou plusieurs classes CSS supplémentaires
 	 * @return 	varchar Code HTML du picto
 	 * @access 	public
 	 * @author 	koéZionCMS
 	 * @version 0.1 - 17/03/2013 by FI
 	 * @version 0.2 - 22/09/2014 by FI - Rajout de la variable $extension
+	 * @version 0.3 - 12/10/2014 by FI - Rajout de la variable $css
 	 */	
-		public function backoffice_picto($controller, $action, $pictoOn, $id = null, $pictoOff = null, $params = null, $extension = 'html') {
+		public function backoffice_picto($controller, $action, $pictoOn, $id = null, $pictoOff = null, $params = null, $extension = 'html', $css = '') {
 			
 			$url = 'backoffice/'.$controller.'/'.$action;
 			if(isset($id)) { $url .= '/'.$id; }
 			if(isset($params)) { $url .= $params; }
-			return '<a href="'.Router::url($url, $extension).'"><img src="'.BASE_URL.$pictoOn.'" /></a>';
+			return '<a href="'.Router::url($url, $extension).'" class="'.$css.'"><img src="'.BASE_URL.$pictoOn.'" /></a>';
 		}			
 		
 	/**
@@ -98,14 +104,16 @@ else {
 	 * @param 	varchar $controller 	Controller de l'url
 	 * @param 	integer $id 			Identifiant de l'élément
 	 * @param 	varchar $action 		Action de l'url
+	 * @param 	varchar $css 			Paramètres supplémentaires pour rajouter une ou plusieurs classes CSS supplémentaires
 	 * @return 	varchar Code HTML du picto
 	 * @access 	public
 	 * @author 	koéZionCMS
 	 * @version 0.1 - 10/03/2013 by FI
+	 * @version 0.2 - 12/10/2014 by FI - Rajout de la variable $css
 	 */	
-		public function backoffice_edit_picto($controller, $id, $action = 'edit') {
+		public function backoffice_edit_picto($controller, $id, $action = 'edit', $css = '') {
 			
-			return '<a href="'.Router::url('backoffice/'.$controller.'/'.$action.'/'.$id).'"><img src="'.BASE_URL.'/img/backoffice/thumb-edit.png" alt="edit" /></a>';
+			return '<a href="'.Router::url('backoffice/'.$controller.'/'.$action.'/'.$id).'" class="'.$css.'"><img src="'.BASE_URL.'/img/backoffice/thumb-edit.png" alt="edit" /></a>';
 		}		
 		
 	/**
@@ -114,27 +122,31 @@ else {
 	 * @param 	varchar $controller 	Controller de l'url
 	 * @param 	integer $id 			Identifiant de l'élément
 	 * @param 	varchar $action 		Action de l'url
+	 * @param 	varchar $css 			Paramètres supplémentaires pour rajouter une ou plusieurs classes CSS supplémentaires
 	 * @return 	varchar Code HTML du picto
 	 * @access 	public
 	 * @author 	koéZionCMS
 	 * @version 0.1 - 10/03/2013 by FI
+	 * @version 0.2 - 12/10/2014 by FI - Rajout de la variable $css
 	 */	
-		public function backoffice_delete_picto($controller, $id, $action = 'delete') {
+		public function backoffice_delete_picto($controller, $id, $action = 'delete', $css = '') {
 			
-			return '<a href="'.Router::url('backoffice/'.$controller.'/'.$action.'/'.$id).'" class="deleteBox" onclick="return confirm(\'Voulez vous vraiment supprimer?\');"><img src="'.BASE_URL.'/img/backoffice/thumb-delete.png" alt="delete" /></a>';
+			return '<a href="'.Router::url('backoffice/'.$controller.'/'.$action.'/'.$id).'" class="deleteBox '.$css.'" onclick="return confirm(\'Voulez vous vraiment supprimer?\');"><img src="'.BASE_URL.'/img/backoffice/thumb-delete.png" alt="delete" /></a>';
 		}			
 		
 	/**
 	 * Cette fonction est utilisée pour générer les boutons delete du backoffice
 	 *
+	 * @param 	varchar $css 			Paramètres supplémentaires pour rajouter une ou plusieurs classes CSS supplémentaires
 	 * @return 	varchar Code HTML du bouton
 	 * @access 	public
 	 * @author 	koéZionCMS
 	 * @version 0.1 - 17/03/2013 by FI
+	 * @version 0.2 - 12/10/2014 by FI - Rajout de la variable $css
 	 */	
-		public function backoffice_delete_button($controller) {
+		public function backoffice_delete_button($controller, $css = '') {
 			
-			return '<a class="btn red deleteFormBox" onclick="return confirm(\''._("Voulez vous vraiment supprimer?").'\');" href="formDelete" style="margin-top: 10px;"><span>'._("SUPPRIMER").'</span></a>
+			return '<a class="btn red deleteFormBox '.$css.'" onclick="return confirm(\''._("Voulez vous vraiment supprimer?").'\');" href="formDelete" style="margin-top: 10px;"><span>'._("SUPPRIMER").'</span></a>
 			<img src="'.BASE_URL.'/img/backoffice/arrow_top.png" />';
 		}		
 		
@@ -144,14 +156,16 @@ else {
 	 * @param 	varchar $controller 	Controller de l'url
 	 * @param 	integer $id 			Identifiant de l'élément
 	 * @param 	varchar $action 		Action de l'url
+	 * @param 	varchar $css 			Paramètres supplémentaires pour rajouter une ou plusieurs classes CSS supplémentaires
 	 * @return 	varchar Code HTML du picto
 	 * @access 	public
 	 * @author 	koéZionCMS
 	 * @version 0.1 - 10/03/2013 by FI
+	 * @version 0.2 - 12/10/2014 by FI - Rajout de la variable $css
 	 */	
-		public function backoffice_move2prev_picto($controller, $id, $action = "move2prev") {
+		public function backoffice_move2prev_picto($controller, $id, $action = "move2prev", $css = '') {
 			
-			return '<a href="'.Router::url('backoffice/'.$controller.'/'.$action.'/'.$id).'"><img src="'.BASE_URL.'/img/backoffice/up.png" alt="up" /></a>';
+			return '<a href="'.Router::url('backoffice/'.$controller.'/'.$action.'/'.$id).'" class="'.$css.'"><img src="'.BASE_URL.'/img/backoffice/up.png" alt="up" /></a>';
 		}			
 		
 	/**
@@ -160,14 +174,16 @@ else {
 	 * @param 	varchar $controller 	Controller de l'url
 	 * @param 	integer $id 			Identifiant de l'élément
 	 * @param 	varchar $action 		Action de l'url
+	 * @param 	varchar $css 			Paramètres supplémentaires pour rajouter une ou plusieurs classes CSS supplémentaires
 	 * @return 	varchar Code HTML du picto
 	 * @access 	public
 	 * @author 	koéZionCMS
 	 * @version 0.1 - 10/03/2013 by FI
+	 * @version 0.2 - 12/10/2014 by FI - Rajout de la variable $css
 	 */	
-		public function backoffice_move2next_picto($controller, $id, $action = "move2next") {
+		public function backoffice_move2next_picto($controller, $id, $action = "move2next", $css = '') {
 			
-			return '<a href="'.Router::url('backoffice/'.$controller.'/'.$action.'/'.$id).'"><img src="'.BASE_URL.'/img/backoffice/down.png" alt="up" /></a>';
+			return '<a href="'.Router::url('backoffice/'.$controller.'/'.$action.'/'.$id).'" class="'.$css.'"><img src="'.BASE_URL.'/img/backoffice/down.png" alt="up" /></a>';
 		}
 	}
 }
