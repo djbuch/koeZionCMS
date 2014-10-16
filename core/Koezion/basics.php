@@ -33,7 +33,22 @@
 			if($die) { die(); }
 		}
 	}
-	
+
+/**
+ * Cette fonction permet de récupérer le chemin d'un fichier par rapport au dossier d'origine du serveur (et non du site)
+ * Pratique, par exemple, pour charger une image chargée depuis le backoffice dans un pdf
+ * 
+ * @param varchar $file Chemin 
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 16/10/2014 by FI 
+ */	
+	function get_path_from_server_origin($file) {
+
+		$file = str_replace(BASE_URL, '', $file);
+		$file = str_replace('/', DS, $file);
+		return ROOT.$file;
+	}	
 	
 	if(!function_exists('_')) {	
 		

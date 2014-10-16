@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 16/10/2014</name>
+		<num>20141016.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Rajout de la fonction get_path_from_server_origin dans le fichier core>KoeZion>basics.php</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 14/10/2014</name>
 		<num>20141014.001</num>
 		<supervisor>KoéZionCMS</supervisor>
