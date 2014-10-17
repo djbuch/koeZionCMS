@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 17/10/2014</name>
+		<num>20141017.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Correction du test sur le contrôle du password lors de la connexion au backoffice</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 17/10/2014</name>
 		<num>20141017.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

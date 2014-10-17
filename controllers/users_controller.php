@@ -59,7 +59,7 @@ class UsersController extends AppController {
 				$httpHost = $_SERVER["HTTP_HOST"];
 				$checkPassword = true; //Par défaut on check le password
 				if(!isset($coreConfs['check_password_local'])) { $coreConfs['check_password_local'] = 0; } //Petit contrôle au cas ou le paramètre de cette conf ne soit pas renseigné
-				if($httpHost == 'localhost' || $httpHost == '127.0.0.1' && !$coreConfs['check_password_local']) { $checkPassword = false; }
+				if(($httpHost == 'localhost' || $httpHost == '127.0.0.1') && !$coreConfs['check_password_local']) { $checkPassword = false; }
 				
 				$passwordOk = true; //Par défaut la password est bon
 				if($checkPassword) { $passwordOk = ($postPassword == $bddPassword); } //Sauf, éventuellement, si on souhaite le contrôle
