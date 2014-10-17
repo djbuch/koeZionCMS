@@ -7,7 +7,7 @@ $coreConfs = $cfg->keys_values();
 
 ////////////////////
 //    TIMEZONE    //
-if(!isset($coreConfs['date_default_timezone'])) { date_default_timezone_set('Europe/Paris'); } //Par défaut EUrope/Paris
+if(!isset($coreConfs['date_default_timezone']) || empty($coreConfs['date_default_timezone'])) { date_default_timezone_set('Europe/Paris'); } //Par défaut EUrope/Paris
 else { date_default_timezone_set($coreConfs['date_default_timezone']); } //Sinon le timezone saisi en backoffice
 
 ///////////////////////////////

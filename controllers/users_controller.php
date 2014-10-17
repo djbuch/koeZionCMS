@@ -26,6 +26,7 @@ class UsersController extends AppController {
  * @version 0.4 - 11/07/2012 by FI - Mise en fonction privée de la récupération des sites Internet 
  * @version 0.5 - 02/03/2013 by FI - Modification de la gestion du role de l'utilisateur, donnée provenant maintenant de la table des groupes 
  * @version 0.6 - 16/04/2013 by FI - Mise en place de la récupération dynamique de la route pour l'interface d'administration
+ * @version 0.7 - 17/10/2014 by FI - Suppression du contrôle du mot de passe pour une utilisation locale
  */
 	function login() {
 		
@@ -54,8 +55,17 @@ class UsersController extends AppController {
 				$bddPassword = $user['password'];
 				$bddOnline = $user['online'];
 				
+				//En local on peut éviter la saisie des mots de passe
+				$httpHost = $_SERVER["HTTP_HOST"];
+				$checkPassword = true; //Par défaut on check le password
+				if(!isset($coreConfs['check_password_local'])) { $coreConfs['check_password_local'] = 0; } //Petit contrôle au cas ou le paramètre de cette conf ne soit pas renseigné
+				if($httpHost == 'localhost' || $httpHost == '127.0.0.1' && !$coreConfs['check_password_local']) { $checkPassword = false; }
+				
+				$passwordOk = true; //Par défaut la password est bon
+				if($checkPassword) { $passwordOk = ($postPassword == $bddPassword); } //Sauf, éventuellement, si on souhaite le contrôle
+				
 				//On va contrôler que le mot de passe saisi soit identique à celui en base de données
-				if($postPassword == $bddPassword) {
+				if($passwordOk) {
 				
 					//Ensuite on contrôle que cet utilisateur à bien le droit de se connecter au backoffice
 					if($bddOnline) { 

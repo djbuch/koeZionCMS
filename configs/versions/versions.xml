@@ -1,5 +1,16 @@
 ﻿<versions>
 	<version>
+		<name>Version du 17/10/2014</name>
+		<num>20141017.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Suppression possible du test du mot de passe lors de la connexion locale au backoffice</task>
+			<task author="FI" type="code">Rajout de l'option du contrôle du mot de passe en local dans les configurations générales</task>
+			<task author="FI" type="code">Correction Timezone bootstrap</task>
+			<task author="FI" type="code">Modification du fichier core.ini pour l'install</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 16/10/2014</name>
 		<num>20141016.001</num>
 		<supervisor>KoéZionCMS</supervisor>
