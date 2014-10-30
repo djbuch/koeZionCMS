@@ -655,7 +655,7 @@ class AppController extends Controller {
  * @author 	koéZionCMS
  * @version 0.1 - 02/10/2012 by FI
  * @version 0.2 - 02/10/2012 by FI - Récupération de tous les champs
- * @version 0.3 - 30/10/2012 by FI - Déplacement de cette fonction de Categories
+ * @version 0.3 - 30/10/2014 by FI - Déplacement de cette fonction de Categories
  */	
 	protected function _get_datas_category($id) {
 		
@@ -675,6 +675,196 @@ class AppController extends Controller {
 		$datas['category'] = $category;
 		return $datas;
 	}
+
+/**
+ * Cette fonction permet la récupération des articles liés à la catégorie courante
+ *
+ * @param 	array 	$datas 		Tableau des données à passer à la vue
+ * @param 	boolean $setLimit 	Indique si il faut mettre en place une limite lors de la recherche
+ * @return	array	Tableau de données à passer à la vue 
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 02/10/2012 by FI
+ * @version 0.3 - 30/10/2014 by FI - Déplacement de cette fonction de Categories
+ */		
+	protected function _get_posts_category($datas, $setLimit = true) {
+				
+		//On va compter le nombre d'articles de cette catégorie
+		$this->loadModel('Post');
+		$postsConditions = array('online' => 1, 'category_id' => $datas['category']['id']);
+		$nbPosts = $this->Post->findCount($postsConditions);
+		
+		if($nbPosts > 0) {
+			
+			//On va envoyer les informations nécessaires à la génération du flux RSS
+			$datas['rss_for_layout'] = array(
+				'title' => $datas['category']['page_title'],	
+				//'link' => Router::url('categories/rss/id:'.$datas['category']['id'].'/slug:'.$datas['category']['slug'], 'xml', true),
+				'link' => Router::url('posts/rss/'.$datas['category']['id'].'/'.$datas['category']['slug'], 'xml', true),
+				'pageLink' => Router::url('categories/view/id:'.$datas['category']['id'].'/slug:'.$datas['category']['slug'], 'html', true)
+			);
+		
+			//////////////////////////////////////////////////////
+			//   RECUPERATION DES CONFIGURATIONS DES ARTICLES   //
+			require_once(LIBS.DS.'config_magik.php'); 										//Import de la librairie de gestion des fichiers de configuration des posts
+			$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'posts.ini', false, false); 		//Création d'une instance
+			$postsConfigs = $cfg->keys_values();											//Récupération des configurations
+			//////////////////////////////////////////////////////
+		
+			$datas['displayPosts'] = true;
+		
+			//Récupération des types d'articles
+			$this->loadModel('PostsType');
+			$datas['postsTypes'] = $this->PostsType->get_for_front($datas['category']['id']);
+		
+			//Construction des paramètres de la requête
+			$postsQuery = array(
+				'conditions' => $postsConditions
+			);			
+			if($setLimit) { $postsQuery['limit'] = $this->pager['limit'].', '.$this->pager['elementsPerPage']; }
+		
+			if($postsConfigs['order'] == 'modified') { $postsQuery['order'] = 'modified DESC'; }
+			else if($postsConfigs['order'] == 'created') { $postsQuery['order'] = 'created DESC'; }
+			else if($postsConfigs['order'] == 'order_by') { $postsQuery['order'] = 'order_by ASC'; }
+		
+			$postsQuery['moreConditions'] = ''; //Par défaut pas de conditions de recherche complémentaire
+		
+			$datas['titlePostsList'] = $datas['category']['title_posts_list'];
+		
+			//////////////////////////////////////////////////////////////////////////
+			///  GESTION DES EVENTUELS PARAMETRES PASSES EN GET PAR L'UTILISATEUR   //
+			$filterPosts = $this->_filter_posts($datas['postsTypes'], $postsConfigs['search']);
+			if(isset($filterPosts['moreConditions'])) {
+		
+				$postsQuery['moreConditions'] = $filterPosts['moreConditions'];
+				unset($filterPosts['moreConditions']);
+			}
+		
+			$datas = am($datas, $filterPosts);
+			//////////////////////////////////////////////////////////////////////////
+		
+			$datas['posts'] = $this->Post->find($postsQuery); //Récupération des articles
+		
+			//On va compter le nombre d'élement de la catégorie
+			//On compte deux fois le nombre de post une fois en totalité une fois en rajoutant si il est renseigné le type d'article
+			//Car si on ne faisait pas cela on avait toujours la zone d'affichage des catégories qui s'affichaient lorsqu'on affichait les frères
+			//même si il n'y avait pas de post
+			$nbPostsCategory = $this->Post->findCount($postsConditions);
+		
+			$this->pager['totalElements'] = $this->Post->findCount($postsConditions, $postsQuery['moreConditions']); //On va compter le nombre d'élement
+			$this->pager['totalPages'] = ceil($this->pager['totalElements'] / $this->pager['elementsPerPage']); //On va compter le nombre de page
+		
+			//if($this->pager['totalElements'] > 0 || count($datas['postsTypes']) > 0) { $datas['is_full_page'] = 0; } //Si on doit afficher les articles alors il faut la colonne de droite
+		}
+
+		return $datas;
+	}
+    
+/**
+ * Cette fonction permet de récupérer les articles à afficher sur le frontoffice (Dans les contrôleurs Categories et Posts)
+ *
+ * @param 	array 	$postsTypes Liste des types de posts
+ * @param 	varchar $searchType Type de recherche
+ * @return 	array 	Configuration de la recherche
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 03/05/2012 by FI
+ * @version 0.3 - 30/10/2014 by FI - Déplacement de cette fonction de Categories
+ */       
+    protected function _filter_posts($postsTypes, $searchType) {
+    	
+    	$return = array();
+    	
+    	//Si l'internaute à cliqué sur un type d'article (ou plusieurs)
+    	if(isset($this->request->data['typepost']) && !empty($this->request->data['typepost'])) {
+    	
+    		/////////////////////////////////////////////
+    		//   MISE EN PLACE DE LA REQUETE STRICTE   //
+    		if($searchType == 'stricte') {
+    	
+    			$this->loadModel('PostsPostsType');
+    			$typePost = explode(',', $this->request->data['typepost']); //Récupération des types de post passés en GET
+    	
+    			$tableAliasBase = 'Kz'.Inflector::camelize('posts_posts_types'); //Définition de la base des alias
+    			$sql =  'SELECT DISTINCT '.$tableAliasBase.'.post_id '; //Construction de la requête
+    			$sql .= 'FROM posts_posts_types AS '.$tableAliasBase.' '; //Construction de la requête
+    	
+    			//Parcours de tous les types de posts passés en GET pour mettre en place les INNER JOIN
+    			foreach($typePost as $k => $v) {
+    	
+    				$tableAlias = $tableAliasBase.$k; //Définition de l'alias de la table
+    				$sql .= 'INNER JOIN posts_posts_types AS '.$tableAlias.' ON '.$tableAliasBase.'.post_id = '.$tableAlias.'.post_id '; //Construction de la requête
+    			}
+    	
+    			$sql .= 'WHERE 1 '; //Construction de la requête
+    	
+    			//Parcours de tous les types de posts passés en GET pour mettre en place les conditions de récupération
+    			foreach($typePost as $k => $v) {
+    	
+    				$tableAlias = $tableAliasBase.$k; //Définition de l'alias de la table
+    				$sql .= ' AND '.$tableAlias.'.posts_type_id = '.$v; //Construction de la requête
+    			}
+    	
+    	
+    			$result = $this->PostsPostsType->query($sql, true);
+    			$postsIdIn = array();
+    			foreach($result as $k => $v) { $postsIdIn[] = $v['post_id']; }
+    	
+    			if(count($postsIdIn)) { $return['moreConditions'] = 'KzPost.id IN ('.implode(',', $postsIdIn).')'; }
+    			else { $return['moreConditions'] = 'KzPost.id IN (0)'; }
+    	
+    			///////////////////////////////////////////
+    			//   MISE EN PLACE DE LA REQUETE LARGE   //
+    		} else if($searchType == 'large') {
+    	
+    			//Construction de la requête de recherche
+    			$return['moreConditions'] = 'KzPost.id IN (SELECT post_id FROM posts_posts_types WHERE posts_type_id';
+    			if(is_numeric($this->request->data['typepost'])) { $return['moreConditions'] .= ' = '.$this->request->data['typepost']; } //Si un seul type
+    			else { $return['moreConditions'] .= ' IN ('.$this->request->data['typepost'].')'; }	//Si plusieurs types
+    			$return['moreConditions'] .= ')';
+    		}
+    	
+    		$typepost = $this->request->data['typepost']; //Récupération des types passés en GET
+    		$libellePage = ''; //Par défaut le libellé de la page est vide
+    	
+    		//Parcours des types de posts
+    		foreach($postsTypes as $columnTitle => $postsTypesValues) {
+    	
+    			$typePost = explode(',', $typepost); //On transforme les types de posts en tableau
+    			foreach($postsTypesValues as $k => $v) { //On parcours les types de post
+    	
+    				//On stocke le libellé du type de post si celui-ci est passé en paramètre
+    				if(in_array($k, $typePost)) { $libellePage[] = $v; }
+    			}
+    		}
+    	
+    		$return['libellePage'] = 'Articles de la catégorie : '.implode(', ', $libellePage); //Construction du titre de la page
+    	
+    		//Si l'internaute à cliqué sur un rédacteur
+    	} else if(isset($this->request->data['writer']) && is_numeric($this->request->data['writer'])) {
+    	
+    		$return['moreConditions'] = 'modified_by = '.$this->request->data['writer'];
+    	
+    		//On va récupérer le libellé de l'utilisateur pour le stocker dans le libellé de la page
+    		$this->loadModel('User');
+    		$user = $this->User->findFirst(array('conditions' => array('id' => $this->request->data['writer'])));
+    		$return['libellePage'] = "Articles rédigés par ".$user['name'];
+    		$this->unloadModel('User');
+    	
+    		//Si l'internaute à cliqué sur une date
+    	} else if(isset($this->request->data['date']) && !empty($this->request->data['date'])) {
+    	
+    		$date = explode('-', $this->request->data['date']); //Récupération des données sur la date
+    		if(isset($date[0]) && is_numeric($date[0]) && isset($date[1]) && is_numeric($date[1])) {
+    	
+    			$return['moreConditions'] = 'YEAR(modified) = '.$date[0].' AND MONTH(modified) = '.$date[1];
+    			$displayDate = $this->components['Text']->date_sql_to_human($this->request->data['date'].'-00');
+    			$return['libellePage'] = "Articles rédigés en ".$displayDate['txt'];
+    		}
+    	}
+    	
+    	return $return;
+    }
 	
 /**
  * Cette fonction permet de récupérer les sliders

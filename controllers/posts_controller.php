@@ -150,6 +150,29 @@ class PostsController extends AppController {
 		}
 	}
 	
+/**
+ * Cette fonction est chargée de mettre en place le flux rss pour la catégorie demandée
+ * 
+ * @param 	integer $id 	Identifiant de la page
+ * @param 	varchar $slug 	Url de la page
+ * @access	public
+ * @author	koéZionCMS
+ * @version 0.1 - 05/11/2012 by FI 
+ * @version 0.2 - 30/10/2014 by FI - Déplacement de cette fonction du contrôleur Categories 
+ * @see http://baptiste-wicht.developpez.com/tutoriels/php/rss/ : Pour l'exemple de la structure du fichier ainsi que les différents paramètres possibles
+ * @see http://www.craym.eu/tutoriels/developpement/flux_RSS.html : A lire plus complet que le précédent
+ * @see http://curul2.free.fr/style.php?feed= ; Pour rajouter un css au flux
+ */	
+	public function rss($id, $slug) {
+		
+		$this->layout = 'rss'; //Définition du layout à utiliser		
+		
+		$datas = $this->_get_datas_category($id);
+		$datas = $this->_get_posts_category($datas, false);		
+		
+		$this->set($datas);
+	}
+	
 //////////////////////////////////////////////////////////////////////////////////////////	
 //										BACKOFFICE										//
 //////////////////////////////////////////////////////////////////////////////////////////

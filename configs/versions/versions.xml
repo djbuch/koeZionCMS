@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 30/10/2014</name>
+		<num>20141030.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Reprise de la gestion des flux RSS, passage de la fonction dans le contrôleur Posts</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 30/10/2014</name>
 		<num>20141030.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
