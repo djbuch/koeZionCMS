@@ -45,9 +45,9 @@ class Post extends Model {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 17/01/2012 by FI
- * @deprecated since 24/08/2012
+ * @version 0.2 - 22/10/2014 by FI - On réactive cette option qui n'était plus utilisé depuis le 24/08/2012
  */
-	//var $files_to_upload = array('img' => array('bdd' => true));
+	var $files_to_upload = array('img' => array('bdd' => true));
 	
 /**
  * Tableau contenant l'ensemble des champs intégrer dans l'index de recherche

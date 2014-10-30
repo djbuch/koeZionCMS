@@ -642,6 +642,40 @@ class AppController extends Controller {
 		$this->render('/elements/ajax/backoffice_ajax_add_right_button');
 	}
 	
+//////////////////////////////////////////////////////////////////////////////////////
+//										PRIVEES										//
+//////////////////////////////////////////////////////////////////////////////////////	
+
+/**
+ * Cette fonction permet la récupération des données de la catégorie courante
+ *
+ * @param 	integer $id Identifiant de la catégorie
+ * @return	array	Tableau contenant les données de la catégorie 
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 02/10/2012 by FI
+ * @version 0.2 - 02/10/2012 by FI - Récupération de tous les champs
+ * @version 0.3 - 30/10/2012 by FI - Déplacement de cette fonction de Categories
+ */	
+	protected function _get_datas_category($id) {
+		
+		$this->loadModel('Category');
+		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS;
+		$cacheFile 		= "category_".$id;
+		
+		$category = Cache::exists_cache_file($cacheFolder, $cacheFile);
+		
+		if(!$category) {
+		
+			$conditions = array('conditions' => array('online' => 1, 'id' => $id));
+			$category = $this->Category->findFirst($conditions);		
+			Cache::create_cache_file($cacheFolder, $cacheFile, $category);
+		}
+
+		$datas['category'] = $category;
+		return $datas;
+	}
+	
 /**
  * Cette fonction permet de récupérer les sliders
  *

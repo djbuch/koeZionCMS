@@ -128,6 +128,7 @@ class TextComponent extends Component {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 06/03/2012 by FI
+ * @version 0.2 - 21/10/2014 by FI - Rajout de explode dans le retour
  */
 	public function date_sql_to_human($date) {
 				
@@ -145,7 +146,15 @@ class TextComponent extends Component {
 			'sql' => $dateTemp[0].'-'.$dateTemp[1],
 			'date' => array(
 				'fullNumber' => $day.'.'.$dateTemp[1].'.'.$year,
-				'fullTxt' => $day.' '.$this->months['short'][$month]." ".$year
+				'fullTxt' => $day.' '.$this->months['short'][$month]." ".$year,
+				'explode' => array(
+					'd' => $day,
+					'm' => array(
+						'number' => $dateTemp[1],
+						'text' => $this->months['short'][$month]
+					),
+					'Y' => $year
+				)
 			),
 			'time' => array(
 				'h' => '',

@@ -1,5 +1,16 @@
 ﻿<versions>
 	<version>
+		<name>Version du 30/10/2014</name>
+		<num>20141030.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Déplacement de la fonction CategoriesController->_get_datas_category dans AppController</task>
+			<task author="FI" type="code">Rajout de urlencode et urldecode dans le contrôleur Searchs</task>
+			<task author="FI" type="code">Réactivation de l'utilisation de l'image d'illustration dans le module Posts</task>
+			<task author="FI" type="code">Modification de la fonction date_sql_to_human du composant Text</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 17/10/2014</name>
 		<num>20141017.002</num>
 		<supervisor>KoéZionCMS</supervisor>
