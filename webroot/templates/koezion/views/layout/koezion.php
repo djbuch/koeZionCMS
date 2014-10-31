@@ -37,9 +37,8 @@
 			$websiteParams['tpl_layout'].'/css/theme_responsive',
 			$websiteParams['tpl_layout'].'/css/font-awsome'
 		);			
-		echo $helpers['Html']->css($css);	
-		echo $helpers['Html']->upload_additional_files('CSS');		
-		if(!empty($websiteParams['css_hack'])) { ?><style type="text/css"><?php echo $websiteParams['css_hack']; ?></style><?php }		
+		echo $helpers['Html']->css($css);				
+		if(!empty($websiteParams['css_hack_file'])) { ?><link href="<?php echo $websiteParams['css_hack_file']; ?>" rel="stylesheet" type="text/css" media="all" /><?php }		
 		?>
 	</head>
 	<body data-baseurl="<?php echo BASE_URL; ?>">
@@ -90,13 +89,11 @@
 			$websiteParams['tpl_layout'].'/js/theme',
 			$websiteParams['tpl_layout'].'/js/fittext/jquery.fittext'
 		);
-		echo $helpers['Html']->js($js);	
-		echo $helpers['Html']->upload_additional_files('JS');	
-		if(!empty($websiteParams['js_hack'])) { ?><script type="text/javascript"><?php echo $websiteParams['js_hack']; ?></script><?php }
+		echo $helpers['Html']->js($js);		
+		if(!empty($websiteParams['js_hack_file'])) { ?><script src="<?php echo $websiteParams['js_hack_file']; ?>" type="text/javascript"></script><?php }
 		
 		echo $helpers['Html']->analytics($websiteParams['ga_code']); 
 		?>
-
 		<script>
 			$(document).ready(function(){
 				$(function(){

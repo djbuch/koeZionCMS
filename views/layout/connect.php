@@ -30,8 +30,7 @@
 			<?php
 		}
 		
-		if(!empty($websiteParams['connect_css_file'])) { ?><link href="<?php echo $websiteParams['connect_css_file']; ?>" rel="stylesheet" type="text/css" /><?php }
-		if(!empty($websiteParams['connect_css'])) { ?><style type="text/css"><?php echo $websiteParams['connect_css']; ?></style><?php }
+		if(!empty($websiteParams['connect_css_file'])) { ?><link href="<?php echo $websiteParams['connect_css_file']; ?>" rel="stylesheet" type="text/css" media="all" /><?php }
 		?>
 	</head>
 	<body>
@@ -79,10 +78,10 @@
 		$js = array(
 			'/backoffice/jquery-1.7.1.min', 	//Librairie JQuery
 			'/backoffice/jquery.smartTab',		//Pour la mise en place des smarttabs			
-			'/connect/costum', 					//Appel des différents plugins
+			'/connect/custom', 					//Appel des différents plugins
 		);
 		echo $helpers['Html']->js($js);
-		if(!empty($websiteParams['connect_js'])) { ?><script type="text/javascript"><?php echo $websiteParams['connect_js']; ?></script><?php }
+		if(!empty($websiteParams['connect_js_file'])) { ?><script src="<?php echo $websiteParams['connect_js_file']; ?>" type="text/javascript"></script><?php }
 		?>
 	</body>
 </html>

@@ -118,19 +118,22 @@
 			<?php 
 			echo $helpers['Form']->upload_files('connect_background', array('label' => "Image de fond"));
 			echo $helpers['Form']->input('connect_text', 'Texte', array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge'));	
-			echo $helpers['Form']->upload_files('connect_css_file', array('label' => "Fichier css supplémentaire"));		
-			echo $helpers['Form']->input('connect_css', 'Rajout de code css', array('type' => 'textarea', 'rows' => 30, 'cols' => 10, 'class' => 'xxlarge'));
-			echo $helpers['Form']->input('connect_js', 'Rajout de code js', array('type' => 'textarea', 'rows' => 30, 'cols' => 10, 'class' => 'xxlarge'));
+			echo $helpers['Form']->upload_files('connect_css_file', array('label' => "Ficher CSS complémentaire"));		
+			echo $helpers['Form']->upload_files('connect_js_file', array('label' => "Ficher JS complémentaire"));		
+			//echo $helpers['Form']->input('connect_css', 'Rajout de code css', array('type' => 'textarea', 'rows' => 30, 'cols' => 10, 'class' => 'xxlarge'));
+			//echo $helpers['Form']->input('connect_js', 'Rajout de code js', array('type' => 'textarea', 'rows' => 30, 'cols' => 10, 'class' => 'xxlarge'));
 			?>
 		</div>
 	</div>
 	<div id="cssjs">
 		<div class="content nopadding">
-			<?php 
-			echo $helpers['Form']->input('css_hack', 'Rajout de code css', array('type' => 'textarea', 'rows' => 30, 'cols' => 10, 'class' => 'xxlarge'));
-			echo $helpers['Form']->upload_files('css_hack_file', array('label' => "Fichier(s) css", 'button_value' => 'Vous pouvez uploader de(s) fichier(s) CSS supplémentaire(s) si besoin', 'tooltip' => "Attention ce fichier doit obligatoirement se trouver dans le dossier Files/css (Si celui-ci n'existe pas vous devrez le créer).", 'display_input' => false));			
-			echo $helpers['Form']->input('js_hack', 'Rajout de code js', array('type' => 'textarea', 'rows' => 30, 'cols' => 10, 'class' => 'xxlarge'));
-			echo $helpers['Form']->upload_files('js_hack_file', array('label' => "Fichier(s) javascript", 'button_value' => 'Vous pouvez uploader de(s) fichier(s) JS supplémentaire(s) si besoin', 'tooltip' => "Attention ce fichier doit obligatoirement se trouver dans le dossier Files/js (Si celui-ci n'existe pas vous devrez le créer).", 'display_input' => false));
+			<?php	
+			echo $helpers['Form']->upload_files('css_hack_file', array('label' => "Ficher CSS complémentaire"));		
+			echo $helpers['Form']->upload_files('js_hack_file', array('label' => "Ficher JS complémentaire"));
+			//echo $helpers['Form']->input('css_hack', 'Rajout de code css', array('type' => 'textarea', 'rows' => 30, 'cols' => 10, 'class' => 'xxlarge'));
+			//echo $helpers['Form']->upload_files('css_hack_file', array('label' => "Fichier(s) css", 'button_value' => 'Vous pouvez uploader de(s) fichier(s) CSS supplémentaire(s) si besoin', 'tooltip' => "Attention ce fichier doit obligatoirement se trouver dans le dossier Files/css (Si celui-ci n'existe pas vous devrez le créer).", 'display_input' => false));			
+			//echo $helpers['Form']->input('js_hack', 'Rajout de code js', array('type' => 'textarea', 'rows' => 30, 'cols' => 10, 'class' => 'xxlarge'));
+			//echo $helpers['Form']->upload_files('js_hack_file', array('label' => "Fichier(s) javascript", 'button_value' => 'Vous pouvez uploader de(s) fichier(s) JS supplémentaire(s) si besoin', 'tooltip' => "Attention ce fichier doit obligatoirement se trouver dans le dossier Files/js (Si celui-ci n'existe pas vous devrez le créer).", 'display_input' => false));
 			?>
 		</div>
 	</div>

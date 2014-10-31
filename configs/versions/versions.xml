@@ -1,5 +1,15 @@
 ﻿<versions>
 	<version>
+		<name>Version du 31/10/2014</name>
+		<num>20141031.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Reprise de la gestion des CSS et des JS additionnels</task>
+			<task author="FI" type="code">Modification de la BDD Websites et Modules</task>
+			<task author="FI" type="code">Mise en place de la possibilité de désactiver un module de l'affichage dans le menu</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 30/10/2014</name>
 		<num>20141030.002</num>
 		<supervisor>KoéZionCMS</supervisor>

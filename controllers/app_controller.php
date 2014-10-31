@@ -1350,7 +1350,7 @@ class AppController extends Controller {
 		foreach($modulesTypes as $k => $v) { $leftMenus[$k] = array('libelle' => $v, 'menus' => array()); }						
 		
 		$this->loadModel('Module');
-		$leftMenuTMP = $this->Module->find(array('conditions' => array('online' => 1), 'order' => 'order_by ASC'));
+		$leftMenuTMP = $this->Module->find(array('conditions' => array('online' => 1, 'no_display_in_menu' => 0), 'order' => 'order_by ASC'));
 		foreach($leftMenuTMP as $k => $v) { 
 			
 			$session = Session::read('Backoffice'); //Récupération des données de la session courante

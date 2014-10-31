@@ -1,5 +1,17 @@
 ﻿<versions> 
 	<version>
+		<name>Version du 31/10/2014</name>
+		<num>20141031.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI">ALTER TABLE  `websites` CHANGE  `css_hack`  `css_hack_file` LONGTEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL;</task>
+			<task author="FI">ALTER TABLE  `websites` CHANGE  `js_hack`  `js_hack_file` LONGTEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL;</task>
+			<task author="FI">ALTER TABLE  `websites` CHANGE  `connect_js`  `connect_js_file` LONGTEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL;</task>
+			<task author="FI">ALTER TABLE  `websites` DROP  `connect_css`;</task>
+			<task author="FI">ALTER TABLE  `modules` CHANGE  `display_in_menu`  `no_display_in_menu` INT( 11 ) NOT NULL;</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 05/09/2014</name>
 		<num>20140905.001</num>
 		<supervisor>KoéZionCMS</supervisor>

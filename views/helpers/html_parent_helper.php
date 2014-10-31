@@ -280,11 +280,16 @@ class HtmlParentHelper extends Helper {
 /**
  * Cette fonction permet l'insertion de fichier CSS ou JS supplémentaire directement depuis le dossier upload
  * 
+ * Appel : 
+ * 	echo $helpers['Html']->upload_additional_files('CSS');
+ * 	echo $helpers['Html']->upload_additional_files('JS');
+ * 
  * @param	varchar $type 	CSS ou JS
  * @param	array 	$except Tableau contenant la liste des fichiers à ignorer
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 19/03/2014 by FI
+ * @deprecated - Since 31/10/2014 by FI - Suppression de cette fonctionnalité car trop lourde à gérer
  */	
 	public function upload_additional_files($type, $except = null) {
 				
