@@ -75,6 +75,11 @@ class View extends Object {
 		
 		$this->rendered = false;		
     }    
+    
+    
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//										FONCTIONS PUBLIQUES										//
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
  * Cette fonction permet d'effectuer le rendu d'une page
@@ -87,6 +92,7 @@ class View extends Object {
  * @version 0.3 - 05/01/2014 by FI - Mise en place de la récupération des vues plugins directement dans les dossiers des templates de façon automatique
  * @version 0.4 - 13/02/2014 by FI - Gestion automatique du layout lors de requêtes AJAX
  * @version 0.5 - 07/08/2014 by FI - Mise en place des hooks pour les vues
+ * @version 0.6 - 01/11/2014 by FI - Modification de la gestion des hooks, la gestion étant maintenant par site on récupère la donnée issue de la BDD et on ne charge plus tous les fichiers. Fonctionnement plus simple lors de la gestion multisites
  * @todo IMPORTANT essayer de voir pourquoi si on retire le file_exists($view) la fonction export du plugin formulaire ne marche plus!!!
  * @todo Essayer d'améliorer l'ajout de websitebaseurl dans le template car il est inséré juste après la récupération de la vue --> supprimé le 25/06/2013 rajouté directement dans le template
  */    
@@ -162,9 +168,15 @@ class View extends Object {
     	//
     	//La vue initialement souhaitée est de la forme nom_du_controleur/nom_de_la_vue
     	//
-    	//Nous allons donc parcourir le dossier contenant les fichiers hook pour les charger et effectuer des tests sur l'existence d'une ligne pour la vue courante    	
-    	foreach(FileAndDir::directoryContent(CONFIGS_HOOKS.DS.'views') as $hookFile) { include(CONFIGS_HOOKS.DS.'views'.DS.$hookFile); } //Chargement des fichier
+    	//Nous allons donc charger les fichiers hooks, s'il y en a, et effectuer des tests sur l'existence d'une ligne pour la vue courante    	
+    	if(isset($this->vars['websiteParams'])) { $websiteHooks = $this->vars['websiteParams']; } //Frontoffice  
+    	else { $websiteHooks = Session::read('Backoffice.Websites.details.'.CURRENT_WEBSITE_ID); } //Backoffice
+    	$viewsHooks = $this->_load_hooks_files('VIEWS', $websiteHooks);
     	if(isset($viewsHooks[$params['controllerVarName'].'/'.$params['action']])) { $view = $viewsHooks[$params['controllerVarName'].'/'.$params['action']]; }
+    	
+    	//ANCIENNE VERSION
+    	//foreach(FileAndDir::directoryContent(CONFIGS_HOOKS.DS.'views') as $hookFile) { include(CONFIGS_HOOKS.DS.'views'.DS.$hookFile); } //Chargement des fichier    	
+    	//if(isset($viewsHooks[$params['controllerVarName'].'/'.$params['action']])) { $view = $viewsHooks[$params['controllerVarName'].'/'.$params['action']]; }
     	    	
     	ob_start(); //On va récupérer dans une variable le contenu de la vue pour l'affichage dans la variable layout_for_content
     	if(file_exists($view)) require_once($view); //Chargement de la vue
@@ -195,6 +207,7 @@ class View extends Object {
  * @version 0.7 - 20/10/2013 by AB - Rajout de la gestion du dossier du plugin
  * @version 0.8 - 27/10/2013 by FI - Changement du nom de la variable inElementFolder par isPlugin
  * @version 0.9 - 18/12/2013 by FI - Modification de la gestion des hooks pour le chargement des fichiers
+ * @version 0.6 - 01/11/2014 by FI - Modification de la gestion des hooks, la gestion étant maintenant par site on récupère la donnée issue de la BDD et on ne charge plus tous les fichiers. Fonctionnement plus simple lors de la gestion multisites
  */
     public function element($element, $vars = null, $isPlugin = false) {
 	
@@ -215,9 +228,15 @@ class View extends Object {
     	//		'backoffice/formulaires/categories' => 'backoffice/MON_DOSSIER/formulaires/categories'
     	//	);
     	//
-    	//Nous allons donc parcourir le dossier contenant les fichiers hook pour les charger et effectuer des tests sur l'existence d'une ligne pour l'élément courant
-    	foreach(FileAndDir::directoryContent(CONFIGS_HOOKS.DS.'elements') as $hookFile) { include(CONFIGS_HOOKS.DS.'elements'.DS.$hookFile); } //Chargement des fichier
+    	//Nous allons donc charger les fichiers hooks, s'il y en a, et effectuer des tests sur l'existence d'une ligne pour l'élément courant  
+    	if(isset($this->vars['websiteParams'])) { $websiteHooks = $this->vars['websiteParams']; } //Frontoffice  
+    	else { $websiteHooks = Session::read('Backoffice.Websites.details.'.CURRENT_WEBSITE_ID); } //Backoffice
+    	$elementsHooks = $this->_load_hooks_files('ELEMENTS', $websiteHooks);
     	if(isset($elementsHooks[$element])) { $element = $elementsHooks[$element]; }
+    	
+    	//ANCIENNE VERSION
+    	//foreach(FileAndDir::directoryContent(CONFIGS_HOOKS.DS.'elements') as $hookFile) { include(CONFIGS_HOOKS.DS.'elements'.DS.$hookFile); } //Chargement des fichier
+    	//if(isset($elementsHooks[$element])) { $element = $elementsHooks[$element]; }
     	////////////////////////////////////////////////////////////   	 	
     	
     	if(isset($vars) && !empty($vars)) { 
@@ -398,4 +417,38 @@ class View extends Object {
 			die();
 		}
 	}
+	
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//										FONCTIONS PRIVEES										//
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Cette fonction permet d'effectuer le chargement des fichiers hooks pour les vues et les éléments
+ * 
+ * @param 	varchar $type 			Type de hook (VIEWS or ELEMENTS)
+ * @param 	array 	$websiteHooks 	Tableau contenant le nom des fichiers à charger
+ * @return 	array 	Tableau contenant les hooks à mettre en place
+ * @access	protected
+ * @author	koéZionCMS
+ * @version 0.1 - 01/11/2014 by FI
+ */	
+	protected function _load_hooks_files($type, $websiteHooks) {
+		
+		if(!empty($websiteHooks['hook_filename'])) { 
+		
+			$hooks = explode(';', $websiteHooks['hook_filename']);
+			
+			if($type == 'VIEWS') { $hooksPath = CONFIGS_HOOKS.DS.'views'.DS; }
+			else if($type == 'ELEMENTS') { $hooksPath = CONFIGS_HOOKS.DS.'elements'.DS; }
+		
+			foreach($hooks as $hook) {
+				
+				$hookFile = $hooksPath.$hook.'.php';
+				if(file_exists($hookFile)) { include($hookFile); }				
+			}
+			
+			if(isset($viewsHooks)) { return $viewsHooks; }
+			else if(isset($elementsHooks)) { return $elementsHooks; }
+		}
+	} 
 }

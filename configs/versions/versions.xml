@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 01/11/2014</name>
+		<num>20141101.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Reprise de la gestion des hooks, cette gestion se fait maintenant par site en fonction des infos de la base de données</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 31/10/2014</name>
 		<num>20141031.001</num>
 		<supervisor>KoéZionCMS</supervisor>

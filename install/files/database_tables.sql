@@ -370,6 +370,7 @@ CREATE TABLE IF NOT EXISTS `websites` (
   `connect_js_file` longtext COLLATE utf8_unicode_ci NOT NULL,
   `slider_type` int(11) NOT NULL DEFAULT '1',
   `favicon` text COLLATE utf8_unicode_ci NOT NULL,
+  `hook_filename` longtext COLLATE utf8_unicode_ci NOT NULL,
   `online` int(11) NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
