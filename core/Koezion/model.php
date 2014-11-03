@@ -597,10 +597,10 @@ class Model extends Object {
 
 			$sql .= $this->delete_connected_datas_sql($connectedDatasPivot, $id);				
 		}
-		pr($sql);
-		/*$queryResult = $this->query($sql);		
+		
+		$queryResult = $this->query($sql);		
 		if(isset($this->searches_params)) { $this->delete_search_index($id); } //Suppression de l'index dans la recherche		
-		return $queryResult;*/
+		return $queryResult;
 	}
 	
 /**

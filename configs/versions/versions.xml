@@ -1,6 +1,13 @@
 ﻿<versions>
 	<version>
 		<name>Version du 03/11/2014</name>
+		<num>20141103.005</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Correction tests fonction delete du modèle principal</task>
+		</tasks>
+	<version>
+		<name>Version du 03/11/2014</name>
 		<num>20141103.004</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
