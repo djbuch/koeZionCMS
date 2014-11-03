@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 03/11/2014</name>
+		<num>20141103.004</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Rajout de la variable $$deleteConnectedDatasEscapeModels dans le modèle principal, cette variable permet d'échapper certains modèles (tables) lors de la suppression</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 03/11/2014</name>
 		<num>20141103.003</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

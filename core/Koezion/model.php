@@ -46,6 +46,16 @@ class Model extends Object {
  * @version 0.1 - 03/11/2014 by FI
  */
 	var $deleteConnectedDatas = true;
+	
+/**
+ * Tableau contenant la liste des modèle à éviter lors de la suppression des données connectées
+ * 
+ * @var 	boolean/array
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 03/11/2014 by FI
+ */
+	var $deleteConnectedDatasEscapeModels = false;
     
 /**
  * Constructeur de la classe
@@ -587,10 +597,10 @@ class Model extends Object {
 
 			$sql .= $this->delete_connected_datas_sql($connectedDatasPivot, $id);				
 		}
-		
-		$queryResult = $this->query($sql);		
+		pr($sql);
+		/*$queryResult = $this->query($sql);		
 		if(isset($this->searches_params)) { $this->delete_search_index($id); } //Suppression de l'index dans la recherche		
-		return $queryResult;
+		return $queryResult;*/
 	}
 	
 /**
@@ -602,18 +612,32 @@ class Model extends Object {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 03/11/2014 by FI
+ * @version 0.2 - 03/11/2014 by FI - Rajout de la possibilité d'échapper des tables lors de la suppression des données connectées
  */	
 	public function delete_connected_datas_sql($fieldName, $fieldValue) {
 				
+		//Récupération des tables à échapper
+		$escapeTables = array();
+		if($this->deleteConnectedDatasEscapeModels) {
+			
+			foreach($this->deleteConnectedDatasEscapeModels as $model) {
+				
+				$modelObject = $this->loadModel($model, true);
+				$escapeTables[] = $modelObject->table;
+			}
+		}
+		
 		$sqlDelete = '';
 		//On fait le parcours de l'ensemble des table de la base de données
 		foreach($this->table_list_in_database() as $table) {
 		
-			//Pour chacune d'elles on va récupérer le shéma et vérifier si la colonne website_id est présente
+			//Pour chacune d'elles on va récupérer le shéma et vérifier si la colonne $fieldName est présente
 			$tableShema = $this->shema($table); //Récupération du shéma de la table $table
-			//On sort de la boule les tables qui commencent par _ (généralement des tables de backup ou de test)
-			//On check si website_id est présent dans le shéma
-			if(substr($table, 0, 1) != '_' && in_array($fieldName, $tableShema)) { 
+			
+			//On sort de la boucle les tables qui commencent par _ (généralement des tables de backup ou de test)
+			//On sort de la boucle les tables à échapper
+			//On check si $fieldName est présent dans le shéma
+			if(substr($table, 0, 1) != '_' && !in_array($table, $escapeTables) && in_array($fieldName, $tableShema)) { 
 				
 				if(is_array($fieldValue)) { $idConditions = " IN (".implode(',', $fieldValue).')'; }
 				else { $idConditions = " = ".$fieldValue; }
