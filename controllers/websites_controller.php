@@ -107,12 +107,14 @@ class WebsitesController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 23/03/2012 by FI
  * @version 0.2 - 08/05/2013 by FI - Amélioration de la fonction de suppression d'un site pour prendre en compte l'ensemble des tables contenant une colonne website_id
+ * @version 0.3 - 03/11/2014 by FI - Reprise de la suppression des données dans les tables
  */
 	function backoffice_delete($id, $redirect = true) {
 	
 		$parentDelete = parent::backoffice_delete($id, false); //On fait appel à la fonction d'édition parente
 		if($parentDelete) {
 	
+			$sqlDelete = '';
 			//On fait le parcours de l'ensemble des table de la base de données
 			foreach($this->Website->table_list_in_database() as $table) {
 				
@@ -120,15 +122,9 @@ class WebsitesController extends AppController {
 				$tableShema = $this->Website->shema($table); //Récupération du shéma de la table $table
 				//On sort de la boule les tables qui commencent par _ (généralement des tables de backup ou de test)
 				//On check si website_id est présent dans le shéma
-				if(substr($table, 0, 1) != '_' && in_array('website_id', $tableShema)) {
-		
-					$modelName = Inflector::classify($table); //Transformation du nom de la table en nom de modèle grâce à Inflector
-					$modelName = str_replace('Plugins', '', $modelName); //Cas des plugins on supprime le mot Plugins car il est présent dans le nom de la table
-					$this->loadModel($modelName); //Chargement du modèle
-					$this->$modelName->deleteByName('website_id', $id); //Suppression des données
-					$this->unloadModel($modelName); //Déchargement du modèle
-				}
+				if(substr($table, 0, 1) != '_' && in_array('website_id', $tableShema)) { $sqlDelete .= "DELETE FROM `".$table."` WHERE `website_id` = ".$id.";\n"; }
 			}
+			if($sqlDelete) { $this->Website->query($sqlDelete); }
 			
 			$this->_edit_session();
 			
