@@ -1461,29 +1461,4 @@ class AppController extends Controller {
 		if(!isset($datas)) { $this->request->data = $datasToCheck; }
 		else { return $datasToCheck; } 
 	}
-	
-/**
- * Cette fonction va permettre la suppression des données connectées à la donnée en cours de suppression
- * 
- * @param 	varchar $fieldName 	Champ servant de pivot pour la suppression 
- * @param 	integer $fieldValue	Valeur du champ à supprimer 
- * @param 	varchar $model 		Nom du modèle courant 
- * @access 	protected
- * @author 	koéZionCMS
- * @version 0.1 - 03/11/2014 by FI
- */	
-	protected function _delete_connected_datas($fieldName, $fieldValue, $model) {
-				
-		$sqlDelete = '';
-		//On fait le parcours de l'ensemble des table de la base de données
-		foreach($this->$model->table_list_in_database() as $table) {
-		
-			//Pour chacune d'elles on va récupérer le shéma et vérifier si la colonne website_id est présente
-			$tableShema = $this->$model->shema($table); //Récupération du shéma de la table $table
-			//On sort de la boule les tables qui commencent par _ (généralement des tables de backup ou de test)
-			//On check si website_id est présent dans le shéma
-			if(substr($table, 0, 1) != '_' && in_array($fieldName, $tableShema)) { $sqlDelete .= "DELETE FROM `".$table."` WHERE `".$fieldName."` = ".$fieldValue.";\n"; }
-		}
-		if($sqlDelete) { $this->$model->query($sqlDelete); }
-	}
 }

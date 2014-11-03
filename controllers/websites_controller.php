@@ -115,8 +115,6 @@ class WebsitesController extends AppController {
 		$parentDelete = parent::backoffice_delete($id, false); //On fait appel à la fonction d'édition parente
 		if($parentDelete) {
 			
-			$this->_delete_connected_datas('website_id', $id, 'Website');
-			
 			$this->_edit_session();
 			
 			if($redirect) { $this->redirect('backoffice/websites/index'); } //On retourne sur la page de listing

@@ -36,6 +36,16 @@ class Model extends Object {
  * @version 0.1 - 07/04/2014 by FI
  */
 	var $checkOnDelete = false;
+	
+/**
+ * Booléen indiquant s'il faut supprimer automatiquement l'ensemble des données connectées à l'élément en cours de suppression
+ * 
+ * @var 	boolean/array
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 03/11/2014 by FI
+ */
+	var $deleteConnectedDatas = true;
     
 /**
  * Constructeur de la classe
@@ -537,24 +547,25 @@ class Model extends Object {
  * @version 0.4 - 17/01/2014 by FI - Mise en place de la variable $moreControls
  * @version 0.5 - 01/04/2014 by FI - Evolution mise en place de la gestion multisites
  * @version 0.6 - 07/04/2014 by FI - Mise en place de la suppression dans les modèles associés via $this->checkOnDelete
+ * @version 0.7 - 03/11/2014 by FI - Mise en place de la suppression des données connectées via la variable $deleteConnectedDatas
  */		
 	public function delete($id, $moreControls = null) {
 		
 		if(is_array($id)) { $idConditions = " IN (".implode(',', $id).')'; } 
 		else { $idConditions = " = ".$id; }		
-		$sql = "DELETE FROM ".$this->table." WHERE ".$this->primaryKey.$idConditions;  //Requête de suppression de l'élément
+		$sql = "DELETE FROM `".$this->table."` WHERE `".$this->primaryKey."`".$idConditions;  //Requête de suppression de l'élément
 		
 		//Permet de rajouter une condition supplémentaire lors de la suppression
 		if(isset($moreControls)) {
 			
 			if(!is_numeric($moreControls['value'])) { $moreControls['value'] = $this->db->quote($moreControls['value']); }
-			$sql .= " AND ".$moreControls['field']." = ".$moreControls['value'];
+			$sql .= " AND `".$moreControls['field']."` = ".$moreControls['value'];
 		}
 		
 		//CAS PARTICULIER : GESTION MULTISITE
-		if($this->manageWebsiteId && in_array('website_id', $this->shema)) { $sql .= " AND website_id = ".CURRENT_WEBSITE_ID; }
+		if($this->manageWebsiteId && in_array('website_id', $this->shema)) { $sql .= " AND `website_id` = ".CURRENT_WEBSITE_ID; }
 		
-		$sql .= ";";				
+		$sql .= ";\n";				
 		
 		//On contrôle si des modèles associés sont renseignés
 		//Cela permet d'effectuer les suppressions croisées plus simplement
@@ -563,13 +574,53 @@ class Model extends Object {
 			foreach($this->checkOnDelete as $model => $pivot) {
 				
 				$modelObject = $this->loadModel($model, true);
-				$sql .= "\n"."DELETE FROM ".$modelObject->table." WHERE ".$pivot." = ".$id.";";
+				$sql .= "\n"."DELETE FROM `".$modelObject->table."` WHERE `".$pivot."` = ".$id.";";
 			}			
+		}
+		
+		//On teste si la suppression automatique des données connectées est activée
+		if($this->deleteConnectedDatas) {
+			
+			//On détermine le pivot
+			$className = get_class($this);
+			$connectedDatasPivot = strtolower($className)."_id";
+
+			$sql .= $this->delete_connected_datas_sql($connectedDatasPivot, $id);				
 		}
 		
 		$queryResult = $this->query($sql);		
 		if(isset($this->searches_params)) { $this->delete_search_index($id); } //Suppression de l'index dans la recherche		
 		return $queryResult;
+	}
+	
+/**
+ * Cette fonction va permettre la récupération de la requête de suppression des données connectées à la donnée en cours de suppression
+ * 
+ * @param 	varchar $fieldName 	Champ servant de pivot pour la suppression 
+ * @param 	integer $fieldValue	Valeur du champ à supprimer
+ * @return	varchar 
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 03/11/2014 by FI
+ */	
+	public function delete_connected_datas_sql($fieldName, $fieldValue) {
+				
+		$sqlDelete = '';
+		//On fait le parcours de l'ensemble des table de la base de données
+		foreach($this->table_list_in_database() as $table) {
+		
+			//Pour chacune d'elles on va récupérer le shéma et vérifier si la colonne website_id est présente
+			$tableShema = $this->shema($table); //Récupération du shéma de la table $table
+			//On sort de la boule les tables qui commencent par _ (généralement des tables de backup ou de test)
+			//On check si website_id est présent dans le shéma
+			if(substr($table, 0, 1) != '_' && in_array($fieldName, $tableShema)) { 
+				
+				if(is_array($fieldValue)) { $idConditions = " IN (".implode(',', $fieldValue).')'; }
+				else { $idConditions = " = ".$fieldValue; }
+				$sqlDelete .= "DELETE FROM `".$table."` WHERE `".$fieldName."`".$idConditions.";\n"; 
+			}
+		}
+		return $sqlDelete;
 	}
 	
 /**
