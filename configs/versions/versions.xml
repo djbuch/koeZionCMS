@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 03/11/2014</name>
+		<num>20141103.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">WebsitesController/AppController --> Reprise de la suppression des données dans les tables lors de la suppression d'un site pour la passer dans une fonction privée</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 03/11/2014</name>
 		<num>20141103.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
