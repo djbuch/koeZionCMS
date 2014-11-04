@@ -91,6 +91,7 @@ class KoeZionPlugin extends Object {
  * @access	protected
  * @author	koéZionCMS
  * @version 0.1 - 09/05/2014 by FI
+ * @version 0.2 - 04/11/2014 by FI - Mise en place de la récursivité dans la librairie FileAndDir pour la création des dossiers
  */	
 	protected function _files_copy($filesCopy) {
 		
@@ -99,11 +100,10 @@ class KoeZionPlugin extends Object {
 		//Parcours des fichiers à copier
 		foreach($filesCopy as $fileCopy) {
 		
-			FileAndDir::createPath($fileCopy['destinationPath']); //Création du dossier de destination
-		
 			//Dans le cas ou on un seul fichier à copier
 			if(isset($fileCopy['sourceName'])) {
-		
+						
+				FileAndDir::createPath($fileCopy['destinationPath']); //Création du dossier de destination
 				$sourceFile = $fileCopy['sourcePath'].DS.$fileCopy['sourceName']; //Chemin du fichier source
 				
 				//On récupère le nom du fichier de destination (par défaut ce sera le même que la source)
@@ -111,13 +111,8 @@ class KoeZionPlugin extends Object {
 				$destinationFile = $fileCopy['destinationPath'].DS.$destinationName; //Chemin du fichier de destination
 				$processResult = FileAndDir::fcopy($sourceFile, $destinationFile); //Copie du fichier
 		
-			//Dans le cas ou on a le contenu d'un dossier à copier
-			} else {
-		
-				$sourcePathContent = FileAndDir::directoryContent($fileCopy['sourcePath']); //On récupère l'ensemble des fichiers
-				//On parcours le tout et on copie
-				foreach($sourcePathContent as $v) { $processResult = FileAndDir::fcopy($fileCopy['sourcePath'].DS.$v, $fileCopy['destinationPath'].DS.$v); }
-			}
+			//Dans le cas ou on a le contenu d'un dossier à copier on procède à une copie récursive
+			} else { FileAndDir::recursive_copy($fileCopy['sourcePath'], $fileCopy['destinationPath']); }
 		}
 		
 		return $processResult;

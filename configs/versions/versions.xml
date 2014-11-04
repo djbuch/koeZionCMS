@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 04/11/2014</name>
+		<num>20141104.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la gestion de l'installation et de la désinstallation des plugins pour prendre en compte la création et la suppression récursive de dossiers</task>
+			<task author="FI" type="code">Rajout de deux nouvelles fonctions dans la librairie FileAndDir pour gérer la copie et la suppression récursive de dossiers</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 03/11/2014</name>
 		<num>20141103.006</num>
 		<supervisor>KoéZionCMS</supervisor>

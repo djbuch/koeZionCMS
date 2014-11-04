@@ -228,43 +228,33 @@ class PluginsController extends AppController {
 								
 							} else {
 								
-								//Dans le cas ou on a le contenu d'un dossier, il faut supprimer tous les fichiers qui ont été créés
-								$sourcePathContent = FileAndDir::directoryContent($fileDelete['sourcePath']);
-								foreach($sourcePathContent as $v) {
-	
-									$fileToDelete = $fileDelete['destinationPath'].DS.$v;
-								
-									if(isset($deletePath)) { FileAndDir::fcopy($fileToDelete, $deletePath.DS.$v); } //Sauvegarde du fichier	
-									$processResult = FileAndDir::remove($fileToDelete); //Suppression du fichier
-									
-									if(!$processResult) { $errors[] = $fileToDelete; }
-								}
+								//Backup des fichiers, on va copier le dossier parent
+								$pathInfos = pathinfo($fileDelete['destinationPath']);
+								FileAndDir::createPath($deletePath.DS.$pathInfos['filename']);
+								FileAndDir::recursive_copy($fileDelete['destinationPath'], $deletePath.DS.$pathInfos['filename']);
+								FileAndDir::recursive_delete($fileDelete['destinationPath']);
 							}
 							
 							//Si l'index removePath est défini à true, alors on supprime le dossier en plus du fichier
 							if(isset($fileDelete['removePath']) && $fileDelete['removePath'] == true) { FileAndDir::remove_directory($fileDelete['destinationPath']); }
-							
 						}
 						
 						if(!empty($errors)) {
 							
 							Session::setFlash('Une erreur est survenue lors de la suppression de certains fichiers :<br />'.implode('<br />* ', $errors), 'error');
-							$this->redirect('backoffice/plugins/index'); //On retourne sur la page de listing
-							
+							$this->redirect('backoffice/plugins/index'); //On retourne sur la page de listing							
 						}
 					}
 				
 			} else {
 				
 				Session::setFlash("Le fichier plugin.php n'existe pas", 'error');
-				$this->redirect('backoffice/plugins/index'); //On retourne sur la page de listing
-								
+				$this->redirect('backoffice/plugins/index'); //On retourne sur la page de listing								
 			}
 		} else {
 			
 			Session::setFlash('Le plugin doit être installé pour pouvoir être désinstallé', 'error');
-			$this->redirect('backoffice/plugins/index'); //On retourne sur la page de listing
-			
+			$this->redirect('backoffice/plugins/index'); //On retourne sur la page de listing			
 		}
 		
 		FileAndDir::delete_directory_file(TMP.DS.'cache'.DS.'models'.DS); //Suppression du fichier de cache de la bdd

@@ -232,7 +232,77 @@ class FileAndDir {
 			return false;
 		}
 	}
+	
+/**
+ * Cette fonction permet la copie récursive de dossiers et fichier
+ * 
+ * @param 	varchar $sourcePath			Dossier source
+ * @param 	varchar $destinationPath 	Dossier de destination
+ * @access	static
+ * @author	koéZionCMS
+ * @version 0.1 - 04/11/2014 by FI
+ */	
+	static function recursive_copy($sourcePath, $destinationPath) {
+				
+		FileAndDir::createPath($destinationPath); //Création du dossier de destination
+		$sourcePathContent = FileAndDir::directoryContent($sourcePath); //On récupère l'ensemble des fichiers
 
+		//On parcours le tout et on copie
+		foreach($sourcePathContent as $v) { 
+					
+			if(!is_dir($sourcePath.DS.$v)) { $processResult = FileAndDir::fcopy($sourcePath.DS.$v, $destinationPath.DS.$v); }
+			else { FileAndDir::recursive_copy($sourcePath.DS.$v, $destinationPath.DS.$v); } 
+		}	
+	}
+	
+/**
+ * Cette fonction permet la suppression récursive de dossiers et fichier
+ * 
+ * @param 	varchar $dirname Chemin du dossier à supprimer
+ * @param 	varchar $followLinks
+ * @throws 	Exception
+ * @source http://pioupioum.fr/developpement/php-spl-supprimer-repertoire-recursif.html
+ * @access	static
+ * @author	koéZionCMS
+ * @version 0.1 - 04/11/2014 by FI
+ */	
+	static function recursive_delete($dirname, $followLinks = false) {
+		
+		if(is_dir($dirname) && !is_link($dirname)) {
+
+			if(!is_writable($dirname))
+				throw new Exception('You do not have renaming permissions!');
+		
+			$iterator = new RecursiveIteratorIterator(
+				new RecursiveDirectoryIterator($dirname),
+				RecursiveIteratorIterator::CHILD_FIRST
+			);
+		
+			while($iterator->valid()) {
+				
+				if(!$iterator->isDot()) {
+					
+					if(!$iterator->isWritable()) {
+						
+						throw new Exception(sprintf('Permission Denied: %s.', $iterator->getPathName()));
+					}
+					
+					if($iterator->isLink() && false === (boolean) $followLinks) { $iterator->next(); }
+					if($iterator->isFile()) { unlink($iterator->getPathName()); }					
+					else if($iterator->isDir()) { rmdir($iterator->getPathName()); }
+				}
+		
+				$iterator->next();
+			}
+			unset($iterator); //Fix for Windows.		
+			return rmdir($dirname);
+		} else { throw new Exception(sprintf('Directory %s does not exist!', $dirname)); }
+	}
+	
+//////////////////////////////////////////	
+//				NOT USEFULL				//	
+//////////////////////////////////////////
+	
 	/**
 	 * Teste si une URI est bonne et lance une exception dans le cas contraire.
 	 * @author  Josselin Willette
