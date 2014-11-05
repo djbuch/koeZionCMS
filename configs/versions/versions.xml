@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 05/11/2014</name>
+		<num>20141105.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la gestion de l'initialisation du composant Email</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 04/11/2014</name>
 		<num>20141104.001</num>
 		<supervisor>KoéZionCMS</supervisor>
