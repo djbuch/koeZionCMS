@@ -24,8 +24,9 @@ class Configure {
  *
  * @return object Instance de la classe Validation
  * @version 0.1 - 28/12/2011
+ * @version 0.2 - 10/11/2014 - Rajout dela visibilité de la fonction
  */	
-	function getInstance() {
+	static function getInstance() {
 		
 		static $instance = array();
 		//if(!$instance) { $instance[0] = &new Configure(); }

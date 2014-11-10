@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 10/11/2014</name>
+		<num>20141110.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la visibilité de la fonction getInstance de la classe Configure</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 05/11/2014</name>
 		<num>20141105.001</num>
 		<supervisor>KoéZionCMS</supervisor>
