@@ -164,6 +164,7 @@ class FormParentHelper extends Helper {
  * @version 0.5 - 17/12/2013 by FI - Reprise de la gestion des select pour pouvoir gérer optgroup
  * @version 0.6 - 07/03/2014 by FI - Reprise de la gestion de la récupération des erreurs
  * @version 0.7 - 09/09/2014 by FI - Rajout de defaultSelect dans les options du select
+ * @version 0.8 - 17/11/2014 by FI - Rajout de forceValue dans les options des checkbox
  * @todo Input de type submit etc..., input radio
  * @todo Voir si utile de gérer en récursif la gestion de optgroup pour le select
  */
@@ -292,6 +293,8 @@ class FormParentHelper extends Helper {
 				
 				$requestvalue = Set::classicExtract($this->view->controller->request->data, $name);//On récupère la valeur dans request				
 				$checked = (($value == $requestvalue) || $isChecked) ? ' checked="checked"' : '';//Si la valeur dans request est la même que celle passée en paramètre, alors l'input est sélectionné
+				
+				$value = isset($options['forceValue']) && $options['forceValue'] ? $options['value'] : $value;
 				
 				//Par défaut le champ hidden permettra de mettre à 0 la valeur du champ si la case n'est pas cochée
 				$inputReturn .= '<input type="hidden" id="'.$inputIdText.'hidden" name="'.$inputNameText.'" value="0" />';
