@@ -92,7 +92,11 @@ class FormParentHelper extends Helper {
 			'enctype' => 'multipart/form-data'
 		);
 		
-		if(isset($options['enctype']) && !$options['enctype']) { unset($defaultOptions['enctype']); }
+		if(isset($options['enctype']) && !$options['enctype']) { 
+			
+			unset($defaultOptions['enctype']);
+			unset($options['enctype']);			 
+		}
 		
 		$options = array_merge($defaultOptions, $options); //Génération du tableau d'options utilisé dans la fonction
 		
