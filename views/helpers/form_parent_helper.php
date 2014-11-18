@@ -82,6 +82,7 @@ class FormParentHelper extends Helper {
  * @author	koéZionCMS
  * @version 0.1 - 20/01/2012 by FI
  * @version 0.2 - 26/10/2013 by FI - Mise en place d'options par défaut
+ * @version 0.3 - 18/11/2014 by FI - Modification gestion enctype
  */
 	function create($options) {
 
@@ -90,6 +91,9 @@ class FormParentHelper extends Helper {
 			'method' => 'post',
 			'enctype' => 'multipart/form-data'
 		);
+		
+		if(isset($options['enctype']) && !$options['enctype']) { unset($defaultOptions['enctype']); }
+		
 		$options = array_merge($defaultOptions, $options); //Génération du tableau d'options utilisé dans la fonction
 		
 		$html = '<form';
