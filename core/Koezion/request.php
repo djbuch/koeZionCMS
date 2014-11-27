@@ -24,16 +24,24 @@ class Request {
  * 10/01/2014 --> Rajout du referer
  * 02/10/2014 --> Modification gestion variable page
  * 11/10/2014 --> Rajout de $this->files
+ * 27/11/2014 --> Mise en place du hooks request - le nom du fichier est égal au nom de l'hôte
  */    
 	public function __construct() {
-				
-		//$this->url = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/'; //Affectation de l'url
-		if(isset($_SERVER['PATH_INFO'])) { $this->url = $_SERVER['PATH_INFO'];  } 
-		else if(isset($_SERVER['SCRIPT_URL'])) { $this->url = $_SERVER['SCRIPT_URL']; } //1and1 hack!!
-		else if(isset($_SERVER['ORIG_PATH_INFO'])) { $this->url = $_SERVER['ORIG_PATH_INFO']; } //1and1 hack!!
-		else {  $this->url = '/'; }
 		
-		$this->fullUrl = 'http://'.$_SERVER["HTTP_HOST"].Router::url($this->url, ''); //Affectation de l'url complète		
+		//Mise en place d'un hook pour la récupération des données url et fullUrl car sur certains serveurs (JAG) le fonctionnement diffère
+		$hookRequestFile = CONFIGS.DS.'hooks'.DS.'request'.DS.$_SERVER['SERVER_ADDR'].'.php';
+		if(file_exists($hookRequestFile)) { require_once($hookRequestFile); }
+		else {
+			
+			//$this->url = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/'; //Affectation de l'url
+			if(isset($_SERVER['PATH_INFO'])) { $this->url = $_SERVER['PATH_INFO'];  } 
+			else if(isset($_SERVER['SCRIPT_URL'])) { $this->url = $_SERVER['SCRIPT_URL']; } //1and1 hack!!
+			else if(isset($_SERVER['ORIG_PATH_INFO'])) { $this->url = $_SERVER['ORIG_PATH_INFO']; } //1and1 hack!!
+			else {  $this->url = '/'; }
+			
+			$this->fullUrl = 'http://'.$_SERVER["HTTP_HOST"].Router::url($this->url, ''); //Affectation de l'url complète		
+		}
+		
 		$this->queryString = $_SERVER['QUERY_STRING'];
 		$this->referer = '';
 		if(isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER'])) { $this->referer = $_SERVER['HTTP_REFERER']; }

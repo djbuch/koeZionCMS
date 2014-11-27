@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 27/11/2014</name>
+		<num>20141127.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de l'objet Request pour y intégrer la gestion d'un hook</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 24/11/2014</name>
 		<num>20141124.001</num>
 		<supervisor>KoéZionCMS</supervisor>
