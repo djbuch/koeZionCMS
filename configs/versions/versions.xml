@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 02/12/2014</name>
+		<num>20141202.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Rajout de la class CSS .input-group-addon pour les formulaires backoffice</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 27/11/2014</name>
 		<num>20141127.001</num>
 		<supervisor>KoéZionCMS</supervisor>
