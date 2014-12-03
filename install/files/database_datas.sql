@@ -1,4 +1,4 @@
-INSERT INTO `modules` (`id`, `name`, `controller_name`, `action_name`, `display_in_menu`, `order_by`, `online`, `created`, `modules_type_id`, `plugin_id`) VALUES
+INSERT INTO `modules` (`id`, `name`, `controller_name`, `action_name`, `no_display_in_menu`, `order_by`, `online`, `created`, `modules_type_id`, `plugin_id`) VALUES
 (1, 'Catégories', 'categories', '', 0, 3, 1, '2012-11-29 22:58:29', 2, 0),
 (2, 'Sliders', 'sliders', '', 0, 4, 1, '2012-11-29 22:58:46', 2, 0),
 (3, 'Focus', 'focus', '', 0, 5, 1, '2012-11-29 22:59:01', 2, 0),
