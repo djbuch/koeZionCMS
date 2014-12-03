@@ -298,6 +298,39 @@ class FileAndDir {
 			return rmdir($dirname);
 		} else { throw new Exception(sprintf('Directory %s does not exist!', $dirname)); }
 	}
+
+/**
+ * http://prendreuncafe.com/blog/post/2005/07/19/218-lister-recursivement-le-contenu-d-un-repertoire-en-php
+ * @param unknown_type $path
+ * @param unknown_type $full_list
+ */	
+	static function recursive_dir_content($path = '.', $full_list = false) {
+		
+		$out = array();
+		$i = 0;
+		$path = substr($path, strlen($path) - 1, strlen($path)) !== DS ? $path.DS : $path;
+		if(!is_dir($path) || !$handle = @dir($path)) { trigger_error(DS.$path.DS." doesn't exists or is not a valid directory", E_USER_ERROR); } 
+		else {
+			
+			while($entry = $handle->read()) {
+				
+				if($full_list == true || ($entry !== "." && $entry !== "..")) {
+					
+					$path_to_entry = $path.$entry;
+					if($entry !== '.' && $entry !== '..' && @is_dir($path_to_entry)) { $out[$entry] = FileAndDir::recursive_dir_content($path_to_entry, $full_list); } 
+					else { 
+						
+						$out[$entry]['root'] = $path_to_entry; 
+						
+						$pathToWww = str_replace(ROOT, BASE_URL, $path_to_entry);
+						$pathToWww = str_replace(DS, '/', $pathToWww);
+						$out[$entry]['www'] = $pathToWww; 
+					}
+				}
+			}
+		}
+		return $out;
+	}
 	
 //////////////////////////////////////////	
 //				NOT USEFULL				//	
