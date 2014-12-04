@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 04/12/2014</name>
+		<num>20141204.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la fonction recursive_dir_content dans la classe FileAndDir, rajout de $datasFormat</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 03/12/2014</name>
 		<num>20141203.002</num>
 		<supervisor>KoéZionCMS</supervisor>

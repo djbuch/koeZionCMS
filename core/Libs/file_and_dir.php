@@ -304,7 +304,7 @@ class FileAndDir {
  * @param unknown_type $path
  * @param unknown_type $full_list
  */	
-	static function recursive_dir_content($path = '.', $full_list = false) {
+	static function recursive_dir_content($path = '.', $full_list = false, $datasFormat = null) {
 		
 		$out = array();
 		$i = 0;
@@ -317,14 +317,23 @@ class FileAndDir {
 				if($full_list == true || ($entry !== "." && $entry !== "..")) {
 					
 					$path_to_entry = $path.$entry;
-					if($entry !== '.' && $entry !== '..' && @is_dir($path_to_entry)) { $out[$entry] = FileAndDir::recursive_dir_content($path_to_entry, $full_list); } 
+					if($entry !== '.' && $entry !== '..' && @is_dir($path_to_entry)) { $out[$entry] = FileAndDir::recursive_dir_content($path_to_entry, $full_list, $datasFormat); } 
 					else { 
 						
-						$out[$entry]['root'] = $path_to_entry; 
+						$rootPath = $path_to_entry;
 						
-						$pathToWww = str_replace(ROOT, BASE_URL, $path_to_entry);
-						$pathToWww = str_replace(DS, '/', $pathToWww);
-						$out[$entry]['www'] = $pathToWww; 
+						$pathToWww = str_replace(ROOT, BASE_URL, $rootPath);
+						$wwwPath = str_replace(DS, '/', $pathToWww);
+						
+						if(!isset($datasFormat)) {
+						
+							$out[$entry]['root'] = $rootPath;						
+							$out[$entry]['www'] = $wwwPath;							
+						} else {
+							
+							if($datasFormat == 'root') { $out[$entry] = $rootPath; }
+							else if($datasFormat == 'www') { $out[$entry] = $wwwPath; }
+						}
 					}
 				}
 			}
