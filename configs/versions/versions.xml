@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 08/12/2014</name>
+		<num>20141208.003</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification gestion des HOOKS dans l'objet View</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 08/12/2014</name>
 		<num>20141208.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

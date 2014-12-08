@@ -176,7 +176,7 @@ class View extends Object {
     	if($this->controller->request->prefix) { $hookAction = $this->controller->request->prefix.'_'.$params['action']; }
     	else { $hookAction = $params['action']; }
     	$hookPathView = $params['controllerFileName'].'/'.$hookAction;
-    	if(isset($viewsHooks[$hookPathView])) { $view = $hookPathView; }
+    	if(isset($viewsHooks[$hookPathView])) { $view = $viewsHooks[$hookPathView]; }
     	
     	//ANCIENNE VERSION
     	//foreach(FileAndDir::directoryContent(CONFIGS_HOOKS.DS.'views') as $hookFile) { include(CONFIGS_HOOKS.DS.'views'.DS.$hookFile); } //Chargement des fichier    	
