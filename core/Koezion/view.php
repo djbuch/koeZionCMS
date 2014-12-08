@@ -93,6 +93,7 @@ class View extends Object {
  * @version 0.4 - 13/02/2014 by FI - Gestion automatique du layout lors de requêtes AJAX
  * @version 0.5 - 07/08/2014 by FI - Mise en place des hooks pour les vues
  * @version 0.6 - 01/11/2014 by FI - Modification de la gestion des hooks, la gestion étant maintenant par site on récupère la donnée issue de la BDD et on ne charge plus tous les fichiers. Fonctionnement plus simple lors de la gestion multisites
+ * @version 0.7 - 08/12/2014 by FI - Modification de la récupération de la variable $hookPathView
  * @todo IMPORTANT essayer de voir pourquoi si on retire le file_exists($view) la fonction export du plugin formulaire ne marche plus!!!
  * @todo Essayer d'améliorer l'ajout de websitebaseurl dans le template car il est inséré juste après la récupération de la vue --> supprimé le 25/06/2013 rajouté directement dans le template
  */    
@@ -172,7 +173,10 @@ class View extends Object {
     	if(isset($this->vars['websiteParams'])) { $websiteHooks = $this->vars['websiteParams']; } //Frontoffice  
     	else { $websiteHooks = Session::read('Backoffice.Websites.details.'.CURRENT_WEBSITE_ID); } //Backoffice
     	$viewsHooks = $this->_load_hooks_files('VIEWS', $websiteHooks);
-    	if(isset($viewsHooks[$params['controllerVarName'].'/'.$params['action']])) { $view = $viewsHooks[$params['controllerVarName'].'/'.$params['action']]; }
+    	if($this->controller->request->prefix) { $hookAction = $this->controller->request->prefix.'_'.$params['action']; }
+    	else { $hookAction = $params['action']; }
+    	$hookPathView = $viewsHooks[$params['controllerFileName'].'/'.$hookAction];
+    	if(isset($hookPathView)) { $view = $hookPathView; }
     	
     	//ANCIENNE VERSION
     	//foreach(FileAndDir::directoryContent(CONFIGS_HOOKS.DS.'views') as $hookFile) { include(CONFIGS_HOOKS.DS.'views'.DS.$hookFile); } //Chargement des fichier    	
