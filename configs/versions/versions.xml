@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 10/12/2014</name>
+		<num>20141210.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Correction gestion javascript du colorpicker du backoffice</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 10/12/2014</name>
 		<num>20141210.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

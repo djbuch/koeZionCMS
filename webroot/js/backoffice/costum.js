@@ -168,6 +168,7 @@ $(document).ready(function() {
 	
 	// COLORPICKER
 	$(".color").livequery(function() { 
+		var _this = $(this);
 		$(this).ColorPicker({
 			color: '#0000ff',
 			onShow: function(colpkr) {
@@ -179,8 +180,11 @@ $(document).ready(function() {
 				return false;
 			},
 			onChange: function(hsb, hex, rgb) {
-				$('.color div span').css('backgroundColor', '#' + hex);
-				$('.color input').val('#' + hex);
+				
+				/*$('.color div span').css('backgroundColor', '#' + hex);
+				$('.color input').val('#' + hex);*/
+				_this.find('div span').css('backgroundColor', '#' + hex);
+				_this.find('input').val('#' + hex);				
 			}
 		});   
 	});
