@@ -310,7 +310,7 @@ class FormHelper extends FormParentHelper {
 		if($inputDatas['inputOptions']['type'] == 'hidden') { return $inputDatas['inputElement']; } 		
 
 		//Cas du color picker
-		if($inputDatas['inputOptions']['colorpicker']) { $inputDatas['inputElement'] = '<div class="color"><div><span style="background-color: '.$inputDatas['inputValue'].'"></span></div>'.$inputDatas['inputElement'].'</div></div>'; }		
+		if($inputDatas['inputOptions']['colorpicker']) { $inputDatas['inputElement'] = '<div class="color"><div><span style="background-color: '.$inputDatas['inputValue'].'"></span></div>'.$inputDatas['inputElement'].'</div>'; }		
 		if($inputDatas['inputOptions']['onlyInput']) { return $inputDatas['inputElement']; }		
 		if($inputDatas['inputOptions']['inputDatas']) { return $inputDatas; }		
 		
