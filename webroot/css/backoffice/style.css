@@ -3,7 +3,7 @@ img{border:0}
 /*#wrapper{position:relative;margin:0 auto;max-width:90%;min-width:980px;height:auto!important;height:100%;min-height:100%}*/
 /*#left{width:203px}*/
 #wrapper{margin-top: 30px;}
-.label{padding: 3px;}
+.label{padding: 3px!important;}
 
 /**************/
 /*    LEFT    */
