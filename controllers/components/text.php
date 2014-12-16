@@ -286,4 +286,26 @@ class TextComponent extends Component {
 		$validation = new Validation();
 		return $validation->date($date, $format);
 	}
+	
+/**
+ * Cette fonction permet de calculer une nouvelle date
+ * 
+ * @param 	integer 	$value
+ * @param 	varvchar 	$type (days, months, years)
+ * @param 	varchar 	$direction (+, -)
+ * @param 	varchar 	$currentDate 
+ * @return 	varchar
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 16/12/2014 by FI
+ */	
+	public function calculate_date($value, $type = 'days', $direction = '+', $currentDate = null) {
+		
+		if(!isset($currentDate)) { $currentDate = date('Y-m-d'); }
+		$currentDate = explode('-', $currentDate);
+		
+		$currentDateTimestamp 	= strtotime($currentDate[0].'-'.$currentDate[1].'-'.$currentDate[2]);
+		$retractationEndDate = date('Y-m-d', strtotime($direction.$value.' '.$type, $currentDateTimestamp));
+		return $retractationEndDate;
+	}
 }
