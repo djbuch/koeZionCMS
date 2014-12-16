@@ -1381,7 +1381,8 @@ class Model extends Object {
     			
     			$fieldOperator = $value['operator'];
     			$fieldValue = $value['value'];
-    			if(is_array($fieldValue)) { $fieldValue = "(".implode(',', $fieldValue).")"; } //Cas d'un tableau   			
+    			if(is_array($fieldValue)) { $fieldValue = "(".implode(',', $fieldValue).")"; } //Cas d'un tableau   	
+    			else if(!is_numeric($fieldValue)) { $fieldValue = $this->db->quote($fieldValue); }		
     			$cond[] = $field.' '.$fieldOperator.' '.$fieldValue;    			
     			
     		} else { $cond[] = $field." IN (".implode(',', $value).")"; } 

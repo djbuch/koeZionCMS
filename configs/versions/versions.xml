@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 16/12/2014</name>
+		<num>20141216.003</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification gestion des opérateurs dans les conditions de recherche du model principal</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 16/12/2014</name>
 		<num>20141216.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
