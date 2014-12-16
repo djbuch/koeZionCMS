@@ -1360,6 +1360,7 @@ class Model extends Object {
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 02/04/2014 by FI
+ * @version 0.2 - 16/12/2014 by FI - Mise en place de la gestion de l'opérateur
  */   
     protected function _get_query_conditions($cond, $field, $value) {
     	
@@ -1373,8 +1374,19 @@ class Model extends Object {
     	$fieldExplode = explode('.', $field);
     	if(count($fieldExplode) == 1) { $field = $this->alias.".".$fieldExplode[0]; }
     	
-    	if(is_array($value)) { $cond[] = $field." IN (".implode(',', $value).")"; }
-    	else { $cond[] = $field."=".$value; }
+    	if(is_array($value)) { 
+    		
+    		//Gestion d'un opérateur particulier (par exemple != ou NOT IN)
+    		if(isset($value['operator'])) {
+    			
+    			$fieldOperator = $value['operator'];
+    			$fieldValue = $value['value'];
+    			if(is_array($fieldValue)) { $fieldValue = "(".implode(',', $fieldValue).")"; } //Cas d'un tableau   			
+    			$cond[] = $field.' '.$fieldOperator.' '.$fieldValue;    			
+    			
+    		} else { $cond[] = $field." IN (".implode(',', $value).")"; } 
+    	}
+    	else { $cond[] = $field." = ".$value; }
     	
     	return $cond;    	
     }
