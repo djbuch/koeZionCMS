@@ -1,7 +1,7 @@
 table{width:100%}
 table,td,tr,th{padding:0;margin:0;border-collapse:collapse}
 table thead tr th,table tfoot tr th{color:#1c1c1c}
-table thead{background:url(../../img/backoffice/back-title.gif) repeat-x right top;border-right:0}
+table thead{background:url(../../img/backoffice/back-title.gif) repeat-x right top;border-right:0;background-size: contain;}
 table thead tr th{border:1px solid #e5e5e5;border-bottom:0;padding:8px 8px 10px;line-height:1.0em;white-space:nowrap}
 table thead tr th.header{border:1px solid #e5e5e5;background-color:transparent}
 table tbody td{border:1px solid #e5e5e5;border-top:0;padding:7px 8px;line-height:1.0em}
