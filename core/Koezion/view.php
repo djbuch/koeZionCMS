@@ -194,11 +194,18 @@ class View extends Object {
     	if(file_exists($view)) require_once($view); //Chargement de la vue
     	$content_for_layout = ob_get_clean(); //On stocke dans cette variable le contenu de la vue   	
     	
-    	$alternativeLayoutFolder = substr_count($this->layout, DS) + substr_count($this->layout, '/');
-    	
-    	if($alternativeLayoutFolder) { require_once $this->layout.'.php'; }
-    	else if(defined('LAYOUT_VIEWS') && file_exists(LAYOUT_VIEWS.DS.'layout'.DS.$this->layout.'.php')) { require LAYOUT_VIEWS.DS.'layout'.DS.$this->layout.'.php'; } //Chemin d'un élément d'un layout
-    	else { require_once VIEWS.DS.'layout'.DS.$this->layout.'.php'; } //On fait l'inclusion du layout par défaut et on affiche la variable dedans
+    	///////////////////////////////////////////////////////
+    	//    ON VA TESTER SI UN HOOK LAYOUT EST EN PLACE    //
+    	$layoutsHooks = $this->_load_hooks_files('LAYOUTS', $websiteHooks);
+    	if(isset($layoutsHooks[$this->layout])) { require_once $layoutsHooks[$this->layout].'.php'; }
+    	else {    	
+	    	
+    		$alternativeLayoutFolder = substr_count($this->layout, DS) + substr_count($this->layout, '/');
+	    	
+	    	if($alternativeLayoutFolder) { require_once $this->layout.'.php'; }
+	    	else if(defined('LAYOUT_VIEWS') && file_exists(LAYOUT_VIEWS.DS.'layout'.DS.$this->layout.'.php')) { require LAYOUT_VIEWS.DS.'layout'.DS.$this->layout.'.php'; } //Chemin d'un élément d'un layout
+	    	else { require_once VIEWS.DS.'layout'.DS.$this->layout.'.php'; } //On fait l'inclusion du layout par défaut et on affiche la variable dedans
+    	}
     	$this->rendered = true; //On indique que la vue est rendue   	
     }
     
@@ -452,6 +459,7 @@ class View extends Object {
 			
 			if($type == 'VIEWS') { $hooksPath = CONFIGS_HOOKS.DS.'views'.DS; }
 			else if($type == 'ELEMENTS') { $hooksPath = CONFIGS_HOOKS.DS.'elements'.DS; }
+			else if($type == 'LAYOUTS') { $hooksPath = CONFIGS_HOOKS.DS.'layouts'.DS; }
 		
 			foreach($hooks as $hook) {
 				
@@ -461,6 +469,7 @@ class View extends Object {
 			
 			if(isset($viewsHooks)) { return $viewsHooks; }
 			else if(isset($elementsHooks)) { return $elementsHooks; }
+			else if(isset($layoutsHooks)) { return $layoutsHooks; }
 		}
 	} 
 }

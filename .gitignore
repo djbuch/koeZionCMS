@@ -12,6 +12,10 @@ EXPORT_PDF/
 installed
 configs/files/*.ini
 configs/hooks/*.php
+configs/hooks/elements/*.php
+configs/hooks/files/*.php
+configs/hooks/layouts/*.php
+configs/hooks/views/*.php
 /configs/plugins/*
 !/configs/plugins/empty
 /plugins/
