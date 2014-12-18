@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 18/12/2014</name>
+		<num>20141218.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Rajout du dossier files dans configs/hooks</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 17/12/2014</name>
 		<num>20141217.001</num>
 		<supervisor>KoéZionCMS</supervisor>
