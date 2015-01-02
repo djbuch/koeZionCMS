@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 02/01/2015</name>
+		<num>20150102.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification des fonctions _serialize et _unserialize dans basics.php</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 29/12/2014</name>
 		<num>20141229.001</num>
 		<supervisor>KoéZionCMS</supervisor>

@@ -220,10 +220,19 @@
 	
 /**
  * Serialize et unserialize des données
- * http://www.jackreichert.com/2014/02/02/handling-a-php-unserialize-offset-error/  
+ * http://www.jackreichert.com/2014/02/02/handling-a-php-unserialize-offset-error/
+ * BASE64 pose pb après les tests effectués à creuser  
  */	
-	function _serialize($datas) { return base64_encode(serialize($datas)); }
-	function _unserialize($datas) { return unserialize(base64_decode($datas)); }
+	function _serialize($datas) { 
+
+		//return base64_encode(serialize($datas)); 
+		return serialize($datas); 
+	}
+	function _unserialize($datas) { 
+		
+		//return unserialize(base64_decode($datas)); 
+		return unserialize($datas); 
+	}
 /*
 	
 
