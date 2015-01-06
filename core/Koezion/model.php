@@ -1140,6 +1140,7 @@ class Model extends Object {
  * @version 0.2 - 13/11/2013 by FI - Rajout du code permettant la gestion de l'option de modification de la date de modification
  * @version 0.3 - 10/01/2014 by FI - Gestion des primary key multiples
  * @version 0.4 - 27/03/2014 by FI - Gestion du champ activate
+ * @version 0.5 - 06/01/2015 by FI - Correction de la gestion de l'intersection permettant le calcul de la variable $isUpdate
  */	
 	protected function _prepare_save_query($datas, $forceInsert, $escapeUpload) {
 					
@@ -1149,11 +1150,22 @@ class Model extends Object {
 		
 		$fieldsToSave = array(); //Tableau des champs de la table à sauvegarder
 		$moreDatasToSave = array(); //Tableau des données supplémentaires à sauvegarder (évite de les regénérer à chaque fois)
-		
+				
 		//Permet de connaitre le type de requete à effectuer
-		//Dans ce cas on est sur de l'update	
-		if(is_array($primaryKey)) { $isUpdate = (array_intersect($datasShema, $primaryKey) == $primaryKey) ? true : false; } 
-		else { $isUpdate = in_array($primaryKey, $datasShema); }
+		//Dans ce cas on est sur de l'update
+		if(is_array($primaryKey)) {
+		
+			//Calcul de l'intersection
+			$intersect = array_intersect($datasShema, $primaryKey);
+		
+			//Tri des tableau à comparer
+			sort($intersect);
+			sort($primaryKey);
+		
+			//Comparaison
+			$isUpdate = ($intersect == $primaryKey) ? true : false;
+			
+		} else { $isUpdate = in_array($primaryKey, $datasShema); }
 					
 		if($isUpdate && !$forceInsert) { $action = 'update'; } 
 		else { 
