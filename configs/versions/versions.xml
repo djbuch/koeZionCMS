@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 07/01/2015</name>
+		<num>20150107.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de l'élément backoffice top_bar</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 06/01/2015</name>
 		<num>20150106.001</num>
 		<supervisor>KoéZionCMS</supervisor>

@@ -15,8 +15,17 @@
 		$websites = Session::read('Backoffice.Websites');
 		$websitesListe = $websites['liste'];
 		$currentWebsite = Session::read('Backoffice.Websites.current');		
-		?>
-		<li class="browse_website"><a href="<?php echo $websites['details'][$currentWebsite]['url']; ?>" target="_blank"><?php echo $helpers['Html']->img('/backoffice/website.png', array('alt' => _("Sites Internet"))); ?></a></li>
+		?>		
+		<li class="browse_website">
+			<?php 
+			$currentUrl = str_replace('http://', '', $websites['details'][$currentWebsite]['url']);
+			$currentUrl = str_replace('/', '', $currentUrl);
+			
+			if($_SERVER['HTTP_HOST']) { $wsUrl = Router::url('/', 'html', true)."?hack_ws_host=".$currentUrl; } 
+			else { $wsUrl = $websites['details'][$currentWebsite]['url']; }
+			?>			
+			<a href="<?php echo $wsUrl; ?>" target="_blank"><?php echo $helpers['Html']->img('/backoffice/website.png', array('alt' => _("Sites Internet"))); ?></a>
+		</li>
 		<li class="noborder">
 			<?php			
 			echo _("Site courant").' : '.$websitesListe[$currentWebsite];
