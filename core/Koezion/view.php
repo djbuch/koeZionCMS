@@ -32,6 +32,7 @@ class View extends Object {
  * @version 0.2 - 05/06/2013 by FI - Mise en place du chargement des helpers template
  * @version 0.2 - 05/06/2013 by FI - Modification de la gestion des Helpers, par défaut on charge de façon distincte les helpers du backoffice et du frontoffice pour plus de souplesse dans la gestion des templates
  * @version 0.3 - 07/07/2014 by FI - Rajout de $this->request = new stdClass(); pour corriger l'erreur suivante Warning: Creating default object from empty value in /core/Koezion/view.php on line 342 
+ * @version 0.4 - 08/01/2015 by FI - Mise en place des hooks pour les helpers 
  */	
 	public function __construct($view, $controller) {
 		
@@ -66,7 +67,17 @@ class View extends Object {
 		
 			foreach(FileAndDir::directoryContent($moreHelpers) as $moreHelper) {
 		
-				require_once($moreHelpers.DS.$moreHelper);
+				$helperPath = $moreHelpers.DS.$moreHelper;
+				
+				//On va effectuer un contrôle pour vérifier si un hook n'est pas en place pour le helper concerné
+				if(defined('LAYOUT_VIEWS')) {	
+    	
+			    	$websiteHooks = $this->vars['websiteParams'];    	
+			    	$helpersHooks = $this->_load_hooks_files('HELPERS', $websiteHooks);
+			    	if(isset($helpersHooks[$moreHelper])) { $helperPath = $helpersHooks[$moreHelper]; }    	
+				}
+				
+				require_once($helperPath);
 				$helperClass = Inflector::camelize(str_replace('_helper.php', '', $moreHelper));
 				$helperObjectName = $helperClass.'Helper';				
 				$this->vars['helpers'][$helperClass] = new $helperObjectName($this);
@@ -450,6 +461,7 @@ class View extends Object {
  * @access	protected
  * @author	koéZionCMS
  * @version 0.1 - 01/11/2014 by FI
+ * @version 0.2 - 08/01/2015 by FI - Rajout de HELPERS
  */	
 	protected function _load_hooks_files($type, $websiteHooks) {
 		
@@ -457,9 +469,11 @@ class View extends Object {
 		
 			$hooks = explode(';', $websiteHooks['hook_filename']);
 			
-			if($type == 'VIEWS') { $hooksPath = CONFIGS_HOOKS.DS.'views'.DS; }
-			else if($type == 'ELEMENTS') { $hooksPath = CONFIGS_HOOKS.DS.'elements'.DS; }
+			
+			if($type == 'ELEMENTS') { $hooksPath = CONFIGS_HOOKS.DS.'elements'.DS; }
+			else if($type == 'HELPERS') { $hooksPath = CONFIGS_HOOKS.DS.'helpers'.DS; }
 			else if($type == 'LAYOUTS') { $hooksPath = CONFIGS_HOOKS.DS.'layouts'.DS; }
+			else if($type == 'VIEWS') { $hooksPath = CONFIGS_HOOKS.DS.'views'.DS; }
 		
 			foreach($hooks as $hook) {
 				
@@ -467,9 +481,10 @@ class View extends Object {
 				if(file_exists($hookFile)) { include($hookFile); }				
 			}
 			
-			if(isset($viewsHooks)) { return $viewsHooks; }
-			else if(isset($elementsHooks)) { return $elementsHooks; }
-			else if(isset($layoutsHooks)) { return $layoutsHooks; }
+			if(isset($elementsHooks)) { return $elementsHooks; }
+			else if(isset($helpersHooks)) { return $helpersHooks; }			
+			else if(isset($layoutsHooks)) { return $layoutsHooks; }			
+			else if(isset($viewsHooks)) { return $viewsHooks; }
 		}
 	} 
 }
