@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 08/01/2015</name>
+		<num>20150108.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise en place de la gestion des hooks pour les helpers</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 07/01/2015</name>
 		<num>20150107.001</num>
 		<supervisor>KoéZionCMS</supervisor>
