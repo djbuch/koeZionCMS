@@ -238,9 +238,25 @@ class View extends Object {
  * @version 0.8 - 27/10/2013 by FI - Changement du nom de la variable inElementFolder par isPlugin
  * @version 0.9 - 18/12/2013 by FI - Modification de la gestion des hooks pour le chargement des fichiers
  * @version 0.6 - 01/11/2014 by FI - Modification de la gestion des hooks, la gestion étant maintenant par site on récupère la donnée issue de la BDD et on ne charge plus tous les fichiers. Fonctionnement plus simple lors de la gestion multisites
+ * @version 0.7 - 21/01/2015 by FI - Réorganisation de la fonction pour une gestion plus souple des hooks éléments plugins (BO)
  */
     public function element($element, $vars = null, $isPlugin = false) {
-	
+    	
+    	if(isset($vars) && !empty($vars)) { 
+    		
+    		foreach($vars as $k => $v) { $this->vars[$k] = $v; } 
+    	}    	
+    	extract($this->vars);   
+    	    	
+    	/////////////////////
+    	// CAS DES PLUGINS //
+    	//On est dans le cas d'un plugin si la variable $this->controller->params['pluginFolder'] existe
+    	if($isPlugin && isset($this->controller->params['pluginFolder']) && !empty($this->controller->params['pluginFolder'])) { 
+    		
+    		$elementHook = $this->controller->params['pluginFolder'].'/views/elements/'.$this->controller->params['controllerFileName'].'/'.$element;
+    		$element = PLUGINS.'/'.$this->controller->params['pluginFolder'].'/views/elements/'.$this->controller->params['controllerFileName'].'/'.$element;	
+    	} 
+    	
     	////////////////////////////////////////////////////////////
     	//VERIFICATION SI UN HOOK EST DISPONIBLE POUR LES ELEMENTS//
     	//Ce hook permet de redéfinir à la volée le chemin de certains éléments
@@ -262,27 +278,10 @@ class View extends Object {
     	if(isset($this->vars['websiteParams'])) { $websiteHooks = $this->vars['websiteParams']; } //Frontoffice  
     	else { $websiteHooks = Session::read('Backoffice.Websites.details.'.CURRENT_WEBSITE_ID); } //Backoffice
     	$elementsHooks = $this->_load_hooks_files('ELEMENTS', $websiteHooks);
+    	
     	if(isset($elementsHooks[$element])) { $element = $elementsHooks[$element]; }
-    	
-    	//ANCIENNE VERSION
-    	//foreach(FileAndDir::directoryContent(CONFIGS_HOOKS.DS.'elements') as $hookFile) { include(CONFIGS_HOOKS.DS.'elements'.DS.$hookFile); } //Chargement des fichier
-    	//if(isset($elementsHooks[$element])) { $element = $elementsHooks[$element]; }
-    	////////////////////////////////////////////////////////////   	 	
-    	
-    	if(isset($vars) && !empty($vars)) { 
-    		
-    		foreach($vars as $k => $v) { $this->vars[$k] = $v; } 
-    	}    	
-    	extract($this->vars);   
-    	 
-    	/////////////////////
-		// CAS DES PLUGINS //
-    	//On est dans le cas d'un plugin si la variable $this->controller->params['pluginFolder'] existe
-    	if($isPlugin && isset($this->controller->params['pluginFolder']) && !empty($this->controller->params['pluginFolder'])) {
-		
-    		$element = PLUGINS.'/'.$this->controller->params['pluginFolder'].'/views/elements/'.$this->controller->params['controllerFileName'].'/'.$element;
-    	
-		}
+    	else if(isset($elementHook) && isset($elementsHooks[$elementHook])) { $element = $elementsHooks[$elementHook]; }
+    	////////////////////////////////////////////////////////////
     	
     	$element = str_replace('/', DS, $element);    	
     	$element = $element.'.php';

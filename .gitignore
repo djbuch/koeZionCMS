@@ -19,6 +19,7 @@ configs/hooks/layouts/*.php
 configs/hooks/views/*.php
 /configs/plugins/*
 !/configs/plugins/empty
+/locales/
 /plugins/
 tmp/backup_bdd/*.sql
 tmp/sessions/*

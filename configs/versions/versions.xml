@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 21/01/2015</name>
+		<num>20150121.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Réorganisation de la fonction element de l'objet View pour une gestion plus souple des hooks éléments plugins (BO)</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 08/01/2015</name>
 		<num>20150108.002</num>
 		<supervisor>KoéZionCMS</supervisor>
