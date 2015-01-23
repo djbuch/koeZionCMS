@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 23/01/2015</name>
+		<num>20150123.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Réorganisation des urls</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 21/01/2015</name>
 		<num>20150121.001</num>
 		<supervisor>KoéZionCMS</supervisor>
