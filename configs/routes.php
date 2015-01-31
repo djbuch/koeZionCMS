@@ -50,8 +50,8 @@ if(is_dir($moreRoutes)) {
 }
 ////////////////////////////////////////////////
 
-Router::connect(':prefix/:id-:slug', 					'posts/view/id:([0-9]+)/slug:([a-zA-Z0-9\-]+)/prefix:([a-zA-Z0-9\-]+)'); 	//Affichage du détail d'un post
-Router::connect(':id-:slug', 							'categories/view/id:([0-9]+)/slug:([a-zA-Z0-9\-]+)'); 						//Affichage d'une page catégorie
+Router::connect(':prefix/:slug-:id', 					'posts/view/id:([0-9]+)/slug:([a-zA-Z0-9\-]+)/prefix:([a-zA-Z0-9\-]+)'); 	//Affichage du détail d'un post
+Router::connect(':slug-:id', 							'categories/view/id:([0-9]+)/slug:([a-zA-Z0-9\-]+)'); 						//Affichage d'une page catégorie
 ////////////////////////////
 
 ///////////////////////////
