@@ -22,6 +22,7 @@ configs/hooks/views/*.php
 /locales/
 /plugins/
 tmp/backup_bdd/*.sql
+tmp/upload/*
 tmp/sessions/*
 !tmp/sessions/empty
 /views/hooks/*
