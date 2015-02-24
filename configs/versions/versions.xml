@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 24/02/2015</name>
+		<num>20150224.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="AJ" type="code">Modification de la fonction redirect de l'objet Parent</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 11/02/2015</name>
 		<num>20150211.001</num>
 		<supervisor>KoéZionCMS</supervisor>

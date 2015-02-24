@@ -17,7 +17,7 @@
 				$streamGetTransports = stream_get_transports(); //retourne un tableau indexé contenant les noms des transports de sockets disponibles pour le système. cf : http://php.net/manual/fr/function.stream-get-transports.php
 				if(in_array('ssl', $streamGetTransports)) {
 					
-					echo $helpers['Form']->input('smtp_secure', 'Utiliser un protocole sécurisé (SSL) pour les envois de mails', array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour activer le protocole sécurisé lors de l'envoi de vos emails"));
+					echo $helpers['Form']->input('smtp_secure', _('Utiliser un protocole sécurisé (SSL) pour les envois de mails'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour activer le protocole sécurisé lors de l'envoi de vos emails")));
 				}	
 			echo $helpers['Form']->end(true); 
 			?>

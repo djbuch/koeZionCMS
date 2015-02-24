@@ -23,7 +23,7 @@ echo $helpers['Html']->js($js, true);
 <div class="section">
 	<div class="box">
 		<div class="title">
-			<h2>Statistiques de visites</h2>			
+			<h2><?php echo _('Statistiques de visites'); ?></h2>			
 		</div>
 		<div class="content nopadding">
 			<?php 
@@ -32,13 +32,13 @@ echo $helpers['Html']->js($js, true);
 			echo $helpers['Form']->input('display', '', array('type' => 'hidden', 'value' => 1)); 
 			?>
 			<div class="row">
-				<label for="InputParentId-button"><b>Sélectionnez une période &gt;</b></label>
+				<label for="InputParentId-button"><b><?php echo _('Sélectionnez une période'); ?> &gt;</b></label>
 				<div class="rowright">
 					début : 					 
 					<?php echo $helpers['Form']->input('start', '', array("class" => "datepicker", "placeholder" => "dd.mm.yy", 'div' => false, 'label' => false, 'style' => 'margin-right:20px;')); ?> 
 					fin : 
 					<?php echo $helpers['Form']->input('end', '', array("class" => "datepicker", "placeholder" => "dd.mm.yy", 'div' => false, 'label' => false)); ?>
-					<button class="medium grey" type="submit" style="opacity: 1;margin:-1px 0 0 20px;position:absolute;"><span>Envoyer</span></button>
+					<button class="medium grey" type="submit" style="opacity: 1;margin:-1px 0 0 20px;position:absolute;"><span><?php echo _('Envoyer'); ?></span></button>
 				</div>
 			</div>
 			<?php echo $helpers['Form']->end(false); ?>
