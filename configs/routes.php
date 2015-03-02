@@ -33,14 +33,6 @@ Router::prefix($routesConfigs['backoffice_prefix'], 'backoffice'); //Définition
 // - A gauche l'url voulue
 // - A droite l'url renseignée dans les vues
 
-////////////////////////////
-//   REGLES FRONTOFFICE   //
-Router::connect('', 									'home/index'); 																//Page d'accueil du site
-Router::connect('e404', 								'home/e404'); 																//Erreur 404
-Router::connect('newsletter', 							'contacts/newsletter'); 													//Inscription à la newsletter
-Router::connect('rechercher', 							'searchs/rechercher');														//Préparation de l'url pour la recherche
-Router::connect('recherche', 							'searchs/index');															//Résultat de la recherche
-
 ////////////////////////////////////////////////
 //   REGLES ADDITIONNELLES POUR LES PLUGINS   //
 $moreRoutes = CONFIGS.DS.'plugins'.DS.'routes';
@@ -49,6 +41,14 @@ if(is_dir($moreRoutes)) {
 	foreach(FileAndDir::directoryContent($moreRoutes) as $moreRoute) { require_once($moreRoutes.DS.$moreRoute); }
 }
 ////////////////////////////////////////////////
+
+////////////////////////////
+//   REGLES FRONTOFFICE   //
+Router::connect('', 									'home/index'); 																//Page d'accueil du site
+Router::connect('e404', 								'home/e404'); 																//Erreur 404
+Router::connect('newsletter', 							'contacts/newsletter'); 													//Inscription à la newsletter
+Router::connect('rechercher', 							'searchs/rechercher');														//Préparation de l'url pour la recherche
+Router::connect('recherche', 							'searchs/index');															//Résultat de la recherche
 
 Router::connect(':prefix/:slug-:id', 					'posts/view/id:([0-9]+)/slug:([a-zA-Z0-9\-]+)/prefix:([a-zA-Z0-9\-]+)'); 	//Affichage du détail d'un post
 Router::connect(':slug-:id', 							'categories/view/id:([0-9]+)/slug:([a-zA-Z0-9\-]+)'); 						//Affichage d'une page catégorie

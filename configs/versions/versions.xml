@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 02/03/2015</name>
+		<num>20150302.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la gestion des routes des plugins</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 24/02/2015</name>
 		<num>20150224.001</num>
 		<supervisor>KoéZionCMS</supervisor>
