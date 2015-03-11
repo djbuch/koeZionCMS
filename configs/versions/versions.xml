@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 11/03/2015</name>
+		<num>20150311.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la gestion des routes des plugins</task>
+			<task author="FI" type="code">Modification du fichier htaccess principal pour ajouter une redirection 301 de mondomaine.com vers www.mondomaine.com</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 02/03/2015</name>
 		<num>20150302.001</num>
 		<supervisor>KoéZionCMS</supervisor>
