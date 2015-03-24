@@ -146,6 +146,6 @@ if(!empty($contentMenu)) {
 			</div>
 		</div>
 		<?php */ ?>
-		<div id="credits">&#169; Copyright 2010 - <?php echo date('Y'); ?> koéZionCMS</div>
+		<div id="credits">&#169; Copyright 2010 - <?php echo date('Y'); ?> <a href="http://www.koezion-cms.com">koéZionCMS</a></div>
 	</div>
 <?php } ?>

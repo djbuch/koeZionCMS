@@ -1,8 +1,7 @@
 <?php
-echo $helpers['Form']->input('post_id', 'Article', array('type' => 'select', 'datas' => $posts, 'tooltip' => "Indiquez ici l'article que vous souhaitez commenter"));
-echo $helpers['Form']->input('name', 'Nom', array('tooltip' => "Indiquez le nom de l'Internaute")); 
-echo $helpers['Form']->input('email', '<i>(*)</i> Email', array('tooltip' => "Indiquez l'email de l'Internaute")); 
-echo $helpers['Form']->input('cpostal', '<i>(*)</i> Code postal', array('tooltip' => "Indiquez le code postal de l'Internaute")); 
-//echo $helpers['Form']->input('message', 'Message', array('type' => 'textarea', 'tooltip' => "Saisissez le message de l'Internaute"));
-echo $helpers['Form']->input('message', 'Message', array('type' => 'textarea', 'wysiswyg' => true, 'toolbar' => 'empty', 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge')); 
-echo $helpers['Form']->input('online', 'Valide', array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour valider ce commentaire"));
+echo $helpers['Form']->input('post_id', _('Article'), 		array('type' => 'select', 'datas' => $posts, 'tooltip' => _("Indiquez ici l'article que vous souhaitez commenter")));
+echo $helpers['Form']->input('name', 	_('Nom'), 			array('tooltip' => _("Indiquez le nom de l'Internaute"))); 
+echo $helpers['Form']->input('email', 	_('Email'), 		array('compulsory' => true, 'tooltip' => _("Indiquez l'email de l'Internaute"))); 
+echo $helpers['Form']->input('cpostal', _('Code postal'), 	array('compulsory' => true, 'tooltip' => _("Indiquez le code postal de l'Internaute"))); 
+echo $helpers['Form']->input('message', _('Message'), 		array('type' => 'textarea', 'wysiswyg' => true, 'toolbar' => 'empty', 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge')); 
+echo $helpers['Form']->input('online', 	_('Valide'), 		array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour valider ce commentaire")));

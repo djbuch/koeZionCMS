@@ -90,15 +90,15 @@ class FormHelper extends FormParentHelper {
 
 		if(!isset($params) || empty($params)) {
 
-			$params['label'] = "Fichier à importer";
-			$params['tooltip'] = "Sélectionnez le fichier à importer";
-			$params['button_value'] = "Sélectionnez le fichier";
+			$params['label'] = _("Fichier à importer");
+			$params['tooltip'] = _("Sélectionnez le fichier à importer");
+			$params['button_value'] = _("Sélectionnez le fichier");
 			$params['display_input'] = true;
 		} else {
 
-			if(!isset($params['label'])) { $params['label'] = "Fichier à importer"; }
-			if(!isset($params['tooltip'])) { $params['tooltip'] = "Sélectionnez le fichier à importer"; }
-			if(!isset($params['button_value'])) { $params['button_value'] = "Sélectionnez le fichier"; }
+			if(!isset($params['label'])) { $params['label'] = _("Fichier à importer"); }
+			if(!isset($params['tooltip'])) { $params['tooltip'] = _("Sélectionnez le fichier à importer"); }
+			if(!isset($params['button_value'])) { $params['button_value'] = _("Sélectionnez le fichier"); }
 			if(!isset($params['display_input'])) { $params['display_input'] = true; }
 		}
 				
@@ -183,28 +183,28 @@ class FormHelper extends FormParentHelper {
 		</script>
 		<div class="row">
 			<label>
-				Fiche technique
-				<img original-title="Sélectionnez le fichier à importer" class="tip-w" style="float: left; margin-right: 5px; cursor: pointer;" alt="tooltip" src="<?php echo BASE_URL; ?>/img/backoffice/tooltip.png">
+				<?php echo _("Fiche technique"); ?>
+				<img original-title="<?php echo _("Sélectionnez le fichier à importer"); ?>" class="tip-w" style="float: left; margin-right: 5px; cursor: pointer;" alt="tooltip" src="<?php echo BASE_URL; ?>/img/backoffice/tooltip.png">
 			</label>
 
 			<div class="rowright">
 				<?php
 				$id = $this->_set_input_id('doc');
-				echo $this->input('select_file', '', array('type' => 'button', 'onclick' => "BrowseServer('Files:/', '".$id."');", 'displayError' => false, 'label' => false, 'div' => false, 'tooltip' => false, 'value' => "Sélectionnez le fichier"));
+				echo $this->input('select_file', '', array('type' => 'button', 'onclick' => "BrowseServer('Files:/', '".$id."');", 'displayError' => false, 'label' => false, 'div' => false, 'tooltip' => false, 'value' => _("Sélectionnez le fichier")));
 				echo $this->input('doc', '', array('tooltip' => false, 'div' => false, 'label' => false, 'class' => 'upload_file'));
 				?>
 			</div>
 		</div>
 		<div class="row">
 			<label>
-				Image
-				<img original-title="Sélectionnez le fichier à importer" class="tip-w" style="float: left; margin-right: 5px; cursor: pointer;" alt="tooltip" src="<?php echo BASE_URL; ?>/img/backoffice/tooltip.png">
+				<?php echo _("Image"); ?>
+				<img original-title="<?php echo _("Sélectionnez le fichier à importer"); ?> class="tip-w" style="float: left; margin-right: 5px; cursor: pointer;" alt="tooltip" src="<?php echo BASE_URL; ?>/img/backoffice/tooltip.png">
 			</label>
 
 			<div class="rowright">
 				<?php
 				$id = $this->_set_input_id('img');
-				echo $this->input('select_file', '', array('type' => 'button', 'onclick' => "BrowseServer('Images:/', '".$id."');", 'displayError' => false, 'label' => false, 'div' => false, 'tooltip' => false, 'value' => "Sélectionnez le fichier"));
+				echo $this->input('select_file', '', array('type' => 'button', 'onclick' => "BrowseServer('Images:/', '".$id."');", 'displayError' => false, 'label' => false, 'div' => false, 'tooltip' => false, 'value' => _("Sélectionnez le fichier")));
 				echo $this->input('img', '', array('tooltip' => false, 'div' => false, 'label' => false, 'class' => 'upload_file'));
 				?>
 			</div>
@@ -285,13 +285,15 @@ class FormHelper extends FormParentHelper {
  * @see FormHelper::input()
  */	
 	function input($name, $label, $options = array()) {
-		
-		//====================    PARAMETRAGES    ====================//
-
-		$escapeAttributes = array('div', 'divright', 'fulllabelerror', 'colorpicker', 'inputDatas');
+				
+		////////////////////////
+		//    PARAMETRAGES    //
+		$modelName 				= isset($this->view->controller->params['modelName']) ? $this->view->controller->params['modelName'] : ''; //Récupération du model courant
+		$escapeAttributes 		= array('div', 'divright', 'fulllabelerror', 'colorpicker', 'inputDatas', 'divRowBorderTop', 'divRowCss');
 		$this->escapeAttributes = am($escapeAttributes, $this->escapeAttributes);		
 		
-		//Liste des options par défaut
+		///////////////////////////////
+		//    GESTION DES OPTIONS    //
 		$defaultOptions = array(
 			'div' => true,
 			'divright' => true,
@@ -300,9 +302,75 @@ class FormHelper extends FormParentHelper {
 			'onlyInput' => false,
 			'inputDatas' => false
 		);
-		$options = array_merge($defaultOptions, $options); //Génération du tableau d'options utilisé dans la fonction
+		$options = array_merge($defaultOptions, $options); //Génération du tableau d'options utilisé dans la fonction		
 		
-		$inputDatas = parent::input($name, $label, $options); //Appel fonction parente
+		$htmlInput = ''; //Chaine de caractères qui va contenir l'élément input demandé
+		
+		//Gestion des traductions
+		$fieldsToTranslate = $this->view->controller->$modelName->fieldsToTranslate;
+		//if(!empty($modelName) && $this->view->controller->$modelName->fieldsToTranslate && $this->view->controller->$modelName->getTranslatedDatas) {
+		if(!empty($modelName) && $fieldsToTranslate && in_array($name, $fieldsToTranslate)) {
+		
+			//pr();
+			
+			$fieldsToTranslate 	= $this->view->controller->$modelName->fieldsToTranslate;
+			$locales = Session::read('Backoffice.Locales');
+			
+			//foreach($fieldsToTranslate as $k => $fieldToTranslate) {
+
+				foreach($locales as $locale) {
+					
+					$inputDatas = parent::input($name.'.'.$locale['code'], $label, am($options, array('divRowCss' => 'row_'.$locale['code']))); //Appel fonction parente
+					$htmlInput .= $this->_html_input($inputDatas);
+				}
+			//}
+			
+			
+			/*$requestData 		= $this->view->controller->request->data;
+			$fieldsToTranslate 	= $this->view->controller->$modelName->fieldsToTranslate;		
+			
+			$keysIntersect 	= array_intersect_key($requestData, array_flip($fieldsToTranslate)); //Récupération de l'intersection de clés des données de la ligne à afficher et des champs à traduire
+			
+			pr($requestData);
+			pr($keysIntersect);
+			
+			//Si l'élément courant est dans le tableau d'intersection et que sa valeur est un tableau
+			if(array_key_exists($name, $keysIntersect) && is_array($keysIntersect[$name])) {
+			
+				//On va parcourir toutes les traductions
+				foreach($keysIntersect[$name] as $locale => $traduction) {
+			
+					$inputDatas = parent::input($name.'.'.$locale, $label, am($options, array('divRowCss' => 'row_'.$locale))); //Appel fonction parente
+					$htmlInput .= $this->_html_input($inputDatas);
+				}
+				
+			//Sinon on génère l'input
+			} else {
+				
+				$inputDatas = parent::input($name, $label, $options); //Appel fonction parente
+				$htmlInput = $this->_html_input($inputDatas);
+			}*/
+		
+		//Cas général
+		} else { 
+			
+			$inputDatas = parent::input($name, $label, $options); //Appel fonction parente
+			$htmlInput = $this->_html_input($inputDatas);
+		}
+		
+		return $htmlInput;		
+	}
+		
+/**
+ * Cette fonction va permettre de créer les checkbox slides
+ *
+ * @param 	array $inputDatas Tableau contenant les données de paramétrage de l'input
+ * @return	varchar Chaine de caractères contenant le code HTML de l'input
+ * @access	protected
+ * @author	koéZionCMS
+ * @version 0.1 - 18/03/2015 by FI
+ */	
+	protected function _html_input($inputDatas) {
 				
 		//====================    	TRAITEMENTS DES DONNEES    ====================//	
 
@@ -314,22 +382,24 @@ class FormHelper extends FormParentHelper {
 		if($inputDatas['inputOptions']['onlyInput']) { return $inputDatas['inputElement']; }		
 		if($inputDatas['inputOptions']['inputDatas']) { return $inputDatas; }		
 		
-		$classError = '';
-		if(!empty($inputDatas['inputError'])) { $classError = ' error'; }
+		$cssRow = '';
+		if(!empty($inputDatas['inputError'])) { $cssRow .= ' error'; }
 				
 		if($inputDatas['inputOptions']['div']) {
 
-			if(isset($inputDatas['inputOptions']['divRowBorderTop']) && !$inputDatas['inputOptions']['divRowBorderTop']) { $styleDiv = ' style="border-top:none"'; } else { $styleDiv = ''; }
+			if(isset($inputDatas['inputOptions']['divRowBorderTop']) && !$inputDatas['inputOptions']['divRowBorderTop']) { $styleDiv = ' style="border-top:none"'; } 
+			else { $styleDiv = ''; }
+			
+			if(isset($inputDatas['inputOptions']['divRowCss']) && !empty($inputDatas['inputOptions']['divRowCss'])) { $cssRow .= ' row_locale '.$inputDatas['inputOptions']['divRowCss']; }
 
-			if($inputDatas['inputOptions']['divright']) { 
-				if($inputDatas['inputOptions']['fulllabelerror']) {
-					return '<div class="row'.$classError.'"'.$styleDiv.'>'.$inputDatas['inputLabel'].'<div class="rowright">'.$inputDatas['inputElement'].'</div>'.$inputDatas['inputError'].'</div>';				
-				} else {
-					return '<div class="row'.$classError.'"'.$styleDiv.'>'.$inputDatas['inputLabel'].'<div class="rowright">'.$inputDatas['inputElement'].$inputDatas['inputError'].'</div>'.'</div>';
-				} 
+			if($inputDatas['inputOptions']['divright']) {
+				 
+				if($inputDatas['inputOptions']['fulllabelerror']) { return '<div class="row'.$cssRow.'"'.$styleDiv.'>'.$inputDatas['inputLabel'].'<div class="rowright">'.$inputDatas['inputElement'].'</div>'.$inputDatas['inputError'].'</div>'; } 
+				else { return '<div class="row'.$cssRow.'"'.$styleDiv.'>'.$inputDatas['inputLabel'].'<div class="rowright">'.$inputDatas['inputElement'].$inputDatas['inputError'].'</div>'.'</div>'; } 
 			}
-			else { return '<div class="row'.$classError.'"'.$styleDiv.'>'.$inputDatas['inputLabel'].$inputDatas['inputElement'].$inputDatas['inputError'].'</div>'; }
-		} else { return $inputDatas['inputLabel'].$inputDatas['inputElement'].$inputDatas['inputError']; }		
+			else { return '<div class="row'.$cssRow.'"'.$styleDiv.'>'.$inputDatas['inputLabel'].$inputDatas['inputElement'].$inputDatas['inputError'].'</div>'; }
+		} else { return $inputDatas['inputLabel'].$inputDatas['inputElement'].$inputDatas['inputError']; }	
+		
 	}
 }
 ?>

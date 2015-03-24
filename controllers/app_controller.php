@@ -171,14 +171,21 @@ class AppController extends Controller {
  * @version 0.2 - 09/03/2012 by FI - Mise en place de la variable $fields
  * @version 0.3 - 29/05/2012 by FI - Mise en place de la variable $order
  * @version 0.4 - 11/12/2013 by FI - Mise en place de la variable $conditions
+ * @version 0.5 - 18/03/2015 by FI - Paramétrages de la traduction
+ * @version 0.6 - 24/03/2015 by FI - Test de l'existence de id ou _id dans les champs du moteur de recherche pour générer les conditions de recherche
  */    
     public function backoffice_index($return = false, $fields = null, $order = null, $conditions = null) {
     	    	
-    	$controllerVarName =  $this->params['controllerVarName']; //On récupère la valeur de la variable du contrôleur
-    	$modelName =  $this->params['modelName']; //On récupère la valeur du modèle
-    	$primaryKey = $this->$modelName->primaryKey;
-
-    	$tableShema = $this->$modelName->shema();
+    	$controllerVarName 	=  $this->params['controllerVarName']; //On récupère la valeur de la variable du contrôleur
+    	$modelName 			=  $this->params['modelName']; //On récupère la valeur du modèle
+    	$primaryKey 		= $this->$modelName->primaryKey;
+    	$tableShema 		= $this->$modelName->shema();
+    	
+    	/////////////////////////////////////////
+    	//    PARAMETRAGES DE LA TRADUCTION    //
+    	//$this->$modelName->getTranslation 	= true; //Cette donnée est déjà à vrai dans le model principal elle permet de récupérer la traduction de la langue par défaut du BO pour une meilleure compréhension
+    	//$this->$modelName->getTranslatedDatas = false; //On ne récupère pas l'ensemble des données traduites dans le listing pour alléger les requêtes
+    	
     	if(in_array('order_by', $tableShema)) { $orderBy = 'order_by ASC'; } else { $orderBy = $primaryKey.' ASC'; }
     	
     	$findConditions = array('conditions' => $conditions, 'fields' => $fields, 'order' => $orderBy);    	
@@ -190,7 +197,7 @@ class AppController extends Controller {
     			
     			if(trim($v) != "") { //Système de poulie lié au fait que empty(0) retourne faux
     				
-    				if($k == 'id') { $searchConditions[] = $k."='".$v."'"; }
+    				if($k == 'id' || substr($k, strlen($k) -3) == '_id') { $searchConditions[] = $k."='".$v."'"; }
     				else { $searchConditions[] = $k." LIKE '%".$v."%'"; }
     			}
     		}
@@ -214,60 +221,14 @@ class AppController extends Controller {
 		//   GESTION DE LA PAGINATION   //
     	if(isset($findConditions['conditions'])) { $this->pager['totalElements'] = $this->$modelName->findCount($findConditions['conditions']); }
     	else { $this->pager['totalElements'] = $this->$modelName->findCount(); }
-    	//$this->pager['totalElements'] = $this->$modelName->findCount();
+    	
     	if(!$datas['displayAll']) { $this->pager['totalPages'] = ceil($this->pager['totalElements'] / $this->pager['elementsPerPage']); }
     	else { $this->pager['totalPages'] = 1; }
     	//////////////////////////////////
     	
     	if($return) { return $datas; }
     	else { $this->set($datas); }
-    }  
-    
-    /*function backoffice_index($return = false, $fields = null, $order = null) {
-    	    	
-    	$controllerVarName =  $this->params['controllerVarName']; //On récupère la valeur de la variable du contrôleur
-    	$modelName =  $this->params['modelName']; //On récupère la valeur du modèle
-    	$primaryKey = $this->$modelName->primaryKey;
-
-    	$tableShema = $this->$modelName->shema();
-    	if(in_array('order_by', $tableShema)) { $orderBy = 'order_by ASC, name ASC'; } else { $orderBy = $primaryKey.' ASC'; }
-    	
-    	$findConditions = array('fields' => $fields, 'order' => $orderBy);    	
-    	
-    	if(isset($this->request->data['Search'])) {
-    	
-    		$searchConditions = array();
-    		foreach($this->request->data['Search'] as $k => $v) {
-    			
-    			if(trim($v) != "") { //Système de poulie lié au fait que empty(0) retourne faux
-    				
-    				if($k == 'id') { $searchConditions[] = $k."='".$v."'"; }
-    				else { $searchConditions[] = $k." LIKE '%".$v."%'"; }
-    			}
-    		}
-    	
-    		if(count($searchConditions) > 0) { $this->searchConditions = $searchConditions; }
-    	}
-    	
-    	$datas['displayAll'] = false;
-    	if(!isset($this->request->data['displayall'])) { $findConditions['limit'] = $this->pager['limit'].', '.$this->pager['elementsPerPage']; } else { $datas['displayAll'] = true; }	
-    	if(isset($order)) { $findConditions['order'] = $order; }
-    	
-    	if(isset($this->searchConditions)) { $findConditions['conditions'] = $this->searchConditions; }
-    	$datas[$controllerVarName] = $this->$modelName->find($findConditions);    	
-    	   	
-    	//////////////////////////////////
-		//   GESTION DE LA PAGINATION   //
-    	if(isset($findConditions['conditions'])) { $this->pager['totalElements'] = $this->$modelName->findCount($findConditions['conditions']); }
-    	else { $this->pager['totalElements'] = $this->$modelName->findCount(); }
-    	//$this->pager['totalElements'] = $this->$modelName->findCount();
-    	if(!$datas['displayAll']) { $this->pager['totalPages'] = ceil($this->pager['totalElements'] / $this->pager['elementsPerPage']); }
-    	else { $this->pager['totalPages'] = 1; }
-    	//////////////////////////////////
-    	
-    	if($return) { return $datas; }
-    	else { $this->set($datas); }
-    }*/    
+    }
     
 /**
  * Cette fonction permet l'ajout d'un élément
@@ -282,27 +243,25 @@ class AppController extends Controller {
     
     	$modelName = $this->params['modelName']; //On récupère la valeur du modèle
     	
+    	/////////////////////////////////////////
+    	//    PARAMETRAGES DE LA TRADUCTION    //
+    	$this->$modelName->getTranslation 		= false; //A ce niveau la pas besoin de récupérer la traduction de l'élément
+    	$this->$modelName->getTranslatedDatas 	= true; //Récupération de l'ensemble des données traduites pour affiche le formulaire
+    	    	
     	if($this->request->data) { //Si des données sont postées
     		
     		if($this->$modelName->validates($this->request->data)) { //Si elles sont valides
         			
     			$this->$modelName->save($this->request->data, $forceInsert); //On les sauvegarde 			    			
-    			Session::setFlash('Le contenu a bien été ajouté'); //Message de confirmation
+    			Session::setFlash(_('Le contenu a bien été ajouté')); //Message de confirmation
     			    			    			
     			$this->_check_cache_configs();
     			$this->_delete_cache();
     			
-    			if($redirect) {
-    				
-					$this->redirect('backoffice/'.$this->params['controllerFileName'].'/index'); //Redirection sur la page de listing
-    			} else {
-    				
-    				return true;
-    			}
-    		} else {
-    
-    			Session::setFlash('Merci de corriger vos informations', 'error'); //On génère le message d'erreur
-    		}
+    			if($redirect) { $this->redirect('backoffice/'.$this->params['controllerFileName'].'/index'); } //Redirection sur la page de listing  
+    			else { return true; }
+    			
+    		} else { Session::setFlash(_('Merci de corriger vos informations'), 'error'); } //On génère le message d'erreur
     	}
     }    
     
@@ -317,8 +276,13 @@ class AppController extends Controller {
  */    
     public function backoffice_edit($id, $redirect = true) {
     	    	
-    	$modelName =  $this->params['modelName']; //On récupère la valeur du modèle
+    	$modelName 	=  $this->params['modelName']; //On récupère la valeur du modèle
     	$primaryKey = $this->$modelName->primaryKey;
+    	
+    	/////////////////////////////////////////
+    	//    PARAMETRAGES DE LA TRADUCTION    //
+    	$this->$modelName->getTranslation 		= false; //A ce niveau la pas besoin de récupérer la traduction de l'élément
+    	$this->$modelName->getTranslatedDatas 	= true; //Récupération de l'ensemble des données traduites pour affiche le formulaire
     	
     	$this->set($primaryKey, $id); //On stocke l'identifiant dans une variable
 
@@ -329,23 +293,16 @@ class AppController extends Controller {
     		if($this->$modelName->validates($this->request->data)) {
     
     			$this->$modelName->save($this->request->data); //On les sauvegarde    			
-    			Session::setFlash('Le contenu a bien été modifié'); //Message de confirmation
+    			Session::setFlash(_('Le contenu a bien été modifié')); //Message de confirmation
     			    			
     			$this->_check_cache_configs();
     			$this->_delete_cache();
     			
-    			if($redirect) {
-    				
-    				$this->redirect('backoffice/'.$this->params['controllerFileName'].'/index'); //On retourne sur la page de listing
-    			} else {
-    				
-    				return true;
-    			}
-    		} else {
-    
-    			Session::setFlash('Merci de corriger vos informations', 'error'); //On stocke le message d'erreur
-    		}
-    		
+    			if($redirect) { $this->redirect('backoffice/'.$this->params['controllerFileName'].'/index'); } //On retourne sur la page de listing 
+    			else { return true; }
+    			
+    		} else { Session::setFlash(_('Merci de corriger vos informations'), 'error'); } //On stocke le message d'erreur
+    		     		
     	//Si aucune donnée n'est postée cela veut dire que c'est le premier passage on va donc récupérer les informations de l'élément
     	} else {
     
@@ -366,12 +323,12 @@ class AppController extends Controller {
  */   
     public function backoffice_delete($id, $redirect = true) {    	
     	
-    	$this->auto_render = false;
-    	$modelName =  $this->params['modelName']; //On récupère la valeur du modèle
-    	$primaryKey = $this->$modelName->primaryKey;
+    	$this->auto_render 	= false;
+    	$modelName 			=  $this->params['modelName']; //On récupère la valeur du modèle
+    	$primaryKey 		= $this->$modelName->primaryKey;
     	
     	$findConditions = array('conditions' => array($primaryKey => $id));
-    	$element = $this->$modelName->findFirst($findConditions);
+    	$element 		= $this->$modelName->findFirst($findConditions);
     	
     	if(!isset($element['is_deletable']) || (isset($element['is_deletable']) && $element['is_deletable'])) {
     	    		
@@ -380,12 +337,13 @@ class AppController extends Controller {
 	    	$this->_check_cache_configs();
 	    	$this->_delete_cache();
 	    	
-	    	Session::setFlash('Le contenu a bien été supprimé'); //Message de confirmation
+	    	Session::setFlash(_('Le contenu a bien été supprimé')); //Message de confirmation
 	    	if($redirect) { $this->redirect('backoffice/'.$this->params['controllerFileName'].'/index'); } //Redirection 
 	    	else { return true; }
+	    	
     	} else {
     		
-    		Session::setFlash('Impossible de supprimer cet élément', 'error'); //Message de confirmation
+    		Session::setFlash(_('Impossible de supprimer cet élément'), 'error'); //Message de confirmation
     		if($redirect) { $this->redirect('backoffice/'.$this->params['controllerFileName'].'/index'); } //Redirection
     		else { return false; }
     	}
@@ -413,7 +371,7 @@ class AppController extends Controller {
     			if($v) { $this->backoffice_delete($k, false); }
     		}
     	
-    		Session::setFlash('Le contenu a bien été supprimé'); //Message de confirmation
+    		Session::setFlash(_('Le contenu a bien été supprimé')); //Message de confirmation
     	} 	
     	
     	$this->redirect('backoffice/'.$this->params['controllerFileName'].'/index'); //Redirection
@@ -430,16 +388,16 @@ class AppController extends Controller {
  */
     public function backoffice_statut($id, $redirect = true) {
     
-    	$this->auto_render = false; //Pas de vue    	
-    	$modelName =  $this->params['modelName']; //On récupère la valeur du modèle    	
-    	//pr($modelName);
-    	$primaryKey = $this->$modelName->primaryKey;
-    	$element = $this->$modelName->findFirst(array('conditions' => array($primaryKey => $id))); //Récupération de l'élément
-    	$online = $element['online']; //Récupération de la valeur actuelle du champ online
-    	$newOnline = abs($online-1); //On génère la nouvelle valeur du champ online
-    	$sql = 'UPDATE '.$this->$modelName->table.' SET online = '.$newOnline.' WHERE '.$primaryKey.' = '.$id; //On construit la requête à effectuer
+    	$this->auto_render 	= false; //Pas de vue    	
+    	$modelName 			=  $this->params['modelName']; //On récupère la valeur du modèle
+    	$primaryKey 		= $this->$modelName->primaryKey;
+    	$element 			= $this->$modelName->findFirst(array('conditions' => array($primaryKey => $id))); //Récupération de l'élément
+    	$online 			= $element['online']; //Récupération de la valeur actuelle du champ online
+    	$newOnline 			= abs($online-1); //On génère la nouvelle valeur du champ online
+    	$sql 				= 'UPDATE '.$this->$modelName->table.' SET online = '.$newOnline.' WHERE '.$primaryKey.' = '.$id; //On construit la requête à effectuer
+    	
     	$this->$modelName->query($sql); //On lance la requête
-    	Session::setFlash('Le statut a bien été modifié'); //Message de confirmation
+    	Session::setFlash(_('Le statut a bien été modifié')); //Message de confirmation
     	
     	$this->_check_cache_configs();
     	$this->_delete_cache();    	
@@ -468,9 +426,9 @@ class AppController extends Controller {
     	set_time_limit(0);
     	ini_set("memory_limit" , "256M");
     	
-    	$this->auto_render = false;    	
-    	$modelName =  $this->params['modelName']; //On récupère la valeur du modèle    	    	
-    	$datas = $this->$modelName->find(); //On va récupérer l'ensemble des données du modèle
+    	$this->auto_render 	= false;    	
+    	$modelName 			=  $this->params['modelName']; //On récupère la valeur du modèle    	    	
+    	$datas 				= $this->$modelName->find(); //On va récupérer l'ensemble des données du modèle
     	
     	foreach($datas as $k => $v) { $this->$modelName->make_search_index($v, $v['id']); } //Reconstruction de l'index
     	
@@ -479,7 +437,7 @@ class AppController extends Controller {
     	$this->_check_cache_configs();
     	$this->_delete_cache();
     	
-    	Session::setFlash('Index du moteur de recherche reconstruit'); //Message de confirmation
+    	Session::setFlash(_('Index du moteur de recherche reconstruit')); //Message de confirmation
     	$this->redirect('backoffice/'.$this->params['controllerFileName'].'/index'); //Redirection
     }	
 	
@@ -507,13 +465,11 @@ class AppController extends Controller {
 		$this->loadModel('Category'); //Chargement du model
 		$categories = $this->Category->getTree(array('conditions' => 'type != 3'));
 		$this->set('categories', $categories);
-		//$this->unloadModel('Category'); //Déchargement du model
 		
 		//Récupération de tous les articles et envoi des données à la vue
 		$this->loadModel('Post'); //Chargement du model
 		$posts = $this->Post->find();
 		$this->set('posts', $posts);
-		//$this->unloadModel('Post'); //Déchargement du model
 		
 		/////////////////////////////////////////////////////////////////////////////////////////
 		//   REGLES ADDITIONNELLES POUR LA RECUPERATION DES LIENS A GENERER POUR LES PLUGINS   //
@@ -522,19 +478,8 @@ class AppController extends Controller {
 		
 			foreach(FileAndDir::directoryContent($moreLinks) as $moreLink) { require_once($moreLinks.DS.$moreLink); }
 		}
-		/////////////////////////////////////////////////////////////////////////////////////////		
+		/////////////////////////////////////////////////////////////////////////////////////////
 		
-		/*//Gestion des liens pour les plugins
-		if(isset($this->plugins['Flipbooks'])) {
-			
-			//Récupération de tous les flipbooks et envoi des données à la vue
-			$this->loadModel('Flipbook'); //Chargement du model
-			$flipbooks = $this->Flipbook->find();
-			$this->set('flipbooks', $flipbooks);			
-		}*/
-		
-		$this->render('/elements/ajax/backoffice_ajax_ckeditor_get_internal_links');
-
 		/*
 		//Récupération de tous les types d'articles et envoi des données à la vue
 		$this->loadModel('PostsType'); //Chargement du model
@@ -552,6 +497,8 @@ class AppController extends Controller {
 		$publicationDates = $this->Category->query("SELECT DISTINCT(STR_TO_DATE(CONCAT(YEAR(modified), '-', MONTH(modified)), '%Y-%m')) AS publication_date FROM posts", true);
 		$this->set('publicationDates', $publicationDates);
 		*/
+		
+		$this->render('/elements/ajax/backoffice_ajax_ckeditor_get_internal_links');
 	}
 	
 /**
@@ -563,11 +510,10 @@ class AppController extends Controller {
  */
 	public function backoffice_ajax_get_css_editor() {
 	
-		$this->layout = 'ajax'; //Définition du layout à utiliser
-		
-		$currentWebsiteId = Session::read("Backoffice.Websites.current");
-		$websiteLayout = Session::read("Backoffice.Websites.details.".$currentWebsiteId.".tpl_layout");
-		$websiteLayoutCode = Session::read("Backoffice.Websites.details.".$currentWebsiteId.".tpl_code");
+		$this->layout 		= 'ajax'; //Définition du layout à utiliser		
+		$currentWebsiteId 	= Session::read("Backoffice.Websites.current");
+		$websiteLayout 		= Session::read("Backoffice.Websites.details.".$currentWebsiteId.".tpl_layout");
+		$websiteLayoutCode 	= Session::read("Backoffice.Websites.details.".$currentWebsiteId.".tpl_code");
 		
 		$this->set('baseUrl', BASE_URL);
 		$this->set('websiteLayout', $websiteLayout);
@@ -584,11 +530,10 @@ class AppController extends Controller {
  */
 	public function backoffice_ajax_get_baseurl() {
 	
-		$this->layout = 'ajax'; //Définition du layout à utiliser		
-		
-		$currentWebsiteId = Session::read("Backoffice.Websites.current");
-		$websiteLayout = Session::read("Backoffice.Websites.details.".$currentWebsiteId.".tpl_layout");
-		$websiteLayoutCode = Session::read("Backoffice.Websites.details.".$currentWebsiteId.".tpl_code");
+		$this->layout 		= 'ajax'; //Définition du layout à utiliser				
+		$currentWebsiteId 	= Session::read("Backoffice.Websites.current");
+		$websiteLayout 		= Session::read("Backoffice.Websites.details.".$currentWebsiteId.".tpl_layout");
+		$websiteLayoutCode 	= Session::read("Backoffice.Websites.details.".$currentWebsiteId.".tpl_code");
 		
 		$this->set('baseUrl', BASE_URL);
 		$this->set('websiteLayout', $websiteLayout);
@@ -605,11 +550,11 @@ class AppController extends Controller {
  */
     public function backoffice_ajax_order_by() {
     	
-    	$this->auto_render = false; //On ne fait pas de rendu de la vue
-    	$modelName =  $this->params['modelName']; //Récupération du nom du modèle    	
-    	$primaryKey = $this->$modelName->primaryKey;
-    	$modelTable =  $this->$modelName->table; //Récupération du nom de la table
-    	$datas = $this->request->data; //Récupération des données
+    	$this->auto_render 	= false; //On ne fait pas de rendu de la vue
+    	$modelName 			=  $this->params['modelName']; //Récupération du nom du modèle    	
+    	$primaryKey 		= $this->$modelName->primaryKey;
+    	$modelTable 		=  $this->$modelName->table; //Récupération du nom de la table
+    	$datas 				= $this->request->data; //Récupération des données
     	
     	$sql = ""; //Requête sql qui sera exécutée
     	foreach($datas['ligne'] as $position => $id) { $sql .= "UPDATE ".$modelTable." SET order_by = ".$position." WHERE ".$primaryKey." = ".$id."; "."\n"; } //Construction de la requête
@@ -634,8 +579,7 @@ class AppController extends Controller {
 		//Récupération des informations du bouton
 		$this->loadModel('RightButton'); //Chargement du modèle
 		$rightButton = $this->RightButton->findFirst(array('fields' => array('name'), 'conditions' => array('id' => $rightButtonId))); //On récupère les données
-		$this->unloadModel('RightButton'); //Déchargement du modèle
-		
+				
 		$this->set('rightButtonId', $rightButtonId);
 		$this->set('rightButtonName', $rightButton['name']);
 		
@@ -699,7 +643,6 @@ class AppController extends Controller {
 			//On va envoyer les informations nécessaires à la génération du flux RSS
 			$datas['rss_for_layout'] = array(
 				'title' => $datas['category']['page_title'],	
-				//'link' => Router::url('categories/rss/id:'.$datas['category']['id'].'/slug:'.$datas['category']['slug'], 'xml', true),
 				'link' => Router::url('posts/rss/'.$datas['category']['id'].'/'.$datas['category']['slug'], 'xml', true),
 				'pageLink' => Router::url('categories/view/id:'.$datas['category']['id'].'/slug:'.$datas['category']['slug'], 'html', true)
 			);
@@ -718,14 +661,12 @@ class AppController extends Controller {
 			$datas['postsTypes'] = $this->PostsType->get_for_front($datas['category']['id']);
 		
 			//Construction des paramètres de la requête
-			$postsQuery = array(
-				'conditions' => $postsConditions
-			);			
+			$postsQuery = array('conditions' => $postsConditions);			
 			if($setLimit) { $postsQuery['limit'] = $this->pager['limit'].', '.$this->pager['elementsPerPage']; }
 		
-			if($postsConfigs['order'] == 'modified') { $postsQuery['order'] = 'modified DESC'; }
-			else if($postsConfigs['order'] == 'created') { $postsQuery['order'] = 'created DESC'; }
-			else if($postsConfigs['order'] == 'order_by') { $postsQuery['order'] = 'order_by ASC'; }
+			if($postsConfigs['order'] == 'modified') 		{ $postsQuery['order'] = 'modified DESC'; }
+			else if($postsConfigs['order'] == 'created') 	{ $postsQuery['order'] = 'created DESC'; }
+			else if($postsConfigs['order'] == 'order_by') 	{ $postsQuery['order'] = 'order_by ASC'; }
 		
 			$postsQuery['moreConditions'] = ''; //Par défaut pas de conditions de recherche complémentaire
 		
@@ -751,10 +692,8 @@ class AppController extends Controller {
 			//même si il n'y avait pas de post
 			$nbPostsCategory = $this->Post->findCount($postsConditions);
 		
-			$this->pager['totalElements'] = $this->Post->findCount($postsConditions, $postsQuery['moreConditions']); //On va compter le nombre d'élement
-			$this->pager['totalPages'] = ceil($this->pager['totalElements'] / $this->pager['elementsPerPage']); //On va compter le nombre de page
-		
-			//if($this->pager['totalElements'] > 0 || count($datas['postsTypes']) > 0) { $datas['is_full_page'] = 0; } //Si on doit afficher les articles alors il faut la colonne de droite
+			$this->pager['totalElements'] 	= $this->Post->findCount($postsConditions, $postsQuery['moreConditions']); //On va compter le nombre d'élement
+			$this->pager['totalPages'] 		= ceil($this->pager['totalElements'] / $this->pager['elementsPerPage']); //On va compter le nombre de page
 		}
 
 		return $datas;
@@ -1153,8 +1092,8 @@ class AppController extends Controller {
 				////////////////////////////////////////////
 				//   SAUVEGARDE DANS LA BASE DE DONNEES   //				
 				$this->Contact->save($this->request->data); 
-				$message = '<p class="confirmation">Votre demande a bien été prise en compte</p>';
-				$messageOk = '<p>Votre demande a bien été prise en compte</p>';
+				$message = '<p class="confirmation">'._('Votre demande a bien été prise en compte').'</p>';
+				$messageOk = '<p>'._('Votre demande a bien été prise en compte').'</p>';
 				
 				$this->set('message', $message);
 				$this->set('messageOk', $messageOk);
@@ -1177,10 +1116,10 @@ class AppController extends Controller {
 			} else {
 		
 				//Gestion des erreurs
-				$message = '<p class="error"><strong>Merci de corriger vos informations</strong>';
+				$message = '<p class="error"><strong>'._('Merci de corriger vos informations').'</strong>';
 				foreach($this->Contact->errors as $k => $v) { $message .= '<br />'.$v; }
 				$message .= '</p>';
-				$messageKo = '<p><strong>Merci de corriger vos informations</strong>';
+				$messageKo = '<p><strong>'._('Merci de corriger vos informations').'</strong>';
 				foreach($this->Contact->errors as $k => $v) { $messageKo .= '<br />'.$v; }
 				$messageKo .= '</p>';
 				
@@ -1238,8 +1177,8 @@ class AppController extends Controller {
 				//   SAUVEGARDE DANS LA BASE DE DONNEES   //
     			$this->request->data['post_id'] = $vars['post']['id'];
     			$this->PostsComment->save($this->request->data);
-    			$message = '<p class="confirmation">Votre commentaire a bien été prise en compte, il sera diffusé après validation par notre modérateur</p>';
-    			$messageOk = '<p>Votre commentaire a bien été prise en compte, il sera diffusé après validation par notre modérateur</p>';
+    			$message = '<p class="confirmation">'._('Votre commentaire a bien été pris en compte, il sera diffusé après validation par notre modérateur').'</p>';
+    			$messageOk = '<p>'._('Votre commentaire a bien été pris en compte, il sera diffusé après validation par notre modérateur').'</p>';
     			
     			$this->set('message', $message);
     			$this->set('messageOk', $messageOk);
@@ -1261,10 +1200,10 @@ class AppController extends Controller {
 				
     		} else {
     	
-    			$message = '<p class="error"><strong>Merci de corriger vos informations</strong>';
+    			$message = '<p class="error"><strong>'.('Merci de corriger vos informations').'</strong>';
     			foreach($this->PostsComment->errors as $k => $v) { $message .= '<br />'.$v; }
     			$message .= '</p>';
-    			$messageKo = '<p><strong>Merci de corriger vos informations</strong>';
+    			$messageKo = '<p><strong>'._('Merci de corriger vos informations').'</strong>';
     			foreach($this->PostsComment->errors as $k => $v) { $messageKo .= '<br />'.$v; }
     			$messageKo .= '</p>';
     			

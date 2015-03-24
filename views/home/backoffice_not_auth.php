@@ -12,13 +12,13 @@
 			
 			<h1 class="e404" style="float:left;"><strong>[401]</strong></h1>
 			<div style="float:left;">
-				<h1>Droits insufisants.</h1>
+				<h1><?php echo _("Droits insufisants"); ?>.</h1>
 				<h6 class="e404">
-					Vous ne disposez pas des droits nécessaires pour cette opération.<br />
-					Contactez l'administrateur pour plus d'informations.
+					<?php echo _("Vous ne disposez pas des droits nécessaires pour cette opération"); ?>.<br />
+					<?php echo _("Contactez l'administrateur pour plus d'informations"); ?>.
 				</h6>					
 			</div>
-			<p style="clear:both;margin-top:30px;float:left;"><a class="btn medium grey" href="javascript:history.back()"><span>Revenir à la page précédente</span></a></p>
+			<p style="clear:both;margin-top:30px;float:left;"><a class="btn medium grey" href="javascript:history.back()"><span><?php echo _("Revenir à la page précédente"); ?></span></a></p>
 		</div>
 	</div>
 </div>

@@ -24,7 +24,7 @@
 				$this->element('backoffice/pagination');
 			} else { 
 				
-				?><p>Aucun élément</p><?php 
+				?><p><?php echo _("Aucun élément"); ?></p><?php 
 			}
 			?>
 		</div>

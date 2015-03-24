@@ -173,6 +173,22 @@ class PostsController extends AppController {
 		$this->set($datas);
 	}
 	
+/**
+ * Cette fonction permet la récupération d'informations sur les articles 
+ *
+ * @param 	integer $id 	Identifiant de l'article
+ * @return	array	Tableau de données à passer à la vue
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 05/03/2015 by AJ
+ */
+	public function get_post_infos($id) {
+	
+		//Récupération d'informations concernant l'article
+		$post = $this->Post->findFirst(array('conditions' => array('id' => $id)));
+		return $post;
+	}
+	
 //////////////////////////////////////////////////////////////////////////////////////////	
 //										BACKOFFICE										//
 //////////////////////////////////////////////////////////////////////////////////////////

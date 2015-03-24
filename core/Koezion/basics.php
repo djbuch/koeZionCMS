@@ -50,7 +50,11 @@
 		return ROOT.$file;
 	}	
 	
-	if(!function_exists('_')) {	
+/**
+ * Gestion de la fonction _() utilisée par GetText pour la localisation
+ * On test si le plugin localization n'est pas en cours d'utilisation car la fonction _() est déjà implémentée dans la librairie GetText
+ */	
+	if(!in_array('localization', get_plugins_connectors()) && !function_exists('_')) {	
 		
 		function _($text) { return $text; }
 	}

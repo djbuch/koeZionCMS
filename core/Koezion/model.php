@@ -56,6 +56,36 @@ class Model extends Object {
  * @version 0.1 - 03/11/2014 by FI
  */
 	var $deleteConnectedDatasEscapeModels = false;
+	
+/**
+ * Tableau contenant l'ensemble des champs à traduire
+ * 
+ * @var 	boolean/array
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 18/03/2015 by FI
+ */
+	var $fieldsToTranslate = false;
+	
+/**
+ * Booléen indiquant s'il faut ou non récupérer la traduction de l'élément courant
+ * 
+ * @var 	boolean/array
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 18/03/2015 by FI
+ */
+	var $getTranslation = true;
+	
+/**
+ * Booléen indiquant s'il faut ou non récupérer l'ensemble des données traduites associées à l'élément courant
+ * 
+ * @var 	boolean/array
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 18/03/2015 by FI
+ */
+	var $getTranslatedDatas = false;
     
 /**
  * Constructeur de la classe
@@ -72,6 +102,7 @@ class Model extends Object {
  * @version 0.8 - 11/11/2013 by FI - Rajout de la source en variable en prévision de futures évolutions
  * @version 0.9 - 03/06/2014 by FI - Rajout de la variable $databaseConfigs pour permettre à un modèle de se connecter à une BDD autre que celle par défaut, le format doit être identique à celui retourné par le fichier configs/files/database.ini
  * @version 1.0 - 08/08/2014 by FI - Modification du premier paramètre passé au constructeur pour y ajouter de nouvelles données (la donnée controller_action)
+ * @version 1.1 - 20/01/2015 by FI - Mise en place du code pour l'i18n
  */
 	public function __construct($modelParams = null, $databaseConfigs = null) {
 
@@ -106,6 +137,22 @@ class Model extends Object {
 		}		
 		
 		$this->alias = "Kz".get_class($this);
+			
+		/////////////////////////////////////////////
+		//    GESTION DE L'INTERNATIONALISATION    //			
+		if(
+			defined('PLUGIN_LOCALIZATION_ACTIV') && 
+			PLUGIN_LOCALIZATION_ACTIV && 
+			defined('LOCALIZATION_TRANSLATE_FIELDS_FILE') && 
+			file_exists(LOCALIZATION_TRANSLATE_FIELDS_FILE)) 
+		{			
+			//On va contrôler que pour le model en cours il n'existe pas de champs à traduire
+			//Le cas échéant on les rajoute dans la variable de classe $fieldsToTranslate
+			require_once(LIBS.DS.'config_magik.php'); //Chargement de ConfigMagik
+			$cfg = new ConfigMagik(LOCALIZATION_TRANSLATE_FIELDS_FILE, true, true); //Création d'une instance de ConfigMagik avec le fichier des champs à traduire
+			$fieldsToTranslate = $cfg->keys_values($this->table); //Récupération des configurations de la table en cours			
+			if($fieldsToTranslate) { $this->fieldsToTranslate = $fieldsToTranslate; }
+		}
 		
 		//On test qu'une connexion ne soit pas déjà active
 		if(isset(Model::$connections[$this->conf])) {
@@ -145,14 +192,14 @@ class Model extends Object {
 			if(Configure::read('debug') >= 1) {
 				
 				$message = '<pre style="background-color: #EBEBEB; border: 1px dashed black; padding: 10px;">';
-				$message .= "La base de donn&eacute;es n'est pas disponible merci de r&eacute;&eacute;ssayer plus tard ".$e->getMessage();
+				$message .= _("BASE DE DONNEES NON DISPONIBLE, MERCI DE REESSAYER PLUS TARD").$e->getMessage();
 				$message .= '</pre>';				
 				die($message);
 				
 			} else {
 								
 				$message = '<pre style="background-color: #EBEBEB; border: 1px dashed black; padding: 10px;">';
-				$message .= "La base de donn&eacute;es n'est pas disponible merci de r&eacute;&eacute;ssayer plus tard ";
+				$message .= _("BASE DE DONNEES INSDISPONIBLE, MERCI DE REESSAYER PLUS TARD");
 				$message .= '</pre>';				
 				die($message);
 				
@@ -160,6 +207,43 @@ class Model extends Object {
 		}
 	}
     
+/**
+ * Fonctions qui sera exécutée après la sauvegarde des données
+ *
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 23/03/2015 by FI
+ */    
+	public function after_save($datas, $saveAction = 'insert') {		
+				
+		////////////////////////////////////////////////
+		//    GESTION DE LA TRADUCTION DE LA TABLE    //
+		if(isset($this->fieldsToTranslate) && !empty($this->fieldsToTranslate)) {
+		
+			//Récupération de l'intersection de clés du tableau de traduction et des données à sauvegarder
+			$keysIntersect 	= array_intersect_key($datas, array_flip($this->fieldsToTranslate));
+
+			//On va tester l'action générée par la requête de sauvegarde pour modifier la valeur de la clée en fonction de l'insert ou de l'update
+			if($saveAction == 'update') { $primaryKey = array('locale', 'model_id'); } else { $primaryKey = 'id'; }
+			
+			$datasTraduction = array();
+			foreach($keysIntersect as $field => $v) {
+				
+				foreach($v as $locale => $localeValue) {
+
+					$datasTraduction[$locale][$field] = $localeValue;
+					$datasTraduction[$locale]['locale'] = $locale; 
+					$datasTraduction[$locale]['model_id'] = $this->id; 
+				}				
+			}
+			
+			$this->table = $this->table.'_i18n';
+			$this->shema = $this->shema();
+			$this->primaryKey = $primaryKey;
+			$this->saveAll($datasTraduction);
+		}
+	}
+	
 /**
  * Cette fonction permet l'exécution du requête sans passer par la fonction find
  * Il suffit d'envoyer directement dans le paramètre $sql la requête à effectuer (par exemple un SELECT ou autre)
@@ -194,7 +278,8 @@ class Model extends Object {
  * 	- moreConditions (optionnel) : cet index est une chaine de caractères et permet lorsqu'il est renseigné de rajouter des conditions de recherche particulières.
  * 	- order (optionnel) : cet index est une chaine de caractères et permet lorsqu'il est renseigné d'effectuer un tri sur les éléments retournés.
  * 	- limit (optionnel) : cet index est un entier et permet lorsqu'il est renseigné de limiter le nombre de résultats retournés.
- *  - allLocales (optionnel) : cet index est un booléen qui permet lors de la récupération d'un élément d'indiquer si il faut ou non récupérer l'ensemble des champs traduits
+ *  - tables (optionnel) : cet index permet de spécifier les tables à charger dans le FROM
+ *  - pr (optionnel) : cet index permet d'indiquer s'il faut ou non imprimer la requête à l'écran  
  *  - innerJoin, leftJoin, rightJoin (optionnel) : cet index permet d'effectuer une instruction "INNER|LEFT|RIGHT JOIN" dans une requête, il contient un tableau qui doit lui-même contenir les index model et pivot. 
  *    L'index model contient le nom du model (et donc de la table) sur lequel on va effectuer la recherche.
  *    L'index pivot contient le point de comparaison entre les deux tables. 
@@ -256,216 +341,336 @@ class Model extends Object {
  * @version 0.5 - 27/03/2014 by FI - Gestion du champ activate
  * @version 0.6 - 02/04/2014 by FI - Mise en place de la gestion du OR dans les conditions de recherche
  * @version 0.7 - 17/07/2014 by FI - Modification de la gestion du champ fields 
+ * @version 0.8 - 20/01/2015 by FI - Gestion i18n 
+ * @version 0.9 - 23/01/2015 by FI - Gestion i18n de l'instruction ORDER BY 
+ * @version 1.0 - 23/03/2015 by FI - Rajout de l'index tables 
+ * @version 1.1 - 23/03/2015 by FI - Rajout de l'index pr 
  */    
 	public function find($req = array(), $type = PDO::FETCH_ASSOC) {
+				
+		//Dans le cas du i18n on teste, la majorité du temps, que l'on ne soit pas dans le BO car nous devons récupérer tous les champs y compris ceux traduits
 		
 		$shema = $this->shema;
 		$sql = 'SELECT '; //Requete sql
-        
+		
+		//Mise en place d'un booléan pour savoir si la traduction est active sur le modèle courant
+		//Il faut que :
+		//	- $this->fieldsToTranslate existe
+		//	- $this->fieldsToTranslate ne soit pas vide
+		if(isset($this->fieldsToTranslate) && !empty($this->fieldsToTranslate)) { $translatedTable = true; }
+		else { $translatedTable = false; }
+        		
 		///////////////////////
 		//   CHAMPS FIELDS   //					
 		//Si aucun champ n'est demandé on va récupérer le shéma de la table et récupérer ces champs
 		//Dans le cas de table traduite on va également récupérer les champs traduits ainsi que la langue associée
-		if(!isset($req['fields']) && !empty($shema)) { $fields = $shema; } 
-		if(isset($req['fields'])) { $fields = $req['fields']; } 
-		else { $fields = '*'; }		
-		$sql .= $this->_get_fields($fields);
+			if(!isset($req['fields']) && !empty($shema)) { $fields = $shema; } 
+			else if(isset($req['fields'])) { $fields = $req['fields']; } 			
+			//else { $fields = '*'; }
+			
+			$i18nFields = null;
+			if(isset($fields) && $translatedTable && $this->getTranslation) {
+				
+				$i18nShema = $this->fieldsToTranslate; //Récupération des champs à traduire
+
+				//On va calculer la différence entre la table "parente" et la table traduite
+				$fields = array_diff($fields, $i18nShema);
+				
+				//Rajout des données complémentaires de la traduction
+				$i18nShema['i18n_id'] 		= 'id'; //On gère un alias pour ce champs pour qu'il ne rentre pas en conflit avec l'id de la table parente
+				$i18nShema['i18n_locale'] 	= 'locale'; //On uniformise avec le champ id
+				$i18nShema['i18n_model_id'] = 'model_id'; //On uniformise avec le champ id
+				
+				$i18nFields = $this->_get_fields($i18nShema, $this->alias.'I18n');
+			}
+			else if(!isset($fields)) { $fields = '*'; }
+			
+			
+			$sql .= $this->_get_fields($fields, null, $i18nFields);
+			
+		////////////////
+		//    FROM    //	
+			if(isset($req['tables']) && !empty($req['tables'])) {
+				
+				$tables = array();
+				foreach($req['tables'] as $table => $alias) { $tables[] = '`'.$table.'` AS `'.$alias.'`'; }	
+				
+			} else { $tables[] = '`'.$this->table.'` AS `'.$this->alias.'`'; }
 		
-		$sql .= "\n".'FROM `'.$this->table.'` AS '.$this->alias.' ';
-		
+			////////////////
+			//    I18N    //
+			//Si il y à une variable contenant des champs à traduire on rajoute la table de le from
+			if($translatedTable && $this->getTranslation) { $tables[] = '`'.$this->table.'_i18n` AS `'.$this->alias.'I18n`'; }
+			
+			$sql .= "\n"."FROM \n\t".implode(", \n\t", $tables)."\n ";
+		/*
+		//VERSION AVEC INNER JOIN changé par une jointure normal car trop restrictive dans l'ordre des tables à charger dans le FROM
+		//Cf posts_type model fonction get_for_front l'ordre des tables dans le from générait une erreur
+		//Si il y à une variable contenant des champs à traduire
+		//On va rajouter le INNER JOIN
+		//Ainsi que le pivot qui sera toujours id dans la table source et model_id dans la table de traduction
+			if($translatedTable && $this->getTranslation) {
+			
+				$sql .= 'INNER JOIN '.$this->table.'_i18n AS '.$this->alias.'I18n ';
+				$sql .= 'ON '.$this->alias.'.id = '.$this->alias.'I18n.model_id ';
+			}	
+		*/
+				
 		///////////////////////////
 		//   CHAMPS LEFT JOIN   //
-		if(isset($req['leftJoin']) && !empty($req['leftJoin'])) {
-			
-			if (!is_array($req['leftJoin'])) { $sql .= "\n".$req['leftJoin']; } //On ajoute à la requête s'il s'agit d'une chaîne 
-			else {
+			if(isset($req['leftJoin']) && !empty($req['leftJoin'])) {
 				
-				if(isset($req['leftJoin'][0])) { //Si l'on a un tableau à index numérique, on peut avoir plusieurs join à la suite et sur plusieurs tables
+				if (!is_array($req['leftJoin'])) { $sql .= "\n".$req['leftJoin']; } //On ajoute à la requête s'il s'agit d'une chaîne 
+				else {
 					
-					foreach ($req['leftJoin'] as $v) {
+					if(isset($req['leftJoin'][0])) { //Si l'on a un tableau à index numérique, on peut avoir plusieurs join à la suite et sur plusieurs tables
 						
-						$joinModel = $this->loadModel($v['model'], true);
-						$sql .= "\n".'LEFT JOIN '.$joinModel->table.' AS '.$joinModel->alias.' ON '.$v['pivot'].' '; //On ajoute à la requête
-					}					
-				} else { //Sinon, on n'a qu'un seul join
-					
-					$joinModel = $this->loadModel($req['leftJoin']['model'], true);
-					$sql .= "\n".'LEFT JOIN '.$joinModel->table.' AS '.$joinModel->alias.' ON '.$req['leftJoin']['pivot'].' '; //On ajoute à la requête					
+						foreach ($req['leftJoin'] as $v) {
+							
+							$joinModel = $this->loadModel($v['model'], true);
+							$sql .= "\n".'LEFT JOIN '.$joinModel->table.' AS '.$joinModel->alias.' ON '.$v['pivot'].' '; //On ajoute à la requête
+						}					
+					} else { //Sinon, on n'a qu'un seul join
+						
+						$joinModel = $this->loadModel($req['leftJoin']['model'], true);
+						$sql .= "\n".'LEFT JOIN '.$joinModel->table.' AS '.$joinModel->alias.' ON '.$req['leftJoin']['pivot'].' '; //On ajoute à la requête					
+					}
 				}
 			}
-		}
 		
 		///////////////////////////
 		//   CHAMPS RIGHT JOIN   //
-		if(isset($req['rightJoin']) && !empty($req['rightJoin'])) {
-			
-			if (!is_array($req['rightJoin'])) { $sql .= "\n".$req['rightJoin']; } //On ajoute à la requête s'il s'agit d'une chaîne 
-			else {
+			if(isset($req['rightJoin']) && !empty($req['rightJoin'])) {
 				
-				if(isset($req['rightJoin'][0])) { //Si l'on a un tableau à index numérique, on peut avoir plusieurs join à la suite et sur plusieurs tables
+				if (!is_array($req['rightJoin'])) { $sql .= "\n".$req['rightJoin']; } //On ajoute à la requête s'il s'agit d'une chaîne 
+				else {
 					
-					foreach ($req['rightJoin'] as $v) {
+					if(isset($req['rightJoin'][0])) { //Si l'on a un tableau à index numérique, on peut avoir plusieurs join à la suite et sur plusieurs tables
 						
-						$joinModel = $this->loadModel($v['model'], true);
-						$sql .= "\n".'RIGHT JOIN '.$joinModel->table.' AS '.$joinModel->alias.' ON '.$v['pivot'].' '; //On ajoute à la requête
-					}					
-				} else { //Sinon, on n'a qu'un seul join
-					
-					$joinModel = $this->loadModel($req['rightJoin']['model'], true);
-					$sql .= "\n".'RIGHT JOIN '.$joinModel->table.' AS '.$joinModel->alias.' ON '.$req['rightJoin']['pivot'].' '; //On ajoute à la requête					
+						foreach ($req['rightJoin'] as $v) {
+							
+							$joinModel = $this->loadModel($v['model'], true);
+							$sql .= "\n".'RIGHT JOIN '.$joinModel->table.' AS '.$joinModel->alias.' ON '.$v['pivot'].' '; //On ajoute à la requête
+						}					
+					} else { //Sinon, on n'a qu'un seul join
+						
+						$joinModel = $this->loadModel($req['rightJoin']['model'], true);
+						$sql .= "\n".'RIGHT JOIN '.$joinModel->table.' AS '.$joinModel->alias.' ON '.$req['rightJoin']['pivot'].' '; //On ajoute à la requête					
+					}
 				}
 			}
-		}
 		
 		///////////////////////////
 		//   CHAMPS INNER JOIN   //
-		if(isset($req['innerJoin']) && !empty($req['innerJoin'])) {
-			
-			if (!is_array($req['innerJoin'])) { $sql .= "\n".$req['innerJoin']; } //On ajoute à la requête s'il s'agit d'une chaîne 
-			else {
+			if(isset($req['innerJoin']) && !empty($req['innerJoin'])) {
 				
-				if(isset($req['innerJoin'][0])) {//Si l'on a un tableau à index numérique, on peut avoir plusieurs "join" à la suite et sur plusieurs tables
+				if (!is_array($req['innerJoin'])) { $sql .= "\n".$req['innerJoin']; } //On ajoute à la requête s'il s'agit d'une chaîne 
+				else {
 					
-					foreach ($req['innerJoin'] as $k => $v) {
-
-						$joinModel = $this->loadModel($v['model'], true);
-						$sql .= "\n".'INNER JOIN '.$joinModel->table.' AS '.$joinModel->alias.' ON '.$v['pivot'].' ';//On ajoute à la requête
+					if(isset($req['innerJoin'][0])) {//Si l'on a un tableau à index numérique, on peut avoir plusieurs "join" à la suite et sur plusieurs tables
+						
+						foreach ($req['innerJoin'] as $k => $v) {
+	
+							$joinModel = $this->loadModel($v['model'], true);
+							$sql .= "\n".'INNER JOIN '.$joinModel->table.' AS '.$joinModel->alias.' ON '.$v['pivot'].' ';//On ajoute à la requête
+						}
+						
+					} else { //Sinon, on n'a qu'un seul "join"
+						
+						$joinModel = $this->loadModel($req['innerJoin']['model'], true);
+						$sql .= "\n".'INNER JOIN '.$joinModel->table.' AS '.$joinModel->alias.' ON '.$req['innerJoin']['pivot'].' ';//On ajoute à la requête
 					}
-					
-				} else { //Sinon, on n'a qu'un seul "join"
-					
-					$joinModel = $this->loadModel($req['innerJoin']['model'], true);
-					$sql .= "\n".'INNER JOIN '.$joinModel->table.' AS '.$joinModel->alias.' ON '.$req['innerJoin']['pivot'].' ';//On ajoute à la requête
 				}
 			}
-		}
 
 		///////////////////////////////////////////////////////////
 		//   CONDITIONS DE RECHERCHE SUR L'IDENTIFIANT DU SITE   //
 		//Si dans le shema de la table on a une colonne website_id		
-		if($this->manageWebsiteId && in_array('website_id', $shema) && get_class($this) != 'UsersGroupsWebsite') {
-		
-			//Si on a pas de conditions de recherche particulières
-			if(!isset($req['conditions'])) { $req['conditions']['website_id'] = CURRENT_WEBSITE_ID; }
-			else {
-				
-				//Sinon on va tester si il s'agit d'un tableau ou d'une chaine de caractères
-				if(is_array($req['conditions'])) { $req['conditions']['website_id'] = CURRENT_WEBSITE_ID; } 
-				else { $req['conditions'] .= " AND website_id=".CURRENT_WEBSITE_ID; }
-			}			
-		}
-		///////////////////////////////////////////////////////////
+			if($this->manageWebsiteId && in_array('website_id', $shema) && get_class($this) != 'UsersGroupsWebsite') {
+			
+				//Si on a pas de conditions de recherche particulières
+				if(!isset($req['conditions'])) { $req['conditions']['website_id'] = CURRENT_WEBSITE_ID; }
+				else {
+					
+					//Sinon on va tester si il s'agit d'un tableau ou d'une chaine de caractères
+					if(is_array($req['conditions'])) { $req['conditions']['website_id'] = CURRENT_WEBSITE_ID; } 
+					else { $req['conditions'] .= " AND website_id=".CURRENT_WEBSITE_ID; }
+				}			
+			}
 
 		///////////////////////////////////////////////////////
 		//   CONDITIONS DE RECHERCHE SUR LE CHAMP ACTIVATE   //
 		//Si dans le shema de la table on a une colonne website_id		
-		if($this->manageActivateField && in_array('activate', $shema)) {
-		
-			//Si on a pas de conditions de recherche particulières
-			if(!isset($req['conditions'])) { $req['conditions']['activate'] = 1; }
-			else {
-				
-				//Sinon on va tester si il s'agit d'un tableau ou d'une chaine de caractères
-				if(is_array($req['conditions'])) { $req['conditions']['activate'] = 1; } 
-				else { $req['conditions'] .= " AND activate=1"; }
-			}			
-		}
-		///////////////////////////////////////////////////////
+			if($this->manageActivateField && in_array('activate', $shema)) {
+			
+				//Si on a pas de conditions de recherche particulières
+				if(!isset($req['conditions'])) { $req['conditions']['activate'] = 1; }
+				else {
+					
+					//Sinon on va tester si il s'agit d'un tableau ou d'une chaine de caractères
+					if(is_array($req['conditions'])) { $req['conditions']['activate'] = 1; } 
+					else { $req['conditions'] .= " AND activate=1"; }
+				}			
+			}
 		
 		///////////////////////////
 		//   CHAMPS CONDITIONS   //
-		if(isset($req['conditions'])) { //Si on a des conditions
-			
-			$conditions = '';	//Mise en variable des conditions	
-			
-			//On teste si conditions est un tableau
-			//Sinon on est dans le cas d'une requête personnalisée
-			if(!is_array($req['conditions']) && !empty($req['conditions'])) {
-                
-				$conditions .= $req['conditions']; //On les ajoute à la requete
-			
-			//Si c'est un tableau on va rajouter les valeurs
-			} else {
+			if(isset($req['conditions'])) { //Si on a des conditions
 				
-				$cond = array();
-				foreach($req['conditions'] as $k => $v) {		
+				$conditions = '';	//Mise en variable des conditions	
+				
+				//On teste si conditions est un tableau
+				//Sinon on est dans le cas d'une requête personnalisée
+				if(!is_array($req['conditions']) && !empty($req['conditions'])) {
+	                
+					$conditions .= $req['conditions']; //On les ajoute à la requete
+				
+				//Si c'est un tableau on va rajouter les valeurs
+				} else {
 					
-					//if(!empty($v)) {
+					$cond = array();
+					foreach($req['conditions'] as $k => $v) {		
 						
-						//On va ensuite tester si la clé est une chaine de caractère
-						//On rajoute le nom de la classe devant le nom de la colonne
-						if(is_string($k)) {					
+						//if(!empty($v)) {
 							
-							if($k == "OR") {
+							//On va ensuite tester si la clé est une chaine de caractère
+							//On rajoute le nom de la classe devant le nom de la colonne
+							if(is_string($k)) {					
 								
-								$orCond = array();
-								foreach($v as $orField => $orValue) { $orCond = $this->_get_query_conditions($orCond, $orField, $orValue); }								
-								$cond[] = '('.implode(' OR ', $orCond).')';
+								if($k == "OR") {
+									
+									$orCond = array();
+									foreach($v as $orField => $orValue) { $orCond = $this->_get_query_conditions($orCond, $orField, $orValue); }								
+									$cond[] = '('.implode(' OR ', $orCond).')';
+								} 
+								else { $cond = $this->_get_query_conditions($cond, $k, $v); }
+								
 							} 
-							else { $cond = $this->_get_query_conditions($cond, $k, $v); }
-							
-						} 
-						else { $cond[] = $v; } //Sinon on rajoute directement la condition dans le tableau
-					//}
+							else { $cond[] = $v; } //Sinon on rajoute directement la condition dans le tableau
+						//}
+					}
 					
-					/*//if(!empty($v)) {
-						
-						//On va ensuite tester si la clé est une chaine de caractère
-						//On rajoute le nom de la classe devant le nom de la colonne
-						if(is_string($k)) {
-	
-							//On va échaper les caractères spéciaux
-							//Equivalement de mysql_real_escape_string --> $v = '"'.mysql_escape_string($v).'"';
-							if(!is_numeric($v) && !is_array($v)) { $v = $this->db->quote($v); }
-							
-							//On recherche si un point est présent dans la valeur du champ ce qui voudrait dire que l'alias est déjà renseigné
-							//auquel cas on ne le rajoute pas
-							//$k = $this->alias.".".$k;														
-							$kExplode = explode('.', $k);
-							if(count($kExplode) == 1) { $k = $this->alias.".".$kExplode[0]; }
-							
-							if(is_array($v)) { $cond[] = $k." IN (".implode(',', $v).")"; }
-							else { $cond[] = $k."=".$v; }
-							
-						} 
-						else { $cond[] = $v; } //Sinon on rajoute directement la condition dans le tableau
-					//}*/
+					if(!empty($cond)) { $conditions .= implode("\n".'AND ', $cond); }
 				}
 				
-				if(!empty($cond)) { $conditions .= implode("\n".'AND ', $cond); }
+				if(!empty($conditions)) { $sql .= "\n".'WHERE '.$conditions.' '; } //On rajoute les conditions à la requête
 			}
-			
-			if(!empty($conditions)) { $sql .= "\n".'WHERE '.$conditions; } //On rajoute les conditions à la requête
-		}
+		
+		////////////////
+		//    I18N    //
+			if($translatedTable && $this->getTranslation) {
+								
+				//Deux cas :
+				// - on a déjà des conditions, le WHERE est donc déjà renseigné
+				// - on a pas de conditions et on peut utiliser le WHERE
+				if(isset($req['conditions'])) { $sql .= "AND `".$this->alias."I18n`.`locale` = '".DEFAULT_LOCALE."'"."\n"; }
+				else { $sql .= "WHERE `".$this->alias."I18n`.`locale` = '".DEFAULT_LOCALE."'"."\n"; }
+				
+				//Dans tous les cas on rajoute le pivot
+				//Au départ ce test s'effectuait dans INNER JOIN qui a été supprimé par la suite
+				$sql .= "AND `".$this->alias.'`.`id` = `'.$this->alias.'I18n`.`model_id` '."\n";
+				
+			}
 		
 		////////////////////////////////
 		//   CHAMPS MORE CONDITIONS   //
-		if(isset($req['moreConditions']) && !empty($req['moreConditions'])) { 
-			
-			if(isset($conditions) && !empty($conditions)) { $sql .= "\n".'AND '; } else { $sql .= "\n".'WHERE '; }			
-			$sql .= $req['moreConditions']; 
-		}
+			if(isset($req['moreConditions']) && !empty($req['moreConditions'])) { 
+				
+				if(isset($conditions) && !empty($conditions)) { $sql .= "\n".'AND '; } else { $sql .= "\n".'WHERE '; }			
+				$sql .= $req['moreConditions'].' '; 
+			}
 		
 		//////////////////////
 		//   CHAMPS GROUP BY   //
-	if(isset($req['groupBy'])) { $sql .= "\n".'GROUP BY '.$req['groupBy']; }
+			if(isset($req['groupBy'])) { 
+								
+				//On va éclater la chaîne pour récupérer tous les champs order
+				$groupBy = explode(',', $req['groupBy']);
+				foreach($groupBy as $groupByK => $groupByV) { //Parcours de tous les champs
+				
+					//Nettoyage de la valeur
+					//Suppression des espaces en début et fin de chaîne
+					//Supression des espaces consécutifs dans la chaîne
+					$groupByV 	= trim($groupByV);
+					$groupByV 	= preg_replace('/\s{2,}/', ' ', $groupByV);
+					$tableAlias = $this->alias; //Récupération de l'alias de la table
+					
+					//On teste si la table n'est pa traduite et que le champ courant est dans la liste des champs traduits
+					if($translatedTable && $this->getTranslation && in_array($groupByV, $this->fieldsToTranslate)) { $tableAlias = $this->alias.'I18n'; }
+				
+					$groupByV 			= '`'.$groupByV.'`'; //On échappe le champ
+					$groupBy[$groupByK] = '`'.$tableAlias.'`.'.$groupByV;
+				}
+				$sql .= "\n".'GROUP BY '.implode(', ', $groupBy).' '; 
+			}
 		
 		//////////////////////
 		//   CHAMPS ORDER   //
-		if(isset($req['order'])) { $sql .= "\n".'ORDER BY '.$req['order']; }
+			if(isset($req['order'])) { 
+				
+				//On va éclater la chaîne pour récupérer tous les champs order
+				$order = explode(',', $req['order']);
+				foreach($order as $orderK => $orderV) { //Parcours de tous les champs
+					
+					//Nettoyage de la valeur
+					//Suppression des espaces en début et fin de chaîne
+					//Supression des espaces consécutifs dans la chaîne
+					$orderV 	= trim($orderV);
+					$orderV 	= preg_replace('/\s{2,}/', ' ', $orderV);
+					$orderV 	= explode(' ', $orderV); //On éclate la donnée					
+					$tableAlias = $this->alias; //Récupération de l'alias de la table
+					
+					//On teste si la table n'est pa traduite et que le champ courant est dans la liste des champs traduits
+					if($translatedTable && $this->getTranslation && in_array($orderV[0], $this->fieldsToTranslate)) { $tableAlias = $this->alias.'I18n'; } 
+					
+					$orderV[0] 		= '`'.$orderV[0].'`'; //On échappe le champ
+					$order[$orderK] = '`'.$tableAlias.'`.'.implode(' ', $orderV);
+				}
+				
+				$sql .= "\n".'ORDER BY '.implode(', ', $order).' '; 
+			}
 		
 		//////////////////////
 		//   CHAMPS LIMIT   //
-		if(isset($req['limit'])) { $sql .= "\n".'LIMIT '.$req['limit']; }
-		
-		//if($this->trace_sql) { pr($sql); }
-		
+			if(isset($req['limit'])) { $sql .= "\n".'LIMIT '.$req['limit']; }
+				
+		if(isset($req['pr']) && $req['pr']) { pr($sql); }
+			
 		$preparedQuery = $this->db->prepare($sql);
 		$preparedQuery->execute();
 		
 		$this->_trace_sql('function find', $preparedQuery->queryString); //Récupération de la requête
 		
-        return $preparedQuery->fetchAll($type);        
+		$return = $preparedQuery->fetchAll($type);
+		
+		/////////////////////////////
+		//    CAS DU BACKOFFICE    //
+		//On récupère toutes les traductions
+		if($translatedTable && $this->getTranslatedDatas) {
+			
+			$localizationModel 			= $this->loadModel('Localization', true);
+			$localizationModel->table 	= $this->table.'_i18n';
+			
+			//Parcours de tous les résultats
+			foreach($return as $k => $v) {
+				
+				$traductions = $localizationModel->find(array('conditions' => array('model_id' => $v['id'])));
+				
+				//Parcours de toutes les traductions
+				foreach($traductions as $traduction) {	
+					
+					$locale 		= $traduction['locale']; //Récupération de la langue					
+					$keysIntersect 	= array_intersect_key($traduction, array_flip($this->fieldsToTranslate)); //Récupération de l'intersection de clés du tableau de traduction et des champs à traduire
+					
+					foreach($keysIntersect as $index => $value) {
+						
+						if(!is_array($return[$k][$index])) { $return[$k][$index] = array(); }						
+						$return[$k][$index][$locale] = $value;
+					}
+				}
+			}
+		}		
+        return $return;        
     }
     
 /**
@@ -494,10 +699,12 @@ class Model extends Object {
  * @author	koéZionCMS
  * @version 0.1 - 16/02/2012 by FI
  * @version 0.2 - 10/01/2014 by FI - Gestion automatique du champ à compter (Le premier de la table)
+ * @version 0.3 - 17/03/2015 by FI - Rajout de $this->fieldsToTranslate = false pour ne pas gérer la traduction des tables lorsque l'on compte les données
  */	
 	public function findCount($conditions = null, $moreConditions = null) {
 		
-		//$field = current($this->shema());
+		$this->fieldsToTranslate = false; //@version 0.3
+		
 		$field = current($this->shema);
 		$res = $this->findFirst(
 			array(
@@ -717,7 +924,7 @@ class Model extends Object {
 			
 			$preparedInfos = $this->_prepare_save_query($datas, $forceInsert, $escapeUpload); //Récupération des données de la préparation de la requête
 			$datasToSave = $this->_prepare_save_datas($datas, $preparedInfos['moreDatasToSave'], $forceInsert, $escapeUpload); //Récupération des données à sauvegarder
-			
+						
 			$queryExecutionResult = $preparedInfos['preparedQuery']->execute($datasToSave); //Exécution de la requête
 			
 			$this->_trace_sql('function save', $preparedInfos['preparedQuery']->queryString, $datasToSave); //Récupération de la requête
@@ -732,6 +939,8 @@ class Model extends Object {
 			//if(isset($this->files_to_upload) && $proceedUpload) { $this->upload_files($datas, $this->id); } //Sauvegarde éventuelle des images
 			if(isset($this->files_to_upload)) { $this->upload_files($datas, $this->id); } //Sauvegarde éventuelle des images
 			if(isset($this->searches_params)) { $this->make_search_index($datasToSave, $this->id, $preparedInfos['action']); } //On génère le fichier d'index de recherche
+		
+			$this->after_save($datas, $preparedInfos['action']);
 		}
 	}
 
@@ -745,11 +954,13 @@ class Model extends Object {
  * @version 0.1 - 24/08/2012 by FI
  * @version 0.2 - 03/04/2013 by FI - Correction de l'affectation des ids
  * @version 0.3 - 10/01/2014 by FI - Gestion des primary key multiples
+ * @version 0.4 - 24/03/2015 by FI - On force l'id en tableau
  */	
 	public function saveAll($datas, $forceInsert = false, $escapeUpload = true) {
 		
 		if(!empty($datas)) {
 			
+			$this->id = array(); //On force le type de l'id en tableau
 			$preparedInfos = $this->_prepare_save_query(current($datas), $forceInsert, $escapeUpload);
 			foreach($datas as $k => $v) { 
 				
@@ -757,8 +968,8 @@ class Model extends Object {
 				$queryExecutionResult = $preparedInfos['preparedQuery']->execute($datasToSave);
 				
 				$this->_trace_sql('function saveAll', $preparedInfos['preparedQuery']->queryString, $datasToSave); //Récupération de la requête
-				
-				if($preparedInfos['action'] == 'insert') { $this->id[] = $this->db->lastInsertId();}
+								
+				if($preparedInfos['action'] == 'insert') { $this->id[] = $this->db->lastInsertId(); }
 				else if(!is_array($this->primaryKey)) { $this->id[] = $v['id']; }
 				else { $this->id[] = 'multiple'; }
 				
@@ -806,7 +1017,9 @@ class Model extends Object {
 				if(Set::check($datas, $k)) { 
 					
 					$this->datas = $datas; //On va rajouter les données à contrôler dans le model dans le cas ou nous en ayons besoin lors de l'utilisation des callback
-					$validation = new Validation($this);					
+					$this->Validation = new Validation($this);					
+					
+					//pr($this->datas);
 					
 					$isValid = false; //Par défaut on renverra toujours faux
 					
@@ -817,10 +1030,12 @@ class Model extends Object {
 						//On va donc les parcourir
 						foreach($v as $kRule => $vRule) { 
 							
-							if(!isset($vRule['allowEmpty'])) { $vRule['allowEmpty'] = false; } //Par défaut si l'index allowEmpty n'existe pas on le rajoute
+							$errors = $this->_check_validation_rules($k, $vRule, $datas, $errors);
+							
+							/*if(!isset($vRule['allowEmpty'])) { $vRule['allowEmpty'] = false; } //Par défaut si l'index allowEmpty n'existe pas on le rajoute
 							
 							$dataToCheck = Set::classicExtract($datas, $k);
-							$isValid = $validation->check($dataToCheck, $vRule['rule']); //Lancement de la règle
+							$isValid = $this->Validation->check($dataToCheck, $vRule['rule']); //Lancement de la règle
 							$allowEmpty = $vRule['allowEmpty'] && empty($dataToCheck); //Génération du booléen allowEmpty
 							
 							//On injecte le message en cas d'erreur
@@ -828,23 +1043,10 @@ class Model extends Object {
 								
 								if(Set::check($Errorsmessages, $vRule['message'])) { $errors[$k] = Set::classicExtract($Errorsmessages, $vRule['message']); }
 								else { $errors[$k] = $vRule['message']; }								 
-							}	
+							}*/	
 						}	
-					} else { 
-						
-						if(!isset($v['allowEmpty'])) { $v['allowEmpty'] = false; } //Par défaut si l'index allowEmpty n'existe pas on le rajoute
-
-						$dataToCheck = Set::classicExtract($datas, $k);
-						$isValid = $validation->check($dataToCheck, $v['rule']); //Lancement de la règle
-						$allowEmpty = $v['allowEmpty'] && empty($dataToCheck); //Génération du booléen allowEmpty
-
-						//On injecte le message en cas d'erreur
-						if(!$isValid && !$allowEmpty) { 
-								
-							if(Set::check($Errorsmessages, $v['message'])) { $errors[$k] = Set::classicExtract($Errorsmessages, $v['message']); }
-							else { $errors[$k] = $v['message']; }								 
-						} 						
-					}
+					} else { $errors = $this->_check_validation_rules($k, $v, $datas, $errors); }
+					
 				} else if($this->validAllFields) { //Par défaut on n'impose pas la validation de tous les champs
 					
 					if(!isset($v['rule'])) { $v = current($v); } //Dans le cas ou on a plusieurs règles de validation on récupère la première
@@ -1090,18 +1292,21 @@ class Model extends Object {
 			
 			///////////////////////////////////////
 			//Sauvegarde des données de recherche//
-			$searchDatas = array(
-				'model' => get_class($this),
-				'title' => $datasToSave[':page_title'],
-				'description' => $datasToSave[':page_description'],
-				'datas' => strip_tags($searchesDatas),
-				'url' => $url,
-				'model_id' => $id				
-			);		
-			require_once(MODELS.DS.'search.php'); //Chargement du model
-			$search = new Search();		
-			$search->save($searchDatas);
-			unset($search); //Déchargement du model
+			if($datasToSave[':online'] == 1) {
+				
+				$searchDatas = array(
+					'model' => get_class($this),
+					'title' => $datasToSave[':page_title'],
+					'description' => $datasToSave[':page_description'],
+					'datas' => strip_tags($searchesDatas),
+					'url' => $url,
+					'model_id' => $id				
+				);		
+				require_once(MODELS.DS.'search.php'); //Chargement du model
+				$search = new Search();		
+				$search->save($searchDatas);
+				unset($search); //Déchargement du model
+			}
 		}
 	}	
 	
@@ -1133,6 +1338,9 @@ class Model extends Object {
  * @param 	array	$datas 			Données à sauvegarder
  * @param 	boolean	$forceInsert 	Indique si il faut forcer l'insert
  * @param 	boolean	$escapeUpload 	Indique si il faut ou non ne pas tenir compte des champs à uploader
+ * @param 	array	$shema 			Schéma de la table
+ * @param 	mixed	$primaryKey 	Clée(s) primaire(s)
+ * @param 	varchar	$table 			Table de la base de données dansa laquelle effectuer la requête
  * @return	array	Tableau contenant les paramètres de la requête préparée
  * @access	protected 
  * @author	koéZionCMS
@@ -1141,15 +1349,16 @@ class Model extends Object {
  * @version 0.3 - 10/01/2014 by FI - Gestion des primary key multiples
  * @version 0.4 - 27/03/2014 by FI - Gestion du champ activate
  * @version 0.5 - 06/01/2015 by FI - Correction de la gestion de l'intersection permettant le calcul de la variable $isUpdate
+ * @version 0.6 - 20/03/2015 by FI - Rajout de $shema et $primaryKey
  */	
-	protected function _prepare_save_query($datas, $forceInsert, $escapeUpload) {
+	protected function _prepare_save_query($datas, $forceInsert, $escapeUpload, $shema = null, $primaryKey = null, $table = null) {
 					
-		$datasShema = array_keys($datas);
-		$shema = $this->shema; //Shema de la table		
-		$primaryKey = $this->primaryKey; //Récupération de la clé primaire
-		
-		$fieldsToSave = array(); //Tableau des champs de la table à sauvegarder
-		$moreDatasToSave = array(); //Tableau des données supplémentaires à sauvegarder (évite de les regénérer à chaque fois)
+		$datasShema 		= array_keys($datas);
+		$shema 				= isset($shema) ? $shema : $this->shema; //Shema de la table		
+		$primaryKey 		= isset($primaryKey) ? $primaryKey : $this->primaryKey; //Récupération de la clé primaire		
+		$table 				= isset($table) ? $table : $this->table; //Récupération de la clé primaire		
+		$fieldsToSave 		= array(); //Tableau des champs de la table à sauvegarder
+		$moreDatasToSave 	= array(); //Tableau des données supplémentaires à sauvegarder (évite de les regénérer à chaque fois)
 				
 		//Permet de connaitre le type de requete à effectuer
 		//Dans ce cas on est sur de l'update
@@ -1241,10 +1450,10 @@ class Model extends Object {
 		}
 		
 		//On va tester l'existence de cette clé dans le tableau des datas
-		/*if($action == 'update') { $sql = 'UPDATE '.$this->table.' SET '.implode(',', $fieldsToSave).' WHERE '.$primaryKey.'=:'.$primaryKey.';'; } 
-		else { $sql = 'INSERT INTO '.$this->table.' SET '.implode(',', $fieldsToSave).';'; }*/
+		/*if($action == 'update') { $sql = 'UPDATE '.$table.' SET '.implode(',', $fieldsToSave).' WHERE '.$primaryKey.'=:'.$primaryKey.';'; } 
+		else { $sql = 'INSERT INTO '.$table.' SET '.implode(',', $fieldsToSave).';'; }*/
 		if($action == 'update') {
-			$sql = 'UPDATE '.$this->table.' SET '.implode(',', $fieldsToSave).' WHERE ';
+			$sql = 'UPDATE '.$table.' SET '.implode(',', $fieldsToSave).' WHERE ';
 			if(is_array($primaryKey)) {
 				
 				foreach($primaryKey as $k => $v) { $primaryKey[$k] = $v.'=:'.$v; }
@@ -1253,8 +1462,8 @@ class Model extends Object {
 			else { $sql .= $primaryKey.'=:'.$primaryKey; }
 			$sql .= ';';
 		} 
-		else { $sql = 'INSERT INTO '.$this->table.' SET '.implode(',', $fieldsToSave).';'; }
-				
+		else { $sql = 'INSERT INTO '.$table.' SET '.implode(',', $fieldsToSave).';'; }
+						
 		return array(
 			'preparedQuery' => $this->db->prepare($sql),
 			'action' => $action,
@@ -1270,6 +1479,8 @@ class Model extends Object {
  * @param 	array	$moreDatasToSave 	Champs supplémentaires à sauvegarder (created par exemple, provient de _prepare_save_query)
  * @param 	boolean	$forceInsert 		Indique si il faut forcer l'insert
  * @param 	boolean	$escapeUpload 		Indique si il faut ou non ne pas tenir compte des champs à uploader
+ * @param 	array	$shema 				Schéma de la table
+ * @param 	mixed	$primaryKey 		Clée(s) primaire(s)
  * @return	array	Tableau contenant les paramètres des données à sauvegarder
  * @access	protected 
  * @author	koéZionCMS
@@ -1277,16 +1488,16 @@ class Model extends Object {
  * @version 0.2 - 10/01/2014 by FI - Gestion des primary key multiples
  * @version 0.3 - 27/03/2014 by FI - Gestion du champ activate
  * @version 0.4 - 22/07/2014 by FI - Suppression des caractères HTML lors de la gestion automatique du slug et du page_title
+ * @version 0.5 - 20/03/2015 by FI - Rajout de $shema et $primaryKey
  */		
-	protected function _prepare_save_datas($datas, $moreDatasToSave, $forceInsert, $escapeUpload) {
+	protected function _prepare_save_datas($datas, $moreDatasToSave, $forceInsert, $escapeUpload, $shema = null, $primaryKey = null) {
 		
-		$shema = $this->shema; //Shéma de la table 
+		$shema 		= isset($shema) ? $shema : $this->shema; //Shema de la table
+		$primaryKey = isset($primaryKey) ? $primaryKey : $this->primaryKey; //Récupération de la clé primaire
 		$datasShema = array_keys($datas); //Shéma des données à sauvegarder
-		$primaryKey = $this->primaryKey; //Récupération de la clé primaire
 				
 		$datasToSave = array(); //Tableau utilisé lors de la préparation de la requête
 		
-		//if(isset($datas[$primaryKey]) && !empty($datas[$primaryKey]) && !$forceInsert) { $datasToSave[":$primaryKey"] = $datas[$primaryKey]; }		
 		if(is_array($primaryKey)) {
 			
 			foreach($primaryKey as $v) {
@@ -1307,7 +1518,6 @@ class Model extends Object {
 		if(in_array('page_title', $shema) && !empty($datas['name']) && (!in_array('page_title', $datasShema) || empty($datas['page_title']))) { $datas['page_title'] = strip_tags($datas['name']); } //On procède à la mise à jour du champ page_title si celui ci n'est pas rempli ou non présent dans le formulaire mais présent dans la table
 		if(in_array('activate', $shema) && isset($datas['activate']) && !$datas['activate'] && in_array('online', $datasShema)) { $datas['online'] = 0; } //On procède à la mise à jour du champ online si le champ activate est présent et que celui-ci est à 0		
 		
-		//if(isset($datas[$primaryKey]) && !$forceInsert) unset($datas[$primaryKey]); //Il faut supprimer du tableau des données la clé primaire si celle ci est définie
 		if(is_array($primaryKey)) {
 			
 			foreach($primaryKey as $v) {
@@ -1326,6 +1536,11 @@ class Model extends Object {
 			if(in_array($k, $shema)) {
 						
 				if(isset($this->files_to_upload) && isset($this->files_to_upload[$k]) && $escapeUpload) continue; //On supprime si il y en a les champs d'upload				
+				
+				//HACK SPECIAL POUR RAJOUTE LORS DE LA MISE EN PLACE DE LA TRADUCTION
+				//Les données envoyées par les formulaires traduits sont sous la forme d'un tableau indexé par les langues
+				//Dans le cas de la table principale on ne récupère que le premier élément
+				if(is_array($v)) { $v = current($v); } 
 				$datasToSave[":$k"] = $v;
 			}
 		}
@@ -1336,28 +1551,70 @@ class Model extends Object {
 /**
  * Cette fonction permet la génération des champs à récupérer
  * 
- * @param 	array	$fields 			Liste des champs
+ * Le format du champ fiels peut être de la forme suivante : 
+ * 
+ * 1 - Cas le plus fréquent : 
+ * 
+ * $fields = array(
+ * 	'id',
+ * 	'name',
+ * 	'online'
+ * );
+ * 
+ * 2 - Définition d'un alias pour le champ
+ * 
+ * $fields = array(
+ * 	'tableId' => 'id',
+ * 	'tableName' => 'name',
+ * 	'tableOnline' => 'online'
+ * );
+ * 
+ * 3 - Spécification de la table dans laquelle récupérer le champ (dans le cas de jointure par exemple)
+ * 
+ * $fields = array(
+ * 	'KzTable.id',
+ * 	'KzTable.name',
+ * 	'KzTable.online'
+ * );
+ * 
+ * 
+ * @param 	array	$fields 		Liste des champs
+ * @param 	varchar	$tableAlias 	Alias de la table
+ * @param 	varchar	$moreFields 	Liste de champs complémentaire (En provenance de la fonction _get_fields cf fonction find)
  * @return	varchar	Chaine de caractères contenant les champs à récupérer
  * @access	protected 
  * @author	koéZionCMS
  * @version 0.1 - 02/01/2014 by FI
+ * @version 0.2 - 17/03/2015 by FI - Rajout de $tableAlias
+ * @version 0.3 - 17/03/2015 by FI - Rajout de $moreFields
  */		
-	protected function _get_fields($fields) {
+	protected function _get_fields($fields, $tableAlias = null, $moreFields = null) {
 		
 		$sql = '';
-		if(is_array($fields)) { //Si il s'agit d'un tableau
+		
+		/////////////////////////////////
+		//    FIELDS EST UN TABLEAU    //
+		if(is_array($fields)) {
+			
+			if(!isset($tableAlias)) { $tableAlias = $this->alias; }
 			
 			foreach($fields as $k => $field) {
 				
 				$field = explode('.', $field);
-				if(!is_int($k)) { $fieldAlias = " AS ".$k; } else { $fieldAlias = ''; } //Si la clé n'est pas numérique c'est qu'elle sert d'alias
-				if(count($field) == 1) { $fields[$k] = '`'.$this->alias.'`.`'.$field[0].'`'.$fieldAlias; }
-				else if(count($field) == 2) { $fields[$k] = '`'.$field[0].'`.`'.$field[1].'`'.$fieldAlias; }
+				if(!is_int($k)) { $fieldAlias = " AS `".$k."`"; } else { $fieldAlias = ''; } //Si la clé n'est pas numérique c'est qu'elle sert d'alias (Cas n°2)
+				
+				if(count($field) == 1) 		{ $fields[$k] = '`'.$tableAlias.'`.`'.$field[0].'`'.$fieldAlias; } //On ne spécifie pas la table (Cas n°1)
+				else if(count($field) == 2) { $fields[$k] = '`'.$field[0].'`.`'.$field[1].'`'.$fieldAlias; } //Cas n°3
 			}
 			
-			$sql .= "\n".implode(', '."\n", $fields); 
+			if(isset($moreFields)) { $fields = am($fields, array($moreFields)); }
+			
+			$sql .= "\n\t".implode(", \n\t", $fields); 
 		} 		
-		else { $sql .= "\n".$fields; } //Si il s'agit d'une chaine de caractères 
+		
+		///////////////////////////////////////////////
+		//    FIELDS EST UNE CHAINE DE CARACTERES    //
+		else { $sql .= "\n".$fields; } 
 		
 		return $sql;
 	}
@@ -1404,6 +1661,75 @@ class Model extends Object {
     	return $cond;    	
     }
 	
+/**
+ * Cette fonction est en charge de contrôler la validité d'un champ
+ *
+ * @param 	varchar	$validationField 	Champ à contrôler
+ * @param 	varchar	$validationRule 	Règle de validation
+ * @param 	array 	$datas 				Données envoyées par le formulaire
+ * @param 	array 	$errors 			Erreurs
+ * @return 	array 	Tableau d'erreurs
+ * @access	protected
+ * @author	koéZionCMS
+ * @version 0.1 - 20/03/2015
+ */		
+	protected function _check_validation_rules($validationField, $validationRule, $datas, $errors) {
+								
+		if(!isset($v['allowEmpty'])) { $validationRule['allowEmpty'] = false; } //Par défaut si l'index allowEmpty n'existe pas on le rajoute
+
+		$dataToCheck	= Set::classicExtract($datas, $validationField); //Récupération de la donnée à contrôler
+		
+		//Si la donnée à contrôler est un tableau 
+		if(is_array($dataToCheck)) {
+			
+			//On va parcourir l'ensemble du tableau pour récupérer les valeurs
+			foreach($dataToCheck as $dataFieldToCheck => $dataValueToCheck) { 
+								
+				$errors = $this->_is_valid_value($dataValueToCheck, $validationRule, $validationField.'.'.$dataFieldToCheck, $errors); //On lance le contrôle
+			}
+						
+		} else { 
+			
+			$errors = $this->_is_valid_value($dataToCheck, $validationRule, $validationField, $errors); //On lance le contrôle 
+		}
+		return $errors;
+	}
+	
+/**
+ * Cette fonction est en charge de contrôler la valeur d'un champ est valide
+ *
+ * @param 	varchar	$valueToCheck 	Valeur du champ à contrôler
+ * @param 	varchar	$validationRule Règle de validation
+ * @param 	array 	$insertErrorIn 	Indique le chemin pour l'insertion de l'erreur
+ * @param 	array 	$errors 		Erreurs
+ * @return 	array 	Tableau d'erreurs
+ * @access	protected
+ * @author	koéZionCMS
+ * @version 0.1 - 20/03/2015
+ */		
+	protected function _is_valid_value($valueToCheck, $validationRule, $insertErrorIn, $errors) {
+		
+		include(CONFIGS.DS.'messages.php'); //Inclusion des éventuels messages d'erreurs
+		
+		$isValid 	= $this->Validation->check($valueToCheck, $validationRule['rule']); //Lancement de la règle
+		$allowEmpty = $validationRule['allowEmpty'] && empty($valueToCheck); //Génération du booléen allowEmpty
+		
+		//On injecte le message en cas d'erreur
+		if(!$isValid && !$allowEmpty) {
+		
+			if(Set::check($Errorsmessages, $validationRule['message'])) { $errors[$insertErrorIn] = Set::classicExtract($Errorsmessages, $validationRule['message']); }
+			else { $errors[$insertErrorIn] = $validationRule['message']; }
+		}
+		
+		return $errors;
+	}
+	
+/**
+ * 
+ * @param unknown_type $function
+ * @param unknown_type $query
+ * @param unknown_type $datasToSave
+ */	
 	protected function _trace_sql($function, $query, $datasToSave = null) {
 			
 		require_once(LIBS.DS.'config_magik.php');

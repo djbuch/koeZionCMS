@@ -1,4 +1,5 @@
 <div id="top-bar">
+	<?php if(isset($this->controller->plugins['Localization'])) { $this->element(PLUGINS.DS.'localization'.DS.'views'.DS.'elements'.DS.'backoffice'.DS.'top_bar'); } ?>
 	<ul>		
 		<li class="nolink"><?php echo _("Bonjour"); ?> <?php echo Session::read("Backoffice.User.name"); ?></li>		
 		<?php 

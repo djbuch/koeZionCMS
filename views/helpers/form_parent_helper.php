@@ -60,7 +60,8 @@ class FormParentHelper extends Helper {
 		'txtBeforeInput',
 		'txtAfterInput',
 		'defaultSelect', //Permet de forcer l'élément à sélectionner par défaut dans un select
-		'onlyInput'
+		'onlyInput',
+		'compulsory' //Indique si le champ est obligatoire
 	);
 
 /**
@@ -188,7 +189,8 @@ class FormParentHelper extends Helper {
 			'labelClass' => false,
 			'labelStyle' => false,
 			'txtBeforeInput' => '',
-			'txtAfterInput' => ''
+			'txtAfterInput' => '',
+			'compulsory' => false
 			
 		);
 		$options = array_merge($defaultOptions, $options); //Génération du tableau d'options utilisé dans la fonction
@@ -267,10 +269,9 @@ class FormParentHelper extends Helper {
 			if($options['labelStyle']) { $labelReturn .= ' style="'.$options['labelStyle'].'"'; }			
 			$labelReturn .= '>';
 			
-			if($options['tooltip']) {
-
-				$labelReturn .= '<img src="'.BASE_URL.'/img/backoffice/tooltip.png" alt="tooltip" style="float: left; margin-right: 5px; cursor: pointer;" class="tip-w" original-title="'.$options['tooltip'].'" />';
-			}
+			if($options['tooltip']) 	{ $labelReturn .= '<img src="'.BASE_URL.'/img/backoffice/tooltip.png" alt="tooltip" style="float: left; margin-right: 5px; cursor: pointer;" class="tip-w" original-title="'.$options['tooltip'].'" />'; }
+			if($options['compulsory']) 	{ $labelReturn .= '<i>(*)</i> '; }
+			
 			$labelReturn .= $label.'</label>';
 		}
 		else { $labelReturn = ''; }

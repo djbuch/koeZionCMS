@@ -1,7 +1,7 @@
 <div class="section">
 	<div class="box">
 		<div class="title">
-			<h2>PHPINFO</h2>			
+			<h2><?php echo _("PHPINFO"); ?></h2>			
 		</div>
 		<div class="content">
 			<div style="width:50%;margin:0 auto;">

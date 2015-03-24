@@ -49,6 +49,25 @@ class PostsType extends Model {
 		//Dans le cas ou est indiqué une catégorie
 		if(isset($categoryId) && !empty($categoryId)) {
 			
+			$params = array(
+				'fields' => array('id', 'name', 'column_title'),
+				'tables' => array(
+					'posts_types' => 'KzPostsType',	
+					'posts_posts_types' => 'KzPostsPostsType',	
+					'posts' => 'KzPost',	
+				),
+				'conditions' => array(
+					"KzPostsPostsType.category_id = ".$categoryId,
+					"KzPostsPostsType.posts_type_id = KzPostsType.id",
+					"KzPostsType.online = 1",
+					"KzPostsPostsType.post_id = KzPost.id",
+					"KzPost.category_id =  ".$categoryId,
+					"KzPost.online = 1"
+				)				
+			);
+			$postsTypes = $this->find($params);
+			
+			/*
 			$sql = "
 				SELECT 
 					PostsType.id, 
@@ -70,6 +89,7 @@ class PostsType extends Model {
 				ORDER BY PostsType.column_title, PostsType.order_by, PostsType.name
 			";			
 			$postsTypes = $this->query($sql, true);
+			*/
 			
 		//Dans le cas ou aucune catégorie n'est indiquée
 		} else {

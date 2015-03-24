@@ -15,7 +15,7 @@
  * @link        http://www.koezion-cms.com
  */
 class FocusController extends AppController {
-    
+	
 /**
  * Cette fonction permet l'initialisation pour la suppression des fichier de cache
  * 

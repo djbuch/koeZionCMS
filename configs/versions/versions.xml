@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 24/03/2015</name>
+		<num>20150324.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">MODIFICATIONS MAJEURES : Préparation du code du CMS au plugin Localization</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 11/03/2015</name>
 		<num>20150311.001</num>
 		<supervisor>KoéZionCMS</supervisor>

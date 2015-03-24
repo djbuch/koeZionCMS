@@ -113,11 +113,11 @@ echo $helpers['Html']->js($js, true);
 		?>
 		<div class="box">
 			<div class="title">
-				<h2>Statistiques du <?php echo $sGraphStart; ?> au <?php echo $sGraphEnd; ?></h2>
+				<h2><?php echo ("Statistiques du"); ?> <?php echo $sGraphStart; ?> au <?php echo $sGraphEnd; ?></h2>
 			</div>
 			<div class="content">
 				<table class="toGraph">
-					<caption>Statistiques du <?php echo $sGraphStart; ?> au <?php echo $sGraphEnd; ?></caption>
+					<caption><?php echo ("Statistiques du"); ?> <?php echo $sGraphStart; ?> au <?php echo $sGraphEnd; ?></caption>
 					<thead>
 						<tr>
 							<td></td>
@@ -128,19 +128,19 @@ echo $helpers['Html']->js($js, true);
 					</thead>
 					<tbody>
 						<tr>
-							<th scope="row">Visiteurs uniques</th>
+							<th scope="row"><?php echo ("Visiteurs uniques"); ?></th>
 							<?php foreach($aGraphDatas['Graph']['VU'] as $nb) { ?>
 								<td><?php echo $nb; ?></td>
 							<?php } ?>
 						</tr>
 						<tr>
-							<th scope="row">Visites totales</th>
+							<th scope="row"><?php echo ("Visites totales"); ?></th>
 							<?php foreach($aGraphDatas['Graph']['VT'] as $nb) { ?>
 								<td><?php echo $nb; ?></td>
 							<?php } ?>
 						</tr>
 						<tr>
-							<th scope="row">Pages vues</th>
+							<th scope="row"><?php echo ("Pages vues"); ?></th>
 							<?php foreach($aGraphDatas['Graph']['PV'] as $nb) { ?>
 								<td><?php echo $nb; ?></td>
 							<?php } ?>
@@ -158,19 +158,19 @@ echo $helpers['Html']->js($js, true);
 					</thead>
 					<tbody>
 						<tr>
-							<th scope="row">Visiteurs uniques</th>
+							<th scope="row"><?php echo ("Visiteurs uniques"); ?></th>
 							<?php foreach($aGraphDatas['Graph']['VU'] as $nb) { ?>
 								<td><?php echo $nb; ?></td>
 							<?php } ?>
 						</tr>
 						<tr>
-							<th scope="row">Visites totales</th>
+							<th scope="row"><?php echo ("Visites totales"); ?></th>
 							<?php foreach($aGraphDatas['Graph']['VT'] as $nb) { ?>
 								<td><?php echo $nb; ?></td>
 							<?php } ?>
 						</tr>
 						<tr>
-							<th scope="row">Pages vues</th>
+							<th scope="row"><?php echo ("Pages vues"); ?></th>
 							<?php foreach($aGraphDatas['Graph']['PV'] as $nb) { ?>
 								<td><?php echo $nb; ?></td>
 							<?php } ?>
@@ -189,15 +189,15 @@ echo $helpers['Html']->js($js, true);
 						<table style="width : 100%;"> 
 							<tbody> 
 								<tr> 
-									<td>Nombre de visite(s) :</td>
+									<td><?php echo ("Nombre de visite(s)"); ?> :</td>
 									<td><?php echo $visits; ?></td> 
 								</tr> 
 								<tr> 
-									<td>Nombre de visite(s) unique(s)</td>
+									<td><?php echo ("Nombre de visite(s) unique(s)"); ?></td>
 									<td><?php echo $unique_visits; ?></td> 
 								</tr> 
 								<tr> 
-									<td>Page(s) vue(s)</td>
+									<td><?php echo ("Page(s) vue(s)"); ?></td>
 									<td><?php echo $page_views; ?></td> 
 								</tr>
 							</tbody> 
@@ -207,7 +207,7 @@ echo $helpers['Html']->js($js, true);
 				
 				<div class="box">
 					<div class="title">
-						<h2>Pages vues par navigateurs</h2>
+						<h2><?php echo ("Pages vues par navigateurs"); ?></h2>
 					</div>
 					<div class="content nopadding">
 						<table style="width : 100%;"> 
@@ -224,7 +224,7 @@ echo $helpers['Html']->js($js, true);
 				
 				<div class="box">
 					<div class="title">
-						<h2>Pages vues par pays</h2>
+						<h2><?php echo ("Pages vues par pays"); ?></h2>
 					</div>
 					<div class="content nopadding">
 						<table style="width : 100%;"> 
@@ -241,7 +241,7 @@ echo $helpers['Html']->js($js, true);
 				
 				<div class="box">
 					<div class="title">
-						<h2>Pages vues par sources</h2>
+						<h2><?php echo ("Pages vues par sources"); ?></h2>
 					</div>
 					<div class="content nopadding">
 						<table style="width : 100%;"> 
@@ -260,7 +260,7 @@ echo $helpers['Html']->js($js, true);
 			<div class="half">
 				<div class="box">
 					<div class="title">
-						<h2>Pages vues par mots clefs</h2>
+						<h2><?php echo ("Pages vues par mots clefs"); ?></h2>
 					</div>
 					<div class="content nopadding">
 						<table style="width : 100%;"> 
@@ -281,7 +281,7 @@ echo $helpers['Html']->js($js, true);
 				
 				<div class="box">
 					<div class="title">
-						<h2>Pages les + vues (Top 20)</h2>
+						<h2><?php echo ("Pages les + vues (Top 20)"); ?></h2>
 					</div>
 					<div class="content nopadding">
 						<table style="width : 100%;"> 
@@ -304,7 +304,7 @@ echo $helpers['Html']->js($js, true);
 			<div class="half">				
 				<div class="box">
 					<div class="title">
-						<h2>Pages les - vues (Top 20)</h2>
+						<h2><?php echo ("Pages les - vues (Top 20)"); ?></h2>
 					</div>
 					<div class="content nopadding">	
 						<table style="width : 100%;"> 

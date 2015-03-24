@@ -93,11 +93,10 @@ class UsersController extends AppController {
 							);				
 
 							//GESTION DU PLUGIN ACLS//
-							if(isset($this->plugins['Acls'])) {
+							$session = $this->_check_acls_plugin($session);
 								
-								$this->load_component('Acls', PLUGINS.DS.'acls'.DS.'controllers'.DS.'components');
-								$session['Acl'] = $this->components['Acls']->get_auth_functions($user['users_group_id']);
-							}						
+							//GESTION DU PLUGIN LOCALIZATION//
+							$session = $this->_check_localization_plugin($session);					
 							
 							//////////////////////////////////////////
 							//    DEFINITION DE L'URL DE LA HOME    // 
@@ -136,12 +135,11 @@ class UsersController extends AppController {
 								);		
 
 								//GESTION DU PLUGIN ACLS//
-								if(isset($this->plugins['Acls'])) {
+								$session = $this->_check_acls_plugin($session);
 									
-									$this->load_component('Acls', PLUGINS.DS.'acls'.DS.'controllers'.DS.'components');
-									$session['Acl'] = $this->components['Acls']->get_auth_functions($user['users_group_id']);
-								}										
-							
+								//GESTION DU PLUGIN LOCALIZATION//
+								$session = $this->_check_localization_plugin($session);										
+								
 								//////////////////////////////////////////
 								//    DEFINITION DE L'URL DE LA HOME    // 
 								if(isset($usersGroup['default_home']) && !empty($usersGroup['default_home'])) { $redirectUrl = $usersGroup['default_home']; }
@@ -268,11 +266,6 @@ class UsersController extends AppController {
 		$this->_init_websites();
 		$this->_init_users_groups();
 	}
-	/*function backoffice_add() {
-	
-		parent::backoffice_add(true); //On fait appel à la fonction d'ajout parente
-		$this->_init_users_groups();
-	}*/
 	
 /**
  * Cette fonction permet l'édition d'un élément
@@ -299,12 +292,7 @@ class UsersController extends AppController {
 		$this->_init_websites();
 		$this->_init_users_groups();
 		$this->_get_assoc_datas($id);
-	}	
-	/*function backoffice_edit($id) {
-	
-		parent::backoffice_edit($id, true); //On fait appel à la fonction d'édition parente
-		$this->_init_users_groups();
-	}*/
+	}
 	
 /**
  * Cette fonction permet la suppression d'un élément
@@ -480,4 +468,47 @@ class UsersController extends AppController {
 		}
 		$this->unloadModel('UsersWebsite'); //Déchargement du modèle
 	}	
+	
+/**
+ * Contrôle de l'existence du plugin ACL
+ *
+ * @param	array $session Tableau contenant les données de la variable de Session
+ * @return	array Données de la variable de Session
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 18/03/2015 by FI
+ */	
+	protected function _check_acls_plugin($session) {
+		
+		if(isset($this->plugins['Acls'])) {
+			
+			$this->load_component('Acls', PLUGINS.DS.'acls'.DS.'controllers'.DS.'components');
+			$session['Acl'] = $this->components['Acls']->get_auth_functions($user['users_group_id']);
+		}
+		
+		return $session;
+	}
+	
+/**
+ * Contrôle de l'existence du plugin LOCALIZATION
+ *
+ * @param	array $session Tableau contenant les données de la variable de Session
+ * @return	array Données de la variable de Session
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 18/03/2015 by FI
+ */	
+	protected function _check_localization_plugin($session) {
+		
+		if(isset($this->plugins['Localization'])) {
+			
+			$this->loadModel('Locale');
+			$localesTMP = $this->Locale->find(array('conditions' => array('online' => 1)));
+			$locales 	= array();
+			foreach($localesTMP as $locale) { $locales[$locale['code']] = $locale; }
+			$session['Locales'] = $locales;
+		}
+		
+		return $session;
+	}
 }

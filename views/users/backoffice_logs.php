@@ -2,14 +2,14 @@
 	<div class="box">
 		
 		<div class="title">
-			<h2><?php echo _("Logs utilisateur")." - ".$userName['name'].' - '.$userName['second_name'].' <i>(IDENTIFIANT : '.$userName['id'].')</i>'; ?></h2>
+			<h2><?php echo _("Logs utilisateur")." - ".$userName['name'].' - '.$userName['second_name'].' <i>('._("IDENTIFIANT").' : '.$userName['id'].')</i>'; ?></h2>
 			<?php echo $helpers['Html']->backoffice_button_title($params['controllerFileName'], 'index', "Listing"); ?>
 		</div>	
 		<div class="content">
 			<?php 
 			$formOptions = array('id' => $params['modelName'].'Logs', 'action' => Router::url('backoffice/'.$params['controllerFileName'].'/logs/'.$userName['id']), 'method' => 'post', 'enctype' => 'multipart/form-data');
 			echo $helpers['Form']->create($formOptions); 
-				echo $helpers['Form']->input('date', 'Afficher les logs pour la journée du :', array("class" => "datepicker", "placeholder" => "dd.mm.yy"));
+				echo $helpers['Form']->input('date', _('Afficher les logs pour la journée du').' :', array("class" => "datepicker", "placeholder" => "dd.mm.yy"));
 			echo $helpers['Form']->end(true); 
 			?>	
 				
@@ -45,7 +45,7 @@
 				<?php 				
 			} else { 
 				
-				?><p>Aucun élément</p><?php 
+				?><p><?php echo _("Aucun élément"); ?></p><?php 
 			}
 			?>
 		</div>

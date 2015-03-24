@@ -5,16 +5,14 @@
 	</ul>
 	<div id="general">
 		<div class="content nopadding">
-			<?php 
-			//$typeList = array('admin' => "Administrateur", 'website_admin' => "Administrateur de site", 'user' => 'Utilisateur');
-			//echo $helpers['Form']->input('role', "<i>(*)</i> Type d'utilisateur", array('type' => 'select', 'datas' => $typeList, 'firstElementList' => _("Sélectionnez un type"), 'tooltip' => "Indiquez le type de cet utilisateur"));			
-			echo $helpers['Form']->input('users_group_id', "<i>(*)</i> Groupe d'utilisateurs", array('type' => 'select', 'datas' => $usersGroupList, 'firstElementList' => _("Sélectionnez un groupe"), 'tooltip' => "Indiquez le groupe de cet utilisateur"));			
-			echo $helpers['Form']->input('name', '<i>(*)</i> Nom', array('tooltip' => "Indiquez le nom de l'utilisateur"));
-			echo $helpers['Form']->input('second_name', 'Complément nom', array('tooltip' => "Indiquez un complément pour le nom de l'utilisateur"));
-			echo $helpers['Form']->input('login', '<i>(*)</i> Identifiant', array('tooltip' => "Indiquez l'identifiant de l'utilisateur (Généralement un email)"));
-			echo $helpers['Form']->input('password', '<i>(*)</i> Mot de passe', array('tooltip' => "Indiquez le mot de passe de l'utilisateur", 'type' => 'password'));
-			echo $helpers['Form']->input('email', '<i>(*)</i> Email de contact', array('tooltip' => "Indiquez l'email de contact de cet utilisateur (peut être identique au login si celui-ci est un email)"));
-			echo $helpers['Form']->input('online', 'Actif', array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour valider cet utilisateur"));
+			<?php 			
+			echo $helpers['Form']->input('users_group_id', _("Groupe d'utilisateurs"), array('compulsory' => true, 'type' => 'select', 'datas' => $usersGroupList, 'firstElementList' => _("Sélectionnez un groupe"), 'tooltip' => _("Indiquez le groupe de cet utilisateur")));			
+			echo $helpers['Form']->input('name', _('Nom'), array('compulsory' => true, 'tooltip' => _("Indiquez le nom de l'utilisateur")));
+			echo $helpers['Form']->input('second_name', _('Complément nom'), array('tooltip' => _("Indiquez un complément pour le nom de l'utilisateur")));
+			echo $helpers['Form']->input('login', _('Identifiant'), array('compulsory' => true, 'tooltip' => _("Indiquez l'identifiant de l'utilisateur (Généralement un email)")));
+			echo $helpers['Form']->input('password', _('Mot de passe'), array('compulsory' => true, 'tooltip' => _("Indiquez le mot de passe de l'utilisateur"), 'type' => 'password'));
+			echo $helpers['Form']->input('email', _('Email de contact'), array('compulsory' => true, 'tooltip' => _("Indiquez l'email de contact de cet utilisateur (peut être identique au login si celui-ci est un email)")));
+			echo $helpers['Form']->input('online', _('Actif'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour valider cet utilisateur")));
 			?>
 		</div>
 	</div>
@@ -22,8 +20,8 @@
 		<div class="content nopadding">
 			<div class="row" style="overflow:hidden;">
 				<label>
-					<?php echo $helpers['Html']->img('/backoffice/tooltip.png', array("original-title" => "Cochez le (ou les) site(s) que cet utilisateur peut administrer", "class" => "tip-w", "style" => "float: left; margin-right: 5px; cursor: pointer;", "alt" => "tooltip")); ?>
-					Site(s) administrable(s)
+					<?php echo $helpers['Html']->img('/backoffice/tooltip.png', array("original-title" => _("Cochez le (ou les) site(s) que cet utilisateur peut administrer"), "class" => "tip-w", "style" => "float: left; margin-right: 5px; cursor: pointer;", "alt" => "tooltip")); ?>
+					<?php echo _("Site(s) administrable(s)"); ?>
 				</label>
 				<div class="rowright">
 					<?php 
