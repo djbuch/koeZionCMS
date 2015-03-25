@@ -637,11 +637,11 @@ class Model extends Object {
 					$orderV[0] = explode('.', $orderV[0]);
 					
 					//Si le champ ne possède pas d'alias on va le rajouter automatiquement pour éviter les ambiguités
-					if(count($orderV[0]) == 1) { 
+					if(count($orderV[0]) == 1) {
 						
 						$field 			= $orderV[0][0];
-						$direction 		= $orderV[1];
-						$order[$orderK] = '`'.$tableAlias.'`.`'.$field.'` '.$direction; 
+						$direction 		= isset($orderV[1]) ? ' '.$orderV[1] : '';
+						$order[$orderK] = '`'.$tableAlias.'`.`'.$field.'`'.$direction; 
 					}
 					
 					//Si le champ possède un alias on va utiliser cet alias pour la mise en place des tris
