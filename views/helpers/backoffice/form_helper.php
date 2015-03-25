@@ -281,6 +281,7 @@ class FormHelper extends FormParentHelper {
  * - div : si vrai la valeur retournée sera contenu dans une div
  * - divright : si vrai le champ input sera retourné dans un div
  * - fulllabelerror : si vrai l'affichage du message d'erreur se fera à part
+ * @version 25/03/2015 by FI - Correction de la gestion du champ traduit pour tester l'exitence d'un model
  * 
  * @see FormHelper::input()
  */	
@@ -306,50 +307,27 @@ class FormHelper extends FormParentHelper {
 		
 		$htmlInput = ''; //Chaine de caractères qui va contenir l'élément input demandé
 		
-		//Gestion des traductions
-		$fieldsToTranslate = $this->view->controller->$modelName->fieldsToTranslate;
-		//if(!empty($modelName) && $this->view->controller->$modelName->fieldsToTranslate && $this->view->controller->$modelName->getTranslatedDatas) {
-		if(!empty($modelName) && $fieldsToTranslate && in_array($name, $fieldsToTranslate)) {
+		////////////////////////////////////
+		//    GESTION DES TRADUCTIONS    //
+		//On va contrôler si l'input à générer est "traductible"
+		$translatedInput = (
+			isset($this->view->controller->$modelName) 
+			&& !empty($modelName) 
+			&& $this->view->controller->$modelName->fieldsToTranslate 
+			&& in_array($name, $this->view->controller->$modelName->fieldsToTranslate)
+		);
 		
-			//pr();
+		//Input traduit
+		if($translatedInput) {
 			
 			$fieldsToTranslate 	= $this->view->controller->$modelName->fieldsToTranslate;
 			$locales = Session::read('Backoffice.Locales');
 			
-			//foreach($fieldsToTranslate as $k => $fieldToTranslate) {
-
-				foreach($locales as $locale) {
+			foreach($locales as $locale) {
 					
-					$inputDatas = parent::input($name.'.'.$locale['code'], $label, am($options, array('divRowCss' => 'row_'.$locale['code']))); //Appel fonction parente
-					$htmlInput .= $this->_html_input($inputDatas);
-				}
-			//}
-			
-			
-			/*$requestData 		= $this->view->controller->request->data;
-			$fieldsToTranslate 	= $this->view->controller->$modelName->fieldsToTranslate;		
-			
-			$keysIntersect 	= array_intersect_key($requestData, array_flip($fieldsToTranslate)); //Récupération de l'intersection de clés des données de la ligne à afficher et des champs à traduire
-			
-			pr($requestData);
-			pr($keysIntersect);
-			
-			//Si l'élément courant est dans le tableau d'intersection et que sa valeur est un tableau
-			if(array_key_exists($name, $keysIntersect) && is_array($keysIntersect[$name])) {
-			
-				//On va parcourir toutes les traductions
-				foreach($keysIntersect[$name] as $locale => $traduction) {
-			
-					$inputDatas = parent::input($name.'.'.$locale, $label, am($options, array('divRowCss' => 'row_'.$locale))); //Appel fonction parente
-					$htmlInput .= $this->_html_input($inputDatas);
-				}
-				
-			//Sinon on génère l'input
-			} else {
-				
-				$inputDatas = parent::input($name, $label, $options); //Appel fonction parente
-				$htmlInput = $this->_html_input($inputDatas);
-			}*/
+				$inputDatas = parent::input($name.'.'.$locale['code'], $label, am($options, array('divRowCss' => 'row_'.$locale['code']))); //Appel fonction parente
+				$htmlInput .= $this->_html_input($inputDatas);
+			}
 		
 		//Cas général
 		} else { 
