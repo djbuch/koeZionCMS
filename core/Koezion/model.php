@@ -585,9 +585,9 @@ class Model extends Object {
 			if(isset($req['groupBy'])) { 
 								
 				//On va éclater la chaîne pour récupérer tous les champs order
-				$groupBy = explode(',', $req['groupBy']);
+				$groupBy = explode(',', $req['groupBy']);				
 				foreach($groupBy as $groupByK => $groupByV) { //Parcours de tous les champs
-				
+
 					//Nettoyage de la valeur
 					//Suppression des espaces en début et fin de chaîne
 					//Supression des espaces consécutifs dans la chaîne
@@ -597,9 +597,11 @@ class Model extends Object {
 					
 					//On teste si la table n'est pa traduite et que le champ courant est dans la liste des champs traduits
 					if($translatedTable && $this->getTranslation && in_array($groupByV, $this->fieldsToTranslate)) { $tableAlias = $this->alias.'I18n'; }
-				
-					$groupByV 			= '`'.$groupByV.'`'; //On échappe le champ
-					$groupBy[$groupByK] = '`'.$tableAlias.'`.'.$groupByV;
+									
+					//On va tester si un alias de table est déjà en place, si ce n'est pas le cas on va le rajouter
+					$groupByV = explode('.', $groupByV);									
+					if(count($groupByV) == 1) 		{ $groupBy[$groupByK] = '`'.$tableAlias.'`.`'.$groupByV[0].'`'; }
+					else if(count($groupByV) == 2) 	{ $groupBy[$groupByK] = '`'.$groupByV[0].'`.`'.$groupByV[1].'`'; }				
 				}
 				$sql .= "\n".'GROUP BY '.implode(', ', $groupBy).' '; 
 			}
@@ -622,11 +624,29 @@ class Model extends Object {
 					
 					//On teste si la table n'est pa traduite et que le champ courant est dans la liste des champs traduits
 					if($translatedTable && $this->getTranslation && in_array($orderV[0], $this->fieldsToTranslate)) { $tableAlias = $this->alias.'I18n'; } 
+										
+					//On va tester si un alias de table est déjà en place, si ce n'est pas le cas on va le rajouter
+					//Dans le cas du order on a au préalable testé si la direction était renseignée via $orderV = explode(' ', $orderV);
+					//On à dond dans $orderV[0] le champ sur lequel effectuer le tri nous devons tester si ce champ possède un alias de renseigné
+					$orderV[0] = explode('.', $orderV[0]);
 					
-					$orderV[0] 		= '`'.$orderV[0].'`'; //On échappe le champ
-					$order[$orderK] = '`'.$tableAlias.'`.'.implode(' ', $orderV);
+					//Si le champ ne possède pas d'alias on va le rajouter automatiquement pour éviter les ambiguités
+					if(count($orderV[0]) == 1) { 
+						
+						$field 			= $orderV[0][0];
+						$direction 		= $orderV[1];
+						$order[$orderK] = '`'.$tableAlias.'`.`'.$field.'` '.$direction; 
+					}
+					
+					//Si le champ possède un alias on va utiliser cet alias pour la mise en place des tris
+					else if(count($orderV) == 2) {
+
+						$alias 			= $orderV[0][0];
+						$field 			= $orderV[0][1];
+						$direction 		= $orderV[1];
+						$order[$orderK] = '`'.$alias.'`.`'.$field.'` '.$direction; 
+					}
 				}
-				
 				$sql .= "\n".'ORDER BY '.implode(', ', $order).' '; 
 			}
 		
