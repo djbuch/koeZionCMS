@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 25/03/2015</name>
+		<num>20150325.004</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Corrections de la génération de la requête liée à la traduction ainsi que des JOIN dans le modèle principal</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 25/03/2015</name>
 		<num>20150325.003</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

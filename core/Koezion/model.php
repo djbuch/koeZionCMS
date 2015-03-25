@@ -407,7 +407,7 @@ class Model extends Object {
 				//$tables[] = '`'.$this->table.'_i18n` AS `'.$this->alias.'I18n`'; 
 			}
 			
-			$sql .= "\n"."FROM \n\t".implode(", \n\t", $tables)."\n ";
+			$sql .= "\n"."FROM \n\t".implode(", \n\t", $tables)." ";
 		
 		//VERSION AVEC INNER JOIN changé par une jointure normal car trop restrictive dans l'ordre des tables à charger dans le FROM
 		//Cf posts_type model fonction get_for_front l'ordre des tables dans le from générait une erreur
@@ -432,12 +432,12 @@ class Model extends Object {
 						foreach ($req['leftJoin'] as $v) {
 							
 							$joinModel = $this->loadModel($v['model'], true);
-							$sql .= "\n".'LEFT JOIN '.$joinModel->table.' AS '.$joinModel->alias.' ON '.$v['pivot'].' '; //On ajoute à la requête
+							$sql .= "\n".'LEFT JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$v['pivot'].' '; //On ajoute à la requête
 						}					
 					} else { //Sinon, on n'a qu'un seul join
 						
 						$joinModel = $this->loadModel($req['leftJoin']['model'], true);
-						$sql .= "\n".'LEFT JOIN '.$joinModel->table.' AS '.$joinModel->alias.' ON '.$req['leftJoin']['pivot'].' '; //On ajoute à la requête					
+						$sql .= "\n".'LEFT JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$req['leftJoin']['pivot'].' '; //On ajoute à la requête					
 					}
 				}
 			}
@@ -454,12 +454,12 @@ class Model extends Object {
 						foreach ($req['rightJoin'] as $v) {
 							
 							$joinModel = $this->loadModel($v['model'], true);
-							$sql .= "\n".'RIGHT JOIN '.$joinModel->table.' AS '.$joinModel->alias.' ON '.$v['pivot'].' '; //On ajoute à la requête
+							$sql .= "\n".'RIGHT JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$v['pivot'].' '; //On ajoute à la requête
 						}					
 					} else { //Sinon, on n'a qu'un seul join
 						
 						$joinModel = $this->loadModel($req['rightJoin']['model'], true);
-						$sql .= "\n".'RIGHT JOIN '.$joinModel->table.' AS '.$joinModel->alias.' ON '.$req['rightJoin']['pivot'].' '; //On ajoute à la requête					
+						$sql .= "\n".'RIGHT JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$req['rightJoin']['pivot'].' '; //On ajoute à la requête					
 					}
 				}
 			}
@@ -476,13 +476,13 @@ class Model extends Object {
 						foreach ($req['innerJoin'] as $k => $v) {
 	
 							$joinModel = $this->loadModel($v['model'], true);
-							$sql .= "\n".'INNER JOIN '.$joinModel->table.' AS '.$joinModel->alias.' ON '.$v['pivot'].' ';//On ajoute à la requête
+							$sql .= "\n".'INNER JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$v['pivot'].' ';//On ajoute à la requête
 						}
 						
 					} else { //Sinon, on n'a qu'un seul "join"
 						
 						$joinModel = $this->loadModel($req['innerJoin']['model'], true);
-						$sql .= "\n".'INNER JOIN '.$joinModel->table.' AS '.$joinModel->alias.' ON '.$req['innerJoin']['pivot'].' ';//On ajoute à la requête
+						$sql .= "\n".'INNER JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$req['innerJoin']['pivot'].' ';//On ajoute à la requête
 					}
 				}
 			}
