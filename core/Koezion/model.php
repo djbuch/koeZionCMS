@@ -399,22 +399,26 @@ class Model extends Object {
 		
 			////////////////
 			//    I18N    //
+			//VERSION SANS LE INNER JOIN
 			//Si il y à une variable contenant des champs à traduire on rajoute la table de le from
-			if($translatedTable && $this->getTranslation) { $tables[] = '`'.$this->table.'_i18n` AS `'.$this->alias.'I18n`'; }
+			if($translatedTable && $this->getTranslation) { 
+				
+				array_unshift($tables, '`'.$this->table.'_i18n` AS `'.$this->alias.'I18n`');
+				//$tables[] = '`'.$this->table.'_i18n` AS `'.$this->alias.'I18n`'; 
+			}
 			
 			$sql .= "\n"."FROM \n\t".implode(", \n\t", $tables)."\n ";
-		/*
+		
 		//VERSION AVEC INNER JOIN changé par une jointure normal car trop restrictive dans l'ordre des tables à charger dans le FROM
 		//Cf posts_type model fonction get_for_front l'ordre des tables dans le from générait une erreur
 		//Si il y à une variable contenant des champs à traduire
 		//On va rajouter le INNER JOIN
 		//Ainsi que le pivot qui sera toujours id dans la table source et model_id dans la table de traduction
-			if($translatedTable && $this->getTranslation) {
+			/*if($translatedTable && $this->getTranslation) {
 			
 				$sql .= 'INNER JOIN '.$this->table.'_i18n AS '.$this->alias.'I18n ';
-				$sql .= 'ON '.$this->alias.'.id = '.$this->alias.'I18n.model_id ';
-			}	
-		*/
+				$sql .= 'ON '.$this->alias.'.id = '.$this->alias.'I18n.model_id '."AND `".$this->alias."I18n`.`locale` = '".DEFAULT_LOCALE."'"."\n";
+			}*/	
 				
 		///////////////////////////
 		//   CHAMPS LEFT JOIN   //
@@ -560,6 +564,8 @@ class Model extends Object {
 		//    I18N    //
 			if($translatedTable && $this->getTranslation) {
 								
+				$sql .= "\n";
+				
 				//Deux cas :
 				// - on a déjà des conditions, le WHERE est donc déjà renseigné
 				// - on a pas de conditions et on peut utiliser le WHERE
