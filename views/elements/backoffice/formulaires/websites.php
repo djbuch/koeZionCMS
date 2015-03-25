@@ -26,6 +26,7 @@
 		<div class="content nopadding">
 			<?php 
 			echo $helpers['Form']->input('tpl_logo', _('Logo'), array('type' => 'textarea', 'toolbar' => 'image', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge', 'tooltip' => _("Sélectionnez votre logo à l'aide de l'explorateur de fichier")));
+			echo $helpers['Form']->input('header_txt', _('Texte header (Optionnel)'), array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge', 'tooltip' => _("Texte affiché dans le header (Optionnel selon le template sélectionné)")));
 			//echo $helpers['Form']->input('tpl_header', _('Header'), array('type' => 'textarea', 'toolbar' => 'image', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge', 'tooltip' => _("Sélectionnez l'image du header à l'aide de l'explorateur de fichier")));
 			?>
 		</div>
