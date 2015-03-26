@@ -38,7 +38,10 @@
 			$websiteParams['tpl_layout'].'/css/font-awsome'
 		);			
 		echo $helpers['Html']->css($css);				
-		if(!empty($websiteParams['css_hack_file'])) { ?><link href="<?php echo $websiteParams['css_hack_file']; ?>" rel="stylesheet" type="text/css" media="all" /><?php }		
+		if(!empty($websiteParams['css_hack_file'])) { ?><link href="<?php echo $websiteParams['css_hack_file']; ?>" rel="stylesheet" type="text/css" media="all" /><?php }
+
+		//Code Google Analytics
+		echo $helpers['Html']->analytics($websiteParams['ga_code']);
 		?>
 	</head>
 	<body data-baseurl="<?php echo BASE_URL; ?>">
@@ -91,8 +94,6 @@
 		);
 		echo $helpers['Html']->js($js);		
 		if(!empty($websiteParams['js_hack_file'])) { ?><script src="<?php echo $websiteParams['js_hack_file']; ?>" type="text/javascript"></script><?php }
-		
-		echo $helpers['Html']->analytics($websiteParams['ga_code']); 
 		?>
 		<script>
 			$(document).ready(function(){

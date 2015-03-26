@@ -1216,15 +1216,17 @@ class Model extends Object {
  * Cette fonction permet de tester l'existence d'une table dans la base de données
  *
  * @param 	varchar $table 		Table à tester
+ * @param 	boolean $forceCache Indique s'il faut ou non force le cache
  * @return 	integer Résultat de la requête
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 07/09/2012 by FI
  * @version 0.2 - 04/03/2013 by FI - Suppression de la variable database et récupération de celle-ci de la variable de classe
  */
-	public function exist_table_in_database($table) {		
+	public function exist_table_in_database($table, $forceCache = true) {		
 				
-		$tablesList = $this->table_list_in_database();		
+		if($forceCache) { $tablesList = $this->table_list_in_database(); }
+		else { $tablesList = $this->_table_list_in_database(); }		
 		return in_array($table, $tablesList);
 	}		
 	
@@ -1235,7 +1237,7 @@ class Model extends Object {
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 04/03/2013 by FI
- * @version 0.2 - 29/10/2013 by FI - Rajout d'un test pour supprimer du tableau les tables des plugins désinstallés 
+ * @version 0.2 - 29/10/2013 by FI - Rajout d'un test pour supprimer du tableau les tables des plugins désinstallés (déporté dans _table_list_in_database)
  */
 	public function table_list_in_database() {		
 				
@@ -1246,17 +1248,30 @@ class Model extends Object {
 		
 		if(!$tablesList) {
 		
-			$tablesList = array();
-			$sql = 'SHOW TABLES FROM `'.$this->database.'`;';
-			foreach($this->query($sql, true) as $k => $v) {
-				
-				$value = array_values($v);
-				if($value[0]{0} != '_') { $tablesList[] = $value[0]; } //Si le premier caractère n'est pas un underscore
-			}
-			
+			$tablesList = $this->_table_list_in_database();			
 			Cache::create_cache_file($cacheFolder, $cacheFile, $tablesList);
 		}
 		
+		return $tablesList;
+	}
+	
+/**
+ * Cette fonction permet de récupérer la liste des tables de la base de données sans gestion du cache
+ *
+ * @return 	array	Liste des tables
+ * @access	public
+ * @author	koéZionCMS
+ * @version 0.1 - 26/03/2015 by FI 
+ */
+	public function _table_list_in_database() {		
+		
+		$tablesList = array();
+		$sql = 'SHOW TABLES FROM `'.$this->database.'`;';
+		foreach($this->query($sql, true) as $k => $v) {
+			
+			$value = array_values($v);
+			if($value[0]{0} != '_') { $tablesList[] = $value[0]; } //Si le premier caractère n'est pas un underscore
+		}		
 		return $tablesList;
 	}
 	
