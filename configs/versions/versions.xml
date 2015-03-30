@@ -1,6 +1,13 @@
 ﻿<versions>
 	<version>
 		<name>Version du 30/03/2015</name>
+		<num>20150330.006</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 30/03/2015</name>
 		<num>20150330.005</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

@@ -328,7 +328,7 @@ class FormHelper extends FormParentHelper {
 			
 			foreach($locales as $locale) {
 			
-				$localeLabel = $label.' <img src="'.$locale['picture'].'" />';
+				$localeLabel = $label.' <img src="'.$locale['picture'].'" style="float: left;margin-right: 5px;" />';
 				$inputDatas = parent::input($name.'.'.$locale['code'], $localeLabel, am($options, array('divRowCss' => 'row_'.$locale['code']))); //Appel fonction parente
 				$htmlInput .= $this->_html_input($inputDatas);
 			}
