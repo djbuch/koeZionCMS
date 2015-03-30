@@ -357,6 +357,7 @@ CREATE TABLE IF NOT EXISTS `websites` (
   `ga_password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `ga_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `search_engine_position` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `header_txt` longtext COLLATE utf8_unicode_ci NOT NULL,
   `footer_gauche` longtext COLLATE utf8_unicode_ci NOT NULL,
   `footer_social` longtext COLLATE utf8_unicode_ci NOT NULL,
   `footer_droite` longtext COLLATE utf8_unicode_ci NOT NULL,
