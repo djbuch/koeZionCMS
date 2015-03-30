@@ -417,7 +417,7 @@ class Model extends Object {
 			/*if($translatedTable && $this->getTranslation) {
 			
 				$sql .= 'INNER JOIN '.$this->table.'_i18n AS '.$this->alias.'I18n ';
-				$sql .= 'ON '.$this->alias.'.id = '.$this->alias.'I18n.model_id '."AND `".$this->alias."I18n`.`locale` = '".DEFAULT_LOCALE."'"."\n";
+				$sql .= 'ON '.$this->alias.'.id = '.$this->alias.'I18n.model_id '."AND `".$this->alias."I18n`.`locale` = '".DEFAULT_LANGUAGE."'"."\n";
 			}*/	
 				
 		///////////////////////////
@@ -569,8 +569,8 @@ class Model extends Object {
 				//Deux cas :
 				// - on a déjà des conditions, le WHERE est donc déjà renseigné
 				// - on a pas de conditions et on peut utiliser le WHERE
-				if(isset($req['conditions'])) { $sql .= "AND `".$this->alias."I18n`.`locale` = '".DEFAULT_LOCALE."'"."\n"; }
-				else { $sql .= "WHERE `".$this->alias."I18n`.`locale` = '".DEFAULT_LOCALE."'"."\n"; }
+				if(isset($req['conditions'])) { $sql .= "AND `".$this->alias."I18n`.`locale` = '".DEFAULT_LANGUAGE."'"."\n"; }
+				else { $sql .= "WHERE `".$this->alias."I18n`.`locale` = '".DEFAULT_LANGUAGE."'"."\n"; }
 				
 				//Dans tous les cas on rajoute le pivot
 				//Au départ ce test s'effectuait dans INNER JOIN qui a été supprimé par la suite
