@@ -1,10 +1,18 @@
 ﻿<versions>
 	<version>
 		<name>Version du 30/03/2015</name>
+		<num>20150330.005</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Correction dans FormHelper rajout de l'image de la langue dans le label.</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 30/03/2015</name>
 		<num>20150330.004</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FI" type="code">Correction dans FormHelper du test sur le champ traduit pour prendre en compte les noms de champs utilisants la notation .</task>
+			<task author="FI" type="code">Correction dans FormHelper du test sur le champ traduit pour prendre en compte les noms de champs utilisants la notation.</task>
 		</tasks>
 	</version>
 	<version>

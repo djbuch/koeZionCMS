@@ -327,8 +327,9 @@ class FormHelper extends FormParentHelper {
 			$locales = Session::read('Backoffice.Locales');
 			
 			foreach($locales as $locale) {
-					
-				$inputDatas = parent::input($name.'.'.$locale['code'], $label, am($options, array('divRowCss' => 'row_'.$locale['code']))); //Appel fonction parente
+			
+				$localeLabel = $label.' <img src="'.$locale['picture'].'" />';
+				$inputDatas = parent::input($name.'.'.$locale['code'], $localeLabel, am($options, array('divRowCss' => 'row_'.$locale['code']))); //Appel fonction parente
 				$htmlInput .= $this->_html_input($inputDatas);
 			}
 		
