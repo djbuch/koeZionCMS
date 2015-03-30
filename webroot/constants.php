@@ -50,7 +50,6 @@ define('CORE', ROOT.DS.'core'); //Chemin vers le coeur de l'application
 	define('SWIFTMAILER', CORE.DS.'SwiftMailer'); //Chemin vers les librairies de SwiftMailer
 
 define('INSTALL_FILES', ROOT.DS.'install'.DS.'files'); //Chemin vers le dossier des traductions
-//define('LOCALE', ROOT.DS.'locale'); //Chemin vers le dossier des traductions
 
 define('MODELS', ROOT.DS.'models'); //Chemin vers le dossier des modèles
 	define('BEHAVIORS', MODELS.DS.'behaviors'); //Chemin vers le dossier des comportements

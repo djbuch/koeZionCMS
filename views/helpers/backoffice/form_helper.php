@@ -324,12 +324,12 @@ class FormHelper extends FormParentHelper {
 		if($translatedInput) {
 			
 			$fieldsToTranslate 	= $this->view->controller->$modelName->fieldsToTranslate;
-			$locales = Session::read('Backoffice.Locales');
+			$languages = Session::read('Backoffice.Languages');
 			
-			foreach($locales as $locale) {
+			foreach($languages as $language) {
 			
-				$localeLabel = $label.' <img src="'.$locale['picture'].'" style="float: left;margin-right: 5px;" />';
-				$inputDatas = parent::input($name.'.'.$locale['code'], $localeLabel, am($options, array('divRowCss' => 'row_'.$locale['code']))); //Appel fonction parente
+				$languageLabel = $label.' <img src="'.$language['picture'].'" style="float: left;margin-right: 5px;" />';
+				$inputDatas = parent::input($name.'.'.$language['code'], $languageLabel, am($options, array('divRowCss' => 'row_'.$language['code']))); //Appel fonction parente
 				$htmlInput .= $this->_html_input($inputDatas);
 			}
 		
@@ -372,7 +372,7 @@ class FormHelper extends FormParentHelper {
 			if(isset($inputDatas['inputOptions']['divRowBorderTop']) && !$inputDatas['inputOptions']['divRowBorderTop']) { $styleDiv = ' style="border-top:none"'; } 
 			else { $styleDiv = ''; }
 			
-			if(isset($inputDatas['inputOptions']['divRowCss']) && !empty($inputDatas['inputOptions']['divRowCss'])) { $cssRow .= ' row_locale '.$inputDatas['inputOptions']['divRowCss']; }
+			if(isset($inputDatas['inputOptions']['divRowCss']) && !empty($inputDatas['inputOptions']['divRowCss'])) { $cssRow .= ' row_language '.$inputDatas['inputOptions']['divRowCss']; }
 
 			if($inputDatas['inputOptions']['divright']) {
 				 

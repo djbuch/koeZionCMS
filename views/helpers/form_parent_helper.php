@@ -129,19 +129,6 @@ class FormParentHelper extends Helper {
 
 		$modelName = isset($this->view->controller->params['modelName']) ? $this->view->controller->params['modelName'] : ''; //Récupération du model courant
 		return $this->_input($name, $label, $options);
-
-		/*//Récupération éventuelle des champs à traduire
-		if($locale && !empty($modelName) && isset($this->view->controller->$modelName->fields_to_translate)) {
-
-			$fieldsToTranslate = $this->view->controller->$modelName->fields_to_translate;
-			if(in_array($name, $fieldsToTranslate)) {
-
-				$html = '<div class="row_locale">';
-				foreach(Session::read('Backoffice.Locale') as $codeLocale => $nameLocale) { $html .= $this->_input($name.'.'.$codeLocale, $label.' '.$nameLocale, $options); }
-				return $html.'</div>';
-
-			} else { return $this->_input($name, $label, $options); }
-		} else { return $this->_input($name, $label, $options); }*/
 	}	
 
 /**

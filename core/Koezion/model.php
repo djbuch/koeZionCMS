@@ -234,11 +234,11 @@ class Model extends Object {
 			$datasTraduction = array();
 			foreach($keysIntersect as $field => $v) {
 				
-				foreach($v as $locale => $localeValue) {
+				foreach($v as $language => $languageValue) {
 
-					$datasTraduction[$locale][$field] = $localeValue;
-					$datasTraduction[$locale]['locale'] = $locale; 
-					$datasTraduction[$locale]['model_id'] = $fromSaveAll ? end($this->id) : $this->id;  //On utilise end pour récupérer le dernier élément ajouté au tableau
+					$datasTraduction[$language][$field] = $languageValue;
+					$datasTraduction[$language]['locale'] = $language; 
+					$datasTraduction[$language]['model_id'] = $fromSaveAll ? end($this->id) : $this->id;  //On utilise end pour récupérer le dernier élément ajouté au tableau
 				}				
 			}
 			
@@ -697,7 +697,7 @@ class Model extends Object {
 				//Parcours de toutes les traductions
 				foreach($traductions as $traduction) {	
 					
-					$locale 		= $traduction['locale']; //Récupération de la langue					
+					$language 		= $traduction['locale']; //Récupération de la langue					
 					$keysIntersect 	= array_intersect_key($traduction, array_flip($this->fieldsToTranslate)); //Récupération de l'intersection de clés du tableau de traduction et des champs à traduire
 					
 					foreach($keysIntersect as $index => $value) {
@@ -705,7 +705,7 @@ class Model extends Object {
 						if(isset($return[$k][$index])) {
 							
 							if(!is_array($return[$k][$index])) { $return[$k][$index] = array(); }						
-							$return[$k][$index][$locale] = $value;
+							$return[$k][$index][$language] = $value;
 						}
 					}
 				}

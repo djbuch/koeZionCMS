@@ -448,12 +448,12 @@ p.arrow {
 	overflow: hidden;
 }
 
-#header .locales {
+#header .languages {
 	float: right;
 	margin-top: 5px;
 }
 
-#header .locales a {
+#header .languages a {
 	font-size: 10px;
 }
 
