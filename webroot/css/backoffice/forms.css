@@ -1,7 +1,7 @@
 form{display:block;margin:0;padding:0}
 .row{display:block;border-top:1px solid #e5e5e5;padding:15px 20px}
-label{float:left;padding:6px 0 0 0;margin:0;font-size:12px;color:#1c1c1c;cursor:text;width:350px}
-.rowright{display:block;margin:0 12px 0 350px}
+label{float:left;padding:6px 0 0 0;margin:0;font-size:12px;color:#1c1c1c;cursor:text;width:200px}
+.rowright{display:block;margin:0 12px 0 200px}
 #right .box .content label.error{display:block;float:none;background:url(../../img/backoffice/icon-error.png) no-repeat 10px 7px #fccac1;border:1px solid #e18b7c;margin:0 0 5px;padding:5px 6px 4px 6px;text-indent:26px;color:#c33820;font:12px/1.6em Arial;width:auto}
 #right .box .content label.error{margin:5px 0 0;width:100%}
 input{display:inline-block;border:1px solid #c5c5c5;outline:0;padding:6px;margin:0;font:12px/15px Arial;color:#1c1c1c;width:100%;height:15px}

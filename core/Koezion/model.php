@@ -210,17 +210,21 @@ class Model extends Object {
 /**
  * Fonctions qui sera exécutée après la sauvegarde des données
  *
+ * @param	array	$datas 			Données à sauvegarder
+ * @param	varchar	$saveAction		Type d'action générée par le save
+ * @param	boolean	$fromSaveAll 	Indique si l'on arrive de saveAll ou non
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 23/03/2015 by FI
  * @version 0.1 - 30/03/2015 by FI - Modification gestion de la sauvegarde en passant par un modèle tampon
+ * @version 0.1 - 30/03/2015 by FI - Rajout de $fromSaveAll pour indiquer si la clé primaire est sous forme de tableau ou non
  */     
-	public function after_save($datas, $saveAction = 'insert') {		
-				
+	public function after_save($datas, $saveAction = 'insert', $fromSaveAll = false) {		
+		
 		////////////////////////////////////////////////
 		//    GESTION DE LA TRADUCTION DE LA TABLE    //
 		if(isset($this->fieldsToTranslate) && !empty($this->fieldsToTranslate)) {
-					
+			
 			//Récupération de l'intersection de clés du tableau de traduction et des données à sauvegarder
 			$keysIntersect 	= array_intersect_key($datas, array_flip($this->fieldsToTranslate));
 
@@ -234,7 +238,7 @@ class Model extends Object {
 
 					$datasTraduction[$locale][$field] = $localeValue;
 					$datasTraduction[$locale]['locale'] = $locale; 
-					$datasTraduction[$locale]['model_id'] = $this->id; 
+					$datasTraduction[$locale]['model_id'] = $fromSaveAll ? end($this->id) : $this->id;  //On utilise end pour récupérer le dernier élément ajouté au tableau
 				}				
 			}
 			
@@ -698,8 +702,11 @@ class Model extends Object {
 					
 					foreach($keysIntersect as $index => $value) {
 						
-						if(!is_array($return[$k][$index])) { $return[$k][$index] = array(); }						
-						$return[$k][$index][$locale] = $value;
+						if(isset($return[$k][$index])) {
+							
+							if(!is_array($return[$k][$index])) { $return[$k][$index] = array(); }						
+							$return[$k][$index][$locale] = $value;
+						}
 					}
 				}
 			}
@@ -989,6 +996,7 @@ class Model extends Object {
  * @version 0.2 - 03/04/2013 by FI - Correction de l'affectation des ids
  * @version 0.3 - 10/01/2014 by FI - Gestion des primary key multiples
  * @version 0.4 - 24/03/2015 by FI - On force l'id en tableau
+ * @version 0.5 - 30/03/2015 by FI - Rajout de la fonction after_save
  */	
 	public function saveAll($datas, $forceInsert = false, $escapeUpload = true) {
 		
@@ -1010,6 +1018,8 @@ class Model extends Object {
 				$this->queryExecutionResult = $queryExecutionResult;
 				
 				if(isset($this->searches_params)) { $this->make_search_index($datasToSave, $this->id, $preparedInfos['action']); } //On génère le fichier d'index de recherche
+				
+				$this->after_save($v, $preparedInfos['action'], true);
 			}
 		}
 	}

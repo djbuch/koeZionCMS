@@ -1,9 +1,18 @@
 ﻿<versions>
 	<version>
 		<name>Version du 30/03/2015</name>
+		<num>20150330.007</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Correction dans le modèle pour la gestion de la traduction</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 30/03/2015</name>
 		<num>20150330.006</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
+			<task author="FI" type="code">Correction dans FormHelper rajout de l'image de la langue dans le label, modification du css forms.</task>
 		</tasks>
 	</version>
 	<version>
