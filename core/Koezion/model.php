@@ -213,13 +213,14 @@ class Model extends Object {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 23/03/2015 by FI
- */    
+ * @version 0.1 - 30/03/2015 by FI - Modification gestion de la sauvegarde en passant par un modèle tampon
+ */     
 	public function after_save($datas, $saveAction = 'insert') {		
 				
 		////////////////////////////////////////////////
 		//    GESTION DE LA TRADUCTION DE LA TABLE    //
 		if(isset($this->fieldsToTranslate) && !empty($this->fieldsToTranslate)) {
-		
+					
 			//Récupération de l'intersection de clés du tableau de traduction et des données à sauvegarder
 			$keysIntersect 	= array_intersect_key($datas, array_flip($this->fieldsToTranslate));
 
@@ -237,10 +238,17 @@ class Model extends Object {
 				}				
 			}
 			
-			$this->table = $this->table.'_i18n';
+			//Pour ne pas perturber le fonctionnement standard du CMS on procède à la création d'un model tampon
+			//par lequel on va effectuer nos opération de mise à jour des données traduites
+			$i18nModel = new Model();			
+			$i18nModel->table = $this->table.'_i18n';
+			$i18nModel->shema = $this->_get_shema($i18nModel->table);
+			$i18nModel->primaryKey = $primaryKey;
+			$i18nModel->saveAll($datasTraduction);
+						
+			/*$this->table = $this->table.'_i18n';
 			$this->shema = $this->shema();
-			$this->primaryKey = $primaryKey;
-			$this->saveAll($datasTraduction);
+			$this->primaryKey = $primaryKey;*/
 		}
 	}
 	

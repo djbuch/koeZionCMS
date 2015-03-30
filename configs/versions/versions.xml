@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 30/03/2015</name>
+		<num>20150330.003</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la fonction AfterSave du modèle principal</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 30/03/2015</name>
 		<num>20150330.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
