@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 30/03/2015</name>
+		<num>20150330.009</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Uniformisation gestion de la traduction</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 30/03/2015</name>
 		<num>20150330.008</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

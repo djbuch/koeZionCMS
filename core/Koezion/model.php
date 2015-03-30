@@ -229,7 +229,7 @@ class Model extends Object {
 			$keysIntersect 	= array_intersect_key($datas, array_flip($this->fieldsToTranslate));
 
 			//On va tester l'action générée par la requête de sauvegarde pour modifier la valeur de la clée en fonction de l'insert ou de l'update
-			if($saveAction == 'update') { $primaryKey = array('locale', 'model_id'); } else { $primaryKey = 'id'; }
+			if($saveAction == 'update') { $primaryKey = array('language', 'model_id'); } else { $primaryKey = 'id'; }
 			
 			$datasTraduction = array();
 			foreach($keysIntersect as $field => $v) {
@@ -237,7 +237,7 @@ class Model extends Object {
 				foreach($v as $language => $languageValue) {
 
 					$datasTraduction[$language][$field] = $languageValue;
-					$datasTraduction[$language]['locale'] = $language; 
+					$datasTraduction[$language]['language'] = $language; 
 					$datasTraduction[$language]['model_id'] = $fromSaveAll ? end($this->id) : $this->id;  //On utilise end pour récupérer le dernier élément ajouté au tableau
 				}				
 			}
@@ -390,7 +390,7 @@ class Model extends Object {
 				
 				//Rajout des données complémentaires de la traduction
 				$i18nShema['i18n_id'] 		= 'id'; //On gère un alias pour ce champs pour qu'il ne rentre pas en conflit avec l'id de la table parente
-				$i18nShema['i18n_locale'] 	= 'locale'; //On uniformise avec le champ id
+				$i18nShema['i18n_language'] = 'language'; //On uniformise avec le champ id
 				$i18nShema['i18n_model_id'] = 'model_id'; //On uniformise avec le champ id
 				
 				$i18nFields = $this->_get_fields($i18nShema, $this->alias.'I18n');
@@ -429,7 +429,7 @@ class Model extends Object {
 			/*if($translatedTable && $this->getTranslation) {
 			
 				$sql .= 'INNER JOIN '.$this->table.'_i18n AS '.$this->alias.'I18n ';
-				$sql .= 'ON '.$this->alias.'.id = '.$this->alias.'I18n.model_id '."AND `".$this->alias."I18n`.`locale` = '".DEFAULT_LANGUAGE."'"."\n";
+				$sql .= 'ON '.$this->alias.'.id = '.$this->alias.'I18n.model_id '."AND `".$this->alias."I18n`.`language` = '".DEFAULT_LANGUAGE."'"."\n";
 			}*/	
 				
 		///////////////////////////
@@ -581,8 +581,8 @@ class Model extends Object {
 				//Deux cas :
 				// - on a déjà des conditions, le WHERE est donc déjà renseigné
 				// - on a pas de conditions et on peut utiliser le WHERE
-				if(isset($req['conditions'])) { $sql .= "AND `".$this->alias."I18n`.`locale` = '".DEFAULT_LANGUAGE."'"."\n"; }
-				else { $sql .= "WHERE `".$this->alias."I18n`.`locale` = '".DEFAULT_LANGUAGE."'"."\n"; }
+				if(isset($req['conditions'])) { $sql .= "AND `".$this->alias."I18n`.`language` = '".DEFAULT_LANGUAGE."'"."\n"; }
+				else { $sql .= "WHERE `".$this->alias."I18n`.`language` = '".DEFAULT_LANGUAGE."'"."\n"; }
 				
 				//Dans tous les cas on rajoute le pivot
 				//Au départ ce test s'effectuait dans INNER JOIN qui a été supprimé par la suite
@@ -697,7 +697,7 @@ class Model extends Object {
 				//Parcours de toutes les traductions
 				foreach($traductions as $traduction) {	
 					
-					$language 		= $traduction['locale']; //Récupération de la langue					
+					$language 		= $traduction['language']; //Récupération de la langue					
 					$keysIntersect 	= array_intersect_key($traduction, array_flip($this->fieldsToTranslate)); //Récupération de l'intersection de clés du tableau de traduction et des champs à traduire
 					
 					foreach($keysIntersect as $index => $value) {
