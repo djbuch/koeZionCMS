@@ -282,6 +282,7 @@ class FormHelper extends FormParentHelper {
  * - divright : si vrai le champ input sera retourné dans un div
  * - fulllabelerror : si vrai l'affichage du message d'erreur se fera à part
  * @version 25/03/2015 by FI - Correction de la gestion du champ traduit pour tester l'exitence d'un model
+ * @version 30/03/2015 by FI - Correction du test sur le champ traduit pour prendre en compte les noms de champs utilisants la notation .
  * 
  * @see FormHelper::input()
  */	
@@ -310,11 +311,13 @@ class FormHelper extends FormParentHelper {
 		////////////////////////////////////
 		//    GESTION DES TRADUCTIONS    //
 		//On va contrôler si l'input à générer est "traductible"
+		//On va prendre en compte les names utilisants la notation AAA.BBB.CCC et récupérer le dernier élément du tableau pour vérifier s'il est lui aussi présent dans la liste
+		$explodeName = explode('.', $name);		
 		$translatedInput = (
 			isset($this->view->controller->$modelName) 
 			&& !empty($modelName) 
 			&& $this->view->controller->$modelName->fieldsToTranslate 
-			&& in_array($name, $this->view->controller->$modelName->fieldsToTranslate)
+			&& in_array(end($explodeName), $this->view->controller->$modelName->fieldsToTranslate)
 		);
 		
 		//Input traduit
