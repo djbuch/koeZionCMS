@@ -30,32 +30,30 @@ class WebsitesController extends AppController {
  * @version 0.3 - 07/06/2012 by FI - Modification de la gestion des couleurs on travaille maintenant avec des templates
  * @version 0.4 - 11/04/2014 by FI - Reprise de la fonction pour alléger le nombre de requêtes
  * @version 0.5 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
+ * @version 0.6 - 02/04/2015 by FI - Modification de la gestion globale de la fonction, rajout de l'utilisation de la fonction parente afin de pouvoir utiliser la gestion de la traduction
  */
-	function backoffice_add($redirect = true, $forceInsert = false) {
-			
-		$this->_init_datas();
-    	
-		//Si des données sont postées
-    	if($this->request->data) { 
-			
+	function backoffice_add($redirect = false, $forceInsert = false) {
+				
+		$this->_init_datas(); //Initialisation des données
+		
+		//Si des données sont postées on va effectuer la modification de certaines données à sauvegarder
+		if($this->request->data) {
+		
 			//Mise à jour des informations
 			$this->request->data = $this->_update_template($this->request->data);
 			$this->request->data = $this->_update_txt_mails($this->request->data);
-    		
-			//Si elles sont valides
-    		if($this->Website->validates($this->request->data)) { 
-        			
-    			$this->Website->save($this->request->data); //On les sauvegarde 			    			
-    			Session::setFlash('Le contenu a bien été ajouté'); //Message de confirmation
-
-    			$this->_init_category();
-    			
-    			$this->_check_cache_configs();
-    			$this->_delete_cache();
-    			$this->_edit_session();
-    			$this->redirect('backoffice/websites/index');
-    		} else { Session::setFlash('Merci de corriger vos informations', 'error'); }
-    	}	
+		}
+		
+		$parentAdd = parent::backoffice_add($redirect, $forceInsert); //On fait appel à la fonction d'ajout parente
+		if($parentAdd) {
+			
+			$this->_init_category(); //Initialisation du noeud racine du site			
+			$this->_check_cache_configs(); //Modification des données en cache
+			$this->_delete_cache(); //Suppression du cache global
+			$this->_edit_session(); //Edition de la variable de Session
+			$this->redirect('backoffice/websites/index'); //Redirection sur la page d'accueil
+			
+		}
 	}	
 	
 /**
@@ -69,33 +67,31 @@ class WebsitesController extends AppController {
  * @version 0.3 - 07/06/2012 by FI - Modification de la gestion des couleurs on travaille maintenant avec des templates
  * @version 0.4 - 11/04/2014 by FI - Reprise de la fonction pour alléger le nombre de requêtes
  * @version 0.5 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
+ * @version 0.6 - 02/04/2015 by FI - Modification de la gestion globale de la fonction, rajout de l'utilisation de la fonction parente afin de pouvoir utiliser la gestion de la traduction
  */
-	function backoffice_edit($id, $redirect = true) {
-	
-		$this->set('id', $id);
-		$this->_init_datas();
+	function backoffice_edit($id, $redirect = false) {
 		
-		//Si des données sont postées
+		$this->_init_datas(); //Initialisation des données
+	
+		//Si des données sont postées on va effectuer la modification de certaines données à sauvegarder	
 		if($this->request->data) {
-			
+		
 			//Mise à jour des informations
 			$this->request->data = $this->_update_template($this->request->data);
 			$this->request->data = $this->_update_txt_mails($this->request->data);
-    
-    		//Si elles sont valides
-    		if($this->Website->validates($this->request->data)) {
-    
-    			$this->Website->save($this->request->data); //On les sauvegarde    			
-    			Session::setFlash('Le contenu a bien été modifié'); //Message de confirmation
-    			    			
-    			$this->_check_cache_configs();
-    			$this->_delete_cache();
-    			$this->_edit_session();
-    			$this->redirect('backoffice/websites/index');
-    			
-    		} else { Session::setFlash('Merci de corriger vos informations', 'error'); }
+		}
+		
+		//On fait appel à la fonction d'édition parente
+		$parentEdit = parent::backoffice_edit($id, $redirect);
+		
+		//Si l'édition s'est correctement déroulée
+		if($parentEdit) {
 			
-		} else { $this->request->data = $this->Website->findFirst(array('conditions' => array('id' => $id))); }
+			$this->_check_cache_configs(); //Modification des données en cache
+			$this->_delete_cache(); //Suppression du cache global
+			$this->_edit_session(); //Edition de la variable de Session
+			$this->redirect('backoffice/websites/index'); //Redirection sur la page d'accueil
+		}
 	}	
 
 /**
