@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 02/04/2015</name>
+		<num>20150402.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la gestion de la traduction dans AppController</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 02/04/2015</name>
 		<num>20150402.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

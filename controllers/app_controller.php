@@ -80,6 +80,9 @@ class AppController extends Controller {
 			$nbPostsComments = $this->PostsComment->findCount(array('online' => 0));
 			$this->set('nbPostsComments', $nbPostsComments);
 						
+			/*
+			//SUPPRIME LE 02/04/2015 car cela pose des problème lors de la récupération des données pour les listes déroulantes
+			//Toutes les traductions étaient récupérées or nous n'avons besoin que de la données de la langue courante du BO
 			/////////////////////////////////////////
 			//    PARAMETRAGES DE LA TRADUCTION    //
 			$modelName = $this->params['modelName'];
@@ -94,6 +97,7 @@ class AppController extends Controller {
 				$this->$modelName->getTranslation 		= false; //A ce niveau la pas besoin de récupérer la traduction de l'élément
 				$this->$modelName->getTranslatedDatas 	= true; //Récupération de l'ensemble des données traduites pour affiche le formulaire
 			}
+			*/
 			
 			//Récupération des plugins
 			/*$this->loadModel('Plugin');
@@ -254,10 +258,16 @@ class AppController extends Controller {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 17/01/2012 by FI
+ * @version 0.2 - 02/04/2015 by FI - Gestion de la traduction
  */
     public function backoffice_add($redirect = true, $forceInsert = false) {
     
     	$modelName = $this->params['modelName']; //On récupère la valeur du modèle
+    	
+    	/////////////////////////////////////////
+    	//    PARAMETRAGES DE LA TRADUCTION    //
+    	$this->$modelName->getTranslation 		= false; //A ce niveau la pas besoin de récupérer la traduction de l'élément
+    	$this->$modelName->getTranslatedDatas 	= true; //Récupération de l'ensemble des données traduites pour affiche le formulaire
     	    	
     	if($this->request->data) { //Si des données sont postées
     		
@@ -284,11 +294,17 @@ class AppController extends Controller {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 17/01/2012 by FI
+ * @version 0.2 - 02/04/2015 by FI - Gestion de la traduction
  */    
     public function backoffice_edit($id, $redirect = true) {
     	    	
     	$modelName 	=  $this->params['modelName']; //On récupère la valeur du modèle
     	$primaryKey = $this->$modelName->primaryKey;
+    	
+    	/////////////////////////////////////////
+    	//    PARAMETRAGES DE LA TRADUCTION    //
+    	$this->$modelName->getTranslation 		= false; //A ce niveau la pas besoin de récupérer la traduction de l'élément
+    	$this->$modelName->getTranslatedDatas 	= true; //Récupération de l'ensemble des données traduites pour affiche le formulaire
     	
     	$this->set($primaryKey, $id); //On stocke l'identifiant dans une variable
 
