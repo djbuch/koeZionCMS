@@ -38,6 +38,7 @@ class AppController extends Controller {
  * @version 0.2 - 25/04/2012 by FI - Rajout de la gestion de la page d'accueil
  * @version 0.3 - 30/04/2012 by FI - Gestion multisites
  * @version 0.4 - 14/06/2012 by FI - Rajout d'un contrôle nécessaire si aucun site n'est retrouné on affiche le formulaire de connexion
+ * @version 0.5 - 02/04/2015 by FI - Mise en place automatisation de la traduction dans les fonctions ADD et EDIT
  * @see Controller::beforeFilter()
  * @todo améliorer la récupération des configs...
  * @todo améliorer la récupération du menu général pour le moment une mise en cache qui me semble améliorable...
@@ -78,6 +79,21 @@ class AppController extends Controller {
 			$this->loadModel('PostsComment');
 			$nbPostsComments = $this->PostsComment->findCount(array('online' => 0));
 			$this->set('nbPostsComments', $nbPostsComments);
+						
+			/////////////////////////////////////////
+			//    PARAMETRAGES DE LA TRADUCTION    //
+			$modelName = $this->params['modelName'];
+			if(
+				in_array($this->params['action'], array('add', 'edit')) && 
+				isset($this->$modelName->fieldsToTranslate) && 
+				!empty($this->$modelName->fieldsToTranslate)
+			) {
+				
+				//Dans le cas de la fonction add et edit on check si on a dans le modèle des champs à traduire
+				//Le cas échéant on paramètre les données du modèle pour récupérer les données traduites
+				$this->$modelName->getTranslation 		= false; //A ce niveau la pas besoin de récupérer la traduction de l'élément
+				$this->$modelName->getTranslatedDatas 	= true; //Récupération de l'ensemble des données traduites pour affiche le formulaire
+			}
 			
 			//Récupération des plugins
 			/*$this->loadModel('Plugin');
@@ -242,11 +258,6 @@ class AppController extends Controller {
     public function backoffice_add($redirect = true, $forceInsert = false) {
     
     	$modelName = $this->params['modelName']; //On récupère la valeur du modèle
-    	
-    	/////////////////////////////////////////
-    	//    PARAMETRAGES DE LA TRADUCTION    //
-    	$this->$modelName->getTranslation 		= false; //A ce niveau la pas besoin de récupérer la traduction de l'élément
-    	$this->$modelName->getTranslatedDatas 	= true; //Récupération de l'ensemble des données traduites pour affiche le formulaire
     	    	
     	if($this->request->data) { //Si des données sont postées
     		
@@ -278,11 +289,6 @@ class AppController extends Controller {
     	    	
     	$modelName 	=  $this->params['modelName']; //On récupère la valeur du modèle
     	$primaryKey = $this->$modelName->primaryKey;
-    	
-    	/////////////////////////////////////////
-    	//    PARAMETRAGES DE LA TRADUCTION    //
-    	$this->$modelName->getTranslation 		= false; //A ce niveau la pas besoin de récupérer la traduction de l'élément
-    	$this->$modelName->getTranslatedDatas 	= true; //Récupération de l'ensemble des données traduites pour affiche le formulaire
     	
     	$this->set($primaryKey, $id); //On stocke l'identifiant dans une variable
 
