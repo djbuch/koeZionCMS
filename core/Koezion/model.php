@@ -216,8 +216,9 @@ class Model extends Object {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 23/03/2015 by FI
- * @version 0.1 - 30/03/2015 by FI - Modification gestion de la sauvegarde en passant par un modèle tampon
- * @version 0.1 - 30/03/2015 by FI - Rajout de $fromSaveAll pour indiquer si la clé primaire est sous forme de tableau ou non
+ * @version 0.2 - 30/03/2015 by FI - Modification gestion de la sauvegarde en passant par un modèle tampon
+ * @version 0.3 - 30/03/2015 by FI - Rajout de $fromSaveAll pour indiquer si la clé primaire est sous forme de tableau ou non
+ * @version 0.4 - 02/04/2015 by FI - Mise en place du test de la valeur à insérer pour rajouter le cas échéant les données de la langue : if(!is_array($v))
  */     
 	public function after_save($datas, $saveAction = 'insert', $fromSaveAll = false) {		
 		
@@ -234,7 +235,20 @@ class Model extends Object {
 			$datasTraduction = array();
 			foreach($keysIntersect as $field => $v) {
 				
-				foreach($v as $language => $languageValue) {
+				///////////////////////////
+				//    CAS PARTICULIER    //
+				//Si $v n'est pas un tableau mais que la table est traduite il faut réorganier les valeurs pour que l'insertion dans la table traduite se fasse correctement
+				//Ce cas ce produit par exemple lors de l'ajout d'un nouveau site Internet on ajoute la catégorie racine mais le tableau des champs traduits 
+				//(en partant du principe que la table des catégories soit traduite) ne comporte pas les données de la langue il faut donc les rajouter à la volée
+				//A voir si cette modification ne pose pas plus de problèmes par la suite
+				if(!is_array($v)) {
+					
+					$translatedDatas = array();
+					foreach(Session::read('Backoffice.Languages') as $sessionLanguage) { $translatedDatas[$sessionLanguage['code']] = $v; }
+					
+				} else { $translatedDatas = $v; }
+				
+				foreach($translatedDatas as $language => $languageValue) {
 
 					$datasTraduction[$language][$field] = $languageValue;
 					$datasTraduction[$language]['language'] = $language; 
