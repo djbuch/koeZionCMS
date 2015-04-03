@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 03/04/2015</name>
+		<num>20150403.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la fonction _prepare_save_datas dans le modèle principal</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 02/04/2015</name>
 		<num>20150402.004</num>
 		<supervisor>KoéZionCMS</supervisor>

@@ -1562,6 +1562,7 @@ class Model extends Object {
  * @version 0.3 - 27/03/2014 by FI - Gestion du champ activate
  * @version 0.4 - 22/07/2014 by FI - Suppression des caractères HTML lors de la gestion automatique du slug et du page_title
  * @version 0.5 - 20/03/2015 by FI - Rajout de $shema et $primaryKey
+ * @version 0.6 - 03/04/2015 by FI - Mise en place de la fonction _manage_additional_fields
  */		
 	protected function _prepare_save_datas($datas, $moreDatasToSave, $forceInsert, $escapeUpload, $shema = null, $primaryKey = null) {
 		
@@ -1585,11 +1586,15 @@ class Model extends Object {
 		require_once(LIBS.DS.'config_magik.php');
 		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
 		$coreConfs = $cfg->keys_values();
+				
+		if(in_array('password', $datasShema) && $coreConfs['hash_password']) { $datas['password'] = sha1($datas['password']); } //On procède à la mise à jour du champ password si il existe
+		if(in_array('activate', $shema) && isset($datas['activate']) && !$datas['activate'] && in_array('online', $datasShema)) { $datas['online'] = 0; } //On procède à la mise à jour du champ online si le champ activate est présent et que celui-ci est à 0
 		
-		if(in_array('password', $datasShema) && $coreConfs['hash_password']) { $datas['password'] = sha1($datas['password']); } //On procède à la mise à jour du champ password si il existe		
-		if(in_array('slug', $shema) && !empty($datas['name']) && (!in_array('slug', $datasShema) || empty($datas['slug']))) { $datas['slug'] = strtolower(Inflector::slug(strip_tags($datas['name']), '-')); } //On procède à la mise à jour du champ slug si celui ci n'est pas rempli ou non présent dans le formulaire mais présent dans la table
-		if(in_array('page_title', $shema) && !empty($datas['name']) && (!in_array('page_title', $datasShema) || empty($datas['page_title']))) { $datas['page_title'] = strip_tags($datas['name']); } //On procède à la mise à jour du champ page_title si celui ci n'est pas rempli ou non présent dans le formulaire mais présent dans la table
-		if(in_array('activate', $shema) && isset($datas['activate']) && !$datas['activate'] && in_array('online', $datasShema)) { $datas['online'] = 0; } //On procède à la mise à jour du champ online si le champ activate est présent et que celui-ci est à 0		
+		///////////////////////////////////////////
+		//    GESTION DES TEXTES AUTOMATIQUES    //
+		//Il faut prendre en compte une éventuelle traduction de ces champs				
+		$datas = $this->_manage_additional_fields('slug', $datas, $shema, $datasShema); //Champ SLUG
+		$datas = $this->_manage_additional_fields('page_title', $datas, $shema, $datasShema); //Champ PAGE_TITLE
 		
 		if(is_array($primaryKey)) {
 			
@@ -1795,6 +1800,57 @@ class Model extends Object {
 		}
 		
 		return $errors;
+	}
+	
+/**
+ * Cette fonction est en charge de contrôler la valeur d'un champ est valide
+ *
+ * @param 	varchar	$field 	Champ à traiter
+ * @param 	array	$datas 	Tableau de données
+ * @return 	array 	Tableau de données
+ * @access	protected
+ * @author	koéZionCMS
+ * @version 0.1 - 03/04/2015
+ */		
+	protected function _manage_additional_fields($field, $datas, $shema, $datasShema) {
+			
+		//CAS 1 : 
+		//La table n'est pas traduite et $field n'est pas rempli ou non présent dans le formulaire mais présent dans la table
+		if(!$this->fieldsToTranslate && in_array($field, $shema) && !empty($datas['name']) && (!in_array($field, $datasShema) || empty($datas[$field]))) { $datas[$field] = strtolower(Inflector::slug(strip_tags($datas['name']), '-')); }
+		
+		//CAS 2 : 
+		//La table est traduite et les champs name et $field sont présents dans les champs traduits
+		else if($this->fieldsToTranslate && in_array('name', $this->fieldsToTranslate) && in_array($field, $this->fieldsToTranslate)) {
+			
+			//On va parcourir les données de $field et vérifier si elles sont vides ou non
+			foreach($datas[$field] as $slugLanguage => $slugValue) {
+				
+				//On ne gère automatiquement la valeur que si la valeur courante de $field est vide
+				if(empty($slugValue)) { $datas[$field][$slugLanguage] = strtolower(Inflector::slug(strip_tags($datas['name'][$slugLanguage]), '-')); }
+			}
+		}
+		
+		//CAS 3 : 
+		//La table est traduite le champ $field est dans le shéma général de la table et seul le champ name est présent dans les champs traduits
+		else if($this->fieldsToTranslate && in_array('name', $this->fieldsToTranslate) && !in_array($field, $this->fieldsToTranslate) && in_array($field, $datasShema)) {
+			
+			//On récupère la valeur du champ name pour la langue par défaut
+			$datas[$field] = strtolower(Inflector::slug(strip_tags($datas['name'][DEFAULT_LANGUAGE]), '-'));
+		}
+		
+		//CAS 4 : 
+		//La table est traduite et seul $field est présent dans les champs traduits
+		else if($this->fieldsToTranslate && !in_array('name', $this->fieldsToTranslate) && in_array($field, $this->fieldsToTranslate)) {
+			
+			//On va parcourir les données de $field et vérifier si elles sont vides ou non
+			foreach($datas[$field] as $slugLanguage => $slugValue) {
+			
+				//On ne gère automatiquement la valeur que si la valeur courante de $field est vide
+				if(empty($slugValue)) { $datas[$field][$slugLanguage] = strtolower(Inflector::slug(strip_tags($datas['name']), '-')); }
+			}
+		}
+		
+		return $datas;
 	}
 	
 /**
