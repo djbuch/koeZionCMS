@@ -1803,7 +1803,7 @@ class Model extends Object {
 	}
 	
 /**
- * Cette fonction est en charge de contrôler la valeur d'un champ est valide
+ * Cette fonction permet de gérer la génération des champs 
  *
  * @param 	varchar	$field 	Champ à traiter
  * @param 	array	$datas 	Tableau de données
@@ -1816,7 +1816,10 @@ class Model extends Object {
 			
 		//CAS 1 : 
 		//La table n'est pas traduite et $field n'est pas rempli ou non présent dans le formulaire mais présent dans la table
-		if(!$this->fieldsToTranslate && in_array($field, $shema) && !empty($datas['name']) && (!in_array($field, $datasShema) || empty($datas[$field]))) { $datas[$field] = strtolower(Inflector::slug(strip_tags($datas['name']), '-')); }
+		if(!$this->fieldsToTranslate && in_array($field, $shema) && !empty($datas['name']) && (!in_array($field, $datasShema) || empty($datas[$field]))) { 
+			
+			$datas[$field] = $this->_format_additional_fields($field, $datas['name']);
+		}
 		
 		//CAS 2 : 
 		//La table est traduite et les champs name et $field sont présents dans les champs traduits
@@ -1826,7 +1829,7 @@ class Model extends Object {
 			foreach($datas[$field] as $slugLanguage => $slugValue) {
 				
 				//On ne gère automatiquement la valeur que si la valeur courante de $field est vide
-				if(empty($slugValue)) { $datas[$field][$slugLanguage] = strtolower(Inflector::slug(strip_tags($datas['name'][$slugLanguage]), '-')); }
+				if(empty($slugValue)) { $datas[$field][$slugLanguage] = $this->_format_additional_fields($field, $datas['name'][$slugLanguage]); }
 			}
 		}
 		
@@ -1835,7 +1838,7 @@ class Model extends Object {
 		else if($this->fieldsToTranslate && in_array('name', $this->fieldsToTranslate) && !in_array($field, $this->fieldsToTranslate) && in_array($field, $datasShema)) {
 			
 			//On récupère la valeur du champ name pour la langue par défaut
-			$datas[$field] = strtolower(Inflector::slug(strip_tags($datas['name'][DEFAULT_LANGUAGE]), '-'));
+			$datas[$field] = $this->_format_additional_fields($field, $datas['name'][DEFAULT_LANGUAGE]);
 		}
 		
 		//CAS 4 : 
@@ -1846,12 +1849,28 @@ class Model extends Object {
 			foreach($datas[$field] as $slugLanguage => $slugValue) {
 			
 				//On ne gère automatiquement la valeur que si la valeur courante de $field est vide
-				if(empty($slugValue)) { $datas[$field][$slugLanguage] = strtolower(Inflector::slug(strip_tags($datas['name']), '-')); }
+				if(empty($slugValue)) { $datas[$field][$slugLanguage] = $this->_format_additional_fields($field, $datas['name']); }
 			}
 		}
 		
 		return $datas;
 	}
+	
+/**
+ * Cette fonction est en charge de contrôler la valeur d'un champ est valide
+ *
+ * @param 	varchar	$field 	Champ à traiter
+ * @param 	varchar	$value 	Valeur à traiter
+ * @return 	varchar	Valeur formatée
+ * @access	protected
+ * @author	koéZionCMS
+ * @version 0.1 - 03/04/2015
+ */		
+	protected function _format_additional_fields($field, $value) {
+		
+		if($field == 'slug') { return strtolower(Inflector::slug(strip_tags($value), '-')); }
+		else { return strip_tags($value); }
+	}	
 	
 /**
  * 
