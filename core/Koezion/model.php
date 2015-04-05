@@ -1337,7 +1337,7 @@ class Model extends Object {
  */
 	public function make_search_index($datasToSave, $id, $action) {
 		
-		pr($datasToSave);
+		//pr($datasToSave);
 		
 		/**
 		 * La variable $searches_params peut être du format suivant : 
