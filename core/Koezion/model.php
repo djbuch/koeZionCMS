@@ -256,14 +256,23 @@ class Model extends Object {
 				}				
 			}
 			
-			//Pour ne pas perturber le fonctionnement standard du CMS on procède à la création d'un model tampon
-			//par lequel on va effectuer nos opération de mise à jour des données traduites
-			$i18nModel = new Model();			
-			$i18nModel->table = $this->table.'_i18n';
-			$i18nModel->shema = $this->_get_shema($i18nModel->table);
-			$i18nModel->primaryKey = $primaryKey;
-			$i18nModel->saveAll($datasTraduction);
-						
+			if($datasTraduction) {
+				
+				//Pour ne pas perturber le fonctionnement standard du CMS on procède à la création d'un model tampon
+				//par lequel on va effectuer nos opération de mise à jour des données traduites
+				$i18nModel = new Model();			
+				$i18nModel->table = $this->table.'_i18n';
+				$i18nModel->shema = $this->_get_shema($i18nModel->table);
+				$i18nModel->primaryKey = $primaryKey;
+				$i18nModel->saveAll($datasTraduction);
+							
+				/*if(isset($this->searches_params)) {
+					
+					//$this->make_search_index($datasToSave, $this->id, $saveAction);
+					pr($this->searches_params);
+				}*/
+				
+			}
 			/*$this->table = $this->table.'_i18n';
 			$this->shema = $this->shema();
 			$this->primaryKey = $primaryKey;*/
@@ -371,6 +380,7 @@ class Model extends Object {
  * @version 0.9 - 23/01/2015 by FI - Gestion i18n de l'instruction ORDER BY 
  * @version 1.0 - 23/03/2015 by FI - Rajout de l'index tables 
  * @version 1.1 - 23/03/2015 by FI - Rajout de l'index pr 
+ * @version 1.2 - 05/04/2015 by FI - Rajout de order by RAND
  */    
 	public function find($req = array(), $type = PDO::FETCH_ASSOC) {
 				
@@ -642,44 +652,48 @@ class Model extends Object {
 		//   CHAMPS ORDER   //
 			if(isset($req['order'])) { 
 				
-				//On va éclater la chaîne pour récupérer tous les champs order
-				$order = explode(',', $req['order']);
-				foreach($order as $orderK => $orderV) { //Parcours de tous les champs
+				if($req['order'] == 'RAND') { $sql .= "\n".'ORDER BY RAND() '; }
+				else {
 					
-					//Nettoyage de la valeur
-					//Suppression des espaces en début et fin de chaîne
-					//Supression des espaces consécutifs dans la chaîne
-					$orderV 	= trim($orderV);
-					$orderV 	= preg_replace('/\s{2,}/', ' ', $orderV);
-					$orderV 	= explode(' ', $orderV); //On éclate la donnée					
-					$tableAlias = $this->alias; //Récupération de l'alias de la table
-					
-					//On teste si la table n'est pa traduite et que le champ courant est dans la liste des champs traduits
-					if($translatedTable && $this->getTranslation && in_array($orderV[0], $this->fieldsToTranslate)) { $tableAlias = $this->alias.'I18n'; } 
-										
-					//On va tester si un alias de table est déjà en place, si ce n'est pas le cas on va le rajouter
-					//Dans le cas du order on a au préalable testé si la direction était renseignée via $orderV = explode(' ', $orderV);
-					//On à dond dans $orderV[0] le champ sur lequel effectuer le tri nous devons tester si ce champ possède un alias de renseigné
-					$orderV[0] = explode('.', $orderV[0]);
-					
-					//Si le champ ne possède pas d'alias on va le rajouter automatiquement pour éviter les ambiguités
-					if(count($orderV[0]) == 1) {
+					//On va éclater la chaîne pour récupérer tous les champs order
+					$order = explode(',', $req['order']);
+					foreach($order as $orderK => $orderV) { //Parcours de tous les champs
 						
-						$field 			= $orderV[0][0];
-						$direction 		= isset($orderV[1]) ? ' '.$orderV[1] : '';
-						$order[$orderK] = '`'.$tableAlias.'`.`'.$field.'`'.$direction; 
+						//Nettoyage de la valeur
+						//Suppression des espaces en début et fin de chaîne
+						//Supression des espaces consécutifs dans la chaîne
+						$orderV 	= trim($orderV);
+						$orderV 	= preg_replace('/\s{2,}/', ' ', $orderV);
+						$orderV 	= explode(' ', $orderV); //On éclate la donnée					
+						$tableAlias = $this->alias; //Récupération de l'alias de la table
+						
+						//On teste si la table n'est pa traduite et que le champ courant est dans la liste des champs traduits
+						if($translatedTable && $this->getTranslation && in_array($orderV[0], $this->fieldsToTranslate)) { $tableAlias = $this->alias.'I18n'; } 
+											
+						//On va tester si un alias de table est déjà en place, si ce n'est pas le cas on va le rajouter
+						//Dans le cas du order on a au préalable testé si la direction était renseignée via $orderV = explode(' ', $orderV);
+						//On à dond dans $orderV[0] le champ sur lequel effectuer le tri nous devons tester si ce champ possède un alias de renseigné
+						$orderV[0] = explode('.', $orderV[0]);
+						
+						//Si le champ ne possède pas d'alias on va le rajouter automatiquement pour éviter les ambiguités
+						if(count($orderV[0]) == 1) {
+							
+							$field 			= $orderV[0][0];
+							$direction 		= isset($orderV[1]) ? ' '.$orderV[1] : '';
+							$order[$orderK] = '`'.$tableAlias.'`.`'.$field.'`'.$direction; 
+						}
+						
+						//Si le champ possède un alias on va utiliser cet alias pour la mise en place des tris
+						else if(count($orderV) == 2) {
+	
+							$alias 			= $orderV[0][0];
+							$field 			= $orderV[0][1];
+							$direction 		= $orderV[1];
+							$order[$orderK] = '`'.$alias.'`.`'.$field.'` '.$direction; 
+						}
 					}
-					
-					//Si le champ possède un alias on va utiliser cet alias pour la mise en place des tris
-					else if(count($orderV) == 2) {
-
-						$alias 			= $orderV[0][0];
-						$field 			= $orderV[0][1];
-						$direction 		= $orderV[1];
-						$order[$orderK] = '`'.$alias.'`.`'.$field.'` '.$direction; 
-					}
-				}
-				$sql .= "\n".'ORDER BY '.implode(', ', $order).' '; 
+					$sql .= "\n".'ORDER BY '.implode(', ', $order).' ';
+				} 
 			}
 		
 		//////////////////////
@@ -993,7 +1007,7 @@ class Model extends Object {
 			
 			//if(isset($this->files_to_upload) && $proceedUpload) { $this->upload_files($datas, $this->id); } //Sauvegarde éventuelle des images
 			if(isset($this->files_to_upload)) { $this->upload_files($datas, $this->id); } //Sauvegarde éventuelle des images
-			if(isset($this->searches_params)) { $this->make_search_index($datasToSave, $this->id, $preparedInfos['action']); } //On génère le fichier d'index de recherche
+			if(isset($this->searches_params) && !$this->fieldsToTranslate) { $this->make_search_index($datasToSave, $this->id, $preparedInfos['action']); } //On génère le fichier d'index de recherche
 		
 			$this->after_save($datas, $preparedInfos['action']);
 		}
@@ -1322,6 +1336,8 @@ class Model extends Object {
  * @version 0.1 - 26/08/2012 by FI
  */
 	public function make_search_index($datasToSave, $id, $action) {
+		
+		pr($datasToSave);
 		
 		/**
 		 * La variable $searches_params peut être du format suivant : 
