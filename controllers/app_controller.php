@@ -502,8 +502,7 @@ class AppController extends Controller {
 		}
 		/////////////////////////////////////////////////////////////////////////////////////////
 		
-		/*
-		//Récupération de tous les types d'articles et envoi des données à la vue
+		/*//Récupération de tous les types d'articles et envoi des données à la vue
 		$this->loadModel('PostsType'); //Chargement du model
 		$postsTypes = $this->PostsType->find();
 		$this->set('postsTypes', $postsTypes);
@@ -517,8 +516,7 @@ class AppController extends Controller {
 		
 		//Récupération des dates de publication
 		$publicationDates = $this->Category->query("SELECT DISTINCT(STR_TO_DATE(CONCAT(YEAR(modified), '-', MONTH(modified)), '%Y-%m')) AS publication_date FROM posts", true);
-		$this->set('publicationDates', $publicationDates);
-		*/
+		$this->set('publicationDates', $publicationDates);*/
 		
 		$this->render('/elements/ajax/backoffice_ajax_ckeditor_get_internal_links');
 	}
