@@ -36,7 +36,8 @@ class Controller extends Object {
 	var $components = array(
 		'Email',
 		'Text',
-		'Website'
+		'Website',
+		'Date'
 	);
 	
 	var $view = false;
