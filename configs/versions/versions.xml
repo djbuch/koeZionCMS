@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 16/04/2015</name>
+		<num>20150416.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la gestion des hooks dans la classe View</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 08/04/2015</name>
 		<num>20150408.002</num>
 		<supervisor>KoéZionCMS</supervisor>

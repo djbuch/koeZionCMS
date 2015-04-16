@@ -461,14 +461,17 @@ class View extends Object {
  * @author	koéZionCMS
  * @version 0.1 - 01/11/2014 by FI
  * @version 0.2 - 08/01/2015 by FI - Rajout de HELPERS
+ * @version 0.3 - 16/04/2015 by FI - Rajout de la gestion d'un fichier par défaut indépendant des données renseignées dans hook_filename
  */	
 	protected function _load_hooks_files($type, $websiteHooks) {
 		
-		if(!empty($websiteHooks['hook_filename'])) { 
+		//Dans le cas ou aucun fichier de hook ne soit demande on va quand même tester si le fichier default existe
+		if(empty($websiteHooks['hook_filename'])) { $websiteHooks['hook_filename'] = 'default'; }
 		
+		if(!empty($websiteHooks['hook_filename'])) { 
+					
 			$hooks = explode(';', $websiteHooks['hook_filename']);
-			
-			
+				
 			if($type == 'ELEMENTS') { $hooksPath = CONFIGS_HOOKS.DS.'elements'.DS; }
 			else if($type == 'HELPERS') { $hooksPath = CONFIGS_HOOKS.DS.'helpers'.DS; }
 			else if($type == 'LAYOUTS') { $hooksPath = CONFIGS_HOOKS.DS.'layouts'.DS; }
@@ -485,5 +488,5 @@ class View extends Object {
 			else if(isset($layoutsHooks)) { return $layoutsHooks; }			
 			else if(isset($viewsHooks)) { return $viewsHooks; }
 		}
-	} 
+	}
 }
