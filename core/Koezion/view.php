@@ -467,6 +467,7 @@ class View extends Object {
 		
 		//Dans le cas ou aucun fichier de hook ne soit demande on va quand même tester si le fichier default existe
 		if(empty($websiteHooks['hook_filename'])) { $websiteHooks['hook_filename'] = 'default'; }
+		else { $websiteHooks['hook_filename'] .= ';default'; }
 		
 		if(!empty($websiteHooks['hook_filename'])) { 
 					
