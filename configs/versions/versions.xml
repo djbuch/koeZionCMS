@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 19/04/2015</name>
+		<num>20150419.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification du fichier Object pour uniformiser les fonctions</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 18/04/2015</name>
 		<num>20150418.001</num>
 		<supervisor>KoéZionCMS</supervisor>
