@@ -25,7 +25,7 @@
 		<?php 
 		echo $helpers['Form']->input('category_id', _('Catégorie parente'), array('type' => 'select', 'datas' => $categoriesList, 'tooltip' => "Indiquez la catégorie parente de cet article, c'est à partir de cette catégorie que cet article sera accessible", 'firstElementList' => "Sélectionnez une catégorie"));
 		echo $helpers['Form']->input('name', _("Titre de l'article"), array('compulsory' => true, 'tooltip' => "Indiquez le titre de l'article. Ce champ sera utilisé comme titre de page dans les moteurs de recherche, 70 caractères maximum recommandé"));
-		echo $helpers['Form']->input('dont_change_modified_date'), _('Ne pas changer la date de modification', array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour ne pas changer automatiquement la date de modification de l'article"));
+		echo $helpers['Form']->input('dont_change_modified_date', _('Ne pas changer la date de modification'), array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour ne pas changer automatiquement la date de modification de l'article"));
 		echo $helpers['Form']->input('online', _('En ligne'), array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour diffuser cet article"));
 		?>		
 		</div>

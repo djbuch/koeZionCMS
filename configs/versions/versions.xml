@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 19/04/2015</name>
+		<num>20150419.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Correction bug dans le formulaire backoffice posts, correction héritage fonction paginate template koezion</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 19/04/2015</name>
 		<num>20150419.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
