@@ -76,9 +76,9 @@ class PostsTypesController extends AppController {
 		if($parentDelete) {
 	
 			//Suppression de l'association entre les posts et les types de posts
-			$this->loadModel('PostsPostsType'); //Chargement du modèle
+			$this->load_model('PostsPostsType'); //Chargement du modèle
 			$this->PostsPostsType->deleteByName('posts_type_id', $id);
-			$this->unloadModel('PostsPostsType'); //Déchargement du modèle
+			$this->unload_model('PostsPostsType'); //Déchargement du modèle
 			
 			if($redirect) { $this->redirect('backoffice/posts_types/index'); } //On retourne sur la page de listing
 			else { return true; }

@@ -74,7 +74,7 @@ class UsersController extends AppController {
 						//1 --> ADMINISTRATEUR BACKOFFICE (SUPERADMIN)
 						//2 --> UTILISATEUR BACKOFFICE (ADMINISTRATEUR DE SITE, REDACTEURS, ETC...)
 						//3 --> UTILISATEUR FRONTOFFICE (UTILISATEUR INTRANET, CLIENT, PAGE PRIVEES)
-						$this->loadModel('UsersGroup');
+						$this->load_model('UsersGroup');
 						$usersGroup = $this->UsersGroup->findFirst(array('conditions' => array('id' => $user['users_group_id'])));
 						$bddRole = $usersGroup['role_id'];
 											
@@ -111,11 +111,11 @@ class UsersController extends AppController {
 						} else if($bddRole == 2) {
 							
 							//Récupération des sites auxquels l'utilisateurs peut se connecter Via son groupe
-							$this->loadModel('UsersGroupsWebsite'); //Chargement du modèle
+							$this->load_model('UsersGroupsWebsite'); //Chargement du modèle
 							$usersGroupsWebsites = $this->UsersGroupsWebsite->find(array('conditions' => array('users_group_id' => $user['users_group_id'])));
 														
 							//Récupération des sites auxquels l'utilisateurs peut se connecter Via l'utilisateur
-							$this->loadModel('UsersWebsite'); //Chargement du modèle
+							$this->load_model('UsersWebsite'); //Chargement du modèle
 							$usersWebsites = $this->UsersWebsite->find(array('conditions' => array('user_id' => $user['id'])));
 							
 							$websitesList = array();
@@ -155,11 +155,11 @@ class UsersController extends AppController {
 						} else if($bddRole == 3) {
 							
 							//Récupération des sites auxquels l'utilisateurs peut se connecter Via son groupe
-							$this->loadModel('UsersGroupsWebsite'); //Chargement du modèle
+							$this->load_model('UsersGroupsWebsite'); //Chargement du modèle
 							$usersGroupsWebsites = $this->UsersGroupsWebsite->find(array('conditions' => array('users_group_id' => $user['users_group_id'])));
 														
 							//Récupération des sites auxquels l'utilisateurs peut se connecter Via l'utilisateur
-							$this->loadModel('UsersWebsite'); //Chargement du modèle
+							$this->load_model('UsersWebsite'); //Chargement du modèle
 							$usersWebsites = $this->UsersWebsite->find(array('conditions' => array('user_id' => $user['id'])));
 							
 							$websitesList = array();
@@ -309,9 +309,9 @@ class UsersController extends AppController {
 		if($parentDelete) {
 	
 			//Suppression de l'association entre les posts et les types de posts
-			$this->loadModel('UsersWebsite'); //Chargement du modèle
+			$this->load_model('UsersWebsite'); //Chargement du modèle
 			$this->UsersWebsite->deleteByName('user_id', $id);
-			$this->unloadModel('UsersWebsite'); //Déchargement du modèle
+			$this->unload_model('UsersWebsite'); //Déchargement du modèle
 		}
 		
 		$this->redirect('backoffice/users/index');
@@ -329,7 +329,7 @@ class UsersController extends AppController {
 	
 		$datas['userName'] = $this->get_user_libelle($id);
 		
-		$this->loadModel('UsersLog');
+		$this->load_model('UsersLog');
 		$usersLogsConditions = array(
 			'conditions' => array(
 				'user_id' => $id,
@@ -346,7 +346,7 @@ class UsersController extends AppController {
 		}		
 		
 		$datas['usersLogs'] = $this->UsersLog->find($usersLogsConditions);		
-		$this->unloadModel('UsersLog');
+		$this->unload_model('UsersLog');
 		
 		$this->set($datas);
 	}
@@ -360,9 +360,9 @@ class UsersController extends AppController {
  */
 	function backoffice_get_user_role($usersGroupId) {
 	
-		$this->loadModel('UsersGroup');
+		$this->load_model('UsersGroup');
 		$usersGroup = $this->UsersGroup->findFirst(array('conditions' => array('id' => $usersGroupId))); //On récupère la liste des sites
-		$this->unloadModel('UsersGroup');
+		$this->unload_model('UsersGroup');
 		return $usersGroup['role_id'];
 	}
 	
@@ -379,9 +379,9 @@ class UsersController extends AppController {
  */
 	protected function _init_users_groups() {
 	
-		$this->loadModel('UsersGroup');
+		$this->load_model('UsersGroup');
 		$usersGroupList = $this->UsersGroup->findList(); //On récupère la liste des sites
-		$this->unloadModel('UsersGroup');
+		$this->unload_model('UsersGroup');
 		$this->set('usersGroupList', $usersGroupList); //On les envois à la vue
 	}
 	
@@ -395,7 +395,7 @@ class UsersController extends AppController {
  */
 	protected function _init_websites_datas($parametres = null) {
 	
-		$this->loadModel('Website'); //Chargement du modèle
+		$this->load_model('Website'); //Chargement du modèle
 		$websites = $this->Website->find($parametres); //Récupération des données
 		
 		$websitesListe = array(); //Liste des sites (ID => NAME)							
@@ -423,9 +423,9 @@ class UsersController extends AppController {
  */
 	protected function _init_websites() {
 	
-		$this->loadModel('Website');
+		$this->load_model('Website');
 		$websitesList = $this->Website->findList(); //On récupère la liste des sites
-		$this->unloadModel('Website');
+		$this->unload_model('Website');
 		$this->set('websitesList', $websitesList); //On les envois à la vue
 	}
 	
@@ -439,9 +439,9 @@ class UsersController extends AppController {
  */	
 	protected function _get_assoc_datas($userId) {
 
-		$this->loadModel('UsersWebsite'); //Chargement du modèle		
+		$this->load_model('UsersWebsite'); //Chargement du modèle		
 		$usersWebsite = $this->UsersWebsite->find(array('conditions' => array('user_id' => $userId))); //On récupère les données
-		$this->unloadModel('UserWebsite'); //Déchargement du modèle
+		$this->unload_model('UserWebsite'); //Déchargement du modèle
 		//On va les rajouter dans la variable $this->request->data
 		foreach($usersWebsite as $k => $v) { $this->request->data['website_id'][$v['website_id']] = 1; }
 	}
@@ -457,7 +457,7 @@ class UsersController extends AppController {
  */	
 	protected function _save_assoc_datas($userId, $deleteAssoc = false) {
 				
-		$this->loadModel('UsersWebsite'); //Chargement du modèle
+		$this->load_model('UsersWebsite'); //Chargement du modèle
 
 		if($deleteAssoc) { $this->UsersWebsite->deleteByName('user_id', $userId); }
 		
@@ -466,7 +466,7 @@ class UsersController extends AppController {
 		
 			if($v) { $this->UsersWebsite->save(array('user_id' => $userId, 'website_id' => $k)); }
 		}
-		$this->unloadModel('UsersWebsite'); //Déchargement du modèle
+		$this->unload_model('UsersWebsite'); //Déchargement du modèle
 	}	
 	
 /**
@@ -502,7 +502,7 @@ class UsersController extends AppController {
 		
 		if(isset($this->plugins['Localization'])) {
 			
-			$this->loadModel('Language');
+			$this->load_model('Language');
 			$languagesTMP = $this->Language->find(array('conditions' => array('online' => 1)));
 			$languages 	= array();
 			foreach($languagesTMP as $language) { $languages[$language['code']] = $language; }

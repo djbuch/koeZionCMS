@@ -57,7 +57,7 @@ class ModulesController extends AppController {
 		if($this->request->data && $this->request->data['modules_type_id']) {
 			
 			//Récupération de l'identifiant du plugin
-			$this->loadModel('ModulesType');
+			$this->load_model('ModulesType');
 			$module = $this->ModulesType->findFirst(array('conditions' => array('id' => $this->request->data['modules_type_id'])));
 			if($module) { $this->request->data['plugin_id'] = $module['plugin_id']; }			
 		}
@@ -80,7 +80,7 @@ class ModulesController extends AppController {
 		if($this->request->data && $this->request->data['modules_type_id']) {
 			
 			//Récupération de l'identifiant du plugin
-			$this->loadModel('ModulesType');
+			$this->load_model('ModulesType');
 			$module = $this->ModulesType->findFirst(array('conditions' => array('id' => $this->request->data['modules_type_id'])));
 			if($module) { $this->request->data['plugin_id'] = $module['plugin_id']; }			
 		}
@@ -97,9 +97,9 @@ class ModulesController extends AppController {
  */	
 	protected function _init_modules_types($return = false) {
 		
-		$this->loadModel('ModulesType'); //Chargement du modèle des types de modules
+		$this->load_model('ModulesType'); //Chargement du modèle des types de modules
 		$modulesTypes = $this->ModulesType->findList(array('conditions' => array('online' => 1))); //On récupère les types de modules		
-		$this->unloadModel('ModulesType'); //Déchargement du modèle des types de modules		
+		$this->unload_model('ModulesType'); //Déchargement du modèle des types de modules		
 		
 		if($return) { return $modulesTypes; }
 		else { $this->set('modulesTypes', $modulesTypes); } //On les envois à la vue

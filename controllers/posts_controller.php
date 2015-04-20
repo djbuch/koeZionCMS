@@ -58,7 +58,7 @@ class PostsController extends AppController {
         
         //////////////////////////////////////
 		//   RECUPERATION DU FIL D'ARIANE   //
-		$this->loadModel('Category'); //Chargement du modèle
+		$this->load_model('Category'); //Chargement du modèle
 		$datas['breadcrumbs'] = $this->Category->getPath($datas['post']['category_id']);
 		$datas['category'] = $this->Category->findFirst(array('conditions' => array('id' => $datas['post']['category_id']))); //Récupération des données de la catégorie parente
 		
@@ -74,14 +74,14 @@ class PostsController extends AppController {
 		//   RECUPERATION DES 20 DERNIERS COMMENTAIRES   //
 		//if($datas['post']['display_form'] == 1) {
 			
-			$this->loadModel('PostsComment'); //Chargement du modèle
+			$this->load_model('PostsComment'); //Chargement du modèle
 			$postsCommentsConditions = array('online' => 1, 'post_id' => $id); //Uniquement les éléments actifs
 			$datas['postsComments'] = $this->PostsComment->find(array(
 				'conditions' => $postsCommentsConditions,
 				'order' => 'id DESC',
 				'limit' => '0, 20'
 			));
-			$this->unloadModel('PostsComment'); //Déchargement du modèle
+			$this->unload_model('PostsComment'); //Déchargement du modèle
 		//}
 		////////////////////////////////////////////////////
 				
@@ -309,14 +309,14 @@ class PostsController extends AppController {
 		if($parentDelete) {
 			
 			//Suppression de l'association entre les posts et les types de posts
-			$this->loadModel('PostsPostsType'); //Chargement du modèle
+			$this->load_model('PostsPostsType'); //Chargement du modèle
 			$this->PostsPostsType->deleteByName('post_id', $id);
-			$this->unloadModel('PostsPostsType'); //Déchargement du modèle
+			$this->unload_model('PostsPostsType'); //Déchargement du modèle
 			
 			//Suppression des commentaires articles
-			$this->loadModel('PostsComment'); //Chargement du modèle
+			$this->load_model('PostsComment'); //Chargement du modèle
 			$this->PostsComment->deleteByName('post_id', $id);
-			$this->unloadModel('PostsComment'); //Déchargement du modèle
+			$this->unload_model('PostsComment'); //Déchargement du modèle
 			
 			if($redirect) { $this->redirect('backoffice/posts/index'); } //On retourne sur la page de listing
 			else { return true; }
@@ -340,9 +340,9 @@ class PostsController extends AppController {
 		$this->layout = 'ajax'; //Définition du layout à utiliser		
 				
 		//Récupération des informations du bouton
-		$this->loadModel('RightButton'); //Chargement du modèle
+		$this->load_model('RightButton'); //Chargement du modèle
 		$rightButton = $this->RightButton->findFirst(array('fields' => array('name'), 'conditions' => array('id' => $rightButtonId))); //On récupère les données
-		$this->unloadModel('RightButton'); //Déchargement du modèle
+		$this->unload_model('RightButton'); //Déchargement du modèle
 		
 		$this->set('rightButtonId', $rightButtonId);
 		$this->set('rightButtonName', $rightButton['name']);
@@ -370,14 +370,14 @@ class PostsController extends AppController {
 		
 		if(!$rightButtonsPost) {
 		
-			$this->loadModel('PostsRightButton');
+			$this->load_model('PostsRightButton');
 			$this->PostsRightButton->primaryKey = 'post_id'; //Pour éviter les erreurs à l'exécution
 			$rightButtonsConditions = array('post_id' => $datas['post']['id']);
 			$nbRightButtons = $this->PostsRightButton->findCount($rightButtonsConditions);
 			
 			if($nbRightButtons) {
 	
-				$this->loadModel('RightButton');
+				$this->load_model('RightButton');
 				
 				//récupération des données
 				$rightButtonsList = $this->PostsRightButton->find(array('conditions' => $rightButtonsConditions, 'order' => 'order_by ASC'));
@@ -408,7 +408,7 @@ class PostsController extends AppController {
 		if($datas['post']['display_posts_types']) {
 			
 			//Récupération des types d'articles
-			$this->loadModel('PostsType');
+			$this->load_model('PostsType');
 			$datas['postsTypes'] = $this->PostsType->get_for_front($datas['category']['id']);	
 		}
 		return $datas;
@@ -496,9 +496,9 @@ class PostsController extends AppController {
  */	
 	protected function _init_categories() {
 
-		$this->loadModel('Category'); //Chargement du modèle des catégories
+		$this->load_model('Category'); //Chargement du modèle des catégories
 		$categoriesList = $this->Category->getTreeList(false); //On récupère les catégories
-		$this->unloadModel('Category'); //Déchargement du modèle des catégories
+		$this->unload_model('Category'); //Déchargement du modèle des catégories
 		$this->set('categoriesList', $categoriesList); //On les envois à la vue
 	}
 	
@@ -512,9 +512,9 @@ class PostsController extends AppController {
  */	
 	protected function _init_posts_types() {
 		
-		$this->loadModel('PostsType'); //Chargement du modèle des types de posts
+		$this->load_model('PostsType'); //Chargement du modèle des types de posts
 		$postsTypesTMP = $this->PostsType->find(array('conditions' => array('online' => 1), 'fields' => array('id', 'name', 'column_title'))); //On récupère les types de posts		
-		$this->unloadModel('PostsType'); //Déchargement du modèle des types de posts
+		$this->unload_model('PostsType'); //Déchargement du modèle des types de posts
 
 		$postsTypes = array();
 		foreach($postsTypesTMP as $v) { $postsTypes[$v['column_title']][] = $v; }		
@@ -530,9 +530,9 @@ class PostsController extends AppController {
  */	
 	protected function _init_right_buttons() {		
 		
-		$this->loadModel('RightButton'); //Chargement du modèle des types de posts
+		$this->load_model('RightButton'); //Chargement du modèle des types de posts
 		$rightButton = $this->RightButton->findList(array('conditions' => array('online' => 1))); //On récupère les types de posts
-		$this->unloadModel('RightButton'); //Déchargement du modèle des types de posts
+		$this->unload_model('RightButton'); //Déchargement du modèle des types de posts
 		$this->set('rightButton', $rightButton); //On les envois à la vue
 	}
 	
@@ -547,16 +547,16 @@ class PostsController extends AppController {
  */	
 	protected function _get_assoc_datas($postId) {
 
-		$this->loadModel('PostsPostsType'); //Chargement du modèle		
+		$this->load_model('PostsPostsType'); //Chargement du modèle		
 		$postsPostsTypes = $this->PostsPostsType->find(array('conditions' => array('post_id' => $postId))); //On récupère les données
-		$this->unloadModel('PostsPostsType'); //Déchargement du modèle
+		$this->unload_model('PostsPostsType'); //Déchargement du modèle
 		
 		//On va les rajouter dans la variable $this->request->data
 		foreach($postsPostsTypes as $k => $v) { $this->request->data['posts_type_id'][$v['posts_type_id']] = 1; }
 
-		$this->loadModel('PostsRightButton'); //Chargement du modèle		
+		$this->load_model('PostsRightButton'); //Chargement du modèle		
 		$rightButtons = $this->PostsRightButton->find(array('conditions' => array('post_id' => $postId), 'order' => 'order_by ASC')); //On récupère les données
-		$this->unloadModel('PostsRightButton'); //Déchargement du modèle
+		$this->unload_model('PostsRightButton'); //Déchargement du modèle
 		
 		//On va les rajouter dans la variable $this->request->data
 		foreach($rightButtons as $k => $v) {			
@@ -577,7 +577,7 @@ class PostsController extends AppController {
  */	
 	protected function _save_assoc_datas_posts_posts_type($postId, $deleteAssoc = false) {
 		
-		$this->loadModel('PostsPostsType'); //Chargement du modèle
+		$this->load_model('PostsPostsType'); //Chargement du modèle
 
 		if($deleteAssoc) { $this->PostsPostsType->deleteByName('post_id', $postId); }
 		
@@ -593,7 +593,7 @@ class PostsController extends AppController {
 				));
 			}
 		}
-		$this->unloadModel('PostsPostsType'); //Déchargement du modèle
+		$this->unload_model('PostsPostsType'); //Déchargement du modèle
 	}
 	
 /**
@@ -607,7 +607,7 @@ class PostsController extends AppController {
  */			
 	protected function _save_assoc_datas_posts_right_button($postId, $deleteAssoc = false) {	
 		
-		$this->loadModel('PostsRightButton'); //Chargement du modèle
+		$this->load_model('PostsRightButton'); //Chargement du modèle
 
 		if($deleteAssoc) { $this->PostsRightButton->deleteByName('post_id', $postId); }
 		
@@ -629,7 +629,7 @@ class PostsController extends AppController {
 				$order++;
 			}
 		}
-		$this->unloadModel('PostsRightButton'); //Déchargement du modèle
+		$this->unload_model('PostsRightButton'); //Déchargement du modèle
 		
 		
 	}
@@ -652,7 +652,7 @@ class PostsController extends AppController {
 			$session = Session::read('Backoffice');
 			
 			//Récupération des groupes d'utilisateurs du site courant
-			$this->loadModel('UsersGroupsWebsite'); //Chargement du modèle
+			$this->load_model('UsersGroupsWebsite'); //Chargement du modèle
 			$usersGroupsWebsites = $this->UsersGroupsWebsite->find(array('conditions' => array('website_id' => $session['Websites']['current']))); //Recherche de tous les groupe
 			
 			//On formate les données
@@ -660,7 +660,7 @@ class PostsController extends AppController {
 			foreach($usersGroupsWebsites as $k => $v) { $usersGroupsWebsitesList[] = $v['users_group_id']; }
 			
 			//On va maintenant récupérer tous les utilisateurs de rôle user ayant ce groupe dans leurs données
-			$this->loadModel('User'); //Chargement du modèle
+			$this->load_model('User'); //Chargement du modèle
 			$users = $this->User->find(array('conditions' => 'users_group_id IN ('.implode(',', $usersGroupsWebsitesList).')')); //Recherche de tous les groupe
 			
 			//Envoi des emails

@@ -44,7 +44,7 @@ class WebsiteComponent extends Component {
 	
 		if(!$website) {
 			
-			$this->loadModel('Website'); //Chargement du modèle
+			$this->load_model('Website'); //Chargement du modèle
 	
 			//HACK SPECIAL LOCAL POUR CHANGER DE SITE pour permettre la passage de l'identifiant du site en paramètre
 			if(isset($_GET['hack_ws_id'])) { Session::write('Frontoffice.hack_ws_id', $_GET['hack_ws_id']); }

@@ -20,7 +20,7 @@ class Object {
  */	
 	public function loadModel($name, $return = false, $databaseConfigs = null) {
 		
-		$this->load_model($name, $return, $databaseConfigs);
+		return $this->load_model($name, $return, $databaseConfigs);
 	}
 
 /**
@@ -38,7 +38,7 @@ class Object {
  * 			'port' => "",
  * 			'source' => "mysql"
  * 		);
- * 		$externalSlider = $this->loadModel('Slider', true, $databaseConfigs);
+ * 		$externalSlider = $this->load_model('Slider', true, $databaseConfigs);
  * 		pr($externalSlider->find());
  *
  * @param varchar 	$name 				Nom du model à charger

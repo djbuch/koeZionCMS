@@ -92,9 +92,9 @@ class PostsCommentsController extends AppController {
  */
 	function _init_posts() {
 	
-		$this->loadModel('Post'); //Chargement du modèle des posts
+		$this->load_model('Post'); //Chargement du modèle des posts
 		$posts = $this->Post->findList(array('conditions' => array('online' => 1))); //On récupère les posts
-		$this->unloadModel('Post'); //Déchargement du modèle des posts
+		$this->unload_model('Post'); //Déchargement du modèle des posts
 		$this->set('posts', $posts); //On les envois à la vue
 	}	
 }

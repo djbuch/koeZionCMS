@@ -325,7 +325,7 @@ class Model extends Object {
  * 		
  *    Voici un exemple de code php :
  * 		
- *		$this->loadModel("Product");		
+ *		$this->load_model("Product");		
  *		$product = $this->Product->findFirst(array(
  *			"conditions" => array(
  * 				'OR' => array('id' => $id, 'product_id' => $id),
@@ -340,7 +340,7 @@ class Model extends Object {
  *
  *	  Cet exemple ne concerne qu'une seule table, mais il est possible de cumuler les joins.
  * 		
- *		$this->loadModel("Product");		
+ *		$this->load_model("Product");		
  *		$product = $this->Product->findFirst(array(
  *			"conditions" => array("id" => $productId),
  *			"fields" => am(
@@ -467,12 +467,12 @@ class Model extends Object {
 						
 						foreach ($req['leftJoin'] as $v) {
 							
-							$joinModel = $this->loadModel($v['model'], true);
+							$joinModel = $this->load_model($v['model'], true);
 							$sql .= "\n".'LEFT JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$v['pivot'].' '; //On ajoute à la requête
 						}					
 					} else { //Sinon, on n'a qu'un seul join
 						
-						$joinModel = $this->loadModel($req['leftJoin']['model'], true);
+						$joinModel = $this->load_model($req['leftJoin']['model'], true);
 						$sql .= "\n".'LEFT JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$req['leftJoin']['pivot'].' '; //On ajoute à la requête					
 					}
 				}
@@ -489,12 +489,12 @@ class Model extends Object {
 						
 						foreach ($req['rightJoin'] as $v) {
 							
-							$joinModel = $this->loadModel($v['model'], true);
+							$joinModel = $this->load_model($v['model'], true);
 							$sql .= "\n".'RIGHT JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$v['pivot'].' '; //On ajoute à la requête
 						}					
 					} else { //Sinon, on n'a qu'un seul join
 						
-						$joinModel = $this->loadModel($req['rightJoin']['model'], true);
+						$joinModel = $this->load_model($req['rightJoin']['model'], true);
 						$sql .= "\n".'RIGHT JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$req['rightJoin']['pivot'].' '; //On ajoute à la requête					
 					}
 				}
@@ -511,13 +511,13 @@ class Model extends Object {
 						
 						foreach ($req['innerJoin'] as $k => $v) {
 	
-							$joinModel = $this->loadModel($v['model'], true);
+							$joinModel = $this->load_model($v['model'], true);
 							$sql .= "\n".'INNER JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$v['pivot'].' ';//On ajoute à la requête
 						}
 						
 					} else { //Sinon, on n'a qu'un seul "join"
 						
-						$joinModel = $this->loadModel($req['innerJoin']['model'], true);
+						$joinModel = $this->load_model($req['innerJoin']['model'], true);
 						$sql .= "\n".'INNER JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$req['innerJoin']['pivot'].' ';//On ajoute à la requête
 					}
 				}
@@ -714,7 +714,7 @@ class Model extends Object {
 		//On récupère toutes les traductions
 		if($translatedTable && $this->getTranslatedDatas) {
 			
-			$localizationModel 			= $this->loadModel('Localization', true);
+			$localizationModel 			= $this->load_model('Localization', true);
 			$localizationModel->table 	= $this->table.'_i18n';
 			
 			//Parcours de tous les résultats
@@ -859,7 +859,7 @@ class Model extends Object {
 			
 			foreach($this->checkOnDelete as $model => $pivot) {
 				
-				$modelObject = $this->loadModel($model, true);
+				$modelObject = $this->load_model($model, true);
 				$sql .= "\n"."DELETE FROM `".$modelObject->table."` WHERE `".$pivot."` = ".$id.";";
 			}			
 		}
@@ -898,7 +898,7 @@ class Model extends Object {
 			
 			foreach($this->deleteConnectedDatasEscapeModels as $model) {
 				
-				$modelObject = $this->loadModel($model, true);
+				$modelObject = $this->load_model($model, true);
 				$escapeTables[] = $modelObject->table;
 			}
 		}

@@ -68,9 +68,9 @@ class Controller extends Object {
 				
 		//    CHARGEMENT DU MODEL COURANT AINSI QUE DES EVENTUELS MODELS SUPPLEMENTAIRES    //
 		$modelName = Inflector::singularize($controllerName); //Création du nom du model		
-		if($this->auto_load_model) { $this->loadModel($modelName); } //Si la variable de chargement automatique du model est à vrai chargement du model
+		if($this->auto_load_model) { $this->load_model($modelName); } //Si la variable de chargement automatique du model est à vrai chargement du model
 		if($this->moreModels) { 
-			foreach($this->moreModels as $modelToLoad) { $this->loadModel($modelToLoad); }
+			foreach($this->moreModels as $modelToLoad) { $this->load_model($modelToLoad); }
 		}	
 		
 		$this->params['modelName'] = $modelName; //Affectation du nom du model		
@@ -102,7 +102,7 @@ class Controller extends Object {
     
 		if(!$pluginsList) {	
 		
-			$this->loadModel('Plugin');
+			$this->load_model('Plugin');
 			$activatePlugins = $this->Plugin->find(array('conditions' => array('online' => 1, 'installed' => 1)));
 			foreach($activatePlugins as $k => $v) {
 				

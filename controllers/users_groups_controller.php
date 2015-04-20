@@ -84,9 +84,9 @@ class UsersGroupsController extends AppController {
 		if($parentDelete) {
 	
 			//Suppression de l'association entre les posts et les types de posts
-			$this->loadModel('UsersGroupsWebsite'); //Chargement du modèle
+			$this->load_model('UsersGroupsWebsite'); //Chargement du modèle
 			$this->UsersGroupsWebsite->deleteByName('users_group_id', $id);
-			$this->unloadModel('UsersGroupsWebsite'); //Déchargement du modèle
+			$this->unload_model('UsersGroupsWebsite'); //Déchargement du modèle
 		}
 		
 		$this->redirect('backoffice/users_groups/index');
@@ -105,9 +105,9 @@ class UsersGroupsController extends AppController {
  */
 	protected function _init_websites() {
 	
-		$this->loadModel('Website');
+		$this->load_model('Website');
 		$websitesList = $this->Website->findList(); //On récupère la liste des sites
-		$this->unloadModel('Website');
+		$this->unload_model('Website');
 		$this->set('websitesList', $websitesList); //On les envois à la vue
 	}
 	
@@ -121,9 +121,9 @@ class UsersGroupsController extends AppController {
  */	
 	protected function _get_assoc_datas($usersGroupId) {
 
-		$this->loadModel('UsersGroupsWebsite'); //Chargement du modèle		
+		$this->load_model('UsersGroupsWebsite'); //Chargement du modèle		
 		$usersGroupsWebsite = $this->UsersGroupsWebsite->find(array('conditions' => array('users_group_id' => $usersGroupId))); //On récupère les données
-		$this->unloadModel('UsersGroupsWebsite'); //Déchargement du modèle
+		$this->unload_model('UsersGroupsWebsite'); //Déchargement du modèle
 		//On va les rajouter dans la variable $this->request->data
 		foreach($usersGroupsWebsite as $k => $v) { $this->request->data['website_id'][$v['website_id']] = 1; }
 	}
@@ -139,7 +139,7 @@ class UsersGroupsController extends AppController {
  */	
 	protected function _save_assoc_datas($usersGroupId, $deleteAssoc = false) {
 				
-		$this->loadModel('UsersGroupsWebsite'); //Chargement du modèle
+		$this->load_model('UsersGroupsWebsite'); //Chargement du modèle
 
 		if($deleteAssoc) { $this->UsersGroupsWebsite->deleteByName('users_group_id', $usersGroupId); }
 		
@@ -148,6 +148,6 @@ class UsersGroupsController extends AppController {
 		
 			if($v) { $this->UsersGroupsWebsite->save(array('users_group_id' => $usersGroupId, 'website_id' => $k)); }
 		}
-		$this->unloadModel('UsersGroupsWebsite'); //Déchargement du modèle
+		$this->unload_model('UsersGroupsWebsite'); //Déchargement du modèle
 	}	
 }

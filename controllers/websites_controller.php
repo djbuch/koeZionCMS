@@ -154,7 +154,7 @@ class WebsitesController extends AppController {
 			$conditions = array("1 AND (online=1 AND layout='".$filter[0]."' AND version='".$filter[1]."') OR id=".$currentTemplateId);
 		} else { $conditions = array('online' => 1); }
 		
-		$this->loadModel('Template'); //Chargement du template
+		$this->load_model('Template'); //Chargement du template
 		$templatesList = $this->Template->find(array('conditions' => $conditions, 'order' => 'name')); //Récupération des données
 		$this->set('templatesList', $templatesList);
 	}	
@@ -175,7 +175,7 @@ class WebsitesController extends AppController {
  */	
 	protected function _init_datas() {
 		
-		$this->loadModel('Template');
+		$this->load_model('Template');
 		$templatesListTMP = $this->Template->find(array('conditions' => array('online' => 1), 'order' => 'name'));
 		$templatesList = array();
 		$templatesFilter = array();		
@@ -216,7 +216,7 @@ class WebsitesController extends AppController {
 		
 		////////////////////////////////////////////////////////
 		//   INITIALISATION DE LA CATEGORIE PARENTE DU SITE   //
-		$this->loadModel('Category');
+		$this->load_model('Category');
 		$categorie = array(
 			'parent_id' => 0,
 			'type' => 3,
@@ -263,7 +263,7 @@ class WebsitesController extends AppController {
 		} else if($userRole == 2) {
 			
 			//Récupération des sites auxquels l'utilisateurs peut se connecter
-			$this->loadModel('UsersGroupsWebsite'); //Chargement du modèle
+			$this->load_model('UsersGroupsWebsite'); //Chargement du modèle
 			$usersGroupsWebsites = $this->UsersGroupsWebsite->find(array('conditions' => array('users_group_id' => $userGroupId)));
 			
 			$usersGroupsWebsitesList = array();

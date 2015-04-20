@@ -35,7 +35,7 @@ class WaitController extends Controller {
     	//Si on est dans le backoffice
 		if($prefix != 'backoffice') {
 									
-			$this->loadModel('Website'); //Chargement du modèle
+			$this->load_model('Website'); //Chargement du modèle
 			$datas['websiteParams'] = $this->Website->findFirst(array('conditions' => "url LIKE '%".$_SERVER['HTTP_HOST']."'"));			
 			$this->set($datas);
 		}

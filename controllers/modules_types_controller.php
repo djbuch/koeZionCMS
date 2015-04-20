@@ -73,9 +73,9 @@ class ModulesTypesController extends AppController {
  */	
 	protected function _init_plugins($return = false) {
 		
-		$this->loadModel('Plugin'); //Chargement du modèle des types de modules
+		$this->load_model('Plugin'); //Chargement du modèle des types de modules
 		$plugins = $this->Plugin->findList(array('conditions' => array('online' => 1))); //On récupère les types de modules		
-		$this->unloadModel('Plugin'); //Déchargement du modèle des types de modules		
+		$this->unload_model('Plugin'); //Déchargement du modèle des types de modules		
 		
 		if($return) { return $plugins; }
 		else { $this->set('plugins', $plugins); } //On les envois à la vue

@@ -71,12 +71,12 @@ class AppController extends Controller {
 			$this->set('leftMenus', $leftMenus);
 			
 			//Récupération des formulaires de contacts non validés
-			$this->loadModel('Contact');
+			$this->load_model('Contact');
 			$nbFormsContacts = $this->Contact->findCount(array('online' => 0));
 			$this->set('nbFormsContacts', $nbFormsContacts);
 			
 			//Récupération des commentaires articles
-			$this->loadModel('PostsComment');
+			$this->load_model('PostsComment');
 			$nbPostsComments = $this->PostsComment->findCount(array('online' => 0));
 			$this->set('nbPostsComments', $nbPostsComments);
 						
@@ -100,7 +100,7 @@ class AppController extends Controller {
 			*/
 			
 			//Récupération des plugins
-			/*$this->loadModel('Plugin');
+			/*$this->load_model('Plugin');
 			$activatePlugins = $this->Plugin->find(array('conditions' => array('online' => 1)));
 			pr($activatePlugins);
 			$this->set('activatePlugins', $activatePlugins);*/
@@ -484,12 +484,12 @@ class AppController extends Controller {
 		$this->layout = 'ajax'; //Définition du layout à utiliser
 		
 		///Récupération de toutes les catégories et envoi des données à la vue
-		$this->loadModel('Category'); //Chargement du model
+		$this->load_model('Category'); //Chargement du model
 		$categories = $this->Category->getTree(array('conditions' => 'type != 3'));
 		$this->set('categories', $categories);
 		
 		//Récupération de tous les articles et envoi des données à la vue
-		$this->loadModel('Post'); //Chargement du model
+		$this->load_model('Post'); //Chargement du model
 		$posts = $this->Post->find();
 		$this->set('posts', $posts);
 		
@@ -503,16 +503,16 @@ class AppController extends Controller {
 		/////////////////////////////////////////////////////////////////////////////////////////
 		
 		/*//Récupération de tous les types d'articles et envoi des données à la vue
-		$this->loadModel('PostsType'); //Chargement du model
+		$this->load_model('PostsType'); //Chargement du model
 		$postsTypes = $this->PostsType->find();
 		$this->set('postsTypes', $postsTypes);
-		$this->unloadModel('PostsType'); //Déchargement du model
+		$this->unload_model('PostsType'); //Déchargement du model
 		
 		//Récupération de tous les utilisateurs (Rédacteurs)
-		$this->loadModel('User'); //Chargement du model
+		$this->load_model('User'); //Chargement du model
 		$writers = $this->User->findList();
 		$this->set('writers', $writers);
-		$this->unloadModel('User'); //Déchargement du model
+		$this->unload_model('User'); //Déchargement du model
 		
 		//Récupération des dates de publication
 		$publicationDates = $this->Category->query("SELECT DISTINCT(STR_TO_DATE(CONCAT(YEAR(modified), '-', MONTH(modified)), '%Y-%m')) AS publication_date FROM posts", true);
@@ -597,7 +597,7 @@ class AppController extends Controller {
 		$this->layout = 'ajax'; //Définition du layout à utiliser		
 				
 		//Récupération des informations du bouton
-		$this->loadModel('RightButton'); //Chargement du modèle
+		$this->load_model('RightButton'); //Chargement du modèle
 		$rightButton = $this->RightButton->findFirst(array('fields' => array('name'), 'conditions' => array('id' => $rightButtonId))); //On récupère les données
 				
 		$this->set('rightButtonId', $rightButtonId);
@@ -623,7 +623,7 @@ class AppController extends Controller {
  */	
 	protected function _get_datas_category($id) {
 		
-		$this->loadModel('Category');
+		$this->load_model('Category');
 		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS;
 		$cacheFile 		= "category_".$id;
 		
@@ -654,7 +654,7 @@ class AppController extends Controller {
 	protected function _get_posts_category($datas, $setLimit = true) {
 				
 		//On va compter le nombre d'articles de cette catégorie
-		$this->loadModel('Post');
+		$this->load_model('Post');
 		$postsConditions = array('online' => 1, 'category_id' => $datas['category']['id']);
 		$nbPosts = $this->Post->findCount($postsConditions);
 		
@@ -677,7 +677,7 @@ class AppController extends Controller {
 			$datas['displayPosts'] = true;
 		
 			//Récupération des types d'articles
-			$this->loadModel('PostsType');
+			$this->load_model('PostsType');
 			$datas['postsTypes'] = $this->PostsType->get_for_front($datas['category']['id']);
 		
 			//Construction des paramètres de la requête
@@ -741,7 +741,7 @@ class AppController extends Controller {
     		//   MISE EN PLACE DE LA REQUETE STRICTE   //
     		if($searchType == 'stricte') {
     	
-    			$this->loadModel('PostsPostsType');
+    			$this->load_model('PostsPostsType');
     			$typePost = explode(',', $this->request->data['typepost']); //Récupération des types de post passés en GET
     	
     			$tableAliasBase = 'Kz'.Inflector::camelize('posts_posts_types'); //Définition de la base des alias
@@ -805,10 +805,10 @@ class AppController extends Controller {
     		$return['moreConditions'] = 'modified_by = '.$this->request->data['writer'];
     	
     		//On va récupérer le libellé de l'utilisateur pour le stocker dans le libellé de la page
-    		$this->loadModel('User');
+    		$this->load_model('User');
     		$user = $this->User->findFirst(array('conditions' => array('id' => $this->request->data['writer'])));
     		$return['libellePage'] = "Articles rédigés par ".$user['name'];
-    		$this->unloadModel('User');
+    		$this->unload_model('User');
     	
     		//Si l'internaute à cliqué sur une date
     	} else if(isset($this->request->data['date']) && !empty($this->request->data['date'])) {
@@ -842,7 +842,7 @@ class AppController extends Controller {
 		
 		if(!$sliders) {
 		
-			$this->loadModel('Slider');
+			$this->load_model('Slider');
 			$sliders = $this->Slider->find(array(
 				'conditions' => array('online' => 1), 
 				'order' => 'order_by ASC, name ASC'
@@ -871,7 +871,7 @@ class AppController extends Controller {
 		
 		if(!$focus) {
 			
-			$this->loadModel('Focus');
+			$this->load_model('Focus');
 			$focus = $this->Focus->find(array(
 				'conditions' => array('online' => 1), 
 				'order' => 'order_by ASC, name ASC'
@@ -901,7 +901,7 @@ class AppController extends Controller {
 		
 		if(isset($params['homePage']) && $params['homePage']) { $rightButtonsConditions['conditions']['display_home_page'] = 1; }
 		
-		$this->loadModel('RightButton');
+		$this->load_model('RightButton');
 		$rightButtons = $this->RightButton->find($rightButtonsConditions);
 		
 		return $rightButtons;
@@ -940,7 +940,7 @@ class AppController extends Controller {
 			else if($postsConfigs['order'] == 'created') { $postsQuery['order'] = 'created DESC'; }
 			else if($postsConfigs['order'] == 'order_by') { $postsQuery['order'] = 'order_by ASC'; }			
 			
-			$this->loadModel('Post');		
+			$this->load_model('Post');		
 			$posts = $this->Post->find($postsQuery);
 		
 			Cache::create_cache_file($cacheFolder, $cacheFile, $posts);
@@ -966,7 +966,7 @@ class AppController extends Controller {
 		
 		if(!$postsTypes) {			
 			
-			$this->loadModel('PostsType');
+			$this->load_model('PostsType');
 			$postsTypes = $this->PostsType->get_for_front();
 		
 			Cache::create_cache_file($cacheFolder, $cacheFile, $postsTypes);
@@ -1027,7 +1027,7 @@ class AppController extends Controller {
 	   			$type = 1;
 	   			if($this->params['controllerName'] == "Errors") { $type = 2; }
 	   			
-	   			$this->loadModel('UsersLog');
+	   			$this->load_model('UsersLog');
 	   			$logDatas = array(
 	   				'url' => $_SERVER['REQUEST_URI'],
 	   				'date' => date('Y-m-d H:i:s'),
@@ -1036,7 +1036,7 @@ class AppController extends Controller {
 	   				'website_id' => CURRENT_WEBSITE_ID
 	   			);
 	   			$this->UsersLog->save($logDatas);   			
-	   			$this->unloadModel('UsersLog');   			
+	   			$this->unload_model('UsersLog');   			
 	   		}
    		}
     }  
@@ -1060,7 +1060,7 @@ class AppController extends Controller {
     	if(!$menuGeneral) {
     	
     		//Récupération du menu général
-    		$this->loadModel('Category');
+    		$this->load_model('Category');
     		$req = array('conditions' => array('online' => 1, 'type' => 1));
     		$menuGeneral = $this->Category->getTreeRecursive($req);
     		
@@ -1082,7 +1082,7 @@ class AppController extends Controller {
 		    	
     	if(isset($this->request->data['type_formulaire']) && $this->request->data['type_formulaire'] == 'contact') { //Si le formulaire de contact est posté  		
     		
-			$this->loadModel('Contact');
+			$this->load_model('Contact');
 			if($this->Contact->validates($this->request->data)) { //Si elles sont valides
 		
 				//Récupération du contenu à envoyer dans le mail
@@ -1122,13 +1122,13 @@ class AppController extends Controller {
 				//Si le plugin mailing est installé on va alors procéder à l'ajout 
 				if(isset($this->plugins['Mailings'])) {
 				
-					$this->loadModel('MailingsEmail');
+					$this->load_model('MailingsEmail');
 					$this->MailingsEmail->save(array(
 						'name' => $this->request->data['name'],
 						'email' => $this->request->data['email'],
 						'etiquette' => $this->request->data['cpostal']	
 					));				
-					$this->unloadModel('MailingsEmail');
+					$this->unload_model('MailingsEmail');
 				}
 				
 				$this->request->data = false;
@@ -1147,7 +1147,7 @@ class AppController extends Controller {
 				$this->set('messageKo', $messageKo);
 			}
 			
-			//$this->unloadModel('Contact');
+			//$this->unload_model('Contact');
 		}
     }      
     
@@ -1166,7 +1166,7 @@ class AppController extends Controller {
     	if(isset($this->request->data['type_formulaire']) && $this->request->data['type_formulaire'] == 'comment') {
     		
     		//pr('dans _send_mail_comments de app');
-    		$this->loadModel('PostsComment'); //Chargement du modèle
+    		$this->load_model('PostsComment'); //Chargement du modèle
     		if($this->PostsComment->validates($this->request->data)) { //Si elles sont valides
     	
     			//Récupération du contenu à envoyer dans le mail
@@ -1207,13 +1207,13 @@ class AppController extends Controller {
 				//Si le plugin mailing est installé on va alors procéder à l'ajout 
 				if(isset($this->plugins['Mailings'])) {
 				
-					$this->loadModel('MailingsEmail');
+					$this->load_model('MailingsEmail');
 					$this->MailingsEmail->save(array(
 						'name' => $this->request->data['name'],
 						'email' => $this->request->data['email'],
 						'etiquette' => $this->request->data['cpostal']	
 					));				
-					$this->unloadModel('MailingsEmail');
+					$this->unload_model('MailingsEmail');
 				}				
 				
 				$this->request->data = false;
@@ -1231,7 +1231,7 @@ class AppController extends Controller {
     			$this->set('messageKo', $messageKo);
     		}
     		
-    		//$this->unloadModel('PostsComment'); //Déchargement du modèle
+    		//$this->unload_model('PostsComment'); //Déchargement du modèle
     	}
     	//////////////////////////////////////////
     }
@@ -1302,13 +1302,13 @@ class AppController extends Controller {
     protected function _get_backoffice_menu() {  
 						
 		//Récupération des modules
-		$this->loadModel('ModulesType'); //Chargement du modèle des types de modules
+		$this->load_model('ModulesType'); //Chargement du modèle des types de modules
 		$modulesTypes = $this->ModulesType->findList(array('conditions' => array('online' => 1), 'order' => 'order_by ASC')); //On récupère les types de modules
 		
 		$leftMenus = array();
 		foreach($modulesTypes as $k => $v) { $leftMenus[$k] = array('libelle' => $v, 'menus' => array()); }						
 		
-		$this->loadModel('Module');
+		$this->load_model('Module');
 		$leftMenuTMP = $this->Module->find(array('conditions' => array('online' => 1, 'no_display_in_menu' => 0), 'order' => 'order_by ASC'));
 		foreach($leftMenuTMP as $k => $v) { 
 			

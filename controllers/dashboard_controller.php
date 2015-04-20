@@ -175,7 +175,7 @@ class DashboardController extends AppController {
 			} catch(SoapFault $soapFault) { $this->set('soapErrorMessage', $soapFault); }
 			
 			//Récupération de la dernière version connue de la base de données
-			$this->loadModel('Config');
+			$this->load_model('Config');
 			$lastKnowVersionBdd = $this->Config->findFirst(array('conditions' => array('code' => 'numVersion')));
 			if(!empty($lastKnowVersionBdd) && isset($lastKnowVersionBdd['value']) && !empty($lastKnowVersionBdd['value'])) {
 				
@@ -211,7 +211,7 @@ class DashboardController extends AppController {
 						
 			$sql = Session::read('Update.sql'); //Récupération des données
 			Session::delete('Update.sql'); //Suppression des données 
-			$this->loadModel('Config');
+			$this->load_model('Config');
 			$this->Config->query($sql);
 			
 			$redirectUrl = "backoffice/configs/delete_cache";

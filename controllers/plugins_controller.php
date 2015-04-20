@@ -342,7 +342,7 @@ class PluginsController extends AppController {
 					$xParsedXml = simplexml_load_file(PLUGINS.DS.$pluginDirectory.DS.'description.xml');
 					$xParsedXml = (array)$xParsedXml;
 			
-					$this->loadModel('Module'); //On charge le modèle permettant la gestion des modules
+					$this->load_model('Module'); //On charge le modèle permettant la gestion des modules
 					foreach($xParsedXml as $k => $v) {
 						
 						$conditions = array('conditions' => array('code' => $xParsedXml['code']));

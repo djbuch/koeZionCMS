@@ -119,7 +119,7 @@ class CategoriesController extends AppController {
 				$postPassword = $data['password'];
 				
 				//Récupération de l'utilisateur
-				$this->loadModel('User');
+				$this->load_model('User');
 				$user = $this->User->findFirst(array('conditions' => array('login' => $postLogin)));				
 								
 				//Si on récupère un utilisateur
@@ -139,7 +139,7 @@ class CategoriesController extends AppController {
 							if($bddRole == 'user') {
 					
 								//Récupération des sites auxquels l'utilisateurs peut se connecter
-								$this->loadModel('UsersGroupsWebsite'); //Chargement du modèle
+								$this->load_model('UsersGroupsWebsite'); //Chargement du modèle
 								$usersGroupsWebsites = $this->UsersGroupsWebsite->find(array('conditions' => array('users_group_id' => $user['users_group_id'])));
 					
 								//On check qu'il y ait au moins un site
@@ -444,9 +444,9 @@ class CategoriesController extends AppController {
 		$this->layout = 'ajax'; //Définition du layout à utiliser		
 				
 		//Récupération des informations du bouton
-		$this->loadModel('RightButton'); //Chargement du modèle
+		$this->load_model('RightButton'); //Chargement du modèle
 		$rightButton = $this->RightButton->findFirst(array('fields' => array('name'), 'conditions' => array('id' => $rightButtonId))); //On récupère les données
-		$this->unloadModel('RightButton'); //Déchargement du modèle
+		$this->unload_model('RightButton'); //Déchargement du modèle
 		
 		$this->set('rightButtonId', $rightButtonId);
 		$this->set('rightButtonName', $rightButton['name']);
@@ -498,7 +498,7 @@ class CategoriesController extends AppController {
  */	
 	protected function _save_assoc_datas($categoryId, $deleteAssoc = false) {
 		
-		$this->loadModel('CategoriesRightButton'); //Chargement du modèle
+		$this->load_model('CategoriesRightButton'); //Chargement du modèle
 
 		if($deleteAssoc) { $this->CategoriesRightButton->deleteByName('category_id', $categoryId); }
 		
@@ -520,7 +520,7 @@ class CategoriesController extends AppController {
 				$order++;
 			}
 		}
-		$this->unloadModel('CategoriesRightButton'); //Déchargement du modèle
+		$this->unload_model('CategoriesRightButton'); //Déchargement du modèle
 	}    
 	
 /**
@@ -533,9 +533,9 @@ class CategoriesController extends AppController {
  */	
 	protected function _get_assoc_datas($categoryId) {
 
-		$this->loadModel('CategoriesRightButton'); //Chargement du modèle		
+		$this->load_model('CategoriesRightButton'); //Chargement du modèle		
 		$rightButtons = $this->CategoriesRightButton->find(array('conditions' => array('category_id' => $categoryId), 'order' => 'order_by ASC')); //On récupère les données
-		$this->unloadModel('CategoriesRightButton'); //Déchargement du modèle
+		$this->unload_model('CategoriesRightButton'); //Déchargement du modèle
 		
 		//On va les rajouter dans la variable $this->request->data
 		foreach($rightButtons as $k => $v) { 
@@ -561,7 +561,7 @@ class CategoriesController extends AppController {
 			$session = Session::read('Backoffice');
 			
 			//Récupération des groupes d'utilisateurs du site courant
-			$this->loadModel('UsersGroupsWebsite'); //Chargement du modèle
+			$this->load_model('UsersGroupsWebsite'); //Chargement du modèle
 			$usersGroupsWebsites = $this->UsersGroupsWebsite->find(array('conditions' => array('website_id' => $session['Websites']['current']))); //Recherche de tous les groupe
 			
 			//On formate les données
@@ -569,7 +569,7 @@ class CategoriesController extends AppController {
 			foreach($usersGroupsWebsites as $k => $v) { $usersGroupsWebsitesList[] = $v['users_group_id']; }
 			
 			//On va maintenant récupérer tous les utilisateurs de rôle user ayant ce groupe dans leurs données
-			$this->loadModel('User'); //Chargement du modèle
+			$this->load_model('User'); //Chargement du modèle
 			$users = $this->User->find(array('conditions' => 'users_group_id IN ('.implode(',', $usersGroupsWebsitesList).')')); //Recherche de tous les groupe
 			
 			//Envoi des emails
@@ -616,16 +616,16 @@ class CategoriesController extends AppController {
 		$categoriesList = $this->Category->getTreeList(); //On récupère les catégories
 		$this->set('categoriesList', $categoriesList); //On les envois à la vue
 		
-		/*$this->loadModel('Template');
+		/*$this->load_model('Template');
 		$templatesListTMP = $this->Template->find(array('conditions' => array('online' => 1), 'order' => 'name'));
 		$templatesList = array();
 		foreach($templatesListTMP as $k => $v) { $templatesList[$v['id']] = $v; }
 		$this->templatesList = $templatesList;
 		$this->set('templatesList', $templatesList); //On les envois à la vue*/
 		
-		$this->loadModel('RightButton'); //Chargement du modèle des types de posts
+		$this->load_model('RightButton'); //Chargement du modèle des types de posts
 		$rightButton = $this->RightButton->findList(array('conditions' => array('online' => 1))); //On récupère les types de posts
-		$this->unloadModel('RightButton'); //Déchargement du modèle des types de posts
+		$this->unload_model('RightButton'); //Déchargement du modèle des types de posts
 		$this->set('rightButton', $rightButton); //On les envois à la vue
 		
 		$this->set('typesOfPage', $this->Category->typesOfPage); //On les envois à la vue
@@ -671,14 +671,14 @@ class CategoriesController extends AppController {
 		
 		if(!$rightButtonsCategory) {
 		
-			$this->loadModel('CategoriesRightButton');
+			$this->load_model('CategoriesRightButton');
 			$this->CategoriesRightButton->primaryKey = 'category_id'; //Pour éviter les erreurs à l'exécution
 			$rightButtonsConditions = array('category_id' => $datas['category']['id']);
 			$nbRightButtons = $this->CategoriesRightButton->findCount($rightButtonsConditions);
 			
 			if($nbRightButtons) {
 	
-				$this->loadModel('RightButton');
+				$this->load_model('RightButton');
 				
 				//récupération des données
 				$rightButtonsList = $this->CategoriesRightButton->find(array('conditions' => $rightButtonsConditions, 'order' => 'order_by ASC'));
