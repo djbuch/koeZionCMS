@@ -219,6 +219,7 @@ class Model extends Object {
  * @version 0.2 - 30/03/2015 by FI - Modification gestion de la sauvegarde en passant par un modèle tampon
  * @version 0.3 - 30/03/2015 by FI - Rajout de $fromSaveAll pour indiquer si la clé primaire est sous forme de tableau ou non
  * @version 0.4 - 02/04/2015 by FI - Mise en place du test de la valeur à insérer pour rajouter le cas échéant les données de la langue : if(!is_array($v))
+ * @version 0.5 - 20/04/2015 by FI - Correction de la gestion des enregistrements des données traduites pour gérer à la fois le insert et le update
  */     
 	public function after_save($datas, $saveAction = 'insert', $fromSaveAll = false) {		
 		
@@ -230,7 +231,7 @@ class Model extends Object {
 			$keysIntersect 	= array_intersect_key($datas, array_flip($this->fieldsToTranslate));
 
 			//On va tester l'action générée par la requête de sauvegarde pour modifier la valeur de la clée en fonction de l'insert ou de l'update
-			if($saveAction == 'update') { $primaryKey = array('language', 'model_id'); } else { $primaryKey = 'id'; }
+			//if($saveAction == 'update') { $primaryKey = array('language', 'model_id'); } else { $primaryKey = 'id'; }
 			
 			$datasTraduction = array();
 			foreach($keysIntersect as $field => $v) {
@@ -260,19 +261,38 @@ class Model extends Object {
 				
 				//Pour ne pas perturber le fonctionnement standard du CMS on procède à la création d'un model tampon
 				//par lequel on va effectuer nos opération de mise à jour des données traduites
-				$i18nModel = new Model();			
+				$i18nModel = new Model();
 				$i18nModel->table = $this->table.'_i18n';
 				$i18nModel->shema = $this->_get_shema($i18nModel->table);
-				$i18nModel->primaryKey = $primaryKey;
-				$i18nModel->saveAll($datasTraduction);
-							
+				
+				//On va parcourir l'ensemble des données pour vérifier si la ligne est présente ou non dans la table
+				//Si elle est présente on fait un update sinon on fait un insert
+				//L'insert se présente lorsqu'on ajoute une langue après que les données de paramétrage de la traduction soient mises en place
+				foreach($datasTraduction as $language => $languageDatas) {
+					
+					//On compte le nombre de ligne
+					$nbLines = $i18nModel->findCount(array(
+						'language' => $languageDatas['language'],
+						'model_id' => $languageDatas['model_id']
+					));
+					
+					//En fonction du nombre de ligne on change la valeur de la clé primaire pour faire
+					//- Soit un update
+					//- Soit un insert
+					if($nbLines) { $primaryKey = array('language', 'model_id'); } 
+					else { $primaryKey = 'id'; }
+				
+					$i18nModel->primaryKey = $primaryKey;
+					$i18nModel->save($languageDatas);
+				}
+				
 				/*if(isset($this->searches_params)) {
 					
 					//$this->make_search_index($datasToSave, $this->id, $saveAction);
 					pr($this->searches_params);
-				}*/
-				
+				}*/				
 			}
+			
 			/*$this->table = $this->table.'_i18n';
 			$this->shema = $this->shema();
 			$this->primaryKey = $primaryKey;*/

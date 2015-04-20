@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 20/04/2015</name>
+		<num>20150420.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Model::after_save : Correction de la gestion des enregistrements des données traduites pour gérer à la fois le insert et le update</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 20/04/2015</name>
 		<num>20150420.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
