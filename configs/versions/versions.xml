@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 21/04/2015</name>
+		<num>20150421.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Model::find : Rajout des index group et orderBy en complément de groupBy et order</task>
+			<task author="FI" type="code">DateComponent : Rajout de la fontion minutes_diff</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 20/04/2015</name>
 		<num>20150420.002</num>
 		<supervisor>KoéZionCMS</supervisor>

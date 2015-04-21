@@ -331,7 +331,8 @@ class Model extends Object {
  * 	- fields (optionnel) : liste des champs à récupérer. Cet index peut être une chaine de caractères ou un tableau, si il est laissé vide la requête récupèrera l'ensemble des colonnes de la table.
  * 	- conditions (optionnel) : ensemble des conditions de recherche à mettre en place. Cet index peut être une chaine de caractères ou un tableau.
  * 	- moreConditions (optionnel) : cet index est une chaine de caractères et permet lorsqu'il est renseigné de rajouter des conditions de recherche particulières.
- * 	- order (optionnel) : cet index est une chaine de caractères et permet lorsqu'il est renseigné d'effectuer un tri sur les éléments retournés.
+ * 	- group ou groupBy (optionnel) : cet index est une chaine de caractères et permet lorsqu'il est renseigné d'effectuer un groupement sur les éléments retournés.
+ * 	- order ou orderBy (optionnel) : cet index est une chaine de caractères et permet lorsqu'il est renseigné d'effectuer un tri sur les éléments retournés.
  * 	- limit (optionnel) : cet index est un entier et permet lorsqu'il est renseigné de limiter le nombre de résultats retournés.
  *  - tables (optionnel) : cet index permet de spécifier les tables à charger dans le FROM
  *  - pr (optionnel) : cet index permet d'indiquer s'il faut ou non imprimer la requête à l'écran  
@@ -401,6 +402,7 @@ class Model extends Object {
  * @version 1.0 - 23/03/2015 by FI - Rajout de l'index tables 
  * @version 1.1 - 23/03/2015 by FI - Rajout de l'index pr 
  * @version 1.2 - 05/04/2015 by FI - Rajout de order by RAND
+ * @version 1.3 - 21/04/2015 by FI - Rajout des index group et orderBy en complément de groupBy et order
  */    
 	public function find($req = array(), $type = PDO::FETCH_ASSOC) {
 				
@@ -416,8 +418,8 @@ class Model extends Object {
 		if(isset($this->fieldsToTranslate) && !empty($this->fieldsToTranslate)) { $translatedTable = true; }
 		else { $translatedTable = false; }
         		
-		///////////////////////
-		//   CHAMPS FIELDS   //					
+		/////////////////////////
+		//    CHAMPS FIELDS    //					
 		//Si aucun champ n'est demandé on va récupérer le shéma de la table et récupérer ces champs
 		//Dans le cas de table traduite on va également récupérer les champs traduits ainsi que la langue associée
 			if(!isset($req['fields']) && !empty($shema)) { $fields = $shema; } 
@@ -476,8 +478,8 @@ class Model extends Object {
 				$sql .= 'ON '.$this->alias.'.id = '.$this->alias.'I18n.model_id '."AND `".$this->alias."I18n`.`language` = '".DEFAULT_LANGUAGE."'"."\n";
 			}*/	
 				
-		///////////////////////////
-		//   CHAMPS LEFT JOIN   //
+		////////////////////////////
+		//    CHAMPS LEFT JOIN    //
 			if(isset($req['leftJoin']) && !empty($req['leftJoin'])) {
 				
 				if (!is_array($req['leftJoin'])) { $sql .= "\n".$req['leftJoin']; } //On ajoute à la requête s'il s'agit d'une chaîne 
@@ -498,8 +500,8 @@ class Model extends Object {
 				}
 			}
 		
-		///////////////////////////
-		//   CHAMPS RIGHT JOIN   //
+		/////////////////////////////
+		//    CHAMPS RIGHT JOIN    //
 			if(isset($req['rightJoin']) && !empty($req['rightJoin'])) {
 				
 				if (!is_array($req['rightJoin'])) { $sql .= "\n".$req['rightJoin']; } //On ajoute à la requête s'il s'agit d'une chaîne 
@@ -520,8 +522,8 @@ class Model extends Object {
 				}
 			}
 		
-		///////////////////////////
-		//   CHAMPS INNER JOIN   //
+		/////////////////////////////
+		//    CHAMPS INNER JOIN    //
 			if(isset($req['innerJoin']) && !empty($req['innerJoin'])) {
 				
 				if (!is_array($req['innerJoin'])) { $sql .= "\n".$req['innerJoin']; } //On ajoute à la requête s'il s'agit d'une chaîne 
@@ -543,8 +545,8 @@ class Model extends Object {
 				}
 			}
 
-		///////////////////////////////////////////////////////////
-		//   CONDITIONS DE RECHERCHE SUR L'IDENTIFIANT DU SITE   //
+		/////////////////////////////////////////////////////////////
+		//    CONDITIONS DE RECHERCHE SUR L'IDENTIFIANT DU SITE    //
 		//Si dans le shema de la table on a une colonne website_id		
 			if($this->manageWebsiteId && in_array('website_id', $shema) && get_class($this) != 'UsersGroupsWebsite') {
 			
@@ -558,8 +560,8 @@ class Model extends Object {
 				}			
 			}
 
-		///////////////////////////////////////////////////////
-		//   CONDITIONS DE RECHERCHE SUR LE CHAMP ACTIVATE   //
+		/////////////////////////////////////////////////////////
+		//    CONDITIONS DE RECHERCHE SUR LE CHAMP ACTIVATE    //
 		//Si dans le shema de la table on a une colonne website_id		
 			if($this->manageActivateField && in_array('activate', $shema)) {
 			
@@ -573,8 +575,8 @@ class Model extends Object {
 				}			
 			}
 		
-		///////////////////////////
-		//   CHAMPS CONDITIONS   //
+		/////////////////////////////
+		//    CHAMPS CONDITIONS    //
 			if(isset($req['conditions'])) { //Si on a des conditions
 				
 				$conditions = '';	//Mise en variable des conditions	
@@ -634,20 +636,24 @@ class Model extends Object {
 				
 			}
 		
-		////////////////////////////////
-		//   CHAMPS MORE CONDITIONS   //
+		//////////////////////////////////
+		//    CHAMPS MORE CONDITIONS    //
 			if(isset($req['moreConditions']) && !empty($req['moreConditions'])) { 
 				
 				if(isset($conditions) && !empty($conditions)) { $sql .= "\n".'AND '; } else { $sql .= "\n".'WHERE '; }			
 				$sql .= $req['moreConditions'].' '; 
 			}
 		
-		//////////////////////
-		//   CHAMPS GROUP BY   //
-			if(isset($req['groupBy'])) { 
+		///////////////////////////
+		//    CHAMPS GROUP BY    //
+			if(isset($req['group']) || isset($req['groupBy'])) { 
+								
+				if(isset($req['group'])) { $groupBy = $req['group']; }
+				else if(isset($req['groupBy'])) { $groupBy = $req['groupBy']; }
+				else { $groupBy = ''; }
 								
 				//On va éclater la chaîne pour récupérer tous les champs order
-				$groupBy = explode(',', $req['groupBy']);				
+				$groupBy = explode(',', $groupBy);				
 				foreach($groupBy as $groupByK => $groupByV) { //Parcours de tous les champs
 
 					//Nettoyage de la valeur
@@ -668,16 +674,20 @@ class Model extends Object {
 				$sql .= "\n".'GROUP BY '.implode(', ', $groupBy).' '; 
 			}
 		
-		//////////////////////
-		//   CHAMPS ORDER   //
-			if(isset($req['order'])) { 
+		///////////////////////////
+		//    CHAMPS ORDER BY    //
+			if(isset($req['order']) || isset($req['orderBy'])) { 
+								
+				if(isset($req['order'])) { $orderBy = $req['order']; }
+				else if(isset($req['orderBy'])) { $orderBy = $req['orderBy']; }
+				else { $orderBy = ''; }
 				
-				if($req['order'] == 'RAND') { $sql .= "\n".'ORDER BY RAND() '; }
+				if($orderBy == 'RAND') { $sql .= "\n".'ORDER BY RAND() '; }
 				else {
 					
 					//On va éclater la chaîne pour récupérer tous les champs order
-					$order = explode(',', $req['order']);
-					foreach($order as $orderK => $orderV) { //Parcours de tous les champs
+					$orderBy = explode(',', $orderBy);
+					foreach($orderBy as $orderK => $orderV) { //Parcours de tous les champs
 						
 						//Nettoyage de la valeur
 						//Suppression des espaces en début et fin de chaîne
@@ -700,7 +710,7 @@ class Model extends Object {
 							
 							$field 			= $orderV[0][0];
 							$direction 		= isset($orderV[1]) ? ' '.$orderV[1] : '';
-							$order[$orderK] = '`'.$tableAlias.'`.`'.$field.'`'.$direction; 
+							$orderBy[$orderK] = '`'.$tableAlias.'`.`'.$field.'`'.$direction; 
 						}
 						
 						//Si le champ possède un alias on va utiliser cet alias pour la mise en place des tris
@@ -709,10 +719,10 @@ class Model extends Object {
 							$alias 			= $orderV[0][0];
 							$field 			= $orderV[0][1];
 							$direction 		= $orderV[1];
-							$order[$orderK] = '`'.$alias.'`.`'.$field.'` '.$direction; 
+							$orderBy[$orderK] = '`'.$alias.'`.`'.$field.'` '.$direction; 
 						}
 					}
-					$sql .= "\n".'ORDER BY '.implode(', ', $order).' ';
+					$sql .= "\n".'ORDER BY '.implode(', ', $orderBy).' ';
 				} 
 			}
 		
