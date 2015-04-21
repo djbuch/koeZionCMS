@@ -503,7 +503,10 @@ class UsersController extends AppController {
 		if(isset($this->plugins['Localization'])) {
 			
 			$this->load_model('Language');
-			$languagesTMP = $this->Language->find(array('conditions' => array('online' => 1)));
+			$languagesTMP = $this->Language->find(array(
+				'conditions' => array('online' => 1),
+				'orderBy' => 'order_by ASC'
+			));
 			$languages 	= array();
 			foreach($languagesTMP as $language) { $languages[$language['code']] = $language; }
 			$session['Languages'] = $languages;

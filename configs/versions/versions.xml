@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 21/04/2015</name>
+		<num>20150421.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">UsersController::_check_localization_plugin : Mise en place du champ orderBy dans la requête</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 21/04/2015</name>
 		<num>20150421.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
