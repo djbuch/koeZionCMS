@@ -18,14 +18,15 @@ class WebsiteComponent extends Component {
 /**
  * Cette fonction permet la récupération des données du site courant
  *
- * @return 	array Données du site Internet
- * @access 	protected
+ * @return 	varchar Url du site à prendre en compte
+ * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 02/05/2012 by FI
  * @version 0.2 - 14/06/2012 by FI - Modification de la récupération du site pour la boucle locale - On récupère le premier site de la liste et plus celui avec l'id 1 pour éviter les éventuelles erreurs
  * @version 0.3 - 04/09/2012 by FI - Mise en place d'un passage de paramètre en GET pour pouvoir changer de site en local
  * @version 0.4 - 02/04/2014 by FI - Mise en place d'un passage de paramètre en GET pour pouvoir changer le host du site en local
  * @version 0.5 - 21/05/2014 by FI - Mise en place d'un passage de paramètre dans la fonction pour pouvoir changer le host du site
+ * @version 0.6 - 23/04/2015 by FI - Rajout de la condition OR dans la récupération du site courant afin de traiter également les alias d'url
  */
 	public function get_website_datas($hackWsHost = null) {
 				
@@ -36,11 +37,11 @@ class WebsiteComponent extends Component {
 		$hackWsHost = isset($hackWsHost) ? $hackWsHost : Session::read('Frontoffice.hack_ws_host');
 		
 		$httpHost = (isset($hackWsHost) && !empty($hackWsHost)) ? $hackWsHost : $_SERVER["HTTP_HOST"]; //Récupération de l'url		
-		
+				
 		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Websites'.DS;
 		$cacheFile 		= $httpHost;	
 		
-		$website = Cache::exists_cache_file($cacheFolder, $cacheFile);
+		$website = array();//Cache::exists_cache_file($cacheFolder, $cacheFile);
 	
 		if(!$website) {
 			
@@ -64,7 +65,17 @@ class WebsiteComponent extends Component {
 			} else {
 	
 				if($hackWsId) { $websiteConditions = array('conditions' => array('id' => $hackWsId, 'online' => 1)); }
-				else { $websiteConditions = array('conditions' => "url LIKE '%".$httpHost."%' AND online = 1"); }
+				else {
+
+					//On récupère les sites dont l'url ou un alias est égal à $httpHost
+					$websiteConditions = array('conditions' => array(
+						'OR' => array(
+							"url LIKE '%".$httpHost."%'",
+							"url_alias LIKE '%".$httpHost."%'",
+						),
+						'online' => 1
+					)); 
+				}
 			}
 			
 			$website = $this->Website->findFirst($websiteConditions);

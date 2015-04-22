@@ -404,6 +404,7 @@ class Model extends Object {
  * @version 1.2 - 05/04/2015 by FI - Rajout de order by RAND
  * @version 1.3 - 21/04/2015 by FI - Rajout des index group et orderBy en complément de groupBy et order
  * @version 1.4 - 22/04/2015 by FI - Modification de le gestion de la récupération des paramètres des conditions LEFT, RIGHT et INNER JOIN
+ * @version 1.5 - 23/04/2015 by FI - Modification de le gestion du OR
  */    
 	public function find($req = array(), $type = PDO::FETCH_ASSOC) {
 				
@@ -627,7 +628,11 @@ class Model extends Object {
 								if($k == "OR") {
 									
 									$orCond = array();
-									foreach($v as $orField => $orValue) { $orCond = $this->_get_query_conditions($orCond, $orField, $orValue); }								
+									foreach($v as $orField => $orValue) { 
+										
+										if(!is_int($orField)) { $orCond = $this->_get_query_conditions($orCond, $orField, $orValue); }
+										else { $orCond[] = $orValue; }
+									}								
 									$cond[] = '('.implode(' OR ', $orCond).')';
 								} 
 								else { $cond = $this->_get_query_conditions($cond, $k, $v); }

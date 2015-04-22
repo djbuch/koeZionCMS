@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 23/04/2015</name>
+		<num>20150423.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">WebsiteComponent::get_website_datas : Rajout de la condition OR dans la récupération du site courant afin de traiter également les alias d'url</task>
+			<task author="FI" type="code">Model::find : Modification de le gestion du OR</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 22/04/2015</name>
 		<num>20150422.004</num>
 		<supervisor>KoéZionCMS</supervisor>
