@@ -17,7 +17,7 @@
 			<?php 
 			echo $helpers['Form']->input('name', _('Titre'), array('compulsory' => true, 'tooltip' => _("Indiquez le titre du site Internet")));
 			echo $helpers['Form']->input('url', _('Url'), array('compulsory' => true, 'tooltip' => _("Indiquez l'url complète du site Internet (avec http:// et sans le / à la fin), sautez une ligne entre chaque domaine.")));
-			//echo $helpers['Form']->input('url_alias', _('Alias du domaine'), array('type' => 'textarea', 'rows' => 1, 'cols' => 10, 'class' => 'xxlarge', 'tooltip' => _("Indiquez ici le ou les alias de ce domaine (url complète avec http:// et sans le / à la fin), sautez une ligne entre chaque domaine.")));
+			echo $helpers['Form']->input('url_alias', _('Alias du domaine'), array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge', 'tooltip' => _("Indiquez ici le ou les alias de ce domaine (url complète avec http:// ou non sans le / à la fin), sautez une ligne entre chaque domaine.")));
 			echo $helpers['Form']->input('online', _('En ligne'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour diffuser ce site Internet")));
 			?>
 		</div>
