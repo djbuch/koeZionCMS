@@ -61,7 +61,8 @@ class FormParentHelper extends Helper {
 		'txtAfterInput',
 		'defaultSelect', //Permet de forcer l'élément à sélectionner par défaut dans un select
 		'onlyInput',
-		'compulsory' //Indique si le champ est obligatoire
+		'compulsory', //Indique si le champ est obligatoire
+		'buttonText' //Texte du bouton pour le type upload
 	);
 
 /**
@@ -161,6 +162,7 @@ class FormParentHelper extends Helper {
  * @version 0.6 - 07/03/2014 by FI - Reprise de la gestion de la récupération des erreurs
  * @version 0.7 - 09/09/2014 by FI - Rajout de defaultSelect dans les options du select
  * @version 0.8 - 17/11/2014 by FI - Rajout de forceValue dans les options des checkbox
+ * @version 0.9 - 22/04/2015 by FI - Rajout du type upload
  * @todo Input de type submit etc..., input radio
  * @todo Voir si utile de gérer en récursif la gestion de optgroup pour le select
  */
@@ -335,6 +337,37 @@ class FormParentHelper extends Helper {
 			//   INPUT DE TYPE FILE   //
 			case 'file':  $inputReturn .= '<input type="file" id="'.$inputIdText.'" name="'.$inputNameText.'"'.$attributes.' />'; break;
 
+			//   INPUT DE TYPE UPLOAD   //
+			case 'upload':  
+				
+				//Génération du script permettant l'affichage du champ upload
+				ob_start();
+				?>
+				<script type="text/javascript">
+				function BrowseServer<?php echo $inputIdText; ?>() {
+				
+					// You can use the "CKFinder" class to render CKFinder in a page:
+					var finder = new CKFinder();
+					finder.basePath = './js/ckfinder/';	// The path for the installation of CKFinder (default = "/ckfinder/").
+					finder.selectActionFunction = SetFileField<?php echo $inputIdText; ?>;
+					finder.popup();
+					
+					// It can also be done in a single line, calling the "static"
+					// popup( basePath, width, height, selectFunction ) function:
+					// CKFinder.popup( '../', null, null, SetFileField ) ;
+					//
+					// The "popup" function can also accept an object as the only argument.
+					// CKFinder.popup( { basePath : '../', selectActionFunction : SetFileField } ) ;
+				}				
+				// This is a sample function which is called when a file is selected in CKFinder.
+				function SetFileField<?php echo $inputIdText; ?>(fileUrl) { document.getElementById("<?php echo $inputIdText; ?>").value = fileUrl; }
+				</script>
+				<?php 
+				$inputReturn .= ob_get_clean();				
+				$inputReturn .= '<input type="text" id="'.$inputIdText.'" name="'.$inputNameText.'" value="'.$value.'" class="upload_file">';
+				$inputReturn .= '<button id="'.$inputIdText.'SelectFile" name="'.$inputNameText.'_select_file" type="button" onclick="BrowseServer'.$inputIdText.'();" class="input_select_file medium black" style="opacity: 1;"><span>'.$options['buttonText'].'</span></button>';
+			break;
+			
 			//   INPUT DE TYPE PASSWORD   //
 			case 'password': $inputReturn .= '<input type="password" id="'.$inputIdText.'" name="'.$inputNameText.'" value="'.$value.'"'.$attributes.' />'; break;
 

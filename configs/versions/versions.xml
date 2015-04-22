@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 22/04/2015</name>
+		<num>20150422.004</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">AppController::beforeFilter : Correction pour tester l'existence de la constante CURRENT_WEBSITE_ID</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 22/04/2015</name>
 		<num>20150422.003</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

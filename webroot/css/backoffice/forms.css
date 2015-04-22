@@ -102,8 +102,8 @@ input.datepicker{width:64px}
 
 .upload_file{width: 70%}
 /*#InputSelectFile{height:29px;width:auto;margin-right:15px;float:left;}*/
-#InputSelectFile{margin-right:15px;margin-top: 0;}
-.upload_file + #InputSelectFile{float:left;}
+#InputSelectFile, .input_select_file{margin-right:15px;margin-top: 0;}
+.upload_file + #InputSelectFile, .upload_file + .input_select_file{float:left;}
 
 h3.form-title{
 	padding: 15px 20px;
