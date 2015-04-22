@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 22/04/2015</name>
+		<num>20150422.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de l'élément backoffice top_bar pour prendre en compte de façon plus précise la gestion de la traduction</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 22/04/2015</name>
 		<num>20150422.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
