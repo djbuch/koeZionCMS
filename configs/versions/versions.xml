@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 22/04/2015</name>
+		<num>20150422.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Model::find : Modification de le gestion de la récupération des paramètres des conditions LEFT, RIGHT et INNER JOIN</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 21/04/2015</name>
 		<num>20150421.002</num>
 		<supervisor>KoéZionCMS</supervisor>

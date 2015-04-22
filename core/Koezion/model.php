@@ -403,6 +403,7 @@ class Model extends Object {
  * @version 1.1 - 23/03/2015 by FI - Rajout de l'index pr 
  * @version 1.2 - 05/04/2015 by FI - Rajout de order by RAND
  * @version 1.3 - 21/04/2015 by FI - Rajout des index group et orderBy en complément de groupBy et order
+ * @version 1.4 - 22/04/2015 by FI - Modification de le gestion de la récupération des paramètres des conditions LEFT, RIGHT et INNER JOIN
  */    
 	public function find($req = array(), $type = PDO::FETCH_ASSOC) {
 				
@@ -489,13 +490,21 @@ class Model extends Object {
 						
 						foreach ($req['leftJoin'] as $v) {
 							
-							$joinModel = $this->load_model($v['model'], true);
-							$sql .= "\n".'LEFT JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$v['pivot'].' '; //On ajoute à la requête
+							$joinDatas = $this->_get_left_right_inner_join_datas($v);
+							$sql .= "\n".'LEFT JOIN '."\n\t".$joinDatas['joinTable'].' AS '.$joinDatas['joinAlias'].' '."\n\t".'ON '.$v['pivot'].' '; //On ajoute à la requête
+
+							//On conserve l'ancienne version 22/04/2015
+							//$joinModel = $this->load_model($v['model'], true);
+							//$sql .= "\n".'LEFT JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$v['pivot'].' '; //On ajoute à la requête
 						}					
-					} else { //Sinon, on n'a qu'un seul join
+					} else { //Sinon, on n'a qu'un seul join						
 						
-						$joinModel = $this->load_model($req['leftJoin']['model'], true);
-						$sql .= "\n".'LEFT JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$req['leftJoin']['pivot'].' '; //On ajoute à la requête					
+						$joinDatas = $this->_get_left_right_inner_join_datas($req['leftJoin']);
+						$sql .= "\n".'LEFT JOIN '."\n\t".$joinDatas['joinTable'].' AS '.$joinDatas['joinAlias'].' '."\n\t".'ON '.$req['leftJoin']['pivot'].' '; //On ajoute à la requête
+						
+						//On conserve l'ancienne version 22/04/2015
+						//$joinModel = $this->load_model($req['leftJoin']['model'], true);
+						//$sql .= "\n".'LEFT JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$req['leftJoin']['pivot'].' '; //On ajoute à la requête					
 					}
 				}
 			}
@@ -511,13 +520,21 @@ class Model extends Object {
 						
 						foreach ($req['rightJoin'] as $v) {
 							
-							$joinModel = $this->load_model($v['model'], true);
-							$sql .= "\n".'RIGHT JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$v['pivot'].' '; //On ajoute à la requête
+							$joinDatas = $this->_get_left_right_inner_join_datas($v);
+							$sql .= "\n".'RIGHT JOIN '."\n\t".$joinDatas['joinTable'].' AS '.$joinDatas['joinAlias'].' '."\n\t".'ON '.$v['pivot'].' '; //On ajoute à la requête
+							
+							//On conserve l'ancienne version 22/04/2015
+							//$joinModel = $this->load_model($v['model'], true);
+							//$sql .= "\n".'RIGHT JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$v['pivot'].' '; //On ajoute à la requête
 						}					
 					} else { //Sinon, on n'a qu'un seul join
 						
-						$joinModel = $this->load_model($req['rightJoin']['model'], true);
-						$sql .= "\n".'RIGHT JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$req['rightJoin']['pivot'].' '; //On ajoute à la requête					
+						$joinDatas = $this->_get_left_right_inner_join_datas($req['rightJoin']);
+						$sql .= "\n".'RIGHT JOIN '."\n\t".$joinDatas['joinTable'].' AS '.$joinDatas['joinAlias'].' '."\n\t".'ON '.$req['leftJoin']['pivot'].' '; //On ajoute à la requête
+						
+						//On conserve l'ancienne version 22/04/2015
+						//$joinModel = $this->load_model($req['rightJoin']['model'], true);
+						//$sql .= "\n".'RIGHT JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$req['rightJoin']['pivot'].' '; //On ajoute à la requête					
 					}
 				}
 			}
@@ -533,14 +550,22 @@ class Model extends Object {
 						
 						foreach ($req['innerJoin'] as $k => $v) {
 	
-							$joinModel = $this->load_model($v['model'], true);
-							$sql .= "\n".'INNER JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$v['pivot'].' ';//On ajoute à la requête
+							$joinDatas = $this->_get_left_right_inner_join_datas($v);
+							$sql .= "\n".'INNER JOIN '."\n\t".$joinDatas['joinTable'].' AS '.$joinDatas['joinAlias'].' '."\n\t".'ON '.$v['pivot'].' '; //On ajoute à la requête
+							
+							//On conserve l'ancienne version 22/04/2015
+							//$joinModel = $this->load_model($v['model'], true);
+							//$sql .= "\n".'INNER JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$v['pivot'].' ';//On ajoute à la requête
 						}
 						
 					} else { //Sinon, on n'a qu'un seul "join"
 						
-						$joinModel = $this->load_model($req['innerJoin']['model'], true);
-						$sql .= "\n".'INNER JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$req['innerJoin']['pivot'].' ';//On ajoute à la requête
+						$joinDatas = $this->_get_left_right_inner_join_datas($req['innerJoin']);
+						$sql .= "\n".'INNER JOIN '."\n\t".$joinDatas['joinTable'].' AS '.$joinDatas['joinAlias'].' '."\n\t".'ON '.$req['leftJoin']['pivot'].' '; //On ajoute à la requête
+						
+						//On conserve l'ancienne version 22/04/2015
+						//$joinModel = $this->load_model($req['innerJoin']['model'], true);
+						//$sql .= "\n".'INNER JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$req['innerJoin']['pivot'].' ';//On ajoute à la requête
 					}
 				}
 			}
@@ -1917,6 +1942,38 @@ class Model extends Object {
 		if($field == 'slug') { return strtolower(Inflector::slug(strip_tags($value), '-')); }
 		else { return strip_tags($value); }
 	}	
+    
+/**
+ * Cette fonction est chargé de retourner les informations nécessaires à la mise en place des conditions LEFT, RIGHT et INNER JOIN dans la requête
+ * 
+ * @param 	array $datas Tableau contenant les informations sur le type de JOIN à mettre en palce
+ * @return 	array Tableau contenant les données du JOIN
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 22/04/2015 by FI 
+ */    
+    protected function _get_left_right_inner_join_datas($datas) {
+    	
+    	$return = array();
+    	
+    	//On teste si l'index model est passé
+    	//Si ce n'est pas le cas on va trouver directement dans le tableau les informations sur la table et l'alias à utiliser
+    	if(!isset($datas['model'])) {
+    		
+    		$return['joinTable'] = $datas['table'];
+    		$return['joinAlias'] = $datas['alias'];
+    	}
+    	
+    	//Si l'index model est présent on le charge pour récupérer le nom de la table ainsi que le nom de l'alias
+    	else {
+    		
+    		$joinModel 				= $this->load_model($datas['model'], true);
+    		$return['joinTable'] 	= $joinModel->table;
+    		$return['joinAlias'] 	= $joinModel->alias;
+    	}
+    	
+    	return $return;
+    }
 	
 /**
  * 
