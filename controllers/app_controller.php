@@ -39,6 +39,7 @@ class AppController extends Controller {
  * @version 0.3 - 30/04/2012 by FI - Gestion multisites
  * @version 0.4 - 14/06/2012 by FI - Rajout d'un contrôle nécessaire si aucun site n'est retrouné on affiche le formulaire de connexion
  * @version 0.5 - 02/04/2015 by FI - Mise en place automatisation de la traduction dans les fonctions ADD et EDIT
+ * @version 0.6 - 22/04/2015 by FI - Correction pour tester l'existence de la constante CURRENT_WEBSITE_ID
  * @see Controller::beforeFilter()
  * @todo améliorer la récupération des configs...
  * @todo améliorer la récupération du menu général pour le moment une mise en cache qui me semble améliorable...
@@ -61,8 +62,11 @@ class AppController extends Controller {
 			define('IS_USER_LOGGED', 'ok');
 			
 			//Récupération de l'identifiant du site courant
-			$currentWebsite = Session::read('Backoffice.Websites.current');
-			define('CURRENT_WEBSITE_ID', $currentWebsite);
+			if(!defined('CURRENT_WEBSITE_ID')) {
+				
+				$currentWebsite = Session::read('Backoffice.Websites.current');
+				define('CURRENT_WEBSITE_ID', $currentWebsite);
+			}
 			
 			$this->layout = 'backoffice'; //Définition du layout pour le backoffice			
 			$this->pager['elementsPerPage'] = $this->backofficeElementPerPage; //Nombre d'élément par page
