@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 24/04/2015</name>
+		<num>20150424.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">AppController::_get_website_menu : gestion de la traduction</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 23/04/2015</name>
 		<num>20150423.004</num>
 		<supervisor>KoéZionCMS</supervisor>

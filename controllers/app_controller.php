@@ -1053,18 +1053,22 @@ class AppController extends Controller {
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 03/05/2012 by FI
+ * @version 0.2 - 24/04/2014 by FI - Gestion de la traduction
  */       
     protected function _get_website_menu($websiteId) {
     	
     	$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS;
-    	$cacheFile 		= "website_menu_".$websiteId;
+    	
+    	//On contrôle si le modèle est traduit
+    	$this->load_model('Category');
+    	if($this->Category->fieldsToTranslate) { $cacheFile = "website_menu_".DEFAULT_LANGUAGE.'_'.$websiteId; } 
+    	else { $cacheFile = "website_menu_".$websiteId; }
     	
     	$menuGeneral = Cache::exists_cache_file($cacheFolder, $cacheFile);
     	
     	if(!$menuGeneral) {
     	
     		//Récupération du menu général
-    		$this->load_model('Category');
     		$req = array('conditions' => array('online' => 1, 'type' => 1));
     		$menuGeneral = $this->Category->getTreeRecursive($req);
     		
@@ -1072,7 +1076,7 @@ class AppController extends Controller {
     	}
     	
     	return $menuGeneral;
-    }       
+    }     
     
 /**
  * Cette fonction permet le contrôle et l'envoi des formulaires de contact
