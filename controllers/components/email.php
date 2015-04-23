@@ -300,6 +300,7 @@ class EmailComponent extends Component {
  * @author 	koéZionCMS
  * @version 0.1 - 02/08/2012 by FI
  * @version 0.2 - 06/03/2014 by FI - Rajout de $replacement
+ * @version 0.3 - 23/04/2015 by FI - Modification de la gestion du remplacement
  */		
 	function replace_links($datas, $url2Use, $replacement = null) {
 		
@@ -336,21 +337,15 @@ class EmailComponent extends Component {
 				}
 				
 				$content = $html->outertext;
-				if(isset($replacement)) { $content = $this->replace_content($content, $replacement); }				
+				if(isset($replacement)) { 
+										
+					$this->load_component('Text', null, $this->controller);
+					$content = $this->components['Text']->replace_content($content, $replacement);
+				}				
 				$datas[$field] = $content;
 			}
 		}		
 		
 		return $datas;
-	}
-
-/**
- * @deprecated since 23/04/2015
- * @see TextComponent::replace_content
- */		
-	public function replace_content($content, $replacement) {
-		
-		$this->load_component('Text', null, $this->controller);
-		return $this->components['Text']->replace_content($content, $replacement);
 	}
 }
