@@ -115,6 +115,39 @@ class TextComponent extends Component {
 		for($i=0;$i<$length;$i++) { $code .= substr($characts, rand()%(strlen($characts)), 1); }
 		return $code;
 	}
+
+/**
+ * Cette fonction permet d'effectuer le rempmlace des données contenues dans un text
+ * Dans $content si on trouve un texte du style [Customer.name] et que l'index est présent dans $replacement alors le texte sera remplacé par sa veleur dans le tableau 
+ * @param 	varchar $content 		Texte dans lequel il faut chercher
+ * @param 	array 	$replacement	Données de remplacement
+ * @return 	varchar	Contenu modifié
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 06/03/2014 by FI
+ * @version 0.2 - 04/04/2014 by FI - Modification de la récupération de la valeur à remplacer
+ */		
+	public function replace_content($content, $replacement) {
+		
+		preg_match_all("/\[(.+?)\]/", $content, $result);
+		
+		//$result contient 
+		// - dans le premier index (0) les chaines trouvés dans le texte avec les crochets
+		// - dans le second (1) les chaines trouvés dans le texte sans les crochets
+		if(!empty($result[1])) {
+			
+			foreach($result[1] as $key => $path) {
+				
+				if(Set::check($replacement, $path)) {
+					
+					$value = Set::classicExtract($replacement, $path);
+					$content = str_replace($result[0][$key], $value, $content);
+				}	
+			}			
+		}
+		
+		return $content;
+	}
 	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //									FONCTIONS PUBLIQUES SUR LES DATES										//
