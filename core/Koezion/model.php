@@ -1887,6 +1887,7 @@ class Model extends Object {
  * @access	protected
  * @author	koéZionCMS
  * @version 0.1 - 03/04/2015
+ * @version 0.2 - 24/04/2015 - Rajout du test de l'existence du champ $datas[$field] dans le cas 2
  */		
 	protected function _manage_additional_fields($field, $datas, $shema, $datasShema) {
 			
@@ -1901,11 +1902,14 @@ class Model extends Object {
 		//La table est traduite et les champs name et $field sont présents dans les champs traduits
 		else if($this->fieldsToTranslate && in_array('name', $this->fieldsToTranslate) && in_array($field, $this->fieldsToTranslate)) {
 			
-			//On va parcourir les données de $field et vérifier si elles sont vides ou non
-			foreach($datas[$field] as $slugLanguage => $slugValue) {
+			if(isset($datas[$field])) {
 				
-				//On ne gère automatiquement la valeur que si la valeur courante de $field est vide
-				if(empty($slugValue)) { $datas[$field][$slugLanguage] = $this->_format_additional_fields($field, $datas['name'][$slugLanguage]); }
+				//On va parcourir les données de $field et vérifier si elles sont vides ou non
+				foreach($datas[$field] as $slugLanguage => $slugValue) {
+					
+					//On ne gère automatiquement la valeur que si la valeur courante de $field est vide
+					if(empty($slugValue)) { $datas[$field][$slugLanguage] = $this->_format_additional_fields($field, $datas['name'][$slugLanguage]); }
+				}
 			}
 		}
 		
