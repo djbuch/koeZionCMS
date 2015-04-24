@@ -836,17 +836,22 @@ class AppController extends Controller {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 27/06/2014 by FI
+ * @version 0.2 - 24/04/2014 by FI - Gestion de la traduction
  */	
 	public function _get_sliders() {
 		
 		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Sliders'.DS;
-		$cacheFile 		= "website_".CURRENT_WEBSITE_ID;
+		
+		//On contrôle si le modèle est traduit
+		$this->load_model('Slider');
+		if($this->Slider->fieldsToTranslate) { $cacheFile = "website_".DEFAULT_LANGUAGE.'_'.CURRENT_WEBSITE_ID; } 
+		else { $cacheFile = "website_".CURRENT_WEBSITE_ID; }
 		
 		$sliders = Cache::exists_cache_file($cacheFolder, $cacheFile);
 		
 		if(!$sliders) {
 		
-			$this->load_model('Slider');
+			//$this->load_model('Slider');
 			$sliders = $this->Slider->find(array(
 				'conditions' => array('online' => 1), 
 				'order' => 'order_by ASC, name ASC'
@@ -865,17 +870,22 @@ class AppController extends Controller {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 27/06/2014 by FI
+ * @version 0.2 - 24/04/2014 by FI - Gestion de la traduction
  */	
 	public function _get_focus() {
 		
-		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Focus'.DS;
-		$cacheFile 		= "website_".CURRENT_WEBSITE_ID;
+		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Focus'.DS;		
+		
+		//On contrôle si le modèle est traduit
+		$this->load_model('Focus');
+		if($this->Focus->fieldsToTranslate) { $cacheFile = "website_".DEFAULT_LANGUAGE.'_'.CURRENT_WEBSITE_ID; } 
+		else { $cacheFile = "website_".CURRENT_WEBSITE_ID; }
 		
 		$focus = Cache::exists_cache_file($cacheFolder, $cacheFile);
 		
 		if(!$focus) {
 			
-			$this->load_model('Focus');
+			//$this->load_model('Focus');
 			$focus = $this->Focus->find(array(
 				'conditions' => array('online' => 1), 
 				'order' => 'order_by ASC, name ASC'
@@ -918,11 +928,16 @@ class AppController extends Controller {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 27/06/2014 by FI
+ * @version 0.2 - 24/04/2014 by FI - Gestion de la traduction
  */	
 	public function _get_posts() {
 		
 		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS;
-		$cacheFile 		= "home_page_website_".CURRENT_WEBSITE_ID;
+		
+		//On contrôle si le modèle est traduit
+		$this->load_model('Post');
+		if($this->Post->fieldsToTranslate) { $cacheFile = "home_page_website_".DEFAULT_LANGUAGE.'_'.CURRENT_WEBSITE_ID; } 
+		else { $cacheFile = "home_page_website_".CURRENT_WEBSITE_ID; }
 		
 		$posts = Cache::exists_cache_file($cacheFolder, $cacheFile);
 		
@@ -943,8 +958,7 @@ class AppController extends Controller {
 			if($postsConfigs['order'] == 'modified') { $postsQuery['order'] = 'modified DESC'; }
 			else if($postsConfigs['order'] == 'created') { $postsQuery['order'] = 'created DESC'; }
 			else if($postsConfigs['order'] == 'order_by') { $postsQuery['order'] = 'order_by ASC'; }			
-			
-			$this->load_model('Post');		
+								
 			$posts = $this->Post->find($postsQuery);
 		
 			Cache::create_cache_file($cacheFolder, $cacheFile, $posts);
@@ -960,17 +974,21 @@ class AppController extends Controller {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 27/06/2014 by FI
+ * @version 0.2 - 24/04/2014 by FI - Gestion de la traduction
  */	
 	public function _get_posts_types() {
 		
 		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'PostsTypes'.DS;
-		$cacheFile 		= "home_page_website_".CURRENT_WEBSITE_ID;
+		
+		//On contrôle si le modèle est traduit
+		$this->load_model('PostsType');
+		if($this->PostsType->fieldsToTranslate) { $cacheFile = "home_page_website_".DEFAULT_LANGUAGE.'_'.CURRENT_WEBSITE_ID; } 
+		else { $cacheFile = "home_page_website_".CURRENT_WEBSITE_ID; }
 		
 		$postsTypes = Cache::exists_cache_file($cacheFolder, $cacheFile);
 		
 		if(!$postsTypes) {			
 			
-			$this->load_model('PostsType');
 			$postsTypes = $this->PostsType->get_for_front();
 		
 			Cache::create_cache_file($cacheFolder, $cacheFile, $postsTypes);

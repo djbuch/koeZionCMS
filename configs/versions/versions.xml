@@ -1,6 +1,17 @@
 ﻿<versions>
 	<version>
 		<name>Version du 24/04/2015</name>
+		<num>20150424.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">AppController::_get_sliders : gestion de la traduction</task>
+			<task author="FI" type="code">AppController::_get_focus : gestion de la traduction</task>
+			<task author="FI" type="code">AppController::_get_posts : gestion de la traduction</task>
+			<task author="FI" type="code">AppController::_get_posts_types : gestion de la traduction</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 24/04/2015</name>
 		<num>20150424.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
