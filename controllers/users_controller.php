@@ -93,7 +93,7 @@ class UsersController extends AppController {
 							);				
 
 							//GESTION DU PLUGIN ACLS//
-							$session = $this->_check_acls_plugin($session);
+							$session = $this->_check_acls_plugin($user, $session);
 								
 							//GESTION DU PLUGIN LOCALIZATION//
 							$session = $this->_check_localization_plugin($session);					
@@ -135,7 +135,7 @@ class UsersController extends AppController {
 								);		
 
 								//GESTION DU PLUGIN ACLS//
-								$session = $this->_check_acls_plugin($session);
+								$session = $this->_check_acls_plugin($user, $session);
 									
 								//GESTION DU PLUGIN LOCALIZATION//
 								$session = $this->_check_localization_plugin($session);										
@@ -472,13 +472,15 @@ class UsersController extends AppController {
 /**
  * Contrôle de l'existence du plugin ACL
  *
+ * @param	array $user 	Données utilisateur
  * @param	array $session Tableau contenant les données de la variable de Session
  * @return	array Données de la variable de Session
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 18/03/2015 by FI
+ * @version 0.2 - 24/04/2015 by FI - Rajout de $user
  */	
-	protected function _check_acls_plugin($session) {
+	protected function _check_acls_plugin($user, $session) {
 		
 		if(isset($this->plugins['Acls'])) {
 			
