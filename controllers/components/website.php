@@ -27,6 +27,7 @@ class WebsiteComponent extends Component {
  * @version 0.4 - 02/04/2014 by FI - Mise en place d'un passage de paramètre en GET pour pouvoir changer le host du site en local
  * @version 0.5 - 21/05/2014 by FI - Mise en place d'un passage de paramètre dans la fonction pour pouvoir changer le host du site
  * @version 0.6 - 23/04/2015 by FI - Rajout de la condition OR dans la récupération du site courant afin de traiter également les alias d'url
+ * @version 0.7 - 24/04/2015 by FI - Gestion de la traduction
  */
 	public function get_website_datas($hackWsHost = null) {
 				
@@ -39,13 +40,15 @@ class WebsiteComponent extends Component {
 		$httpHost = (isset($hackWsHost) && !empty($hackWsHost)) ? $hackWsHost : $_SERVER["HTTP_HOST"]; //Récupération de l'url		
 				
 		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Websites'.DS;
-		$cacheFile 		= $httpHost;	
+ 
+		//On contrôle si le modèle est traduit
+		$this->load_model('Website'); //Chargement du modèle
+		if($this->Website->fieldsToTranslate) { $cacheFile = $httpHost.'_'.DEFAULT_LANGUAGE; } 
+		else { $cacheFile = $httpHost; }
 		
 		$website = array();//Cache::exists_cache_file($cacheFolder, $cacheFile);
 	
 		if(!$website) {
-			
-			$this->load_model('Website'); //Chargement du modèle
 	
 			//HACK SPECIAL LOCAL POUR CHANGER DE SITE pour permettre la passage de l'identifiant du site en paramètre
 			if(isset($_GET['hack_ws_id'])) { Session::write('Frontoffice.hack_ws_id', $_GET['hack_ws_id']); }

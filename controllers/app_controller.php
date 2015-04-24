@@ -624,12 +624,16 @@ class AppController extends Controller {
  * @version 0.1 - 02/10/2012 by FI
  * @version 0.2 - 02/10/2012 by FI - Récupération de tous les champs
  * @version 0.3 - 30/10/2014 by FI - Déplacement de cette fonction de Categories
+ * @version 0.4 - 24/04/2015 by FI - Gestion de la traduction
  */	
 	protected function _get_datas_category($id) {
-		
+				
+		$cacheFolder = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS;
+ 
+		//On contrôle si le modèle est traduit
 		$this->load_model('Category');
-		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS;
-		$cacheFile 		= "category_".$id;
+		if($this->Category->fieldsToTranslate) { $cacheFile = "category_".$id.'_'.DEFAULT_LANGUAGE; } 
+		else { $cacheFile = "category_".$id; }
 		
 		$category = Cache::exists_cache_file($cacheFolder, $cacheFile);
 		
@@ -836,7 +840,7 @@ class AppController extends Controller {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 27/06/2014 by FI
- * @version 0.2 - 24/04/2014 by FI - Gestion de la traduction
+ * @version 0.2 - 24/04/2015 by FI - Gestion de la traduction
  */	
 	public function _get_sliders() {
 		
@@ -844,7 +848,7 @@ class AppController extends Controller {
 		
 		//On contrôle si le modèle est traduit
 		$this->load_model('Slider');
-		if($this->Slider->fieldsToTranslate) { $cacheFile = "website_".DEFAULT_LANGUAGE.'_'.CURRENT_WEBSITE_ID; } 
+		if($this->Slider->fieldsToTranslate) { $cacheFile = "website_".CURRENT_WEBSITE_ID.'_'.DEFAULT_LANGUAGE; } 
 		else { $cacheFile = "website_".CURRENT_WEBSITE_ID; }
 		
 		$sliders = Cache::exists_cache_file($cacheFolder, $cacheFile);
@@ -870,7 +874,7 @@ class AppController extends Controller {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 27/06/2014 by FI
- * @version 0.2 - 24/04/2014 by FI - Gestion de la traduction
+ * @version 0.2 - 24/04/2015 by FI - Gestion de la traduction
  */	
 	public function _get_focus() {
 		
@@ -878,7 +882,7 @@ class AppController extends Controller {
 		
 		//On contrôle si le modèle est traduit
 		$this->load_model('Focus');
-		if($this->Focus->fieldsToTranslate) { $cacheFile = "website_".DEFAULT_LANGUAGE.'_'.CURRENT_WEBSITE_ID; } 
+		if($this->Focus->fieldsToTranslate) { $cacheFile = "website_".CURRENT_WEBSITE_ID.'_'.DEFAULT_LANGUAGE; } 
 		else { $cacheFile = "website_".CURRENT_WEBSITE_ID; }
 		
 		$focus = Cache::exists_cache_file($cacheFolder, $cacheFile);
@@ -928,7 +932,7 @@ class AppController extends Controller {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 27/06/2014 by FI
- * @version 0.2 - 24/04/2014 by FI - Gestion de la traduction
+ * @version 0.2 - 24/04/2015 by FI - Gestion de la traduction
  */	
 	public function _get_posts() {
 		
@@ -936,7 +940,7 @@ class AppController extends Controller {
 		
 		//On contrôle si le modèle est traduit
 		$this->load_model('Post');
-		if($this->Post->fieldsToTranslate) { $cacheFile = "home_page_website_".DEFAULT_LANGUAGE.'_'.CURRENT_WEBSITE_ID; } 
+		if($this->Post->fieldsToTranslate) { $cacheFile = "home_page_website_".CURRENT_WEBSITE_ID.'_'.DEFAULT_LANGUAGE; } 
 		else { $cacheFile = "home_page_website_".CURRENT_WEBSITE_ID; }
 		
 		$posts = Cache::exists_cache_file($cacheFolder, $cacheFile);
@@ -974,7 +978,7 @@ class AppController extends Controller {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 27/06/2014 by FI
- * @version 0.2 - 24/04/2014 by FI - Gestion de la traduction
+ * @version 0.2 - 24/04/2015 by FI - Gestion de la traduction
  */	
 	public function _get_posts_types() {
 		
@@ -982,7 +986,7 @@ class AppController extends Controller {
 		
 		//On contrôle si le modèle est traduit
 		$this->load_model('PostsType');
-		if($this->PostsType->fieldsToTranslate) { $cacheFile = "home_page_website_".DEFAULT_LANGUAGE.'_'.CURRENT_WEBSITE_ID; } 
+		if($this->PostsType->fieldsToTranslate) { $cacheFile = "home_page_website_".CURRENT_WEBSITE_ID.'_'.DEFAULT_LANGUAGE; } 
 		else { $cacheFile = "home_page_website_".CURRENT_WEBSITE_ID; }
 		
 		$postsTypes = Cache::exists_cache_file($cacheFolder, $cacheFile);
@@ -1071,7 +1075,7 @@ class AppController extends Controller {
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 03/05/2012 by FI
- * @version 0.2 - 24/04/2014 by FI - Gestion de la traduction
+ * @version 0.2 - 24/04/2015 by FI - Gestion de la traduction
  */       
     protected function _get_website_menu($websiteId) {
     	
@@ -1079,7 +1083,7 @@ class AppController extends Controller {
     	
     	//On contrôle si le modèle est traduit
     	$this->load_model('Category');
-    	if($this->Category->fieldsToTranslate) { $cacheFile = "website_menu_".DEFAULT_LANGUAGE.'_'.$websiteId; } 
+    	if($this->Category->fieldsToTranslate) { $cacheFile = "website_menu_".$websiteId.'_'.DEFAULT_LANGUAGE; } 
     	else { $cacheFile = "website_menu_".$websiteId; }
     	
     	$menuGeneral = Cache::exists_cache_file($cacheFolder, $cacheFile);

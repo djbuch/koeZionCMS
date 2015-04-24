@@ -661,17 +661,21 @@ class CategoriesController extends AppController {
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 02/10/2012 by FI
+ * @version 0.2 - 24/04/2015 by FI - Gestion de la traduction
  */		
 	protected function _get_right_buttons_category($datas) {
 					
 		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS;
-		$cacheFile 		= "category_".$datas['category']['id']."_right_buttons";
 		
+		//On contrôle si le modèle est traduit
+		$this->load_model('CategoriesRightButton');
+		if($this->CategoriesRightButton->fieldsToTranslate) { $cacheFile = "category_".$datas['category']['id']."_right_buttons".'_'.DEFAULT_LANGUAGE; } 
+		else { $cacheFile = "category_".$datas['category']['id']."_right_buttons"; }
+				
 		$rightButtonsCategory = Cache::exists_cache_file($cacheFolder, $cacheFile);
 		
 		if(!$rightButtonsCategory) {
 		
-			$this->load_model('CategoriesRightButton');
 			$this->CategoriesRightButton->primaryKey = 'category_id'; //Pour éviter les erreurs à l'exécution
 			$rightButtonsConditions = array('category_id' => $datas['category']['id']);
 			$nbRightButtons = $this->CategoriesRightButton->findCount($rightButtonsConditions);
@@ -705,6 +709,7 @@ class CategoriesController extends AppController {
  * @version 0.1 - 20/12/2012 by FI
  * @version 0.2 - 20/03/2014 by FI - Modification formatage du tableau
  * @version 0.3 - 08/04/2014 by FI - Gestion des pages volantes
+ * @version 0.4 - 24/04/2015 by FI - Gestion de la traduction
  */	
 	protected function _get_children_category($datas) {
 		
@@ -713,8 +718,11 @@ class CategoriesController extends AppController {
 		if($datas['category']['display_children']) { //Si on doit récupérer les enfants			
 			
 			$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS;
-			$cacheFile 		= "category_".$datas['category']['id']."_children";
 			
+			//On contrôle si le modèle est traduit
+			if($this->Category->fieldsToTranslate) { $cacheFile = "category_".$datas['category']['id']."_children".'_'.DEFAULT_LANGUAGE; } 
+			else { $cacheFile = "category_".$datas['category']['id']."_children"; }
+						
 			$childrenCategory = Cache::exists_cache_file($cacheFolder, $cacheFile);
 			
 			if(!$childrenCategory) {
@@ -744,6 +752,7 @@ class CategoriesController extends AppController {
  * @version 0.1 - 20/12/2012 by FI
  * @version 0.2 - 20/03/2014 by FI - Modification formatage du tableau
  * @version 0.3 - 08/04/2014 by FI - Gestion des pages volantes
+ * @version 0.4 - 24/04/2015 by FI - Gestion de la traduction
  */	
 	protected function _get_brothers_category($datas) {
 						
@@ -752,7 +761,10 @@ class CategoriesController extends AppController {
 		if($datas['category']['display_brothers']) { //Si on doit récupérer les frères		
 			
 			$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS;
-			$cacheFile 		= "category_".$datas['category']['id']."_brothers";
+			
+			//On contrôle si le modèle est traduit
+			if($this->Category->fieldsToTranslate) { $cacheFile = "category_".$datas['category']['id']."_brothers".'_'.DEFAULT_LANGUAGE; } 
+			else { $cacheFile = "category_".$datas['category']['id']."_brothers"; }
 			
 			$brothersCategory = Cache::exists_cache_file($cacheFolder, $cacheFile);
 			

@@ -1,13 +1,31 @@
 ﻿<versions>
 	<version>
 		<name>Version du 24/04/2015</name>
+		<num>20150424.003</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">AppController::_get_datas_category : gestion de la traduction pour le cache</task>
+			<task author="FI" type="code">AppController::_get_sliders : gestion de la traduction pour le cache</task>
+			<task author="FI" type="code">AppController::_get_focus : gestion de la traduction pour le cache</task>
+			<task author="FI" type="code">AppController::_get_posts : gestion de la traduction pour le cache</task>
+			<task author="FI" type="code">AppController::_get_posts_types : gestion de la traduction pour le cache</task>
+			<task author="FI" type="code">CategoriesController::_get_right_buttons_category : gestion de la traduction pour le cache</task>
+			<task author="FI" type="code">CategoriesController::_get_children_category : gestion de la traduction pour le cache</task>
+			<task author="FI" type="code">WebsiteComponent::get_website_datas : gestion de la traduction pour le cache</task>
+			<task author="FI" type="code">PostsController::_get_right_buttons_posts : gestion de la traduction pour le cache</task>
+			<task author="FI" type="code">PostsController::_get_children_category : gestion de la traduction pour le cache</task>
+			<task author="FI" type="code">PostsController::_get_brothers_category : gestion de la traduction pour le cache</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 24/04/2015</name>
 		<num>20150424.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FI" type="code">AppController::_get_sliders : gestion de la traduction</task>
-			<task author="FI" type="code">AppController::_get_focus : gestion de la traduction</task>
-			<task author="FI" type="code">AppController::_get_posts : gestion de la traduction</task>
-			<task author="FI" type="code">AppController::_get_posts_types : gestion de la traduction</task>
+			<task author="FI" type="code">AppController::_get_sliders : gestion de la traduction pour le cache</task>
+			<task author="FI" type="code">AppController::_get_focus : gestion de la traduction pour le cache</task>
+			<task author="FI" type="code">AppController::_get_posts : gestion de la traduction pour le cache</task>
+			<task author="FI" type="code">AppController::_get_posts_types : gestion de la traduction pour le cache</task>
 		</tasks>
 	</version>
 	<version>
@@ -15,7 +33,7 @@
 		<num>20150424.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FI" type="code">AppController::_get_website_menu : gestion de la traduction</task>
+			<task author="FI" type="code">AppController::_get_website_menu : gestion de la traduction pour le cache</task>
 		</tasks>
 	</version>
 	<version>

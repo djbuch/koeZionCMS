@@ -360,17 +360,21 @@ class PostsController extends AppController {
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 21/06/2013 by FI
+ * @version 0.2 - 24/04/2015 by FI - Gestion de la traduction
  */		
 	protected function _get_right_buttons_posts($datas) {
 					
 		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS;
-		$cacheFile 		= "post_".$datas['post']['id']."_right_buttons";
+ 
+		//On contrôle si le modèle est traduit
+		$this->load_model('PostsRightButton');
+		if($this->PostsRightButton->fieldsToTranslate) { $cacheFile = "post_".$datas['post']['id']."_right_buttons".'_'.DEFAULT_LANGUAGE; } 
+		else { $cacheFile = "post_".$datas['post']['id']."_right_buttons"; }
 		
 		$rightButtonsPost = Cache::exists_cache_file($cacheFolder, $cacheFile);
 		
 		if(!$rightButtonsPost) {
 		
-			$this->load_model('PostsRightButton');
 			$this->PostsRightButton->primaryKey = 'post_id'; //Pour éviter les erreurs à l'exécution
 			$rightButtonsConditions = array('post_id' => $datas['post']['id']);
 			$nbRightButtons = $this->PostsRightButton->findCount($rightButtonsConditions);
@@ -422,6 +426,7 @@ class PostsController extends AppController {
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 21/06/2013 by FI
+ * @version 0.2 - 24/04/2015 by FI - Gestion de la traduction
  */	
 	protected function _get_children_category($datas) {
 		
@@ -430,7 +435,10 @@ class PostsController extends AppController {
 		if($datas['post']['display_children']) { //Si on doit récupérer les enfants			
 			
 			$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS;
-			$cacheFile 		= "post_".$datas['post']['id']."_children";
+ 
+			//On contrôle si le modèle est traduit
+			if($this->Category->fieldsToTranslate) { $cacheFile = "post_".$datas['post']['id']."_children".'_'.DEFAULT_LANGUAGE; } 
+			else { $cacheFile = "post_".$datas['post']['id']."_children"; }
 			
 			$childrenCategory = Cache::exists_cache_file($cacheFolder, $cacheFile);
 			
@@ -458,6 +466,7 @@ class PostsController extends AppController {
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 21/06/2013 by FI
+ * @version 0.2 - 24/04/2015 by FI - Gestion de la traduction
  */	
 	protected function _get_brothers_category($datas) {
 						
@@ -466,8 +475,11 @@ class PostsController extends AppController {
 		if($datas['post']['display_brothers']) { //Si on doit récupérer les frères		
 			
 			$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS;
-			$cacheFile 		= "post_".$datas['post']['id']."_brothers";
-			
+ 
+			//On contrôle si le modèle est traduit
+			if($this->Category->fieldsToTranslate) { $cacheFile = "post_".$datas['post']['id']."_brothers".'_'.DEFAULT_LANGUAGE; } 
+			else { $cacheFile = "post_".$datas['post']['id']."_brothers"; }
+						
 			$brothersCategory = Cache::exists_cache_file($cacheFolder, $cacheFile);
 			
 			if(!$brothersCategory) {
