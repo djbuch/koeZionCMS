@@ -70,10 +70,16 @@ class Configure {
  * @access 	static
  * @author 	koéZionCMS
  * @version 0.1 - 16/05/2012 by FI
+ * @version 0.2 - 29/04/2015 by FI - Mise en place d'un paramètre supplémentaire pour indiquer le type d'inclusion
  */	
-	static function import($librairie, $ext = 'php') {
+	static function import($librairie, $ext = 'php', $type = 'ro') {
 		
 		if(isset($ext)) $librairie = $librairie.'.'.$ext;
-		require_once($librairie);		
+		switch($type) {
+			case 'ro': 	require_once $librairie;	break;
+			case 'r': 	require $librairie; 		break;
+			case 'io': 	include_once $librairie; 	break;
+			case 'i': 	include $librairie; 		break;
+		}		
 	}
 }

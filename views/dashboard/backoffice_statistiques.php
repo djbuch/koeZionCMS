@@ -27,7 +27,7 @@ echo $helpers['Html']->js($js, true);
 		</div>
 		<div class="content nopadding">
 			<?php 
-			$formOptions = array('action' => Router::url('backoffice/'.$params['controllerFileName'].'/index'), 'method' => 'post');
+			$formOptions = array('action' => Router::url('backoffice/'.$params['controllerFileName'].'/statistiques'), 'method' => 'post');
 			echo $helpers['Form']->create($formOptions);
 			echo $helpers['Form']->input('display', '', array('type' => 'hidden', 'value' => 1)); 
 			?>

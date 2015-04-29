@@ -25,6 +25,7 @@ class Router {
  * @param $url url a parser
  * @param $request objet de type Request
  * @return tableau contenant les paramètres 
+ * @version 28/04/2015 by FI - Test de l'existence d'un contrôleur isset($params[0])
  */
 	static function parse($url, $request) {
 		
@@ -63,8 +64,8 @@ class Router {
 			array_shift($params); //Par défaut params commence par la clé du prefixe on va donc décaller d'un valeur pour qu'il commence bien par le controller
 		}		
 		
-		$request->controller = $params[0]; //Initialisation du controller
-		$request->action = isset($params[1]) ? $params[1] : 'index'; //On va tester si une action est demandée, sinon on affecte la fonction index par défaut
+		$request->controller 	= isset($params[0]) ? $params[0] : 'Unset'; //Initialisation du controller
+		$request->action 		= isset($params[1]) ? $params[1] : 'index'; //On va tester si une action est demandée, sinon on affecte la fonction index par défaut
 		
 		//HACK pour éviter que les fonctions du back ne puissent etre accessible avec une url du type front
 		//ex --> post/admin_edit/19
