@@ -65,7 +65,6 @@
 		<div class="content nopadding">
 			<?php 
 			echo $helpers['Form']->input('short_content', _('Descriptif court'), array('type' => 'textarea', 'wysiswyg' => true, 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge', 'tooltip' => _("Saisissez ici le descriptif court de votre article, n'hésitez pas à utiliser les modèles de pages pour vous aider")));
-			echo $helpers['Form']->input('redirect_to', _('Url de redirection'), array('tooltip' => _("Remplissez ce champ si souhaitez, à partir de cet article, faire une redirection vers une url de votre choix, il ne vous sera alors pas nécessaire de saisir le descriptif long")));			
 			echo $helpers['Form']->input('content', _('Descriptif long'), array('type' => 'textarea', 'wysiswyg' => true, 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge', 'tooltip' => _("Saisissez ici le descriptif long de votre article, n'hésitez pas à utiliser les modèles de pages pour vous aider")));
 			?>
 		</div>
@@ -138,6 +137,7 @@
 		<div class="content nopadding">
 			<?php 
 			echo $helpers['Form']->input('display_link', _("Afficher un lien sous forme de bouton à la suite de l'article"), array('type' => 'checkbox', 'tooltip' => _("En cochant cette case vous afficherez automatiquement le lien pour se rendre sur le détail de l'article, par défaut le titre de l'article sera également cliquable")));						
+			echo $helpers['Form']->input('redirect_to', _('Url de redirection'), array('tooltip' => _("Remplissez ce champ si souhaitez, à partir de cet article, faire une redirection vers une url de votre choix, il ne vous sera alors pas nécessaire de saisir le descriptif long")));			
 			echo $helpers['Form']->input('display_home_page', _("Afficher cet article sur la la page d'accueil"), array('type' => 'checkbox', 'tooltip' => _("En cochant cette case vous afficherez cet article sur la page d'accueil du site")));
 
 			if(!isset($formulaires)) { $formulaires = array (2 => _('Formulaire commentaire article')); } 

@@ -1826,12 +1826,13 @@ class Model extends Object {
  * @access	protected
  * @author	koéZionCMS
  * @version 0.1 - 20/03/2015
+ * @version 0.2 - 05/05/2015 - Correction de la gestion de l'affectation de $validationRule['allowEmpty']  
  */		
 	protected function _check_validation_rules($validationField, $validationRule, $datas, $errors) {
-								
-		if(!isset($v['allowEmpty'])) { $validationRule['allowEmpty'] = false; } //Par défaut si l'index allowEmpty n'existe pas on le rajoute
+		
+		if(!isset($validationRule['allowEmpty'])) { $validationRule['allowEmpty'] = false; } //Par défaut si l'index allowEmpty n'existe pas on le rajoute
 
-		$dataToCheck	= Set::classicExtract($datas, $validationField); //Récupération de la donnée à contrôler
+		$dataToCheck = Set::classicExtract($datas, $validationField); //Récupération de la donnée à contrôler
 		
 		//Si la donnée à contrôler est un tableau 
 		if(is_array($dataToCheck)) {

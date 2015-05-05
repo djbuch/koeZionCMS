@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 05/05/2015</name>
+		<num>20150505.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Model::_check_validation_rules : Correction de la gestion de l'affectation de $validationRule['allowEmpty']</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 29/04/2015</name>
 		<num>20150429.001</num>
 		<supervisor>KoéZionCMS</supervisor>
