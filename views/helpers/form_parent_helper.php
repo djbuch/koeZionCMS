@@ -14,7 +14,7 @@ class FormParentHelper extends Helper {
  * @author 	koéZionCMS
  * @version 0.1 - 03/05/2012 by AA
  */
-	private $radio_count = 0;
+	private $radioCount = 0;
 
 /**
  * Variable contenant le champ name du dernier input radio
@@ -24,7 +24,7 @@ class FormParentHelper extends Helper {
  * @author 	koéZionCMS
  * @version 0.1 - 11/01/2014 by FI
  */
-	private $radio_name = null;
+	private $radioName = null;
 
 /**
  * Variable contenant l'objet vue ayant fait appel au formulaire
@@ -163,6 +163,7 @@ class FormParentHelper extends Helper {
  * @version 0.7 - 09/09/2014 by FI - Rajout de defaultSelect dans les options du select
  * @version 0.8 - 17/11/2014 by FI - Rajout de forceValue dans les options des checkbox
  * @version 0.9 - 22/04/2015 by FI - Rajout du type upload
+ * @version 1.0 - 06/05/2015 by FI - Correction de la gestion des noms des inputs radio
  * @todo Input de type submit etc..., input radio
  * @todo Voir si utile de gérer en récursif la gestion de optgroup pour le select
  */
@@ -304,14 +305,18 @@ class FormParentHelper extends Helper {
 			// 03/05/2013 by AA
 			case 'radio':
 				
-				if(!isset($this->radio_name)) { $this->radio_name = $name; }
-				if($name != $this->radio_name) { $this->radio_count = 0; } //On réinitialise le compteur des inputs radio
+				if(!isset($this->radioName)) { $this->radioName = $name; }								
+				if($name != $this->radioName) { 
+										
+					$this->radioName = $name; //On réinitialise le nom des inputs radio
+					$this->radioCount = 0; //On réinitialise le compteur des inputs radio
+				} 
 				$isChecked = isset($options['isChecked']) && $options['isChecked'] ? true : false;
 
 				$requestvalue = Set::classicExtract($this->view->controller->request->data, $name);//On récupère la valeur dans request
 				$checked = (($options['value'] == $requestvalue) || $isChecked) ? ' checked="checked"' : '';//Si la valeur dans request est la même que celle passée en paramètre, alors l'input est sélectionné
 
-				$inputIdText .= $this->radio_count;//On concatène l'identifiant pour qu'il soit correctement indiqué sur le label et l'input
+				$inputIdText .= $this->radioCount;//On concatène l'identifiant pour qu'il soit correctement indiqué sur le label et l'input
 				$inputReturn .= '<input type="radio" id="'.$inputIdText.'" name="'.$inputNameText.'" value="'.$options['value'].'"'.$checked.' '.$attributes.' />';
 
 				//Gestion du label de l'input
@@ -331,7 +336,7 @@ class FormParentHelper extends Helper {
 					$labelReturn = '';
 				}
 				
-				if($name == $this->radio_name) { $this->radio_count++; } //On incrémente le label, de cette façon, au prochain input créé, l'id sera différent du précédent.
+				if($name == $this->radioName) { $this->radioCount++; } //On incrémente le label, de cette façon, au prochain input créé, l'id sera différent du précédent.
 			break;
 
 			//   INPUT DE TYPE FILE   //
