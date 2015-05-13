@@ -1,8 +1,20 @@
 <?php
 /**
- * Ce helpers permet la mise en place et la gestion des forulaires de l'application
+ * Class FormHelper
+ * 
+ * Ce helper permet la mise en place et la gestion des forulaires de l'application
+ * 
+ * PHP versions 4 and 5
  *
- * @toto mutualiser la generation de l'id avec le helper html pour la mise en place de ckeditor
+ * KoéZionCMS : PHP OPENSOURCE CMS (http://www.koezion-cms.com)
+ * Copyright KoéZionCMS
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ * 
+ * @todo 		mutualiser la generation de l'id avec le helper html pour la mise en place de ckeditor 
+ * @copyright	KoéZionCMS
+ * @link        http://www.koezion-cms.com
  */
 class FormParentHelper extends Helper {
 
@@ -46,21 +58,21 @@ class FormParentHelper extends Helper {
  * @version 0.1 - 20/01/2012 by FI
  */
 	var $escapeAttributes = array(
-		'type', 
-		'displayError', 
-		'label', 
-		'datas', 
-		'value', 
-		'tooltip', 
-		'modelToCheck', 
-		'labelClass', 
-		'labelStyle', 
-		'isChecked', 
-		'buttonType',
-		'txtBeforeInput',
-		'txtAfterInput',
+		'type', //Type de l'input
+		'displayError', //Indique s'il faut ou non afficher les erreurs
+		'label', //Label de l'input
+		'datas', //Tableau de données utilisé dans le select
+		'value', //Valeur de l'input
+		'tooltip', //Indique si un tooltup est présent ou non
+		'modelToCheck', //Nom du modèle à contrôler
+		'labelClass', //Classe(s) à affecter au label
+		'labelStyle', //Style(s) à affecter au label
+		'isChecked', //Indique si la case à cocher est cochée
+		'buttonType', //Type de bouton
+		'txtBeforeInput', //Texte à afficher avant l'input
+		'txtAfterInput', //Texte à afficher après l'input
 		'defaultSelect', //Permet de forcer l'élément à sélectionner par défaut dans un select
-		'onlyInput',
+		'onlyInput', //Indique s'il faut renvoyer uniquement l'input
 		'compulsory', //Indique si le champ est obligatoire
 		'buttonText' //Texte du bouton pour le type upload
 	);
@@ -180,7 +192,8 @@ class FormParentHelper extends Helper {
 			'labelStyle' => false,
 			'txtBeforeInput' => '',
 			'txtAfterInput' => '',
-			'compulsory' => false
+			'compulsory' => false,
+			'onlyInput' => false
 			
 		);
 		$options = array_merge($defaultOptions, $options); //Génération du tableau d'options utilisé dans la fonction
@@ -252,19 +265,7 @@ class FormParentHelper extends Helper {
 		$inputReturn = ''; //Variable qui va contenir la chaine de caractère de l'input
 
 		//Gestion du label de l'input
-		if($options['label']) {
-
-			$labelReturn = '<label for="'.$inputIdText.'"';
-			if($options['labelClass']) { $labelReturn .= ' class="'.$options['labelClass'].'"'; }			
-			if($options['labelStyle']) { $labelReturn .= ' style="'.$options['labelStyle'].'"'; }			
-			$labelReturn .= '>';
-			
-			if($options['tooltip']) 	{ $labelReturn .= '<img src="'.BASE_URL.'/img/backoffice/tooltip.png" alt="tooltip" style="float: left; margin-right: 5px; cursor: pointer;" class="tip-w" original-title="'.$options['tooltip'].'" />'; }
-			if($options['compulsory']) 	{ $labelReturn .= '<i>(*)</i> '; }
-			
-			$labelReturn .= $label.'</label>';
-		}
-		else { $labelReturn = ''; }
+		$labelDatas = $this->_set_input_label($inputIdText, $label, $options);
 
 		//Génération du champ input
 		switch($options['type']) {
@@ -321,20 +322,7 @@ class FormParentHelper extends Helper {
 
 				//Gestion du label de l'input
 				//On recrée le label afin d'être sûrs de l'identifiant de celui-ci
-				if($options['label']) {
-					
-					$labelReturn = '<label for="'.$inputIdText.'"';
-					if($options['labelClass']) { $labelReturn .= ' class="'.$options['labelClass'].'"'; }		
-					if($options['labelStyle']) { $labelReturn .= ' style="'.$options['labelStyle'].'"'; }				
-					$labelReturn .= '>'.$label;
-					
-					if($options['tooltip']) {
-						$labelReturn .= '<img src="'.BASE_URL.'/img/backoffice/tooltip.png" alt="tooltip" style="float: left; margin-right: 5px; cursor: pointer;" class="tip-w" original-title="'.$options['tooltip'].'" />';
-					}
-					$labelReturn .= '</label>';
-				} else {
-					$labelReturn = '';
-				}
+				$labelDatas = $this->_set_input_label($inputIdText, $label, $options);				
 				
 				if($name == $this->radioName) { $this->radioCount++; } //On incrémente le label, de cette façon, au prochain input créé, l'id sera différent du précédent.
 			break;
@@ -461,12 +449,75 @@ class FormParentHelper extends Helper {
 		if(!empty($options['txtBeforeInput'])) { $inputReturn = $options['txtBeforeInput'].$inputReturn; }
 		if(!empty($options['txtAfterInput'])) { $inputReturn = $inputReturn.$options['txtAfterInput'];  }
 		
+		return am(
+			$labelDatas,
+			array(
+				'inputElement' => $inputReturn,
+				'inputValue' => $value,
+				'inputError' => $errorLabel,
+				'inputOptions' => $options
+			)
+		);
+	}
+
+/**
+ * 
+ * @param 	varchar 	$inputIdText Identifiant de l'input
+ * @param 	varchar 	$label Label de l'input
+ * @param 	array 	$options Tableau d'options
+ * @return 	array Tableau contenant les données du label
+ * @access	private
+ * @author	koéZionCMS
+ * @version 0.1 - 13/05/2015 by FI
+ */	
+	function _set_input_label($inputIdText, $label, $options) {
+		
+		//Si un label est demandé
+		if($options['label']) {
+
+			//Valeur par défaut
+			$labelDetails = array(
+				'start' => '',
+				'content' => '',
+				'end' => ''	
+			);
+			
+			$labelReturn = '<label for="'.$inputIdText.'"';
+			if($options['labelClass']) { $labelReturn .= ' class="'.$options['labelClass'].'"'; }			
+			if($options['labelStyle']) { $labelReturn .= ' style="'.$options['labelStyle'].'"'; }			
+			$labelReturn .= '>';
+			
+			$labelDetails['start'] .= $labelReturn;
+			
+			if($options['tooltip']) {
+
+				$tooltips 					= '<img src="'.BASE_URL.'/img/backoffice/tooltip.png" alt="tooltip" style="float: left; margin-right: 5px; cursor: pointer;" class="tip-w" original-title="'.$options['tooltip'].'" />';
+				$labelReturn 				.= $tooltips; 
+				$labelDetails['content'] 	.= $tooltips;
+			}
+			if($options['compulsory']) { 
+				
+				$compulsory 				= '<i>(*)</i> ';
+				$labelReturn 				.= $compulsory; 
+				$labelDetails['content'] 	.= $compulsory;
+			}
+			
+			$labelDetails['content'] .= $label;
+			
+			$labelReturn .= $label.'</label>';
+			$labelDetails['end'] .= '</label>';			
+		} 
+		
+		//Si pas de label demandé
+		else { 
+			
+			$labelReturn = '';
+			$labelDetails = array();
+		}
+		
 		return array(
 			'inputLabel' => $labelReturn,
-			'inputElement' => $inputReturn,
-			'inputValue' => $value,
-			'inputError' => $errorLabel,
-			'inputOptions' => $options
+			'inputLabelDetails' => $labelDetails
 		);
 	}
 
