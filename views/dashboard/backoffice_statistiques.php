@@ -20,7 +20,11 @@ $js = array(
 );
 echo $helpers['Html']->js($js, true);
 ?>
-<div class="section">
+<style type="text/css">
+#dashboard.statistiques .half{position: relative;left: 50%;margin-left: -25%;}
+#dashboard.statistiques .box .title{background: #ECECEC;}
+</style>
+<div id="dashboard" class="statistiques section">
 	<div class="box">
 		<div class="title">
 			<h2><?php echo _('Statistiques de visites'); ?></h2>			
@@ -147,7 +151,7 @@ echo $helpers['Html']->js($js, true);
 						</tr>		
 					</tbody>
 				</table>
-				<table style="width:100%;margin-top:20px;">
+				<table style="margin-top:20px;">
 					<thead>
 						<tr>
 							<td style="width:15%"></td>
@@ -255,9 +259,7 @@ echo $helpers['Html']->js($js, true);
 						</table>					
 					</div>
 				</div>
-			</div>
 				
-			<div class="half">
 				<div class="box">
 					<div class="title">
 						<h2><?php echo ("Pages vues par mots clefs"); ?></h2>
@@ -274,10 +276,6 @@ echo $helpers['Html']->js($js, true);
 						</table>
 					</div>
 				</div>
-			</div>
-		</div>			
-		<div class="section">	
-			<div class="half">
 				
 				<div class="box">
 					<div class="title">
@@ -299,9 +297,7 @@ echo $helpers['Html']->js($js, true);
 						</table>						
 					</div>
 				</div>
-			</div>
-				
-			<div class="half">				
+							
 				<div class="box">
 					<div class="title">
 						<h2><?php echo ("Pages les - vues (Top 20)"); ?></h2>

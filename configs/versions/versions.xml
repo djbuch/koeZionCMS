@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 19/05/2015</name>
+		<num>20150519.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Dashboard::backoffice_statistiques : Modification de la vue</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 13/05/2015</name>
 		<num>20150513.001</num>
 		<supervisor>KoéZionCMS</supervisor>
