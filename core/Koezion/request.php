@@ -25,6 +25,7 @@ class Request {
  * 02/10/2014 --> Modification gestion variable page
  * 11/10/2014 --> Rajout de $this->files
  * 27/11/2014 --> Mise en place du hooks request - le nom du fichier est égal au nom de l'hôte
+ * 28/05/2015 --> Rajout d'un test sur $this->url avant traitement, rajout de $protocol
  */    
 	public function __construct() {
 		
@@ -34,12 +35,17 @@ class Request {
 		else {
 			
 			//$this->url = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/'; //Affectation de l'url
-			if(isset($_SERVER['PATH_INFO'])) { $this->url = $_SERVER['PATH_INFO'];  } 
+			if(isset($_SERVER['PATH_INFO'])) { $this->url = $_SERVER['PATH_INFO']; } 
 			else if(isset($_SERVER['SCRIPT_URL'])) { $this->url = $_SERVER['SCRIPT_URL']; } //1and1 hack!!
 			else if(isset($_SERVER['ORIG_PATH_INFO'])) { $this->url = $_SERVER['ORIG_PATH_INFO']; } //1and1 hack!!
 			else {  $this->url = '/'; }
 			
-			$this->fullUrl = 'http://'.$_SERVER["HTTP_HOST"].Router::url($this->url, ''); //Affectation de l'url complète		
+			if(in_array($this->url, array('/webroot', 'webroot', '/index.php', 'index.php', '/webroot/index.php'))) { $this->url = '/'; }
+			
+			$protocol = 'http';
+			if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') { $protocol = 'https'; }
+			
+			$this->fullUrl = $protocol.'://'.$_SERVER["HTTP_HOST"].Router::url($this->url, ''); //Affectation de l'url complète		
 		}
 		
 		$this->queryString = $_SERVER['QUERY_STRING'];

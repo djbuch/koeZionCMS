@@ -46,7 +46,7 @@ class WebsiteComponent extends Component {
 		if($this->Website->fieldsToTranslate) { $cacheFile = $httpHost.'_'.DEFAULT_LANGUAGE; } 
 		else { $cacheFile = $httpHost; }
 		
-		$website = array();//Cache::exists_cache_file($cacheFolder, $cacheFile);
+		$website = Cache::exists_cache_file($cacheFolder, $cacheFile);
 	
 		if(!$website) {
 	

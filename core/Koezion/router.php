@@ -153,8 +153,9 @@ class Router {
  * @param mixed 	$extension 	Indique si il faut ou non mettre l'extension html (faux si pas d'url)
  * @param boolean 	$fullUrl 	Indique si il faut retourner une url complète (avec http et le HOST)
  * @return varchar Url formatée
+ * @version 28/05/2015 by FI - Rajout de $protocol
  */		
-	static function url($url = '', $extension = 'html', $fullUrl = false) {
+	static function url($url = '', $extension = 'html', $fullUrl = false, $protocol = 'http') {
 		
 		trim($url, '/');
 		
@@ -198,7 +199,7 @@ class Router {
 		//	et que l'url ne contient pas déhà l'extension
 		if($url != '/' && !empty($extension) && !substr_count($url, '.'.$extension)) { $url .= '.'.$extension; } //Cas ou on est pas sur la racine du site
 		
-		if($fullUrl) { $url2Return = 'http://'.$_SERVER['HTTP_HOST'].BASE_URL.$url; }
+		if($fullUrl) { $url2Return = $protocol.'://'.$_SERVER['HTTP_HOST'].BASE_URL.$url; }
 		else { $url2Return = BASE_URL.$url; }
 		
 		return $url2Return;

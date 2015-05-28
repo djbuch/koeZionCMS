@@ -1,5 +1,15 @@
 ﻿<versions>
 	<version>
+		<name>Version du 28/05/2015</name>
+		<num>20150528.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">WebsiteComponent::get_website_datas : ré-activation de la récupération des données par le cache</task>
+			<task author="FI" type="code">Request::__construct : Rajout d'un test sur $this->url avant traitement, rajout de $protocol</task>
+			<task author="FI" type="code">Router::url :Rajout de $protocol</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 19/05/2015</name>
 		<num>20150519.001</num>
 		<supervisor>KoéZionCMS</supervisor>
