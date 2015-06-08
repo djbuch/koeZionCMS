@@ -1,4 +1,7 @@
-<?php echo '<?xml version="1.0" encoding="UTF-8" ?>'; ?>
+<?php 
+header('Content-Type: application/xml; charset=utf-8');
+echo '<?xml version="1.0" encoding="UTF-8" ?>'; 
+?>
 <rss version="2.0">
 	<channel>
         <title><?php echo $rss_for_layout['title']." - ".$this->vars['websiteParams']['name']; ?></title>

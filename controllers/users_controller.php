@@ -27,6 +27,7 @@ class UsersController extends AppController {
  * @version 0.5 - 02/03/2013 by FI - Modification de la gestion du role de l'utilisateur, donnée provenant maintenant de la table des groupes 
  * @version 0.6 - 16/04/2013 by FI - Mise en place de la récupération dynamique de la route pour l'interface d'administration
  * @version 0.7 - 17/10/2014 by FI - Suppression du contrôle du mot de passe pour une utilisation locale
+ * @version 0.8 - 04/06/2015 by FI - Correction récupération des données lors de l'utilisation d'un site sécurisé
  */
 	function login() {
 		
@@ -173,7 +174,7 @@ class UsersController extends AppController {
 								//$usersGroupsWebsitesList = array();
 								//foreach($usersGroupsWebsites as $k => $v) { $usersGroupsWebsitesList[] = $v['website_id']; }
 								
-								$websiteDatas = $this->_get_website_datas(); //Récupération des données du site courant
+								$websiteDatas = $this->components['Website']->get_website_datas(); //Récupération des données du site courant
 								
 								if(!in_array(CURRENT_WEBSITE_ID, $websitesList)) { Session::setFlash(_("Désolé mais vous ne pouvez pas accéder à ce site"), 'error'); }
 								else { 

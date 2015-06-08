@@ -1,5 +1,21 @@
 ﻿<versions>
 	<version>
+		<name>Version du 08/06/2015</name>
+		<num>20150608.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Correction du header dans le layout RSS</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 04/06/2015</name>
+		<num>20150604.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">UsersController::login : Correction récupération des données lors de l'utilisation d'un site sécurisé</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 28/05/2015</name>
 		<num>20150528.001</num>
 		<supervisor>KoéZionCMS</supervisor>
