@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 09/06/2015</name>
+		<num>20150609.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">FormParentHelper::_get_input_value : Rajout de la variable $forceDefaultValue</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 08/06/2015</name>
 		<num>20150608.001</num>
 		<supervisor>KoéZionCMS</supervisor>

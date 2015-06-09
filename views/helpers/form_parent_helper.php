@@ -74,7 +74,8 @@ class FormParentHelper extends Helper {
 		'defaultSelect', //Permet de forcer l'élément à sélectionner par défaut dans un select
 		'onlyInput', //Indique s'il faut renvoyer uniquement l'input
 		'compulsory', //Indique si le champ est obligatoire
-		'buttonText' //Texte du bouton pour le type upload
+		'buttonText', //Texte du bouton pour le type upload
+		'forceDefaultValue' //Indique s'il faut force ou non la valeur par défaut de l'input
 	);
 
 /**
@@ -193,7 +194,8 @@ class FormParentHelper extends Helper {
 			'txtBeforeInput' => '',
 			'txtAfterInput' => '',
 			'compulsory' => false,
-			'onlyInput' => false
+			'onlyInput' => false,
+			'forceDefaultValue' => false
 			
 		);
 		$options = array_merge($defaultOptions, $options); //Génération du tableau d'options utilisé dans la fonction
@@ -229,7 +231,7 @@ class FormParentHelper extends Helper {
 			//unset($this->view->controller->$modelName->errors[$name]);
 		}*/
 
-		$value = $this->_get_input_value($name, $options['value']);
+		$value = $this->_get_input_value($name, $options['value'], $options['forceDefaultValue']);
 
 		//Si la clée n'est pas définie dans les valeurs postées on initialise data à vide
 		//if(!isset($this->view->controller->request->data->$name)) { $value = ''; }
@@ -570,30 +572,22 @@ class FormParentHelper extends Helper {
 /**
  * Cette fonction permet la récupération de la valeur par défaut du champ input
  *
- * @param 	varchar $name Nom du champ
- * @param 	mixed	$defaultValue Valeur par défaut
+ * @param 	varchar $name 				Nom du champ
+ * @param 	mixed	$defaultValue 		Valeur par défaut
+ * @param 	boolean	$forceDefaultValue 	Indique s'il faut forcer ou non la valeur par défaut de l'input
  * @return 	mixed Valeur du champ input
  * @access	private
  * @author	koéZionCMS
  * @version 0.1 - 25/01/2012 by FI
  * @version 0.2 - 31/03/2014 by FI - Modification de la récupération de la valeur par défaut
+ * @version 0.3 - 09/06/2015 by FI - Rajout de $forceDefaultValue
  */
-	function _get_input_value($name, $defaultValue) {
+	function _get_input_value($name, $defaultValue, $forceDefaultValue) {
 		
 		$currentValue = '';
 		if(Set::check($this->view->controller->request->data, $name)) { $currentValue = Set::classicExtract($this->view->controller->request->data, $name); }
 				
-		if($currentValue == '' && isset($defaultValue)) { return $defaultValue; }
+		if(($currentValue == '' || $forceDefaultValue) && isset($defaultValue)) { return $defaultValue; }
 		else { return $currentValue; }
-	
-		/*//Données postées
-		if(Set::check($this->view->controller->request->data, $name)) { return Set::classicExtract($this->view->controller->request->data, $name); } 
-		//Données non postées
-		else if(isset($defaultValue)) { return $defaultValue; }*/
-
-		/*//Données postées
-		if(Set::check($this->view->controller->request->data, $name)) { return Set::classicExtract($this->view->controller->request->data, $name); } 
-		//Données non postées
-		else if(!isset($this->view->controller->request->data[$name]) && $defaultValue) { return $defaultValue; }*/
 	}
 }
