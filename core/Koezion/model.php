@@ -405,6 +405,7 @@ class Model extends Object {
  * @version 1.3 - 21/04/2015 by FI - Rajout des index group et orderBy en complément de groupBy et order
  * @version 1.4 - 22/04/2015 by FI - Modification de le gestion de la récupération des paramètres des conditions LEFT, RIGHT et INNER JOIN
  * @version 1.5 - 23/04/2015 by FI - Modification de le gestion du OR
+ * @version 1.6 - 07/07/2015 by FI - Correction gestion rightJoin et innerJoin (Thks SS) 
  */    
 	public function find($req = array(), $type = PDO::FETCH_ASSOC) {
 				
@@ -531,7 +532,7 @@ class Model extends Object {
 					} else { //Sinon, on n'a qu'un seul join
 						
 						$joinDatas = $this->_get_left_right_inner_join_datas($req['rightJoin']);
-						$sql .= "\n".'RIGHT JOIN '."\n\t".$joinDatas['joinTable'].' AS '.$joinDatas['joinAlias'].' '."\n\t".'ON '.$req['leftJoin']['pivot'].' '; //On ajoute à la requête
+						$sql .= "\n".'RIGHT JOIN '."\n\t".$joinDatas['joinTable'].' AS '.$joinDatas['joinAlias'].' '."\n\t".'ON '.$req['rightJoin']['pivot'].' '; //On ajoute à la requête
 						
 						//On conserve l'ancienne version 22/04/2015
 						//$joinModel = $this->load_model($req['rightJoin']['model'], true);
@@ -562,7 +563,7 @@ class Model extends Object {
 					} else { //Sinon, on n'a qu'un seul "join"
 						
 						$joinDatas = $this->_get_left_right_inner_join_datas($req['innerJoin']);
-						$sql .= "\n".'INNER JOIN '."\n\t".$joinDatas['joinTable'].' AS '.$joinDatas['joinAlias'].' '."\n\t".'ON '.$req['leftJoin']['pivot'].' '; //On ajoute à la requête
+						$sql .= "\n".'INNER JOIN '."\n\t".$joinDatas['joinTable'].' AS '.$joinDatas['joinAlias'].' '."\n\t".'ON '.$req['innerJoin']['pivot'].' '; //On ajoute à la requête
 						
 						//On conserve l'ancienne version 22/04/2015
 						//$joinModel = $this->load_model($req['innerJoin']['model'], true);

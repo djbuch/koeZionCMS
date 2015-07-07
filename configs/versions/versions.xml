@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 07/07/2015</name>
+		<num>20150707.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">MOdel::find : Correction gestion rightJoin et innerJoin (Thks SS)</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 09/06/2015</name>
 		<num>20150609.001</num>
 		<supervisor>KoéZionCMS</supervisor>
