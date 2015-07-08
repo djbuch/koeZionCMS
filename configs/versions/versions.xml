@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 08/07/2015</name>
+		<num>20150708.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise en place de la réécriture du dossier de stockage CKfinder via la variable de session</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 08/07/2015</name>
 		<num>20150708.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

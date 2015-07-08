@@ -114,6 +114,13 @@ if(Session::read('Backoffice.UsersGroup.role_id') == 1 || $onlyOneFolder) {
 	$baseUrl = dirname(dirname(dirname(dirname(dirname(dirname($_SERVER['SCRIPT_NAME'])))))).'/upload/'.$userPath.'/'; //Chemin relatif vers le dossier upload
 	
 }
+
+//Réécriture du dossier de stockage via une variable de session
+if(Session::check('REWRITE_CK_FINDER_FOLDER')) {
+	
+	$userPath = Session::read('REWRITE_CK_FINDER_FOLDER');
+	$baseUrl = dirname(dirname(dirname(dirname(dirname(dirname($_SERVER['SCRIPT_NAME'])))))).'/upload/'.$userPath.'/'; //Chemin relatif vers le dossier upload	
+}
 //$baseUrl = dirname(dirname(dirname(dirname(dirname(dirname($_SERVER['SCRIPT_NAME'])))))).'/upload/'; //Chemin relatif vers le dossier upload
 //$baseUrl = str_replace('webroot/', '', $baseUrlTMP); //On supprime le dossier webroot pour qu'il n'apparaisse pas lors de l'ajout des images
 
