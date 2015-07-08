@@ -1,10 +1,18 @@
 ﻿<versions>
 	<version>
+		<name>Version du 08/07/2015</name>
+		<num>20150708.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise à jour du Behavior Upload passage de 0.31 à 0.33dev</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 07/07/2015</name>
 		<num>20150707.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FI" type="code">MOdel::find : Correction gestion rightJoin et innerJoin (Thks SS)</task>
+			<task author="FI" type="code">Model::find : Correction gestion rightJoin et innerJoin (Thks SS)</task>
 		</tasks>
 	</version>
 	<version>
