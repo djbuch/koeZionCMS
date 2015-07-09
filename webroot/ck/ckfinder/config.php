@@ -194,9 +194,12 @@ Subfolders inherit their default settings from their parents' definitions.
 	  means "all resource types".
 */
 
+$ressourceType = '*';
+if(Session::check('REWRITE_CK_FINDER_RESSOURCE_TYPE')) { $ressourceType = Session::read('REWRITE_CK_FINDER_RESSOURCE_TYPE'); }
+
 $config['AccessControl'][] = Array(
 		'role' => '*',
-		'resourceType' => '*',
+		'resourceType' => $ressourceType,
 		'folder' => '/',
 
 		'folderView' => true,
