@@ -1207,6 +1207,7 @@ class Model extends Object {
  * @author	koéZionCMS
  * @version 0.1 - 28/12/2011
  * @version 0.2 - 10/02/2014 - Reprise de la fonction dans le cas ou l'upload de fichiers en front soit nécessaire
+ * @version 0.3 - 10/07/2015 - Reprise de la gestion de la génération des données dans le cas if(isset($v['path']) && $v['path'])
  */	
 	public function upload_files($datas, $id) {
 		
@@ -1219,13 +1220,19 @@ class Model extends Object {
 				if($handle->uploaded) {
 					
 					if(isset($v['path']) && $v['path']) {
-						 
-						$filePath = $v['path']; 
-						$filePathBdd = $v['path']; 
+												
+						$filePath = $v['path'];
+						
+						//Redéfinition du chemin d'accès qui sera sauvegardé en BDD
+						$filePathBdd = str_replace(ROOT, BASE_URL, $v['path']); //On remplace le chemin d'accès depuis la racine du disque par celui depuis la racine du localhost
+						$filePathBdd = str_replace(DS, '/', $filePathBdd); //On remplace les DS par des /
+						$filePathBdd = str_replace('webroot/', '', $filePathBdd); //On supprime le dossier webroot qui n'est pas utile
+						
 					} else {
 						 
 						$filePath = WEBROOT.DS."upload".DS.get_class($this).DS.$id; 
 						$filePathBdd = BASE_URL."/upload/".DS.get_class($this).'/'.$id; 
+						
 					}
 					
 					$handle->Process($filePath);					
