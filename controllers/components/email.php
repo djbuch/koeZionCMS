@@ -109,6 +109,7 @@ class EmailComponent extends Component {
  * @version 0.1 - 06/02/2012 by FI
  * @version 0.2 - 02/08/2012 by FI - Customisation des messages
  * @version 0.3 - 07/11/2013 by FI - Mise en place de la possibilité de ne pas envoyer de bcc
+ * @version 0.4 - 10/07/2015 by FI - Mise en place de la possibilité de changer les données de ->setFrom
  */
 	function send($datas, $controller, $file = null) {
 		
@@ -132,10 +133,14 @@ class EmailComponent extends Component {
 			$content_for_layout = ob_get_clean(); //On récupère le rendu
 	
 			$type = isset($datas['type']) ? $datas['type'] : 'text/html'; //Récupération du type du message
+			
+			$mailSetFromEmail 	= isset($datas['setFromEmail']) ? $datas['setFromEmail'] : $this->mailSetFromEmail;
+			$mailSetFromName 	= isset($datas['setFromName']) ? $datas['setFromName'] : $this->mailSetFromName;
+			
 			//Création du message
 			$message = Swift_Message::newInstance()
 				->setSubject($datas['subject']) //Mise en place du sujet
-				->setFrom(array($this->mailSetFromEmail => $this->mailSetFromName)) //Mise en place de l'adresse de l'expéditeur								
+				->setFrom(array($mailSetFromEmail => $mailSetFromName)) //Mise en place de l'adresse de l'expéditeur								
 				->addPart($content_for_layout, $type); // And optionally an alternative body
 			
 			//Si on a des fichiers joints

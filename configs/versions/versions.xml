@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 10/07/2015</name>
+		<num>20150710.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">EmailComponent::send : Mise en place de la possibilité de changer les données de ->setFrom</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 09/07/2015</name>
 		<num>20150709.001</num>
 		<supervisor>KoéZionCMS</supervisor>
