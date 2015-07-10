@@ -84,6 +84,7 @@ class FormHelper extends FormParentHelper {
  *
  * @param unknown_type $input
  * @return unknown
+ * @version 0.1 - 10/07/2015 by FI - Rajout de txtAfterInput
  *
  */
 	function upload_files($field, $params = null) {
@@ -137,6 +138,7 @@ class FormHelper extends FormParentHelper {
 				<?php				
 				if($params['display_input']) { echo $this->input($field, '', array('tooltip' => false, 'div' => false, 'label' => false, 'class' => 'upload_file')); }
 				echo $this->input('select_file', '<span>'.$params['button_value'].'</span>', array('type' => 'button', 'onclick' => 'BrowseServer'.$inputIdText.'();', 'displayError' => false, 'label' => false, 'div' => false, 'tooltip' => false, 'class' => 'medium black'));
+				if(isset($params['txtAfterInput'])) { echo $params['txtAfterInput']; }
 				?>
 			</div>
 		</div>
