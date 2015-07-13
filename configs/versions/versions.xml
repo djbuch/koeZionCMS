@@ -1,10 +1,18 @@
 ﻿<versions>
 	<version>
+		<name>Version du 13/07/2015</name>
+		<num>20150713.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Test CDATA</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 10/07/2015</name>
 		<num>20150710.003</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FI" type="code">Model::upload_files : Reprise de la gestion de la génération des données dans le cas if(isset($v['path']) && $v['path'])</task>
+			<task author="FI" type="code"><![CDATA[Model::upload_files : Reprise de la gestion de la génération des données dans le cas if(isset($v['path']) && $v['path'])]]></task>
 		</tasks>
 	</version>
 	<version>
