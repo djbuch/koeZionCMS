@@ -1,11 +1,18 @@
 ﻿<versions>
 	<version>
 		<name>Version du 16/07/2015</name>
+		<num>20150716.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Dispatcher : Modifications de l'héritage</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 16/07/2015</name>
 		<num>20150716.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="FI" type="code">Dispatcher::load_controller_file : Mise en place des hooks controllers</task>
-			<task author="FI" type="code">Dispatcher : Modifications de l'héritage</task>
 			<task author="FI" type="code">Object::load_model : Mise en place des hooks modèles</task>
 			<task author="FI" type="code">Object::load_hooks_files : Déplacement de cette fonction de l'objet View et rajout des la gestion des hooks pour les controleurs et les modèles</task>
 			<task author="FI" type="code">View::_load_hooks_files : Suppression de la fonction</task>

@@ -17,7 +17,7 @@
  * @copyright	KoéZionCMS
  * @link        http://www.koezion-cms.com
  */
-class Dispatcher {
+class Dispatcher extends Object {
 
 /**
  * Objet de type Request
