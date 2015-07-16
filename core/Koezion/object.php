@@ -145,6 +145,7 @@ class Object {
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 25/01/2011 by FI
+ * @version 0.2 - 16/07/2015 by FI - Mise en place des hooks composants
  */	
 	public function load_component($component, $path = null, $componentController = null) {	
 
@@ -164,11 +165,18 @@ class Object {
 		if(!isset($path)) { $componentPath = COMPONENTS; }
 		else { $componentPath = $path; } 
 		
-		require_once $componentPath.DS.$componentFileName.'.php'; //Inclusion du fichier
+		$componentPathFile = $componentPath.DS.$componentFileName.'.php';
+		
+		/////////////////////////////////////////////////////////////////
+		//    VERIFICATION SI UN HOOK EST DISPONIBLE POUR LE MODELE    //
+		$componentsHooks = $this->load_hooks_files('COMPONENTS');		
+		if(isset($componentsHooks[$componentObjectName])) { $componentPathFile = $componentsHooks[$componentObjectName]; }		
+		
+		require_once $componentPathFile; //Inclusion du fichier
 		if(isset($componentController)) { $controller = $componentController; } else { $controller = $this; }
 		
 		$this->components[$component] = new $componentObjectName($controller); //Et on insère l'objet
-	}		
+	}	
 
 /**
  * Cette fonction permet d'effectuer le chargement des fichiers hooks pour les vues et les éléments
@@ -182,6 +190,7 @@ class Object {
  * @version 0.2 - 08/01/2015 by FI - Rajout de HELPERS
  * @version 0.3 - 16/04/2015 by FI - Rajout de la gestion d'un fichier par défaut indépendant des données renseignées dans hook_filename
  * @version 0.4 - 16/07/2015 by FI - Déplacement de cette fonction de l'objet View et rajout des la gestion des hooks pour les controleurs et les modèles
+ * @version 0.5 - 16/07/2015 by FI - Rajout de la gestion des hooks pour les composants
  */	
 	public function load_hooks_files($type, $websiteHooks = null) {
 		
@@ -198,8 +207,9 @@ class Object {
 			else if($type == 'ELEMENTS') 	{ $hooksPath = CONFIGS_HOOKS.DS.'elements'.DS; }
 			else if($type == 'HELPERS') 	{ $hooksPath = CONFIGS_HOOKS.DS.'helpers'.DS; }
 			else if($type == 'CONTROLLERS') { $hooksPath = CONFIGS_HOOKS.DS.'controllers'.DS; }
+			else if($type == 'COMPONENTS') 	{ $hooksPath = CONFIGS_HOOKS.DS.'components'.DS; }
 			else if($type == 'MODELS') 		{ $hooksPath = CONFIGS_HOOKS.DS.'models'.DS; }
-		
+					
 			foreach($hooks as $hook) {
 				
 				$hookFile = $hooksPath.$hook.'.php';
@@ -211,6 +221,7 @@ class Object {
 			else if(isset($elementsHooks)) 		{ return $elementsHooks; }
 			else if(isset($helpersHooks)) 		{ return $helpersHooks; }			
 			else if(isset($controllersHooks)) 	{ return $controllersHooks; }
+			else if(isset($componentsHooks)) 	{ return $componentsHooks; }
 			else if(isset($modelsHooks)) 		{ return $modelsHooks; }
 		}
 	}

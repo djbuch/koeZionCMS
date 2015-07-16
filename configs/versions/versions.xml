@@ -1,6 +1,15 @@
 ﻿<versions>
 	<version>
 		<name>Version du 16/07/2015</name>
+		<num>20150716.003</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Object::load_component : Mise en place des hooks composants</task>
+			<task author="FI" type="code">Object::load_hooks_files : Rajout de la gestion des hooks pour les composants</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 16/07/2015</name>
 		<num>20150716.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
