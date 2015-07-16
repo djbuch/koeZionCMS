@@ -73,7 +73,7 @@ class View extends Object {
 				if(defined('LAYOUT_VIEWS')) {	
     	
 			    	$websiteHooks = $this->vars['websiteParams'];    	
-			    	$helpersHooks = $this->_load_hooks_files('HELPERS', $websiteHooks);
+			    	$helpersHooks = $this->load_hooks_files('HELPERS', $websiteHooks);
 			    	if(isset($helpersHooks[$moreHelper])) { $helperPath = $helpersHooks[$moreHelper]; }    	
 				}
 				
@@ -183,7 +183,7 @@ class View extends Object {
     	//Nous allons donc charger les fichiers hooks, s'il y en a, et effectuer des tests sur l'existence d'une ligne pour la vue courante    	
     	if(isset($this->vars['websiteParams'])) { $websiteHooks = $this->vars['websiteParams']; } //Frontoffice  
     	else { $websiteHooks = Session::read('Backoffice.Websites.details.'.CURRENT_WEBSITE_ID); } //Backoffice
-    	$viewsHooks = $this->_load_hooks_files('VIEWS', $websiteHooks);
+    	$viewsHooks = $this->load_hooks_files('VIEWS', $websiteHooks);
     	if($this->controller->request->prefix) { $hookAction = $this->controller->request->prefix.'_'.$params['action']; }
     	else { $hookAction = $params['action']; }
     	$hookPathView = $params['controllerFileName'].'/'.$hookAction;
@@ -207,7 +207,7 @@ class View extends Object {
     	
     	///////////////////////////////////////////////////////
     	//    ON VA TESTER SI UN HOOK LAYOUT EST EN PLACE    //
-    	$layoutsHooks = $this->_load_hooks_files('LAYOUTS', $websiteHooks);
+    	$layoutsHooks = $this->load_hooks_files('LAYOUTS', $websiteHooks);
     	if(isset($layoutsHooks[$this->layout])) { require_once $layoutsHooks[$this->layout].'.php'; }
     	else {    	
 	    	
@@ -277,7 +277,7 @@ class View extends Object {
     	//Nous allons donc charger les fichiers hooks, s'il y en a, et effectuer des tests sur l'existence d'une ligne pour l'élément courant  
     	if(isset($this->vars['websiteParams'])) { $websiteHooks = $this->vars['websiteParams']; } //Frontoffice  
     	else { $websiteHooks = Session::read('Backoffice.Websites.details.'.CURRENT_WEBSITE_ID); } //Backoffice
-    	$elementsHooks = $this->_load_hooks_files('ELEMENTS', $websiteHooks);
+    	$elementsHooks = $this->load_hooks_files('ELEMENTS', $websiteHooks);
     	
     	if(isset($elementsHooks[$element])) { $element = $elementsHooks[$element]; }
     	else if(isset($elementHook) && isset($elementsHooks[$elementHook])) { $element = $elementsHooks[$elementHook]; }
@@ -444,50 +444,6 @@ class View extends Object {
 			Session::write('redirectMessage', $message);			
 			$this->redirect('home/e404');
 			die();
-		}
-	}
-	
-//////////////////////////////////////////////////////////////////////////////////////////////////
-//										FONCTIONS PRIVEES										//
-//////////////////////////////////////////////////////////////////////////////////////////////////
-
-/**
- * Cette fonction permet d'effectuer le chargement des fichiers hooks pour les vues et les éléments
- * 
- * @param 	varchar $type 			Type de hook (VIEWS or ELEMENTS)
- * @param 	array 	$websiteHooks 	Tableau contenant le nom des fichiers à charger
- * @return 	array 	Tableau contenant les hooks à mettre en place
- * @access	protected
- * @author	koéZionCMS
- * @version 0.1 - 01/11/2014 by FI
- * @version 0.2 - 08/01/2015 by FI - Rajout de HELPERS
- * @version 0.3 - 16/04/2015 by FI - Rajout de la gestion d'un fichier par défaut indépendant des données renseignées dans hook_filename
- */	
-	protected function _load_hooks_files($type, $websiteHooks) {
-		
-		//Dans le cas ou aucun fichier de hook ne soit demande on va quand même tester si le fichier default existe
-		if(empty($websiteHooks['hook_filename'])) { $websiteHooks['hook_filename'] = 'default'; }
-		else { $websiteHooks['hook_filename'] .= ';default'; }
-		
-		if(!empty($websiteHooks['hook_filename'])) { 
-					
-			$hooks = explode(';', $websiteHooks['hook_filename']);
-				
-			if($type == 'ELEMENTS') { $hooksPath = CONFIGS_HOOKS.DS.'elements'.DS; }
-			else if($type == 'HELPERS') { $hooksPath = CONFIGS_HOOKS.DS.'helpers'.DS; }
-			else if($type == 'LAYOUTS') { $hooksPath = CONFIGS_HOOKS.DS.'layouts'.DS; }
-			else if($type == 'VIEWS') { $hooksPath = CONFIGS_HOOKS.DS.'views'.DS; }
-		
-			foreach($hooks as $hook) {
-				
-				$hookFile = $hooksPath.$hook.'.php';
-				if(file_exists($hookFile)) { include($hookFile); }				
-			}
-			
-			if(isset($elementsHooks)) { return $elementsHooks; }
-			else if(isset($helpersHooks)) { return $helpersHooks; }			
-			else if(isset($layoutsHooks)) { return $layoutsHooks; }			
-			else if(isset($viewsHooks)) { return $viewsHooks; }
 		}
 	}
 }

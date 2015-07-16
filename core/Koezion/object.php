@@ -51,6 +51,7 @@ class Object {
  * @version 0.2 - 18/03/2014 by FI - Reprise du chargement des modèles des plugins
  * @version 0.3 - 03/06/2014 by FI - Rajout de la variable $databaseConfigs permettant la connexion à une autre BDD
  * @version 0.4 - 08/08/2014 by FI - Modification des données envoyées au constructeur, création de la variable $modelParams
+ * @version 0.5 - 16/07/2015 by FI - Mise en place des hooks modèles
  */
 	public function load_model($name, $return = false, $databaseConfigs = null) {
 		
@@ -84,6 +85,11 @@ class Object {
 			
 			if(isset($file_path_plugin) && file_exists($file_path_plugin)) { $file_path = $file_path_plugin; } //Si il y a un plugin on le charge par défaut		
 			else if(file_exists($file_path_default)) { $file_path = $file_path_default; } //Sinon on test si le model par défaut existe
+						
+			/////////////////////////////////////////////////////////////////
+			//    VERIFICATION SI UN HOOK EST DISPONIBLE POUR LE MODELE    //
+			$modelsHooks = $this->load_hooks_files('MODELS');
+			if(isset($modelsHooks[$name])) { $file_path = $modelsHooks[$name]; }
 			
 			//On va tester l'existence de ce fichier
 			if(!file_exists($file_path)) { 				
@@ -162,7 +168,52 @@ class Object {
 		if(isset($componentController)) { $controller = $componentController; } else { $controller = $this; }
 		
 		$this->components[$component] = new $componentObjectName($controller); //Et on insère l'objet
-	}	
+	}		
+
+/**
+ * Cette fonction permet d'effectuer le chargement des fichiers hooks pour les vues et les éléments
+ * 
+ * @param 	varchar $type 			Type de hook (VIEWS or ELEMENTS)
+ * @param 	array 	$websiteHooks 	Tableau contenant le nom des fichiers à charger
+ * @return 	array 	Tableau contenant les hooks à mettre en place
+ * @access	public
+ * @author	koéZionCMS
+ * @version 0.1 - 01/11/2014 by FI
+ * @version 0.2 - 08/01/2015 by FI - Rajout de HELPERS
+ * @version 0.3 - 16/04/2015 by FI - Rajout de la gestion d'un fichier par défaut indépendant des données renseignées dans hook_filename
+ * @version 0.4 - 16/07/2015 by FI - Déplacement de cette fonction de l'objet View et rajout des la gestion des hooks pour les controleurs et les modèles
+ */	
+	public function load_hooks_files($type, $websiteHooks = null) {
+		
+		//Dans le cas ou aucun fichier de hook ne soit demande on va quand même tester si le fichier default existe
+		if(!isset($websiteHooks['hook_filename']) || empty($websiteHooks['hook_filename'])) { $websiteHooks['hook_filename'] = 'default'; }
+		else { $websiteHooks['hook_filename'] .= ';default'; }
+		
+		if(!empty($websiteHooks['hook_filename'])) { 
+					
+			$hooks = explode(';', $websiteHooks['hook_filename']);
+				
+			if($type == 'LAYOUTS') 			{ $hooksPath = CONFIGS_HOOKS.DS.'layouts'.DS; }
+			else if($type == 'VIEWS') 		{ $hooksPath = CONFIGS_HOOKS.DS.'views'.DS; }			
+			else if($type == 'ELEMENTS') 	{ $hooksPath = CONFIGS_HOOKS.DS.'elements'.DS; }
+			else if($type == 'HELPERS') 	{ $hooksPath = CONFIGS_HOOKS.DS.'helpers'.DS; }
+			else if($type == 'CONTROLLERS') { $hooksPath = CONFIGS_HOOKS.DS.'controllers'.DS; }
+			else if($type == 'MODELS') 		{ $hooksPath = CONFIGS_HOOKS.DS.'models'.DS; }
+		
+			foreach($hooks as $hook) {
+				
+				$hookFile = $hooksPath.$hook.'.php';
+				if(file_exists($hookFile)) { include($hookFile); }				
+			}
+			
+			if(isset($layoutsHooks)) 			{ return $layoutsHooks; }				
+			else if(isset($viewsHooks)) 		{ return $viewsHooks; }
+			else if(isset($elementsHooks)) 		{ return $elementsHooks; }
+			else if(isset($helpersHooks)) 		{ return $helpersHooks; }			
+			else if(isset($controllersHooks)) 	{ return $controllersHooks; }
+			else if(isset($modelsHooks)) 		{ return $modelsHooks; }
+		}
+	}
 
 /**
  * Cette fonction permet de faire une redirection de page

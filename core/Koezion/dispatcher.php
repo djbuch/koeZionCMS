@@ -124,7 +124,7 @@ class Dispatcher {
 	
 		$fileName 			= $this->load_controller_file();
 		$controllerName 	= Inflector::camelize($fileName); //On transforme le nom du fichier pour récupérer le nom du controller	
-		$controller 		=  new $controllerName($this->request); //Création d'une instance du controller souhaité dans lequel on injecte la request		
+		$controller 		= new $controllerName($this->request); //Création d'une instance du controller souhaité dans lequel on injecte la request		
 		return $controller;
 	}	
 	
@@ -140,6 +140,7 @@ class Dispatcher {
  * @version 0.3 - 18/03/2014 by FI - Allègement de la gestion du chargement du fichier du controller 
  * @version 0.4 - 12/04/2014 by FI - Suppression de _plugin dans le nom d'un controller de plugin 
  * @version 0.5 - 12/04/2014 by FI - Annulation suppression de _plugin dans le nom d'un controller de plugin car un plugin peut potentiellement avoir le même nom qu'un controller existant 
+ * @version 0.6 - 16/07/2015 by FI - Mise en place des hooks controllers  
  */
 	public function load_controller_file($controllerToLoad = null) {
 		
@@ -159,6 +160,12 @@ class Dispatcher {
 			$controllerName = strtolower($this->request->controller.'_plugin_controller');
 		}
 		//////////////////////////////////////////////
+		
+		/////////////////////////////////////////////////////////////////////
+		//    VERIFICATION SI UN HOOK EST DISPONIBLE POUR LE CONTROLEUR    //
+		$controllersHooks = $this->load_hooks_files('CONTROLLERS');
+		$camelizedControllerName = Inflector::camelize($controllerName);		
+		if(isset($controllersHooks[$camelizedControllerName])) { $controllerPath = $controllersHooks[$camelizedControllerName]; }
 	
 		if(file_exists($controllerPath)) { 
 			
