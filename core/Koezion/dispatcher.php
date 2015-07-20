@@ -163,8 +163,8 @@ class Dispatcher extends Object {
 		
 		/////////////////////////////////////////////////////////////////////
 		//    VERIFICATION SI UN HOOK EST DISPONIBLE POUR LE CONTROLEUR    //
-		$controllersHooks = $this->load_hooks_files('CONTROLLERS');
-		$camelizedControllerName = Inflector::camelize($controllerName);		
+		$controllersHooks 			= $this->load_hooks_files('CONTROLLERS');
+		$camelizedControllerName 	= Inflector::camelize($controllerName);		
 		if(isset($controllersHooks[$camelizedControllerName])) { $controllerPath = $controllersHooks[$camelizedControllerName]; }
 	
 		if(file_exists($controllerPath)) { 

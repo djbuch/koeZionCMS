@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 20/07/2015</name>
+		<num>20150720.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">SVN TEST</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 16/07/2015</name>
 		<num>20150716.003</num>
 		<supervisor>KoéZionCMS</supervisor>
