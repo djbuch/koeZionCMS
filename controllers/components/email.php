@@ -36,6 +36,7 @@ class EmailComponent extends Component {
  * @version 0.1 - 06/20/2011 by FI
  * @version 0.2 - 02/03/2012 by FI - Modification de la récupération des configurations, on passe maintenant par un fichier .ini
  * @version 0.3 - 18/04/2012 by FI - Modification de la récupération du .ini il n'y a plus de section
+ * @version 0.4 - 21/07/2015 by FI - Gestion de l'encryption
  */
 	function init($file) {
 		
@@ -75,7 +76,12 @@ class EmailComponent extends Component {
 				
 			} else {		
 				
-				if(isset($conf['smtp_secure']) && $conf['smtp_secure']) { $encryption = 'ssl'; } else {  $encryption = null; }
+				if(isset($conf['smtp_secure']) && $conf['smtp_secure']) { 
+					
+					if($conf['smtp_secure'] == 1) { $encryption = 'ssl'; }
+					else { $encryption = $conf['smtp_secure']; } 
+					
+				} else {  $encryption = null; }
 				
 				//Définition du transport smtp
 				$transport = Swift_SmtpTransport::newInstance()
