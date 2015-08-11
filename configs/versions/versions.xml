@@ -1,5 +1,18 @@
 ﻿<versions>
 	<version>
+		<name>Version du 11/08/2015</name>
+		<num>20150811.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">EmailComponent::init : Mise en place de la gestion des exceptions lors de l'envoi de mail</task>
+			<task author="FI" type="code">EmailComponent::send : Mise en place de la gestion des exceptions lors de l'envoi de mail</task>
+			<task author="FI" type="code">EmailComponent::send_free : Mise en place de la gestion des exceptions lors de l'envoi de mail</task>
+			<task author="FI" type="code">EmailComponent::send_test : Mise en place de la gestion des exceptions lors de l'envoi de mail</task>
+			<task author="SS" type="code">HtmlParentHelper::css : Correction dédoublonnage du tableau $css et si la valeur $css n'est pas vide</task>
+			<task author="SS" type="code">HtmlParentHelper::js : Correction dédoublonnage du tableau $js et si la valeur $css n'est pas vide</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 21/07/2015</name>
 		<num>20150721.001</num>
 		<supervisor>KoéZionCMS</supervisor>

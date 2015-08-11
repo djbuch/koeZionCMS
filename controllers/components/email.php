@@ -19,6 +19,7 @@
 class EmailComponent extends Component {
 
 	var $mailer = false;
+	var $exceptions = false;
 	
 	private $smtpHost = ''; 
 	private $smtpPort = '';
@@ -37,8 +38,11 @@ class EmailComponent extends Component {
  * @version 0.2 - 02/03/2012 by FI - Modification de la récupération des configurations, on passe maintenant par un fichier .ini
  * @version 0.3 - 18/04/2012 by FI - Modification de la récupération du .ini il n'y a plus de section
  * @version 0.4 - 21/07/2015 by FI - Gestion de l'encryption
+ * @version 0.5 - 11/08/2015 by FI - Mise en place de la gestion des exceptions lors de l'envoi de mail
  */
 	function init($file) {
+		
+		$this->exceptions = false;
 		
 		require_once(LIBS.DS.'config_magik.php'); //Import de la librairie de gestion des fichiers de configuration
 		$cfg = new ConfigMagik($file, true, true); //Création d'une instance
@@ -116,13 +120,14 @@ class EmailComponent extends Component {
  * @version 0.2 - 02/08/2012 by FI - Customisation des messages
  * @version 0.3 - 07/11/2013 by FI - Mise en place de la possibilité de ne pas envoyer de bcc
  * @version 0.4 - 10/07/2015 by FI - Mise en place de la possibilité de changer les données de ->setFrom
+ * @version 0.5 - 11/08/2015 by FI - Mise en place de la gestion des exceptions lors de l'envoi de mail
  */
 	function send($datas, $controller, $file = null) {
 		
 		if(!isset($file) && empty($file)) { $file = CONFIGS.DS.'files'.DS.'mailer.ini'; }
 		$this->init($file);
 		
-		$numSent = 0;	
+		$numSent = 0;
 		
 		if($this->mailer) {
 			
@@ -184,13 +189,19 @@ class EmailComponent extends Component {
 				foreach($datas['to'] as $k => $to) {
 					
 					$message->setTo(array($to));
-					$numSent += $this->mailer->send($message); //On envoi le message
+					
+					//On envoi le message
+					try { $numSent += $this->mailer->send($message); } 
+					catch(Exception $e) { $this->exceptions[] = _('Exception reçue').' : '.$e->getMessage(); }
 				}				
 			}
 			else { //Mise en place de l'adresse du destinataire
 				
 				$message->setTo(array($datas['to']));
-				$numSent += $this->mailer->send($message); //On envoi le message			
+					
+				//On envoi le message
+				try { $numSent += $this->mailer->send($message); } 
+				catch(Exception $e) { $this->exceptions[] = _('Exception reçue').' : '.$e->getMessage(); }	
 			}			
 		}
 		return $numSent;
@@ -204,6 +215,7 @@ class EmailComponent extends Component {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 22/05/2014 by FI
+ * @version 0.2 - 11/08/2015 by FI - Mise en place de la gestion des exceptions lors de l'envoi de mail
  */	
 	function send_free($datas = null) {
 				
@@ -257,13 +269,19 @@ class EmailComponent extends Component {
 					foreach($datas['to'] as $k => $to) {
 						
 						$message->setTo(array($to));
-						$numSent += $this->mailer->send($message); //On envoi le message
+					
+					//On envoi le message
+					try { $numSent += $this->mailer->send($message); } 
+					catch(Exception $e) { $this->exceptions[] = _('Exception reçue').' : '.$e->getMessage(); }
 					}				
 				}
 				else { //Mise en place de l'adresse du destinataire
 					
 					$message->setTo(array($datas['to']));
-					$numSent += $this->mailer->send($message); //On envoi le message			
+					
+					//On envoi le message
+					try { $numSent += $this->mailer->send($message); } 
+					catch(Exception $e) { $this->exceptions[] = _('Exception reçue').' : '.$e->getMessage(); }			
 				}
 			}
 		}
@@ -279,6 +297,7 @@ class EmailComponent extends Component {
  * @author 	koéZionCMS
  * @version 0.1 - 06/02/2012 by FI
  * @version 0.2 - 22/05/2014 by FI - Suppression de la variable $controller qui ne sert pas dans la fonction
+ * @version 0.3 - 11/08/2015 by FI - Mise en place de la gestion des exceptions lors de l'envoi de mail
  */	
 	function send_test() {
 		
@@ -293,8 +312,10 @@ class EmailComponent extends Component {
 				->setFrom(array('noreply@koezion-cms.com' => 'koéZionCMS')) //Mise en place de l'adresse de l'expéditeur
 				->setTo(array($this->bccEmail)) //Mise en place de l'adresse du destinataire
 				->addPart("Votre serveur SMTP est correctement paramétré", 'text/html'); // And optionally an alternative body
-				
-			$numSent = $this->mailer->send($message); //On envoi le message
+									
+			//On envoi le message
+			try { $numSent += $this->mailer->send($message); } 
+			catch(Exception $e) { $this->exceptions[] = _('Exception reçue').' : '.$e->getMessage(); }
 		}
 		
 		return $numSent;	

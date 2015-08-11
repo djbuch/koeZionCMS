@@ -94,6 +94,7 @@ class HtmlParentHelper extends Helper {
  * @version 0.6 - 27/12/2013 by FI : Mise en place la possibilité de charger directement un fichier
  * @version 0.7 - 08/07/2014 by FI : Mise en place la possibilité de charger des fichiers libremement via le code F
  * @version 0.8 - 17/09/2014 by FI : Rajout de la possibilité de modifier les attributs rel, type et media
+ * @version 0.9 - 06/08/2015 by SS : Correction dédoublonnage du tableau $css et si la valeur $css n'est pas vide
  */	
 	public function css($css, $inline = false, $merge = true, $minified = false) {	
 		
@@ -106,52 +107,57 @@ class HtmlParentHelper extends Helper {
 				$this->css = array(); //On vide le tableau dans le cas ou d'autres insertions seraient prévues
 			}
 			
+			$css = array_unique($css);
+			
 			$html = ''; //Code HTML qui sera retourné
 			foreach($css as $k => $v) { //Parcours de l'ensemble des fichiers
-
-				$cssRel = 'stylesheet';
-				$cssType = 'text/css';
-				$cssMedia = 'all';
-				if(is_array($v)) {
-					
-					$cssHref = $v['href'];
-					if(isset($v['rel'])) { $cssRel = $v['rel']; } 
-					if(isset($v['type'])) { $cssType = $v['type']; } 
-					if(isset($v['media'])) { $cssMedia = $v['media']; }					
-				} else {
-					
-					$cssHref = $v;
-				}
 				
+				if(!empty($v)) {
 				
-				//On va vérifier si le css n'est pas externe
-				if(substr_count($cssHref, 'http://')) { $cssPath = $cssHref; }
-				else {
-				
-					$firstChar = $cssHref{0};
-					switch($firstChar) {
-										
-						case 'P': //Plugin
-							$cssFile = '/plugins/'.str_replace('P/', '', $cssHref);
-						break;	
-										
-						case 'F': //Free, chargement libre
-							$cssFile = str_replace('F/', '', $cssHref);
-						break;				
+					$cssRel = 'stylesheet';
+					$cssType = 'text/css';
+					$cssMedia = 'all';
+					if(is_array($v)) {
 						
-						case '/': //Normal						
-							$cssFile = '/css/'.$cssHref;						
-						break;
+						$cssHref = $v['href'];
+						if(isset($v['rel'])) { $cssRel = $v['rel']; } 
+						if(isset($v['type'])) { $cssType = $v['type']; } 
+						if(isset($v['media'])) { $cssMedia = $v['media']; }					
+					} else {
 						
-						default: //Front						
-							$cssFile = '/templates/'.$cssHref;						
-						break;
+						$cssHref = $v;
 					}
 					
-					if(!substr_count($cssHref, '.css')) { $cssFile.='.css'; }	//On teste si l'extension n'est pas déjà renseignée sinon on la rajoute			
-					$cssPath = Router::webroot($cssFile); //On génère le chemin vers le fichier
-				}
-				$html .= "\t\t".'<link href="'.$cssPath.'" rel="'.$cssRel.'" type="'.$cssType.'" media="'.$cssMedia.'" />'."\n"; //On génère la balise de chargement						
+					
+					//On va vérifier si le css n'est pas externe
+					if(substr_count($cssHref, 'http://')) { $cssPath = $cssHref; }
+					else {
+					
+						$firstChar = $cssHref{0};
+						switch($firstChar) {
+											
+							case 'P': //Plugin
+								$cssFile = '/plugins/'.str_replace('P/', '', $cssHref);
+							break;	
+											
+							case 'F': //Free, chargement libre
+								$cssFile = str_replace('F/', '', $cssHref);
+							break;				
+							
+							case '/': //Normal						
+								$cssFile = '/css/'.$cssHref;						
+							break;
+							
+							default: //Front						
+								$cssFile = '/templates/'.$cssHref;						
+							break;
+						}
+						
+						if(!substr_count($cssHref, '.css')) { $cssFile.='.css'; }	//On teste si l'extension n'est pas déjà renseignée sinon on la rajoute			
+						$cssPath = Router::webroot($cssFile); //On génère le chemin vers le fichier
+					}
+					$html .= "\t\t".'<link href="'.$cssPath.'" rel="'.$cssRel.'" type="'.$cssType.'" media="'.$cssMedia.'" />'."\n"; //On génère la balise de chargement
+				}						
 			}
 			
 			$html .= "\n"; //Rajout d'un saut de ligne			
@@ -206,6 +212,7 @@ class HtmlParentHelper extends Helper {
  * @version 0.6 - 27/12/2013 by FI : Mise en place la possibilité de charger directement un fichier
  * @version 0.7 - 07/03/2014 by FI : Mise en place la possibilité de charger des variables pour les fichiers
  * @version 0.8 - 08/07/2014 by FI : Mise en place la possibilité de charger des fichiers libremement via le code F
+ * @version 0.9 - 06/08/2015 by SS : Correction dédoublonnage du tableau $js et si la valeur $js n'est pas vide
  */	
 	public function js($js, $inline = false, $merge = true, $minified = false) {
 		
@@ -218,46 +225,51 @@ class HtmlParentHelper extends Helper {
 				$this->js = array(); //On vide le tableau dans le cas ou d'autres insertions seraient prévues
 			}
 			
+			$js = array_unique($js);
+			
 			$html = ''; //Code HTML qui sera retourné
 			foreach($js as $k => $v) { //Parcours de l'ensemble des fichiers
 				
-				//On va vérifier si le js n'est pas externe
-				if(substr_count($v, 'http://')) { $jsPath = $v; }
-				else {
-				
-					$firstChar = $v{0};
-					switch($firstChar) {
-										
-						case 'P': //Plugin
-							$jsFile = '/plugins/'.str_replace('P/', '', $v);
-						break;	
-										
-						case 'F': //Free, chargement libre
-							$jsFile = str_replace('F/', '', $v);
-						break;				
+				if(!empty($v)) {
+					
+					//On va vérifier si le js n'est pas externe
+					if(substr_count($v, 'http://')) { $jsPath = $v; }
+					else {
+					
+						$firstChar = $v{0};
+						switch($firstChar) {
+											
+							case 'P': //Plugin
+								$jsFile = '/plugins/'.str_replace('P/', '', $v);
+							break;	
+											
+							case 'F': //Free, chargement libre
+								$jsFile = str_replace('F/', '', $v);
+							break;				
+							
+							case '/': //Normal						
+								$jsFile = '/js/'.$v;						
+							break;
+							
+							default: //Front						
+								$jsFile = '/templates/'.$v;						
+							break;
+						}
 						
-						case '/': //Normal						
-							$jsFile = '/js/'.$v;						
-						break;
+						if(!substr_count($v, '.js')) { $jsFile.='.js'; } //On teste si l'extension n'est pas déjà renseignée sinon on la rajoute
+						$jsPath = Router::webroot($jsFile); //On génère le chemin vers le fichier
+					}				
+					
+					//On contrôle si il faut charger d'éventuels paramètres au fichier courant
+					//On charge les données avant le fichier
+					if(!empty($this->jsParams) && isset($this->jsParams[$k])) {
 						
-						default: //Front						
-							$jsFile = '/templates/'.$v;						
-						break;
+						$html .= "\t\t".'<script type="text/javascript">';
+						foreach($this->jsParams[$k] as $paramName => $paramValue) { $html .= 'var '.$paramName.' = '.$paramValue.';'."\n"; }
+						$html .= '</script>'."\n"; //On génère la balise de chargement
 					}
-					
-					if(!substr_count($v, '.js')) { $jsFile.='.js'; } //On teste si l'extension n'est pas déjà renseignée sinon on la rajoute
-					$jsPath = Router::webroot($jsFile); //On génère le chemin vers le fichier
-				}				
-				
-				//On contrôle si il faut charger d'éventuels paramètres au fichier courant
-				//On charge les données avant le fichier
-				if(!empty($this->jsParams) && isset($this->jsParams[$k])) {
-					
-					$html .= "\t\t".'<script type="text/javascript">';
-					foreach($this->jsParams[$k] as $paramName => $paramValue) { $html .= 'var '.$paramName.' = '.$paramValue.';'."\n"; }
-					$html .= '</script>'."\n"; //On génère la balise de chargement
-				}
-				$html .= "\t\t".'<script src="'.$jsPath.'" type="text/javascript"></script>'."\n"; //On génère la balise de chargement			
+					$html .= "\t\t".'<script src="'.$jsPath.'" type="text/javascript"></script>'."\n"; //On génère la balise de chargement
+				}			
 			}			
 			
 			$html .= "\n"; //Rajout d'un saut de ligne
