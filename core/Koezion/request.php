@@ -26,6 +26,7 @@ class Request {
  * 11/10/2014 --> Rajout de $this->files
  * 27/11/2014 --> Mise en place du hooks request - le nom du fichier est égal au nom de l'hôte
  * 28/05/2015 --> Rajout d'un test sur $this->url avant traitement, rajout de $protocol
+ * 13/08/2015 --> Rajout de $this->protocol et $this->domain
  */    
 	public function __construct() {
 		
@@ -46,6 +47,8 @@ class Request {
 			if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') { $protocol = 'https'; }
 			
 			$this->fullUrl = $protocol.'://'.$_SERVER["HTTP_HOST"].Router::url($this->url, ''); //Affectation de l'url complète		
+			$this->domain = $_SERVER["HTTP_HOST"]; //Affectation du domaine		
+			$this->protocol = $protocol; //Affectation du protocole		
 		}
 		
 		$this->queryString = $_SERVER['QUERY_STRING'];

@@ -1,5 +1,16 @@
 ﻿<versions>
 	<version>
+		<name>Version du 13/08/2015</name>
+		<num>20150813.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">UsersController::login : Rajout d'un test pour vérifier si la navigation HTTPS est activée</task>
+			<task author="FI" type="code">Object::redirect : Test sur l'url pour savoir si il y a https:// dedans</task>
+			<task author="FI" type="code">Request::__construct : Rajout de $this->protocol et $this->domain</task>
+			<task author="FI" type="code">Vue Configs::backoffice_core_list : Rajout de la case à cocher pour gérer l'HTTPS</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 11/08/2015</name>
 		<num>20150811.001</num>
 		<supervisor>KoéZionCMS</supervisor>

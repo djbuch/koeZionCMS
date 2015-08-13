@@ -239,7 +239,8 @@ class Object {
  * @version 0.2 - 02/05/2012 - Test sur l'url pour savoir si il y a http:// dedans 
  * @version 0.3 - 06/11/2012 - Rajout de la possibilité de passer des paramètres 
  * @version 0.4 - 29/03/2014 - Déplacement de cette fonction de la classe Controller vers la classe Object
- * @version 0.5 - 24/02/2015 - Rajoute de la variable $external
+ * @version 0.5 - 24/02/2015 - Rajout de la variable $external
+ * @version 0.6 - 13/08/2015 - Test sur l'url pour savoir si il y a https:// dedans 
  */
 	public function redirect($url, $code = null, $params = null, $external = false) {
 		 
@@ -289,7 +290,7 @@ class Object {
 		if(isset($code)) { header("HTTP/1.0 ".$code." ".$http_codes[$code]); }
 
 		//On contrôle que l'url de redirection ne commence pas par http
-		if(!substr_count($url, 'http://') && !$external) { $url = Router::url($url); }
+		if(!substr_count($url, 'http://') && !substr_count($url, 'https://') && !$external) { $url = Router::url($url); }
 
 		//On rajoute les paramètres éventuels
 		if(isset($params)) {$url .= '?'.$params; }

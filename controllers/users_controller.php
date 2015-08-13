@@ -28,18 +28,28 @@ class UsersController extends AppController {
  * @version 0.6 - 16/04/2013 by FI - Mise en place de la récupération dynamique de la route pour l'interface d'administration
  * @version 0.7 - 17/10/2014 by FI - Suppression du contrôle du mot de passe pour une utilisation locale
  * @version 0.8 - 04/06/2015 by FI - Correction récupération des données lors de l'utilisation d'un site sécurisé
+ * @version 0.9 - 13/08/2015 by FI - Rajout d'un test pour vérifier si la navigation HTTPS est activée
  */
-	function login() {
+	function login() {		
+
+		//Récupération des configurations
+		require_once(LIBS.DS.'config_magik.php');
+		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
+		$coreConfs = $cfg->keys_values();	
+
+		//Si la navigation HTTPS est activée mais que le protocole ne l'est pas on redirige vers la même page mais en https
+		if(isset($coreConfs['https_activated']) && $coreConfs['https_activated'] && $this->request->protocol == 'http') { 
+
+			$httpsUrl = Router::url('users/login', 'html', true, 'https');
+			$this->redirect($httpsUrl);
+		}		
 		
 		$this->layout = 'connect'; //Définition du layout	
 			
 		if($this->request->data) {
 			
-			$data = $this->request->data; //Mise en variable des données postées			
-			
-			require_once(LIBS.DS.'config_magik.php');
-			$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
-			$coreConfs = $cfg->keys_values();			
+			$data = $this->request->data; //Mise en variable des données postées	
+					
 			if($coreConfs['hash_password']) { $data['password'] = sha1($data['password']); } //Cryptage du mot de passe
 			
 			//Récupération du login et du mot de passe dans des variables
