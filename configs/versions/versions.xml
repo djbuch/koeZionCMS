@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 13/08/2015</name>
+		<num>20150813.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Layout connect : Modification du lien de redirection vers la racine du site pour ne pas prendre en compte l'HTTPS si celui-ci est activé</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 13/08/2015</name>
 		<num>20150813.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
