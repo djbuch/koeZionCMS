@@ -1,5 +1,25 @@
 ﻿<versions>
 	<version>
+		<name>Version du 14/08/2015</name>
+		<num>20150814.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">UsersController::login : Suppression du test HTTPS suite au passage de la fonctionnalité directement dans le routeur</task>
+			<task author="FI" type="code">Basics::pr : Correction code</task>
+			<task author="FI" type="code">Router::parse : Correction code</task>
+			<task author="FI" type="code">Router::connect : Correction code</task>
+			<task author="FI" type="code">Router::url : Mise en place de la récupération du protocol via Router::get_url_protocol</task>
+			<task author="FI" type="code">Router::webroot : Suppression rajout de BASE_URL</task>
+			<task author="FI" type="code">Router::webroot : Suppression rajout de BASE_URL</task>
+			<task author="FI" type="code">Router::get_url_protocol : Création de la fonction</task>
+			<task author="FI" type="code">Vue Configs::backoffice_core_list : Rajout de la liste des urls à gérer lorsque l'HTTPS est activé</task>
+			<task author="FI" type="code">HtmlParentHelper::css : Mise en place de la gestion du protocole</task>
+			<task author="FI" type="code">HtmlParentHelper::js : Mise en place de la gestion du protocole</task>
+			<task author="FI" type="code">Layout empty : Rajout de la gestion des css et des js supplémentaires via la fonction HtmlParentHelper::css et HtmlParentHelper::js</task>
+			<task author="FI" type="code">Layout koezion : Rajout de la gestion des css et des js supplémentaires via la fonction HtmlParentHelper::css et HtmlParentHelper::js</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 13/08/2015</name>
 		<num>20150813.002</num>
 		<supervisor>KoéZionCMS</supervisor>

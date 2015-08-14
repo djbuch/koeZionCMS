@@ -10,7 +10,7 @@
 				</ul>								
 				<div id="general">
 					<div class="content nopadding">
-						<?php
+						<?php						
 						echo $helpers['Form']->input('check_password_local', _('Tester le mot de passe en local'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour activer le contrôle du mot de passe en local")));
 						echo $helpers['Form']->input('hash_password', _('Crypter les mots de passe utilisateurs'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour activer hashage des mots de passe dans la base de données")));
 						echo $helpers['Form']->input('log_sql', _('Activer le log SQL'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour activer le log des reqêtes SQL effectuées")));
@@ -18,7 +18,9 @@
 						echo $helpers['Form']->input('display_php_error', _('Afficher les erreurs PHP'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour afficher les erreurs PHP")));
 						echo $helpers['Form']->input('local_storage_session', _('Stocker les variables de sessions localement'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour activer le stockage local des variables de sessions")));
 						$txtAfterInput = '<br /><br />'._('ATTENTION vous devez avoir un certificat SSL installé sur le serveur pour que cette option soit fonctionnelle.').'<br />'._("Rapprochez vous de votre hébergeur pour plus d'informations.");
+						$txtAfterInput .= '<br /><br />'._("Urls à sécuriser").' <i>'._("(Indiquez ici les urls à sécuriser, si plusieurs les séparer par ;)").'</i><br />'.$helpers['Form']->input('https_secure_urls', '', array('onlyInput' => true));
 						echo $helpers['Form']->input('https_activated', _("Activer l'HTTPS pour les espaces sécurisés (Backoffice par exemple)"), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour activer la navigation via HTTPS"), 'txtAfterInput' => $txtAfterInput));
+						
 						echo $helpers['Form']->input('backoffice_home_page', _("Page d'accueil du backoffice"), array('tooltip' => _("Indiquez ici l'adresse de la première page du backoffice")));
 						$txtAfterInput = '<br />'._('Pour plus d\'informations sur les timezones').' <a href="http://php.net/manual/en/timezones.php" target="_blank">'._('cliquez-ici').'</a>';	
 						echo $helpers['Form']->input('date_default_timezone', _("Timezone par défaut"), array('txtAfterInput' => $txtAfterInput));						

@@ -5,7 +5,7 @@
  */
 	function pr($var, $start = null, $end = null, $die = 0) {
 		
-		if (Configure::read('debug') > 0) {			
+		if(Configure::read('debug') > 0) {			
 			
 			$debug = debug_backtrace();
 			

@@ -29,20 +29,9 @@ class UsersController extends AppController {
  * @version 0.7 - 17/10/2014 by FI - Suppression du contrôle du mot de passe pour une utilisation locale
  * @version 0.8 - 04/06/2015 by FI - Correction récupération des données lors de l'utilisation d'un site sécurisé
  * @version 0.9 - 13/08/2015 by FI - Rajout d'un test pour vérifier si la navigation HTTPS est activée
+ * @version 1.0 - 14/08/2015 by FI - Suppression du test HTTPS suite au passage de la fonctionnalité directement dans le routeur
  */
 	function login() {		
-
-		//Récupération des configurations
-		require_once(LIBS.DS.'config_magik.php');
-		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
-		$coreConfs = $cfg->keys_values();	
-
-		//Si la navigation HTTPS est activée mais que le protocole ne l'est pas on redirige vers la même page mais en https
-		if(isset($coreConfs['https_activated']) && $coreConfs['https_activated'] && $this->request->protocol == 'http') { 
-
-			$httpsUrl = Router::url('users/login', 'html', true, 'https');
-			$this->redirect($httpsUrl);
-		}		
 		
 		$this->layout = 'connect'; //Définition du layout	
 			

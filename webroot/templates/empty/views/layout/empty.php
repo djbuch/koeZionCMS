@@ -17,8 +17,9 @@
 		/////////////
 		echo "\n";
 		$css = array();			
+		if(!empty($websiteParams['css_hack_file'])) { $css[] = 'F/'.$websiteParams['css_hack_file']; } //Chargement des CSS complémentaires		
 		echo $helpers['Html']->css($css);	
-		if(!empty($websiteParams['css_hack_file'])) { ?><link href="<?php echo $websiteParams['css_hack_file']; ?>" rel="stylesheet" type="text/css" media="all" /><?php }		
+		/*if(!empty($websiteParams['css_hack_file'])) { ?><link href="<?php echo $websiteParams['css_hack_file']; ?>" rel="stylesheet" type="text/css" media="all" /><?php }*/		
 		?>
 	</head>
 	<body data-baseurl="<?php echo BASE_URL; ?>">		
@@ -32,8 +33,9 @@
 		//   JAVASCRIPT   //
 		////////////////////		
 		$js = array();
+		if(!empty($websiteParams['js_hack_file'])) { $js[] = 'F/'.$websiteParams['js_hack_file']; } //Chargement des JS complémentaires
 		echo $helpers['Html']->js($js);	
-		if(!empty($websiteParams['js_hack_file'])) { ?><script src="<?php echo $websiteParams['js_hack_file']; ?>" type="text/javascript"></script><?php }
+		/*if(!empty($websiteParams['js_hack_file'])) { ?><script src="<?php echo $websiteParams['js_hack_file']; ?>" type="text/javascript"></script><?php }*/
 		
 		echo $helpers['Html']->analytics($websiteParams['ga_code']); 
 		?>

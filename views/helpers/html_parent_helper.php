@@ -95,6 +95,7 @@ class HtmlParentHelper extends Helper {
  * @version 0.7 - 08/07/2014 by FI : Mise en place la possibilité de charger des fichiers libremement via le code F
  * @version 0.8 - 17/09/2014 by FI : Rajout de la possibilité de modifier les attributs rel, type et media
  * @version 0.9 - 06/08/2015 by SS : Correction dédoublonnage du tableau $css et si la valeur $css n'est pas vide
+ * @version 1.0 - 14/08/2015 by FI : Mise en place de la gestion du protocole
  */	
 	public function css($css, $inline = false, $merge = true, $minified = false) {	
 		
@@ -151,10 +152,18 @@ class HtmlParentHelper extends Helper {
 							default: //Front						
 								$cssFile = '/templates/'.$cssHref;						
 							break;
-						}
+						}						
 						
-						if(!substr_count($cssHref, '.css')) { $cssFile.='.css'; }	//On teste si l'extension n'est pas déjà renseignée sinon on la rajoute			
+						//if(!substr_count($cssHref, '.css')) { $cssFile.='.css'; }	//On teste si l'extension n'est pas déjà renseignée sinon on la rajoute
 						$cssPath = Router::webroot($cssFile); //On génère le chemin vers le fichier
+						
+						//On teste si la navigation courante est en HTTPS
+						if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') { $protocol = 'https'; } 
+						else { $protocol = 'http'; }
+
+						//Génération du lien vers le fichier CSS
+						if(!substr_count($cssPath, '.css')) { $cssPath = Router::url($cssPath, 'css', true, $protocol); }
+						else { $cssPath = Router::url($cssPath, '', true, $protocol); }
 					}
 					$html .= "\t\t".'<link href="'.$cssPath.'" rel="'.$cssRel.'" type="'.$cssType.'" media="'.$cssMedia.'" />'."\n"; //On génère la balise de chargement
 				}						
@@ -213,6 +222,7 @@ class HtmlParentHelper extends Helper {
  * @version 0.7 - 07/03/2014 by FI : Mise en place la possibilité de charger des variables pour les fichiers
  * @version 0.8 - 08/07/2014 by FI : Mise en place la possibilité de charger des fichiers libremement via le code F
  * @version 0.9 - 06/08/2015 by SS : Correction dédoublonnage du tableau $js et si la valeur $js n'est pas vide
+ * @version 1.0 - 14/08/2015 by FI : Mise en place de la gestion du protocole
  */	
 	public function js($js, $inline = false, $merge = true, $minified = false) {
 		
@@ -256,8 +266,16 @@ class HtmlParentHelper extends Helper {
 							break;
 						}
 						
-						if(!substr_count($v, '.js')) { $jsFile.='.js'; } //On teste si l'extension n'est pas déjà renseignée sinon on la rajoute
+						//if(!substr_count($v, '.js')) { $jsFile.='.js'; } //On teste si l'extension n'est pas déjà renseignée sinon on la rajoute
 						$jsPath = Router::webroot($jsFile); //On génère le chemin vers le fichier
+																		
+						//On teste si la navigation courante est en HTTPS
+						if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') { $protocol = 'https'; } 
+						else { $protocol = 'http'; }
+
+						//Génération du lien vers le fichier JS
+						if(!substr_count($jsPath, '.js')) { $jsPath = Router::url($jsPath, 'js', true, $protocol); }
+						else { $jsPath = Router::url($jsPath, '', true, $protocol); }
 					}				
 					
 					//On contrôle si il faut charger d'éventuels paramètres au fichier courant

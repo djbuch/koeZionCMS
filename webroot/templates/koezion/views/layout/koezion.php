@@ -37,8 +37,9 @@
 			$websiteParams['tpl_layout'].'/css/theme_responsive',
 			$websiteParams['tpl_layout'].'/css/font-awsome'
 		);			
+		if(!empty($websiteParams['css_hack_file'])) { $css[] = 'F/'.$websiteParams['css_hack_file']; } //Chargement des CSS complémentaires		
 		echo $helpers['Html']->css($css);				
-		if(!empty($websiteParams['css_hack_file'])) { ?><link href="<?php echo $websiteParams['css_hack_file']; ?>" rel="stylesheet" type="text/css" media="all" /><?php }
+		/*if(!empty($websiteParams['css_hack_file'])) { ?><link href="<?php echo $websiteParams['css_hack_file']; ?>" rel="stylesheet" type="text/css" media="all" /><?php }*/
 
 		//Code Google Analytics
 		echo $helpers['Html']->analytics($websiteParams['ga_code']);
@@ -92,8 +93,9 @@
 			$websiteParams['tpl_layout'].'/js/theme',
 			$websiteParams['tpl_layout'].'/js/fittext/jquery.fittext'
 		);
+		if(!empty($websiteParams['js_hack_file'])) { $js[] = 'F/'.$websiteParams['js_hack_file']; } //Chargement des JS complémentaires
 		echo $helpers['Html']->js($js);		
-		if(!empty($websiteParams['js_hack_file'])) { ?><script src="<?php echo $websiteParams['js_hack_file']; ?>" type="text/javascript"></script><?php }
+		/*if(!empty($websiteParams['js_hack_file'])) { ?><script src="<?php echo $websiteParams['js_hack_file']; ?>" type="text/javascript"></script><?php }*/
 		?>
 		<script>
 			$(document).ready(function(){
