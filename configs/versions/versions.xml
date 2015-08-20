@@ -1,5 +1,21 @@
 ﻿<versions>
 	<version>
+		<name>Version du 20/08/2015</name>
+		<num>20150820.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">FormHelper::custom_checkbox_slide : Correction passage de paramètres fonction _get_input_value</task>			
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 18/08/2015</name>
+		<num>20150818.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Request::__construct : Correction sur $this->fullUrl</task>			
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 18/08/2015</name>
 		<num>20150818.001</num>
 		<supervisor>KoéZionCMS</supervisor>

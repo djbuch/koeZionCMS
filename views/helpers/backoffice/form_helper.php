@@ -223,16 +223,18 @@ class FormHelper extends FormParentHelper {
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 11/12/2013 by FI
+ * @version 0.2 - 20/08/2015 by FI - Correction passage de paramètres fonction _get_input_value
  */
 	function custom_checkbox_slide($name, $options = array()) {
 	
 		//Liste des options par défaut
 		$defaultOptions = array(
-			'value' => false
+			'value' => false,
+			'forceDefaultValue' => false
 		);
 		$options = array_merge($defaultOptions, $options); //Génération du tableau d'options utilisé dans la fonction
 		
-		$value = $this->_get_input_value($name, $options['value']); //Récupération de la valeur			
+		$value = $this->_get_input_value($name, $options['value'], $options['forceDefaultValue']); //Récupération de la valeur			
 		$inputNameText = $this->_set_input_name($name); //Mise en variable du name de l'input
 		$inputIdText = $this->_set_input_id($inputNameText); //Mise en variable de l'id de l'input	
 		
