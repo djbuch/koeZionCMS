@@ -1,10 +1,19 @@
 ﻿<versions>
 	<version>
 		<name>Version du 21/08/2015</name>
+		<num>20150821.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise à jour de SwiftMailer</task>			
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 21/08/2015</name>
 		<num>20150821.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FI" type="code">Mise en place du module de filtrage des crawlers</task>			
+			<task author="FI" type="code">Mise en place du module de filtrage des crawlers</task>
+			<task author="FI" type="bdd">Rajout de la table unwanted_crawlers</task>			
 		</tasks>
 	</version>
 	<version>
