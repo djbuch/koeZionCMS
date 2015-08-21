@@ -21,6 +21,9 @@
 						$txtAfterInput .= '<br /><br />'._("Urls à sécuriser").' <i>'._("(Indiquez ici les urls à sécuriser, si plusieurs les séparer par ;)").'</i><br />'.$helpers['Form']->input('https_secure_urls', '', array('onlyInput' => true));
 						echo $helpers['Form']->input('https_activated', _("Activer l'HTTPS pour les espaces sécurisés (Backoffice par exemple)"), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour activer la navigation via HTTPS"), 'txtAfterInput' => $txtAfterInput));
 						
+						$txtAfterInput = '<br /><br />'._("Vous devez renseigner l'ensemble des filtres à mettre en place dans le ").'<a href="'.Router::url("adm/unwanted_crawlers").'">'._("module crawlers").'</a>';
+						echo $helpers['Form']->input('filtering_crawlers', _('Activer le filtrage des crawlers'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour activer le filtrages des crawlers"), 'txtAfterInput' => $txtAfterInput));
+						
 						echo $helpers['Form']->input('backoffice_home_page', _("Page d'accueil du backoffice"), array('tooltip' => _("Indiquez ici l'adresse de la première page du backoffice")));
 						$txtAfterInput = '<br />'._('Pour plus d\'informations sur les timezones').' <a href="http://php.net/manual/en/timezones.php" target="_blank">'._('cliquez-ici').'</a>';	
 						echo $helpers['Form']->input('date_default_timezone', _("Timezone par défaut"), array('txtAfterInput' => $txtAfterInput));						

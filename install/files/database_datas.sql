@@ -76,3 +76,27 @@ INSERT INTO `templates` (`id`, `name`, `layout`, `version`, `code`, `color`, `on
 (41, 'Purple chocolate', 'koezion', 'Chocolate', 'chocolate_purple', '000000', 1, '2013-11-09 03:03:44'),
 (42, 'Red chocolate', 'koezion', 'Chocolate', 'chocolate_red', '000000', 1, '2013-11-09 03:03:44'),
 (43, 'Empty', 'empty', 'empty', 'empty', '000000', 1, '2014-07-15 03:03:44');
+
+INSERT INTO `unwanted_crawlers` (`id`, `name`, `url`, `ip`, `online`, `created`) VALUES
+(1, 'I LOVE ITALY', 'iloveitaly', '208.73.211.70', 1, '2015-08-20 18:42:17'),
+(3, 'FLOATING SHARE BUTTONS', 'floating-share-buttons', '', 1, '2015-08-21 11:28:24'),
+(4, 'TRAFFIC 2 MONEY', 'traffic2money', '', 1, '2015-08-21 11:28:42'),
+(5, '4 WEBMASTERS', '4webmasters.org', '', 1, '2015-08-21 11:29:12'),
+(6, 'FREE FLOATING BUTTONS', 'free-floating-buttons', '', 1, '2015-08-21 11:29:45'),
+(7, 'SEXYALI', 'sexyali', '', 1, '2015-08-21 11:30:12'),
+(8, 'GET FREE SOCIAL TRAFFIC', 'get-free-social-traffic', '', 1, '2015-08-21 11:30:33'),
+(9, 'SUCCESS SEO', 'success-seo', '', 1, '2015-08-21 11:31:00'),
+(10, 'TRAFFIC MONETIZER', 'trafficmonetizer', '', 1, '2015-08-21 11:31:23'),
+(11, 'FREE SOCIAL BUTTONS', 'free-social-buttons', '', 1, '2015-08-21 11:31:44'),
+(12, 'EVENT TRACKING', 'event-tracking', '', 1, '2015-08-21 11:32:32'),
+(13, 'EROT', 'erot.co', '', 1, '2015-08-21 11:32:57'),
+(14, 'GET FREE TRAFFIC NOW', 'Get-Free-Traffic-Now', '', 1, '2015-08-21 11:33:31'),
+(15, 'BUTTONS FOR WEBSITE', 'buttons-for-website', '', 1, '2015-08-21 11:33:49'),
+(16, 'CHINESE AMEZON', 'chinese-amezon', '', 1, '2015-08-21 11:34:19'),
+(17, 'E BUYEASY', 'e-buyeasy', '', 1, '2015-08-21 11:35:21'),
+(18, 'VIDEOS FOR YOUR BUSINESS', 'videos-for-your-business', '', 1, '2015-08-21 11:35:54'),
+(19, 'HONGFANJI', 'hongfanji', '', 1, '2015-08-21 11:36:36'),
+(20, 'DARODAR', 'darodar', '', 1, '2015-08-21 11:37:12'),
+(21, 'HOW TO EARN QUICK MONEY', 'how-to-earn-quick-money', '', 1, '2015-08-21 11:38:02'),
+(22, 'GW EC', 'gw-ec', '', 1, '2015-08-21 11:38:50'),
+(23, 'SEMALT', 'semalt', '', 1, '2015-08-21 11:38:50');

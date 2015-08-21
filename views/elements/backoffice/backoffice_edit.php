@@ -9,7 +9,8 @@ $libellePage = array(
 	'Contacts' 		=> _("un formulaire Internaute (Contacts/Newsletter)"),
 	'Users' 		=> _("un utilisateur"),
 	'UsersGroups' 	=> _("un groupe d'utilisateurs"),	
-	'Websites' 		=> _("un site Internet")
+	'Websites' 		=> _("un site Internet"),
+	'UnwantedCrawlers' 	=> _("un crawler")
 );
 ?>
 <div class="section">

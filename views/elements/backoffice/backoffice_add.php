@@ -12,7 +12,8 @@ $libellePage = array(
 	'Websites' 		=> _("un site Internet"),
 	'RightButtons' 	=> _("un bouton colonne de droite"),
 	'Modules' 		=> _("un module"),
-	'ModulesTypes' 	=> _("un type de module")
+	'ModulesTypes' 	=> _("un type de module"),
+	'UnwantedCrawlers' 	=> _("un crawler")
 );
 ?>
 <div class="section">

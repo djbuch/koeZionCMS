@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 21/08/2015</name>
+		<num>20150821.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise en place du module de filtrage des crawlers</task>			
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 20/08/2015</name>
 		<num>20150820.001</num>
 		<supervisor>KoéZionCMS</supervisor>
