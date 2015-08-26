@@ -1,6 +1,16 @@
 ﻿<versions>
 	<version>
 		<name>Version du 26/08/2015</name>
+		<num>20150826.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Reprise contrôle des crawlers</task>			
+			<task author="FI" type="bdd">Modification table modules</task>			
+			<task author="FI" type="bdd">Modification fichier sql d'installation database_tables.sql</task>			
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 26/08/2015</name>
 		<num>20150826.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

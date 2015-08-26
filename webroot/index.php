@@ -37,7 +37,7 @@ require_once KOEZION.DS.'bootstrap.php'; //Premier fichier lancé par l'applicat
 /////////////////////////////////
 if(isset($coreConfs['filtering_crawlers']) && $coreConfs['filtering_crawlers']) {
 	
-	$referer 	= isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : ''; //Récupération du referer
+	$referer 	= strtolower(isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : ''); //Récupération du referer
 	$ip 		= $_SERVER["REMOTE_ADDR"]; //Récupération de l'ip
 	
 	require_once(MODELS.DS.'unwanted_crawler.php'); //Chargement de la librairie
@@ -47,8 +47,12 @@ if(isset($coreConfs['filtering_crawlers']) && $coreConfs['filtering_crawlers']) 
 	//On parcours la liste des crawlers
 	foreach($uwantedCrawlers as $uwantedCrawler) {
 		
-		$refererCheck 	= stristr($referer, $uwantedCrawler['url']) != FALSE; //Contrôle sur le referer
-		$ipCheck 		= stristr($ip, $uwantedCrawler['ip']) != FALSE; //Contrôle sur l'adresse IP
+		//$refererCheck 	= stristr($referer, $uwantedCrawler['url']) != FALSE; //Contrôle sur le referer
+		//$ipCheck 		= stristr($ip, $uwantedCrawler['ip']) != FALSE; //Contrôle sur l'adresse IP
+		
+		$uwantedCrawlerUrl 	= strtolower($uwantedCrawler['url']);
+		$refererCheck 		= substr_count($referer, $uwantedCrawlerUrl); //Contrôle sur le referer
+		$ipCheck 			= substr_count($ip, $uwantedCrawler['ip']); //Contrôle sur l'adresse IP
 
 		//Si l'un ou l'autre des tests est vrai alors on affiche la page d'erreur
 		if($refererCheck || $ipCheck) {
