@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 26/08/2015</name>
+		<num>20150826.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Request::__construct : Déplacement $protocol et $this->domain et $this->protocol</task>			
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 21/08/2015</name>
 		<num>20150821.003</num>
 		<supervisor>KoéZionCMS</supervisor>

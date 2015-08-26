@@ -28,8 +28,12 @@ class Request {
  * 28/05/2015 --> Rajout d'un test sur $this->url avant traitement, rajout de $protocol
  * 13/08/2015 --> Rajout de $this->protocol et $this->domain
  * 19/08/2015 --> Correction sur $this->fullUrl
+ * 26/08/2015 --> Déplacement $protocol et $this->domain et $this->protocol
  */    
 	public function __construct() {
+			
+		$protocol = 'http';
+		if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') { $protocol = 'https'; }
 		
 		//Mise en place d'un hook pour la récupération des données url et fullUrl car sur certains serveurs (JAG) le fonctionnement diffère
 		$hookRequestFile = CONFIGS.DS.'hooks'.DS.'request'.DS.$_SERVER['SERVER_ADDR'].'.php';
@@ -44,14 +48,12 @@ class Request {
 			
 			if(in_array($this->url, array('/webroot', 'webroot', '/index.php', 'index.php', '/webroot/index.php'))) { $this->url = '/'; }
 			
-			$protocol = 'http';
-			if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') { $protocol = 'https'; }
-			
 			$this->fullUrl = Router::url($this->url, '', true, $protocol); //Affectation de l'url complète
-			//$this->fullUrl = $protocol.'://'.$_SERVER["HTTP_HOST"].Router::url($this->url, ''); //Affectation de l'url complète		
-			$this->domain = $_SERVER["HTTP_HOST"]; //Affectation du domaine		
-			$this->protocol = $protocol; //Affectation du protocole		
+			//$this->fullUrl = $protocol.'://'.$_SERVER["HTTP_HOST"].Router::url($this->url, ''); //Affectation de l'url complète			
 		}
+		
+		$this->domain = $_SERVER["HTTP_HOST"]; //Affectation du domaine		
+		$this->protocol = $protocol; //Affectation du protocole	
 		
 		$this->queryString = $_SERVER['QUERY_STRING'];
 		$this->referer = '';
