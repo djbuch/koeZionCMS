@@ -30,16 +30,17 @@ class UsersController extends AppController {
  * @version 0.8 - 04/06/2015 by FI - Correction récupération des données lors de l'utilisation d'un site sécurisé
  * @version 0.9 - 13/08/2015 by FI - Rajout d'un test pour vérifier si la navigation HTTPS est activée
  * @version 1.0 - 14/08/2015 by FI - Suppression du test HTTPS suite au passage de la fonctionnalité directement dans le routeur
+ * @version 1.1 - 27/08/2015 by FI - Gestion template backoffice
  */
 	function login() {		
 		
-		$this->layout = 'connect'; //Définition du layout	
+		$this->layout = WEBROOT.DS.'templates'.DS.BACKOFFICE_TEMPLATE.DS.'views'.DS.'layout'.DS.'connect'; //Définition du layout	
 			
 		if($this->request->data) {
 			
 			$data = $this->request->data; //Mise en variable des données postées	
 					
-			if($coreConfs['hash_password']) { $data['password'] = sha1($data['password']); } //Cryptage du mot de passe
+			if(HASH_PASSWORD) { $data['password'] = sha1($data['password']); } //Cryptage du mot de passe
 			
 			//Récupération du login et du mot de passe dans des variables
 			$postLogin = $data['login'];
@@ -58,8 +59,8 @@ class UsersController extends AppController {
 				//En local on peut éviter la saisie des mots de passe
 				$httpHost = $_SERVER["HTTP_HOST"];
 				$checkPassword = true; //Par défaut on check le password
-				if(!isset($coreConfs['check_password_local'])) { $coreConfs['check_password_local'] = 0; } //Petit contrôle au cas ou le paramètre de cette conf ne soit pas renseigné
-				if(($httpHost == 'localhost' || $httpHost == '127.0.0.1') && !$coreConfs['check_password_local']) { $checkPassword = false; }
+				if(!defined('CHECK_PASSWORD_LOCAL')) { $checkPasswordLocal = 0; } //Petit contrôle au cas ou le paramètre de cette conf ne soit pas renseigné
+				if(($httpHost == 'localhost' || $httpHost == '127.0.0.1') && !$checkPasswordLocal) { $checkPassword = false; }
 				
 				$passwordOk = true; //Par défaut la password est bon
 				if($checkPassword) { $passwordOk = ($postPassword == $bddPassword); } //Sauf, éventuellement, si on souhaite le contrôle

@@ -24,10 +24,10 @@ class Session {
 		//Récupération des configuration du coeur de l'application pour détermine le mode de stockage des variables de sessions
 		//Soit on utilise le comportement natif de PHP
 		//Soit on stocke les sessions en local dans le dossier TMP
-		require_once(LIBS.DS.'config_magik.php');
-		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
-		$coreConfs = $cfg->keys_values();		
-		if(isset($coreConfs['local_storage_session']) && $coreConfs['local_storage_session']) { ini_set('session.save_path', TMP.DS.'sessions'); }
+		//require_once(LIBS.DS.'config_magik.php');
+		//$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
+		//$coreConfs = $cfg->keys_values();		
+		if(defined('LOCAL_STORAGE_SESSION') && LOCAL_STORAGE_SESSION) { ini_set('session.save_path', TMP.DS.'sessions'); }
 		
 		ini_set('session.use_trans_sid', 0);													//Evite de passe l'id de la session dans l'url
 		session_name($sessionName); 															//On affecte le nom

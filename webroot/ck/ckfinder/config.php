@@ -21,9 +21,9 @@ require_once KOEZION.DS.'session.php'; //On charge le composant
 Session::init();
 
 //Récupération des configurations du système
-require_once(LIBS.DS.'config_magik.php'); //Import de la librairie de gestion des fichiers de configuration
-$cfg 			= new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
-$coreConfigs 	= $cfg->keys_values();
+//require_once(LIBS.DS.'config_magik.php'); //Import de la librairie de gestion des fichiers de configuration
+//$cfg 			= new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
+//$coreConfigs 	= $cfg->keys_values();
 
 /*
  * ### CKFinder : Configuration File - Basic Instructions
@@ -102,7 +102,7 @@ ATTENTION: The trailing slash is required.
 */
 //Mise en place d'un dossier particulier dans le cas d'administrateur de site
 $onlyOneFolder = 0;
-if(isset($coreConfigs['ckfinder_only_one_folder'])) { $onlyOneFolder = $coreConfigs['ckfinder_only_one_folder']; } 
+if(defined('CKFINDER_ONLY_ONE_FOLDER')) { $onlyOneFolder = CKFINDER_ONLY_ONE_FOLDER; } 
 
 if(Session::read('Backoffice.UsersGroup.role_id') == 1 || $onlyOneFolder) {
 	
@@ -252,14 +252,17 @@ Example: 'maxSize' => "8M",
 */
 $config['DefaultResourceTypes'] = '';
 
-$filesExtensions = '7z,aiff,asf,avi,bmp,csv,doc,docx,fla,flv,gif,gz,gzip,jpeg,jpg,mid,mov,mp3,mp4,mpc,mpeg,mpg,ods,odt,pdf,png,ppt,pptx,pxd,qt,ram,rar,rm,rmi,rmvb,rtf,sdc,sitd,swf,sxc,sxw,tar,tgz,tif,tiff,txt,vsd,wav,wma,wmv,xls,xlsx,zip,kml,css,html,js'; 
-if(isset($coreConfigs['ckfinder_files_type']) && !empty($coreConfigs['ckfinder_files_type'])) { $filesExtensions = $coreConfigs['ckfinder_files_type']; }
+$filesExtensions = '7z,aiff,asf,avi,bmp,csv,doc,docx,fla,flv,gif,gz,gzip,jpeg,jpg,mid,mov,mp3,mp4,mpc,mpeg,mpg,ods,odt,pdf,png,ppt,pptx,pxd,qt,ram,rar,rm,rmi,rmvb,rtf,sdc,sitd,swf,sxc,sxw,tar,tgz,tif,tiff,txt,vsd,wav,wma,wmv,xls,xlsx,zip,kml,css,html,js';
+$ckfinderFilesType = defined('CKFINDER_FILES_TYPE') ? CKFINDER_FILES_TYPE : '';
+if(!empty($ckfinderFilesType)) { $filesExtensions = $ckfinderFilesType; }
 
 $imagesExtensions = 'bmp,gif,jpeg,jpg,png'; 
-if(isset($coreConfigs['ckfinder_images_type']) && !empty($coreConfigs['ckfinder_images_type'])) { $imagesExtensions = $coreConfigs['ckfinder_images_type']; }
+$ckfinderImagesType = defined('CKFINDER_IMAGES_TYPE') ? CKFINDER_IMAGES_TYPE : '';
+if(!empty($ckfinderImagesType)) { $imagesExtensions = $ckfinderImagesType; }
 
 $flashExtensions = 'swf,flv'; 
-if(isset($coreConfigs['ckfinder_flash_type']) && !empty($coreConfigs['ckfinder_flash_type'])) { $flashExtensions = $coreConfigs['ckfinder_flash_type']; }
+$ckfinderFlashType = defined('CKFINDER_FLASH_TYPE') ? CKFINDER_FLASH_TYPE : '';
+if(!empty($ckfinderFlashType)) { $flashExtensions = $ckfinderFlashType; }
 
 $config['ResourceType'][] = Array(
 		'name' => 'Files',				// Single quotes not allowed

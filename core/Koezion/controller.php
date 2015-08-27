@@ -175,17 +175,18 @@ class Controller extends Object {
  * @version 0.1 - 23/12/2011
  * @version 0.2 - 24/09/2012 by FI - Rajout du boolean $inViewsFolder pour indiquer si le dossier de stockage de la vue est dans views
  * @version 0.3 - 04/03/2013 by FI - Modification de la fonction de rendu pour pouvoir redéfinir la vue à rendre directement d'un plugin
+ * @version 0.4 - 26/08/2015 by FI - Suppression de la variable $inViewsFolder passée en paramètre
  */
-	public function render($view, $inViewsFolder = true) {
+	public function render($view) {
 
-		if($this->view) { $view = $this->view; $inViewsFolder = false; }
+		if($this->view) { $view = $this->view; }
 		
 		$this->beforeRender();
 
 		$this->set('pager', $this->pager); //Variable de pagination
 		$this->set('params', $this->params); //Variable de paramètres
 		$this->View = new View($view, $this);		
-		$this->View->render($inViewsFolder);		
+		$this->View->render();		
 	}
 	
 	protected function _plugins_before_functions($beforeFunction) {

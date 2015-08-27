@@ -1,1 +1,0 @@
-<?php $this->element('backoffice/formulaires/websites_templates'); ?>

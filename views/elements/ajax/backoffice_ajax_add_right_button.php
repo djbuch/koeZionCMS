@@ -1,1 +1,1 @@
-<?php $this->element('backoffice/right_button_line'); ?>
+<?php $this->element('right_button_line'); ?>

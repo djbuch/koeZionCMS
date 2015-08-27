@@ -1,26 +1,27 @@
 <?php
 //ini_set( 'magic_quotes_gpc', 0 );
 //Récupération de la configuration du coeur
-require_once(LIBS.DS.'config_magik.php');
-$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
-$coreConfs = $cfg->keys_values();
+//require_once(LIBS.DS.'config_magik.php');
+//$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
+//$coreConfs = $cfg->keys_values();
 
 ////////////////////
 //    TIMEZONE    //
-if(!isset($coreConfs['date_default_timezone']) || empty($coreConfs['date_default_timezone'])) { date_default_timezone_set('Europe/Paris'); } //Par défaut EUrope/Paris
-else { date_default_timezone_set($coreConfs['date_default_timezone']); } //Sinon le timezone saisi en backoffice
+$dateDefaultTimezone = defined('DATE_DEFAULT_TIMEZONE') ? DATE_DEFAULT_TIMEZONE : '';
+if(empty($dateDefaultTimezone)) { date_default_timezone_set('Europe/Paris'); } //Par défaut EUrope/Paris
+else { date_default_timezone_set(DATE_DEFAULT_TIMEZONE); } //Sinon le timezone saisi en backoffice
 
 ///////////////////////////////
 //    GESTION DES ERREURS    //
 //--> http://www.ficgs.com/Comment-montrer-les-erreur-PHP-f1805.html
-if(!isset($coreConfs['display_php_error'])) {
+if(!defined('DISPLAY_PHP_ERROR')) {
 	
 	//Si la données n'est pas dans la liste (Cas pour d'anciennes versions)
 	$httpHost = $_SERVER["HTTP_HOST"];
 	if($httpHost == 'localhost' || $httpHost == '127.0.0.1') { $displayErrors = 1; } else { $displayErrors = 0; }
 	
 } 
-else { $displayErrors = $coreConfs['display_php_error']; }
+else { $displayErrors = DISPLAY_PHP_ERROR; }
 ini_set('display_errors', $displayErrors); //Affichage ou non des erreurs
 
 //Rapporte les erreurs d'exécution de script

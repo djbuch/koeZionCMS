@@ -35,7 +35,7 @@ require_once KOEZION.DS.'bootstrap.php'; //Premier fichier lancé par l'applicat
 /////////////////////////////////
 //    FILTRAGE DES CRAWLERS    //
 /////////////////////////////////
-if(isset($coreConfs['filtering_crawlers']) && $coreConfs['filtering_crawlers']) {
+if(defined('FILTERING_CRAWLERS') && FILTERING_CRAWLERS) {
 	
 	$referer 	= strtolower(isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : ''); //Récupération du referer
 	$ip 		= $_SERVER["REMOTE_ADDR"]; //Récupération de l'ip
@@ -47,7 +47,7 @@ if(isset($coreConfs['filtering_crawlers']) && $coreConfs['filtering_crawlers']) 
 	//On parcours la liste des crawlers
 	foreach($uwantedCrawlers as $uwantedCrawler) {
 		
-		//$refererCheck 	= stristr($referer, $uwantedCrawler['url']) != FALSE; //Contrôle sur le referer
+		//$refererCheck = stristr($referer, $uwantedCrawler['url']) != FALSE; //Contrôle sur le referer
 		//$ipCheck 		= stristr($ip, $uwantedCrawler['ip']) != FALSE; //Contrôle sur l'adresse IP
 		
 		$uwantedCrawlerUrl 	= strtolower($uwantedCrawler['url']);

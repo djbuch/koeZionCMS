@@ -60,8 +60,13 @@ class View extends Object {
 		}
 		
 		//INSERTION DES EVENTUELS HELPERS DU TEMPLATE (BACK OU FRONT)//		
-		if(defined('LAYOUT_VIEWS')) { $moreHelpers = LAYOUT_VIEWS.DS.'helpers'; } //Cette variable n'existe qu'en front
-		else { $moreHelpers = HELPERS.DS.'backoffice'; } //Backoffice
+		if(defined('FRONTOFFICE_VIEWS')) { $moreHelpers = FRONTOFFICE_VIEWS.DS.'helpers'; } //Cette variable n'existe qu'en front
+		else { 
+			
+			$moreHelpers = BACKOFFICE_VIEWS.DS.'helpers';
+			///$moreHelpers = HELPERS.DS.'backoffice'; 
+		
+		} //Backoffice
 		
 		if(is_dir($moreHelpers)) {
 		
@@ -70,7 +75,7 @@ class View extends Object {
 				$helperPath = $moreHelpers.DS.$moreHelper;
 				
 				//On va effectuer un contrôle pour vérifier si un hook n'est pas en place pour le helper concerné
-				if(defined('LAYOUT_VIEWS')) {	
+				if(defined('FRONTOFFICE_VIEWS')) {	
     	
 			    	$websiteHooks = $this->vars['websiteParams'];    	
 			    	$helpersHooks = $this->load_hooks_files('HELPERS', $websiteHooks);
@@ -105,11 +110,12 @@ class View extends Object {
  * @version 0.5 - 07/08/2014 by FI - Mise en place des hooks pour les vues
  * @version 0.6 - 01/11/2014 by FI - Modification de la gestion des hooks, la gestion étant maintenant par site on récupère la donnée issue de la BDD et on ne charge plus tous les fichiers. Fonctionnement plus simple lors de la gestion multisites
  * @version 0.7 - 08/12/2014 by FI - Modification de la récupération de la variable $hookPathView
+ * @version 0.8 - 26/08/2015 by FI - Suppression de la variable $inViewsFolder passée en paramètre et modification du chemin de la vue backoffice 
  * @todo IMPORTANT essayer de voir pourquoi si on retire le file_exists($view) la fonction export du plugin formulaire ne marche plus!!!
  * @todo Essayer d'améliorer l'ajout de websitebaseurl dans le template car il est inséré juste après la récupération de la vue --> supprimé le 25/06/2013 rajouté directement dans le template
  */    
-    public function render($inViewsFolder = true) {
-    	
+    public function render() {
+    	    	
     	if($this->rendered) { return false; } //Si la vue est déjà rendue on retourne faux
     
     	extract($this->vars); //On récupère les variables		
@@ -118,26 +124,29 @@ class View extends Object {
     	if(substr($this->view, 0, 5) == 'ajax_' || substr($this->view, 0, 16) == 'backoffice_ajax_') { $this->layout = 'ajax'; }
     	
     	//Si on désire rendre une vue particulière celle
-    	if(strpos($this->view, '/') === 0 && $inViewsFolder) { $view = VIEWS.$this->view.'.php'; }
+    	if(strpos($this->view, '/') === 0) { $view = VIEWS.$this->view.'.php'; }
     	
     	//Sinon le comportement par défaut ira chercher les vues dans le dossier views puis dans le dossier du layout correspond
     	else {    		
     		
-    		if($inViewsFolder) { $view = VIEWS.DS.$this->controller->request->controller.DS.$this->view.'.php'; } //Cas des vues backoffice
-    		else { $view = $this->view.'.php'; } //Cas de vues particulières
+    		//Cas des vues backoffice
+    		if(defined('BACKOFFICE_VIEWS')) { $view = BACKOFFICE_VIEWS.DS.$this->controller->request->controller.DS.$this->view.'.php'; } 
     		
     		//Si la variable existe (Elle n'existe que pour le front)
     		//Redéfinition du chemin des vues en fonction du template
-    		if(isset($this->vars['websiteParams'])) {
+    		else if(isset($this->vars['websiteParams'])) {
     			
     			$templateLayout = $this->vars['websiteParams']['tpl_layout']; //On récupère le layout courant
     			//$alternativeView = VIEWS.DS.'layout_views'.DS.$templateLayout.DS.$this->controller->request->controller.DS.$this->view.'.php'; //On génère une variable contenant le chemin vers une vue alternative située dans un dossier portant le nom du layout
-    			$alternativeView = LAYOUT_VIEWS.DS.$this->controller->request->controller.DS.$this->view.'.php'; //On génère une variable contenant le chemin vers une vue alternative située dans un dossier portant le nom du layout
+    			$alternativeView = FRONTOFFICE_VIEWS.DS.$this->controller->request->controller.DS.$this->view.'.php'; //On génère une variable contenant le chemin vers une vue alternative située dans un dossier portant le nom du layout
     		
 	    		//Si ce fichier n'existe pas on prendra la vue par défaut
     			if(file_exists($alternativeView)) { $view = $alternativeView; }
     		}    	 
-    	
+    		
+    		//Autres cas
+    		else { $view = $this->view.'.php'; }
+    		
 	    	//Cas des plugins
 	    	//On adopte un comportement par défaut pour le rendu des vues des plugins
 	    	//On va les chercher dans le dossier du plugin, puis dans le dossier views, puis dans le dossier du controlleur
@@ -214,7 +223,8 @@ class View extends Object {
     		$alternativeLayoutFolder = substr_count($this->layout, DS) + substr_count($this->layout, '/');
 	    	
 	    	if($alternativeLayoutFolder) { require_once $this->layout.'.php'; }
-	    	else if(defined('LAYOUT_VIEWS') && file_exists(LAYOUT_VIEWS.DS.'layout'.DS.$this->layout.'.php')) { require LAYOUT_VIEWS.DS.'layout'.DS.$this->layout.'.php'; } //Chemin d'un élément d'un layout
+	    	else if(defined('FRONTOFFICE_VIEWS') && file_exists(FRONTOFFICE_VIEWS.DS.'layout'.DS.$this->layout.'.php')) { require FRONTOFFICE_VIEWS.DS.'layout'.DS.$this->layout.'.php'; } //Chemin d'un élément d'un layout
+	    	else if(defined('BACKOFFICE_VIEWS') && file_exists(BACKOFFICE_VIEWS.DS.'layout'.DS.$this->layout.'.php')) { require BACKOFFICE_VIEWS.DS.'layout'.DS.$this->layout.'.php'; } //Chemin d'un élément d'un layout
 	    	else { require_once VIEWS.DS.'layout'.DS.$this->layout.'.php'; } //On fait l'inclusion du layout par défaut et on affiche la variable dedans
     	}
     	$this->rendered = true; //On indique que la vue est rendue   	
@@ -239,6 +249,7 @@ class View extends Object {
  * @version 0.9 - 18/12/2013 by FI - Modification de la gestion des hooks pour le chargement des fichiers
  * @version 0.6 - 01/11/2014 by FI - Modification de la gestion des hooks, la gestion étant maintenant par site on récupère la donnée issue de la BDD et on ne charge plus tous les fichiers. Fonctionnement plus simple lors de la gestion multisites
  * @version 0.7 - 21/01/2015 by FI - Réorganisation de la fonction pour une gestion plus souple des hooks éléments plugins (BO)
+ * @version 0.8 - 26/08/2015 by FI - Modification du chemin des éléments backoffice
  */
     public function element($element, $vars = null, $isPlugin = false) {
     	
@@ -286,10 +297,9 @@ class View extends Object {
     	$element = str_replace('/', DS, $element);    	
     	$element = $element.'.php';
     	if(file_exists($element)) { require $element; } //Cas le plus simple on donne tous le chemin de l'élément
-    	//else if(isset($this->vars['websiteParams']) && file_exists(LAYOUT_VIEWS.DS.'elements'.DS.$element)) { require LAYOUT_VIEWS.DS.'elements'.DS.$element; } //Chemin d'un élément d'un layout
-    	else if(defined('LAYOUT_VIEWS') && file_exists(LAYOUT_VIEWS.DS.'elements'.DS.$element)) { require LAYOUT_VIEWS.DS.'elements'.DS.$element; } //Chemin d'un élément d'un layout
-    	else if(file_exists(ELEMENTS.DS.$element)) { require ELEMENTS.DS.$element; } //Cas basique
-    	else { require ELEMENTS.DS.'backoffice'.DS.'missing_element.php'; } 
+    	else if(defined('FRONTOFFICE_VIEWS') && file_exists(FRONTOFFICE_VIEWS.DS.'elements'.DS.$element)) { require FRONTOFFICE_VIEWS.DS.'elements'.DS.$element; } //Chemin d'un élément d'un layout
+    	else if(defined('BACKOFFICE_VIEWS') && file_exists(BACKOFFICE_VIEWS.DS.'elements'.DS.$element)) { require BACKOFFICE_VIEWS.DS.'elements'.DS.$element; } //Chemin d'un élément d'un layout
+    	else { require VIEWS.DS.'missing_element.php'; } 
     }
     
 /**

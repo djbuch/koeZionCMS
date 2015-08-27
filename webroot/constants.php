@@ -88,3 +88,17 @@ define('BASE_URL', $baseUrl); //Chemin relatif vers le coeur de l'application
 
 define('GENERATOR_META', 'koéZion CMS - CMS OPENSOURCE PHP');
 define('GENERATOR_LINK', '<p id="powered_by" style="position:absolute;width:20px;bottom:5px;right:5px;font-size:8px;margin-bottom:0;height:20px;opacity:.3;z-index:10000"><a href="http://www.koezion-cms.com" title="Propulsé par koéZionCMS - CMS opensource PHP" style="width:20px;height:20px;text-indent:-9999px;display:block;background: url('.BASE_URL.'/img/logo_koezion_mini.png) no-repeat top right transparent;padding: 0;margin: 0;border: none;">Propulsé par koéZionCMS - CMS opensource PHP</a></p>');
+
+////////////////////////////////////////////////////
+//    RECUPERATION DES CONFIGURATIONS DU COEUR    //
+require_once(LIBS.DS.'config_magik.php');
+$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
+$coreConfs = $cfg->keys_values();
+
+foreach($coreConfs as $coreConfField => $coreConfValue) {
+
+	$coreConfField = strtoupper($coreConfField);
+	if(!defined($coreConfField)) { define($coreConfField, $coreConfValue); }
+}
+
+if(!defined('BACKOFFICE_TEMPLATE')) { define('BACKOFFICE_TEMPLATE', 'bo_godzilla'); }

@@ -68,7 +68,11 @@ class AppController extends Controller {
 				define('CURRENT_WEBSITE_ID', $currentWebsite);
 			}
 			
-			$this->layout = 'backoffice'; //Définition du layout pour le backoffice			
+			$this->layout = 'backoffice'; //Définition du layout pour le backoffice
+			
+			//ON VA DEFINIR LA CONSTANTE D'ACCES AUX VUES DU TEMPLATE//
+			define('BACKOFFICE_VIEWS', WEBROOT.DS.'templates'.DS.BACKOFFICE_TEMPLATE.DS.'views');			
+			
 			$this->pager['elementsPerPage'] = $this->backofficeElementPerPage; //Nombre d'élément par page
 
 			$leftMenus = $this->_get_backoffice_menu();			
@@ -145,7 +149,7 @@ class AppController extends Controller {
 			}
 			
 			//ON VA DEFINIR LA CONSTANTE D'ACCES AUX VUES DU TEMPLATE//
-			define('LAYOUT_VIEWS', WEBROOT.DS.'templates'.DS.$datas['websiteParams']['tpl_layout'].DS.'views');
+			define('FRONTOFFICE_VIEWS', WEBROOT.DS.'templates'.DS.$datas['websiteParams']['tpl_layout'].DS.'views');
 			$this->set($datas);
 		}		
 		
@@ -1120,7 +1124,7 @@ class AppController extends Controller {
 				$messageContent = $vars['websiteParams']['txt_mail_contact'];				
 				$tplLayout = $vars['websiteParams']['tpl_layout'];
 				
-				if(defined('LAYOUT_VIEWS')) { $emailElement = LAYOUT_VIEWS.DS.'elements'.DS.'email'.DS.'contact'; }
+				if(defined('FRONTOFFICE_VIEWS')) { $emailElement = FRONTOFFICE_VIEWS.DS.'elements'.DS.'email'.DS.'contact'; }
 				else { $emailElement = ELEMENTS.DS.'email'.DS.'default'; }
 				
 				$this->request->data = Sanitize::clean($this->request->data, array('remove_html' => true)); //Petit nettoyage des données avant envoi et insertion
@@ -1204,7 +1208,7 @@ class AppController extends Controller {
     			$messageContent = $vars['websiteParams']['txt_mail_comments'];				
 				$tplLayout = $vars['websiteParams']['tpl_layout'];
 				
-				if(defined('LAYOUT_VIEWS')) { $emailElement = LAYOUT_VIEWS.DS.'elements'.DS.'email'.DS.'commentaire'; } 
+				if(defined('FRONTOFFICE_VIEWS')) { $emailElement = FRONTOFFICE_VIEWS.DS.'elements'.DS.'email'.DS.'commentaire'; } 
 				else { $emailElement = ELEMENTS.DS.'email'.DS.'default'; }
 				
 				$this->request->data = Sanitize::clean($this->request->data, array('remove_html' => true)); //Petit nettoyage des données avant envoi et insertion

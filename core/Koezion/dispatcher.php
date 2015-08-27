@@ -207,11 +207,11 @@ class Dispatcher extends Object {
  */    
 	public function error($message) {
         
-		require_once(LIBS.DS.'config_magik.php');
-		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
-		$coreConfs = $cfg->keys_values();
+		//require_once(LIBS.DS.'config_magik.php');
+		//$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
+		//$coreConfs = $cfg->keys_values();
 		
-		if($coreConfs['log_php']) {
+		if(LOG_PHP) {
 
 			//Rajout le 02/04/2013
 			$date = date('Y-m-d');

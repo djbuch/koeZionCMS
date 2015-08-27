@@ -1,1 +1,0 @@
-<?php $this->element('backoffice/listing/commun/tbody_display'); ?>

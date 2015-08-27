@@ -1667,11 +1667,11 @@ class Model extends Object {
 			if(isset($datas[$primaryKey]) && !empty($datas[$primaryKey]) && !$forceInsert) { $datasToSave[":$primaryKey"] = $datas[$primaryKey]; }
 		}
 				
-		require_once(LIBS.DS.'config_magik.php');
-		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
-		$coreConfs = $cfg->keys_values();
+		//require_once(LIBS.DS.'config_magik.php');
+		//$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
+		//$coreConfs = $cfg->keys_values();
 				
-		if(in_array('password', $datasShema) && $coreConfs['hash_password']) { $datas['password'] = sha1($datas['password']); } //On procède à la mise à jour du champ password si il existe
+		if(in_array('password', $datasShema) && HASH_PASSWORD) { $datas['password'] = sha1($datas['password']); } //On procède à la mise à jour du champ password si il existe
 		if(in_array('activate', $shema) && isset($datas['activate']) && !$datas['activate'] && in_array('online', $datasShema)) { $datas['online'] = 0; } //On procède à la mise à jour du champ online si le champ activate est présent et que celui-ci est à 0
 		
 		///////////////////////////////////////////
@@ -2001,11 +2001,11 @@ class Model extends Object {
  */	
 	protected function _trace_sql($function, $query, $datasToSave = null) {
 			
-		require_once(LIBS.DS.'config_magik.php');
-		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
-		$coreConfs = $cfg->keys_values();
+		//require_once(LIBS.DS.'config_magik.php');
+		//$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
+		//$coreConfs = $cfg->keys_values();
 		
-		if($coreConfs['log_sql']) {
+		if(LOG_SQL) {
 			
 			$date = date('Y-m-d');
 			

@@ -493,7 +493,7 @@ class FormParentHelper extends Helper {
 			
 			if($options['tooltip']) {
 
-				$tooltips 					= '<img src="'.BASE_URL.'/img/backoffice/tooltip.png" alt="tooltip" style="float: left; margin-right: 5px; cursor: pointer;" class="tip-w" original-title="'.$options['tooltip'].'" />';
+				$tooltips 					= '<img src="'.BASE_URL.'/templates/'.BACKOFFICE_TEMPLATE.'/img/tooltip.png" alt="tooltip" style="float: left; margin-right: 5px; cursor: pointer;" class="tip-w" original-title="'.$options['tooltip'].'" />';
 				$labelReturn 				.= $tooltips; 
 				$labelDetails['content'] 	.= $tooltips;
 			}

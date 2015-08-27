@@ -227,14 +227,14 @@ class Router {
 		$protocol = 'http';
 		
 		//Récupération des configurations du coeur
-		require_once(LIBS.DS.'config_magik.php');
-		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
-		$coreConfs = $cfg->keys_values();
+		//require_once(LIBS.DS.'config_magik.php');
+		//$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
+		//$coreConfs = $cfg->keys_values();
 		
 		//On check si la navigation sécurisée est activée (HTTPS)
-		if(isset($coreConfs['https_activated']) && $coreConfs['https_activated']) {
+		if(defined('HTTP_ACTIVATED') && HTTP_ACTIVATED) {
 						
-			$secureUrls = explode(';', $coreConfs['https_secure_urls']); //On récupère la liste des urls qui sont sécurisées sous forme de tableau
+			$secureUrls = explode(';', HTTP_SECURE_URLS); //On récupère la liste des urls qui sont sécurisées sous forme de tableau
 			
 			//Parcours de la liste des urls
 			foreach($secureUrls as $secureUrl) {

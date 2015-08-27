@@ -38,7 +38,7 @@ class ContactsController extends AppController {
     			$vars = $this->get('vars');
     			$messageContent = $vars['websiteParams']['txt_mail_newsletter'];
 			
-    			if(defined('LAYOUT_VIEWS')) { $emailElement = LAYOUT_VIEWS.DS.'elements'.DS.'email'.DS.'newsletter'; }
+    			if(defined('FRONTOFFICE_VIEWS')) { $emailElement = FRONTOFFICE_VIEWS.DS.'elements'.DS.'email'.DS.'newsletter'; }
     			else { $emailElement = ELEMENTS.DS.'email'.DS.'default'; }
     			
     			$this->request->data = Sanitize::clean($this->request->data, array('remove_html' => true)); //Petit nettoyage des données avant envoi et insertion
