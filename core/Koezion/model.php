@@ -2005,7 +2005,7 @@ class Model extends Object {
 		//$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
 		//$coreConfs = $cfg->keys_values();
 		
-		if(LOG_SQL) {
+		if(defined('LOG_SQL') && LOG_SQL) {
 			
 			$date = date('Y-m-d');
 			

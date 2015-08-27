@@ -36,3 +36,4 @@ webroot/upload/*
 webroot/templates/*
 !webroot/templates/koezion
 !webroot/templates/empty
+!webroot/templates/bo_godzilla

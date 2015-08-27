@@ -19,12 +19,12 @@ $stepTitle = array(
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>.:: Installation <?php echo $stepTitle[$step];?>::.</title>
-		<link href="../webroot/css/backoffice/style.css" rel="stylesheet" type="text/css" />
-		<link href="../webroot/css/backoffice/style_text.css" rel="stylesheet" type="text/css" />
-		<link href="../webroot/css/backoffice/login.css" rel="stylesheet" type="text/css" />
-		<link href="../webroot/css/backoffice/forms.css" rel="stylesheet" type="text/css" />
-		<link href="../webroot/css/backoffice/form-buttons.css" rel="stylesheet" type="text/css" />
-		<link href="../webroot/css/backoffice/system-messages.css" rel="stylesheet" type="text/css" />
+		<link href="../webroot/css/install/style.css" rel="stylesheet" type="text/css" />
+		<link href="../webroot/css/install/style_text.css" rel="stylesheet" type="text/css" />
+		<link href="../webroot/css/install/login.css" rel="stylesheet" type="text/css" />
+		<link href="../webroot/css/install/forms.css" rel="stylesheet" type="text/css" />
+		<link href="../webroot/css/install/form-buttons.css" rel="stylesheet" type="text/css" />
+		<link href="../webroot/css/install/system-messages.css" rel="stylesheet" type="text/css" />
 		<link href="../webroot/css/install/hook.css" rel="stylesheet" type="text/css" />
 	</head>
 
