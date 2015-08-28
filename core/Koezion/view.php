@@ -159,7 +159,7 @@ class View extends Object {
 	    	if(isset($pluginsConnectors[$params['controllerFileName']])) { $potentialPluginControllerName = Inflector::camelize($pluginsConnectors[$params['controllerFileName']]); }
 	    	//////////////////////////////////////////////
 	    		    	
-	    	if(isset($pluginsList[$potentialPluginControllerName]) && $inViewsFolder) {
+	    	if(isset($pluginsList[$potentialPluginControllerName])) {
 	    		
 	    		$pluginInfos = $pluginsList[$potentialPluginControllerName];    		    		
 	    		    		
