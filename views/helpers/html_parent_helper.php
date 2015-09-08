@@ -96,6 +96,7 @@ class HtmlParentHelper extends Helper {
  * @version 0.8 - 17/09/2014 by FI : Rajout de la possibilité de modifier les attributs rel, type et media
  * @version 0.9 - 06/08/2015 by SS : Correction dédoublonnage du tableau $css et si la valeur $css n'est pas vide
  * @version 1.0 - 14/08/2015 by FI : Mise en place de la gestion du protocole
+ * @version 1.1 - 07/09/2015 by FI : Gestion des fichers externes via https
  */	
 	public function css($css, $inline = false, $merge = true, $minified = false) {	
 		
@@ -131,7 +132,7 @@ class HtmlParentHelper extends Helper {
 					
 					
 					//On va vérifier si le css n'est pas externe
-					if(substr_count($cssHref, 'http://')) { $cssPath = $cssHref; }
+					if(substr_count($cssHref, 'http://') || substr_count($cssHref, 'https://')) { $cssPath = $cssHref; }
 					else {
 					
 						$firstChar = $cssHref{0};
@@ -223,6 +224,7 @@ class HtmlParentHelper extends Helper {
  * @version 0.8 - 08/07/2014 by FI : Mise en place la possibilité de charger des fichiers libremement via le code F
  * @version 0.9 - 06/08/2015 by SS : Correction dédoublonnage du tableau $js et si la valeur $js n'est pas vide
  * @version 1.0 - 14/08/2015 by FI : Mise en place de la gestion du protocole
+ * @version 1.1 - 07/09/2015 by FI : Gestion des fichers externes via https
  */	
 	public function js($js, $inline = false, $merge = true, $minified = false) {
 		
@@ -243,7 +245,7 @@ class HtmlParentHelper extends Helper {
 				if(!empty($v)) {
 					
 					//On va vérifier si le js n'est pas externe
-					if(substr_count($v, 'http://')) { $jsPath = $v; }
+					if(substr_count($v, 'http://') || substr_count($v, 'https://')) { $jsPath = $v; }
 					else {
 					
 						$firstChar = $v{0};

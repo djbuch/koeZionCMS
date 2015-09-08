@@ -1,5 +1,39 @@
 ﻿<versions>
 	<version>
+		<name>Version du 07/09/2015</name>
+		<num>20150907.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">FormParentHelper::css : Gestion des fichers externes via https</task>		
+			<task author="FI" type="code">FormParentHelper::js : Gestion des fichers externes via https</task>		
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 04/09/2015</name>
+		<num>20150904.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">FormParentHelper::_set_input_label : Suppression de la gestion du tooltips dans ce fichier</task>			
+			<task author="FI" type="code">BO Godzilla FormHelper::_html_input : Gestion du tooltips</task>			
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 02/09/2015</name>
+		<num>20150902.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">AppController::_get_backoffice_menu : rajout de l'icone lors de la récupération des types de modules</task>			
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 01/09/2015</name>
+		<num>20150901.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Rajout du champ icon dans la table des types de modules</task>			
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 28/08/2015</name>
 		<num>20150828.001</num>
 		<supervisor>KoéZionCMS</supervisor>

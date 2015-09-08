@@ -1337,10 +1337,16 @@ class AppController extends Controller {
 						
 		//Récupération des modules
 		$this->load_model('ModulesType'); //Chargement du modèle des types de modules
-		$modulesTypes = $this->ModulesType->findList(array('conditions' => array('online' => 1), 'order' => 'order_by ASC')); //On récupère les types de modules
+		$modulesTypes = $this->ModulesType->find(array('conditions' => array('online' => 1), 'order' => 'order_by ASC')); //On récupère les types de modules
 		
 		$leftMenus = array();
-		foreach($modulesTypes as $k => $v) { $leftMenus[$k] = array('libelle' => $v, 'menus' => array()); }						
+		foreach($modulesTypes as $v) { 
+			$leftMenus[$v['id']] = array(
+				'libelle' => $v['name'], 
+				'icon' => $v['icon'], 
+				'menus' => array()
+			); 
+		}						
 		
 		$this->load_model('Module');
 		$leftMenuTMP = $this->Module->find(array('conditions' => array('online' => 1, 'no_display_in_menu' => 0), 'order' => 'order_by ASC'));

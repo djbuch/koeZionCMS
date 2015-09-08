@@ -340,7 +340,7 @@ class FormHelper extends FormParentHelper {
 		//Cas général
 		} else { 
 			
-			$inputDatas = parent::input($name, $label, $options); //Appel fonction parente
+			$inputDatas = parent::input($name, $label, $options); //Appel fonction parente			
 			$htmlInput = $this->_html_input($inputDatas);
 		}
 		
@@ -355,13 +355,22 @@ class FormHelper extends FormParentHelper {
  * @access	protected
  * @author	koéZionCMS
  * @version 0.1 - 18/03/2015 by FI
+ * @version 0.2 - 04/09/2015 by FI - Gestion du tooltips
  */	
 	protected function _html_input($inputDatas) {
 				
 		//====================    	TRAITEMENTS DES DONNEES    ====================//	
 
 		//Cas du champ caché
-		if($inputDatas['inputOptions']['type'] == 'hidden') { return $inputDatas['inputElement']; } 		
+		if($inputDatas['inputOptions']['type'] == 'hidden') { return $inputDatas['inputElement']; } 	
+
+		//Gestion du tooltips
+		if($inputDatas['inputOptions']['tooltip']) {
+			
+			$tooltips = '<img src="'.BASE_URL.'/templates/'.BACKOFFICE_TEMPLATE.'/img/tooltip.png" alt="tooltip" style="float: left; margin-right: 5px; cursor: pointer;" class="tip-w" original-title="'.$inputDatas['inputOptions']['tooltip'].'" />';
+			$inputDatas['inputLabelDetails']['start'] .= $tooltips;
+			$inputDatas['inputLabel'] = $inputDatas['inputLabelDetails']['start'].$inputDatas['inputLabelDetails']['content'].$inputDatas['inputLabelDetails']['end'];
+		}
 
 		//Cas du color picker
 		if($inputDatas['inputOptions']['colorpicker']) { $inputDatas['inputElement'] = '<div class="color"><div><span style="background-color: '.$inputDatas['inputValue'].'"></span></div>'.$inputDatas['inputElement'].'</div>'; }		

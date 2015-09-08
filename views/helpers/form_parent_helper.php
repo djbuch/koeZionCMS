@@ -471,6 +471,7 @@ class FormParentHelper extends Helper {
  * @access	private
  * @author	koéZionCMS
  * @version 0.1 - 13/05/2015 by FI
+ * @version 0.2 - 04/09/2015 by FI - Suppression de la gestion du tooltips dans ce fichier
  */	
 	function _set_input_label($inputIdText, $label, $options) {
 		
@@ -491,12 +492,6 @@ class FormParentHelper extends Helper {
 			
 			$labelDetails['start'] .= $labelReturn;
 			
-			if($options['tooltip']) {
-
-				$tooltips 					= '<img src="'.BASE_URL.'/templates/'.BACKOFFICE_TEMPLATE.'/img/tooltip.png" alt="tooltip" style="float: left; margin-right: 5px; cursor: pointer;" class="tip-w" original-title="'.$options['tooltip'].'" />';
-				$labelReturn 				.= $tooltips; 
-				$labelDetails['content'] 	.= $tooltips;
-			}
 			if($options['compulsory']) { 
 				
 				$compulsory 				= '<i>(*)</i> ';

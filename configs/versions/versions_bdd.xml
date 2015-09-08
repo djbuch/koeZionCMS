@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 01/09/2015</name>
+		<num>20150901.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI">ALTER TABLE  `modules_types` ADD  `icon` VARCHAR( 255 ) NOT NULL AFTER  `name`;</task>
+		</tasks>	
+	</version> 
+	<version>
 		<name>Version du 26/08/2015</name>
 		<num>20150826.001</num>
 		<supervisor>KoéZionCMS</supervisor>
