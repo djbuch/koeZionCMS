@@ -105,6 +105,7 @@ DROP TABLE IF EXISTS `modules_types`;
 CREATE TABLE IF NOT EXISTS `modules_types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `icon` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `order_by` int(11) NOT NULL,
   `online` int(11) NOT NULL,
   `created` datetime DEFAULT NULL,
