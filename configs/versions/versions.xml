@@ -1,5 +1,25 @@
 ﻿<versions>
 	<version>
+		<name>Version du 14/09/2015</name>
+		<num>20150914.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">FormParentHelper::_input : Extraction des données txtBeforeInput et txtAfterInput dans le tableau de retour</task>
+			<task author="FI" type="code">View::element : Modification de la gestion des vaiables complémentaires passées à l'élément, on ne globalise plus en les ajoutant à $this->vars</task>
+			<task author="FI" type="code">UsersController::login : Correction gestion de la variable $checkPasswordLocal</task>
+			<task author="FI" type="code">Mise en place du template backoffice AdminLte</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 09/09/2015</name>
+		<num>20150909.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">FormParentHelper : rajout de la variable $editorFields</task>	
+			<task author="FI" type="code">FormParentHelper::_input : gestion de la variable editorFields pour les éditeurs de texte</task>	
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 08/09/2015</name>
 		<num>20150908.001</num>
 		<supervisor>KoéZionCMS</supervisor>

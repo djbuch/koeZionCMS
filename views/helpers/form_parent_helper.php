@@ -77,6 +77,16 @@ class FormParentHelper extends Helper {
 		'buttonText', //Texte du bouton pour le type upload
 		'forceDefaultValue' //Indique s'il faut force ou non la valeur par défaut de l'input
 	);
+	
+/**
+ * Variable contenant la liste des éditeurs WYSIWYG à charger
+ *
+ * @var 	mixed (boolean/array)
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 09/09/2015 by FI
+ */
+	var $editorFields = false;
 
 /**
  * Constructeur de la classe
@@ -177,6 +187,8 @@ class FormParentHelper extends Helper {
  * @version 0.8 - 17/11/2014 by FI - Rajout de forceValue dans les options des checkbox
  * @version 0.9 - 22/04/2015 by FI - Rajout du type upload
  * @version 1.0 - 06/05/2015 by FI - Correction de la gestion des noms des inputs radio
+ * @version 1.1 - 09/09/2015 by FI - Rajout de la variable editorFields
+ * @version 1.2 - 14/09/2015 by FI - Extraction des données txtBeforeInput et txtAfterInput dans le tableau de retour
  * @todo Input de type submit etc..., input radio
  * @todo Voir si utile de gérer en récursif la gestion de optgroup pour le select
  */
@@ -283,7 +295,14 @@ class FormParentHelper extends Helper {
 				if(isset($options['wysiswyg']) && $options['wysiswyg']) {
 
 					if(isset($options['toolbar']) && $options['toolbar']) { $toolbar = $options['toolbar']; } else { $toolbar = null; }
-					$inputReturn .= $this->ckeditor(array($inputNameText), $toolbar);
+
+					//$inputReturn .= $this->ckeditor(array($inputNameText), $toolbar); //Ancienne version dans laquelle on chargeait l'éditeur à la volée					
+					
+					//Nouvelle version dans laquelle l'éditeur est chargée à la fin du chargement complet de la page
+					$this->editorFields[] = array(
+						'inputName' => $inputNameText,
+						'inputToolbar' => $toolbar
+					);					
 				}
 			break;
 
@@ -448,18 +467,22 @@ class FormParentHelper extends Helper {
 			$errorLabel .= '</label>';
 		}
 		
-		if(!empty($options['txtBeforeInput'])) { $inputReturn = $options['txtBeforeInput'].$inputReturn; }
-		if(!empty($options['txtAfterInput'])) { $inputReturn = $inputReturn.$options['txtAfterInput'];  }
-		
-		return am(
+		$return = am(
 			$labelDatas,
 			array(
 				'inputElement' => $inputReturn,
 				'inputValue' => $value,
 				'inputError' => $errorLabel,
-				'inputOptions' => $options
+				'inputOptions' => $options,
+				'txtBeforeInput' => '',
+				'txtAfterInput' => ''				
 			)
-		);
+		);		
+		
+		if(!empty($options['txtBeforeInput'])) { $return['txtBeforeInput'] = $options['txtBeforeInput']; }
+		if(!empty($options['txtAfterInput'])) { $return['txtAfterInput'] = $options['txtAfterInput'];  }
+		
+		return $return;
 	}
 
 /**

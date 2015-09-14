@@ -27,8 +27,8 @@ $(document).ready(function() {
 				//On récupère les données en GET et on rajoute une nouvelle ligne
 				$.get(action, function(datas) { $(datas).appendTo("#buttons"); });
 				addedButton.push(rightButton);
-			} else { jAlert("Ce bouton est déjà inséré"); }
-		} else { jAlert("Vous devez sélectionner un bouton"); }		
+			} else { alert("Ce bouton est déjà inséré"); }
+		} else { alert("Vous devez sélectionner un bouton"); }		
 	});		
 	
 	$("#buttons").livequery(function() { 	
@@ -37,7 +37,8 @@ $(document).ready(function() {
 			items: '.sortable', 
 			revert: true, 
 			axis: 'y', 
-			cursor: 'move'
+			cursor: 'move',
+		stop: function() { jAlert('Opération terminée, élément déplacé', 'Message'); }
 		});
 	});
 });

@@ -1,0 +1,73 @@
+.main-header>.navbar{margin-left: 0;}
+.main-header>.navbar p.welcome{float: left;height: 50px;margin: 0;line-height: 50px;color: white;}
+.main-header .sidebar-toggle {padding: 15px 19px;margin-right: 15px;}
+@media (min-width: 768px) {
+	.sidebar-mini.sidebar-collapse .main-header .navbar {margin-left: 0;}
+}
+.control-sidebar-dark a{color: #b8c7ce;}
+@media (min-width: 768px) {
+	.sidebar-mini.sidebar-collapse .sidebar-menu > li:hover > a > span:not(.pull-right),
+	/*.sidebar-mini.sidebar-collapse .sidebar-menu > li:hover > .treeview-menu {width: 300px;padding: 10px}*/
+	
+	.sidebar-mini.sidebar-collapse .sidebar-menu > li:hover > a > span {padding: 12px 5px 12px 20px!important;}
+}
+/*.main-sidebar,.left-side {width: 300px;}*/
+/*.content-wrapper,
+.right-side,
+.main-footer {margin-left: 300px;}*/
+
+table .xxs{width:25px}
+table .xxs2{width:35px}
+table .xs{width:50px}
+table .s{width:75px}
+table .m{width:95px}
+table .l{width:120px}
+table .xl{width:150px}
+table .xxl{width:170px}
+table .xxxl{width:200px}
+table .table_line_title th{text-transform: uppercase;background: #CECCCC;}
+table tr.current_template td{border-bottom: 1px solid black;margin-bottom: 15px;}
+
+.content-header > .page_menu {float: right;margin: 0;position: absolute;top: 15px;right: 10px;}
+
+.nav-tabs-custom{margin: 0;}
+.nav-tabs-custom .left .box,
+.nav-tabs-custom .left .box .box-body,
+.nav-tabs-custom .left .box ul{padding: 0;}
+.nav-tabs-custom .nav-tabs.nav-stacked li{background: white;}
+.nav-tabs-custom .nav-tabs.nav-stacked li.active{
+	border-top: none;
+	border-left: 3px solid;
+	border-left-color: #3c8dbc;
+}
+.nav-tabs-custom .left .nav-tabs.nav-stacked li a{border: none!important;margin: 0!important;}
+
+.add_edit_page .right .box-header{margin: -10px -25px 15px -25px;}
+
+.move_cursor{margin-right:5px;margin-top:-2px;cursor:move;}
+
+.right_button_line{margin-top: 20px;background: white;}
+.right_button_line .row{margin-top: 5px;}
+.right_button_line div.checkbox{margin: 0;}
+
+.infos{cursor: pointer;}
+
+.pagination>li>a.select {
+	z-index: 3;
+	color: #23527c;
+	background-color: #eee;
+	border-color: #ddd;
+}
+
+.datepicker{width: 120px;}
+
+form .right .form-group:not(.no_border_bottom),
+form .right .checkbox:not(.no_border_bottom){
+	margin: 0 -25px;
+    padding: 0 25px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ECECEC;	
+}
+form .right .form-group:last-child,
+form .right .checkbox:last-child{border: none;margin-bottom: 0;padding-bottom: 5px;}

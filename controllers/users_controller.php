@@ -31,6 +31,7 @@ class UsersController extends AppController {
  * @version 0.9 - 13/08/2015 by FI - Rajout d'un test pour vérifier si la navigation HTTPS est activée
  * @version 1.0 - 14/08/2015 by FI - Suppression du test HTTPS suite au passage de la fonctionnalité directement dans le routeur
  * @version 1.1 - 27/08/2015 by FI - Gestion template backoffice
+ * @version 1.2 - 14/09/2015 by FI - Correction gestion de la variable $checkPasswordLocal
  */
 	function login() {		
 		
@@ -59,7 +60,7 @@ class UsersController extends AppController {
 				//En local on peut éviter la saisie des mots de passe
 				$httpHost = $_SERVER["HTTP_HOST"];
 				$checkPassword = true; //Par défaut on check le password
-				if(!defined('CHECK_PASSWORD_LOCAL')) { $checkPasswordLocal = 0; } //Petit contrôle au cas ou le paramètre de cette conf ne soit pas renseigné
+				if(!defined('CHECK_PASSWORD_LOCAL')) { $checkPasswordLocal = 0; } else { $checkPasswordLocal = CHECK_PASSWORD_LOCAL; } //Petit contrôle au cas ou le paramètre de cette conf ne soit pas renseigné
 				if(($httpHost == 'localhost' || $httpHost == '127.0.0.1') && !$checkPasswordLocal) { $checkPassword = false; }
 				
 				$passwordOk = true; //Par défaut la password est bon

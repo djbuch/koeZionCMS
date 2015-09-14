@@ -250,12 +250,14 @@ class View extends Object {
  * @version 0.6 - 01/11/2014 by FI - Modification de la gestion des hooks, la gestion étant maintenant par site on récupère la donnée issue de la BDD et on ne charge plus tous les fichiers. Fonctionnement plus simple lors de la gestion multisites
  * @version 0.7 - 21/01/2015 by FI - Réorganisation de la fonction pour une gestion plus souple des hooks éléments plugins (BO)
  * @version 0.8 - 26/08/2015 by FI - Modification du chemin des éléments backoffice
+ * @version 0.9 - 14/09/2015 by FI - Modification de la gestion des vaiables complémentaires passées à l'élément, on ne globalise plus en les ajoutant à $this->vars
  */
     public function element($element, $vars = null, $isPlugin = false) {
     	
     	if(isset($vars) && !empty($vars)) { 
     		
-    		foreach($vars as $k => $v) { $this->vars[$k] = $v; } 
+    		//foreach($vars as $k => $v) { $this->vars[$k] = $v; }
+    		extract($vars); 
     	}    	
     	extract($this->vars);   
     	    	
