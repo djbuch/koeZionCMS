@@ -3,7 +3,7 @@
 	<head>
 	    <meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-	    <title><?php echo ".:: "._("Login Système d'administration"); ?></title>
+	    <title><?php echo ".:: "._("Connexion backoffice"); ?></title>
 	    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 		<meta name="generator" content="<?php echo GENERATOR_META; ?>" /><?php //ATTENTION VOUS NE POUVEZ PAS SUPPRIMER CETTE BALISE ?>			
 		<?php
