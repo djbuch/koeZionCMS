@@ -80,3 +80,6 @@ form .right .checkbox:not(.no_border_bottom){
 }
 form .right .form-group:last-child,
 form .right .checkbox:last-child{border: none;margin-bottom: 0;padding-bottom: 5px;}
+
+.control-sidebar-heading{margin-bottom: 0;}
+.control-sidebar-menu > li > a{padding: 2px 0 2px 20px;}

@@ -19,7 +19,7 @@
 		
 			?>
 			<style type="text/css">
-				body{background: url("<?php echo $websiteParams['connect_background']; ?>");}	
+				body{background: url("<?php echo $websiteParams['connect_background']; ?>")!important;}	
 			</style>
 			<?php
 		}

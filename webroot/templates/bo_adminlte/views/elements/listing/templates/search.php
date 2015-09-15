@@ -7,7 +7,7 @@ if(isset($this->controller->request->data['Search'])) {
 	$iconBox 	= 'fa-minus';
 }
 ?>
-<div class="box box-primary<?php echo $cssBox; ?>">
+<div class="box <?php echo $cssBox; ?>">
 	<?php
 	$formOptions = array('action' => Router::url('backoffice/'.$params['controllerFileName']), 'method' => 'get', 'id' => 'formSearch');
 	echo $helpers['Form']->create($formOptions);

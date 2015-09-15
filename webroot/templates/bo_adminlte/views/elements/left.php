@@ -9,48 +9,72 @@ $currentAction 		= $this->controller->request->action;
 			<?php 
 			foreach($leftMenus as $leftMenu) { 
 			
-				if(!empty($leftMenu['libelle'])) { 
-				
-					?>
-					<li class="treeview">
-						<a href="#"><?php if($leftMenu['icon']) { ?><i class="<?php echo $leftMenu['icon']; ?>"></i> <?php } ?><span><?php echo strtoupper($leftMenu['libelle']); ?></span><i class="fa fa-angle-left pull-right"></i></a>
-						<ul class="treeview-menu">
-					<?php  
-				}				
-				
-				foreach($leftMenu['menus'] as $subMenusKey => $subMenus) {
-				
-					if(!is_int($subMenusKey)) {						
-						
+				if($leftMenu['menus']) {
+					
+					if(!empty($leftMenu['libelle'])) { 
+					
+						$moduleLiClass = 'treeview';
+						if(count($leftMenu['menus']) == 1) {
+							
+							$module 			= current($leftMenu['menus']);
+							$moduleController 	= $module['controller_name'];
+							$moduleAction 		= !empty($module['action_name']) ? $module['action_name'] : 'index';
+							$moduleLink 		= Router::url('backoffice/'.$moduleController.'/'.$moduleAction);							
+							if($moduleController == $currentController && in_array($currentAction, array($moduleAction, 'add', 'edit'))) { $moduleLiClass .= ' active'; }
+							
+						} else { $moduleLink = '#'; }						
 						?>
-						<li class="treeview">
-							<?php if(!empty($subMenusKey)) { ?><a href="#"><span><?php echo $subMenusKey; ?></span><i class="fa fa-angle-left pull-right"></i></a><?php } ?>
-							<ul class="treeview-menu">
-								<?php 
-								foreach($subMenus as $subMenu) {
-									
-									$controller = $subMenu['controller_name'];
-									$action 	= !empty($subMenu['action_name']) ? $subMenu['action_name'] : 'index';
-									$class 		= '';
-									if($controller == $currentController && $action == $currentAction) { $class = ' class="active"'; }
-									?><li<?php echo $class; ?>><a href="<?php echo Router::url('backoffice/'.$subMenu['controller_name'].'/'.$action); ?>"><i class="fa fa-circle-o"></i> <?php echo $subMenu['name']; ?></a></li><?php 
-								}
+						<li class="<?php echo $moduleLiClass; ?>">
+							<a href="<?php echo $moduleLink; ?>">
+								<?php if($leftMenu['icon']) { ?><i class="<?php echo $leftMenu['icon']; ?>"></i> <?php } ?>
+								<span><?php echo strtoupper($leftMenu['libelle']); ?></span>
+								<?php if(count($leftMenu['menus']) > 1) { ?><i class="fa fa-angle-left pull-right"></i><?php } ?>
+							</a>
+							<?php if(count($leftMenu['menus']) > 1) { ?><ul class="treeview-menu"><?php } ?>
+						<?php  
+					}				
+					
+					if(count($leftMenu['menus']) > 1) {
+						
+						foreach($leftMenu['menus'] as $subMenusKey => $subMenus) {
+						
+							if(!is_int($subMenusKey)) {						
+								
 								?>
-							</ul>
-						</li>
-						<?php						
-					} else {
+								<li class="treeview">
+									<?php if(!empty($subMenusKey)) { ?><a href="#"><span><?php echo $subMenusKey; ?></span><i class="fa fa-angle-left pull-right"></i></a><?php } ?>
+									<ul class="treeview-menu">
+										<?php 
+										foreach($subMenus as $subMenu) {
+											
+											$moduleController 	= $subMenu['controller_name'];
+											$moduleAction 		= !empty($subMenu['action_name']) ? $subMenu['action_name'] : 'index';
+											$moduleLiClass 		= '';
+											if($moduleController == $currentController && in_array($currentAction, array($moduleAction, 'add', 'edit'))) { $moduleLiClass = ' class="active"'; }
+											?><li<?php echo $moduleLiClass; ?>><a href="<?php echo Router::url('backoffice/'.$moduleController.'/'.$moduleAction); ?>"><i class="fa fa-circle-o"></i> <?php echo $subMenu['name']; ?></a></li><?php 
+										}
+										?>
+									</ul>
+								</li>
+								<?php						
+							} else {
+								
+								$moduleController 	= $subMenus['controller_name'];				
+								$moduleAction 		= !empty($subMenus['action_name']) ? $subMenus['action_name'] : 'index';
+								$moduleLiClass 		= '';
+								if($moduleController == $currentController && in_array($currentAction, array($moduleAction, 'add', 'edit'))) { $moduleLiClass = ' class="active"'; }
+								
+								?><li<?php echo $moduleLiClass; ?>><a href="<?php echo Router::url('backoffice/'.$moduleController.'/'.$moduleAction); ?>"><i class="fa fa-circle-o"></i> <span><?php echo $subMenus['name']; ?></span></a></li><?php	
+							}
+						}
+					}
+					
+					if(!empty($leftMenu['libelle'])) { 
 						
-						$controller = $subMenus['controller_name'];				
-						$action 	= !empty($subMenus['action_name']) ? $subMenus['action_name'] : 'index';
-						$class 		= '';
-						if($controller == $currentController && $action == $currentAction) { $class = ' class="active"'; }
-						
-						?><li<?php echo $class; ?>><a href="<?php echo Router::url('backoffice/'.$controller.'/'.$action); ?>"><i class="fa fa-circle-o"></i> <span><?php echo $subMenus['name']; ?></span></a></li><?php	
+						if(count($leftMenu['menus']) > 1) { ?></ul><?php }
+						?></li><?php 
 					}
 				}
-				
-				if(!empty($leftMenu['libelle'])) { ?></ul></li><?php }
 			} 
 			?>
 		</ul>

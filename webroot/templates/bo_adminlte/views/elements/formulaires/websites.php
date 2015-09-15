@@ -14,7 +14,7 @@
 				    	<li><a href="#options" data-toggle="tab"><i class="fa fa-plug"></i> <?php echo _("Options"); ?></a></li>
 				    	<li><a href="#googleanalytics" data-toggle="tab"><i class="fa fa-line-chart"></i> <?php echo _("Google Analytics"); ?></a></li>
 				    	<li><a href="#connect" data-toggle="tab"><i class="fa fa-lock"></i> <?php echo _("Page de connexion"); ?></a></li>
-				    	<li><a href="#cssjs" data-toggle="tab"><i class="fa fa-cloud"></i> <?php echo _("CSS & JS"); ?></a></li>
+				    	<li><a href="#cssjs" data-toggle="tab"><i class="fa fa-code"></i> <?php echo _("CSS & JS"); ?></a></li>
 					</ul>
 				</div>
 			</div>
@@ -149,7 +149,7 @@
                 		</div>
 				    	<div class="tab-pane" id="cssjs">	
 				    		<div class="box-header bg-light-blue">
-								<h4><i class="fa fa-cloud"></i> <?php echo _("CSS & JS"); ?></h4>                  
+								<h4><i class="fa fa-code"></i> <?php echo _("CSS & JS"); ?></h4>                  
                 			</div>  	
 							<?php	
 							echo $helpers['Form']->upload_files('css_hack_file', array('label' => _("Ficher CSS complémentaire")));		

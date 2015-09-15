@@ -4,3 +4,4 @@ body{background-color: #ecf0f5;}
 .callout{margin-bottom: 5px;}
 .content-wrapper .content-header{background: #3C3B3B;color: white;padding: 15px;}
 .box-header h4{margin: 0;}
+.content-wrapper{padding-top: 0;}
