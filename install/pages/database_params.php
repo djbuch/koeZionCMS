@@ -37,44 +37,58 @@ if(isset($_POST['valid_database_form']) && $_POST['valid_database_form']) {
 	}
 }
 ?>
-<div id="right">		
-	<div id="main">				
+<div class="box box-primary">
+	<div class="box-header bg-light-blue">
+		<h4><i class="fa fa-database"></i> <?php echo _("CONFIGURATION DE LA BASE DE DONNEES"); ?></h4>                  
+	</div>    							
+	<?php
+	//Si la bdd n'est pas importée, cas par défaut on arrive sur la page
+	if(!isset($bddcheck)) {
 		
-		<div class="box">			
-			<div class="title">
-				<h2>CONFIGURATION DE LA BASE DE DONNEES</h2>
+		?>
+		<form action="index.php?step=database_params" method="post">
+			<div class="box-body">
+				<div class="callout callout-warning"><?php echo ("ATTENTION : La base de données doit être crée avant de procéder aux paramétrages."); ?></div>
+				<?php require_once(INSTALL_INCLUDE.DS.'database_form.php'); ?>
+			</div>	
+			<div class="box-footer">
+				<button class="btn btn-primary btn-flat pull-right" type="submit"><?php echo _('Tester la connexion à la base de données'); ?></button>
 			</div>
-			<div class="content nopadding">							
-				<?php
-				//Si la bdd n'est pas importée, cas par défaut on arrive sur la page
-				if(!isset($bddcheck)) {
-					
-					?><div class="system warning">ATTENTION : La base de données doit être crée avant de procéder aux paramétrages.</div><?php 
-					require_once(INSTALL_INCLUDE.DS.'database_form.php');					
-					
-				} else {					
-				
-					if(!$bddcheck) {
+		</form>
+		<?php				
+		
+	} else {					
+	
+		//Si le check de la BDD n'est pas concluant
+		if(!$bddcheck) {
 
-						?>
-						<div class="system warning">ATTENTION : La base de données doit être crée avant de procéder aux paramétrages.</div>
-						<div class="system error">Impossible de se connecter à la base de données avec les informations communiquées, veuillez recommencer.</div>
-						<?php 
-						require_once(INSTALL_INCLUDE.DS.'database_form.php');
-					}
-					else { 
-					
-						?>
-						<div class="system succes">La base de données est correctement paramétrée.</div>
-						<form action="index.php?step=database_tables" method="post">
-							<input type="hidden" name="section" value="<?php echo $section; ?>" />
-							<div class="row" style="text-align: right;"><button class="medium grey" type="submit"><span>Importer les tables de la base de données</span></button></div>
-						</form>
-						<?php 
-					}
-				}
-				?>
-			</div>			
-		</div>	
-	</div>
+			?>
+			<form action="index.php?step=database_params" method="post">
+				<div class="box-body">
+					<div class="callout callout-warning"><?php echo ("ATTENTION : La base de données doit être crée avant de procéder aux paramétrages."); ?></div>
+					<div class="callout callout-danger"><?php echo ("Impossible de se connecter à la base de données avec les informations communiquées, veuillez recommencer."); ?></div>
+					<?php require_once(INSTALL_INCLUDE.DS.'database_form.php'); ?>
+				</div>
+				<div class="box-footer">
+					<button class="btn btn-primary btn-flat pull-right" type="submit"><?php echo _('Tester la connexion à la base de données'); ?></button>
+				</div>
+			</form>
+			<?php 
+			
+		} else {
+		
+			?>
+			<div class="box-body">
+				<div class="callout callout-success"><?php echo ("La base de données est correctement paramétrée."); ?></div>
+			</div>
+			<div class="box-footer">
+				<form action="index.php?step=database_tables" method="post">
+					<input type="hidden" name="section" value="<?php echo $section; ?>" />
+					<button class="btn btn-primary btn-flat pull-right" type="submit"><?php echo _('Importer les tables de la base de données'); ?></button>
+				</form> 
+			</div>
+			<?php
+		}
+	}
+	?>
 </div>

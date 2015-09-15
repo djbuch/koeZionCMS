@@ -1,5 +1,15 @@
 ﻿<versions>
 	<version>
+		<name>Version du 15/09/2015</name>
+		<num>20150915.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Reprise complète du processus d'installation</task>
+			<task author="FI" type="code">Suppression de l'API Google Analytics</task>
+			<task author="FI" type="code">Corrections CSS sur la mise en page du nouveau backoffice</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 14/09/2015</name>
 		<num>20150914.001</num>
 		<supervisor>KoéZionCMS</supervisor>

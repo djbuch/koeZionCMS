@@ -23,50 +23,47 @@ if(isset($_GET['action']) && $_GET['action'] == 'sendmail') {
 	$checkSendMail = @mail($to, $subject, $message, $headers);
 }
 ?>
-<div id="right">		
-	<div id="main">		
-		<div class="box">
-			<div class="title">
-				<h2>FIN DE L'INSTALLATION</h2>
-			</div>			
-			<div class="content nopadding">	
-				<div class="system succes">
-					<b>Bravo!!!</b><br />
-					Vous venez de terminer l'installation du CMS koéZion<br />					
-				</div>
-				<div class="system warning">
-					<b>Accès au Backoffice</b><br />
-					Pour vous connecter au backoffice utilisez l'adresse www.votrenomdedomaine.com/adm <br />
-					Le login par défaut est <b>superadmin</b><br />
-					Le mot de passe par défaut est <b>superadmin</b><br />
-					<i>Pensez à le changer par un mot de passe que vous seul pourrez retrouver</i>
-					
-				</div>
-				<div class="system info">
-					<b>Astuce</b><br />
-					Pendant le temps du paramétrage des différentes options de votre site Internet nous vous conseillons d'activer l'option permettant de sécuriser votre site Internet, ceci afin éviter que vos pages ne soient référencées durant la création de votre site Internet. 
-				</div>
-				<div class="system error">
-					<b>ATTENTION INFORMATION IMPORTANTE</b><br />
-					Veillez à supprimer le dossier install qui se trouve à la racine de votre dossier d'hébergement sur votre serveur
-				</div>
-				<?php //require_once(ROOT.DS.'core'.DS.'Koezion'.DS.'router.php'); ?>						
-				<div class="row" style="overflow: hidden;">
-					<a href="<?php echo Router::url('/'); ?>" target="_blank"><button class="medium grey" type="submit" style="float: right;"><span>Accéder à la page d'accueil de votre site koéZionCMS</span></button></a>
-					<a href="<?php echo Router::url('/adm'); ?>" target="_blank"><button class="medium grey" type="submit" style="float: right;"><span>Accéder à l'espace d'administration de votre site koéZionCMS</span></button></a>						
-				</div>
-				
-				<div class="row" style="overflow: hidden;">
-					<div class="system info">
-						<b>Information</b><br />
-						Souhaitez vous nous envoyer un email pour que votre site apparaisse dans notre portfolio?<br />
-						Si oui cliquez sur le bouton ci-dessous.
-					</div>
-					<form action="index.php?step=final&action=sendmail" method="post">
-						<button class="medium grey" type="submit" style="float: right;"><span>Prévenir KoéZionCMS</span></button>
-					</form>
-				</div>					
-			</div>
+<div class="box box-primary">
+	<div class="box-header bg-light-blue">
+		<h4><i class="fa fa-folder-open"></i> <?php echo _("FIN DE L'INSTALLATION"); ?></h4>                  
+	</div>    		
+	<div class="box-body">
+		
+		<div class="alert alert-success alert-dismissable">
+        	<h4><i class="icon fa fa-check"></i> <?php echo _("Bravo"); ?>!</h4>
+            <?php echo _("Vous venez de terminer l'installation d KoéZioN CMS"); ?>
+		</div>		
+		<div class="alert alert-warning alert-dismissable">
+			<h4><i class="icon fa fa-warning"></i> <?php echo _("Accès au Backoffice"); ?></h4>
+            <?php echo _("Pour vous connecter au backoffice utilisez l'adresse www.votrenomdedomaine.com/adm"); ?><br />
+            <?php echo _("Le login par défaut est"); ?> <b>superadmin</b><br />
+            <?php echo _("Le mot de passe par défaut est"); ?> <b>superadmin</b><br />
+            <?php echo _("Pensez à le changer par un mot de passe que vous seul pourrez retrouver"); ?><br />
+		</div>
+		<div class="alert alert-info alert-dismissable">
+            <h4><i class="icon fa fa-info"></i> <?php echo _("Astuce"); ?>!</h4>
+        	<?php echo _("Pendant le temps du paramétrage des différentes options de votre site Internet nous vous conseillons d'activer l'option permettant de sécuriser votre site Internet, ceci afin éviter que vos pages ne soient référencées durant la création de votre site Internet."); ?>
+		</div>		
+		<div class="alert alert-danger  alert-dismissable">
+			<h4><i class="icon fa fa-ban"></i> <?php echo _("INFORMATION IMPORTANTE"); ?>!</h4>
+			<?php echo _("Veillez à supprimer le dossier install qui se trouve à la racine de votre dossier d'hébergement sur votre serveur."); ?>
+		</div>
+		
+		<div style="margin-top:50px;overflow: hidden;">
+			<a href="<?php echo Router::url('/'); ?>" target="_blank"><button class="btn btn-primary btn-flat pull-left"><?php echo _("Accéder au frontoffice de votre site KoéZioN CMS"); ?></button></a>
+			<a href="<?php echo Router::url('/adm'); ?>" target="_blank"><button class="btn btn-primary btn-flat pull-right"><?php echo _("Accéder au backoffice de votre site KoéZioN CMS"); ?></button></a>						
 		</div>	
 	</div>
+	<div class="box-footer"> 
+		<div class="callout callout-info">
+			<b><?php echo _("Information"); ?></b><br />
+			<?php echo _("Souhaitez vous nous envoyer un email pour que votre site apparaisse dans notre portfolio"); ?>?<br />
+			<?php echo _("Si oui cliquez sur le bouton ci-dessous"); ?>.
+			<div class="text-right">
+				<form action="index.php?step=final&action=sendmail" method="post">
+					<button class="btn btn-warning btn-flat" type="submit"><?php echo _("Prévenir KoéZionCMS"); ?></button>
+				</form>
+			</div>
+		</div>
+	</div>	
 </div>

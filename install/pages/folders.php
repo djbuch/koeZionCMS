@@ -69,79 +69,78 @@ $folders = array(
 	)
 );
 ?>
-<div id="right">		
-	<div id="main">		
-		<div class="box">
-			<div class="title">
-				<h2>PARAMETRAGES DES DOSSIERS</h2>
-			</div>			
-			<div class="content">	
-				<?php 
-				$result = true;
-				
-				//On va parcourir l'ensemble des dossiers
-				foreach($folders as $folder) {
-				
-					$checkFolder = $folder['checkFolder'];
-					$txtFolder = $folder['txtFolder'];
-					$check = $folder['check'];
-				
-					switch($check) {
-						
-						case 'chmod':
-							
-							if(FileAndDir::dwritable($checkFolder)) { ?><div class="system succes">Le dossier <b><?php echo $txtFolder; ?></b> est correctement paramétré.</div><?php } 
-							else { 
-								
-								$result = false;
-								?><div class="system error">
-									Le dossier <b><?php echo $txtFolder; ?></b> n'est pas correctement paramétré.<br />
-									Le  chmod doit être 0777 pour le dossier et tous les éléments qui le compose.
-								</div><?php
-							}
-							
-						break;
-						
-						case 'exist':
-									
-							if(FileAndDir::dexists($checkFolder)) { 
-								$result = false;
-								?><div class="system error">Le dossier <b><?php echo $txtFolder; ?></b> doit être supprimé.</div><?php 
-							}
-						break;						
-					}					
-				}
-				
-				if($result) {					
-					
-					///////////////////////////////////////////////////
-					//   CREATION DES DOSSIERS DANS WEBROOT/UPLOAD   //
-					$foldersToCreate = array(
-							WEBROOT_UPLOAD.DS.'_thumbs',
-							WEBROOT_UPLOAD.DS.'_thumbs'.DS.'Files',
-							WEBROOT_UPLOAD.DS.'_thumbs'.DS.'Flash',
-							WEBROOT_UPLOAD.DS.'_thumbs'.DS.'Images',
-							WEBROOT_UPLOAD.DS.'files',
-							WEBROOT_UPLOAD.DS.'flash',
-							WEBROOT_UPLOAD.DS.'images'
-					);
-					foreach($foldersToCreate as $folder) { FileAndDir::createPath($folder); }
-					
-					FileAndDir::fcopy(INSTALL_FILES.DS.'core.ini', CONFIGS_FILES.DS.'core.ini');
-					FileAndDir::fcopy(INSTALL_FILES.DS.'posts.ini', CONFIGS_FILES.DS.'posts.ini');
-					FileAndDir::fcopy(INSTALL_FILES.DS.'routes.ini', CONFIGS_FILES.DS.'routes.ini');
-									
-					$httpHost = $_SERVER["HTTP_HOST"];
-					if($httpHost == 'localhost' || $httpHost == '127.0.0.1') { $section = 'localhost'; } else { $section = 'online'; }
-					?>
-					<form action="index.php?step=database_params" method="post">
-						<input type="hidden" name="section" value="<?php echo $section; ?>" />
-						<div class="row" style="text-align: right; padding-right: 0; padding-bottom: 0;"><button class="medium grey" type="submit"><span>Configurer la base de données</span></button></div>
-					</form>
-					<?php 
-				} 
-				?>
-			</div>
-		</div>	
+<div class="box box-primary">
+	<div class="box-header bg-light-blue">
+		<h4><i class="fa fa-folder-open"></i> <?php echo _("PARAMETRAGES DES DOSSIERS"); ?></h4>                  
 	</div>
+    <div class="box-body">
+		<?php 
+		$result = true;
+		
+		//On va parcourir l'ensemble des dossiers
+		foreach($folders as $folder) {
+		
+			$checkFolder = $folder['checkFolder'];
+			$txtFolder = $folder['txtFolder'];
+			$check = $folder['check'];
+		
+			switch($check) {
+				
+				case 'chmod':
+					
+					if(FileAndDir::dwritable($checkFolder)) { ?><div class="callout callout-success">Le dossier <b><?php echo $txtFolder; ?></b> est correctement paramétré.</div><?php } 
+					else { 
+						
+						$result = false;
+						?><div class="callout callout-warning">
+							Le dossier <b><?php echo $txtFolder; ?></b> n'est pas correctement paramétré.<br />
+							Le  chmod doit être 0777 pour le dossier et tous les éléments qui le compose.
+						</div><?php
+					}
+					
+				break;
+				
+				case 'exist':
+							
+					if(FileAndDir::dexists($checkFolder)) { 
+						$result = false;
+						?><div class="callout callout-warning">Le dossier <b><?php echo $txtFolder; ?></b> doit être supprimé.</div><?php 
+					}
+				break;						
+			}					
+		}
+		?>
+	</div>
+	<?php		 
+	if($result) {					
+		
+		///////////////////////////////////////////////////
+		//   CREATION DES DOSSIERS DANS WEBROOT/UPLOAD   //
+		$foldersToCreate = array(
+				WEBROOT_UPLOAD.DS.'_thumbs',
+				WEBROOT_UPLOAD.DS.'_thumbs'.DS.'Files',
+				WEBROOT_UPLOAD.DS.'_thumbs'.DS.'Flash',
+				WEBROOT_UPLOAD.DS.'_thumbs'.DS.'Images',
+				WEBROOT_UPLOAD.DS.'files',
+				WEBROOT_UPLOAD.DS.'flash',
+				WEBROOT_UPLOAD.DS.'images'
+		);
+		foreach($foldersToCreate as $folder) { FileAndDir::createPath($folder); }
+		
+		FileAndDir::fcopy(INSTALL_FILES.DS.'core.ini', CONFIGS_FILES.DS.'core.ini');
+		FileAndDir::fcopy(INSTALL_FILES.DS.'posts.ini', CONFIGS_FILES.DS.'posts.ini');
+		FileAndDir::fcopy(INSTALL_FILES.DS.'routes.ini', CONFIGS_FILES.DS.'routes.ini');
+						
+		$httpHost = $_SERVER["HTTP_HOST"];
+		if($httpHost == 'localhost' || $httpHost == '127.0.0.1') { $section = 'localhost'; } else { $section = 'online'; }
+		?>
+		<div class="box-footer"> 
+			<form action="index.php?step=database_params" method="post">
+				<input type="hidden" name="section" value="<?php echo $section; ?>" />
+				<button class="btn btn-primary btn-flat pull-right" type="submit"><?php echo _('Configurer la base de données'); ?></button>
+			</form>
+		</div>
+		<?php 
+	} 
+	?>
 </div>

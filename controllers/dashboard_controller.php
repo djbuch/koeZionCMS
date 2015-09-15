@@ -30,6 +30,86 @@ class DashboardController extends AppController {
 		$redirectUrl = "backoffice/dashboard/version";		
 		$this->redirect($redirectUrl, 301); //On lance la redirection		
 	}
+	
+/**
+ * Cette fonction permet l'affichage d'une page
+ *
+ * @access	public
+ * @author	koéZionCMS
+ * @version 0.1 - 27/09/2013 by FI
+ */
+	function backoffice_version() {
+		
+		if(!extension_loaded('soap')) {
+		
+			$this->set('soapErrorMessage', "<b>L'extension SOAP n'est pas installée</b>");
+			
+		} else {
+			
+			$clientSOAP = new SoapClient(
+				null,
+				array (
+					'uri' => 'http://www.koezion-cms.com/__WEBSERVICES__/webservices.php',
+					'location' => 'http://www.koezion-cms.com/__WEBSERVICES__/webservices.php',
+					'trace' => 1,
+					'exceptions' => 0
+				)
+			);
+			
+			//Version BDD
+			$localVersion = $this->_check_local_version('versions_bdd.xml');
+			$bddVersion = array('localVersion' => $localVersion, 'remoteVersion' => 'inconnu');
+			try {
+				
+				$bddVersionTemp = $clientSOAP->__soapCall('get_version', array('file' => 'versions_bdd.xml', 'localVersion' => $localVersion), null, null, $output);				
+				if(!is_soap_fault($bddVersionTemp)) { $bddVersion = $bddVersionTemp; }
+				
+			} catch(SoapFault $soapFault) { $this->set('soapErrorMessage', $soapFault); }
+			
+			//Récupération de la dernière version connue de la base de données
+			$this->load_model('Config');
+			$lastKnowVersionBdd = $this->Config->findFirst(array('conditions' => array('code' => 'numVersion')));
+			if(!empty($lastKnowVersionBdd) && isset($lastKnowVersionBdd['value']) && !empty($lastKnowVersionBdd['value'])) {
+				
+				if($bddVersion['localVersion'] < $lastKnowVersionBdd['value']) { $bddVersion['localVersion'] = $lastKnowVersionBdd['value']; }
+			}			
+			$this->set('bddVersion', $bddVersion);			
+			
+			//Version Code
+			$localVersion = $this->_check_local_version('versions.xml');
+			$cmsVersion = array('localVersion' => $localVersion, 'remoteVersion' => 'inconnu');
+			try {
+				
+				$cmsVersionTemp = $clientSOAP->__soapCall('get_version', array('file' => 'versions.xml', 'localVersion' => $localVersion), null, null, $output);			
+				if(!is_soap_fault($cmsVersionTemp)) { $cmsVersion = $cmsVersionTemp; }
+				
+			} catch(SoapFault $soapFault) { $this->set('soapErrorMessage', $soapFault); }
+			$this->set('cmsVersion', $cmsVersion);
+			
+			//Message KOEZION
+			$cmsMessage = array('Pas de nouveaux messages');
+			try {
+				
+				$cmsMessageTemp = $clientSOAP->__soapCall('get_messages', array('host' => $_SERVER["HTTP_HOST"]), null, null, $output);
+								
+				if(!is_soap_fault($cmsMessageTemp)) { $cmsMessage = $cmsMessageTemp; } 
+				else { /*ERREUR*/ }
+				
+			} catch(SoapFault $soapFault) { $this->set('soapErrorMessage', $soapFault); }
+			$this->set('cmsMessage', $cmsMessage);
+		}
+		
+		if(isset($this->request->data['update_bdd']) && $this->request->data['update_bdd']) {
+						
+			$sql = Session::read('Update.sql'); //Récupération des données
+			Session::delete('Update.sql'); //Suppression des données 
+			$this->load_model('Config');
+			$this->Config->query($sql);
+			
+			$redirectUrl = "backoffice/configs/delete_cache";
+			$this->redirect($redirectUrl, 301); //On lance la redirection
+		}
+	}
 
 /**
  * Cette fonction permet l'affichage des statistiques de visites
@@ -37,8 +117,9 @@ class DashboardController extends AppController {
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 27/09/2013 by FI
+ * @version 0.2 - 15/09/2015 by FI - Cette fonction est supprimé car Google a changé complètement le fonctionnement de l'accès à ses API elle sera réactivée lorsque nous aurons trouvé comment la remettre en place facilement
  */	
-	function backoffice_statistiques() {
+	/*function backoffice_statistiques() {
 		
 		$aParams = $this->_check_datas_stats(); //Contrôle des dates
 
@@ -137,87 +218,7 @@ class DashboardController extends AppController {
 					
 			} else { $this->set('sMessageErreurGa', 'Il y a un problème dans le paramétrages de vos données Google Analytics'); }
 		}		
-	}	
-	
-/**
- * Cette fonction permet l'affichage d'une page
- *
- * @access	public
- * @author	koéZionCMS
- * @version 0.1 - 27/09/2013 by FI
- */
-	function backoffice_version() {
-		
-		if(!extension_loaded('soap')) {
-		
-			$this->set('soapErrorMessage', "<b>L'extension SOAP n'est pas installée</b>");
-			
-		} else {
-			
-			$clientSOAP = new SoapClient(
-				null,
-				array (
-					'uri' => 'http://www.koezion-cms.com/__WEBSERVICES__/webservices.php',
-					'location' => 'http://www.koezion-cms.com/__WEBSERVICES__/webservices.php',
-					'trace' => 1,
-					'exceptions' => 0
-				)
-			);
-			
-			//Version BDD
-			$localVersion = $this->_check_local_version('versions_bdd.xml');
-			$bddVersion = array('localVersion' => $localVersion, 'remoteVersion' => 'inconnu');
-			try {
-				
-				$bddVersionTemp = $clientSOAP->__soapCall('get_version', array('file' => 'versions_bdd.xml', 'localVersion' => $localVersion), null, null, $output);				
-				if(!is_soap_fault($bddVersionTemp)) { $bddVersion = $bddVersionTemp; }
-				
-			} catch(SoapFault $soapFault) { $this->set('soapErrorMessage', $soapFault); }
-			
-			//Récupération de la dernière version connue de la base de données
-			$this->load_model('Config');
-			$lastKnowVersionBdd = $this->Config->findFirst(array('conditions' => array('code' => 'numVersion')));
-			if(!empty($lastKnowVersionBdd) && isset($lastKnowVersionBdd['value']) && !empty($lastKnowVersionBdd['value'])) {
-				
-				if($bddVersion['localVersion'] < $lastKnowVersionBdd['value']) { $bddVersion['localVersion'] = $lastKnowVersionBdd['value']; }
-			}			
-			$this->set('bddVersion', $bddVersion);			
-			
-			//Version Code
-			$localVersion = $this->_check_local_version('versions.xml');
-			$cmsVersion = array('localVersion' => $localVersion, 'remoteVersion' => 'inconnu');
-			try {
-				
-				$cmsVersionTemp = $clientSOAP->__soapCall('get_version', array('file' => 'versions.xml', 'localVersion' => $localVersion), null, null, $output);			
-				if(!is_soap_fault($cmsVersionTemp)) { $cmsVersion = $cmsVersionTemp; }
-				
-			} catch(SoapFault $soapFault) { $this->set('soapErrorMessage', $soapFault); }
-			$this->set('cmsVersion', $cmsVersion);
-			
-			//Message KOEZION
-			$cmsMessage = array('Pas de nouveaux messages');
-			try {
-				
-				$cmsMessageTemp = $clientSOAP->__soapCall('get_messages', array('host' => $_SERVER["HTTP_HOST"]), null, null, $output);
-								
-				if(!is_soap_fault($cmsMessageTemp)) { $cmsMessage = $cmsMessageTemp; } 
-				else { /*ERREUR*/ }
-				
-			} catch(SoapFault $soapFault) { $this->set('soapErrorMessage', $soapFault); }
-			$this->set('cmsMessage', $cmsMessage);
-		}
-		
-		if(isset($this->request->data['update_bdd']) && $this->request->data['update_bdd']) {
-						
-			$sql = Session::read('Update.sql'); //Récupération des données
-			Session::delete('Update.sql'); //Suppression des données 
-			$this->load_model('Config');
-			$this->Config->query($sql);
-			
-			$redirectUrl = "backoffice/configs/delete_cache";
-			$this->redirect($redirectUrl, 301); //On lance la redirection
-		}
-	}
+	}*/	
 	
 //==================================================================================================================================================//
 //   																FONCTIONS PRIVEES   															//
