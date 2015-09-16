@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 16/09/2015</name>
+		<num>20150916.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Correction mise en page template backoffice</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 16/09/2015</name>
 		<num>20150916.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

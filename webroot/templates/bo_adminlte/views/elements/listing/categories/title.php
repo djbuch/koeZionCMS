@@ -11,8 +11,8 @@ else if($currentAction == 'edit') { $pageTitle = _("Editer une catégorie"); }
 	</h1>	
 	<div class="page_menu" >
   		<?php 
-  		if($currentAction == 'index') { echo $helpers['Html']->backoffice_button_title($params['controllerFileName'], 'add', '<i class="fa fa-save"></i>&nbsp;&nbsp;'.strtoupper(_("Ajouter")), null, 'html', 'btn-success'); }
-  		else { echo $helpers['Html']->backoffice_button_title($params['controllerFileName'], 'index', '<i class="fa fa-list-ul"></i>&nbsp;&nbsp;'.strtoupper(_("Retour listing")), null, 'html', 'btn-default'); } 
+  		if($currentAction == 'index') { echo $helpers['Html']->backoffice_button_title($params['controllerFileName'], 'add', '<i class="fa fa-save"></i>&nbsp;&nbsp;'.strtoupper(_("Ajouter")), null, 'html', 'btn-success btn-xs'); }
+  		else { echo $helpers['Html']->backoffice_button_title($params['controllerFileName'], 'index', '<i class="fa fa-list-ul"></i>&nbsp;&nbsp;'.strtoupper(_("Retour listing")), null, 'html', 'btn-default btn-xs'); } 
   		?>
 	</div>
 </section>
