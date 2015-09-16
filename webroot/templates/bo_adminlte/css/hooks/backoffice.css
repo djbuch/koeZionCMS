@@ -1,4 +1,5 @@
 .main-header>.navbar{margin-left: 0;}
+.skin-blue .main-header .navbar{background-color: #1a2226;}
 .main-header>.navbar p.welcome{float: left;height: 50px;margin: 0;line-height: 50px;color: white;}
 .main-header .sidebar-toggle {padding: 15px 19px;margin-right: 15px;}
 @media (min-width: 768px) {
@@ -16,14 +17,19 @@
 .right-side,
 .main-footer {margin-left: 300px;}*/
 
-.content-wrapper{padding-top: 25px;}
+.skin-blue .sidebar-menu>li.header {padding: 8px 25px 8px 15px;}
+
+/*.content-wrapper{padding-top: 25px;}*/
 .content-wrapper .content-header{    
-	background-color: white;
-    border-top: 1px solid #CCC8C8;
-    border-bottom: 1px solid #CCC8C8;
-    padding: 25px;
+	background-color: #3c8dbc;
+    /*border-top: 1px solid #CCC8C8;*/
+    border-bottom: 2px solid #CCC8C8;
+    padding: 22px;
+    color: white;
 }
-.content-header > .page_menu{top: 26px;right: 25px;float: right;margin: 0;position: absolute;}
+.content-header > h1 {font-size: 30px;}
+.content-header > h1 > small{color:#E8E8E8;}
+.content-header > .page_menu{top: 21px;right: 22px;float: right;margin: 0;position: absolute;}
 .content-header > .page_menu a{margin-left: 10px;}
 
 table .xxs{width:25px}

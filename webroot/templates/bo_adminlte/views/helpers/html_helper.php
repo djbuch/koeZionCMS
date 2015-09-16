@@ -152,7 +152,7 @@ else {
 	 */	
 		public function backoffice_delete_button($controller, $css = '') {
 			
-			return '<a class="btn btn-sm btn-danger btn-flat deleteFormBox '.$css.'" onclick="return confirm(\''._("Voulez vous vraiment supprimer?").'\');" href="formDelete">'._("SUPPRIMER TOUS LES ELEMENTS SELECTIONNES").'</a>
+			return '<a class="btn btn-xs btn-danger btn-flat deleteFormBox '.$css.'" onclick="return confirm(\''._("Voulez vous vraiment supprimer?").'\');" href="formDelete">'._("SUPPRIMER TOUS LES ELEMENTS SELECTIONNES").'</a>
 			<img src="'.BASE_URL.'/templates/bo_adminlte/img/arrow_top.png" />';
 		}		
 		
