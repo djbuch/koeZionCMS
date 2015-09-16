@@ -89,3 +89,6 @@ form .right .checkbox:last-child{border: none;margin-bottom: 0;padding-bottom: 5
 
 .control-sidebar-heading{margin-bottom: 0;}
 .control-sidebar-menu > li > a{padding: 2px 0 2px 20px;}
+
+.small-box > .small-box-footer{padding: 3px 15px;}
+.small-box > .small-box-footer.text-left{text-align: left;}

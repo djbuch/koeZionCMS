@@ -10,7 +10,7 @@ INSERT INTO `modules` (`id`, `name`, `controller_name`, `action_name`, `icon`, `
 (9, 'Sites Internet', 'websites', '', '', 0, 0, 1, '2012-11-30 09:27:12', 5, 0),
 (10, 'Utilisateurs', 'users', '', '', 0, 1, 1, '2012-11-30 09:27:32', 5, 0),
 (11, 'Plugins', 'plugins', '', '', 0, 2, 1, '2012-11-30 09:27:47', 6, 0),
-(13, 'Tableau de bord', 'dashboard', 'version', '', 0, 1, 1, '2013-10-08 00:52:32', 7, 0);
+(13, 'Tableau de bord', 'dashboard', '', '', 0, 1, 1, '2013-10-08 00:52:32', 7, 0);
 
 INSERT INTO `modules_types` (`id`, `name`, `icon`, `order_by`, `online`, `created`, `modified`, `modified_by`, `plugin_id`) VALUES
 (7, 'TABLEAU DE BORD', 'fa fa-dashboard', 0, 1, '2012-12-01 06:39:27', '2015-09-15 08:54:33', 1, 0),

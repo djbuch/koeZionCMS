@@ -75,6 +75,12 @@ $(document).ready(function() {
 		}
 	});
 	
+	$(".list_elements .sortable td").each(function() {
+		
+		var width = $(this).outerWidth();
+		$(this).css('width', width);		
+	});
+	
     $('.datepicker').daterangepicker({
         singleDatePicker: true,
         showDropdowns: true,

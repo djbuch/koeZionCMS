@@ -379,6 +379,7 @@ CREATE TABLE IF NOT EXISTS `websites` (
   `css_hack_file` longtext COLLATE utf8_unicode_ci NOT NULL,
   `js_hack_file` longtext COLLATE utf8_unicode_ci NOT NULL,
   `connect_background` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `connect_logo` longtext COLLATE utf8_unicode_ci NOT NULL,
   `connect_text` longtext COLLATE utf8_unicode_ci NOT NULL,
   `connect_css_file` longtext COLLATE utf8_unicode_ci NOT NULL,
   `connect_js_file` longtext COLLATE utf8_unicode_ci NOT NULL,

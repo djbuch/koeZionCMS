@@ -142,6 +142,7 @@
                 			</div>  
 							<?php 
 							echo $helpers['Form']->upload_files('connect_background', array('label' => _("Image de fond")));
+							echo $helpers['Form']->input('connect_logo', _('Logo'), array('type' => 'textarea', 'toolbar' => 'image', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'tooltip' => _("Sélectionnez votre logo à l'aide de l'explorateur de fichier")));
 							echo $helpers['Form']->input('connect_text', _('Texte'), array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge'));	
 							echo $helpers['Form']->upload_files('connect_css_file', array('label' => _("Ficher CSS complémentaire")));		
 							echo $helpers['Form']->upload_files('connect_js_file', array('label' => _("Ficher JS complémentaire")));		

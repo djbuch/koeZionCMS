@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 16/09/2015</name>
+		<num>20150916.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI">ALTER TABLE  `websites` ADD  `connect_logo` LONGTEXT NOT NULL AFTER  `connect_background`;</task>
+		</tasks>	
+	</version> 
+	<version>
 		<name>Version du 01/09/2015</name>
 		<num>20150901.001</num>
 		<supervisor>KoéZionCMS</supervisor>
