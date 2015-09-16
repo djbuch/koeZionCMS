@@ -5,7 +5,8 @@
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <title><?php echo ".:: "._("Connexion backoffice"); ?></title>
 	    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-		<meta name="generator" content="<?php echo GENERATOR_META; ?>" /><?php //ATTENTION VOUS NE POUVEZ PAS SUPPRIMER CETTE BALISE ?>			
+		<meta name="generator" content="<?php echo GENERATOR_META; ?>" /><?php //ATTENTION VOUS NE POUVEZ PAS SUPPRIMER CETTE BALISE ?>
+		<meta name="robots" content="noindex">			
 		<?php
 		$css = array(
 			'bo_adminlte/bootstrap/css/bootstrap.min',
