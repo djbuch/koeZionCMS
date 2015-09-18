@@ -111,6 +111,7 @@ class View extends Object {
  * @version 0.6 - 01/11/2014 by FI - Modification de la gestion des hooks, la gestion étant maintenant par site on récupère la donnée issue de la BDD et on ne charge plus tous les fichiers. Fonctionnement plus simple lors de la gestion multisites
  * @version 0.7 - 08/12/2014 by FI - Modification de la récupération de la variable $hookPathView
  * @version 0.8 - 26/08/2015 by FI - Suppression de la variable $inViewsFolder passée en paramètre et modification du chemin de la vue backoffice 
+ * @version 0.9 - 17/09/2015 by FI - Rajout d'un contrôle supplémentaire sur la vue à charger pour vérifier si le fichier demandé n'existe pas dans l'arborescence 
  * @todo IMPORTANT essayer de voir pourquoi si on retire le file_exists($view) la fonction export du plugin formulaire ne marche plus!!!
  * @todo Essayer d'améliorer l'ajout de websitebaseurl dans le template car il est inséré juste après la récupération de la vue --> supprimé le 25/06/2013 rajouté directement dans le template
  */    
@@ -125,6 +126,9 @@ class View extends Object {
     	
     	//Si on désire rendre une vue particulière celle
     	if(strpos($this->view, '/') === 0) { $view = VIEWS.$this->view.'.php'; }
+    	
+    	//Si on indique un chemin de fichier complet
+    	else if(file_exists($this->view.'.php')) { $view = $this->view.'.php'; }
     	
     	//Sinon le comportement par défaut ira chercher les vues dans le dossier views puis dans le dossier du layout correspond
     	else {    		
