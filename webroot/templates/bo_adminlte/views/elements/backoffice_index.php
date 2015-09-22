@@ -1,9 +1,7 @@
 <?php $this->element('listing/'.$this->vars['params']['controllerFileName'].'/title'); ?>		
 <section class="content">
 	<div class="row">		
-		<div class="col-md-12">
-			<?php $this->element('listing/'.$this->vars['params']['controllerFileName'].'/search'); ?>
-		</div>	
+		<?php $this->element('listing/'.$this->vars['params']['controllerFileName'].'/search'); ?>
     	<div class="col-md-12">
     		<?php $this->element('flash_messages'); ?>
     		<div class="box box-primary">

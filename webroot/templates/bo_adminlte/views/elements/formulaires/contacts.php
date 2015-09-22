@@ -5,7 +5,7 @@
 		echo $helpers['Form']->input('phone', _('Téléphone'), array('compulsory' => true, 'tooltip' => _("Indiquez le téléphone du contact"))); 
 		echo $helpers['Form']->input('email', _('Email'), array('compulsory' => true, 'tooltip' => _("Indiquez l'email du contact"))); 
 		echo $helpers['Form']->input('cpostal', _('Code postal'), array('compulsory' => true, 'tooltip' => _("Indiquez le code postal du contact"))); 
-		echo $helpers['Form']->input('message', _('Message'), array('compulsory' => true, 'type' => 'textarea', 'wysiswyg' => true, 'toolbar' => 'empty', 'rows' => 5, 'cols' => 10, 'class' => 'xxlarge')); 
+		echo $helpers['Form']->input('message', _('Message'), array('compulsory' => true, 'type' => 'textarea', 'wysiswyg' => true, 'toolbar' => 'empty', 'class' => 'xxlarge')); 
 		echo $helpers['Form']->input('online', _('Valide'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour valider ce contact (Une fois validé le contact sera exporté dans le fichier csv)")));
 		?>
 	</div>	

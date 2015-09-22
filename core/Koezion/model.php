@@ -406,6 +406,7 @@ class Model extends Object {
  * @version 1.4 - 22/04/2015 by FI - Modification de le gestion de la récupération des paramètres des conditions LEFT, RIGHT et INNER JOIN
  * @version 1.5 - 23/04/2015 by FI - Modification de le gestion du OR
  * @version 1.6 - 07/07/2015 by FI - Correction gestion rightJoin et innerJoin (Thks SS) 
+ * @version 1.7 - 21/09/2015 by FI - Rajout d'un test sur $orderBy pour vérifier que ce n'est pas déjà un tableau car le explode sur un tableau génère une erreur 
  */    
 	public function find($req = array(), $type = PDO::FETCH_ASSOC) {
 				
@@ -716,8 +717,11 @@ class Model extends Object {
 				if($orderBy == 'RAND') { $sql .= "\n".'ORDER BY RAND() '; }
 				else {
 					
-					//On va éclater la chaîne pour récupérer tous les champs order
-					$orderBy = explode(',', $orderBy);
+					if(!is_array($orderBy)) {
+
+						//On va éclater la chaîne pour récupérer tous les champs order
+						$orderBy = explode(',', $orderBy);
+					}
 					foreach($orderBy as $orderK => $orderV) { //Parcours de tous les champs
 						
 						//Nettoyage de la valeur

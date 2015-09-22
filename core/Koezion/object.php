@@ -52,6 +52,7 @@ class Object {
  * @version 0.3 - 03/06/2014 by FI - Rajout de la variable $databaseConfigs permettant la connexion à une autre BDD
  * @version 0.4 - 08/08/2014 by FI - Modification des données envoyées au constructeur, création de la variable $modelParams
  * @version 0.5 - 16/07/2015 by FI - Mise en place des hooks modèles
+ * @version 0.6 - 22/09/2015 by FI - Rajout de isset($this->request->fullUrl)
  */
 	public function load_model($name, $return = false, $databaseConfigs = null) {
 		
@@ -104,7 +105,7 @@ class Object {
 			$modelParams = null;
 			if(isset($this->request)) { 
 				
-				$modelParams['url'] 				= $this->request->fullUrl;
+				$modelParams['url'] 				= isset($this->request->fullUrl) ? $this->request->fullUrl : '';
 				$modelParams['controller_action'] 	= isset($this->request->controller) && isset($this->request->action) ? $this->request->controller.'/'.$this->request->action : '';				 
 			}
 			

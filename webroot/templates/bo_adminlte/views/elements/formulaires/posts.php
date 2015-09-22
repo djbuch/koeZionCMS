@@ -48,8 +48,8 @@
 								<h4><i class="fa fa-file-word-o"></i> <?php echo _("Descriptifs court et long"); ?></h4>                  
                 			</div>                	
 							<?php 
-							echo $helpers['Form']->input('short_content', _('Descriptif court'), array('type' => 'textarea', 'wysiswyg' => true, 'rows' => 5, 'cols' => 10, 'tooltip' => _("Saisissez ici le descriptif court de votre article, n'hésitez pas à utiliser les modèles de pages pour vous aider")));
-							echo $helpers['Form']->input('content', _('Descriptif long'), array('type' => 'textarea', 'wysiswyg' => true, 'rows' => 5, 'cols' => 10, 'tooltip' => _("Saisissez ici le descriptif long de votre article, n'hésitez pas à utiliser les modèles de pages pour vous aider")));
+							echo $helpers['Form']->input('short_content', _('Descriptif court'), array('type' => 'textarea', 'wysiswyg' => true, 'tooltip' => _("Saisissez ici le descriptif court de votre article, n'hésitez pas à utiliser les modèles de pages pour vous aider")));
+							echo $helpers['Form']->input('content', _('Descriptif long'), array('type' => 'textarea', 'wysiswyg' => true, 'tooltip' => _("Saisissez ici le descriptif long de votre article, n'hésitez pas à utiliser les modèles de pages pour vous aider")));
 							?>		
                 		</div>
 				    	<div class="tab-pane" id="types">	
@@ -196,7 +196,7 @@
 	                			</div>                		
 								<?php 
 								echo $helpers['Form']->input('send_mail', _("Envoyer un email pour informer les utilisateurs de l'ajout (ou de la modification)"), array('type' => 'checkbox', 'tooltip' => _("En cochant cette case un email sera automatiquement envoyer à l'ensemble des utilisateurs référencés dans le système")));
-								echo $helpers['Form']->input('message_mail', _('Contenu email newsletter'), array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte qui sera envoyé par email")));
+								echo $helpers['Form']->input('message_mail', _('Contenu email newsletter'), array('type' => 'textarea', 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte qui sera envoyé par email")));
 								?>	
 	                		</div>
 	                	<?php } ?>

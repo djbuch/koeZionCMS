@@ -31,7 +31,7 @@
 							<?php 
 							echo $helpers['Form']->input('name', _('Titre'), array('compulsory' => true, 'tooltip' => _("Indiquez le titre du site Internet")));
 							echo $helpers['Form']->input('url', _('Url'), array('compulsory' => true, 'tooltip' => _("Indiquez l'url complète du site Internet (avec http:// et sans le / à la fin), sautez une ligne entre chaque domaine.")));
-							echo $helpers['Form']->input('url_alias', _('Alias du domaine'), array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'tooltip' => _("Indiquez ici le ou les alias de ce domaine (url complète avec http:// ou non sans le / à la fin), sautez une ligne entre chaque domaine.")));
+							echo $helpers['Form']->input('url_alias', _('Alias du domaine'), array('type' => 'textarea', 'tooltip' => _("Indiquez ici le ou les alias de ce domaine (url complète avec http:// ou non sans le / à la fin), sautez une ligne entre chaque domaine.")));
 							echo $helpers['Form']->input('online', _('En ligne'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour diffuser ce site Internet")));
 							?>            			
                 		</div>
@@ -51,9 +51,9 @@
 								<h4><i class="fa fa-arrow-up"></i> <?php echo _("Header"); ?></h4>                  
                 			</div>  
 							<?php 
-							echo $helpers['Form']->input('tpl_logo', _('Logo'), array('type' => 'textarea', 'toolbar' => 'image', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'tooltip' => _("Sélectionnez votre logo à l'aide de l'explorateur de fichier")));
-							echo $helpers['Form']->input('header_txt', _('Texte header (Optionnel)'), array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'tooltip' => _("Texte affiché dans le header (Optionnel selon le template sélectionné)")));
-							//echo $helpers['Form']->input('tpl_header', _('Header'), array('type' => 'textarea', 'toolbar' => 'image', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'tooltip' => _("Sélectionnez l'image du header à l'aide de l'explorateur de fichier")));
+							echo $helpers['Form']->input('tpl_logo', _('Logo'), array('type' => 'textarea', 'toolbar' => 'image', 'wysiswyg' => true,  'tooltip' => _("Sélectionnez votre logo à l'aide de l'explorateur de fichier")));
+							echo $helpers['Form']->input('header_txt', _('Texte header (Optionnel)'), array('type' => 'textarea', 'wysiswyg' => true,  'tooltip' => _("Texte affiché dans le header (Optionnel selon le template sélectionné)")));
+							//echo $helpers['Form']->input('tpl_header', _('Header'), array('type' => 'textarea', 'toolbar' => 'image', 'wysiswyg' => true,  'tooltip' => _("Sélectionnez l'image du header à l'aide de l'explorateur de fichier")));
 							?>			
                 		</div>
 				    	<div class="tab-pane" id="foot">	
@@ -61,11 +61,11 @@
 								<h4><i class="fa fa-arrow-down"></i> <?php echo _("Footer"); ?></h4>                  
                 			</div>  		
 							<?php 
-							echo $helpers['Form']->input('footer_gauche', _('Colonne de gauche'), array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge'));			
-							echo $helpers['Form']->input('footer_droite', _('Colonne de droite'), array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge'));
-							echo $helpers['Form']->input('footer_bottom', _('Baseline'), array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge'));
-							echo $helpers['Form']->input('footer_social', _('Texte social'), array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'tooltip' => _("Indiquez ici, par exemple, le texte du module social de Facebook. Attention si vous activez cette zone la zone newsletter sera supprimée.")));
-							echo $helpers['Form']->input('footer_addthis', _('Module AddThis'), array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'tooltip' => _("Indiquez ici le code pour le module AddThis.")));
+							echo $helpers['Form']->input('footer_gauche', _('Colonne de gauche'), array('type' => 'textarea', 'wysiswyg' => true,  'class' => 'xxlarge'));			
+							echo $helpers['Form']->input('footer_droite', _('Colonne de droite'), array('type' => 'textarea', 'wysiswyg' => true,  'class' => 'xxlarge'));
+							echo $helpers['Form']->input('footer_bottom', _('Baseline'), array('type' => 'textarea', 'wysiswyg' => true,  'class' => 'xxlarge'));
+							echo $helpers['Form']->input('footer_social', _('Texte social'), array('type' => 'textarea', 'tooltip' => _("Indiquez ici, par exemple, le texte du module social de Facebook. Attention si vous activez cette zone la zone newsletter sera supprimée.")));
+							echo $helpers['Form']->input('footer_addthis', _('Module AddThis'), array('type' => 'textarea', 'tooltip' => _("Indiquez ici le code pour le module AddThis.")));
 							?>
                 		</div>
 				    	<div class="tab-pane" id="txt">	
@@ -73,10 +73,10 @@
 								<h4><i class="fa fa-file-text-o"></i> <?php echo _("Textes"); ?></h4>                  
                 			</div>  	
 							<?php 
-							echo $helpers['Form']->input('txt_slogan', _('Slogan (accueil)'), array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'tooltip' => _("Indiquez le slogan du site")));
-							echo $helpers['Form']->input('txt_posts', _('Articles (accueil)'), array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte de présentation des articles sur la page d'accueil")));
-							echo $helpers['Form']->input('txt_newsletter', _('Page newsletter'), array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte de la page newsletter")));
-							//echo $helpers['Form']->input('txt_social', _('Texte social'), array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'tooltip' => _("")));
+							echo $helpers['Form']->input('txt_slogan', _('Slogan (accueil)'), array('type' => 'textarea', 'wysiswyg' => true,  'tooltip' => _("Indiquez le slogan du site")));
+							echo $helpers['Form']->input('txt_posts', _('Articles (accueil)'), array('type' => 'textarea', 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte de présentation des articles sur la page d'accueil")));
+							echo $helpers['Form']->input('txt_newsletter', _('Page newsletter'), array('type' => 'textarea', 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte de la page newsletter")));
+							//echo $helpers['Form']->input('txt_social', _('Texte social'), array('type' => 'textarea', 'tooltip' => _("")));
 							?>
                 		</div>
 				    	<div class="tab-pane" id="txtemails">	
@@ -84,14 +84,14 @@
 								<h4><i class="fa fa-envelope"></i> <?php echo _("Textes emails"); ?></h4>                  
                 			</div>  	
 							<?php 
-							echo $helpers['Form']->input('txt_after_form_contact', _('Mentions après formulaire de contact'), array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte qui sera affiché après le formulaire de contact")));
-							echo $helpers['Form']->input('txt_mail_contact', _('Contenu email contact'), array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte qui sera envoyé par email")));
+							echo $helpers['Form']->input('txt_after_form_contact', _('Mentions après formulaire de contact'), array('type' => 'textarea', 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte qui sera affiché après le formulaire de contact")));
+							echo $helpers['Form']->input('txt_mail_contact', _('Contenu email contact'), array('type' => 'textarea', 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte qui sera envoyé par email")));
 							
-							echo $helpers['Form']->input('txt_after_form_comments', _('Mentions après formulaire commentaires'), array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte qui sera affiché après le formulaire de commentaires article")));
-							echo $helpers['Form']->input('txt_mail_comments', _('Contenu email commentaires'), array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte qui sera envoyé par email")));
+							echo $helpers['Form']->input('txt_after_form_comments', _('Mentions après formulaire commentaires'), array('type' => 'textarea', 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte qui sera affiché après le formulaire de commentaires article")));
+							echo $helpers['Form']->input('txt_mail_comments', _('Contenu email commentaires'), array('type' => 'textarea', 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte qui sera envoyé par email")));
 							
-							echo $helpers['Form']->input('txt_after_newsletter', _('Mentions après formulaire newsletter'), array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte qui sera affiché après le formulaire d'inscription à la newsletter")));
-							echo $helpers['Form']->input('txt_mail_newsletter', _('Contenu email newsletter'), array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte qui sera envoyé par email")));
+							echo $helpers['Form']->input('txt_after_newsletter', _('Mentions après formulaire newsletter'), array('type' => 'textarea', 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte qui sera affiché après le formulaire d'inscription à la newsletter")));
+							echo $helpers['Form']->input('txt_mail_newsletter', _('Contenu email newsletter'), array('type' => 'textarea', 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte qui sera envoyé par email")));
 							?>
                 		</div>
 				    	<div class="tab-pane" id="seo">	
@@ -133,7 +133,7 @@
 							echo $helpers['Form']->input('ga_login', _('Google analytics Login'), array('tooltip' => _("Indiquez ici votre identifiant de connexion à Google Analytics")));
 							echo $helpers['Form']->input('ga_password', _('Google analytics Password'), array('tooltip' => _("Indiquez ici votre mot de passe de connexion à Google Analytics")));
 							echo $helpers['Form']->input('ga_id', _('Google analytics ID'), array('tooltip' => _("Indiquez ici l'ID du profil Google Analytics (Disponible les paramètres du profil)")));
-							echo $helpers['Form']->input('ga_code', _('Code Google Analytics'), array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'tooltip' => _("Indiquez ici le code de suivi Google Analytics")));			
+							echo $helpers['Form']->input('ga_code', _('Code Google Analytics'), array('type' => 'textarea', 'tooltip' => _("Indiquez ici le code de suivi Google Analytics")));			
 							?>
                 		</div>
 				    	<div class="tab-pane" id="connect">	
@@ -142,8 +142,8 @@
                 			</div>  
 							<?php 
 							echo $helpers['Form']->upload_files('connect_background', array('label' => _("Image de fond")));
-							echo $helpers['Form']->input('connect_logo', _('Logo'), array('type' => 'textarea', 'toolbar' => 'image', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'tooltip' => _("Sélectionnez votre logo à l'aide de l'explorateur de fichier")));
-							echo $helpers['Form']->input('connect_text', _('Texte'), array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'class' => 'xxlarge'));	
+							echo $helpers['Form']->input('connect_logo', _('Logo'), array('type' => 'textarea', 'toolbar' => 'image', 'wysiswyg' => true,  'tooltip' => _("Sélectionnez votre logo à l'aide de l'explorateur de fichier")));
+							echo $helpers['Form']->input('connect_text', _('Texte'), array('type' => 'textarea', 'wysiswyg' => true,  'class' => 'xxlarge'));	
 							echo $helpers['Form']->upload_files('connect_css_file', array('label' => _("Ficher CSS complémentaire")));		
 							echo $helpers['Form']->upload_files('connect_js_file', array('label' => _("Ficher JS complémentaire")));		
 							?>

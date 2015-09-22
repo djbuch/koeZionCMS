@@ -1,5 +1,24 @@
 ﻿<versions>
 	<version>
+		<name>Version du 22/09/2015</name>
+		<num>20150922.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Object::load_model : rajout d'un contrôle sur l'existence de la variable $this->request->fullUrl</task>
+			<task author="FI" type="code">Modification des templates backoffice disponibles dans le formulaire de gestion des configurations du coeur</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 21/09/2015</name>
+		<num>20150921.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Model::find: Rajout d'un test sur $orderBy pour vérifier que ce n'est pas déjà un tableau car le explode sur un tableau génère une erreur</task>
+			<task author="FI" type="code">Correction de la génération des textarea dans les formulaires BO</task>
+			<task author="FI" type="code">Reprise de la mise en page des moteurs de recherche BO</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 17/09/2015</name>
 		<num>20150917.001</num>
 		<supervisor>KoéZionCMS</supervisor>

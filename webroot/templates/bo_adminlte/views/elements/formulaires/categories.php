@@ -35,7 +35,7 @@
 							echo $helpers['Form']->input('parent_id', _('Page parente'), array('type' => 'select', 'datas' => $categoriesList, 'tooltip' => _("Indiquez la page parente de cette page (Racine du site par défaut)")));
 							echo $helpers['Form']->input('type', _('Type de page'), array('type' => 'select', 'datas' => $typesOfPage, 'tooltip' => _("Une page évènement n'est pas intégrée dans le menu général, vous pourrez faire des liens vers celle-ci via l'éditeur WYSIWYG")));
 							echo $helpers['Form']->input('name', _('Titre'), array('compulsory' => true, 'tooltip' => _("Indiquez le titre de la page. Ce champ sera utilisé (par défaut) comme titre de page dans les moteurs de recherche, 70 caractères maximum recommandé")));
-							echo $helpers['Form']->input('content', _('Contenu'), array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'tooltip' => _("Saisissez ici le contenu de votre page, n'hésitez pas à utiliser les modèles de pages pour vous aider")));
+							echo $helpers['Form']->input('content', _('Contenu'), array('type' => 'textarea', 'wysiswyg' => true,  'tooltip' => _("Saisissez ici le contenu de votre page, n'hésitez pas à utiliser les modèles de pages pour vous aider")));
 							echo $helpers['Form']->input('online', _('En ligne'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour diffuser cette page")));
 							?>
 				    	</div>
@@ -109,7 +109,7 @@
                 			</div>	
 				       		<?php 
 							echo $helpers['Form']->input('is_secure', _('Activer la protection de la page'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour activer la protection de la page")));
-							echo $helpers['Form']->input('txt_secure', _('Texte page sécurisée'), array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'tooltip' => _("Saisissez ici le texte qui sera affiché si la page est sécurisée")));	
+							echo $helpers['Form']->input('txt_secure', _('Texte page sécurisée'), array('type' => 'textarea', 'wysiswyg' => true,  'tooltip' => _("Saisissez ici le texte qui sera affiché si la page est sécurisée")));	
 							?>
 				        </div>
 				        <?php if($isSecure) { ?>
@@ -119,7 +119,7 @@
 	                			</div>	
 					        	<?php 
 								echo $helpers['Form']->input('send_mail', _("Envoyer un email pour informer les utilisateurs de l'ajout (ou de la modification)"), array('type' => 'checkbox', 'tooltip' => _("En cochant cette case un email sera automatiquement envoyer à l'ensemble des utilisateurs référencés dans le système")));
-								echo $helpers['Form']->input('message_mail', _('Contenu email newsletter'), array('type' => 'textarea', 'rows' => 5, 'cols' => 10, 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte qui sera envoyé par email")));
+								echo $helpers['Form']->input('message_mail', _('Contenu email newsletter'), array('type' => 'textarea', 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte qui sera envoyé par email")));
 								?>
 					        </div>
 				        <?php } ?>
