@@ -84,7 +84,7 @@ form .right .checkbox:not(.no_border_bottom){
     padding-bottom: 15px;
     border-bottom: 1px solid #ECECEC;	
 }
-form .right .form-group:last-child,
+form .right .form-group:last-child:not(.force_border),
 form .right .checkbox:last-child{border: none;margin-bottom: 0;padding-bottom: 5px;}
 
 .control-sidebar-heading{margin-bottom: 0;}

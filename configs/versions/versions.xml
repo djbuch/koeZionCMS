@@ -1,5 +1,17 @@
 ﻿<versions>
 	<version>
+		<name>Version du 23/09/2015</name>
+		<num>20150923.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">FormParentHelper::_input : Rajout de if($requestvalue != '') { $isChecked = false; } pour la gestion de la coche par défaut des cases à cocher</task>
+			<task author="FI" type="code">HtmlParentHelper::js : Gestion de l'ajout de fichiers JS via PHP</task>
+			<task author="FI" type="code">Hooks CSS backoffice : modification de la classe de gestion des form-group</task>
+			<task author="FI" type="code">Layout Backoffice AdminLTE : modification du chargement du JS pour résoudre les conflits entre jQuery UI tooltip et Bootstrap tooltip</task>
+			<task author="FI" type="code">Rajout du fichier PHP permettant de gérer les conflits entre jQuery UI tooltip et Bootstrap tooltip</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 22/09/2015</name>
 		<num>20150922.001</num>
 		<supervisor>KoéZionCMS</supervisor>

@@ -189,6 +189,7 @@ class FormParentHelper extends Helper {
  * @version 1.0 - 06/05/2015 by FI - Correction de la gestion des noms des inputs radio
  * @version 1.1 - 09/09/2015 by FI - Rajout de la variable editorFields
  * @version 1.2 - 14/09/2015 by FI - Extraction des données txtBeforeInput et txtAfterInput dans le tableau de retour
+ * @version 1.3 - 23/09/2015 by FI - Rajout de if($requestvalue != '') { $isChecked = false; } pour la gestion de la coche par défaut des cases à cocher 
  * @todo Input de type submit etc..., input radio
  * @todo Voir si utile de gérer en récursif la gestion de optgroup pour le select
  */
@@ -207,8 +208,7 @@ class FormParentHelper extends Helper {
 			'txtAfterInput' => '',
 			'compulsory' => false,
 			'onlyInput' => false,
-			'forceDefaultValue' => false
-			
+			'forceDefaultValue' => false			
 		);
 		$options = array_merge($defaultOptions, $options); //Génération du tableau d'options utilisé dans la fonction
 
@@ -312,9 +312,10 @@ class FormParentHelper extends Helper {
 				if(empty($value)) { $value = 1; }
 				$isChecked = isset($options['isChecked']) && $options['isChecked'] ? true : false;
 				
-				$requestvalue = Set::classicExtract($this->view->controller->request->data, $name);//On récupère la valeur dans request				
+				$requestvalue = Set::classicExtract($this->view->controller->request->data, $name);//On récupère la valeur dans request						
+				if($requestvalue != '') { $isChecked = false; } 
+						
 				$checked = (($value == $requestvalue) || $isChecked) ? ' checked="checked"' : '';//Si la valeur dans request est la même que celle passée en paramètre, alors l'input est sélectionné
-				
 				$value = isset($options['forceValue']) && $options['forceValue'] ? $options['value'] : $value;
 				
 				//Par défaut le champ hidden permettra de mettre à 0 la valeur du champ si la case n'est pas cochée

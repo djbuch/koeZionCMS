@@ -44,16 +44,7 @@
 		$js = array(
 			'bo_adminlte/plugins/jQuery/jQuery-2.1.4.min', /*jQuery 2.1.4*/
 			'https://code.jquery.com/ui/1.11.4/jquery-ui.min.js', /*jQuery UI 1.11.4*/
-		);
-		echo $helpers['Html']->js($js);
-		
-		//Resolve conflict in jQuery UI tooltip with Bootstrap tooltip
-		?>
-    	<script>
-    	$.widget.bridge('uibutton', $.ui.button);
-    	</script>
-		<?php	    
-		$js = array(
+			'bo_adminlte/js/resolve_conflict.php', //Resolve conflict in jQuery UI tooltip with Bootstrap tooltip		
 			'bo_adminlte/bootstrap/js/bootstrap.min', /*Bootstrap 3.3.5*/
 			'/commun/jquery.livequery', /*Utile pour le chargement des pages en ajax*/
 			'/commun/scripts', /*Scripts perso*/
@@ -79,6 +70,6 @@
 		
 		$helpers['Form']->ckeditor();		
 		include_once(ELEMENTS.DS.'js'.DS.'buttons_right_column.php'); 
-		?>
+		?>	
 	</body>
 </html>

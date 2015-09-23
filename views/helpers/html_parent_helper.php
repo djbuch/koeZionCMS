@@ -225,6 +225,7 @@ class HtmlParentHelper extends Helper {
  * @version 0.9 - 06/08/2015 by SS : Correction dédoublonnage du tableau $js et si la valeur $js n'est pas vide
  * @version 1.0 - 14/08/2015 by FI : Mise en place de la gestion du protocole
  * @version 1.1 - 07/09/2015 by FI : Gestion des fichers externes via https
+ * @version 1.2 - 23/09/2015 by FI : Gestion de l'ajout de fichiers JS via PHP
  */	
 	public function js($js, $inline = false, $merge = true, $minified = false) {
 		
@@ -276,7 +277,8 @@ class HtmlParentHelper extends Helper {
 						else { $protocol = 'http'; }
 
 						//Génération du lien vers le fichier JS
-						if(!substr_count($jsPath, '.js')) { $jsPath = Router::url($jsPath, 'js', true, $protocol); }
+						if(substr_count($jsPath, '.php')) { $jsPath = WEBROOT.str_replace('/', DS, $jsPath); }
+						else if(!substr_count($jsPath, '.js')) { $jsPath = Router::url($jsPath, 'js', true, $protocol); }
 						else { $jsPath = Router::url($jsPath, '', true, $protocol); }
 					}				
 					
@@ -288,7 +290,17 @@ class HtmlParentHelper extends Helper {
 						foreach($this->jsParams[$k] as $paramName => $paramValue) { $html .= 'var '.$paramName.' = '.$paramValue.';'."\n"; }
 						$html .= '</script>'."\n"; //On génère la balise de chargement
 					}
-					$html .= "\t\t".'<script src="'.$jsPath.'" type="text/javascript"></script>'."\n"; //On génère la balise de chargement
+					
+					//Chargement des fichiers JS via PHP
+					if(substr_count($jsPath, '.php')) {
+						
+						ob_start();
+						include_once($jsPath);
+						$html .= ob_get_clean();						
+					} 
+					
+					//Chargement des fichiers JS : on génère la balise de chargement
+					else { $html .= "\t\t".'<script src="'.$jsPath.'" type="text/javascript"></script>'."\n"; }
 				}			
 			}			
 			
