@@ -1,5 +1,15 @@
 ﻿<versions>
 	<version>
+		<name>Version du 24/09/2015</name>
+		<num>20150924.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">PluginsController::backoffice_uninstall : Reprise de la gestion de la suppression des tables et des fichiers d'un plugin. Maintenant on supprime toutes les tables et on en fait un backup. Les fichiers du plugin ne sont plus sauvegardés.</task>
+			<task author="FI" type="code">Rajout du composant Database : ce composant permet d'effectuer des opération sur la base de données</task>
+			<task author="FI" type="code">Controller::$components : Rajout du composant Database</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 23/09/2015</name>
 		<num>20150923.001</num>
 		<supervisor>KoéZionCMS</supervisor>

@@ -33,11 +33,19 @@ class Controller extends Object {
 	public $modelName = '';
 	var $moreModels = false;
 	
+/**
+ * Liste des composants chargées dans le CMS
+ *
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 24/09/2015 by FI
+ */
 	var $components = array(
+		'Database',
+		'Date',
 		'Email',
 		'Text',
-		'Website',
-		'Date'
+		'Website'
 	);
 	
 	var $view = false;

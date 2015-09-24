@@ -147,6 +147,7 @@ class PluginsController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 30/03/2013 by AA
  * @version 0.2 - 29/10/2013 by FI - Reprise de la fonction pour la terminer...
+ * @version 0.2 - 24/09/2015 by FI - Reprise de la gestion de la suppression des tables et des fichiers d'un plugin. Maintenant on supprime toutes les tables et on en fait un backup. Les fichiers du plugin ne sont plus sauvegardés.
  */
 	public function backoffice_uninstall($id) {
 
@@ -174,27 +175,43 @@ class PluginsController extends AppController {
 														
 					//ON VA RECUPERER, SI IL Y EN A, LA LISTE DES TABLES ASSOCIEES AU PLUGIN EN COURS DE SUPPRESSION
 					$databaseTables 			= $this->Plugin->table_list_in_database(); //Liste des tables de la BDD
-					$databasePluginTables 		= array(); //Liste des tables du plugin
+					$databasePluginTables 		= array(); //Liste des tables du plugin (utilisée pour la sauvegarde)
 					$databasePluginTablesPrefix = 'plugins_'.$plugin['code']; //Préfix des tables du plugin
-					
+										
 					//On va parcourir la liste des tables de la base de données pour en extraire les tables associées au plugin
-					//Elles seront ensuite renommées en vue d'une suppression manuelle par le gestionnaire de la BDD									
+					//Elles seront ensuite supprimées mais une sauvegarde sera effectuée avant									
 					foreach($databaseTables as $databaseTable) {
-					
+											
 						if(substr_count($databaseTable, $databasePluginTablesPrefix)) { 
 							
-							$sql[] = "RENAME TABLE `".$databaseTable."` TO `_".$databaseTable."_".date("Ymd_His")."`;"; 
+							//Suppression du rename car la longueur des noms des tables posait problème
+							//$sql[] 				= "RENAME TABLE `".$databaseTable."` TO `_".$databaseTable."_".date("Ymd_His")."`;";
+							$sql[] 					= "DROP TABLE `".$databaseTable."`;";
+							$databasePluginTables[] = array('table' => $databaseTable);
 						}
 					}					
 	
 					//Si on a des requêtes supplémentaires à exécuter
 					//Prévu pour supprimer les types de modules par exemple
 					if($pluginClass->fileSqlDelete) { $sql[] = $pluginClass->fileSqlDelete; }
+										
+					//Création du dossier de backup
+					if($pluginClass->path) {
 					
-					//On va récupérer l'identifiant du type de module à supprimer
-					//$modulesTypeIdResult = current($this->Plugin->query("SELECT DISTINCT(`modules_type_id`) FROM `modules` WHERE `plugin_id` = ".$id.";", true));
-					//$modulesTypeId = $modulesTypeIdResult['modules_type_id'];	
-					//if($modulesTypeId != 6) { $this->Plugin->query('DELETE FROM `modules_types` WHERE `id` = '.$modulesTypeId.';'); } //On supprime le type de module associé à ce plugin
+						$deletePath = $pluginClass->path.DS.'delete'.DS.date("Ymd_His");
+						FileAndDir::createPath($deletePath);
+					}
+					
+					//Sauvegarde des tables du plugin
+					if($databasePluginTables) {
+						
+						//Backup de la base de données
+						$databaseBackup = $this->components['Database']->export_database($this->Plugin, $databasePluginTables, true);
+												
+						$handle = fopen($deletePath.DS.'database.sql', 'w');
+						fwrite($handle, $databaseBackup);
+						fclose($handle);
+					}
 										
 					$sql = implode("\n", $sql);
 					$this->Plugin->query($sql);
@@ -205,14 +222,7 @@ class PluginsController extends AppController {
 				//Si des fichiers doivent être supprimés, on les récupère dans le plugin
 				//A REPRENDRE VOIR EVENTUELLEMENT SI ON SUPPRIME PAS LA CLASSE FileAndDir???
 					if(isset($pluginClass->filesCopy)) {
-						
-						//Création du dossier de backup des fichiers de configuration du plugin
-						if($pluginClass->path) { 
-							
-							$deletePath = $pluginClass->path.DS.'delete'.DS.date("Ymd_His");
-							FileAndDir::createPath($deletePath); 
-						}						
-					
+										
 						foreach($pluginClass->filesCopy as $fileDelete) {
 	
 							if(isset($fileDelete['sourceName'])) {
@@ -221,7 +231,7 @@ class PluginsController extends AppController {
 								$destinationName = isset($fileDelete['destinationName']) ? $fileDelete['destinationName'] : $fileDelete['sourceName'];
 								$fileToDelete = $fileDelete['destinationPath'].DS.$destinationName; //Chemin du fichier de destination
 								
-								if(isset($deletePath)) { FileAndDir::fcopy($fileToDelete, $deletePath.DS.$destinationName); } //Sauvegarde du fichier								
+								//if(isset($deletePath)) { FileAndDir::fcopy($fileToDelete, $deletePath.DS.$destinationName); } //Sauvegarde du fichier								
 								$processResult = FileAndDir::remove($fileToDelete); //Suppression du fichier
 								
 								if(!$processResult) { $errors[] = $fileToDelete; }
@@ -230,8 +240,8 @@ class PluginsController extends AppController {
 								
 								//Backup des fichiers, on va copier le dossier parent
 								$pathInfos = pathinfo($fileDelete['destinationPath']);
-								FileAndDir::createPath($deletePath.DS.$pathInfos['filename']);
-								FileAndDir::recursive_copy($fileDelete['destinationPath'], $deletePath.DS.$pathInfos['filename']);
+								//FileAndDir::createPath($deletePath.DS.$pathInfos['filename']);
+								//FileAndDir::recursive_copy($fileDelete['destinationPath'], $deletePath.DS.$pathInfos['filename']);
 								FileAndDir::recursive_delete($fileDelete['destinationPath']);
 							}
 							
