@@ -1,8 +1,18 @@
 ﻿<versions>
 	<version>
 		<name>Version du 25/09/2015</name>
-		<num>20150925.001</num>
+		<num>20150925.002</num>
 		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise à jour CSS backoffice</task>
+			<task author="FI" type="code">FormHelper::input : Rajout de wrapperDivInput et de wrapperDivInputClass</task>
+			<task author="FI" type="code">FormHelper::_html_input : Rajout de wrapperDivInput et de wrapperDivInputClass</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 25/09/2015</name>
+		<num>20150925.001</num>
+		<supervisor>KoéZionCMS</supervisor> 
 		<tasks>
 			<task author="FI" type="code">Mise à jour CSS backoffice</task>
 		</tasks>

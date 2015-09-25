@@ -93,3 +93,15 @@ form .right .checkbox:last-child{border: none;margin-bottom: 0;padding-bottom: 5
 
 .small-box > .small-box-footer{padding: 3px 15px;}
 .small-box > .small-box-footer.text-left{text-align: left;}
+
+h3.form-title {	
+	margin: -15px -25px 15px -25px;x;
+    padding: 15px 25px;
+    background: #222d32;
+	color: white;
+}
+h5.form-title {
+	margin: -15px -25px 15px -25px;x;
+    padding: 15px 25px;
+    background: #EBEBEB;
+}

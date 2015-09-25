@@ -263,7 +263,8 @@ class FormHelper extends FormParentHelper {
  * - divright : si vrai le champ input sera retourné dans un div
  * - fulllabelerror : si vrai l'affichage du message d'erreur se fera à part
  * @version 25/03/2015 by FI - Correction de la gestion du champ traduit pour tester l'exitence d'un model
- * @version 30/03/2015 by FI - Correction du test sur le champ traduit pour prendre en compte les noms de champs utilisants la notation .
+ * @version 30/03/2015 by FI - Correction du test sur le champ traduit pour prendre en compte les noms de champs utilisants la notation.
+ * @version 25/09/2015 by FI - Rajout de wrapperDivInput et de wrapperDivInputClass
  * 
  * @see FormHelper::input()
  */	
@@ -278,8 +279,10 @@ class FormHelper extends FormParentHelper {
 		///////////////////////////////
 		//    GESTION DES OPTIONS    //
 		$defaultOptions = array(
-			'wrapperDiv' => true,
-			'wrapperDivClass' => 'form-group',
+			'wrapperDiv' => true, //Div qui va entourer le label et l'input
+			'wrapperDivClass' => 'form-group', //Classe par défaut de la div 
+			'wrapperDivInput' => false, //Div qui va entourer uniquement l'input
+			'wrapperDivInputClass' => 'input-group', //Classe par défaut
 			'inputDatas' => false,
 			'class' => 'form-control'
 		);
@@ -338,6 +341,7 @@ class FormHelper extends FormParentHelper {
  * @author	koéZionCMS
  * @version 0.1 - 18/03/2015 by FI
  * @version 0.2 - 04/09/2015 by FI - Gestion du tooltips
+ * @version 0.3 - 25/09/2015 by FI - Rajout de wrapperDivInput et de wrapperDivInputClass
  */	
 	protected function _html_input($inputDatas) {
 				
@@ -380,7 +384,15 @@ class FormHelper extends FormParentHelper {
 			}
 			
 			//Cas générique
-			else { $return .= $inputDatas['inputLabel'].$inputDatas['txtBeforeInput'].$inputDatas['inputElement'].$inputDatas['txtAfterInput'].$inputDatas['inputError']; }
+			else { 
+				
+				$return .= $inputDatas['inputLabel'];
+				if($inputDatas['inputOptions']['wrapperDivInput']) { $return .= '<div class="'.$inputDatas['inputOptions']['wrapperDivInputClass'].'">'; }
+				$return .= $inputDatas['txtBeforeInput'].$inputDatas['inputElement'].$inputDatas['txtAfterInput'];
+				if($inputDatas['inputOptions']['wrapperDivInput']) { $return .= '</div>'; }
+				$return .= $inputDatas['inputError']; 
+			
+			}
 			$return .= '</div>';
 			return $return;
 			
