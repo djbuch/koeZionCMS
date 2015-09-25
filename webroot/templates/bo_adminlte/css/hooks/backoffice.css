@@ -8,7 +8,7 @@
 .control-sidebar-dark a{color: #b8c7ce;}
 @media (min-width: 768px) {
 	.sidebar-mini.sidebar-collapse .sidebar-menu > li:hover > a > span:not(.pull-right),
-	/*.sidebar-mini.sidebar-collapse .sidebar-menu > li:hover > .treeview-menu {width: 300px;padding: 10px}*/
+	.sidebar-mini.sidebar-collapse .sidebar-menu > li:hover > .treeview-menu {width: 300px;}
 	
 	.sidebar-mini.sidebar-collapse .sidebar-menu > li:hover > a > span {padding: 12px 5px 12px 20px!important;}
 }
@@ -18,6 +18,7 @@
 .main-footer {margin-left: 300px;}*/
 
 .skin-blue .sidebar-menu>li.header {padding: 8px 25px 8px 15px;}
+.sidebar-menu .treeview-menu > li > .treeview-menu > li > a{padding-left: 0;}
 
 /*.content-wrapper{padding-top: 25px;}*/
 .content-wrapper .content-header{    
