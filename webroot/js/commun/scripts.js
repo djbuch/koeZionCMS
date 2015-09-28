@@ -35,6 +35,16 @@ $(document).ready(function() {
 		get_host: function() {
 
 			//Appel $.get_host()
+			var host	= document.location.host; //Host de l'url
+			var origin 	= document.location.origin; //Origine de l'url (avec http, https, ect...)
+			var href 	= document.location.href; //Url complète
+			
+			if(href.indexOf("/adm/", 0) > 0) { var back = "adm/"; } else { var back = ""; } //On contrôle si l'on est dans le baskoffice ou non
+			
+	  		return origin + baseurl + "/" + back;
+						
+			/*Suppression le 28/09/2015*/
+	  		/*
 	  		var sHost = window.location.host; //Récupération du host
 	  		var sHref = window.location.href; //Récupération de l'url
 	  		
@@ -48,11 +58,13 @@ $(document).ready(function() {
 	  			  		
 			var sHostToReturn =  "http://" + sHost + baseurl + "/" + sBack;
 	  		return sHostToReturn;
-			
+			*/
+	  		
 			/*RAJOUT DU 17/06/2013 A TESTER POUR VOIR SI CA FONCTIONNE CORRECTEMENT*/
-	  		/*SUppression le 21/06/2013 car ça fonctionnait mal*/
+	  		/*Suppression le 21/06/2013 car ça fonctionnait mal*/
 			/*http://stackoverflow.com/questions/6179882/getbaseurl-javascript-call-function-in-a-href*/
-		/*	var url = location.href;  // entire url including querystring - also: window.location.href;
+			/*
+			var url = location.href;  // entire url including querystring - also: window.location.href;
 			var baseURL = url.substring(0, url.indexOf('/', 14));
 
 			if (baseURL.indexOf('http://localhost') != -1) {
@@ -68,37 +80,36 @@ $(document).ready(function() {
 			else {
 			    // Root Url for domain name
 			    return baseURL + "/";
-			}*/
+			}
+			*/
 		},
 		is_back: function() { 
 	  		
 			//Appel $.is_back()
-			var sHost = window.location.host;
-	  		var sHref = window.location.href;
-	  		
-	  		if(sHref.indexOf("/adm/", 0) > 0) { return 1; } else { return 0; } 
+	  		var href = window.location.href;	  		
+	  		if(href.indexOf("/adm/", 0) > 0) { return 1; } else { return 0; } 
 		},
 		get_surface_ecran: function() {
 				
 			//Appel $.get_surface_ecran()
-			var iScreenWidth, iPageHeight;
+			var screenWidth, pageHeight;
 			
 			// firefox is ok
-			iPageHeight = document.documentElement.scrollHeight;
-			iScreenWidth = document.documentElement.scrollWidth;
+			pageHeight = document.documentElement.scrollHeight;
+			screenWidth = document.documentElement.scrollWidth;
 			
 			// now IE 7 + Opera with "min window"
-			if ( document.documentElement.clientHeight > iPageHeight ) { iPageHeight  = document.documentElement.clientHeight; }
-			if ( document.documentElement.clientWidth > iScreenWidth ) { iScreenWidth  = document.documentElement.clientWidth; }
+			if ( document.documentElement.clientHeight > pageHeight ) { pageHeight  = document.documentElement.clientHeight; }
+			if ( document.documentElement.clientWidth > screenWidth ) { screenWidth  = document.documentElement.clientWidth; }
 			
 			// last for safari
-			if ( document.body.scrollHeight > iPageHeight ) { iPageHeight = document.body.scrollHeight; }
-			if ( document.body.scrollWidth > iScreenWidth ) { iScreenWidth = document.body.scrollWidth; }
+			if ( document.body.scrollHeight > pageHeight ) { pageHeight = document.body.scrollHeight; }
+			if ( document.body.scrollWidth > screenWidth ) { screenWidth = document.body.scrollWidth; }
 			
 			return  {
-				screenWidth: iScreenWidth, 
+				screenWidth: screenWidth, 
 				screenHeight: screen.height,
-				pageHeight: iPageHeight,
+				pageHeight: pageHeight,
 				windowHeight: $(window).height(),
 				windowWidth: $(window).width()	
 			};
@@ -106,10 +117,10 @@ $(document).ready(function() {
 		same_height: function(oElement) {
 			
 			//Appel $.same_height()
-			var aHeights = [];
-			$(oElement).each(function(){ aHeights.push( $(this).innerHeight() ); });
-			var iMaxHeight = Math.max.apply(null, aHeights);
-			$(oElement).css( {'height': iMaxHeight + 'px'} );
+			var heights = [];
+			$(oElement).each(function(){ heights.push( $(this).innerHeight() ); });
+			var maxHeight = Math.max.apply(null, heights);
+			$(oElement).css( {'height': maxHeight + 'px'} );
 		}
 	});		
 	
