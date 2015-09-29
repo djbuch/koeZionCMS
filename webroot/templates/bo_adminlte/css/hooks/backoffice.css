@@ -1,23 +1,23 @@
 .main-header>.navbar{margin-left: 0;}
 .skin-blue .main-header .navbar{background-color: #1a2226;}
 .main-header>.navbar p.welcome{float: left;height: 50px;margin: 0;line-height: 50px;color: white;}
-.main-header .sidebar-toggle {padding: 15px 19px;margin-right: 15px;}
-@media (min-width: 768px) {
-	.sidebar-mini.sidebar-collapse .main-header .navbar {margin-left: 0;}
+.main-header .sidebar-toggle{padding: 15px 19px;margin-right: 15px;}
+@media (min-width: 768px){
+	.sidebar-mini.sidebar-collapse .main-header .navbar{margin-left: 0;}
 }
 .control-sidebar-dark a{color: #b8c7ce;}
-@media (min-width: 768px) {
+@media (min-width: 768px){
 	.sidebar-mini.sidebar-collapse .sidebar-menu > li:hover > a > span:not(.pull-right),
-	.sidebar-mini.sidebar-collapse .sidebar-menu > li:hover > .treeview-menu {width: 300px;}
+	.sidebar-mini.sidebar-collapse .sidebar-menu > li:hover > .treeview-menu{width: 300px;}
 	
-	.sidebar-mini.sidebar-collapse .sidebar-menu > li:hover > a > span {padding: 12px 5px 12px 20px!important;}
+	.sidebar-mini.sidebar-collapse .sidebar-menu > li:hover > a > span{padding: 12px 5px 12px 20px!important;}
 }
-/*.main-sidebar,.left-side {width: 300px;}*/
+/*.main-sidebar,.left-side{width: 300px;}*/
 /*.content-wrapper,
 .right-side,
-.main-footer {margin-left: 300px;}*/
+.main-footer{margin-left: 300px;}*/
 
-.skin-blue .sidebar-menu>li.header {padding: 8px 25px 8px 15px;}
+.skin-blue .sidebar-menu>li.header{padding: 8px 25px 8px 15px;}
 .sidebar-menu .treeview-menu > li > .treeview-menu > li > a{padding-left: 0;}
 
 /*.content-wrapper{padding-top: 25px;}*/
@@ -28,7 +28,7 @@
     padding: 15px;
     color: white;
 }
-.content-header > h1 {font-size: 25px;}
+.content-header > h1{font-size: 25px;}
 .content-header > h1 > small{color:#E8E8E8;}
 .content-header > .page_menu{top: 17px;right: 15px;float: right;margin: 0;position: absolute;}
 .content-header > .page_menu a{margin-left: 10px;}
@@ -68,7 +68,7 @@ table tr.current_template td{border-bottom: 1px solid black;margin-bottom: 15px;
 
 .infos{cursor: pointer;}
 
-.pagination>li>a.select {
+.pagination>li>a.select{
 	z-index: 3;
 	color: #23527c;
 	background-color: #eee;
@@ -77,16 +77,16 @@ table tr.current_template td{border-bottom: 1px solid black;margin-bottom: 15px;
 
 .datepicker{width: 120px;}
 
-form .right .form-group:not(.no_border_bottom),
-form .right .checkbox:not(.no_border_bottom){
+form .form-group:not(.no_border_bottom),
+form .checkbox:not(.no_border_bottom){
 	margin: 0 -25px;
     padding: 0 25px;
     margin-bottom: 15px;
     padding-bottom: 15px;
     border-bottom: 1px solid #ECECEC;	
 }
-form .right .form-group:last-child:not(.force_border),
-form .right .checkbox:last-child{border: none;margin-bottom: 0;padding-bottom: 5px;}
+form .form-group:last-child:not(.force_border),
+form .checkbox:last-child{border: none;margin-bottom: 0;padding-bottom: 5px;}
 
 .control-sidebar-heading{margin-bottom: 0;}
 .control-sidebar-menu > li > a{padding: 2px 0 2px 20px;}
@@ -94,14 +94,21 @@ form .right .checkbox:last-child{border: none;margin-bottom: 0;padding-bottom: 5
 .small-box > .small-box-footer{padding: 3px 15px;}
 .small-box > .small-box-footer.text-left{text-align: left;}
 
-h3.form-title {	
-	margin: -15px -25px 15px -25px;x;
+h3.form-title{	
+	margin: -15px -25px 15px -25px;
     padding: 15px 25px;
     background: #222d32;
 	color: white;
 }
-h5.form-title {
+h5.form-title{
 	margin: -15px -25px 15px -25px;x;
     padding: 15px 25px;
     background: #EBEBEB;
 }
+h3.form-title.disabled_margin_top,
+h5.form-title.disabled_margin_top{margin-top: 15px!important;}
+
+.row.row_large h3.form-title,
+.row.row_large h3.form-title{margin: -15px -10px 15px -10px;}
+
+.row.row_large{margin-left: -30px;margin-right: -30px;}

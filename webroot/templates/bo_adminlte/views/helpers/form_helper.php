@@ -57,6 +57,7 @@ class FormHelper extends FormParentHelper {
  * @param unknown_type $input
  * @return unknown
  * @version 0.1 - 10/07/2015 by FI - Rajout de txtAfterInput
+ * @version 0.2 - 29/09/2015 by FI - Rajout de $params['wrapperDivClass']
  *
  */
 	function upload_files($field, $params = null) {
@@ -67,12 +68,14 @@ class FormHelper extends FormParentHelper {
 			$params['tooltip'] = _("Sélectionnez le fichier à importer");
 			$params['button_value'] = _("Sélectionnez le fichier");
 			$params['display_input'] = true;
+			$params['wrapperDivClass'] = 'form-group'; 
 		} else {
 
 			if(!isset($params['label'])) { $params['label'] = _("Fichier à importer"); }
 			if(!isset($params['tooltip'])) { $params['tooltip'] = _("Sélectionnez le fichier à importer"); }
 			if(!isset($params['button_value'])) { $params['button_value'] = _("Sélectionnez le fichier"); }
 			if(!isset($params['display_input'])) { $params['display_input'] = true; }
+			if(!isset($params['wrapperDivClass'])) { $params['wrapperDivClass'] = 'form-group';  }
 		}
 				
 		$inputNameText = $this->_set_input_name($field); //Mise en variable du name de l'input
@@ -100,7 +103,7 @@ class FormHelper extends FormParentHelper {
 			// This is a sample function which is called when a file is selected in CKFinder.
 			function SetFileField<?php echo $inputIdText; ?>(fileUrl) { document.getElementById("<?php echo $inputIdText; ?>").value = fileUrl; }
 		</script>
-		<div class="form-group">
+		<div class="<?php echo $params['wrapperDivClass']; ?>">
 			<label>
 				<?php 			
 				echo $params['label'];

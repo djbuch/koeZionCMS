@@ -37,8 +37,8 @@ $(document).ready(function() {
 			items: '.sortable', 
 			revert: true, 
 			axis: 'y', 
-			cursor: 'move',
-		stop: function() { jAlert('Opération terminée, élément déplacé', 'Message'); }
+			cursor: 'move'
+			//stop: function() { jAlert('Opération terminée, élément déplacé', 'Message'); }
 		});
 	});
 });

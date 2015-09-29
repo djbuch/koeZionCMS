@@ -1,5 +1,15 @@
 ﻿<versions>
 	<version>
+		<name>Version du 29/09/2015</name>
+		<num>20150929.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">FormHelper::upload_files : rajout de $params['wrapperDivClass']</task>
+			<task author="FI" type="code">Rajout de css dans le backoffice</task>
+			<task author="FI" type="code">Modification du fichier views/js/buttons_right_column.php</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 28/09/2015</name>
 		<num>20150928.001</num>
 		<supervisor>KoéZionCMS</supervisor>
