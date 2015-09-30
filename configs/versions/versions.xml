@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 30/09/2015</name>
+		<num>20150930.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise à jour des formulaires backoffice</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 29/09/2015</name>
 		<num>20150929.001</num>
 		<supervisor>KoéZionCMS</supervisor>
