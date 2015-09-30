@@ -20,14 +20,18 @@ if(isset($this->controller->request->data['Search'])) {
 				</div>
 			</div>
 			<div class="box-body">
-				<?php 
-				echo $helpers['Form']->input('Search.id', _('Identifiant'));
-				echo $helpers['Form']->input('Search.name', _('Libellé'));
-				echo $helpers['Form']->input('Search.login', _('Identifiant'));
-				echo $helpers['Form']->input('Search.email', _('Email'));
-				?>               
+				<div class="col-md-12">
+					<?php 
+					echo $helpers['Form']->input('Search.id', _('Identifiant'));
+					echo $helpers['Form']->input('Search.name', _('Libellé'));
+					echo $helpers['Form']->input('Search.login', _('Identifiant'));
+					echo $helpers['Form']->input('Search.email', _('Email'));
+					?>               
+				</div>
 			</div>
-		    <div class="box-footer"><?php echo $helpers['Form']->button(_('Rechercher')); ?></div>
+		    <div class="box-footer">
+		    	<div class="col-md-12"><?php echo $helpers['Form']->button(_('Rechercher')); ?></div>
+		    </div>
 	    <?php echo $helpers['Form']->end(); ?>
 	</div>
 </div>

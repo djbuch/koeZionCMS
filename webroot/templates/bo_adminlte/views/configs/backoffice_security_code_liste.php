@@ -10,13 +10,15 @@
 			?>
 			<div class="box box-primary">
 				<div class="box-body">
-					<?php			 
-					echo $helpers['Form']->input('security_code', _("Code pour les tâches planifiées"), array('tooltip' => _("Indiquez ici le code de sécurité permettant de sécuriser les accès aux procédures CRON")));				
-					echo $helpers['Form']->input('nb_bdd_backups', _("Nombre de backups BDD"), array('tooltip' => _("Indiquez ici le nombre de backups de base de données à conserver")));
-					?>
+					<div class="col-md-12">
+						<?php			 
+						echo $helpers['Form']->input('security_code', _("Code pour les tâches planifiées"), array('tooltip' => _("Indiquez ici le code de sécurité permettant de sécuriser les accès aux procédures CRON")));				
+						echo $helpers['Form']->input('nb_bdd_backups', _("Nombre de backups BDD"), array('tooltip' => _("Indiquez ici le nombre de backups de base de données à conserver")));
+						?>
+					</div>
 				</div>
 				<div class="box-footer">
-					<?php echo $helpers['Form']->button(); ?>
+					<div class="col-md-12"><?php echo $helpers['Form']->button(); ?></div>
 				</div>
 			</div>	
 			<?php 

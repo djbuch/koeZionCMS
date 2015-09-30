@@ -24,7 +24,6 @@ if(isset($this->controller->request->data['Search'])) {
 					<?php 
 					echo $helpers['Form']->input('Search.id', _('Identifiant'));
 					echo $helpers['Form']->input('Search.name', _('Libellé'));
-					echo $helpers['Form']->input('Search.email', _('Email'));	
 					?>               
 				</div>
 			</div>
@@ -33,4 +32,4 @@ if(isset($this->controller->request->data['Search'])) {
 		    </div>
 	    <?php echo $helpers['Form']->end(); ?>
 	</div>
-</div>	
+</div>
