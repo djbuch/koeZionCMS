@@ -126,7 +126,7 @@
 					</div>
 				</div>
 				<div class="box-footer">
-                	<?php echo $helpers['Form']->button(); ?>    
+                	<div class="col-md-12"><?php echo $helpers['Form']->button(); ?></div>    
 				</div>
 			</div>
 		</div>
