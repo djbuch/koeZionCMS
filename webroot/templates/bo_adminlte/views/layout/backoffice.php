@@ -10,6 +10,7 @@
 			'bo_adminlte/bootstrap/css/bootstrap.min', /*Bootstrap 3.3.5*/
 			'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css', /*Font Awesome*/
 			'https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css', /*Ionicons*/
+			'bo_adminlte/css/hooks/jquery-ui', /*jQuery UI*/
 			'bo_adminlte/css/AdminLTE', /*Theme style*/
 			'bo_adminlte/css/skins/skin-blue.min', /*AdminLTE Skins*/
 			'bo_adminlte/plugins/iCheck/flat/blue', /*iCheck*/

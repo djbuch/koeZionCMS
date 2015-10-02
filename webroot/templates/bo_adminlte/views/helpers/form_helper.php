@@ -276,7 +276,7 @@ class FormHelper extends FormParentHelper {
 		////////////////////////
 		//    PARAMETRAGES    //
 		$modelName 				= isset($this->view->controller->params['modelName']) ? $this->view->controller->params['modelName'] : ''; //Récupération du model courant
-		$escapeAttributes 		= array('wrapperDiv', 'wrapperDivClass', 'inputDatas');
+		$escapeAttributes 		= array('wrapperDiv', 'wrapperDivClass', 'wrapperDivInput', 'wrapperDivInputClass', 'inputDatas');
 		$this->escapeAttributes = am($escapeAttributes, $this->escapeAttributes);		
 		
 		///////////////////////////////
@@ -389,7 +389,7 @@ class FormHelper extends FormParentHelper {
 			//Cas générique
 			else { 
 				
-				$return .= $inputDatas['inputLabel'];
+				if($inputDatas['inputOptions']['label']) { $return .= $inputDatas['inputLabel']; }
 				if($inputDatas['inputOptions']['wrapperDivInput']) { $return .= '<div class="'.$inputDatas['inputOptions']['wrapperDivInputClass'].'">'; }
 				$return .= $inputDatas['txtBeforeInput'].$inputDatas['inputElement'].$inputDatas['txtAfterInput'];
 				if($inputDatas['inputOptions']['wrapperDivInput']) { $return .= '</div>'; }

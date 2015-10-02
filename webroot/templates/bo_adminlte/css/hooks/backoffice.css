@@ -114,3 +114,5 @@ h5.form-title.disabled_margin_top{margin-top: 15px!important;}
 .row.row_large{margin-left: -30px;margin-right: -30px;}
 .row.row_small{margin-left: -10px;margin-right: -10px;padding-left: 10px;padding-right: 10px;}
 .row.border_bottom{border-bottom: 1px solid #ECECEC;margin-bottom: 15px;padding-bottom: 15px;}
+
+.colorpicker{border-radius:0!important;}

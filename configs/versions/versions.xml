@@ -1,6 +1,17 @@
 ﻿<versions>
 	<version>
 		<name>Version du 02/10/2015</name>
+		<num>20151002.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Rajout de la librairie jQueryUI</task>
+			<task author="FI" type="code">Modification CSS backoffice</task>
+			<task author="FI" type="code">Correction sur les layouts backoffice et empty</task>
+			<task author="FI" type="code">Rajout des champs à échapper dans le helper form</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 02/10/2015</name>
 		<num>20151002.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
