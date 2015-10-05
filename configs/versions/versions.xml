@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 05/10/2015</name>
+		<num>20151005.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">UsersController::login : Rajout d'un contrôle sur le hash du password</task>
+			<task author="FI" type="code">Reprise des fichiers mutulisés pour l'affichage des tableaux en BO</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 02/10/2015</name>
 		<num>20151002.002</num>
 		<supervisor>KoéZionCMS</supervisor>
