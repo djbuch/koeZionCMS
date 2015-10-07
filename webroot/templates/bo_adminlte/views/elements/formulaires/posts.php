@@ -37,10 +37,10 @@
 								<h4><i class="fa fa-file-text-o"></i> <?php echo _("Général"); ?></h4>                  
                 			</div>  
 							<?php 
-							echo $helpers['Form']->input('category_id', _('Catégorie parente'), array('type' => 'select', 'datas' => $categoriesList, 'tooltip' => "Indiquez la catégorie parente de cet article, c'est à partir de cette catégorie que cet article sera accessible", 'firstElementList' => "Sélectionnez une catégorie"));
-							echo $helpers['Form']->input('name', _("Titre de l'article"), array('compulsory' => true, 'tooltip' => "Indiquez le titre de l'article. Ce champ sera utilisé comme titre de page dans les moteurs de recherche, 70 caractères maximum recommandé"));
-							echo $helpers['Form']->input('dont_change_modified_date', _('Ne pas changer la date de modification'), array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour ne pas changer automatiquement la date de modification de l'article"));
-							echo $helpers['Form']->input('online', _('En ligne'), array('type' => 'checkbox', 'tooltip' => "Cochez cette case pour diffuser cet article"));
+							echo $helpers['Form']->input('category_id', _('Catégorie parente'), array('type' => 'select', 'datas' => $categoriesList, 'tooltip' => _("Indiquez la catégorie parente de cet article, c'est à partir de cette catégorie que cet article sera accessible"), 'firstElementList' => _("Sélectionnez une catégorie")));
+							echo $helpers['Form']->input('name', _("Titre de l'article"), array('compulsory' => true, 'tooltip' => _("Indiquez le titre de l'article. Ce champ sera utilisé comme titre de page dans les moteurs de recherche, 70 caractères maximum recommandé")));
+							echo $helpers['Form']->input('dont_change_modified_date', _('Ne pas changer la date de modification'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour ne pas changer automatiquement la date de modification de l'article")));
+							echo $helpers['Form']->input('online', _('En ligne'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour diffuser cet article")));
 							?>	             			
                 		</div>
 				    	<div class="tab-pane" id="textes">	
@@ -58,7 +58,7 @@
                 			</div>                
                 			<?php echo $helpers['Form']->input('display_posts_types', _("Afficher les types d'articles dans la colonne de page"), array('type' => 'checkbox', 'tooltip' => _("En cliquant sur cette case les types d'articles seront affichés dans la colonne de droite"))); ?>
 							<label>Type d'article</label>
-							<p class="help-block"><?php echo ("CCochez les types d'article (Plusieurs choix possibles)"); ?></p>
+							<p class="help-block"><?php echo _("Cochez les types d'article (Plusieurs choix possibles)"); ?></p>
 							<?php if($postsTypes) { ?>
 								<table class="table">
 									<tbody>
@@ -66,7 +66,7 @@
 										foreach($postsTypes as $rubrique => $v) {
 											
 											?>
-											<tr>
+											<tr class="table_line_title">
 												<th colspan="4"><i class="fa fa-arrow-right"></i> <?php echo _('Rubrique').' : '.$rubrique; ?></th>
 											</tr>
 											<?php
@@ -150,7 +150,7 @@
 							echo $helpers['Form']->input('display_form', _('Formulaire'), array('type' => 'select', 'datas' => $formulaires, 'tooltip' => _("Indiquez le formulaire que vous souhaitez afficher sur la page"), 'firstElementList' => _("Sélectionnez un formulaire")));					
 							echo $helpers['Form']->input('shooting_time', _("Durée de réalisation"), array('tooltip' => _("Indiquez la durée de réalisation de ce qui sera présenté dans cet article")));
 							echo $helpers['Form']->input('img', _('image'), array('type' => 'file', 'class' => 'input-file', 'tooltip' => _("Cliquez sur le bouton pour télécharger votre image d'illustration. Attention : Mode RVB, Résolution 72dpi")));
-							echo $helpers['Form']->input('publication_date', _('Date de publication'), array('wrapperDivClass' => 'form-group no_border_bottom', 'class' => 'form-control datepicker', 'placeholder' => 'dd.mm.yy', 'tooltip' => "Indiquez la date à laquelle cet article sera publié")); 
+							echo $helpers['Form']->input('publication_date', _('Date de publication'), array('wrapperDivClass' => 'form-group no_border_bottom', 'class' => 'form-control datepicker', 'placeholder' => 'dd.mm.yy', 'tooltip' => _("Indiquez la date à laquelle cet article sera publié"))); 
 							?>
 							<div class="row">
 								<p class="col-md-12"><?php echo _("Cette option vous permet de définir la date à laquelle sera publié l'article en utilisant une tâche"); ?> <a href="http://fr.wikipedia.org/wiki/Cron" target="_blank">CRON</a></p>

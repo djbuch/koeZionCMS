@@ -1,5 +1,15 @@
 ﻿<versions>
 	<version>
+		<name>Version du 07/10/2015</name>
+		<num>20151007.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Correction CSS backoffice</task>
+			<task author="FI" type="code">Correction éléments backoffice</task>
+			<task author="FI" type="code">View::render : Rajout d'un contrôle supplémentaire si on indique un chemin de fichier complet</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 05/10/2015</name>
 		<num>20151005.001</num>
 		<supervisor>KoéZionCMS</supervisor>
