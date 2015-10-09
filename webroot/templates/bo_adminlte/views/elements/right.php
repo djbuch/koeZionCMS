@@ -19,6 +19,12 @@
             	<li><a href="<?php echo Router::url('backoffice/modules_types/index'); ?>"><i class="fa fa-caret-right"></i> <?php echo _("Types de modules"); ?></a></li>
 			</ul>          
     	</div>
+    	<hr />
+		<div class="tab-content">
+			<p style="font-size:11px;text-align:center;"><strong>Copyright &copy; 2010 - <?php echo date('Y'); ?> <a href="http://www.koezion-cms.com">koéZion CMS</a></strong></p>
+			<p style="font-size:11px;text-align:center;margin-bottom:0;">Template by <a href="https://almsaeedstudio.com/AdminLTE">Almsaeed Studio</a></p>
+		</div>
+		<hr />
 	</aside>
 	<div class="control-sidebar-bg"></div>
 <?php } ?>

@@ -16,7 +16,7 @@ else {
 	 * @param 	varchar $controller 	Controller de l'url
 	 * @param 	varchar $action 		Action de l'url
 	 * @param 	varchar $title 			Titre du bouton
-	 * @param 	varchar $params 		Paramètres supplémentaires à passer dans l'url
+	 * @param 	array 	$params 		Paramètres supplémentaires à passer dans l'url
 	 * @param 	varchar $extension 		Paramètres supplémentaires pour modifier l'extension de l'url
 	 * @param 	varchar $css 			Paramètres supplémentaires pour rajouter une ou plusieurs classes CSS supplémentaires
 	 * @param 	varchar $moreAttributes	Paramètres supplémentaires (libre)
@@ -32,9 +32,57 @@ else {
 		public function backoffice_button_title($controller, $action, $title, $params = null, $extension = 'html', $css = 'btn-default btn-xs', $moreAttributes = '') {
 			
 			$url = "backoffice/".$controller."/".$action;
-			if(isset($params)) { $url .= $params; }
+			if(isset($params)) { $url .= '/'.implode('/', $params); }
 			return '<a class="btn btn-flat '.$css.'" href="'.Router::url($url, $extension).'" '.$moreAttributes.'>'.$title.'</a>';
-		}				
+		}		
+		
+	/**
+	 * Cette fonction est utilisée pour générer une action avec un picto donné
+	 *
+	 * @param 	varchar $controller 	Controller de l'url
+	 * @param 	varchar $action 		Action de l'url
+	 * @param 	varchar $pictoOn 		Url du picto actif
+	 * @param 	integer $id 			Identifiant de l'élément
+	 * @param 	varchar $pictoOff 		Url du picto inactif
+	 * @param 	array 	$params 		Paramètres supplémentaires à passer dans l'url
+	 * @param 	varchar $extension 		Paramètres supplémentaires + Paramètres supplémentaires pour modifier l'extension de l'url
+	 * @param 	varchar $css 			Paramètres supplémentaires pour rajouter une ou plusieurs classes CSS supplémentaires
+	 * @return 	varchar Code HTML du picto
+	 * @access 	public
+	 * @author 	koéZionCMS
+	 * @version 0.1 - 17/03/2013 by FI
+	 * @version 0.2 - 22/09/2014 by FI - Rajout de la variable $extension
+	 * @version 0.3 - 12/10/2014 by FI - Rajout de la variable $css
+	 */	
+		public function backoffice_picto($controller, $action, $pictoOn, $id = null, $pictoOff = null, $params = null, $extension = 'html', $css = '') {
+			
+			$url = 'backoffice/'.$controller.'/'.$action;
+			if(isset($id)) { $url .= '/'.$id; }
+		if(isset($params)) { $url .= '/'.implode('/', $params); }
+			return '<a href="'.Router::url($url, $extension).'" class="'.$css.'"><img src="'.BASE_URL.$pictoOn.'" /></a>';
+		}	
+		
+	/**
+	 * Cette fonction est utilisée pour générer une action avec un picto donné
+	 *
+	 * @param 	varchar $name 			Texte du lien
+	 * @param 	varchar $controller 	Controller de l'url
+	 * @param 	varchar $action 		Action de l'url
+	 * @param 	varchar $params 		Paramètres supplémentaires
+	 * @param 	varchar $extension 		Extension de l'url
+	 * @param 	varchar $css 			Paramètres supplémentaires pour rajouter une ou plusieurs classes CSS supplémentaires
+	 * @param 	varchar $style 			Paramètres supplémentaires pour rajouter un ou plusieurs styles CSS supplémentaires
+	 * @return 	varchar Code HTML du lien
+	 * @access 	public
+	 * @author 	koéZionCMS
+	 * @version 0.1 - 08/10/2015 by FI
+	 */	
+		public function backoffice_link($name, $controller, $action = 'index', $params = null, $extension = 'html', $css = '', $style = '') {
+			
+			$url = 'backoffice/'.$controller.'/'.$action;
+			if(isset($params)) { $url .= $params; }
+			return '<a href="'.Router::url($url, $extension).'" class="'.$css.'" style="'.$style.'">'.$name.'</a>';
+		}			
 		
 	/**
 	 * Cette fonction est utilisée pour générer le lien statut du backoffice
@@ -77,32 +125,7 @@ else {
 		public function backoffice_edit_link($controller, $id, $name, $action = 'edit', $css = '') {
 		
 			return '<a href="'.Router::url('backoffice/'.$controller.'/'.$action.'/'.$id).'" class="edit_link '.$css.'">'.$name.'</a>';
-		}			
-		
-	/**
-	 * Cette fonction est utilisée pour générer une action avec un picto donné
-	 *
-	 * @param 	varchar $controller 	Controller de l'url
-	 * @param 	varchar $action 		Action de l'url
-	 * @param 	varchar $pictoOn 		Url du picto actif
-	 * @param 	integer $id 			Identifiant de l'élément
-	 * @param 	varchar $pictoOff 		Url du picto inactif
-	 * @param 	varchar $extension 		Paramètres supplémentaires + Paramètres supplémentaires pour modifier l'extension de l'url
-	 * @param 	varchar $css 			Paramètres supplémentaires pour rajouter une ou plusieurs classes CSS supplémentaires
-	 * @return 	varchar Code HTML du picto
-	 * @access 	public
-	 * @author 	koéZionCMS
-	 * @version 0.1 - 17/03/2013 by FI
-	 * @version 0.2 - 22/09/2014 by FI - Rajout de la variable $extension
-	 * @version 0.3 - 12/10/2014 by FI - Rajout de la variable $css
-	 */	
-		public function backoffice_picto($controller, $action, $pictoOn, $id = null, $pictoOff = null, $params = null, $extension = 'html', $css = '') {
-			
-			$url = 'backoffice/'.$controller.'/'.$action;
-			if(isset($id)) { $url .= '/'.$id; }
-			if(isset($params)) { $url .= $params; }
-			return '<a href="'.Router::url($url, $extension).'" class="'.$css.'"><img src="'.BASE_URL.$pictoOn.'" /></a>';
-		}			
+		}					
 		
 	/**
 	 * Cette fonction est utilisée pour générer les pictos edit du backoffice

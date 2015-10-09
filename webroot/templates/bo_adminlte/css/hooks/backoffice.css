@@ -1,3 +1,4 @@
+body{background: #ecf0f5;}
 .main-header>.navbar{margin-left: 0;}
 .skin-blue .main-header .navbar{background-color: #1a2226;}
 .main-header>.navbar p.welcome{float: left;height: 50px;margin: 0;line-height: 50px;color: white;}
@@ -88,6 +89,8 @@ form .checkbox:not(.no_border_bottom){
 form .form-group:last-child:not(.force_border),
 form .checkbox:last-child{border: none;margin-bottom: 0;padding-bottom: 5px;}
 
+form .form-group.form-group-mini{margin: 0 -15px 15px;padding: 0 15px 15px;}
+
 .control-sidebar-heading{margin-bottom: 0;}
 .control-sidebar-menu > li > a{padding: 2px 0 2px 20px;}
 
@@ -117,3 +120,10 @@ h5.form-title.disabled_margin_top{margin-top: 15px!important;}
 .row.border_bottom{border-bottom: 1px solid #ECECEC;margin-bottom: 15px;padding-bottom: 15px;}
 
 .colorpicker{border-radius:0!important;}
+
+.info-box.info-box_verticale{float: left;}
+.info-box.info-box_verticale .info-box-icon{height: auto;width: 100%;}
+.info-box.info-box_verticale .info-box-icon img{margin: 0 auto;}
+.info-box.info-box_verticale .info-box-content{float: left;margin-left: 0;width: 100%;}
+.info-box.info-box_verticale .info-box-content .info-box-text,
+.info-box.info-box_verticale .info-box-content .info-box-number{text-align: center;}

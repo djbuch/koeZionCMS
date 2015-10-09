@@ -407,6 +407,7 @@ class Model extends Object {
  * @version 1.5 - 23/04/2015 by FI - Modification de le gestion du OR
  * @version 1.6 - 07/07/2015 by FI - Correction gestion rightJoin et innerJoin (Thks SS) 
  * @version 1.7 - 21/09/2015 by FI - Rajout d'un test sur $orderBy pour vérifier que ce n'est pas déjà un tableau car le explode sur un tableau génère une erreur 
+ * @version 1.8 - 09/10/2015 by SS - Mise en place de la mutualisation du code des INNER, LEFT et RIGHT JOIN 
  */    
 	public function find($req = array(), $type = PDO::FETCH_ASSOC) {
 				
@@ -461,27 +462,63 @@ class Model extends Object {
 		
 			////////////////
 			//    I18N    //
-			//VERSION SANS LE INNER JOIN
-			//Si il y à une variable contenant des champs à traduire on rajoute la table de le from
-			if($translatedTable && $this->getTranslation) { 
+				//VERSION SANS LE INNER JOIN
+				//Si il y à une variable contenant des champs à traduire on rajoute la table de le from
+				if($translatedTable && $this->getTranslation) { 
+					
+					array_unshift($tables, '`'.$this->table.'_i18n` AS `'.$this->alias.'I18n`');
+					//$tables[] = '`'.$this->table.'_i18n` AS `'.$this->alias.'I18n`'; 
+				}
 				
-				array_unshift($tables, '`'.$this->table.'_i18n` AS `'.$this->alias.'I18n`');
-				//$tables[] = '`'.$this->table.'_i18n` AS `'.$this->alias.'I18n`'; 
-			}
-			
-			$sql .= "\n"."FROM \n\t".implode(", \n\t", $tables)." ";
+				$sql .= "\n"."FROM \n\t".implode(", \n\t", $tables)." ";
 		
-		//VERSION AVEC INNER JOIN changé par une jointure normal car trop restrictive dans l'ordre des tables à charger dans le FROM
-		//Cf posts_type model fonction get_for_front l'ordre des tables dans le from générait une erreur
-		//Si il y à une variable contenant des champs à traduire
-		//On va rajouter le INNER JOIN
-		//Ainsi que le pivot qui sera toujours id dans la table source et model_id dans la table de traduction
-			/*if($translatedTable && $this->getTranslation) {
-			
-				$sql .= 'INNER JOIN '.$this->table.'_i18n AS '.$this->alias.'I18n ';
-				$sql .= 'ON '.$this->alias.'.id = '.$this->alias.'I18n.model_id '."AND `".$this->alias."I18n`.`language` = '".DEFAULT_LANGUAGE."'"."\n";
-			}*/	
+				//VERSION AVEC INNER JOIN changé par une jointure normale car trop restrictive dans l'ordre des tables à charger dans le FROM
+				//Cf posts_type model fonction get_for_front l'ordre des tables dans le from générait une erreur
+				//Si il y à une variable contenant des champs à traduire
+				//On va rajouter le INNER JOIN
+				//Ainsi que le pivot qui sera toujours id dans la table source et model_id dans la table de traduction
+					/*if($translatedTable && $this->getTranslation) {
+					
+						$sql .= 'INNER JOIN '.$this->table.'_i18n AS '.$this->alias.'I18n ';
+						$sql .= 'ON '.$this->alias.'.id = '.$this->alias.'I18n.model_id '."AND `".$this->alias."I18n`.`language` = '".DEFAULT_LANGUAGE."'"."\n";
+					}*/	
 				
+		///////////////////////
+		//    CHAMPS JOIN    //
+			//Nouvelle version proposée par SS rajoutée le le 09/10/2015
+			if(isset($req['innerJoin']) && !empty($req['innerJoin'])) 	{ $joins['INNER'] = $req['innerJoin']; 	} //INNER
+			if(isset($req['leftJoin']) && !empty($req['leftJoin'])) 	{ $joins['LEFT'] = $req['leftJoin']; 	} //LEFT
+			if(isset($req['rightJoin']) && !empty($req['rightJoin'])) 	{ $joins['RIGHT'] = $req['rightJoin']; 	} //RIGHT
+			
+			if(isset($joins) && !empty($joins)) {
+				
+				foreach($joins as $joinType => $join) {
+					
+					if(!empty($join)) {
+					
+						if (!is_array($join)) { $sql .= "\n".$join; } //On ajoute à la requête s'il s'agit d'une chaîne
+						else {
+								
+							if(isset($join[0])) { //Si l'on a un tableau à index numérique, on peut avoir plusieurs join à la suite et sur plusieurs tables
+					
+								foreach ($join as $v) {
+										
+									$joinDatas = $this->_get_left_right_inner_join_datas($v);
+									$sql .= "\n".$joinType.' JOIN '."\n\t".$joinDatas['joinTable'].' AS '.$joinDatas['joinAlias'].' '."\n\t".'ON '.$v['pivot'].' '; //On ajoute à la requête
+								}
+							} else { //Sinon, on n'a qu'un seul join
+					
+								$joinDatas = $this->_get_left_right_inner_join_datas($join);
+								$sql .= "\n".$joinType.' JOIN '."\n\t".$joinDatas['joinTable'].' AS '.$joinDatas['joinAlias'].' '."\n\t".'ON '.$join['pivot'].' '; //On ajoute à la requête
+							}
+						}
+					}
+				}
+			}
+				
+		/*
+		 * Version supprimée le 09/10/2015 suite à l'amélioration proposée par SS
+		 * 		
 		////////////////////////////
 		//    CHAMPS LEFT JOIN    //
 			if(isset($req['leftJoin']) && !empty($req['leftJoin'])) {
@@ -572,6 +609,7 @@ class Model extends Object {
 					}
 				}
 			}
+		*/
 
 		/////////////////////////////////////////////////////////////
 		//    CONDITIONS DE RECHERCHE SUR L'IDENTIFIANT DU SITE    //
