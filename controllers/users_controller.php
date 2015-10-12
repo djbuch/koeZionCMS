@@ -33,6 +33,7 @@ class UsersController extends AppController {
  * @version 1.1 - 27/08/2015 by FI - Gestion template backoffice
  * @version 1.2 - 14/09/2015 by FI - Correction gestion de la variable $checkPasswordLocal
  * @version 1.3 - 05/10/2015 by FI - Rajout de defined(HASH_PASSWORD)
+ * @version 1.4 - 12/10/2015 by FI - Rajout du contrôle de la valeur de HASH_PASSWORD
  */
 	function login() {		
 		
@@ -42,7 +43,7 @@ class UsersController extends AppController {
 			
 			$data = $this->request->data; //Mise en variable des données postées	
 					
-			if(defined('HASH_PASSWORD')) { $data['password'] = sha1($data['password']); } //Cryptage du mot de passe
+			if(defined('HASH_PASSWORD') && HASH_PASSWORD) { $data['password'] = sha1($data['password']); } //Cryptage du mot de passe
 			
 			//Récupération du login et du mot de passe dans des variables
 			$postLogin = $data['login'];

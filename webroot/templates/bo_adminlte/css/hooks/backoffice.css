@@ -19,7 +19,12 @@ body{background: #ecf0f5;}
 .main-footer{margin-left: 300px;}*/
 
 .skin-blue .sidebar-menu>li.header{padding: 8px 25px 8px 15px;}
-.sidebar-menu .treeview-menu > li > .treeview-menu > li > a{padding-left: 0;}
+.sidebar-menu .treeview-menu > li > .treeview-menu > li > a{padding-left: 5px;}
+.sidebar-menu .treeview-menu > li > a > .fa,
+.sidebar-menu .treeview-menu > li > a > .glyphicon,
+.sidebar-menu .treeview-menu > li > a > .ion {
+  width: 10px;
+}
 
 /*.content-wrapper{padding-top: 25px;}*/
 .content-wrapper .content-header{    
@@ -51,6 +56,8 @@ table tr.current_template td{border-bottom: 1px solid black;margin-bottom: 15px;
 .nav-tabs-custom .left .box .box-body,
 .nav-tabs-custom .left .box ul{padding: 0;}
 .nav-tabs-custom .nav-tabs.nav-stacked li{background: white;}
+
+.input-group .input-group-addon{background-color: #d2d6de;}
 .nav-tabs-custom .nav-tabs.nav-stacked li.active{
 	border-top: none;
 	border-left: 3px solid;

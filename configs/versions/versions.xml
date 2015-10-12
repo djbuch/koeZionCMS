@@ -1,5 +1,15 @@
 ﻿<versions>
 	<version>
+		<name>Version du 12/10/2015</name>
+		<num>20151012.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">UsersController::login : Rajout du contrôle de la valeur de HASH_PASSWORD</task>
+			<task author="FI" type="code">Modification CSS backoffice</task>
+			<task author="FI" type="code">Changement des pictos du menu de gauche du backoffice</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 09/10/2015</name>
 		<num>20151009.001</num>
 		<supervisor>KoéZionCMS</supervisor>
