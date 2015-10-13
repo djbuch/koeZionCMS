@@ -31,6 +31,10 @@ ini_set('log_errors', 1); //Log des erreurs dans un fichier
 $logFile = TMP.DS.'logs'.DS.'php'.DS.date('Y-m-d').'.log'; //Chemin du fichier de logs
 ini_set('error_log', $logFile); //Définition du chemin du fichier de logs
 
+//Activer / Désactiver la compression ZLIB
+$zlibOutputCompression = isset($coreConfs['outpout_compression']) && $coreConfs['outpout_compression'] == '1' ? "On" : "Off";
+ini_set("zlib.output_compression", $zlibOutputCompression); 
+
 ///////////////////////////////////////////////////////////////////
 //    MISE EN PLACE DES LIENS VERS LES DIFFERENTES LIBRAIRIES    //
 require_once CAKEPHP.DS.'inflector.php'; //Classe Object permettant le respect de certaines conventions

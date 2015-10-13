@@ -27,16 +27,16 @@ define('WEBROOT', dirname(__FILE__)); //Chemin vers le dossier webroot
 	define('IMG', WEBROOT.DS.'img'); //Chemin vers le dossier img
 	define('JS', WEBROOT.DS.'js'); //Chemin vers le dossier js
 	define('WEBROOT_PLUGINS', WEBROOT.DS.'plugins'); //Chemin vers le dossier plugins 
+	define('TEMPLATES', WEBROOT.DS.'templates'); //Chemin vers le dossier templates 
 	define('UPLOAD', WEBROOT.DS.'upload'); //Chemin vers le dossier upload
 
 define('ROOT', dirname(WEBROOT)); //Chemin vers le dossier racine du site
 
 define('CONFIGS', ROOT.DS.'configs'); //Chemin vers le dossier config
 	define('CONFIGS_FILES', CONFIGS.DS.'files'); //Chemin vers le dossier des .ini
-	define('CONFIGS_VERSIONS', CONFIGS.DS.'versions'); //Chemin vers le dossier des fichiers de versions
 	define('CONFIGS_HOOKS', CONFIGS.DS.'hooks'); //Chemin vers le dossier des hooks
-	define('CONFIGS_LAYOUT', CONFIGS.DS.'layout'); //Chemin vers le dossier des layout
 	define('CONFIGS_PLUGINS', CONFIGS.DS.'plugins'); //Chemin vers le dossier des plugins
+	define('CONFIGS_VERSIONS', CONFIGS.DS.'versions'); //Chemin vers le dossier des fichiers de versions
 
 define('CONTROLLERS', ROOT.DS.'controllers'); //Chemin vers le dossier des contrôleurs
 	define('COMPONENTS', CONTROLLERS.DS.'components'); //Chemin vers le dossier des composants

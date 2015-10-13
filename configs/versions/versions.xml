@@ -1,5 +1,16 @@
 ﻿<versions>
 	<version>
+		<name>Version du 13/10/2015</name>
+		<num>20151013.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="SS" type="code">bootstrap.php : rajout de la gestion de la compression des pages avec la librairie ZLIB</task>
+			<task author="FI" type="code">Rajout du dossier layout dans les vues génériques, rajout des layouts ajax, empty et rss</task>
+			<task author="FI" type="code">Modification du fichier de gestion des constantes</task>
+			<task author="SS" type="code">Modification de la vue permettant la gestion des configurations du coeur pour intégrer la gestion de la compression ZLIB</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 12/10/2015</name>
 		<num>20151012.001</num>
 		<supervisor>KoéZionCMS</supervisor>

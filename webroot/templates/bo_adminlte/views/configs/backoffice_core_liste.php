@@ -36,6 +36,7 @@
 										echo $helpers['Form']->input('log_sql', _('Activer le log SQL'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour activer le log des reqêtes SQL effectuées")));
 										echo $helpers['Form']->input('log_php', _('Activer le log PHP'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour activer le log des erreurs PHP")));
 										echo $helpers['Form']->input('display_php_error', _('Afficher les erreurs PHP'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour afficher les erreurs PHP")));
+										echo $helpers['Form']->input('outpout_compression', _('Activer la compression ZLIB'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour activer la compression des pages avec la librairie ZLIB de PHP")));
 										echo $helpers['Form']->input('local_storage_session', _('Stocker les variables de sessions localement'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour activer le stockage local des variables de sessions")));										
 										$txtAfterInput = '<p class="help-block">'._('ATTENTION vous devez avoir un certificat SSL installé sur le serveur pour que cette option soit fonctionnelle.').'<br />'._("Rapprochez vous de votre hébergeur pour plus d'informations.").'</p>';
 										$txtAfterInput .= '<br />'._("Urls à sécuriser").' <i>'._("(Indiquez ici les urls à sécuriser, si plusieurs les séparer par ;)").'</i><br />'.$helpers['Form']->input('https_secure_urls', '', array('onlyInput' => true));
