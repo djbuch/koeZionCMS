@@ -408,6 +408,7 @@ class Model extends Object {
  * @version 1.6 - 07/07/2015 by FI - Correction gestion rightJoin et innerJoin (Thks SS) 
  * @version 1.7 - 21/09/2015 by FI - Rajout d'un test sur $orderBy pour vérifier que ce n'est pas déjà un tableau car le explode sur un tableau génère une erreur 
  * @version 1.8 - 09/10/2015 by SS - Mise en place de la mutualisation du code des INNER, LEFT et RIGHT JOIN 
+ * @version 1.9 - 14/10/2015 by SS - Correction gestion de l'alias dans le ORDER BY 
  */    
 	public function find($req = array(), $type = PDO::FETCH_ASSOC) {
 				
@@ -783,7 +784,7 @@ class Model extends Object {
 							
 							$field 			= $orderV[0][0];
 							$direction 		= isset($orderV[1]) ? ' '.$orderV[1] : '';
-							$orderBy[$orderK] = '`'.$tableAlias.'`.`'.$field.'`'.$direction; 
+							$orderBy[$orderK] = '`'.$field.'`'.$direction; 
 						}
 						
 						//Si le champ possède un alias on va utiliser cet alias pour la mise en place des tris

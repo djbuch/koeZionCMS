@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 14/10/2015</name>
+		<num>20151014.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="SS" type="code">Model::find : Correction gestion de l'alias dans le ORDER BY</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 14/10/2015</name>
 		<num>20151014.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
