@@ -26,7 +26,7 @@
 			</td>
 			<?php /* ?><td class="text-center"><?php echo $v['lft']; ?></td>
 			<td class="text-center"><?php echo $v['rgt']; ?></td><?php */ ?>
-			<td class="text-center">				
+			<td class="actions text-center">				
 				<?php echo $helpers['Html']->backoffice_move2prev_picto($params['controllerFileName'], $v['id']); ?>			
 				<?php echo $helpers['Html']->backoffice_move2next_picto($params['controllerFileName'], $v['id']); ?>
 				<?php echo $helpers['Html']->backoffice_edit_picto($params['controllerFileName'], $v['id']); ?>			

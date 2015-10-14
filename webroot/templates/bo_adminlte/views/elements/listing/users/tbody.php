@@ -17,7 +17,7 @@ $logUsersActiv = $websitesSession['details'][$currentWebsite]['log_users_activ']
 				} 
 				?>
 			</td>
-			<td class="text-center">	
+			<td class="actions text-center">	
 				<?php echo $helpers['Html']->backoffice_edit_picto($params['controllerFileName'], $v['id']); ?>			
 				<?php echo $helpers['Html']->backoffice_delete_picto($params['controllerFileName'], $v['id']); ?>			
 			</td>

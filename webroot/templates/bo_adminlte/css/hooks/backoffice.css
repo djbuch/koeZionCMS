@@ -50,6 +50,7 @@ table .xxl{width:170px}
 table .xxxl{width:200px}
 table .table_line_title th{text-transform: uppercase;background: #CECCCC;}
 table tr.current_template td{border-bottom: 1px solid black;margin-bottom: 15px;}
+table .actions img{margin-left: 2px;}
 
 .nav-tabs-custom{margin: 0;}
 .nav-tabs-custom .left .box,

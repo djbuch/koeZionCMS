@@ -14,9 +14,7 @@
  * @link        http://www.koezion-cms.com
  */
 class ModulesController extends AppController {
-	
-	
-	
+		
 //////////////////////////////////////////////////////////////////////////////////////////
 //										BACKOFFICE										//
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -28,17 +26,22 @@ class ModulesController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 29/05/2012 by FI
  * @version 0.2 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
+ * @version 0.3 - 14/10/2015 by FI - Réorganisation du passage de paramètres à la vue
  */
 	function backoffice_index($return = false, $fields = null, $order = null, $conditions = null) {
 		
 		$datas = parent::backoffice_index(true, array('id', 'name', 'order_by', 'online', 'modules_type_id'), 'order_by ASC');		
+				
+		$modulesTypes = $this->_init_modules_types(true);
+		//$datas['modulesTypes'] = $modulesTypes;
 		
 		$modules = array();
-		foreach($datas['modules'] as $k => $v) { $modules[$v['modules_type_id']][] = $v; }
-		$datas['modules'] = $modules;
+		foreach($datas['modules'] as $k => $v) { 
+			
+			if(isset($modulesTypes[$v['modules_type_id']])) { $modules[$modulesTypes[$v['modules_type_id']]][] = $v; }
+		}
 		
-		$modulesTypes = $this->_init_modules_types(true);
-		$datas['modulesTypes'] = $modulesTypes;
+		$datas['modules'] = $modules;
 		
 		$this->set($datas);
 	}
@@ -87,6 +90,10 @@ class ModulesController extends AppController {
 		parent::backoffice_edit($id); //On fait appel à la fonction d'édition parente
 		$this->_init_modules_types();
 	}
+		
+//////////////////////////////////////////////////////////////////////////////////////////
+//									PRIVEES / PROTEGEES									//
+//////////////////////////////////////////////////////////////////////////////////////////	
 	
 /**
  * Cette fonction permet l'initialisation de la liste des types de posts

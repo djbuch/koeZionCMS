@@ -7,7 +7,7 @@
 			<td><?php echo $v['layout']; ?></td>
 			<td><?php echo $v['version']; ?></td>
 			<td><?php echo $v['code']; ?></td>
-			<td class="text-center">	
+			<td class="actions text-center">	
 				<?php echo $helpers['Html']->backoffice_edit_picto($params['controllerFileName'], $v['id']); ?>			
 				<?php echo $helpers['Html']->backoffice_delete_picto($params['controllerFileName'], $v['id']); ?>			
 			</td>

@@ -17,7 +17,7 @@
 				echo $helpers['Html']->backoffice_edit_link($params['controllerFileName'], $v['id'], $name); 
 				?>				
 			</td>
-			<td class="text-center">	
+			<td class="actions text-center">	
 				<?php echo $helpers['Html']->backoffice_edit_picto($params['controllerFileName'], $v['id']); ?>			
 				<?php echo $helpers['Html']->backoffice_delete_picto($params['controllerFileName'], $v['id']); ?>			
 			</td>

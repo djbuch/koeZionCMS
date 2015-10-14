@@ -20,7 +20,7 @@
 		
 			?>
 			<style type="text/css">
-				body{background: url("<?php echo $websiteParams['connect_background']; ?>")!important;}	
+				.login-page{background-image: url("<?php echo $websiteParams['connect_background']; ?>");}	
 			</style>
 			<?php
 		}
