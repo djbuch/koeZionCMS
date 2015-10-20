@@ -845,7 +845,7 @@ class Model extends Object {
 		}		
         return $return;        
     }
-    
+
 /**
  * Cette fonction permet de retourner le premier élément correspondant aux conditions de recherche
  * 
@@ -854,13 +854,15 @@ class Model extends Object {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 16/02/2012 by FI
+ * @version 0.2 - 19/10/2015 by SS - Ajout de la condition limit pour récupérer une ligne de résultat
  */    
 	public function findFirst($req = array()) { 
 		
+		if(!isset($req['limit'])) { $req = am($req, array('limit' => 1)); }
+		
 		$request = $this->find($req); //On lance la requête
-		return current($request); //Par défaut on va retourne le premier élément du tableau 
-	}
-	
+		return current($request); //Par défaut on va retourne le premier élément du tableau
+	}	
 	
 /**
  * Cette fonction permet de compter le nombre de résultat d'une requeête

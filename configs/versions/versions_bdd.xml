@@ -1,5 +1,18 @@
 ﻿<versions>
 	<version>
+		<name>Version du 20/10/2015</name>
+		<num>20151020.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI">
+				ALTER TABLE  `focus` 
+				ADD  `details_title` VARCHAR( 255 ) NOT NULL AFTER  `name` ,
+				ADD  `details_img` LONGTEXT NOT NULL AFTER  `details_title` ,
+				ADD  `details_content` LONGTEXT NOT NULL AFTER  `details_img`;
+			</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 16/09/2015</name>
 		<num>20150916.001</num>
 		<supervisor>KoéZionCMS</supervisor>

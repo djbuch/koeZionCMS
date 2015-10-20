@@ -77,6 +77,9 @@ DROP TABLE IF EXISTS `focus`;
 CREATE TABLE IF NOT EXISTS `focus` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `details_title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `details_img` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `details_content` longtext COLLATE utf8_unicode_ci NOT NULL,
   `content` longtext COLLATE utf8_unicode_ci NOT NULL,
   `order_by` int(11) NOT NULL,
   `online` int(11) NOT NULL,
