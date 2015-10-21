@@ -53,10 +53,17 @@
     			style : 'width:100%',
     			items : InternPagesSelectBox,
     			onChange : function() {
-    			
-                    var d = CKEDITOR.dialog.getCurrent();
+    				
+					var protocolDatas = this.getValue().split("://");
+					var protocol = '';
+					if(protocolDatas[0] == 'http') { protocol = 'http://'; }
+					else if(protocolDatas[0] == 'https') { protocol = 'https://'; }
+					else if(protocolDatas[0] == 'ftp') { protocol = 'ftp://'; }
+					else if(protocolDatas[0] == 'news') { protocol = 'news://'; }
+					
+					var d = CKEDITOR.dialog.getCurrent();
                     d.setValueOf('info', 'url', this.getValue());
-                    d.setValueOf('info', 'protocol', !this.getValue() ? 'http://' : '');
+                    d.setValueOf('info', 'protocol', protocol);
                 },
     			setup : function(data) {
     			
