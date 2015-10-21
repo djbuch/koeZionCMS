@@ -407,7 +407,7 @@ class PostsController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 22/06/2013 by FI
  */		
-	public function _get_posts_types($datas) {
+	public function _get_posts_types($datas = null) {
 
 		if($datas['post']['display_posts_types']) {
 			
