@@ -19,8 +19,11 @@ $currentAction 		= $this->controller->request->action;
 							$module 			= current($leftMenu['menus']);
 							$moduleController 	= $module['controller_name'];
 							$moduleAction 		= !empty($module['action_name']) ? $module['action_name'] : 'index';
-							$moduleLink 		= Router::url('backoffice/'.$moduleController.'/'.$moduleAction);							
-							if($moduleController == $currentController && in_array($currentAction, array($moduleAction, 'add', 'edit'))) { $moduleLiClass .= ' active'; }
+							$moduleLink 		= Router::url('backoffice/'.$moduleController.'/'.$moduleAction);
+											
+							$othersActions = array();
+							if(!empty($module['others_actions'])) { $othersActions = explode(',', $module['others_actions']); }							
+							if(($moduleController == $currentController && in_array($currentAction, array($moduleAction, 'add', 'edit'))) || in_array($currentController.'/'.$currentAction, $othersActions)) { $moduleLiClass = ' class="active"'; }
 							
 						} else { $moduleLink = '#'; }						
 						?>
@@ -50,7 +53,10 @@ $currentAction 		= $this->controller->request->action;
 											$moduleController 	= $subMenu['controller_name'];
 											$moduleAction 		= !empty($subMenu['action_name']) ? $subMenu['action_name'] : 'index';
 											$moduleLiClass 		= '';
-											if($moduleController == $currentController && in_array($currentAction, array($moduleAction, 'add', 'edit'))) { $moduleLiClass = ' class="active"'; }
+											
+											$othersActions = array();
+											if(!empty($subMenu['others_actions'])) { $othersActions = explode(',', $subMenu['others_actions']); }
+											if(($moduleController == $currentController && in_array($currentAction, array($moduleAction, 'add', 'edit'))) || in_array($currentController.'/'.$currentAction, $othersActions)) { $moduleLiClass = ' class="active"'; }
 											?><li<?php echo $moduleLiClass; ?>><a href="<?php echo Router::url('backoffice/'.$moduleController.'/'.$moduleAction); ?>"><i class="fa fa-angle-double-right"></i> <?php echo $subMenu['name']; ?></a></li><?php 
 										}
 										?>
@@ -62,8 +68,10 @@ $currentAction 		= $this->controller->request->action;
 								$moduleController 	= $subMenus['controller_name'];				
 								$moduleAction 		= !empty($subMenus['action_name']) ? $subMenus['action_name'] : 'index';
 								$moduleLiClass 		= '';
-								if($moduleController == $currentController && in_array($currentAction, array($moduleAction, 'add', 'edit'))) { $moduleLiClass = ' class="active"'; }
 								
+								$othersActions = array();
+								if(!empty($subMenus['others_actions'])) { $othersActions = explode(',', $subMenus['others_actions']); }
+								if(($moduleController == $currentController && in_array($currentAction, array($moduleAction, 'add', 'edit'))) || in_array($currentController.'/'.$currentAction, $othersActions)) { $moduleLiClass = ' class="active"'; }								
 								?><li<?php echo $moduleLiClass; ?>><a href="<?php echo Router::url('backoffice/'.$moduleController.'/'.$moduleAction); ?>"><i class="fa fa-angle-right"></i> <span><?php echo $subMenus['name']; ?></span></a></li><?php	
 							}
 						}

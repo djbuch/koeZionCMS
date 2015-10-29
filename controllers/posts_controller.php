@@ -586,6 +586,7 @@ class PostsController extends AppController {
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 26/01/2012 by FI
+ * @version 0.2 - 27/10/2015 by FI - Rajout du contrôle de l'existence de la variable $this->request->data['posts_type_id']
  */	
 	protected function _save_assoc_datas_posts_posts_type($postId, $deleteAssoc = false) {
 		
@@ -593,16 +594,19 @@ class PostsController extends AppController {
 
 		if($deleteAssoc) { $this->PostsPostsType->deleteByName('post_id', $postId); }
 		
-		$postsTypeId = $this->request->data['posts_type_id'];
-		foreach($postsTypeId as $k => $v) {
-		
-			if($v) {
-		
-				$this->PostsPostsType->save(array(
-					'post_id' => $postId,
-					'posts_type_id'	=> $k,
-					'category_id' => $this->request->data['category_id']
-				));
+		if(isset($this->request->data['posts_type_id']))  {
+			
+			$postsTypeId = $this->request->data['posts_type_id'];
+			foreach($postsTypeId as $k => $v) {
+			
+				if($v) {
+			
+					$this->PostsPostsType->save(array(
+						'post_id' => $postId,
+						'posts_type_id'	=> $k,
+						'category_id' => $this->request->data['category_id']
+					));
+				}
 			}
 		}
 		$this->unload_model('PostsPostsType'); //Déchargement du modèle

@@ -7,15 +7,20 @@ class FormHelper extends FormParentHelper {
  *
  * @param 	varchar $text Texte du bouton
  * @param 	varchar $moreAttributes Attributs complémentaires
+ * @param 	varchar $moreCss CSS complémentaires
+ * @param 	varchar $css Classes CSS
  * @return	varchar Chaine de caractères contenant le bouton
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 09/09/2015 by FI
+ * @version 0.2 - 28/10/2015 by FI - Rajout de $moreCss et $css
  */
-	function button($text = null, $moreAttributes = null) {
+	function button($text = null, $moreAttributes = null, $moreCss = null, $css = null) {
 
 		if(empty($text)) { $text = _("Envoyer"); }		
-		$html = '<button type="submit" class="btn btn-primary pull-right" '.$moreAttributes.'>'.$text.'</button>';
+		if(!isset($css)) { $css = 'btn btn-primary pull-right'; }
+		if(isset($moreCss)) { $css .= ' '.$moreCss; }
+		$html = '<button type="submit" class="'.$css.'" '.$moreAttributes.'>'.$text.'</button>';
 		return $html;
 	}
 

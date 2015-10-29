@@ -1,5 +1,29 @@
 ﻿<versions>
 	<version>
+		<name>Version du 29/10/2015</name>
+		<num>20151029.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Rajout du champ others_actions dans la table modules</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 28/10/2015</name>
+		<num>20151028.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">FormHelper::button : Rajout de $moreCss et $css</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 27/10/2015</name>
+		<num>20151027.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">PostsController::_save_assoc_datas_posts_posts_type : Rajout du contrôle de l'existence de la variable $this->request->data['posts_type_id']</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 21/10/2015</name>
 		<num>20151021.002</num>
 		<supervisor>KoéZionCMS</supervisor>

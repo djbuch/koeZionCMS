@@ -94,6 +94,7 @@ CREATE TABLE IF NOT EXISTS `modules` (
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `controller_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `action_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `others_actions` longtext COLLATE utf8_unicode_ci NOT NULL,
   `icon` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `no_display_in_menu` int(11) NOT NULL,
   `order_by` int(11) NOT NULL,
