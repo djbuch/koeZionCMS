@@ -1,10 +1,19 @@
 ﻿<versions>
 	<version>
+		<name>Version du 30/10/2015</name>
+		<num>20151030.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="bdd">Rajout du champ prohibited_actions dans la table modules</task>
+			<task author="FI" type="code">Reprise de la gestion du menu général du backoffice</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 29/10/2015</name>
 		<num>20151029.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FI" type="code">Rajout du champ others_actions dans la table modules</task>
+			<task author="FI" type="bdd">Rajout du champ others_actions dans la table modules</task>
 		</tasks>
 	</version>
 	<version>

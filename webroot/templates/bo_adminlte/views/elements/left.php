@@ -1,6 +1,7 @@
 <?php 
 $currentController 	= $this->controller->request->controller;
 $currentAction 		= $this->controller->request->action;
+$currentUrl 		= $currentController.'/'.$currentAction; 
 ?>
 <aside class="main-sidebar">
 	<section class="sidebar">
@@ -13,21 +14,19 @@ $currentAction 		= $this->controller->request->action;
 					
 					if(!empty($leftMenu['libelle'])) { 
 					
-						$moduleLiClass = 'treeview';
+						$moduleLiClass = '';
 						if(count($leftMenu['menus']) == 1) {
 							
 							$module 			= current($leftMenu['menus']);
 							$moduleController 	= $module['controller_name'];
 							$moduleAction 		= !empty($module['action_name']) ? $module['action_name'] : 'index';
+							$moduleActions 		= get_menu_actions($moduleController, $moduleAction, $module['others_actions'], $module['prohibited_actions']);
 							$moduleLink 		= Router::url('backoffice/'.$moduleController.'/'.$moduleAction);
-											
-							$othersActions = array();
-							if(!empty($module['others_actions'])) { $othersActions = explode(',', $module['others_actions']); }							
-							if(($moduleController == $currentController && in_array($currentAction, array($moduleAction, 'add', 'edit'))) || in_array($currentController.'/'.$currentAction, $othersActions)) { $moduleLiClass = ' class="active"'; }
-							
+							if(in_array($currentUrl, $moduleActions)) { $moduleLiClass = ' active'; }
+														
 						} else { $moduleLink = '#'; }						
 						?>
-						<li class="<?php echo $moduleLiClass; ?>">
+						<li class="treeview<?php echo $moduleLiClass; ?>">
 							<a href="<?php echo $moduleLink; ?>">
 								<?php if($leftMenu['icon']) { ?><i class="<?php echo $leftMenu['icon']; ?>"></i> <?php } ?>
 								<span><?php echo strtoupper($leftMenu['libelle']); ?></span>
@@ -52,11 +51,9 @@ $currentAction 		= $this->controller->request->action;
 											
 											$moduleController 	= $subMenu['controller_name'];
 											$moduleAction 		= !empty($subMenu['action_name']) ? $subMenu['action_name'] : 'index';
+											$moduleActions 		= get_menu_actions($moduleController, $moduleAction, $subMenu['others_actions'], $subMenu['prohibited_actions']);
 											$moduleLiClass 		= '';
-											
-											$othersActions = array();
-											if(!empty($subMenu['others_actions'])) { $othersActions = explode(',', $subMenu['others_actions']); }
-											if(($moduleController == $currentController && in_array($currentAction, array($moduleAction, 'add', 'edit'))) || in_array($currentController.'/'.$currentAction, $othersActions)) { $moduleLiClass = ' class="active"'; }
+											if(in_array($currentUrl, $moduleActions)) { $moduleLiClass = ' class="active"'; }
 											?><li<?php echo $moduleLiClass; ?>><a href="<?php echo Router::url('backoffice/'.$moduleController.'/'.$moduleAction); ?>"><i class="fa fa-angle-double-right"></i> <?php echo $subMenu['name']; ?></a></li><?php 
 										}
 										?>
@@ -67,11 +64,9 @@ $currentAction 		= $this->controller->request->action;
 								
 								$moduleController 	= $subMenus['controller_name'];				
 								$moduleAction 		= !empty($subMenus['action_name']) ? $subMenus['action_name'] : 'index';
+								$moduleActions 		= get_menu_actions($moduleController, $moduleAction, $subMenus['others_actions'], $subMenus['prohibited_actions']);
 								$moduleLiClass 		= '';
-								
-								$othersActions = array();
-								if(!empty($subMenus['others_actions'])) { $othersActions = explode(',', $subMenus['others_actions']); }
-								if(($moduleController == $currentController && in_array($currentAction, array($moduleAction, 'add', 'edit'))) || in_array($currentController.'/'.$currentAction, $othersActions)) { $moduleLiClass = ' class="active"'; }								
+								if(in_array($currentUrl, $moduleActions)) { $moduleLiClass = ' class="active"'; }								
 								?><li<?php echo $moduleLiClass; ?>><a href="<?php echo Router::url('backoffice/'.$moduleController.'/'.$moduleAction); ?>"><i class="fa fa-angle-right"></i> <span><?php echo $subMenus['name']; ?></span></a></li><?php	
 							}
 						}
@@ -88,3 +83,30 @@ $currentAction 		= $this->controller->request->action;
 		</ul>
 	</section>
 </aside>
+<?php 
+function get_menu_actions($moduleController, $moduleAction, $submenuOthersActions, $submenuProhibitedActions) {
+											
+	//Liste des actions possibles
+	$moduleActions = array(
+		$moduleController.'/'.$moduleAction,
+		$moduleController.'/add',
+		$moduleController.'/edit',
+	);
+	
+	//Liste des actions complémentaires
+	if(!empty($submenuOthersActions)) { 
+		
+		$submenuOthersActions = explode(',', $submenuOthersActions);
+		$moduleActions = am($moduleActions, $submenuOthersActions);
+	}
+	
+	//Liste des actions interdites
+	if(!empty($submenuProhibitedActions)) { 
+		
+		$submenuProhibitedActions = explode(',', $submenuProhibitedActions);
+		$moduleActions = array_diff($moduleActions, $submenuProhibitedActions);
+	}
+	
+	return $moduleActions;
+}
+?>
