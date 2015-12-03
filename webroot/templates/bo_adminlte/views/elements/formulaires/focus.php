@@ -1,3 +1,7 @@
+<?php 
+$websitesSession 	= Session::read('Backoffice.Websites'); //Récupération de la variable de session
+$currentWebsite 	= $websitesSession['current']; //Récupération du site courant
+?>
 <div class="row">
 	<div class="nav-tabs-custom">
 		<div class="col-md-2 left">
@@ -5,6 +9,7 @@
 	    		<div class="box-body">
 					<ul class="nav nav-tabs nav-stacked col-md-12">
 				    	<li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-file-text-o"></i> <?php echo _("Général"); ?></a></li>
+						<li><a href="#publication" data-toggle="tab"><i class="fa fa-copy"></i> <?php echo _("Publication"); ?></a></li>
 				        <li><a href="#details_content" data-toggle="tab"><i class="fa fa-indent"></i> <?php echo _("Contenu détaillé"); ?></a></li>
 				        <li><a href="#brut_content" data-toggle="tab"><i class="fa fa-align-justify"></i> <?php echo _("Contenu brut"); ?></a></li>				        
 					</ul>
@@ -24,7 +29,21 @@
 							echo $helpers['Form']->input('name', _('Libellé'), array('compulsory' => true, 'tooltip' => _("Indiquez le titre du focus")));
 							echo $helpers['Form']->input('online', _('En ligne'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour diffuser ce focus")));
 							?>
-				    	</div>
+				    	</div>   	
+				    	<div class="tab-pane" id="publication">	
+				    		<div class="box-header bg-light-blue">
+								<h4><i class="fa fa-copy"></i> <?php echo _("Publication"); ?></h4>                  
+                			</div>               
+                			<div class="callout callout-info">
+			                	<p><?php echo _('Pour publier ce focus dans un ou plusieurs site cochez la ou les cases correspondantes')?>.</p>
+							</div> 		
+							<?php 
+							foreach($websitesSession['liste'] as $websiteId => $websiteName) {
+								
+								echo $helpers['Form']->input('FocusWebsite.'.$websiteId.'.display', _('Diffuser dans le site').' '.$websiteName, array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour diffuser ce focus dans le site".' '.$websiteName)));
+							}
+							?>	
+                		</div>
 				        <div class="tab-pane" id="details_content">	
 				    		<div class="box-header bg-light-blue">
 								<h4><i class="fa fa-indent"></i> <?php echo _("Contenu détaillé"); ?></h4>                  

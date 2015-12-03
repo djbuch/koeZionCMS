@@ -235,6 +235,29 @@ class CategoriesController extends AppController {
 		return array('id' => $category['id'], 'name' => $category['name'], 'slug' => $category['slug']);
 	}
 	
+/**
+ * Cette fonction permet de récupérer l'arborescence d'un site donné
+ * Cette fonction est utilisée dans la vue de création d'un article dans le BO pour récupérer l'arborescence des autres sites enregistrés dans le système
+ *
+ * @param 	integer $websiteId 	Identifiant du site
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 01/12/2015 by FI
+ */
+	public function request_tree_list($websiteId = null) {
+		
+		$query = array();
+		if(isset($websiteId)) { 
+			
+			//Dans le cas ou un site particulier est demandé on désactive la gestion automatique sur la colonne website_id
+			$this->Category->manageWebsiteId = false;
+			$query = array('conditions' => array('website_id' => $websiteId)); 
+		}
+		
+		$categoriesList = $this->Category->getTreeList(false, $query); //On récupère les catégories
+		return $categoriesList; //On les envois à la vue
+	}
+	
 //////////////////////////////////////////////////////////////////////////////////////////	
 //										BACKOFFICE										//
 //////////////////////////////////////////////////////////////////////////////////////////

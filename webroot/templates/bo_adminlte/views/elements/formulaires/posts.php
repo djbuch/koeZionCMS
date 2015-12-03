@@ -1,26 +1,28 @@
+<?php 
+$websitesSession 	= Session::read('Backoffice.Websites'); //Récupération de la variable de session
+$currentWebsite 	= $websitesSession['current']; //Récupération du site courant
+?>
 <div class="row">
 	<div class="nav-tabs-custom">
 		<div class="col-md-2 left">
 			<div class="box box-primary">
 	    		<div class="box-body">
 					<ul class="nav nav-tabs nav-stacked col-md-12">
-				    	<li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-file-text-o"></i> <?php echo _("Général"); ?></a></li>
+				    	<li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-file-text-o"></i> <?php echo _("Général"); ?></a></li>    	
+						<li><a href="#publication" data-toggle="tab"><i class="fa fa-copy"></i> <?php echo _("Publication"); ?></a></li>
 				    	<li><a href="#textes" data-toggle="tab"><i class="fa fa-file-word-o"></i> <?php echo _("Descriptifs court et long"); ?></a></li>
 				    	<li><a href="#types" data-toggle="tab"><i class="fa fa-tags"></i> <?php echo _("Types d'article"); ?></a></li>
 				    	<li><a href="#right_column" data-toggle="tab"><i class="fa fa-navicon"></i> <?php echo _("Colonne page"); ?></a></li>
 				    	<li><a href="#buttons" data-toggle="tab"><i class="fa fa-hand-o-right"></i> <?php echo _("Boutons page"); ?></a></li>
 				    	<li><a href="#seo" data-toggle="tab"><i class="fa fa-search"></i> <?php echo _("SEO"); ?></a></li>
-				    	<li><a href="#options" data-toggle="tab"><i class="fa fa-plug"></i> <?php echo _("Options"); ?></a></li>
-				    	
-						<?php 
+				    	<li><a href="#options" data-toggle="tab"><i class="fa fa-plug"></i> <?php echo _("Options"); ?></a></li>				
+						<?php
 						//On ne va afficher ce menu que si le site courant est sécurisé
-						$websitesSession = Session::read('Backoffice.Websites'); //Récupération de la variable de session
-						$currentWebsite = $websitesSession['current']; //Récupération du site courant
 						$websiteDetails = $websitesSession['details'][$currentWebsite]; //Récupération du détail du site courant
 						$isSecure = $websiteDetails['secure_activ']; //On va vérifier si celui-ci est sécurisé
 						if($isSecure) {
 							
-							?><li><a href="#emailing" data-toggle="tab"><i class="fa "></i> <?php echo _("Emailing"); ?></a></li><?php 
+							?><li><a href="#emailing" data-toggle="tab"><i class="fa fa-send"></i> <?php echo _("Emailing"); ?></a></li><?php 
 						}	
 						?>
 					</ul>
@@ -37,11 +39,29 @@
 								<h4><i class="fa fa-file-text-o"></i> <?php echo _("Général"); ?></h4>                  
                 			</div>  
 							<?php 
-							echo $helpers['Form']->input('category_id', _('Catégorie parente'), array('type' => 'select', 'datas' => $categoriesList, 'tooltip' => _("Indiquez la catégorie parente de cet article, c'est à partir de cette catégorie que cet article sera accessible"), 'firstElementList' => _("Sélectionnez une catégorie")));
 							echo $helpers['Form']->input('name', _("Titre de l'article"), array('compulsory' => true, 'tooltip' => _("Indiquez le titre de l'article. Ce champ sera utilisé comme titre de page dans les moteurs de recherche, 70 caractères maximum recommandé")));
 							echo $helpers['Form']->input('dont_change_modified_date', _('Ne pas changer la date de modification'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour ne pas changer automatiquement la date de modification de l'article")));
 							echo $helpers['Form']->input('online', _('En ligne'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour diffuser cet article")));
 							?>	             			
+                		</div>                	
+				    	<div class="tab-pane" id="publication">	
+				    		<div class="box-header bg-light-blue">
+								<h4><i class="fa fa-copy"></i> <?php echo _("Publication"); ?></h4>                  
+                			</div>               
+                			<div class="callout callout-info">
+			                	<p><?php echo _('Pour publier cet article dans un ou plusieurs site cochez la ou les cases correspondantes')?>.</p>
+							</div> 		
+							<?php 
+							//unset($websitesSession['liste'][$currentWebsite]); //On supprime le site courant
+							foreach($websitesSession['liste'] as $websiteId => $websiteName) {
+								
+								$websiteCategories = $this->request('Categories', 'request_tree_list', array('websiteId' => $websiteId));									
+								?><h5 class="form-title"><?php echo _("Site")." ".$websiteName; ?></h5><?php 
+								echo $helpers['Form']->input('CategoriesPostsWebsite.'.$websiteId.'.display', _('Diffuser dans le site').' '.$websiteName, array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour diffuser cet article dans le site".' '.$websiteName)));
+								echo $helpers['Form']->input('CategoriesPostsWebsite.'.$websiteId.'.display_home_page', _("Afficher cet article sur la la page d'accueil du site").' '.$websiteName, array('type' => 'checkbox', 'tooltip' => _("En cochant cette case vous afficherez cet article sur la page d'accueil du site".' '.$websiteName)));
+								echo $helpers['Form']->input('CategoriesPostsWebsite.'.$websiteId.'.category_id', _("Catégorie parente de l'article dans le site").' '.$websiteName, array('type' => 'select', 'datas' => $websiteCategories, 'tooltip' => _("Indiquez la catégorie parente de cet article, c'est à partir de cette catégorie que cet article sera accessible dans le site").' '.$websiteName, 'firstElementList' => _("Sélectionnez une catégorie")));
+							}
+							?>	
                 		</div>
 				    	<div class="tab-pane" id="textes">	
 				    		<div class="box-header bg-light-blue">
@@ -144,8 +164,7 @@
 							<?php 
 							echo $helpers['Form']->input('display_link', _("Afficher un lien sous forme de bouton à la suite de l'article"), array('type' => 'checkbox', 'tooltip' => _("En cochant cette case vous afficherez automatiquement le lien pour se rendre sur le détail de l'article, par défaut le titre de l'article sera également cliquable")));						
 							echo $helpers['Form']->input('redirect_to', _('Url de redirection'), array('tooltip' => _("Remplissez ce champ si souhaitez, à partir de cet article, faire une redirection vers une url de votre choix, il ne vous sera alors pas nécessaire de saisir le descriptif long")));			
-							echo $helpers['Form']->input('display_home_page', _("Afficher cet article sur la la page d'accueil"), array('type' => 'checkbox', 'tooltip' => _("En cochant cette case vous afficherez cet article sur la page d'accueil du site")));
-				
+							
 							if(!isset($formulaires)) { $formulaires = array (2 => _('Formulaire commentaire article')); } 
 							echo $helpers['Form']->input('display_form', _('Formulaire'), array('type' => 'select', 'datas' => $formulaires, 'tooltip' => _("Indiquez le formulaire que vous souhaitez afficher sur la page"), 'firstElementList' => _("Sélectionnez un formulaire")));					
 							echo $helpers['Form']->input('shooting_time', _("Durée de réalisation"), array('tooltip' => _("Indiquez la durée de réalisation de ce qui sera présenté dans cet article")));
@@ -189,7 +208,7 @@
 							} 
 							?>
                 		</div>
-                		<?php if($isSecure) { ?>
+	                	<?php if($isSecure) { ?>
 					    	<div class="tab-pane" id="emailing">	
 					    		<div class="box-header bg-light-blue">
 									<h4><i class="fa "></i> <?php echo _("Emailing"); ?></h4>                  

@@ -233,10 +233,12 @@ class TextComponent extends Component {
  * @author 	koéZionCMS
  * @version 0.1 - 23/07/2012 by FI
  * @version 0.1 - 25/10/2012 by FI - Rajout d'une option permettant de choisir si on retourne les valeurs dans un tablau avec des index en chiffres ou en lettres
+ * @version 0.2 - 06/11/2015 by FI - Rajout de $date = explode(' ', $date);
  */
 	public function date_human_to_array($date, $separateur = '.', $retour = 'c') {
 		
-		$dateTmp = explode($separateur, $date);
+		$date = explode(' ', $date);		
+		$dateTmp = explode($separateur, $date[0]);
 		
 		if($retour == 'c') {
 			return array(

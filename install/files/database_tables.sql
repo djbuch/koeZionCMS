@@ -40,6 +40,23 @@ CREATE TABLE IF NOT EXISTS `categories` (
   KEY `type_2` (`type`,`online`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+DROP TABLE IF EXISTS `categories_posts_posts_types`;
+CREATE TABLE IF NOT EXISTS `categories_posts_posts_types` (
+  `category_id` int(11) NOT NULL,
+  `post_id` int(11) NOT NULL,
+  `posts_type_id` int(11) NOT NULL,
+  `website_id` int(11) NOT NULL,
+  PRIMARY KEY (`category_id`,`post_id`,`posts_type_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `categories_posts_websites`;
+CREATE TABLE IF NOT EXISTS `categories_posts_websites` (
+  `category_id` int(11) NOT NULL,
+  `post_id` int(11) NOT NULL,
+  `website_id` int(11) NOT NULL,
+  `display_home_page` int(11) NOT NULL,
+  PRIMARY KEY (`category_id`,`post_id`,`website_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `categories_right_buttons`;
 CREATE TABLE IF NOT EXISTS `categories_right_buttons` (
@@ -84,9 +101,17 @@ CREATE TABLE IF NOT EXISTS `focus` (
   `order_by` int(11) NOT NULL,
   `online` int(11) NOT NULL,
   `created` datetime DEFAULT NULL,
-  `website_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `focus_websites`;
+CREATE TABLE IF NOT EXISTS `focus_websites` (
+  `focus_id` int(11) NOT NULL,
+  `website_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `dont_display_on_home` int(11) NOT NULL,
+  PRIMARY KEY (`focus_id`,`website_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `modules`;
 CREATE TABLE IF NOT EXISTS `modules` (
@@ -136,10 +161,10 @@ CREATE TABLE IF NOT EXISTS `plugins` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-
 DROP TABLE IF EXISTS `posts`;
 CREATE TABLE IF NOT EXISTS `posts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `label` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `short_content` longtext COLLATE utf8_unicode_ci NOT NULL,
   `content` longtext COLLATE utf8_unicode_ci NOT NULL,
@@ -158,7 +183,6 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `display_brothers` int(11) NOT NULL,
   `display_link` int(11) NOT NULL,
   `display_form` int(11) NOT NULL,
-  `display_home_page` int(11) NOT NULL,
   `display_posts_types` int(11) NOT NULL,
   `order_by` int(11) NOT NULL,
   `message_mail` longtext COLLATE utf8_unicode_ci NOT NULL,
@@ -168,8 +192,6 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `modified` datetime NOT NULL,
   `created_by` int(11) NOT NULL,
   `modified_by` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL,
-  `website_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -188,15 +210,6 @@ CREATE TABLE IF NOT EXISTS `posts_comments` (
   `website_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-DROP TABLE IF EXISTS `posts_posts_types`;
-CREATE TABLE IF NOT EXISTS `posts_posts_types` (
-  `post_id` int(11) NOT NULL,
-  `posts_type_id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL,
-  `website_id` int(11) NOT NULL,
-  PRIMARY KEY (`post_id`,`posts_type_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `posts_right_buttons`;
 CREATE TABLE IF NOT EXISTS `posts_right_buttons` (
@@ -262,9 +275,17 @@ CREATE TABLE IF NOT EXISTS `sliders` (
   `order_by` int(11) NOT NULL,
   `online` int(11) NOT NULL,
   `created` datetime DEFAULT NULL,
-  `website_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `sliders_websites`;
+CREATE TABLE IF NOT EXISTS `sliders_websites` (
+  `slider_id` int(11) NOT NULL,
+  `website_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `dont_display_on_home` int(11) NOT NULL,
+  PRIMARY KEY (`slider_id`,`website_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `templates`;
 CREATE TABLE IF NOT EXISTS `templates` (

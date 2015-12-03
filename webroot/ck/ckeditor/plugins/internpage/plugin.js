@@ -25,7 +25,7 @@
 	var sUrl = sHref.substr(0, iSubStringPosition);
 	
 	var InternPagesSelectBox = new Array();
-	$.post(sUrl + 'home/ajax_ckeditor_get_internal_links.html', function(aData) {
+	$.post(sUrl + 'dashboard/ajax_ckeditor_get_internal_links.html', function(aData) {
 			
 		$.each(aData, function(sEntryIndex, aEntryValue) {
 			

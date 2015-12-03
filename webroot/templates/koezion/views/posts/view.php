@@ -20,7 +20,7 @@ else { $rightColumn = true; }
 	<h2 class="widgettitle"><?php echo $post['name']; ?></h2>	
 	<p class="post_info">
 		<?php 					
-		$categoryLink = $this->request('Categories', 'get_category_link', array($post['category_id']));
+		$categoryLink = $this->request('Categories', 'get_category_link', array($category['id']));
 		$categoryName = $categoryLink['name'];
 		$postBaseRoute = Router::url('categories/view/id:'.$categoryLink['id'].'/slug:'.$categoryLink['slug']);				
 		

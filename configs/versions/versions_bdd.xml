@@ -1,5 +1,65 @@
 ﻿<versions>
 	<version>
+		<name>Version du 03/12/2015</name>
+		<num>20151203.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI">
+				DROP TABLE IF EXISTS `categories_posts_websites`;
+				CREATE TABLE IF NOT EXISTS `categories_posts_websites` (
+  					`category_id` int(11) NOT NULL,
+  					`post_id` int(11) NOT NULL,
+  					`website_id` int(11) NOT NULL,
+  					`display_home_page` int(11) NOT NULL,
+  					PRIMARY KEY (`category_id`,`post_id`,`website_id`)
+				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+			</task>
+			<task author="FI">
+				DROP TABLE IF EXISTS `focus_websites`;
+				CREATE TABLE IF NOT EXISTS `focus_websites` (
+  					`focus_id` int(11) NOT NULL,
+  					`website_id` int(11) NOT NULL,
+  					`category_id` int(11) NOT NULL,
+  					`dont_display_on_home` int(11) NOT NULL,
+  					PRIMARY KEY (`focus_id`,`website_id`)
+				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;			
+			</task>
+			<task author="FI">
+				DROP TABLE IF EXISTS `sliders_websites`;
+				CREATE TABLE IF NOT EXISTS `sliders_websites` (
+  					`slider_id` int(11) NOT NULL,
+  					`website_id` int(11) NOT NULL,
+  					`category_id` int(11) NOT NULL,
+  					`dont_display_on_home` int(11) NOT NULL,
+  					PRIMARY KEY (`slider_id`,`website_id`)
+				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;			
+			</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 02/12/2015</name>
+		<num>20151202.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI">ALTER TABLE `posts` DROP `display_home_page`;</task>
+			<task author="FI">ALTER TABLE `focus` DROP `website_id`;</task>
+			<task author="FI">ALTER TABLE  `posts` ADD  `label` VARCHAR( 255 ) NOT NULL AFTER  `id`;</task>
+			<task author="FI">ALTER TABLE `sliders` DROP `website_id`;</task>
+			<task author="FI">RENAME TABLE `posts_posts_types` TO `categories_posts_posts_types`;</task>
+			<task author="FI">ALTER TABLE `posts_types` DROP `website_id`;</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 01/12/2015</name>
+		<num>20151201.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI">ALTER TABLE `posts_posts_types` DROP PRIMARY KEY, ADD PRIMARY KEY(`post_id`, `posts_type_id`, `category_id`);</task>
+			<task author="FI">ALTER TABLE `posts` DROP `category_id`;</task>
+			<task author="FI">ALTER TABLE `posts` DROP `website_id`;</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 30/10/2015</name>
 		<num>20151030.001</num>
 		<supervisor>KoéZionCMS</supervisor>

@@ -30,7 +30,8 @@ class PostsController extends AppController {
  * @version 0.1 - 03/01/2012 by FI 
  * @version 0.2 - 28/02/2012 by FI - Mise en place du fil d'ariane pour les articles 
  * @version 0.3 - 09/03/2012 by FI - Mise en place du préfixe pour les url des articles 
- * @version 0.4 - 01/80/2012 by FI - Récupération des commentaires uniquement si l'option est cochée, rajout du formulaire de contact dans l'affichage
+ * @version 0.4 - 01/08/2012 by FI - Récupération des commentaires uniquement si l'option est cochée, rajout du formulaire de contact dans l'affichage
+ * @version 0.5 - 02/12/2015 by FI - Modification de la récupération des données suite à la mise en place de la publication multiple
  */	
 	public function view($id, $slug, $prefix) {
 		
@@ -38,8 +39,17 @@ class PostsController extends AppController {
 		$conditions = array('conditions' => array('online' => 1, 'id' => $id));
 		$datas['post'] = $this->Post->findFirst($conditions); //On récupère le premier élément
         
+		//On va récupérer les informations dans la table d'association
+		$this->load_model('CategoriesPostsWebsite');
+		$assocDatas = $this->CategoriesPostsWebsite->findFirst(array(
+			'conditions' => array(
+				'post_id' => $id,
+				'website_id' => CURRENT_WEBSITE_ID
+			)
+		));
+		
 		//Si aucune catégorie n'est définie on lance une erreur
-		if($datas['post']['category_id'] == 0) {
+		if(empty($assocDatas)) {
 			
 			Session::write('redirectMessage', "Désolé l'article n'existe plus");
 			$this->redirect('home/e404');			
@@ -59,8 +69,8 @@ class PostsController extends AppController {
         //////////////////////////////////////
 		//   RECUPERATION DU FIL D'ARIANE   //
 		$this->load_model('Category'); //Chargement du modèle
-		$datas['breadcrumbs'] = $this->Category->getPath($datas['post']['category_id']);
-		$datas['category'] = $this->Category->findFirst(array('conditions' => array('id' => $datas['post']['category_id']))); //Récupération des données de la catégorie parente
+		$datas['breadcrumbs'] = $this->Category->getPath($assocDatas['category_id']);
+		$datas['category'] = $this->Category->findFirst(array('conditions' => array('id' => $assocDatas['category_id']))); //Récupération des données de la catégorie parente
 		
 		$datas['breadcrumbsPost'][] = array(
 			'id' => $datas['post']['id'],
@@ -209,17 +219,17 @@ class PostsController extends AppController {
 		$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'posts.ini', false, false); 		//Création d'une instance
 		$postsConfigs = $cfg->keys_values();	
 		
-		if($postsConfigs['order'] == 'modified') { $order = 'category_id ASC, modified DESC'; }
-		else if($postsConfigs['order'] == 'created') { $order = 'category_id ASC, created_by ASC'; }
-		else if($postsConfigs['order'] == 'order_by') { $order = 'category_id ASC, order_by ASC'; }
+		if($postsConfigs['order'] == 'modified') { $order = 'modified DESC'; }
+		else if($postsConfigs['order'] == 'created') { $order = 'created_by ASC'; }
+		else if($postsConfigs['order'] == 'order_by') { $order = 'order_by ASC'; }
 		
 		$this->set('postsOrder', $postsConfigs['order']);
 		
 		$datas = parent::backoffice_index(true, null, $order);		
 		
-		$posts = array();
+		/*$posts = array();
 		foreach($datas['posts'] as $k => $v) { $posts[$v['category_id']][] = $v; }
-		$datas['posts'] = $posts;
+		$datas['posts'] = $posts;*/
 		$this->set($datas);
 		
 	}
@@ -233,6 +243,7 @@ class PostsController extends AppController {
  * @version 0.2 - 21/06/2013 by FI - Rajout de la récupération des boutons colonnes de doite --> C'est le jour le plus long de l'année
  * @version 0.3 - 03/11/2013 by FI - Modification de la fonction de transformation des dates
  * @version 0.4 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
+ * @version 0.5 - 30/11/2015 by FI - Rajout de la publication sur plusieurs sites
  */	
 	public function backoffice_add($redirect = true, $forceInsert = false) {
 
@@ -243,7 +254,8 @@ class PostsController extends AppController {
 		
 			if($this->Post->id > 0 && $parentAdd) {		 
 				
-				$this->_save_assoc_datas_posts_posts_type($this->Post->id);	
+				$this->_save_assoc_datas_posts_categories_websites_and_posts_posts_types($this->Post->id);	
+				//$this->_save_assoc_datas_posts_posts_type($this->Post->id);	
 				$this->_save_assoc_datas_posts_right_button($this->Post->id);	
 				$this->_check_send_mail($this->request->data);	
 				FileAndDir::remove(TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS.'home_page_website_'.CURRENT_WEBSITE_ID.'.cache'); //On supprime le dossier cache
@@ -268,6 +280,7 @@ class PostsController extends AppController {
  * @version 0.2 - 21/06/2013 by FI - Rajout de la récupération des boutons colonnes de doite --> C'est le jour le plus long de l'année
  * @version 0.3 - 03/11/2013 by FI - Modification de la fonction de transformation des dates
  * @version 0.4 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
+ * @version 0.5 - 30/11/2015 by FI - Rajout de la publication sur plusieurs sites
  */	
 	public function backoffice_edit($id = null, $redirect = true) {
 				
@@ -277,8 +290,9 @@ class PostsController extends AppController {
 		if($this->request->data) {
 			
 			if($parentEdit) {						
-								
-				$this->_save_assoc_datas_posts_posts_type($this->Post->id, true);	
+				
+				$this->_save_assoc_datas_posts_categories_websites_and_posts_posts_types($this->Post->id, true);
+				//$this->_save_assoc_datas_posts_posts_type($this->Post->id, true);	
 				$this->_save_assoc_datas_posts_right_button($this->Post->id, true);	
 				$this->_check_send_mail($this->request->data);	
 				FileAndDir::remove(TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS.'home_page_website_'.CURRENT_WEBSITE_ID.'.cache'); //On supprime le dossier cache
@@ -309,9 +323,9 @@ class PostsController extends AppController {
 		if($parentDelete) {
 			
 			//Suppression de l'association entre les posts et les types de posts
-			$this->load_model('PostsPostsType'); //Chargement du modèle
-			$this->PostsPostsType->deleteByName('post_id', $id);
-			$this->unload_model('PostsPostsType'); //Déchargement du modèle
+			$this->load_model('CategoriesPostsPostsType'); //Chargement du modèle
+			$this->CategoriesPostsPostsType->deleteByName('post_id', $id);
+			$this->unload_model('CategoriesPostsPostsType'); //Déchargement du modèle
 			
 			//Suppression des commentaires articles
 			$this->load_model('PostsComment'); //Chargement du modèle
@@ -556,39 +570,119 @@ class PostsController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 26/01/2012 by FI
  * @version 0.2 - 21/06/2013 by FI - Rajout de la récupération des boutons colonnes de droite
+ * @version 0.3 - 30/11/2015 by FI - Rajout de la récupération des sites
  */	
 	protected function _get_assoc_datas($postId) {
 
-		$this->load_model('PostsPostsType'); //Chargement du modèle		
-		$postsPostsTypes = $this->PostsPostsType->find(array('conditions' => array('post_id' => $postId))); //On récupère les données
-		$this->unload_model('PostsPostsType'); //Déchargement du modèle
-		
-		//On va les rajouter dans la variable $this->request->data
-		foreach($postsPostsTypes as $k => $v) { $this->request->data['posts_type_id'][$v['posts_type_id']] = 1; }
-
-		$this->load_model('PostsRightButton'); //Chargement du modèle		
-		$rightButtons = $this->PostsRightButton->find(array('conditions' => array('post_id' => $postId), 'order' => 'order_by ASC')); //On récupère les données
-		$this->unload_model('PostsRightButton'); //Déchargement du modèle
-		
-		//On va les rajouter dans la variable $this->request->data
-		foreach($rightButtons as $k => $v) {			
+		//////////////////////////////////
+		//    RECUPERATION DES SITES    //
+			$this->load_model('CategoriesPostsWebsite'); //Chargement du modèle		
+			$categoriesPostsWebsite = $this->CategoriesPostsWebsite->find(array('conditions' => array('post_id' => $postId))); //On récupère les données
+			$this->unload_model('CategoriesPostsWebsite'); //Déchargement du modèle
 			
-			$this->request->data['right_button_id'][$v['right_button_id']]['top'] = $v['position'];
-			$this->request->data['right_button_id'][$v['right_button_id']]['activate'] = 1; 
+			//On va les rajouter dans la variable $this->request->data
+			foreach($categoriesPostsWebsite as $k => $v) { 
+								
+				$this->request->data['CategoriesPostsWebsite'][$v['website_id']]['display'] = 1; 
+				$this->request->data['CategoriesPostsWebsite'][$v['website_id']]['display_home_page'] = $v['display_home_page']; 
+				$this->request->data['CategoriesPostsWebsite'][$v['website_id']]['category_id'] = $v['category_id']; 
+			}		
+
+		////////////////////////////////////////////
+		//    RECUPERATION DES TYPES D'ARTICLE    //
+			$this->load_model('CategoriesPostsPostsType'); //Chargement du modèle		
+			$postsPostsTypes = $this->CategoriesPostsPostsType->find(array('conditions' => array('post_id' => $postId))); //On récupère les données
+			$this->unload_model('CategoriesPostsPostsType'); //Déchargement du modèle
+			
+			//On va les rajouter dans la variable $this->request->data
+			foreach($postsPostsTypes as $k => $v) { $this->request->data['posts_type_id'][$v['posts_type_id']] = 1; }
+
+		////////////////////////////////////
+		//    RECUPERATION DES BOUTONS    //
+			$this->load_model('PostsRightButton'); //Chargement du modèle		
+			$rightButtons = $this->PostsRightButton->find(array('conditions' => array('post_id' => $postId), 'order' => 'order_by ASC')); //On récupère les données
+			$this->unload_model('PostsRightButton'); //Déchargement du modèle
+			
+			//On va les rajouter dans la variable $this->request->data
+			foreach($rightButtons as $k => $v) {			
+				
+				$this->request->data['right_button_id'][$v['right_button_id']]['top'] = $v['position'];
+				$this->request->data['right_button_id'][$v['right_button_id']]['activate'] = 1; 
+			}
+	}
+	
+/**
+ * Cette fonction permet la sauvegarde de l'association entre les articles, les catégories et les sites Internet
+ * Elle gère également la sauvegarde entre les articles, les types d'articles et les catégories
+ *
+ * @param	integer $postId 		Identifiant de l'article
+ * @param	boolean $deleteAssoc 	Si vrai l'association entre l'article et les sites sera supprimée
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 30/11/2015 by FI
+ */	
+	protected function _save_assoc_datas_posts_categories_websites_and_posts_posts_types($postId, $deleteAssoc = false) {
+		
+		$this->load_model('CategoriesPostsWebsite');
+		$this->load_model('CategoriesPostsPostsType');
+
+		if($deleteAssoc) { 
+			
+			$this->CategoriesPostsWebsite->deleteByName('post_id', $postId); 
+			$this->CategoriesPostsPostsType->deleteByName('post_id', $postId);
 		}
+				
+		if(isset($this->request->data['CategoriesPostsWebsite']))  {
+			
+			$categoriesPostsWebsite = $this->request->data['CategoriesPostsWebsite'];
+						
+			foreach($categoriesPostsWebsite as $websiteId => $websiteDatas) {
+			
+				if($websiteDatas['display']) {
+										
+					$this->CategoriesPostsWebsite->save(array(
+						'post_id' 	 => $postId,
+						'website_id' => $websiteId,
+						'category_id'	=> $websiteDatas['category_id'],
+						'display_home_page'	=> $websiteDatas['display_home_page']
+					));
+					
+					///////////////////////////////////////////////////
+					//    GESTION DE L'AJOUT DES TYPES D'ARTICLES    //
+					if(isset($this->request->data['posts_type_id']))  {
+			
+						$postsTypes = $this->request->data['posts_type_id'];
+						foreach($postsTypes as $postsTypeId => $isPostsTypeChecked) {
+						
+							if($isPostsTypeChecked) {
+						
+								$this->CategoriesPostsPostsType->save(array(
+									'post_id' => $postId,
+									'posts_type_id'	=> $postsTypeId,
+									'category_id' => $websiteDatas['category_id'],
+									'website_id' => $websiteId
+								));
+							}
+						}
+					}					
+				}
+			}
+		}
+		$this->unload_model('CategoriesPostsWebsite');
+		$this->unload_model('CategoriesPostsPostsType');
 	}
 	
 /**
  * Cette fonction permet la sauvegarde de l'association entre les posts et les types de posts
  *
  * @param	integer $postId 		Identifiant du post
- * @param	boolean $deleteAssoc 	Si vrai l'association entre l'utilisateur et les sites sera supprimée
+ * @param	boolean $deleteAssoc 	Si vrai l'association entre l'article et les types d'article sera supprimée
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 26/01/2012 by FI
  * @version 0.2 - 27/10/2015 by FI - Rajout du contrôle de l'existence de la variable $this->request->data['posts_type_id']
  */	
-	protected function _save_assoc_datas_posts_posts_type($postId, $deleteAssoc = false) {
+	/*protected function _save_assoc_datas_posts_posts_type($postId, $deleteAssoc = false) {
 		
 		$this->load_model('PostsPostsType'); //Chargement du modèle
 
@@ -610,13 +704,13 @@ class PostsController extends AppController {
 			}
 		}
 		$this->unload_model('PostsPostsType'); //Déchargement du modèle
-	}
+	}*/
 	
 /**
  * Cette fonction permet la sauvegarde de l'association entre les posts et les boutons colonne de droite
  *
  * @param	integer $postId 		Identifiant du post
- * @param	boolean $deleteAssoc 	Si vrai l'association entre l'utilisateur et les sites sera supprimée
+ * @param	boolean $deleteAssoc 	Si vrai l'association entre l'article et les boutons sera supprimée
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 21/06/2013 by FI

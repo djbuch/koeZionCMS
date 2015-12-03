@@ -2,7 +2,7 @@
 	
 	<?php if(!isset($cssZone)) { $cssZone = 'gs_8'; } ?>
 	<div class="<?php echo $cssZone; ?> omega">
-		<?php 
+		<?php
 		foreach($posts as $k => $v) { 
 			
 			$postUrl = Router::url('posts/view/id:'.$v['id'].'/slug:'.$v['slug'].'/prefix:'.$v['prefix']);

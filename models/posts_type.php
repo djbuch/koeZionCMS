@@ -53,15 +53,14 @@ class PostsType extends Model {
 				'fields' => array('id', 'name', 'column_title'),
 				'tables' => array(
 					'posts_types' => 'KzPostsType',	
-					'posts_posts_types' => 'KzPostsPostsType',	
+					'categories_posts_posts_types' => 'KzCategoriesPostsPostsType',	
 					'posts' => 'KzPost',	
 				),
 				'conditions' => array(
-					"KzPostsPostsType.category_id = ".$categoryId,
-					"KzPostsPostsType.posts_type_id = KzPostsType.id",
+					"KzCategoriesPostsPostsType.category_id = ".$categoryId,
+					"KzCategoriesPostsPostsType.posts_type_id = KzPostsType.id",
 					"KzPostsType.online = 1",
-					"KzPostsPostsType.post_id = KzPost.id",
-					"KzPost.category_id =  ".$categoryId,
+					"KzCategoriesPostsPostsType.post_id = KzPost.id",
 					"KzPost.online = 1"
 				)				
 			);
@@ -103,7 +102,7 @@ class PostsType extends Model {
 		
 		//Formatage de la variable de retour
 		$retour = array();
-		foreach($postsTypes as $k => $v) { $retour[$v['column_title']][$v['id']] = $v['name']; }
+		foreach($postsTypes as $k => $v) { $retour[$v['column_title']][$v['id']] = $v['name']; }		
 		return $retour;
 	}
 }

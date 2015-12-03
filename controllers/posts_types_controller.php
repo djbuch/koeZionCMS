@@ -33,7 +33,7 @@ class PostsTypesController extends AppController {
 			array(
 				'fields' => array('id', 'name'),
 				'conditions' => array('online' => 1),
-				'moreConditions' => 'KzPostsType.id IN (SELECT posts_type_id FROM posts_posts_types WHERE post_id = '.$postId.')'
+				'moreConditions' => 'KzPostsType.id IN (SELECT posts_type_id FROM categories_posts_posts_types WHERE post_id = '.$postId.')'
 			)
 		);
 		return $result;
@@ -76,9 +76,9 @@ class PostsTypesController extends AppController {
 		if($parentDelete) {
 	
 			//Suppression de l'association entre les posts et les types de posts
-			$this->load_model('PostsPostsType'); //Chargement du modèle
-			$this->PostsPostsType->deleteByName('posts_type_id', $id);
-			$this->unload_model('PostsPostsType'); //Déchargement du modèle
+			$this->load_model('CategoriesPostsPostsType'); //Chargement du modèle
+			$this->CategoriesPostsPostsType->deleteByName('posts_type_id', $id);
+			$this->unload_model('CategoriesPostsPostsType'); //Déchargement du modèle
 			
 			if($redirect) { $this->redirect('backoffice/posts_types/index'); } //On retourne sur la page de listing
 			else { return true; }

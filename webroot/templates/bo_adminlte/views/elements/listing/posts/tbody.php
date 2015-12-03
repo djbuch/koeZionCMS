@@ -1,4 +1,5 @@
-<?php foreach($$params['controllerVarName'] as $categoryId => $postsList): ?>
+<?php $this->element('listing/commun/tbody_display'); ?>
+<?php /*foreach($$params['controllerVarName'] as $categoryId => $postsList): ?>
 	<tr class="table_line_title">
 		<?php if($postsOrder == 'order_by') { $colspan = 6; } else { $colspan = 5; } ?>
 		<th colspan="<?php echo $colspan; ?>">
@@ -30,4 +31,4 @@
 			</tr>
 		<?php endforeach; ?>
 	</tbody>
-<?php endforeach; ?>
+<?php endforeach;*/ ?>

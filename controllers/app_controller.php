@@ -662,15 +662,41 @@ class AppController extends Controller {
  * @author 	koéZionCMS
  * @version 0.1 - 02/10/2012 by FI
  * @version 0.3 - 30/10/2014 by FI - Déplacement de cette fonction de Categories
+ * @version 0.4 - 01/12/2015 by FI - Reprise de la requête de récupération des données suite à la mise en place de la multi publication
  */		
 	protected function _get_posts_category($datas, $setLimit = true) {
-				
-		//On va compter le nombre d'articles de cette catégorie
+
+		//Récupération des articles
+		$this->load_model('Post');
+		$postsQuery = array(
+			'fields' => am(
+				$this->Post->shema,
+				array(
+					'KzCategoriesPostsWebsite.category_id',
+					'KzCategoriesPostsWebsite.website_id',
+					'KzCategoriesPostsWebsite.display_home_page',
+				)
+			),
+			'conditions' => array(
+				'online' => 1, 
+				'KzCategoriesPostsWebsite.category_id' => $datas['category']['id'],
+				'KzCategoriesPostsWebsite.website_id' => CURRENT_WEBSITE_ID
+			),
+ 			"innerJoin" => array( 
+ 				array(
+ 					"model" => "CategoriesPostsWebsite",
+ 					"pivot" => "KzPost.id = KzCategoriesPostsWebsite.post_id"				
+ 				)
+ 			)					
+		);
+		$allPosts = $this->Post->find($postsQuery);
+		
+		/*//On va compter le nombre d'articles de cette catégorie
 		$this->load_model('Post');
 		$postsConditions = array('online' => 1, 'category_id' => $datas['category']['id']);
-		$nbPosts = $this->Post->findCount($postsConditions);
-		
-		if($nbPosts > 0) {
+		$nbPosts = $this->Post->findCount($postsConditions);*/
+				
+		if(count($allPosts) > 0) {
 			
 			//On va envoyer les informations nécessaires à la génération du flux RSS
 			$datas['rss_for_layout'] = array(
@@ -693,7 +719,7 @@ class AppController extends Controller {
 			$datas['postsTypes'] = $this->PostsType->get_for_front($datas['category']['id']);
 		
 			//Construction des paramètres de la requête
-			$postsQuery = array('conditions' => $postsConditions);			
+			//$postsQuery = array('conditions' => $postsConditions);			
 			if($setLimit) { $postsQuery['limit'] = $this->pager['limit'].', '.$this->pager['elementsPerPage']; }
 		
 			if($postsConfigs['order'] == 'modified') 		{ $postsQuery['order'] = 'modified DESC'; }
@@ -722,9 +748,8 @@ class AppController extends Controller {
 			//On compte deux fois le nombre de post une fois en totalité une fois en rajoutant si il est renseigné le type d'article
 			//Car si on ne faisait pas cela on avait toujours la zone d'affichage des catégories qui s'affichaient lorsqu'on affichait les frères
 			//même si il n'y avait pas de post
-			$nbPostsCategory = $this->Post->findCount($postsConditions);
-		
-			$this->pager['totalElements'] 	= $this->Post->findCount($postsConditions, $postsQuery['moreConditions']); //On va compter le nombre d'élement
+				
+			$this->pager['totalElements'] 	= count($datas['posts']); //On va compter le nombre d'élement
 			$this->pager['totalPages'] 		= ceil($this->pager['totalElements'] / $this->pager['elementsPerPage']); //On va compter le nombre de page
 		}
 
@@ -753,18 +778,18 @@ class AppController extends Controller {
     		//   MISE EN PLACE DE LA REQUETE STRICTE   //
     		if($searchType == 'stricte') {
     	
-    			$this->load_model('PostsPostsType');
+    			$this->load_model('CategoriesPostsPostsType');
     			$typePost = explode(',', $this->request->data['typepost']); //Récupération des types de post passés en GET
     	
-    			$tableAliasBase = 'Kz'.Inflector::camelize('posts_posts_types'); //Définition de la base des alias
+    			$tableAliasBase = 'KzCategoriesPostsPostsType'; //Définition de la base des alias
     			$sql =  'SELECT DISTINCT '.$tableAliasBase.'.post_id '; //Construction de la requête
-    			$sql .= 'FROM posts_posts_types AS '.$tableAliasBase.' '; //Construction de la requête
+    			$sql .= 'FROM categories_posts_posts_types AS '.$tableAliasBase.' '; //Construction de la requête
     	
     			//Parcours de tous les types de posts passés en GET pour mettre en place les INNER JOIN
     			foreach($typePost as $k => $v) {
     	
     				$tableAlias = $tableAliasBase.$k; //Définition de l'alias de la table
-    				$sql .= 'INNER JOIN posts_posts_types AS '.$tableAlias.' ON '.$tableAliasBase.'.post_id = '.$tableAlias.'.post_id '; //Construction de la requête
+    				$sql .= 'INNER JOIN categories_posts_posts_types AS '.$tableAlias.' ON '.$tableAliasBase.'.post_id = '.$tableAlias.'.post_id '; //Construction de la requête
     			}
     	
     			$sql .= 'WHERE 1 '; //Construction de la requête
@@ -777,7 +802,7 @@ class AppController extends Controller {
     			}
     	
     	
-    			$result = $this->PostsPostsType->query($sql, true);
+    			$result = $this->CategoriesPostsPostsType->query($sql, true);
     			$postsIdIn = array();
     			foreach($result as $k => $v) { $postsIdIn[] = $v['post_id']; }
     	
@@ -789,7 +814,7 @@ class AppController extends Controller {
     		} else if($searchType == 'large') {
     	
     			//Construction de la requête de recherche
-    			$return['moreConditions'] = 'KzPost.id IN (SELECT post_id FROM posts_posts_types WHERE posts_type_id';
+    			$return['moreConditions'] = 'KzPost.id IN (SELECT post_id FROM categories_posts_posts_types WHERE posts_type_id';
     			if(is_numeric($this->request->data['typepost'])) { $return['moreConditions'] .= ' = '.$this->request->data['typepost']; } //Si un seul type
     			else { $return['moreConditions'] .= ' IN ('.$this->request->data['typepost'].')'; }	//Si plusieurs types
     			$return['moreConditions'] .= ')';
@@ -845,8 +870,9 @@ class AppController extends Controller {
  * @author 	koéZionCMS
  * @version 0.1 - 27/06/2014 by FI
  * @version 0.2 - 24/04/2015 by FI - Gestion de la traduction
+ * @version 0.3 - 02/12/2015 by FI - Gestion de la publication sur des sites multiples
  */	
-	public function _get_sliders() {
+	protected function _get_sliders() {
 		
 		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Sliders'.DS;
 		
@@ -857,14 +883,22 @@ class AppController extends Controller {
 		
 		$sliders = Cache::exists_cache_file($cacheFolder, $cacheFile);
 		
-		if(!$sliders) {
-		
-			//$this->load_model('Slider');
-			$sliders = $this->Slider->find(array(
-				'conditions' => array('online' => 1), 
-				'order' => 'order_by ASC, name ASC'
-			));
-		
+		if(!$sliders) {	
+			
+			$conditions = array(
+				'conditions' => array(
+					'KzSlider.online' => 1,
+					'KzSlidersWebsite.website_id' => CURRENT_WEBSITE_ID
+				),
+				"innerJoin" => array(
+					array(
+						"model" => "SlidersWebsite",
+						"pivot" => "KzSlider.id = KzSlidersWebsite.slider_id"
+					)
+				), 
+				'order' => 'KzSlider.order_by ASC, KzSlider.name ASC'
+			);
+			$sliders = $this->Slider->find($conditions);	
 			Cache::create_cache_file($cacheFolder, $cacheFile, $sliders);
 		}
 		
@@ -879,8 +913,9 @@ class AppController extends Controller {
  * @author 	koéZionCMS
  * @version 0.1 - 27/06/2014 by FI
  * @version 0.2 - 24/04/2015 by FI - Gestion de la traduction
+ * @version 0.3 - 02/12/2015 by FI - Gestion de la publication sur des sites multiples
  */	
-	public function _get_focus() {
+	protected function _get_focus() {
 		
 		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Focus'.DS;		
 		
@@ -893,12 +928,20 @@ class AppController extends Controller {
 		
 		if(!$focus) {
 			
-			//$this->load_model('Focus');
-			$focus = $this->Focus->find(array(
-				'conditions' => array('online' => 1), 
-				'order' => 'order_by ASC, name ASC'
-			));
-		
+			$conditions = array(
+				'conditions' => array(
+					'KzFocus.online' => 1,
+					'KzFocusWebsite.website_id' => CURRENT_WEBSITE_ID
+				),
+				"innerJoin" => array(
+					array(
+						"model" => "FocusWebsite",
+						"pivot" => "KzFocus.id = KzFocusWebsite.focus_id"
+					)
+				), 
+				'order' => 'KzFocus.order_by ASC, KzFocus.name ASC'
+			);
+			$focus = $this->Focus->find($conditions);	
 			Cache::create_cache_file($cacheFolder, $cacheFile, $focus);
 		}
 		
@@ -914,7 +957,7 @@ class AppController extends Controller {
  * @author 	koéZionCMS
  * @version 0.1 - 05/09/2014 by FI
  */	
-	public function _get_right_buttons($params) {
+	protected function _get_right_buttons($params) {
 						
 		$rightButtonsConditions = array(
 			'conditions' => array('online' => 1), 
@@ -938,7 +981,7 @@ class AppController extends Controller {
  * @version 0.1 - 27/06/2014 by FI
  * @version 0.2 - 24/04/2015 by FI - Gestion de la traduction
  */	
-	public function _get_posts() {
+	protected function _get_posts() {
 		
 		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS;
 		
@@ -948,7 +991,6 @@ class AppController extends Controller {
 		else { $cacheFile = "home_page_website_".CURRENT_WEBSITE_ID; }
 		
 		$posts = Cache::exists_cache_file($cacheFolder, $cacheFile);
-		
 		if(!$posts) {	
 		
 			//////////////////////////////////////////////////////
@@ -957,17 +999,35 @@ class AppController extends Controller {
 			$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'posts.ini', false, false); 		//Création d'une instance
 			$postsConfigs = $cfg->keys_values();											//Récupération des configurations
 			//////////////////////////////////////////////////////
-			
-			$postsQuery = array(
-				'conditions' => array('online' => 1, 'display_home_page' => 1),
+						
+			$conditions = array(
+				'fields' => am(
+					$this->Post->shema,
+					array(
+						'KzCategoriesPostsWebsite.category_id',
+						'KzCategoriesPostsWebsite.website_id',
+						'KzCategoriesPostsWebsite.display_home_page',
+					)
+				),
+				'conditions' => array(
+					'KzPost.online' => 1,
+					'KzCategoriesPostsWebsite.website_id' => CURRENT_WEBSITE_ID,
+					'KzCategoriesPostsWebsite.display_home_page' => 1,
+				),
+				"innerJoin" => array(
+					array(
+						"model" => "CategoriesPostsWebsite",
+						"pivot" => "KzPost.id = KzCategoriesPostsWebsite.post_id"
+					)
+				),
 				'limit' => '0, '.$postsConfigs['home_page_limit']
-			);	
+			);
 		
-			if($postsConfigs['order'] == 'modified') { $postsQuery['order'] = 'modified DESC'; }
-			else if($postsConfigs['order'] == 'created') { $postsQuery['order'] = 'created DESC'; }
-			else if($postsConfigs['order'] == 'order_by') { $postsQuery['order'] = 'order_by ASC'; }			
+			if($postsConfigs['order'] == 'modified') { $conditions['order'] = 'modified DESC'; }
+			else if($postsConfigs['order'] == 'created') { $conditions['order'] = 'created DESC'; }
+			else if($postsConfigs['order'] == 'order_by') { $conditions['order'] = 'order_by ASC'; }			
 								
-			$posts = $this->Post->find($postsQuery);
+			$posts = $this->Post->find($conditions);
 		
 			Cache::create_cache_file($cacheFolder, $cacheFile, $posts);
 		}
@@ -984,7 +1044,7 @@ class AppController extends Controller {
  * @version 0.1 - 27/06/2014 by FI
  * @version 0.2 - 24/04/2015 by FI - Gestion de la traduction
  */	
-	public function _get_posts_types() {
+	protected function _get_posts_types() {
 		
 		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'PostsTypes'.DS;
 		
@@ -1004,10 +1064,6 @@ class AppController extends Controller {
 		
 		return $postsTypes;
 	}
-
-//////////////////////////////////////////////////////////////////////////////////////////
-//									FONCTIONS PRIVEES									//
-//////////////////////////////////////////////////////////////////////////////////////////
     
 /**
  * Cette fonction permet de vérifier si le site courant est sécurisé ou pas
@@ -1270,6 +1326,13 @@ class AppController extends Controller {
     	//////////////////////////////////////////
     }
     
+/**
+ * Fonction chargée de supprimer les fichiers en cache
+ * 
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 02/03/2013 by FI
+ */    
     protected function _delete_cache() {
     	
     	if(isset($this->cachingFiles)) {
