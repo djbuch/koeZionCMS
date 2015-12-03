@@ -9,7 +9,7 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
 	    		<div class="box-body">
 					<ul class="nav nav-tabs nav-stacked col-md-12">
 				    	<li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-file-text-o"></i> <?php echo _("Général"); ?></a></li>    	
-						<li><a href="#publication" data-toggle="tab"><i class="fa fa-copy"></i> <?php echo _("Publication"); ?></a></li>
+						<li><a href="#diffusion" data-toggle="tab"><i class="fa fa-copy"></i> <?php echo _("Diffusion"); ?></a></li>
 				    	<li><a href="#textes" data-toggle="tab"><i class="fa fa-file-word-o"></i> <?php echo _("Descriptifs court et long"); ?></a></li>
 				    	<li><a href="#types" data-toggle="tab"><i class="fa fa-tags"></i> <?php echo _("Types d'article"); ?></a></li>
 				    	<li><a href="#right_column" data-toggle="tab"><i class="fa fa-navicon"></i> <?php echo _("Colonne page"); ?></a></li>
@@ -44,15 +44,14 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
 							echo $helpers['Form']->input('online', _('En ligne'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour diffuser cet article")));
 							?>	             			
                 		</div>                	
-				    	<div class="tab-pane" id="publication">	
+				    	<div class="tab-pane" id="diffusion">	
 				    		<div class="box-header bg-light-blue">
-								<h4><i class="fa fa-copy"></i> <?php echo _("Publication"); ?></h4>                  
+								<h4><i class="fa fa-copy"></i> <?php echo _("Diffusion"); ?></h4>                  
                 			</div>               
                 			<div class="callout callout-info">
-			                	<p><?php echo _('Pour publier cet article dans un ou plusieurs site cochez la ou les cases correspondantes')?>.</p>
+			                	<p><?php echo _('Pour diffuser cet article dans un ou plusieurs sites cochez la ou les cases correspondantes')?>.</p>
 							</div> 		
 							<?php 
-							//unset($websitesSession['liste'][$currentWebsite]); //On supprime le site courant
 							foreach($websitesSession['liste'] as $websiteId => $websiteName) {
 								
 								$websiteCategories = $this->request('Categories', 'request_tree_list', array('websiteId' => $websiteId));									

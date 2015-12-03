@@ -9,7 +9,7 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
 	    		<div class="box-body">
 					<ul class="nav nav-tabs nav-stacked col-md-12">
 				    	<li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-file-text-o"></i> <?php echo _("Général"); ?></a></li>
-						<li><a href="#publication" data-toggle="tab"><i class="fa fa-copy"></i> <?php echo _("Publication"); ?></a></li>
+						<li><a href="#diffusion" data-toggle="tab"><i class="fa fa-copy"></i> <?php echo _("Diffusion"); ?></a></li>
 				        <li><a href="#details_content" data-toggle="tab"><i class="fa fa-indent"></i> <?php echo _("Contenu détaillé"); ?></a></li>
 				        <li><a href="#brut_content" data-toggle="tab"><i class="fa fa-align-justify"></i> <?php echo _("Contenu brut"); ?></a></li>				        
 					</ul>
@@ -30,12 +30,12 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
 							echo $helpers['Form']->input('online', _('En ligne'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour diffuser ce focus")));
 							?>
 				    	</div>   	
-				    	<div class="tab-pane" id="publication">	
+				    	<div class="tab-pane" id="diffusion">	
 				    		<div class="box-header bg-light-blue">
-								<h4><i class="fa fa-copy"></i> <?php echo _("Publication"); ?></h4>                  
+								<h4><i class="fa fa-copy"></i> <?php echo _("Diffusion"); ?></h4>                  
                 			</div>               
                 			<div class="callout callout-info">
-			                	<p><?php echo _('Pour publier ce focus dans un ou plusieurs site cochez la ou les cases correspondantes')?>.</p>
+			                	<p><?php echo _('Pour diffuser ce focus dans un ou plusieurs sites cochez la ou les cases correspondantes')?>.</p>
 							</div> 		
 							<?php 
 							foreach($websitesSession['liste'] as $websiteId => $websiteName) {

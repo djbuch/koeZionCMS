@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 03/12/2015</name>
+		<num>20151203.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise en place de la publication multiple pour les articles, les focus et les sliders</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 03/12/2015</name>
 		<num>20151203.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
