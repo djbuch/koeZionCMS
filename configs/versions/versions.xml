@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 04/12/2015</name>
+		<num>20151204.003</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">NETTOYAGE</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 04/12/2015</name>
 		<num>20151204.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
