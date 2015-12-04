@@ -30,7 +30,7 @@
 		?>		
 		</div>
 		<div class="content nopadding">
-			<?php echo $helpers['Form']->input('publication_date', _('Date de publication'), array("class" => "datepicker", "placeholder" => "dd.mm.yy", 'tooltip' => "Indiquez la date à laquelle cet article sera publié")); ?>
+			<?php echo $helpers['Form']->input('publication_start_date', _('Date de publication'), array("class" => "datepicker", "placeholder" => "dd.mm.yy", 'tooltip' => "Indiquez la date à laquelle cet article sera publié")); ?>
 			<p style="padding:0 20px 0 20px;margin-bottom:5px"><?php echo _("Cette option vous permet de définir la date à laquelle sera publié l'article en utilisant une tâche"); ?> <a href="http://fr.wikipedia.org/wiki/Cron" target="_blank">CRON</a></p>
 			<p style="padding:0 20px 0 20px;margin-bottom:5px"><?php echo _("Vous pouvez utiliser des services CRON gratuits comme par exemple"); ?> <a href="http://www.cronoo.com/" target="_blank">Cronoo</a></p>			
 			<?php 
@@ -47,7 +47,7 @@
 			} else { 
 			
 				?>
-				<p style="padding:0 20px 0 20px;margin-bottom:5px"><?php echo _("Pour mettre en place la diffusion automatique vous pouvez utiliser l'url suivante"); ?> <?php echo $websiteUrl; ?>/posts/update_publication_date.xml?update_code=<?php echo $updateCode['security_code']; ?></p>
+				<p style="padding:0 20px 0 20px;margin-bottom:5px"><?php echo _("Pour mettre en place la diffusion automatique vous pouvez utiliser l'url suivante"); ?> <?php echo $websiteUrl; ?>/posts/publish.xml?update_code=<?php echo $updateCode['security_code']; ?></p>
 				<p style="padding:0 20px 0 20px;margin-bottom:5px"><?php echo _("Le type du format de retour est l'XML"); ?></p>
 				<p style="padding:0 20px 0 20px;margin-bottom:5px">
 				&lt;export&gt;<br />

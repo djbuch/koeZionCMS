@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 04/12/2015</name>
+		<num>20151204.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="bdd">Mise en place des champs nécessaires pour déterminer les dates de publications et de la sécurisation des consultations des articles du blog</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 03/12/2015</name>
 		<num>20151203.002</num>
 		<supervisor>KoéZionCMS</supervisor>

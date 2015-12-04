@@ -128,7 +128,7 @@ class PostsController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 25/10/2012 by FI
  */	
-	public function update_publication_date() {
+	public function publish() {
 		
 		$this->layout = 'empty'; //Définition du layout à utiliser
 		$datas['type'] = 'xml';
@@ -141,7 +141,7 @@ class PostsController extends AppController {
 		if(isset($_GET['update_code']) && !empty($_GET['update_code']) && !empty($cfgValues['security_code']) && ($_GET['update_code'] == $cfgValues['security_code'])) {
 
 			//Conditions de recherche
-			$conditions = array('conditions' => "online = 0 AND publication_date <> '0000-00-00' AND publication_date <= '".date('Y-m-d')."'");
+			$conditions = array('conditions' => "online = 0 AND publication_start_date <> '0000-00-00' AND publication_start_date <= '".date('Y-m-d')."'");
 			$post = $this->Post->find($conditions); //On récupère le premier élément
 			foreach($post as $k => $v) {
 				
@@ -247,7 +247,7 @@ class PostsController extends AppController {
  */	
 	public function backoffice_add($redirect = true, $forceInsert = false) {
 
-		$this->_transform_date('fr2Sql', 'publication_date'); //Transformation de la date FR en date SQL	
+		$this->_transform_date('fr2Sql', 'publication_start_date'); //Transformation de la date FR en date SQL	
 		$parentAdd = parent::backoffice_add(false); //On fait appel à la fonction d'ajout parente
 		
 		if($this->request->data) {
@@ -264,7 +264,7 @@ class PostsController extends AppController {
 			}
 		}
 		
-		$this->_transform_date('sql2Fr', 'publication_date'); //Transformation de la date SQL en date FR		
+		$this->_transform_date('sql2Fr', 'publication_start_date'); //Transformation de la date SQL en date FR		
 		$this->_init_categories();
 		$this->_init_posts_types();
 		$this->_init_right_buttons();
@@ -284,7 +284,7 @@ class PostsController extends AppController {
  */	
 	public function backoffice_edit($id = null, $redirect = true) {
 				
-		$this->_transform_date('fr2Sql', 'publication_date'); //Transformation de la date FR en date SQL
+		$this->_transform_date('fr2Sql', 'publication_start_date'); //Transformation de la date FR en date SQL
 		$parentEdit = parent::backoffice_edit($id, false); //On fait appel à la fonction d'édition parente
 		
 		if($this->request->data) {
@@ -301,7 +301,7 @@ class PostsController extends AppController {
 			}
 		}
 		
-		$this->_transform_date('sql2Fr', 'publication_date'); //Transformation de la date SQL en date FR
+		$this->_transform_date('sql2Fr', 'publication_start_date'); //Transformation de la date SQL en date FR
 		$this->_init_categories();
 		$this->_init_posts_types();
 		$this->_init_right_buttons();

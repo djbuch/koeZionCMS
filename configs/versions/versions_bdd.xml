@@ -1,5 +1,34 @@
 ﻿<versions>
 	<version>
+		<name>Version du 04/12/2015</name>
+		<num>20151204.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI">
+				ALTER TABLE  `sliders` 
+				ADD  `publication_start_date` DATE NOT NULL AFTER  `order_by` ,
+				ADD  `publication_end_date` DATE NOT NULL AFTER  `publication_start_date`;
+			</task>
+			<task author="FI">
+				ALTER TABLE  `focus` 
+				ADD  `publication_start_date` DATE NOT NULL AFTER  `order_by` ,
+				ADD  `publication_end_date` DATE NOT NULL AFTER  `publication_start_date`;
+			</task>
+			<task author="FI">
+				ALTER TABLE  `categories` 
+				ADD  `publication_start_date` DATE NOT NULL AFTER  `js_file` ,
+				ADD  `publication_end_date` DATE NOT NULL AFTER  `publication_start_date`;
+			</task>
+			<task author="FI">
+				ALTER TABLE  `posts` 
+				ADD  `is_secure` INT NOT NULL AFTER  `display_posts_types` , 
+				ADD  `txt_secure` LONGTEXT NOT NULL AFTER  `is_secure`;
+			</task>
+			<task author="FI">ALTER TABLE  `posts` ADD  `publication_end_date` DATE NOT NULL AFTER  `publication_start_date`;</task>
+			<task author="FI">ALTER TABLE  `posts` CHANGE  `publication_date`  `publication_start_date` DATE NOT NULL;</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 03/12/2015</name>
 		<num>20151203.001</num>
 		<supervisor>KoéZionCMS</supervisor>

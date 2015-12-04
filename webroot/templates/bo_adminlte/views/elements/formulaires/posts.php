@@ -168,7 +168,7 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
 							echo $helpers['Form']->input('display_form', _('Formulaire'), array('type' => 'select', 'datas' => $formulaires, 'tooltip' => _("Indiquez le formulaire que vous souhaitez afficher sur la page"), 'firstElementList' => _("Sélectionnez un formulaire")));					
 							echo $helpers['Form']->input('shooting_time', _("Durée de réalisation"), array('tooltip' => _("Indiquez la durée de réalisation de ce qui sera présenté dans cet article")));
 							echo $helpers['Form']->input('img', _('image'), array('type' => 'file', 'class' => 'input-file', 'tooltip' => _("Cliquez sur le bouton pour télécharger votre image d'illustration. Attention : Mode RVB, Résolution 72dpi")));
-							echo $helpers['Form']->input('publication_date', _('Date de publication'), array('wrapperDivClass' => 'form-group no_border_bottom', 'class' => 'form-control datepicker', 'placeholder' => 'dd.mm.yy', 'tooltip' => _("Indiquez la date à laquelle cet article sera publié"))); 
+							echo $helpers['Form']->input('publication_start_date', _('Date de publication'), array('wrapperDivClass' => 'form-group no_border_bottom', 'class' => 'form-control datepicker', 'placeholder' => 'dd.mm.yy', 'tooltip' => _("Indiquez la date à laquelle cet article sera publié"))); 
 							?>
 							<div class="row">
 								<p class="col-md-12"><?php echo _("Cette option vous permet de définir la date à laquelle sera publié l'article en utilisant une tâche"); ?> <a href="http://fr.wikipedia.org/wiki/Cron" target="_blank">CRON</a></p>
@@ -193,7 +193,7 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
 							
 								?>
 								<div class="row">
-									<p class="col-md-12"><?php echo _("Pour mettre en place la diffusion automatique vous pouvez utiliser l'url suivante"); ?> <?php echo $websiteUrl; ?>/posts/update_publication_date.xml?update_code=<?php echo $updateCode['security_code']; ?></p>
+									<p class="col-md-12"><?php echo _("Pour mettre en place la diffusion automatique vous pouvez utiliser l'url suivante"); ?> <?php echo $websiteUrl; ?>/posts/publish.xml?update_code=<?php echo $updateCode['security_code']; ?></p>
 									<p class="col-md-12"><?php echo _("Le type du format de retour est l'XML"); ?></p>
 									<p class="col-md-12">
 									&lt;export&gt;<br />
