@@ -15,7 +15,8 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
 				    	<li><a href="#right_column" data-toggle="tab"><i class="fa fa-navicon"></i> <?php echo _("Colonne page"); ?></a></li>
 				    	<li><a href="#buttons" data-toggle="tab"><i class="fa fa-hand-o-right"></i> <?php echo _("Boutons page"); ?></a></li>
 				    	<li><a href="#seo" data-toggle="tab"><i class="fa fa-search"></i> <?php echo _("SEO"); ?></a></li>
-				    	<li><a href="#options" data-toggle="tab"><i class="fa fa-plug"></i> <?php echo _("Options"); ?></a></li>				
+				    	<li><a href="#options" data-toggle="tab"><i class="fa fa-plug"></i> <?php echo _("Options"); ?></a></li>	
+				        <li><a href="#secure" data-toggle="tab"><i class="fa fa-lock"></i> <?php echo _("Sécuriser l'article"); ?></a></li>			
 						<?php
 						//On ne va afficher ce menu que si le site courant est sécurisé
 						$websiteDetails = $websitesSession['details'][$currentWebsite]; //Récupération du détail du site courant
@@ -207,6 +208,15 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
 							} 
 							?>
                 		</div>
+				        <div class="tab-pane" id="secure">	
+				    		<div class="box-header bg-light-blue">
+								<h4><i class="fa fa-lock"></i> <?php echo _("Sécuriser l'article"); ?></h4>                  
+                			</div>	
+				       		<?php 
+							echo $helpers['Form']->input('is_secure', _("Activer la protection de l'article"), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour activer la protection de l'article")));
+							echo $helpers['Form']->input('txt_secure', _('Texte article sécurisé'), array('type' => 'textarea', 'wysiswyg' => true,  'tooltip' => _("Saisissez ici le texte qui sera affiché si l'article est sécurisé")));	
+							?>
+				        </div>
 	                	<?php if($isSecure) { ?>
 					    	<div class="tab-pane" id="emailing">	
 					    		<div class="box-header bg-light-blue">
