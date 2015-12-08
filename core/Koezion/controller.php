@@ -45,6 +45,7 @@ class Controller extends Object {
 		'Date',
 		'Email',
 		'Text',
+		'User',
 		'Website'
 	);
 	

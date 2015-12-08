@@ -41,10 +41,11 @@ $Errorsmessages['Slider']['name'] = _('La valeur de ce champ est de 2 caractère
 
 $Errorsmessages['User']['role'] = _('Vous devez sélectionner une valeur.');
 $Errorsmessages['User']['group'] = _('Vous devez sélectionner une valeur.');
-$Errorsmessages['User']['name'] = _('La valeur de ce champ est de 2 caractères minimum.');
+$Errorsmessages['User']['name'] = _('Vous devez saisir votre nom (2 caractères minimum).');
 $Errorsmessages['User']['login'] = _('La valeur de ce champ est de 4 caractères minimum.');
-$Errorsmessages['User']['password'] = _('La valeur de ce champ est de 4 caractères minimum.');
-$Errorsmessages['User']['email'] = _('Vous devez indiquer un email valide.');
+$Errorsmessages['User']['password'] = _('Vous devez saisir un mot de passe (4 caractères minimum).');
+$Errorsmessages['User']['email1'] = _('Vous devez indiquer un email valide.');
+$Errorsmessages['User']['email2'] = _('Désolé mais cet email est déjà utilisé.');
 
 $Errorsmessages['UsersGroup']['name'] = _('La valeur de ce champ est de 2 caractères minimum.');
 $Errorsmessages['UsersGroup']['role_id'] = _('Vous devez sélectionner une valeur.');

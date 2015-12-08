@@ -1,5 +1,41 @@
 ﻿<versions>
 	<version>
+		<name>Version du 08/12/2015</name>
+		<num>20151208.001</num>
+		<supervisor>KoéZionCMS</supervisor>		
+		<tasks>
+			<task author="FI">ALTER TABLE  `websites` ADD  `txt_confirm_lost_password_user` LONGTEXT NOT NULL AFTER  `txt_mail_lost_password_user`;</task>
+			<task author="FI">
+				ALTER TABLE  `websites` 
+					ADD  `subject_mail_lost_password_user` VARCHAR( 255 ) NOT NULL AFTER  `txt_mail_refused_user` ,
+					ADD  `txt_mail_lost_password_user` LONGTEXT NOT NULL AFTER  `subject_mail_lost_password_user`;
+			</task>
+			<task author="FI">ALTER TABLE  `websites` ADD  `txt_confirm_validated_user` LONGTEXT NOT NULL AFTER  `txt_mail_validated_user`;</task>
+			<task author="FI">ALTER TABLE  `websites` ADD  `txt_confirm_inscription_user` LONGTEXT NOT NULL AFTER  `txt_mail_inscription_user`;</task>
+			<task author="FI">ALTER TABLE  `websites` ADD  `subject_mail_refused_user` VARCHAR( 255 ) NOT NULL AFTER  `txt_mail_validated_user`;</task>
+			<task author="FI">ALTER TABLE  `websites` ADD  `subject_mail_validated_user` VARCHAR( 255 ) NOT NULL AFTER  `txt_mail_inscription_user`;</task>
+			<task author="FI">ALTER TABLE  `websites` ADD  `subject_mail_inscription_user` VARCHAR( 255 ) NOT NULL AFTER  `txt_mail_newsletter`;</task>
+			<task author="FI">ALTER TABLE  `websites` ADD  `subject_mail_newsletter` VARCHAR( 255 ) NOT NULL AFTER  `txt_mail_comments`;</task>
+			<task author="FI">ALTER TABLE  `websites` ADD  `subject_mail_comments` VARCHAR( 255 ) NOT NULL AFTER  `txt_mail_contact`;</task>
+			<task author="FI">ALTER TABLE  `websites` ADD  `subject_mail_contact` VARCHAR( 255 ) NOT NULL AFTER  `txt_newsletter`;</task>
+			<task author="FI">ALTER TABLE  `websites` ADD  `moderate_new_users` INT NOT NULL AFTER  `log_users_activ`;</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 07/12/2015</name>
+		<num>20151207.001</num>
+		<supervisor>KoéZionCMS</supervisor>		
+		<tasks>
+			<task author="FI">
+				ALTER TABLE  `websites` 
+					ADD  `txt_mail_inscription_user` LONGTEXT NOT NULL AFTER  `txt_mail_newsletter` ,
+					ADD  `txt_mail_validated_user` LONGTEXT NOT NULL AFTER  `txt_mail_inscription_user` ,
+					ADD  `txt_mail_refused_user` LONGTEXT NOT NULL AFTER  `txt_mail_validated_user`;
+			</task>
+			<task author="FI">ALTER TABLE  `websites` ADD  `txt_after_form_user` LONGTEXT NOT NULL AFTER  `txt_after_newsletter`;</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 04/12/2015</name>
 		<num>20151204.001</num>
 		<supervisor>KoéZionCMS</supervisor>

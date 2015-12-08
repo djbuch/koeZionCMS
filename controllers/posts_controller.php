@@ -79,46 +79,62 @@ class PostsController extends AppController {
 			'prefix' => $datas['post']['prefix']
 		);
 		//////////////////////////////////////
-				
-		///////////////////////////////////////////////////
-		//   RECUPERATION DES 20 DERNIERS COMMENTAIRES   //
-		//if($datas['post']['display_form'] == 1) {
+		
+		
+		//Récupération de l'éventuelle données permettant de savoir si la page est visible (dans la variable de session)
+		//$isAuthPost = Session::read('Frontoffice.Post.'.$datas['post']['id'].'.isAuth');
+		$isAuthPost = Session::read('Frontoffice.User');
+		
+		//Si la page est sécurisée il va falloir vérifier si l'utilisateur ne s'est pas déjà connecté
+		if(isset($datas['post']['is_secure']) && $datas['post']['is_secure'] && !$isAuthPost) {
 			
-			$this->load_model('PostsComment'); //Chargement du modèle
-			$postsCommentsConditions = array('online' => 1, 'post_id' => $id); //Uniquement les éléments actifs
-			$datas['postsComments'] = $this->PostsComment->find(array(
-				'conditions' => $postsCommentsConditions,
-				'order' => 'id DESC',
-				'limit' => '0, 20'
-			));
-			$this->unload_model('PostsComment'); //Déchargement du modèle
-		//}
-		////////////////////////////////////////////////////
-				
-		$datas['children'] = array();
-		$datas['brothers'] = array();
-		$datas['postsTypes'] = array();
-		
-		//////////////////////////////////
-		//   RECUPERATION DES ENFANTS   //
-		$datas = $this->_get_children_category($datas);
-								
-		/////////////////////////////////
-		//   RECUPERATION DES FRERES   //
-		$datas = $this->_get_brothers_category($datas);
-		
-		/////////////////////////////
-		//   GESTION DES BOUTONS   //
-		$datas = $this->_get_right_buttons_posts($datas);	
-		
-		//////////////////////////////////////
-		//   GESTION DES TYPES D'ARTICLES   //
-		$datas = $this->_get_posts_types($datas);	
+			$this->components['User']->frontoffice_login($this->request->data, $datas);
+						
+			$this->set($datas); //On fait passer les données à la vue
+			$this->view = 'not_auth';
 			
-		$this->set($datas); //On fait passer les données à la vue	
+		} else {
 				
-		//On va tester si des données sont postées par un formulaire et que le plugin Formulaires n'est pas installé
-		if(isset($this->request->data['type_formulaire']) && !isset($this->plugins['Formulaires'])) { $this->_send_mail_comments(); }
+			///////////////////////////////////////////////////
+			//   RECUPERATION DES 20 DERNIERS COMMENTAIRES   //
+			//if($datas['post']['display_form'] == 1) {
+				
+				$this->load_model('PostsComment'); //Chargement du modèle
+				$postsCommentsConditions = array('online' => 1, 'post_id' => $id); //Uniquement les éléments actifs
+				$datas['postsComments'] = $this->PostsComment->find(array(
+					'conditions' => $postsCommentsConditions,
+					'order' => 'id DESC',
+					'limit' => '0, 20'
+				));
+				$this->unload_model('PostsComment'); //Déchargement du modèle
+			//}
+			////////////////////////////////////////////////////
+					
+			$datas['children'] = array();
+			$datas['brothers'] = array();
+			$datas['postsTypes'] = array();
+			
+			//////////////////////////////////
+			//   RECUPERATION DES ENFANTS   //
+			$datas = $this->_get_children_category($datas);
+									
+			/////////////////////////////////
+			//   RECUPERATION DES FRERES   //
+			$datas = $this->_get_brothers_category($datas);
+			
+			/////////////////////////////
+			//   GESTION DES BOUTONS   //
+			$datas = $this->_get_right_buttons_posts($datas);	
+			
+			//////////////////////////////////////
+			//   GESTION DES TYPES D'ARTICLES   //
+			$datas = $this->_get_posts_types($datas);	
+				
+			$this->set($datas); //On fait passer les données à la vue	
+					
+			//On va tester si des données sont postées par un formulaire et que le plugin Formulaires n'est pas installé
+			if(isset($this->request->data['type_formulaire']) && !isset($this->plugins['Formulaires'])) { $this->_send_mail_comments(); }
+		}
 	}
 	
 /**

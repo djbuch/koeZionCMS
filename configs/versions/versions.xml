@@ -1,5 +1,15 @@
 ﻿<versions>
 	<version>
+		<name>Version du 08/12/2015</name>
+		<num>20151208.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="bdd">Mise à jour de la table websites pour la gestion des pages et articles sécurisés</task>
+			<task author="FI" type="code">Mise en place du code permettant la gestion des pages et articles sécurisés</task>
+			<task author="FI" type="code">Rajout du composant User</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 04/12/2015</name>
 		<num>20151204.003</num>
 		<supervisor>KoéZionCMS</supervisor>

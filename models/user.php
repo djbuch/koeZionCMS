@@ -34,9 +34,14 @@ class User extends Model {
 			'message' => 'User.password'
 		),
 		'email' => array(
-			'rule' => 'email',
-			'message' => 'User.email'
-		)
-			
+			'rule1' => array(
+				'rule' => 'email',
+				'message' => 'User.email1'
+			),
+			'rule2' => array(
+				'rule' => array('callback', array('only_one_email')),
+				'message' => 'User.email2',
+			)
+		)			
 	);
 }

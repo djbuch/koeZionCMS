@@ -158,11 +158,11 @@ class UsersController extends AppController {
 						//UTILISATEUR FRONTOFFICE//
 						} else if($bddRole == 3) {
 							
-							//Récupération des sites auxquels l'utilisateurs peut se connecter Via son groupe
+							//Récupération des sites auxquels l'utilisateurs peut se connecter via son groupe
 							$this->load_model('UsersGroupsWebsite'); //Chargement du modèle
 							$usersGroupsWebsites = $this->UsersGroupsWebsite->find(array('conditions' => array('users_group_id' => $user['users_group_id'])));
 														
-							//Récupération des sites auxquels l'utilisateurs peut se connecter Via l'utilisateur
+							//Récupération des sites auxquels l'utilisateurs peut se connecter via l'utilisateur
 							$this->load_model('UsersWebsite'); //Chargement du modèle
 							$usersWebsites = $this->UsersWebsite->find(array('conditions' => array('user_id' => $user['id'])));
 							
@@ -214,6 +214,19 @@ class UsersController extends AppController {
 	}
 	
 /**
+ * Cette fonction permet la déconnexion du frontoffice
+ *
+ * @access	public
+ * @author	koéZionCMS
+ * @version 0.1 - 08/12/2015 by FI
+ */	
+	function frontoffice_logout() {
+				
+		Session::delete('Frontoffice');
+		$this->redirect('/');		
+	}
+	
+/**
  * Cette fonction permet de récupérer le libellé d'un utilisateur donné
  *
  * @param 	integer $id 	Identifiant de l'utilisateur
@@ -253,18 +266,17 @@ class UsersController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 18/05/2012 by FI
  * @version 0.2 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
+ * @version 0.3 - 08/12/2015 by FI - Rajout de la fonction _send_user_mail()			
  */
 	function backoffice_add($redirect = true, $forceInsert = false) {
 	
-		$parentAdd = parent::backoffice_add(false); //On fait appel à la fonction d'ajout parente
+		$parentAdd = parent::backoffice_add($forceInsert); //On fait appel à la fonction d'ajout parente
 		
-		if($this->request->data) {
-		
-			if($this->User->id > 0) {
+		if($parentAdd) {
 				
-				$this->_save_assoc_datas($this->User->id);				
-				if($parentAdd) { $this->redirect('backoffice/users/index'); } //On retourne sur la page de listing
-			}
+			$this->_save_assoc_datas($this->User->id);	
+			$this->_send_user_mail();						
+			$this->redirect('backoffice/users/index');
 		}
 	
 		$this->_init_websites();
@@ -279,18 +291,17 @@ class UsersController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 18/05/2012 by FI
  * @version 0.2 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
+ * @version 0.3 - 08/12/2015 by FI - Rajout de la fonction _send_user_mail()
  */
-	function backoffice_edit($id, $redirect = true) {
+	function backoffice_edit($id, $redirect = false) {
 	
-		$parentEdit = parent::backoffice_edit($id, false); //On fait appel à la fonction d'édition parente
+		$parentEdit = parent::backoffice_edit($id, $redirect); //On fait appel à la fonction d'édition parente
 	
-		if($this->request->data) {
-			
-			if($parentEdit) {						
+		if($parentEdit) {
 				
-				$this->_save_assoc_datas($id, true);		
-				$this->redirect('backoffice/users/index'); //On retourne sur la page de listing
-			}
+			$this->_save_assoc_datas($id, true);
+			$this->_send_user_mail();			
+			$this->redirect('backoffice/users/index'); 
 		}
 	
 		$this->_init_websites();
@@ -519,5 +530,74 @@ class UsersController extends AppController {
 		}
 		
 		return $session;
+	}
+	
+/**
+ * Fonction chargée d'envoyer si besoin les mails de confirmation ou de refus d'inscription
+ *
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 08/12/2015 by FI
+ */	
+	protected function _send_user_mail() {
+			
+		//Si on a coché l'envoi de mail de validation
+		if($this->request->data['is_validated_user']) {
+			
+			$emailSubject 	= $this->request->data['subject_mail_validated_user'];
+			$emailContent 	= $this->request->data['txt_mail_validated_user'];	
+			
+			//Cas particulier si l'utilisateur est validé mais que online = 0 on va le corriger
+			if(!$this->request->data['online']) {
+				
+				$userOnline = array('id' => $this->User->id, 'online' => 1);				
+				$this->User->save($userOnline);
+			}
+		}
+		
+		//Si on a coché l'envoi de mail de refus
+		else if($this->request->data['is_refused_user']) {
+			
+			$emailSubject 	= $this->request->data['subject_mail_refused_user'];
+			$emailContent 	= $this->request->data['txt_mail_refused_user'];
+			
+			//Cas particulier si l'utilisateur est refusé mais que online = 1 on va le corriger
+			if($this->request->data['online']) {
+				
+				$userOnline = array('id' => $this->User->id, 'online' => 0);				
+				$this->User->save($userOnline);
+			}
+		}
+		
+		//Si l'un ou l'autre est coché
+		if(isset($emailSubject)) {
+			
+			$websitesSession 		= Session::read('Backoffice.Websites'); //Récupération de la variable de session
+			$currentWebsiteId 		= $websitesSession['current']; //Récupération du site courant
+			$currentWebsiteDatas 	= $websitesSession['details'][$currentWebsiteId]; //Récupération du site courant
+			
+			$user 					= $this->request->data;
+			
+			//Envoi du mail
+			$emailContent = $this->components['Email']->replace_links(
+				array(							
+					'subject' => $emailSubject,
+					'content' => $emailContent
+				),
+				$currentWebsiteDatas['url'],
+				array(
+					'User' 	=> $user,
+					'Website' 	=> $currentWebsiteDatas
+				)
+			);
+			
+			$mailDatas = array(
+				'subject' => $emailContent['subject'],
+				'to' => $user['email'],
+				'element' => ELEMENTS.DS.'email'.DS.'default',
+				'vars' => array('messageContent' => $emailContent['content'])
+			);
+			$this->components['Email']->send($mailDatas, $this); //On fait appel au composant email			
+		}		
 	}
 }

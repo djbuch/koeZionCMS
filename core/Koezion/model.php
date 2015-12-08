@@ -1341,6 +1341,38 @@ class Model extends Object {
 		return $shema;
 	}
 	
+/////////////////////	
+//    CALLBACKS    //	
+/////////////////////
+	
+/**
+ * Cette fonction permet de contrôler qu'un login n'est pas déjà utilisé
+ * 
+ * @var 	integer $val Valeur du champ
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 07/12/2015 by FI
+ */	
+	public function only_one_email($val) {
+		
+		$modelDatas = $this->datas; //Données postées
+		
+		$conditions = array('email' => $val);
+		if(isset($modelDatas['id'])) {
+			
+			$conditions['id'] = array(
+				'operator' => '!=',
+				'value' => $modelDatas['id']
+			);			
+		}
+		
+		return !$this->findCount($conditions);
+	}
+	
+///////////////////////////////////////	
+//    FONCTIONS PRIVEES/PROTEGEES    //	
+///////////////////////////////////////
+	
 /**
  * Cette fonction permet d'afficher le shéma d'une table
  * Cette table peut ne pas être forcément locale à la base

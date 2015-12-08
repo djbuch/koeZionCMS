@@ -102,7 +102,8 @@ class CategoriesController extends AppController {
 		$datas['breadcrumbs'] = $this->Category->getPath($id); //Récupération du fil d'ariane
 		
 		//Récupération de l'éventuelle données permettant de savoir si la page est visible (dans la variable de session)
-		$isAuthCategory = Session::read('Frontoffice.Category.'.$datas['category']['id'].'.isAuth');
+		//$isAuthCategory = Session::read('Frontoffice.Category.'.$datas['category']['id'].'.isAuth');
+		$isAuthCategory = Session::read('Frontoffice.User');
 		
 		//Si la page est sécurisée il va falloir vérifier si l'utilisateur ne s'est pas déjà connecté
 		if(isset($datas['category']['is_secure']) && $datas['category']['is_secure'] && !$isAuthCategory) {
@@ -111,8 +112,8 @@ class CategoriesController extends AppController {
 			//   GESTION DU FORMULAIRE   //
 			if(isset($this->request->data['formulaire_secure'])) { //Si le formulaire de contact est posté
 			
-				$data = $this->request->data; //Mise en variable des données postées			
-				$data['password'] = sha1($data['password']); //Cryptage du mot de passe
+				$data = $this->request->data; //Mise en variable des données postées					
+				if(defined('HASH_PASSWORD') && HASH_PASSWORD) { $data['password'] = sha1($data['password']); } //Cryptage du mot de passe
 			
 				//Récupération du login et du mot de passe dans des variables
 				$postLogin = $data['login'];
@@ -187,7 +188,7 @@ class CategoriesController extends AppController {
 			//////////////////////////////////////////			
 			
 			$this->set($datas); //On fait passer les données à la vue
-			$this->render('/categories/not_auth');
+			$this->view = 'not_auth';
 			
 		} else {
 						
