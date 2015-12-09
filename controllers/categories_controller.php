@@ -42,6 +42,7 @@ class CategoriesController extends AppController {
  * @version 1.4 - 02/08/2012 by FI - Passage de la gestion du formulaire de contact dans une fonction pour le mutualiser avec d'autres contrôleurs
  * @version 1.5 - 02/10/2012 by FI - Mise en place d'un slider pour les catégories, Mise en place de la possibilité de changer le template des pages
  * @version 1.6 - 05/11/2012 by FI - Mise en fonction privée de la récupération de la catégorie ainsi que la récupération des articles associés pour pouvoir l'utiliser dans le flux rss
+ * @version 1.7 - 09/12/2015 by FI - Gestion de la récupération des sliders et des focus
  */	
 	public function view($id, $slug) {
 	
@@ -213,6 +214,14 @@ class CategoriesController extends AppController {
 			//////////////////////////////
 			//   GESTION DES BOUTONS   //
 			$datas = $this->_get_right_buttons_category($datas);			
+			
+			/////////////////////////////
+			//   GESTION DES SLIDERS   //
+			$datas['sliders'] = $this->_get_sliders($datas['category']['id']);
+			
+			///////////////////////////
+			//   GESTION DES FOCUS   //
+			$datas['focus'] = $this->_get_focus($datas['category']['id']);	
 			
 			$this->set($datas); //On fait passer les données à la vue
 				

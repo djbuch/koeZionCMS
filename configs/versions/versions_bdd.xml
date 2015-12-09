@@ -1,5 +1,20 @@
 ﻿<versions>
 	<version>
+		<name>Version du 09/12/2015</name>
+		<num>20151209.001</num>
+		<supervisor>KoéZionCMS</supervisor>		
+		<tasks>
+			<task author="FI">ALTER TABLE `categories_sliders_websites` DROP PRIMARY KEY, ADD PRIMARY KEY(`category_id`, `slider_id`, `website_id`);</task>
+			<task author="FI">ALTER TABLE  `categories_sliders_websites` ADD  `category_id` INT NOT NULL FIRST;</task>
+			<task author="FI">ALTER TABLE `categories_sliders_websites` DROP `category_id`, DROP `dont_display_on_home`;</task>
+			<task author="FI">ALTER TABLE `categories_focus_websites` DROP PRIMARY KEY, ADD PRIMARY KEY(`category_id`, `focus_id`, `website_id`);</task>
+			<task author="FI">ALTER TABLE  `categories_focus_websites` ADD  `category_id` INT NOT NULL FIRST;</task>
+			<task author="FI">ALTER TABLE `categories_focus_websites` DROP `category_id`, DROP `dont_display_on_home`;</task>
+			<task author="FI">RENAME TABLE  `sliders_websites` TO  `categories_sliders_websites`;</task>
+			<task author="FI">RENAME TABLE  `focus_websites` TO  `categories_focus_websites`;</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 08/12/2015</name>
 		<num>20151208.001</num>
 		<supervisor>KoéZionCMS</supervisor>		

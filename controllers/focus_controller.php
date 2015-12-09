@@ -27,7 +27,7 @@ class FocusController extends AppController {
 
 		if(parent::backoffice_add($redirect, $forceInsert)) {	 
 				
-			$this->_save_assoc_datas_focus_websites($this->Focus->id);
+			$this->_save_assoc_datas_categories_focus_websites($this->Focus->id);
 			$this->redirect('backoffice/focus/index'); //On retourne sur la page de listing
 		}
 	}
@@ -44,7 +44,7 @@ class FocusController extends AppController {
 				
 		if(parent::backoffice_edit($id, $redirect)) {
 			
-			$this->_save_assoc_datas_focus_websites($this->Focus->id, true);
+			$this->_save_assoc_datas_categories_focus_websites($this->Focus->id, true);
 			$this->redirect('backoffice/focus/index'); //On retourne sur la page de listing
 		}
 		
@@ -54,59 +54,88 @@ class FocusController extends AppController {
 /**
  * Cette fonction permet l'initialisation des données de l'association
  *
- * @param	integer $sliderId Identifiant du slider
+ * @param	integer $focusId Identifiant du focus
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 02/12/2015 by FI
+ * @version 0.2 - 09/12/2015 by FI - Rajout de la gestion des catégories
  */	
-	protected function _get_assoc_datas($sliderId) {
+	protected function _get_assoc_datas($focusId) {
 
 		//////////////////////////////////
 		//    RECUPERATION DES SITES    //
-			$this->load_model('FocusWebsite'); //Chargement du modèle		
-			$focusWebsites = $this->FocusWebsite->find(array('conditions' => array('focus_id' => $sliderId))); //On récupère les données
-			$this->unload_model('FocusWebsite'); //Déchargement du modèle
-			
-			//On va les rajouter dans la variable $this->request->data
-			foreach($focusWebsites as $k => $v) { 
-								
-				$this->request->data['FocusWebsite'][$v['website_id']]['display'] = 1; 
+		$this->load_model('CategoriesFocusWebsite'); //Chargement du modèle		
+		$categoriesFocusWebsites = $this->CategoriesFocusWebsite->find(array('conditions' => array('focus_id' => $focusId))); //On récupère les données
+		$this->unload_model('CategoriesFocusWebsite'); //Déchargement du modèle
+					
+		//On va les rajouter dans la variable $this->request->data
+		foreach($categoriesFocusWebsites as $k => $v) { 
+							
+			$this->request->data['CategoriesFocusWebsite'][$v['website_id']]['display'] = 1; 
+			if($v['category_id'] == 0) { $this->request->data['CategoriesFocusWebsite'][$v['website_id']]['display_home_page'] = 1; }
+			else {
+				
+				$this->request->data['CategoriesFocusWebsite'][$v['website_id']]['category_id'][$v['category_id']] = 1;
 			}
+		}
 	}
 	
 /**
  * Cette fonction permet la sauvegarde de l'association entre les focus et les sites Internet
  *
- * @param	integer $sliderId 		Identifiant du slider
- * @param	boolean $deleteAssoc 	Si vrai l'association entre le slider et les sites sera supprimée
+ * @param	integer $focusId 		Identifiant du focus
+ * @param	boolean $deleteAssoc 	Si vrai l'association entre le focus et les sites sera supprimée
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 02/12/2015 by FI
+ * @version 0.2 - 09/12/2015 by FI - Rajout de la gestion de la publication des focus dans les catégories
  */	
-	protected function _save_assoc_datas_focus_websites($sliderId, $deleteAssoc = false) {
+	protected function _save_assoc_datas_categories_focus_websites($focusId, $deleteAssoc = false) {
 		
-		$this->load_model('FocusWebsite');
+		$this->load_model('CategoriesFocusWebsite');
 
-		if($deleteAssoc) { $this->FocusWebsite->deleteByName('focus_id', $sliderId); }
+		if($deleteAssoc) { $this->CategoriesFocusWebsite->deleteByName('focus_id', $focusId); }
 				
-		if(isset($this->request->data['FocusWebsite']))  {
-			
-			$focusWebsites = $this->request->data['FocusWebsite'];
+		if(isset($this->request->data['CategoriesFocusWebsite']))  {
 						
-			foreach($focusWebsites as $websiteId => $websiteDatas) {
+			$categoriesFocusWebsites = $this->request->data['CategoriesFocusWebsite'];
+
+			$datasToSave = array(); //Données à sauvegarder
+			foreach($categoriesFocusWebsites as $websiteId => $websiteDatas) {
 			
 				if($websiteDatas['display']) {
-										
-					$this->FocusWebsite->save(array(
-						'focus_id'  => $sliderId,
-						'website_id' => $websiteId
-					));										
+
+					//Si on doit diffuser cet élément sur la home
+					if($websiteDatas['display_home_page']) {
+						
+						$datasToSave[] = array(
+							'category_id' => 0,
+							'focus_id'  => $focusId,
+							'website_id' => $websiteId
+						);
+					}
+					
+					//Check des catégories dans lesquelles cet élément doit être publié
+					foreach($websiteDatas['category_id'] as $categoryId => $isCheckedCategory) {
+						
+						if($isCheckedCategory) {
+							
+							$datasToSave[] = array(
+								'category_id' => $categoryId,
+								'focus_id'  => $focusId,
+								'website_id' => $websiteId
+							);
+						}
+					}
 				}
 			}
+			
+			if($datasToSave) { $this->CategoriesFocusWebsite->saveAll($datasToSave); }
+			
 		}
-		$this->unload_model('FocusWebsite');
+		$this->unload_model('CategoriesFocusWebsite');
 	}
-	
+    
 /**
  * Cette fonction permet l'initialisation pour la suppression des fichier de cache
  * 
@@ -114,11 +143,24 @@ class FocusController extends AppController {
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 20/12/2012 by FI
+ * @version 0.2 - 09/12/2015 by FI - Rajout de la gestion de la publication dans les pages
  */  
 	protected function _init_caching($params = null) {	
 		
-		$this->cachingFiles = array(		
-			TMP.DS.'cache'.DS.'variables'.DS.'Focus'.DS.'website_'.CURRENT_WEBSITE_ID.'.cache'
-		);		
-	}
+		$this->cachingFiles['website_'.CURRENT_WEBSITE_ID.'_0'] = TMP.DS.'cache'.DS.'variables'.DS.'Focus'.DS.'website_'.CURRENT_WEBSITE_ID.'_0.cache';
+		
+		if(isset($this->request->data['CategoriesFocusWebsite']) && !empty($this->request->data['CategoriesFocusWebsite'])) {
+			
+			foreach($this->request->data['CategoriesFocusWebsite'] as $websiteId => $websiteDatas) {
+				
+				if(isset($websiteDatas['category_id'])) {
+					
+					foreach($websiteDatas['category_id'] as $categoryId => $isChecked) {
+		
+						$this->cachingFiles['website_'.CURRENT_WEBSITE_ID.'_'.$categoryId] = TMP.DS.'cache'.DS.'variables'.DS.'Focus'.DS.'website_'.CURRENT_WEBSITE_ID.'_'.$categoryId.'.cache';
+					}
+				}
+			}
+		}
+	}	
 }

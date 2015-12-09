@@ -42,6 +42,14 @@ CREATE TABLE IF NOT EXISTS `categories` (
   KEY `type_2` (`type`,`online`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+DROP TABLE IF EXISTS `categories_focus_websites`;
+CREATE TABLE IF NOT EXISTS `categories_focus_websites` (
+  `category_id` int(11) NOT NULL,
+  `focus_id` int(11) NOT NULL,
+  `website_id` int(11) NOT NULL,
+  PRIMARY KEY (`category_id`,`focus_id`,`website_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 DROP TABLE IF EXISTS `categories_posts_posts_types`;
 CREATE TABLE IF NOT EXISTS `categories_posts_posts_types` (
   `category_id` int(11) NOT NULL,
@@ -67,6 +75,14 @@ CREATE TABLE IF NOT EXISTS `categories_right_buttons` (
   `position` int(11) NOT NULL,
   `order_by` int(11) NOT NULL,
   PRIMARY KEY (`category_id`,`right_button_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `categories_sliders_websites`;
+CREATE TABLE IF NOT EXISTS `categories_sliders_websites` (
+  `category_id` int(11) NOT NULL,
+  `slider_id` int(11) NOT NULL,
+  `website_id` int(11) NOT NULL,
+  PRIMARY KEY (`category_id`,`slider_id`,`website_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `configs`;
@@ -107,15 +123,6 @@ CREATE TABLE IF NOT EXISTS `focus` (
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-DROP TABLE IF EXISTS `focus_websites`;
-CREATE TABLE IF NOT EXISTS `focus_websites` (
-  `focus_id` int(11) NOT NULL,
-  `website_id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL,
-  `dont_display_on_home` int(11) NOT NULL,
-  PRIMARY KEY (`focus_id`,`website_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `modules`;
 CREATE TABLE IF NOT EXISTS `modules` (
@@ -286,15 +293,6 @@ CREATE TABLE IF NOT EXISTS `sliders` (
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-DROP TABLE IF EXISTS `sliders_websites`;
-CREATE TABLE IF NOT EXISTS `sliders_websites` (
-  `slider_id` int(11) NOT NULL,
-  `website_id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL,
-  `dont_display_on_home` int(11) NOT NULL,
-  PRIMARY KEY (`slider_id`,`website_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `templates`;
 CREATE TABLE IF NOT EXISTS `templates` (

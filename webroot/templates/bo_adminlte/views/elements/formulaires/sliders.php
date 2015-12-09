@@ -40,7 +40,27 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
 							<?php 
 							foreach($websitesSession['liste'] as $websiteId => $websiteName) {
 								
-								echo $helpers['Form']->input('SlidersWebsite.'.$websiteId.'.display', _('Diffuser dans le site').' '.$websiteName, array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour diffuser ce slider dans le site".' '.$websiteName)));
+								$websiteCategories = $this->request('Categories', 'request_tree_list', array('websiteId' => $websiteId));
+								?><h5 class="form-title"><?php echo _("Site")." ".$websiteName; ?></h5><?php								
+								echo $helpers['Form']->input('CategoriesSlidersWebsite.'.$websiteId.'.display', _('Diffuser dans le site').' '.$websiteName, array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour diffuser ce slider dans le site".' '.$websiteName)));							
+								echo $helpers['Form']->input('CategoriesSlidersWebsite.'.$websiteId.'.display_home_page', _("Afficher ce slider sur la la page d'accueil du site").' '.$websiteName, array('type' => 'checkbox', 'tooltip' => _("En cochant cette case vous afficherez ce slider sur la page d'accueil du site".' '.$websiteName)));
+								?>
+								<table class="table table-bordered table-hover">
+									<thead>
+										<tr>
+											<th colspan="2"><?php echo _("Rubrique"); ?></th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php foreach($websiteCategories as $k => $v) { ?>												
+											<tr>
+												<td class="txtcenter xxs"><?php echo $helpers['Form']->input('CategoriesSlidersWebsite.'.$websiteId.'.category_id.'.$k, '', array('type' => 'checkbox', 'onlyInput' => true)); ?></td>
+												<td><?php echo $v; ?></td>
+											</tr>	
+										<?php } ?>
+									</tbody>
+								</table>								
+								<?php
 							}
 							?>	
                 		</div>

@@ -865,21 +865,23 @@ class AppController extends Controller {
 /**
  * Cette fonction permet de récupérer les sliders
  *
+ * @param	integer Identifiant de la catégorie
  * @return	array Liste des sliders
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 27/06/2014 by FI
  * @version 0.2 - 24/04/2015 by FI - Gestion de la traduction
  * @version 0.3 - 02/12/2015 by FI - Gestion de la publication sur des sites multiples
+ * @version 0.4 - 09/12/2015 by FI - Gestion de la publication dans les pages
  */	
-	protected function _get_sliders() {
+	protected function _get_sliders($categoryId = 0) {
 		
 		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Sliders'.DS;
 		
 		//On contrôle si le modèle est traduit
 		$this->load_model('Slider');
-		if($this->Slider->fieldsToTranslate) { $cacheFile = "website_".CURRENT_WEBSITE_ID.'_'.DEFAULT_LANGUAGE; } 
-		else { $cacheFile = "website_".CURRENT_WEBSITE_ID; }
+		if($this->Slider->fieldsToTranslate) { $cacheFile = "website_".CURRENT_WEBSITE_ID.'_'.$categoryId.'_'.DEFAULT_LANGUAGE; } 
+		else { $cacheFile = "website_".CURRENT_WEBSITE_ID.'_'.$categoryId; }
 		
 		$sliders = Cache::exists_cache_file($cacheFolder, $cacheFile);
 		
@@ -888,12 +890,13 @@ class AppController extends Controller {
 			$conditions = array(
 				'conditions' => array(
 					'KzSlider.online' => 1,
-					'KzSlidersWebsite.website_id' => CURRENT_WEBSITE_ID
+					'KzCategoriesSlidersWebsite.category_id' => $categoryId,
+					'KzCategoriesSlidersWebsite.website_id' => CURRENT_WEBSITE_ID
 				),
 				"innerJoin" => array(
 					array(
-						"model" => "SlidersWebsite",
-						"pivot" => "KzSlider.id = KzSlidersWebsite.slider_id"
+						"model" => "CategoriesSlidersWebsite",
+						"pivot" => "KzSlider.id = KzCategoriesSlidersWebsite.slider_id"
 					)
 				), 
 				'order' => 'KzSlider.order_by ASC, KzSlider.name ASC'
@@ -908,21 +911,22 @@ class AppController extends Controller {
 /**
  * Cette fonction permet de récupérer les focus
  *
- * @return	array Liste des focus
+ * @param	integer Identifiant de la catégorie
+ * @return	array 	Liste des focus
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 27/06/2014 by FI
  * @version 0.2 - 24/04/2015 by FI - Gestion de la traduction
  * @version 0.3 - 02/12/2015 by FI - Gestion de la publication sur des sites multiples
  */	
-	protected function _get_focus() {
+	protected function _get_focus($categoryId = 0) {
 		
 		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Focus'.DS;		
 		
 		//On contrôle si le modèle est traduit
 		$this->load_model('Focus');
-		if($this->Focus->fieldsToTranslate) { $cacheFile = "website_".CURRENT_WEBSITE_ID.'_'.DEFAULT_LANGUAGE; } 
-		else { $cacheFile = "website_".CURRENT_WEBSITE_ID; }
+		if($this->Focus->fieldsToTranslate) { $cacheFile = "website_".CURRENT_WEBSITE_ID.'_'.$categoryId.'_'.DEFAULT_LANGUAGE; } 
+		else { $cacheFile = "website_".CURRENT_WEBSITE_ID.'_'.$categoryId; }
 		
 		$focus = Cache::exists_cache_file($cacheFolder, $cacheFile);
 		
@@ -931,12 +935,13 @@ class AppController extends Controller {
 			$conditions = array(
 				'conditions' => array(
 					'KzFocus.online' => 1,
-					'KzFocusWebsite.website_id' => CURRENT_WEBSITE_ID
+					'KzCategoriesFocusWebsite.category_id' => $categoryId,
+					'KzCategoriesFocusWebsite.website_id' => CURRENT_WEBSITE_ID,
 				),
 				"innerJoin" => array(
 					array(
-						"model" => "FocusWebsite",
-						"pivot" => "KzFocus.id = KzFocusWebsite.focus_id"
+						"model" => "CategoriesFocusWebsite",
+						"pivot" => "KzFocus.id = KzCategoriesFocusWebsite.focus_id"
 					)
 				), 
 				'order' => 'KzFocus.order_by ASC, KzFocus.name ASC'

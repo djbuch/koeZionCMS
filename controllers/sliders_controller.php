@@ -26,7 +26,7 @@ class SlidersController extends AppController {
 
 		if(parent::backoffice_add($redirect, $forceInsert)) {	 
 				
-			$this->_save_assoc_datas_sliders_websites($this->Slider->id);
+			$this->_save_assoc_datas_categories_sliders_websites($this->Slider->id);
 			$this->redirect('backoffice/sliders/index'); //On retourne sur la page de listing
 		}
 	}
@@ -43,7 +43,7 @@ class SlidersController extends AppController {
 				
 		if(parent::backoffice_edit($id, $redirect)) {
 			
-			$this->_save_assoc_datas_sliders_websites($this->Slider->id, true);
+			$this->_save_assoc_datas_categories_sliders_websites($this->Slider->id, true);
 			$this->redirect('backoffice/sliders/index'); //On retourne sur la page de listing
 		}
 		
@@ -57,20 +57,26 @@ class SlidersController extends AppController {
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 02/12/2015 by FI
+ * @version 0.2 - 09/12/2015 by FI - Rajout de la gestion des catégories
  */	
 	protected function _get_assoc_datas($sliderId) {
 
 		//////////////////////////////////
 		//    RECUPERATION DES SITES    //
-			$this->load_model('SlidersWebsite'); //Chargement du modèle		
-			$slidersWebsites = $this->SlidersWebsite->find(array('conditions' => array('slider_id' => $sliderId))); //On récupère les données
-			$this->unload_model('SlidersWebsite'); //Déchargement du modèle
-			
-			//On va les rajouter dans la variable $this->request->data
-			foreach($slidersWebsites as $k => $v) { 
-								
-				$this->request->data['SlidersWebsite'][$v['website_id']]['display'] = 1; 
+		$this->load_model('CategoriesSlidersWebsite'); //Chargement du modèle		
+		$categoriesSlidersWebsites = $this->CategoriesSlidersWebsite->find(array('conditions' => array('slider_id' => $sliderId))); //On récupère les données
+		$this->unload_model('CategoriesSlidersWebsite'); //Déchargement du modèle
+					
+		//On va les rajouter dans la variable $this->request->data
+		foreach($categoriesSlidersWebsites as $k => $v) { 
+							
+			$this->request->data['CategoriesSlidersWebsite'][$v['website_id']]['display'] = 1; 
+			if($v['category_id'] == 0) { $this->request->data['CategoriesSlidersWebsite'][$v['website_id']]['display_home_page'] = 1; }
+			else {
+				
+				$this->request->data['CategoriesSlidersWebsite'][$v['website_id']]['category_id'][$v['category_id']] = 1;
 			}
+		}
 	}
 	
 /**
@@ -81,29 +87,52 @@ class SlidersController extends AppController {
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 02/12/2015 by FI
+ * @version 0.2 - 09/12/2015 by FI - Rajout de la gestion de la publication des sliders dans les catégories
  */	
-	protected function _save_assoc_datas_sliders_websites($sliderId, $deleteAssoc = false) {
+	protected function _save_assoc_datas_categories_sliders_websites($sliderId, $deleteAssoc = false) {
 		
-		$this->load_model('SlidersWebsite');
+		$this->load_model('CategoriesSlidersWebsite');
 
-		if($deleteAssoc) { $this->SlidersWebsite->deleteByName('slider_id', $sliderId); }
+		if($deleteAssoc) { $this->CategoriesSlidersWebsite->deleteByName('slider_id', $sliderId); }
 				
-		if(isset($this->request->data['SlidersWebsite']))  {
-			
-			$slidersWebsites = $this->request->data['SlidersWebsite'];
+		if(isset($this->request->data['CategoriesSlidersWebsite']))  {
 						
-			foreach($slidersWebsites as $websiteId => $websiteDatas) {
+			$categoriesSlidersWebsites = $this->request->data['CategoriesSlidersWebsite'];
+
+			$datasToSave = array(); //Données à sauvegarder
+			foreach($categoriesSlidersWebsites as $websiteId => $websiteDatas) {
 			
 				if($websiteDatas['display']) {
-										
-					$this->SlidersWebsite->save(array(
-						'slider_id'  => $sliderId,
-						'website_id' => $websiteId
-					));										
+
+					//Si on doit diffuser cet élément sur la home
+					if($websiteDatas['display_home_page']) {
+						
+						$datasToSave[] = array(
+							'category_id' => 0,
+							'slider_id'  => $sliderId,
+							'website_id' => $websiteId
+						);
+					}
+					
+					//Check des catégories dans lesquelles cet élément doit être publié
+					foreach($websiteDatas['category_id'] as $categoryId => $isCheckedCategory) {
+						
+						if($isCheckedCategory) {
+							
+							$datasToSave[] = array(
+								'category_id' => $categoryId,
+								'slider_id'  => $sliderId,
+								'website_id' => $websiteId
+							);
+						}
+					}
 				}
 			}
+			
+			if($datasToSave) { $this->CategoriesSlidersWebsite->saveAll($datasToSave); }
+			
 		}
-		$this->unload_model('SlidersWebsite');
+		$this->unload_model('CategoriesSlidersWebsite');
 	}
     
 /**
@@ -113,11 +142,24 @@ class SlidersController extends AppController {
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 20/12/2012 by FI
+ * @version 0.2 - 09/12/2015 by FI - Rajout de la gestion de la publication dans les pages
  */  
 	protected function _init_caching($params = null) {	
 		
-		$this->cachingFiles = array(		
-			TMP.DS.'cache'.DS.'variables'.DS.'Sliders'.DS.'website_'.CURRENT_WEBSITE_ID.'.cache'
-		);		
+		$this->cachingFiles['website_'.CURRENT_WEBSITE_ID.'_0'] = TMP.DS.'cache'.DS.'variables'.DS.'Sliders'.DS.'website_'.CURRENT_WEBSITE_ID.'_0.cache';
+		
+		if(isset($this->request->data['CategoriesSlidersWebsite']) && !empty($this->request->data['CategoriesSlidersWebsite'])) {
+			
+			foreach($this->request->data['CategoriesSlidersWebsite'] as $websiteId => $websiteDatas) {
+				
+				if(isset($websiteDatas['category_id'])) {
+					 
+					foreach($websiteDatas['category_id'] as $categoryId => $isChecked) {
+	
+						$this->cachingFiles['website_'.CURRENT_WEBSITE_ID.'_'.$categoryId] = TMP.DS.'cache'.DS.'variables'.DS.'Sliders'.DS.'website_'.CURRENT_WEBSITE_ID.'_'.$categoryId.'.cache';
+					}
+				}
+			}
+		}
 	}	
 }
