@@ -75,7 +75,21 @@ class FormParentHelper extends Helper {
 		'onlyInput', //Indique s'il faut renvoyer uniquement l'input
 		'compulsory', //Indique si le champ est obligatoire
 		'buttonText', //Texte du bouton pour le type upload
-		'forceDefaultValue' //Indique s'il faut force ou non la valeur par défaut de l'input
+		'forceDefaultValue', //Indique s'il faut force ou non la valeur par défaut de l'input
+		'firstElementList' //Premier élément d'une liste select
+	);
+	
+/**
+ * Variable contenant les options à corriger pour validation W3C
+ *
+ * @var 	array
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 30/11/2015 by SS
+ */
+	var $validateAttributes = array(
+		'readonly', 
+		'disabled'
 	);
 	
 /**
@@ -190,7 +204,9 @@ class FormParentHelper extends Helper {
  * @version 1.1 - 09/09/2015 by FI - Rajout de la variable editorFields
  * @version 1.2 - 14/09/2015 by FI - Extraction des données txtBeforeInput et txtAfterInput dans le tableau de retour
  * @version 1.3 - 23/09/2015 by FI - Rajout de if($requestvalue != '') { $isChecked = false; } pour la gestion de la coche par défaut des cases à cocher 
- * @todo Input de type submit etc..., input radio
+ * @version 1.4 - 30/10/2015 by SS - Rajout du type captcha
+ * @version 1.5 - 30/11/2015 by SS - Rajout du type datalist
+ * @version 1.6 - 30/11/2015 by SS - Correction des attributs pour validation W3C
  * @todo Voir si utile de gérer en récursif la gestion de optgroup pour le select
  */
 	function _input($name, $label, $options = array()) {
@@ -259,7 +275,11 @@ class FormParentHelper extends Helper {
 		foreach($options as $k => $v) { //Parcours de l'ensemble des options
 
 			//On va éviter d'ajouter dans les attributs des valeurs non conforme
-			if(!in_array($k, $this->escapeAttributes) && !empty($v)) { $attributes .= ' '.$k.'="'.$v.'"'; }
+			if(!in_array($k, $this->escapeAttributes) && !empty($v)) {
+				
+				if(in_array($k, $this->validateAttributes)) { $attributes .= ' '.$k.'="'.$k.'"'; }
+				else { $attributes .= ' '.$k.'="'.$v.'"'; }
+			}
 		}
 		///////////////////////////////
 
@@ -395,50 +415,56 @@ class FormParentHelper extends Helper {
 
 				if(isset($options['firstElementList'])) { $inputReturn .= '<option value="">'.$options['firstElementList'].'</option>'; }
 
-				//Parcours de l'ensemble des données du select
-				foreach($options['datas'] as $k => $v) {
+				if(!empty($options['datas'])) {
 					
-					if(!is_array($v) || (is_array($v) && isset($v['attributes']))) {
+					//Parcours de l'ensemble des données du select
+					foreach($options['datas'] as $k => $v) {
 						
-						if(is_array($v)) {
+						$optionResult = '';
+						if(!is_array($v) || (is_array($v) && (isset($v['attributes']) || isset($v['countResult'])))) {
 							
-							$optionValue = $v['value'];
-							$optionAttributes = ' '.$v['attributes'];
-							
-						} else {
-							
-							$optionValue = $v;
-							$optionAttributes = '';
-							
-						}
-						
-						if(($value != '' && $value == $k) || (isset($options['defaultSelect']) && $options['defaultSelect'] == $k)) { $selected=' selected="selected"'; } else { $selected = ''; }
-						$inputReturn .= '<option value="'.$k.'"'.$selected.$optionAttributes.'>'.$optionValue.'</option>';	
-											
-					} else {
-						
-						$inputReturn .= '<optgroup label="'.$k.'">';
-						foreach($v as $k1 => $v1) {
-						
-							if(is_array($v1)) {
+							if(is_array($v) && isset($v['value'])) {
 								
-								$optionValue = $v1['value'];
-								$optionAttributes = ' '.$v1['attributes'];
+								$optionValue = $v['value'];
+								$optionAttributes = (isset($v['attributes']) ? ' '.$v['attributes'] : '');
+								$optionResult = (isset($v['countResult']) ? $v['countResult'] : '');
 								
 							} else {
 								
-								$optionValue = $v1;
+								$optionValue = $v;
 								$optionAttributes = '';
 								
 							}
-						
-							if(($value != '' && $value == $k1) || (isset($options['defaultSelect']) && $options['defaultSelect'] == $k1)) { $selected=' selected="selected"'; } else { $selected = ''; }
-							$inputReturn .= '<option value="'.$k1.'"'.$selected.$optionAttributes.'>'.$optionValue.'</option>';							
+							
+							if(($value != '' && $value == $k) || (isset($options['defaultSelect']) && $options['defaultSelect'] == $k)) { $selected=' selected="selected"'; } else { $selected = ''; }
+							$inputReturn .= '<option value="'.$k.'"'.$selected.$optionAttributes.'>'.$optionValue.(is_numeric($optionResult) && $optionResult > 0 ? ' ('.$optionResult.')' : '').'</option>';	
+												
+						} else {
+							
+							$inputReturn .= '<optgroup label="'.$k.'">';
+							foreach($v as $k1 => $v1) {
+							
+								if(is_array($v1) && isset($v1['value'])) {
+									
+									$optionValue = $v1['value'];
+									$optionAttributes = (isset($v1['attributes']) ? ' '.$v1['attributes'] : '');
+									$optionResult = (isset($v1['countResult']) ? $v1['countResult'] : '');
+									
+								} else {
+									
+									$optionValue = $v1;
+									$optionAttributes = '';
+									
+								}
+							
+								if(($value != '' && $value == $k1) || (isset($options['defaultSelect']) && $options['defaultSelect'] == $k1)) { $selected=' selected="selected"'; } else { $selected = ''; }
+								$inputReturn .= '<option value="'.$k1.'"'.$selected.$optionAttributes.'>'.$optionValue.(is_numeric($optionResult) && $optionResult > 0 ? ' ('.$optionResult.')' : '').'</option>';							
+							}
+							$inputReturn .= ' </optgroup>';						
 						}
-						$inputReturn .= ' </optgroup>';						
 					}
 				}
-				if(count($options['datas']) == 0) { $inputReturn .= '<option></option>'; }
+				if(count($options['datas']) == 0) { $inputReturn .= '<option label=""></option>'; }
 				$inputReturn .= '</select>';
 			break;
 
@@ -450,6 +476,83 @@ class FormParentHelper extends Helper {
 				$buttonType = 'button';
 				if(isset($options['buttonType'])) { $buttonType = $options['buttonType']; }
 				$inputReturn .= '<button id="'.$inputIdText.'" name="'.$inputNameText.'" type="'.$buttonType.'" value="'.$value.'"'.$attributes.'>'.$label.'</button>';
+			break;
+			
+			//   INPUT DE TYPE CAPTCHA   //
+			case 'captcha':
+				$val1 = rand(1, 10);
+				$val2 = rand(1, 10);
+				Session::write('Frontoffice.captcha', ($val1 + $val2));
+				$inputReturn .= '<div class="row">';
+				$inputReturn .= '<div class="col-md-2">';
+				$inputReturn .= '<strong>'.$val1.' + '.$val2.' =</strong>';
+				$inputReturn .= '</div>';
+				$inputReturn .= '<div class="col-md-2">';
+				$inputReturn .= '<input type="text" id="'.$inputIdText.'" name="'.$inputNameText.'" value=""'.$attributes.' />';
+				$inputReturn .= '</div>';
+				$inputReturn .= '</div>';
+				break;
+				
+			//   INPUT DE TYPE SELECT   //
+			case 'datalist':
+			
+				$inputReturn .= '<input list="'.$inputIdText.'" name="'.$inputNameText.'" />';
+				$inputReturn .= '<datalist id="'.$inputIdText.'"';
+				$inputReturn .= $attributes.'>';
+			
+				if(isset($options['firstElementList'])) { $inputReturn .= '<option value="">'.$options['firstElementList'].'</option>'; }
+			
+				if(!empty($options['datas'])) {
+						
+					//Parcours de l'ensemble des données du select
+					foreach($options['datas'] as $k => $v) {
+			
+						$optionResult = '';
+						if(!is_array($v) || (is_array($v) && (isset($v['attributes']) || isset($v['countResult'])))) {
+								
+							if(is_array($v) && isset($v['value'])) {
+			
+								$optionValue = $v['value'];
+								$optionAttributes = (isset($v['attributes']) ? ' '.$v['attributes'] : '');
+								$optionResult = (isset($v['countResult']) ? $v['countResult'] : '');
+			
+							} else {
+			
+								$optionValue = $v;
+								$optionAttributes = '';
+			
+							}
+								
+							if(($value != '' && $value == $k) || (isset($options['defaultSelect']) && $options['defaultSelect'] == $k)) { $selected=' selected="selected"'; } else { $selected = ''; }
+							$inputReturn .= '<option value="'.$k.'"'.$selected.$optionAttributes.'>'.$optionValue.(is_numeric($optionResult) && $optionResult > 0 ? ' ('.$optionResult.')' : '').'</option>';
+			
+						} else {
+								
+							$inputReturn .= '<optgroup label="'.$k.'">';
+							foreach($v as $k1 => $v1) {
+									
+								if(is_array($v1) && isset($v1['value'])) {
+										
+									$optionValue = $v1['value'];
+									$optionAttributes = (isset($v1['attributes']) ? ' '.$v1['attributes'] : '');
+									$optionResult = (isset($v1['countResult']) ? $v1['countResult'] : '');
+										
+								} else {
+										
+									$optionValue = $v1;
+									$optionAttributes = '';
+										
+								}
+									
+								if(($value != '' && $value == $k1) || (isset($options['defaultSelect']) && $options['defaultSelect'] == $k1)) { $selected=' selected="selected"'; } else { $selected = ''; }
+								$inputReturn .= '<option value="'.$k1.'"'.$selected.$optionAttributes.'>'.$optionValue.(is_numeric($optionResult) && $optionResult > 0 ? ' ('.$optionResult.')' : '').'</option>';
+							}
+							$inputReturn .= ' </optgroup>';
+						}
+					}
+				}
+				if(count($options['datas']) == 0) { $inputReturn .= '<option label="empty"></option>'; }
+				$inputReturn .= '</datalist>';
 			break;
 			
 			default: $inputReturn .= '<input type="'.$options['type'].'" id="'.$inputIdText.'" name="'.$inputNameText.'" value="'.$value.'"'.$attributes.' />'; break;
