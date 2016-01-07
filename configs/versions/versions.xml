@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 07/01/2016</name>
+		<num>20160107.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="SS" type="code">FormParentHelper::_input : fichier form parent helpers - ajout type "captcha" - ajout type "datalist" - ajout compteur de résultat dans les types "select"</task>
+			<task author="SS" type="code">Model::find : ajout gestion de UNION dans les requêtes - ajout paramètres PDO</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 09/12/2015</name>
 		<num>20151209.002</num>
 		<supervisor>KoéZionCMS</supervisor>
