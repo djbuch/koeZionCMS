@@ -103,6 +103,7 @@ class Model extends Object {
  * @version 0.9 - 03/06/2014 by FI - Rajout de la variable $databaseConfigs pour permettre à un modèle de se connecter à une BDD autre que celle par défaut, le format doit être identique à celui retourné par le fichier configs/files/database.ini
  * @version 1.0 - 08/08/2014 by FI - Modification du premier paramètre passé au constructeur pour y ajouter de nouvelles données (la donnée controller_action)
  * @version 1.1 - 20/01/2015 by FI - Mise en place du code pour l'i18n
+ * @version 1.2 - 15/10/2015 by SS - Ajout du parametre MYSQL_ATTR_LOCAL_INFILE dans PDO
  */
 	public function __construct($modelParams = null, $databaseConfigs = null) {
 
@@ -174,7 +175,7 @@ class Model extends Object {
 				$dsn, 
 				$conf['login'], 
 				$conf['password'], 
-				array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8')
+				array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8', PDO::MYSQL_ATTR_LOCAL_INFILE => true)
 			); 
             
 			//Mise en place des erreurs de la classe PDO
@@ -385,6 +386,64 @@ class Model extends Object {
  *			)
  *		));
  *
+ *		Cet exemple permet d'utiliser UNION avec deux requêtes
+ *		On peut utiliser autant de requête imbriquée que l'on veut
+ *
+ *		$sales = $this->Model->find(
+ *			array('union' =>
+ *				array(
+ *					array(
+ *						'fields' => array(),
+ *						'conditions' => array(),
+ *						'leftJoin' => array()
+ *					),
+ *					array(
+ *						'fields' => array(),
+ *						'conditions' => array(),
+ *						'leftJoin' => array()
+ *					)
+ *				)
+ *			), 
+ *			array(
+ *				'order' => '',
+ *				'limit' => ''
+ *			)
+ *		);
+ *
+ *		On peut utiliser UNION pour une seule requête
+ *		Ce cas est géré mais il n'a aucun interêt
+ *		La requête sera alors lancée comme une requête simple
+ *
+ *		$sales = $this->Model->find(
+ *			array('union' =>
+ *				array(
+ *					array(
+ *						'fields' => array(),
+ *						'conditions' => array(),
+ *						'leftJoin' => array()
+ *					)
+ *				)
+ *			), 
+ *			array(
+ *				'order' => '',
+ *				'limit' => ''
+ *			)
+ *		);
+ *
+ *		$sales = $this->Model->find(
+ *			array('union' =>
+ *				array(
+ *					'fields' => array(),
+ *					'conditions' => array(),
+ *					'leftJoin' => array()
+ *				)
+ *			), 
+ *			array(
+ *				'order' => '',
+ *				'limit' => ''
+ *			)
+ *		);
+ *
  *	  Ce principe de fonctionnement est identique pour les INNER et le RIGHT JOIN
  * 
  * @param 	array 	$req 	Tableau de conditions et paramétrages de la requete
@@ -409,341 +468,396 @@ class Model extends Object {
  * @version 1.7 - 21/09/2015 by FI - Rajout d'un test sur $orderBy pour vérifier que ce n'est pas déjà un tableau car le explode sur un tableau génère une erreur 
  * @version 1.8 - 09/10/2015 by SS - Mise en place de la mutualisation du code des INNER, LEFT et RIGHT JOIN 
  * @version 1.9 - 14/10/2015 by SS - Correction gestion de l'alias dans le ORDER BY 
+ * @version 2.0 - 07/12/2015 by SS - Ajout de la gestion de UNION
  */    
 	public function find($req = array(), $type = PDO::FETCH_ASSOC) {
 				
 		//Dans le cas du i18n on teste, la majorité du temps, que l'on ne soit pas dans le BO car nous devons récupérer tous les champs y compris ceux traduits
 		
 		$shema = $this->shema;
-		$sql = 'SELECT '; //Requete sql
-		
-		//Mise en place d'un booléan pour savoir si la traduction est active sur le modèle courant
-		//Il faut que :
-		//	- $this->fieldsToTranslate existe
-		//	- $this->fieldsToTranslate ne soit pas vide
-		if(isset($this->fieldsToTranslate) && !empty($this->fieldsToTranslate)) { $translatedTable = true; }
-		else { $translatedTable = false; }
-        		
-		/////////////////////////
-		//    CHAMPS FIELDS    //					
-		//Si aucun champ n'est demandé on va récupérer le shéma de la table et récupérer ces champs
-		//Dans le cas de table traduite on va également récupérer les champs traduits ainsi que la langue associée
-			if(!isset($req['fields']) && !empty($shema)) { $fields = $shema; } 
-			else if(isset($req['fields'])) { $fields = $req['fields']; } 			
-			//else { $fields = '*'; }
+		if(isset($req['union']) && !empty($req['union']) && is_array($req['union'])) {
 			
-			$i18nFields = null;
-			if(isset($fields) && $translatedTable && $this->getTranslation) {
-				
-				$i18nShema = $this->fieldsToTranslate; //Récupération des champs à traduire
-
-				//On va calculer la différence entre la table "parente" et la table traduite
-				$fields = array_diff($fields, $i18nShema);
-				
-				//Rajout des données complémentaires de la traduction
-				$i18nShema['i18n_id'] 		= 'id'; //On gère un alias pour ce champs pour qu'il ne rentre pas en conflit avec l'id de la table parente
-				$i18nShema['i18n_language'] = 'language'; //On uniformise avec le champ id
-				$i18nShema['i18n_model_id'] = 'model_id'; //On uniformise avec le champ id
-				
-				$i18nFields = $this->_get_fields($i18nShema, $this->alias.'I18n');
-			}
-			else if(!isset($fields)) { $fields = '*'; }
+			if(count($req['union']) > 1) { $union = $req['union']; }
+			elseif(count($req['union']) == 1 && isset($req['union'][0])) { $union[] = $req['union'][0]; }
+			else { $union[] = $req['union']; }
+		}
+		else { $union[] = $req; }
+		$sql = ''; //Requete sql
+		foreach($union as $key => $r) {
 			
+			$tableOfAlias = array();
 			
-			$sql .= $this->_get_fields($fields, null, $i18nFields);
-			
-		////////////////
-		//    FROM    //	
-			if(isset($req['tables']) && !empty($req['tables'])) {
-				
-				$tables = array();
-				foreach($req['tables'] as $table => $alias) { $tables[] = '`'.$table.'` AS `'.$alias.'`'; }	
-				
-			} else { $tables[] = '`'.$this->table.'` AS `'.$this->alias.'`'; }
-		
-			////////////////
-			//    I18N    //
-				//VERSION SANS LE INNER JOIN
-				//Si il y à une variable contenant des champs à traduire on rajoute la table de le from
-				if($translatedTable && $this->getTranslation) { 
-					
-					array_unshift($tables, '`'.$this->table.'_i18n` AS `'.$this->alias.'I18n`');
-					//$tables[] = '`'.$this->table.'_i18n` AS `'.$this->alias.'I18n`'; 
-				}
-				
-				$sql .= "\n"."FROM \n\t".implode(", \n\t", $tables)." ";
-		
-				//VERSION AVEC INNER JOIN changé par une jointure normale car trop restrictive dans l'ordre des tables à charger dans le FROM
-				//Cf posts_type model fonction get_for_front l'ordre des tables dans le from générait une erreur
-				//Si il y à une variable contenant des champs à traduire
-				//On va rajouter le INNER JOIN
-				//Ainsi que le pivot qui sera toujours id dans la table source et model_id dans la table de traduction
-					/*if($translatedTable && $this->getTranslation) {
-					
-						$sql .= 'INNER JOIN '.$this->table.'_i18n AS '.$this->alias.'I18n ';
-						$sql .= 'ON '.$this->alias.'.id = '.$this->alias.'I18n.model_id '."AND `".$this->alias."I18n`.`language` = '".DEFAULT_LANGUAGE."'"."\n";
-					}*/	
-				
-		///////////////////////
-		//    CHAMPS JOIN    //
-			//Nouvelle version proposée par SS rajoutée le le 09/10/2015
-			if(isset($req['innerJoin']) && !empty($req['innerJoin'])) 	{ $joins['INNER'] = $req['innerJoin']; 	} //INNER
-			if(isset($req['leftJoin']) && !empty($req['leftJoin'])) 	{ $joins['LEFT'] = $req['leftJoin']; 	} //LEFT
-			if(isset($req['rightJoin']) && !empty($req['rightJoin'])) 	{ $joins['RIGHT'] = $req['rightJoin']; 	} //RIGHT
+			///////////////////////
+			//    CHAMPS JOIN    //
+			if(isset($r['innerJoin']) && !empty($r['innerJoin'])) 	{ $joins['INNER'] = $r['innerJoin']; 	} //INNER
+			if(isset($r['leftJoin']) && !empty($r['leftJoin'])) 	{ $joins['LEFT'] = $r['leftJoin']; 	} //LEFT
+			if(isset($r['rightJoin']) && !empty($r['rightJoin'])) 	{ $joins['RIGHT'] = $r['rightJoin']; 	} //RIGHT
 			
 			if(isset($joins) && !empty($joins)) {
-				
+					
 				foreach($joins as $joinType => $join) {
-					
+			
 					if(!empty($join)) {
-					
-						if (!is_array($join)) { $sql .= "\n".$join; } //On ajoute à la requête s'il s'agit d'une chaîne
-						else {
-								
+			
+						if (is_array($join)) {
 							if(isset($join[0])) { //Si l'on a un tableau à index numérique, on peut avoir plusieurs join à la suite et sur plusieurs tables
-					
+			
 								foreach ($join as $v) {
 										
 									$joinDatas = $this->_get_left_right_inner_join_datas($v);
-									$sql .= "\n".$joinType.' JOIN '."\n\t".$joinDatas['joinTable'].' AS '.$joinDatas['joinAlias'].' '."\n\t".'ON '.$v['pivot'].' '; //On ajoute à la requête
+									$tableOfAlias[$this->alias] = $this->alias.$key;
+									$tableOfAlias[$joinDatas['joinAlias']] = $joinDatas['joinAlias'].$key;
 								}
 							} else { //Sinon, on n'a qu'un seul join
-					
+			
 								$joinDatas = $this->_get_left_right_inner_join_datas($join);
-								$sql .= "\n".$joinType.' JOIN '."\n\t".$joinDatas['joinTable'].' AS '.$joinDatas['joinAlias'].' '."\n\t".'ON '.$join['pivot'].' '; //On ajoute à la requête
+								$tableOfAlias[$this->alias] = $this->alias.$key;
+								$tableOfAlias[$joinDatas['joinAlias']] = $joinDatas['joinAlias'].$key;
 							}
 						}
 					}
 				}
 			}
-				
-		/*
-		 * Version supprimée le 09/10/2015 suite à l'amélioration proposée par SS
-		 * 		
-		////////////////////////////
-		//    CHAMPS LEFT JOIN    //
-			if(isset($req['leftJoin']) && !empty($req['leftJoin'])) {
-				
-				if (!is_array($req['leftJoin'])) { $sql .= "\n".$req['leftJoin']; } //On ajoute à la requête s'il s'agit d'une chaîne 
-				else {
+			
+			$sql .= (isset($req['union']) && !empty($req['union']) ? '( ' : '');
+			$sql .= 'SELECT ';
+			
+			//Mise en place d'un booléan pour savoir si la traduction est active sur le modèle courant
+			//Il faut que :
+			//	- $this->fieldsToTranslate existe
+			//	- $this->fieldsToTranslate ne soit pas vide
+			if(isset($this->fieldsToTranslate) && !empty($this->fieldsToTranslate)) { $translatedTable = true; }
+			else { $translatedTable = false; }
 					
-					if(isset($req['leftJoin'][0])) { //Si l'on a un tableau à index numérique, on peut avoir plusieurs join à la suite et sur plusieurs tables
-						
-						foreach ($req['leftJoin'] as $v) {
-							
-							$joinDatas = $this->_get_left_right_inner_join_datas($v);
-							$sql .= "\n".'LEFT JOIN '."\n\t".$joinDatas['joinTable'].' AS '.$joinDatas['joinAlias'].' '."\n\t".'ON '.$v['pivot'].' '; //On ajoute à la requête
+			/////////////////////////
+			//    CHAMPS FIELDS    //					
+			//Si aucun champ n'est demandé on va récupérer le shéma de la table et récupérer ces champs
+			//Dans le cas de table traduite on va également récupérer les champs traduits ainsi que la langue associée
+				if(!isset($r['fields']) && !empty($shema)) { $fields = $shema; } 
+				else if(isset($r['fields'])) { $fields = $r['fields']; } 			
+				//else { $fields = '*'; }
+				
+				$i18nFields = null;
+				if(isset($fields) && $translatedTable && $this->getTranslation) {
+					
+					$i18nShema = $this->fieldsToTranslate; //Récupération des champs à traduire
 
-							//On conserve l'ancienne version 22/04/2015
-							//$joinModel = $this->load_model($v['model'], true);
-							//$sql .= "\n".'LEFT JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$v['pivot'].' '; //On ajoute à la requête
-						}					
-					} else { //Sinon, on n'a qu'un seul join						
+					//On va calculer la différence entre la table "parente" et la table traduite
+					$fields = array_diff($fields, $i18nShema);
+					
+					//Rajout des données complémentaires de la traduction
+					$i18nShema['i18n_id'] 		= 'id'; //On gère un alias pour ce champs pour qu'il ne rentre pas en conflit avec l'id de la table parente
+					$i18nShema['i18n_language'] = 'language'; //On uniformise avec le champ id
+					$i18nShema['i18n_model_id'] = 'model_id'; //On uniformise avec le champ id
+					
+					$i18nFields = $this->_get_fields($i18nShema, $this->alias.'I18n', null);
+				}
+				else if(!isset($fields)) { $fields = '*'; }
+				
+				
+				//if(!(isset($req['union']) && !empty($req['union']))) { $sql .= $this->_get_fields($fields, null, $i18nFields); }
+				$sql .= $this->_get_fields($fields, null, $i18nFields);
+				
+			////////////////
+			//    FROM    //	
+				$tables = array();
+				if(isset($r['tables']) && !empty($r['tables'])) {
+					
+					foreach($r['tables'] as $table => $alias) {
 						
-						$joinDatas = $this->_get_left_right_inner_join_datas($req['leftJoin']);
-						$sql .= "\n".'LEFT JOIN '."\n\t".$joinDatas['joinTable'].' AS '.$joinDatas['joinAlias'].' '."\n\t".'ON '.$req['leftJoin']['pivot'].' '; //On ajoute à la requête
+						$tables[] = '`'.$table.'` AS `'.$alias.'`';
+						//if(isset($req['union']) && !empty($req['union'])) { $sql .= $this->_get_fields($fields, $alias, $i18nFields); }
+					}	
+					
+				} else { $tables[] = '`'.$this->table.'` AS `'.$this->alias.'`'; }
+			
+				////////////////
+				//    I18N    //
+					//VERSION SANS LE INNER JOIN
+					//Si il y à une variable contenant des champs à traduire on rajoute la table de le from
+					if($translatedTable && $this->getTranslation) { 
 						
-						//On conserve l'ancienne version 22/04/2015
-						//$joinModel = $this->load_model($req['leftJoin']['model'], true);
-						//$sql .= "\n".'LEFT JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$req['leftJoin']['pivot'].' '; //On ajoute à la requête					
+						array_unshift($tables, '`'.$this->table.'_i18n` AS `'.$this->alias.'I18n`');
+						//$tables[] = '`'.$this->table.'_i18n` AS `'.$this->alias.'I18n`'; 
+					}
+					
+					$sql .= "\n"."FROM \n\t".implode(", \n\t", $tables)." ";
+			
+					//VERSION AVEC INNER JOIN changé par une jointure normale car trop restrictive dans l'ordre des tables à charger dans le FROM
+					//Cf posts_type model fonction get_for_front l'ordre des tables dans le from générait une erreur
+					//Si il y à une variable contenant des champs à traduire
+					//On va rajouter le INNER JOIN
+					//Ainsi que le pivot qui sera toujours id dans la table source et model_id dans la table de traduction
+						/*if($translatedTable && $this->getTranslation) {
+						
+							$sql .= 'INNER JOIN '.$this->table.'_i18n AS '.$this->alias.'I18n ';
+							$sql .= 'ON '.$this->alias.'.id = '.$this->alias.'I18n.model_id '."AND `".$this->alias."I18n`.`language` = '".DEFAULT_LANGUAGE."'"."\n";
+						}*/	
+					
+			///////////////////////
+			//    CHAMPS JOIN    //
+				//Nouvelle version proposée par SS rajoutée le le 09/10/2015
+				if(isset($joins) && !empty($joins)) {
+					
+					foreach($joins as $joinType => $join) {
+						
+						if(!empty($join)) {
+						
+							if (!is_array($join)) { $sql .= "\n".$join; } //On ajoute à la requête s'il s'agit d'une chaîne
+							else {
+									
+								if(isset($join[0])) { //Si l'on a un tableau à index numérique, on peut avoir plusieurs join à la suite et sur plusieurs tables
+						
+									foreach ($join as $v) {
+											
+										$joinDatas = $this->_get_left_right_inner_join_datas($v);
+										$sql .= "\n".$joinType.' JOIN '."\n\t".$joinDatas['joinTable'].' AS '.$joinDatas['joinAlias'].' '."\n\t".'ON '.$v['pivot'].' '; //On ajoute à la requête
+									}
+								} else { //Sinon, on n'a qu'un seul join
+						
+									$joinDatas = $this->_get_left_right_inner_join_datas($join);
+									$sql .= "\n".$joinType.' JOIN '."\n\t".$joinDatas['joinTable'].' AS '.$joinDatas['joinAlias'].' '."\n\t".'ON '.$join['pivot'].' '; //On ajoute à la requête
+								}
+							}
+						}
 					}
 				}
-			}
-		
-		/////////////////////////////
-		//    CHAMPS RIGHT JOIN    //
-			if(isset($req['rightJoin']) && !empty($req['rightJoin'])) {
-				
-				if (!is_array($req['rightJoin'])) { $sql .= "\n".$req['rightJoin']; } //On ajoute à la requête s'il s'agit d'une chaîne 
-				else {
 					
-					if(isset($req['rightJoin'][0])) { //Si l'on a un tableau à index numérique, on peut avoir plusieurs join à la suite et sur plusieurs tables
+			/*
+			 * Version supprimée le 09/10/2015 suite à l'amélioration proposée par SS
+			 * 		
+			////////////////////////////
+			//    CHAMPS LEFT JOIN    //
+				if(isset($req['leftJoin']) && !empty($req['leftJoin'])) {
+					
+					if (!is_array($req['leftJoin'])) { $sql .= "\n".$req['leftJoin']; } //On ajoute à la requête s'il s'agit d'une chaîne 
+					else {
 						
-						foreach ($req['rightJoin'] as $v) {
+						if(isset($req['leftJoin'][0])) { //Si l'on a un tableau à index numérique, on peut avoir plusieurs join à la suite et sur plusieurs tables
 							
-							$joinDatas = $this->_get_left_right_inner_join_datas($v);
-							$sql .= "\n".'RIGHT JOIN '."\n\t".$joinDatas['joinTable'].' AS '.$joinDatas['joinAlias'].' '."\n\t".'ON '.$v['pivot'].' '; //On ajoute à la requête
+							foreach ($req['leftJoin'] as $v) {
+								
+								$joinDatas = $this->_get_left_right_inner_join_datas($v);
+								$sql .= "\n".'LEFT JOIN '."\n\t".$joinDatas['joinTable'].' AS '.$joinDatas['joinAlias'].' '."\n\t".'ON '.$v['pivot'].' '; //On ajoute à la requête
+
+								//On conserve l'ancienne version 22/04/2015
+								//$joinModel = $this->load_model($v['model'], true);
+								//$sql .= "\n".'LEFT JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$v['pivot'].' '; //On ajoute à la requête
+							}					
+						} else { //Sinon, on n'a qu'un seul join						
+							
+							$joinDatas = $this->_get_left_right_inner_join_datas($req['leftJoin']);
+							$sql .= "\n".'LEFT JOIN '."\n\t".$joinDatas['joinTable'].' AS '.$joinDatas['joinAlias'].' '."\n\t".'ON '.$req['leftJoin']['pivot'].' '; //On ajoute à la requête
 							
 							//On conserve l'ancienne version 22/04/2015
-							//$joinModel = $this->load_model($v['model'], true);
-							//$sql .= "\n".'RIGHT JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$v['pivot'].' '; //On ajoute à la requête
-						}					
-					} else { //Sinon, on n'a qu'un seul join
-						
-						$joinDatas = $this->_get_left_right_inner_join_datas($req['rightJoin']);
-						$sql .= "\n".'RIGHT JOIN '."\n\t".$joinDatas['joinTable'].' AS '.$joinDatas['joinAlias'].' '."\n\t".'ON '.$req['rightJoin']['pivot'].' '; //On ajoute à la requête
-						
-						//On conserve l'ancienne version 22/04/2015
-						//$joinModel = $this->load_model($req['rightJoin']['model'], true);
-						//$sql .= "\n".'RIGHT JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$req['rightJoin']['pivot'].' '; //On ajoute à la requête					
+							//$joinModel = $this->load_model($req['leftJoin']['model'], true);
+							//$sql .= "\n".'LEFT JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$req['leftJoin']['pivot'].' '; //On ajoute à la requête					
+						}
 					}
 				}
-			}
-		
-		/////////////////////////////
-		//    CHAMPS INNER JOIN    //
-			if(isset($req['innerJoin']) && !empty($req['innerJoin'])) {
-				
-				if (!is_array($req['innerJoin'])) { $sql .= "\n".$req['innerJoin']; } //On ajoute à la requête s'il s'agit d'une chaîne 
-				else {
+			
+			/////////////////////////////
+			//    CHAMPS RIGHT JOIN    //
+				if(isset($req['rightJoin']) && !empty($req['rightJoin'])) {
 					
-					if(isset($req['innerJoin'][0])) {//Si l'on a un tableau à index numérique, on peut avoir plusieurs "join" à la suite et sur plusieurs tables
+					if (!is_array($req['rightJoin'])) { $sql .= "\n".$req['rightJoin']; } //On ajoute à la requête s'il s'agit d'une chaîne 
+					else {
 						
-						foreach ($req['innerJoin'] as $k => $v) {
-	
-							$joinDatas = $this->_get_left_right_inner_join_datas($v);
-							$sql .= "\n".'INNER JOIN '."\n\t".$joinDatas['joinTable'].' AS '.$joinDatas['joinAlias'].' '."\n\t".'ON '.$v['pivot'].' '; //On ajoute à la requête
+						if(isset($req['rightJoin'][0])) { //Si l'on a un tableau à index numérique, on peut avoir plusieurs join à la suite et sur plusieurs tables
+							
+							foreach ($req['rightJoin'] as $v) {
+								
+								$joinDatas = $this->_get_left_right_inner_join_datas($v);
+								$sql .= "\n".'RIGHT JOIN '."\n\t".$joinDatas['joinTable'].' AS '.$joinDatas['joinAlias'].' '."\n\t".'ON '.$v['pivot'].' '; //On ajoute à la requête
+								
+								//On conserve l'ancienne version 22/04/2015
+								//$joinModel = $this->load_model($v['model'], true);
+								//$sql .= "\n".'RIGHT JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$v['pivot'].' '; //On ajoute à la requête
+							}					
+						} else { //Sinon, on n'a qu'un seul join
+							
+							$joinDatas = $this->_get_left_right_inner_join_datas($req['rightJoin']);
+							$sql .= "\n".'RIGHT JOIN '."\n\t".$joinDatas['joinTable'].' AS '.$joinDatas['joinAlias'].' '."\n\t".'ON '.$req['rightJoin']['pivot'].' '; //On ajoute à la requête
 							
 							//On conserve l'ancienne version 22/04/2015
-							//$joinModel = $this->load_model($v['model'], true);
-							//$sql .= "\n".'INNER JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$v['pivot'].' ';//On ajoute à la requête
+							//$joinModel = $this->load_model($req['rightJoin']['model'], true);
+							//$sql .= "\n".'RIGHT JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$req['rightJoin']['pivot'].' '; //On ajoute à la requête					
+						}
+					}
+				}
+			
+			/////////////////////////////
+			//    CHAMPS INNER JOIN    //
+				if(isset($req['innerJoin']) && !empty($req['innerJoin'])) {
+					
+					if (!is_array($req['innerJoin'])) { $sql .= "\n".$req['innerJoin']; } //On ajoute à la requête s'il s'agit d'une chaîne 
+					else {
+						
+						if(isset($req['innerJoin'][0])) {//Si l'on a un tableau à index numérique, on peut avoir plusieurs "join" à la suite et sur plusieurs tables
+							
+							foreach ($req['innerJoin'] as $k => $v) {
+		
+								$joinDatas = $this->_get_left_right_inner_join_datas($v);
+								$sql .= "\n".'INNER JOIN '."\n\t".$joinDatas['joinTable'].' AS '.$joinDatas['joinAlias'].' '."\n\t".'ON '.$v['pivot'].' '; //On ajoute à la requête
+								
+								//On conserve l'ancienne version 22/04/2015
+								//$joinModel = $this->load_model($v['model'], true);
+								//$sql .= "\n".'INNER JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$v['pivot'].' ';//On ajoute à la requête
+							}
+							
+						} else { //Sinon, on n'a qu'un seul "join"
+							
+							$joinDatas = $this->_get_left_right_inner_join_datas($req['innerJoin']);
+							$sql .= "\n".'INNER JOIN '."\n\t".$joinDatas['joinTable'].' AS '.$joinDatas['joinAlias'].' '."\n\t".'ON '.$req['innerJoin']['pivot'].' '; //On ajoute à la requête
+							
+							//On conserve l'ancienne version 22/04/2015
+							//$joinModel = $this->load_model($req['innerJoin']['model'], true);
+							//$sql .= "\n".'INNER JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$req['innerJoin']['pivot'].' ';//On ajoute à la requête
+						}
+					}
+				}
+			*/
+
+			/////////////////////////////////////////////////////////////
+			//    CONDITIONS DE RECHERCHE SUR L'IDENTIFIANT DU SITE    //
+			//Si dans le shema de la table on a une colonne website_id		
+				if($this->manageWebsiteId && in_array('website_id', $shema) && get_class($this) != 'UsersGroupsWebsite') {
+				
+					//Si on a pas de conditions de recherche particulières
+					if(!isset($r['conditions'])) { $r['conditions']['website_id'] = CURRENT_WEBSITE_ID; }
+					else {
+						
+						//Sinon on va tester si il s'agit d'un tableau ou d'une chaine de caractères
+						if(is_array($r['conditions'])) { $r['conditions']['website_id'] = CURRENT_WEBSITE_ID; } 
+						else { $r['conditions'] .= " AND website_id=".CURRENT_WEBSITE_ID; }
+					}			
+				}
+
+			/////////////////////////////////////////////////////////
+			//    CONDITIONS DE RECHERCHE SUR LE CHAMP ACTIVATE    //
+			//Si dans le shema de la table on a une colonne website_id		
+				if($this->manageActivateField && in_array('activate', $shema)) {
+				
+					//Si on a pas de conditions de recherche particulières
+					if(!isset($r['conditions'])) { $r['conditions']['activate'] = 1; }
+					else {
+						
+						//Sinon on va tester si il s'agit d'un tableau ou d'une chaine de caractères
+						if(is_array($r['conditions'])) { $r['conditions']['activate'] = 1; } 
+						else { $r['conditions'] .= " AND activate=1"; }
+					}			
+				}
+			
+			/////////////////////////////
+			//    CHAMPS CONDITIONS    //
+				if(isset($r['conditions'])) { //Si on a des conditions
+					
+					$conditions = '';	//Mise en variable des conditions	
+					
+					//On teste si conditions est un tableau
+					//Sinon on est dans le cas d'une requête personnalisée
+					if(!is_array($r['conditions']) && !empty($r['conditions'])) {
+						
+						$conditions .= $r['conditions']; //On les ajoute à la requete
+					
+					//Si c'est un tableau on va rajouter les valeurs
+					} else {
+						
+						$cond = array();
+						foreach($r['conditions'] as $k => $v) {		
+							
+							//if(!empty($v)) {
+								
+								//On va ensuite tester si la clé est une chaine de caractère
+								//On rajoute le nom de la classe devant le nom de la colonne
+								if(is_string($k)) {					
+									
+									if($k == "OR") {
+										
+										$orCond = array();
+										foreach($v as $orField => $orValue) { 
+											
+											if(!is_int($orField)) { $orCond = $this->_get_query_conditions($orCond, $orField, $orValue); }
+											else { $orCond[] = $orValue; }
+										}								
+										$cond[] = '('.implode(' OR ', $orCond).')';
+									} 
+									else { $cond = $this->_get_query_conditions($cond, $k, $v); }
+									
+								} 
+								else { $cond[] = $v; } //Sinon on rajoute directement la condition dans le tableau
+							//}
 						}
 						
-					} else { //Sinon, on n'a qu'un seul "join"
-						
-						$joinDatas = $this->_get_left_right_inner_join_datas($req['innerJoin']);
-						$sql .= "\n".'INNER JOIN '."\n\t".$joinDatas['joinTable'].' AS '.$joinDatas['joinAlias'].' '."\n\t".'ON '.$req['innerJoin']['pivot'].' '; //On ajoute à la requête
-						
-						//On conserve l'ancienne version 22/04/2015
-						//$joinModel = $this->load_model($req['innerJoin']['model'], true);
-						//$sql .= "\n".'INNER JOIN '."\n\t".$joinModel->table.' AS '.$joinModel->alias.' '."\n\t".'ON '.$req['innerJoin']['pivot'].' ';//On ajoute à la requête
+						if(!empty($cond)) { $conditions .= implode("\n".'AND ', $cond); }
 					}
+					
+					if(!empty($conditions)) { $sql .= "\n".'WHERE '.$conditions.' '; } //On rajoute les conditions à la requête
 				}
-			}
-		*/
-
-		/////////////////////////////////////////////////////////////
-		//    CONDITIONS DE RECHERCHE SUR L'IDENTIFIANT DU SITE    //
-		//Si dans le shema de la table on a une colonne website_id		
-			if($this->manageWebsiteId && in_array('website_id', $shema) && get_class($this) != 'UsersGroupsWebsite') {
 			
-				//Si on a pas de conditions de recherche particulières
-				if(!isset($req['conditions'])) { $req['conditions']['website_id'] = CURRENT_WEBSITE_ID; }
-				else {
-					
-					//Sinon on va tester si il s'agit d'un tableau ou d'une chaine de caractères
-					if(is_array($req['conditions'])) { $req['conditions']['website_id'] = CURRENT_WEBSITE_ID; } 
-					else { $req['conditions'] .= " AND website_id=".CURRENT_WEBSITE_ID; }
-				}			
-			}
-
-		/////////////////////////////////////////////////////////
-		//    CONDITIONS DE RECHERCHE SUR LE CHAMP ACTIVATE    //
-		//Si dans le shema de la table on a une colonne website_id		
-			if($this->manageActivateField && in_array('activate', $shema)) {
-			
-				//Si on a pas de conditions de recherche particulières
-				if(!isset($req['conditions'])) { $req['conditions']['activate'] = 1; }
-				else {
-					
-					//Sinon on va tester si il s'agit d'un tableau ou d'une chaine de caractères
-					if(is_array($req['conditions'])) { $req['conditions']['activate'] = 1; } 
-					else { $req['conditions'] .= " AND activate=1"; }
-				}			
-			}
-		
-		/////////////////////////////
-		//    CHAMPS CONDITIONS    //
-			if(isset($req['conditions'])) { //Si on a des conditions
-				
-				$conditions = '';	//Mise en variable des conditions	
-				
-				//On teste si conditions est un tableau
-				//Sinon on est dans le cas d'une requête personnalisée
-				if(!is_array($req['conditions']) && !empty($req['conditions'])) {
-	                
-					$conditions .= $req['conditions']; //On les ajoute à la requete
-				
-				//Si c'est un tableau on va rajouter les valeurs
-				} else {
-					
-					$cond = array();
-					foreach($req['conditions'] as $k => $v) {		
-						
-						//if(!empty($v)) {
-							
-							//On va ensuite tester si la clé est une chaine de caractère
-							//On rajoute le nom de la classe devant le nom de la colonne
-							if(is_string($k)) {					
-								
-								if($k == "OR") {
+			////////////////
+			//    I18N    //
+				if($translatedTable && $this->getTranslation) {
 									
-									$orCond = array();
-									foreach($v as $orField => $orValue) { 
+					$sql .= "\n";
+					
+					//Deux cas :
+					// - on a déjà des conditions, le WHERE est donc déjà renseigné
+					// - on a pas de conditions et on peut utiliser le WHERE
+					if(isset($r['conditions'])) { $sql .= "AND `".$this->alias."I18n`.`language` = '".DEFAULT_LANGUAGE."'"."\n"; }
+					else { $sql .= "WHERE `".$this->alias."I18n`.`language` = '".DEFAULT_LANGUAGE."'"."\n"; }
+					
+					//Dans tous les cas on rajoute le pivot
+					//Au départ ce test s'effectuait dans INNER JOIN qui a été supprimé par la suite
+					$sql .= "AND `".$this->alias.'`.`id` = `'.$this->alias.'I18n`.`model_id` '."\n";
+					
+				}
+			
+			//////////////////////////////////
+			//    CHAMPS MORE CONDITIONS    //
+				if(isset($r['moreConditions']) && !empty($r['moreConditions'])) { 
+					
+					if(isset($conditions) && !empty($conditions)) { $sql .= "\n".'AND '; } else { $sql .= "\n".'WHERE '; }			
+					$sql .= $r['moreConditions'].' '; 
+				}
+			
+			///////////////////////////
+			//    CHAMPS GROUP BY    //
+				if(isset($r['group']) || isset($r['groupBy'])) { 
+									
+					if(isset($r['group'])) { $groupBy = $r['group']; }
+					else if(isset($r['groupBy'])) { $groupBy = $r['groupBy']; }
+					else { $groupBy = ''; }
+									
+					//On va éclater la chaîne pour récupérer tous les champs order
+					$groupBy = explode(',', $groupBy);				
+					foreach($groupBy as $groupByK => $groupByV) { //Parcours de tous les champs
+
+						//Nettoyage de la valeur
+						//Suppression des espaces en début et fin de chaîne
+						//Supression des espaces consécutifs dans la chaîne
+						$groupByV 	= trim($groupByV);
+						$groupByV 	= preg_replace('/\s{2,}/', ' ', $groupByV);
+						$tableAlias = $this->alias; //Récupération de l'alias de la table
+						
+						//On teste si la table n'est pa traduite et que le champ courant est dans la liste des champs traduits
+						if($translatedTable && $this->getTranslation && in_array($groupByV, $this->fieldsToTranslate)) { $tableAlias = $this->alias.'I18n'; }
 										
-										if(!is_int($orField)) { $orCond = $this->_get_query_conditions($orCond, $orField, $orValue); }
-										else { $orCond[] = $orValue; }
-									}								
-									$cond[] = '('.implode(' OR ', $orCond).')';
-								} 
-								else { $cond = $this->_get_query_conditions($cond, $k, $v); }
-								
-							} 
-							else { $cond[] = $v; } //Sinon on rajoute directement la condition dans le tableau
-						//}
+						//On va tester si un alias de table est déjà en place, si ce n'est pas le cas on va le rajouter
+						$groupByV = explode('.', $groupByV);									
+						if(count($groupByV) == 1) 		{ $groupBy[$groupByK] = '`'.$tableAlias.'`.`'.$groupByV[0].'`'; }
+						else if(count($groupByV) == 2) 	{ $groupBy[$groupByK] = '`'.$groupByV[0].'`.`'.$groupByV[1].'`'; }				
 					}
+					$sql .= "\n".'GROUP BY '.implode(', ', $groupBy).' '; 
 					
-					if(!empty($cond)) { $conditions .= implode("\n".'AND ', $cond); }
 				}
-				
-				if(!empty($conditions)) { $sql .= "\n".'WHERE '.$conditions.' '; } //On rajoute les conditions à la requête
-			}
-		
-		////////////////
-		//    I18N    //
-			if($translatedTable && $this->getTranslation) {
-								
-				$sql .= "\n";
-				
-				//Deux cas :
-				// - on a déjà des conditions, le WHERE est donc déjà renseigné
-				// - on a pas de conditions et on peut utiliser le WHERE
-				if(isset($req['conditions'])) { $sql .= "AND `".$this->alias."I18n`.`language` = '".DEFAULT_LANGUAGE."'"."\n"; }
-				else { $sql .= "WHERE `".$this->alias."I18n`.`language` = '".DEFAULT_LANGUAGE."'"."\n"; }
-				
-				//Dans tous les cas on rajoute le pivot
-				//Au départ ce test s'effectuait dans INNER JOIN qui a été supprimé par la suite
-				$sql .= "AND `".$this->alias.'`.`id` = `'.$this->alias.'I18n`.`model_id` '."\n";
-				
-			}
-		
-		//////////////////////////////////
-		//    CHAMPS MORE CONDITIONS    //
-			if(isset($req['moreConditions']) && !empty($req['moreConditions'])) { 
-				
-				if(isset($conditions) && !empty($conditions)) { $sql .= "\n".'AND '; } else { $sql .= "\n".'WHERE '; }			
-				$sql .= $req['moreConditions'].' '; 
-			}
-		
-		///////////////////////////
-		//    CHAMPS GROUP BY    //
-			if(isset($req['group']) || isset($req['groupBy'])) { 
-								
-				if(isset($req['group'])) { $groupBy = $req['group']; }
-				else if(isset($req['groupBy'])) { $groupBy = $req['groupBy']; }
-				else { $groupBy = ''; }
-								
-				//On va éclater la chaîne pour récupérer tous les champs order
-				$groupBy = explode(',', $groupBy);				
-				foreach($groupBy as $groupByK => $groupByV) { //Parcours de tous les champs
-
-					//Nettoyage de la valeur
-					//Suppression des espaces en début et fin de chaîne
-					//Supression des espaces consécutifs dans la chaîne
-					$groupByV 	= trim($groupByV);
-					$groupByV 	= preg_replace('/\s{2,}/', ' ', $groupByV);
-					$tableAlias = $this->alias; //Récupération de l'alias de la table
-					
-					//On teste si la table n'est pa traduite et que le champ courant est dans la liste des champs traduits
-					if($translatedTable && $this->getTranslation && in_array($groupByV, $this->fieldsToTranslate)) { $tableAlias = $this->alias.'I18n'; }
-									
-					//On va tester si un alias de table est déjà en place, si ce n'est pas le cas on va le rajouter
-					$groupByV = explode('.', $groupByV);									
-					if(count($groupByV) == 1) 		{ $groupBy[$groupByK] = '`'.$tableAlias.'`.`'.$groupByV[0].'`'; }
-					else if(count($groupByV) == 2) 	{ $groupBy[$groupByK] = '`'.$groupByV[0].'`.`'.$groupByV[1].'`'; }				
-				}
-				$sql .= "\n".'GROUP BY '.implode(', ', $groupBy).' '; 
-			}
+			$sql .= (isset($req['union']) && !empty($req['union']) ? ') ' : '');
+			if(isset($req['union']) && !empty($req['union']) && $key != (count($union) - 1)) { $sql .= "\n".'UNION ALL '."\n"; }
+			
+			////////////////////////////////
+			//   REMPLACEMENT DES ALIAS   //
+			if(isset($req['union']) && !empty($req['union']) && !empty($tableOfAlias)) { $sql = str_replace(array_keys($tableOfAlias), $tableOfAlias, $sql); }
+		}
 		
 		///////////////////////////
 		//    CHAMPS ORDER BY    //
@@ -793,7 +907,8 @@ class Model extends Object {
 							$alias 			= $orderV[0][0];
 							$field 			= $orderV[0][1];
 							$direction 		= $orderV[1];
-							$orderBy[$orderK] = '`'.$alias.'`.`'.$field.'` '.$direction; 
+							//$orderBy[$orderK] = '`'.$alias.'`.`'.$field.'` '.$direction; 
+							$orderBy[$orderK] = '`'.$field.'` '.$direction;
 						}
 					}
 					$sql .= "\n".'ORDER BY '.implode(', ', $orderBy).' ';
@@ -845,7 +960,7 @@ class Model extends Object {
 		}		
         return $return;        
     }
-
+    
 /**
  * Cette fonction permet de retourner le premier élément correspondant aux conditions de recherche
  * 
@@ -854,15 +969,16 @@ class Model extends Object {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 16/02/2012 by FI
- * @version 0.2 - 19/10/2015 by SS - Ajout de la condition limit pour récupérer une ligne de résultat
+ * @version 0.2 - 19/10/2015 by SS Ajout de la condition limit pour récupérer une ligne de résultats
  */    
 	public function findFirst($req = array()) { 
 		
-		if(!isset($req['limit'])) { $req = am($req, array('limit' => 1)); }
+		if(!empty($req) && !isset($req['limit'])) { $req = am($req, array('limit' => 1)); }
 		
 		$request = $this->find($req); //On lance la requête
 		return current($request); //Par défaut on va retourne le premier élément du tableau
-	}	
+	}
+	
 	
 /**
  * Cette fonction permet de compter le nombre de résultat d'une requeête
@@ -1340,38 +1456,6 @@ class Model extends Object {
 		}		
 		return $shema;
 	}
-	
-/////////////////////	
-//    CALLBACKS    //	
-/////////////////////
-	
-/**
- * Cette fonction permet de contrôler qu'un login n'est pas déjà utilisé
- * 
- * @var 	integer $val Valeur du champ
- * @access 	public
- * @author 	koéZionCMS
- * @version 0.1 - 07/12/2015 by FI
- */	
-	public function only_one_email($val) {
-		
-		$modelDatas = $this->datas; //Données postées
-		
-		$conditions = array('email' => $val);
-		if(isset($modelDatas['id'])) {
-			
-			$conditions['id'] = array(
-				'operator' => '!=',
-				'value' => $modelDatas['id']
-			);			
-		}
-		
-		return !$this->findCount($conditions);
-	}
-	
-///////////////////////////////////////	
-//    FONCTIONS PRIVEES/PROTEGEES    //	
-///////////////////////////////////////
 	
 /**
  * Cette fonction permet d'afficher le shéma d'une table
