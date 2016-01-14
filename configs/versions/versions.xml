@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 11/01/2016</name>
+		<num>20160111.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">AppController::_get_posts_category : Problème lors du comptage des éléments, rajout de la variable $postsCountQuery</task>
+			<task author="FI" type="code">View::loadControllerFile : Rajout d'un test sur l'inclusion du fichier du contrôleur</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 07/01/2016</name>
 		<num>20160107.001</num>
 		<supervisor>KoéZionCMS</supervisor>

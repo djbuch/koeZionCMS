@@ -663,12 +663,13 @@ class AppController extends Controller {
  * @version 0.1 - 02/10/2012 by FI
  * @version 0.3 - 30/10/2014 by FI - Déplacement de cette fonction de Categories
  * @version 0.4 - 01/12/2015 by FI - Reprise de la requête de récupération des données suite à la mise en place de la multi publication
+ * @version 0.5 - 11/12/2015 by FI - Problème lors du comptage des éléments, rajout de la variable $postsCountQuery
  */		
 	protected function _get_posts_category($datas, $setLimit = true) {
 
 		//Récupération des articles
 		$this->load_model('Post');
-		$postsQuery = array(
+		$postsQuery = $postsCountQuery = array(
 			'fields' => am(
 				$this->Post->shema,
 				array(
@@ -689,13 +690,12 @@ class AppController extends Controller {
  				)
  			)					
 		);
-		$allPosts = $this->Post->find($postsQuery);
+		$allPosts = $this->Post->find($postsCountQuery);
 		
 		/*//On va compter le nombre d'articles de cette catégorie
 		$this->load_model('Post');
 		$postsConditions = array('online' => 1, 'category_id' => $datas['category']['id']);
 		$nbPosts = $this->Post->findCount($postsConditions);*/
-				
 		if(count($allPosts) > 0) {
 			
 			//On va envoyer les informations nécessaires à la génération du flux RSS
@@ -735,7 +735,7 @@ class AppController extends Controller {
 			$filterPosts = $this->_filter_posts($datas['postsTypes'], $postsConfigs['search']);
 			if(isset($filterPosts['moreConditions'])) {
 		
-				$postsQuery['moreConditions'] = $filterPosts['moreConditions'];
+				$postsQuery['moreConditions'] = $postsCountQuery['moreConditions'] = $filterPosts['moreConditions'];
 				unset($filterPosts['moreConditions']);
 			}
 		
@@ -748,8 +748,8 @@ class AppController extends Controller {
 			//On compte deux fois le nombre de post une fois en totalité une fois en rajoutant si il est renseigné le type d'article
 			//Car si on ne faisait pas cela on avait toujours la zone d'affichage des catégories qui s'affichaient lorsqu'on affichait les frères
 			//même si il n'y avait pas de post
-				
-			$this->pager['totalElements'] 	= count($datas['posts']); //On va compter le nombre d'élement
+						
+			$this->pager['totalElements'] 	= count($this->Post->find($postsCountQuery)); //On va compter le nombre d'élement
 			$this->pager['totalPages'] 		= ceil($this->pager['totalElements'] / $this->pager['elementsPerPage']); //On va compter le nombre de page
 		}
 

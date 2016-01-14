@@ -415,7 +415,9 @@ class View extends Object {
     	else { return $c->index_view_for_backoffice; }
     }
     
-/*FONCTION QUASI IDENTIQUE QUE CELLE DU DISPATCHER*/	
+/*FONCTION QUASI IDENTIQUE QUE CELLE DU DISPATCHER*/
+//Mise en place d'un contrôle de l'existance de la classe 20160107
+// @todo REPRENDRE CETTE FONCTION 	
 	public function loadControllerFile($controllerToLoad) {		
 		
 		$controllerName = Inflector::underscore($controllerToLoad);			
@@ -451,7 +453,7 @@ class View extends Object {
 				if(file_exists($pluginControllerBoostrap)) { require_once($pluginControllerBoostrap); }
 			}
 			
-			require_once $controller_path; //Inclusion de ce fichier si il existe
+			if(!class_exists(Inflector::camelize($controller_name))) { require_once $controller_path; } //Inclusion de ce fichier si il existe
 			return $controller_name;
 			
 		} else { 
