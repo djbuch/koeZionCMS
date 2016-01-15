@@ -17,19 +17,28 @@
  * @link        http://www.koezion-cms.com
  * @version		0.1
  */
-require_once('constants.php');
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//    DEFINITION DU CHEMIN ET CHARGEMENT DE LA LIBRAIRIE CONTENANT L'ENSEMBLE DES CONSTANTES DU SYSTEME    //
+//14/01/2016 - Modification du chargement du fichier des constantes suite à le refonte complète du système de chargement et de stockage des fichiers
+define('DS', 		DIRECTORY_SEPARATOR); 	//Définition du séparateur dans le cas ou l'on est sur windows ou linux
+define('WEBROOT', 	dirname(__FILE__)); 	//Chemin vers le dossier webroot
+define('ROOT', 		dirname(WEBROOT)); 		//Chemin vers le dossier racine du site
+
+require_once(ROOT.DS.'core'.DS.'koeZion'.DS.'system'.DS.'constants.php');
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //01/08/2012 - Rajout d'un test pour savoir si le site est correctement paramétré
 //Si le fichier database n'existe pas cela veut dire que le site n'est pas correctement paramétré
 //il faut donc rediriger vers le dossier d'installation
-if(!file_exists(CONFIGS.DS.'files'.DS.'database.ini')) {
+if(!file_exists(CONFIGS_FILES.DS.'database.ini')) {
 	
-	require_once KOEZION.DS.'router.php'; //Chargement de l'object Router (Analyse des Urls)
+	require_once SYSTEM.DS.'router.php'; //Chargement de l'object Router (Analyse des Urls)
 	header("Location:".Router::url('/install',''));
 	die();
 }
 
-require_once KOEZION.DS.'bootstrap.php'; //Premier fichier lancé par l'application
+require_once SYSTEM.DS.'bootstrap.php'; //Premier fichier lancé par l'application
 
 //21/08/2015 by FI - Rajout du filtrage des crawlers 
 /////////////////////////////////
@@ -58,7 +67,7 @@ if(defined('FILTERING_CRAWLERS') && FILTERING_CRAWLERS) {
 		if($refererCheck || $ipCheck) {
 	    	
 			header("HTTP/1.0 404 Not Found"); //On lance une erreur 404
-	        readfile('crawlers404.php'); //On charge le fichier qui affiche l'erreur
+	        readfile(SYSTEM.DS.'crawlers404.php'); //On charge le fichier qui affiche l'erreur
 	        die; //On ne permet pas l'exécution du code situé après cette instruction
 		}
 	}

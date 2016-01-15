@@ -2,9 +2,9 @@
 function load_lib() {
 			
 	require_once(CAKEPHP.DS.'inflector.php');
-	require_once(KOEZION.DS.'router.php');
-	require_once(KOEZION.DS.'object.php');
-	require_once(KOEZION.DS.'model.php');
+	require_once(SYSTEM.DS.'router.php');
+	require_once(SYSTEM.DS.'object.php');
+	require_once(SYSTEM.DS.'model.php');
 }
 
 function init_templates() {

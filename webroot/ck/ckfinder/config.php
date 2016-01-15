@@ -10,19 +10,19 @@ define('CONFIGS', ROOT.DS.'configs'); //Chemin vers le dossier config
 
 define('CORE', ROOT.DS.'core'); //Chemin vers le coeur de l'application
 define('CAKEPHP', CORE.DS.'CakePhp'); //Chemin vers les librairies koeZion
-define('KOEZION', CORE.DS.'Koezion'); //Chemin vers les librairies koeZion
+define('SYSTEM', CORE.DS.'koeZion'.DS.'system'); //Chemin vers les librairies koeZion
 define('LIBS', CORE.DS.'Libs'); //Chemin vers les librairies diverses
 
 define('TMP', ROOT.DS.'tmp'); //Chemin vers le dossier temporaire
 
 require_once CAKEPHP.DS.'inflector.php'; //On charge le composant
 require_once CAKEPHP.DS.'set.php'; //On charge le composant
-require_once KOEZION.DS.'session.php'; //On charge le composant
+require_once SYSTEM.DS.'session.php'; //On charge le composant
 Session::init();
 
 //Récupération des configurations du système
 //require_once(LIBS.DS.'config_magik.php'); //Import de la librairie de gestion des fichiers de configuration
-//$cfg 			= new ConfigMagik(CONFIGS.DS.'files'.DS.'core.ini', true, false);
+//$cfg 			= new ConfigMagik(CONFIGS_FILES.DS.'core.ini', true, false);
 //$coreConfigs 	= $cfg->keys_values();
 
 /*
