@@ -18,10 +18,6 @@
  * @version		0.2 - 14/01/2016 by FI - Modification du chargement du fichier des constantes suite à le refonte complète du système de chargement et de stockage des fichiers
  */
 
-define('DS', 		DIRECTORY_SEPARATOR); 	//Définition du séparateur dans le cas ou l'on est sur windows ou linux
-define('WEBROOT', 	dirname(__FILE__)); 	//Chemin vers le dossier webroot
-define('ROOT', 		dirname(WEBROOT)); 		//Chemin vers le dossier racine du site
-
 ////////////////////////////////////////////////////////////////////////////////////
 //   MISE EN PLACE DES CONSTANTES VERS LES DIFFERENTS DOSSIERS (CHEMINS ASSOLUS)  //
 ////////////////////////////////////////////////////////////////////////////////////

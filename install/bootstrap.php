@@ -6,7 +6,7 @@ define('DS', 		DIRECTORY_SEPARATOR); 			//Définition du séparateur dans le cas
 define('ROOT', 		dirname(dirname(__FILE__))); 	//Chemin vers le dossier racine du site
 define('WEBROOT', 	ROOT.DS.'webroot'); 			//Chemin vers le dossier webroot
 
-require_once ROOT.DS.'core'.DS.'koeZion'.DS.'system'.DS.'constants.php';
+require_once WEBROOT.DS.'constants.php';
 
 ////////////////////////////////////////////////////////////////
 //   CHARGEMENT DES LIBRAIRIES UTILISEES POUR L'INSTALLATION  //

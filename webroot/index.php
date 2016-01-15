@@ -19,6 +19,10 @@
  */
 //$debut = microtime(true);
 
+define('DS', 		DIRECTORY_SEPARATOR); 	//Définition du séparateur dans le cas ou l'on est sur windows ou linux
+define('WEBROOT', 	dirname(__FILE__)); 	//Chemin vers le dossier webroot
+define('ROOT', 		dirname(WEBROOT)); 		//Chemin vers le dossier racine du site
+
 require_once 'constants.php';
 
 //01/08/2012 - Rajout d'un test pour savoir si le site est correctement paramétré
