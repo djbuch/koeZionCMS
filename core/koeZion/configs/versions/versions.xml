@@ -1,6 +1,16 @@
 ﻿<versions>
 	<version checkpoint="true">
 		<name>Version du 15/01/2016</name>
+		<num>20160115.003</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Reprise du fichier de gestion des constantes</task>
+			<task author="FI" type="code">Reprise du fichier index.php</task>
+			<task author="FI" type="code">Reprise du fichier core/koeZion/system/crawlers.php pour gérer l'exclusion des différents crawlers</task>
+		</tasks>
+	</version>
+	<version checkpoint="true">
+		<name>Version du 15/01/2016</name>
 		<num>20160115.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
