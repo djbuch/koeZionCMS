@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version checkpoint="true">
 		<name>Version du 15/01/2016</name>
+		<num>20160115.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Reprise du processus d'installation</task>
+		</tasks>
+	</version>
+	<version checkpoint="true">
+		<name>Version du 15/01/2016</name>
 		<num>20160115.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

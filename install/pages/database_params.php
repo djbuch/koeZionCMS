@@ -16,16 +16,16 @@ if(isset($_POST['valid_database_form']) && $_POST['valid_database_form']) {
 	unset($_POST['valid_database_form']);
 	$datas = $_POST; //Création d'une variable contenant les données postées
 
-	require_once(INSTALL_VALIDATE.DS.'database.php'); //Inclusion des règles de validation des champs
+	require_once INSTALL_VALIDATE.DS.'database.php'; //Inclusion des règles de validation des champs
 	
 	//Si pas d'erreur de validation
 	if(!isset($formerrors)) {
 			
-		require_once(INSTALL_FUNCTIONS.DS.'database.php'); //Inclusion des fonctions de paramétrage de la base de données
+		require_once INSTALL_FUNCTIONS.DS.'database.php'; //Inclusion des fonctions de paramétrage de la base de données
 		$bddcheck = check_connexion($datas['host'], $datas['login'], $datas['password'], $datas['database']); //On check la connexion à la bdd
 		if($bddcheck) {
 			
-			require_once(LIBS.DS.'config_magik.php'); //Import de la librairie de gestion des fichiers de configuration
+			require_once LIBS.DS.'config_magik.php'; //Import de la librairie de gestion des fichiers de configuration
 			$cfg = new ConfigMagik(CONFIGS_FILES.DS.'database.ini', true, true); //Création d'une instance, si le fichier database.ini n'existe pas il sera créé
 			
 			
@@ -49,7 +49,7 @@ if(isset($_POST['valid_database_form']) && $_POST['valid_database_form']) {
 		<form action="index.php?step=database_params" method="post">
 			<div class="box-body">
 				<div class="callout callout-warning"><?php echo ("ATTENTION : La base de données doit être crée avant de procéder aux paramétrages."); ?></div>
-				<?php require_once(INSTALL_INCLUDE.DS.'database_form.php'); ?>
+				<?php require_once INSTALL_INCLUDE.DS.'database_form.php'; ?>
 			</div>	
 			<div class="box-footer">
 				<button class="btn btn-primary btn-flat pull-right" type="submit"><?php echo _('Tester la connexion à la base de données'); ?></button>
@@ -67,7 +67,7 @@ if(isset($_POST['valid_database_form']) && $_POST['valid_database_form']) {
 				<div class="box-body">
 					<div class="callout callout-warning"><?php echo ("ATTENTION : La base de données doit être crée avant de procéder aux paramétrages."); ?></div>
 					<div class="callout callout-danger"><?php echo ("Impossible de se connecter à la base de données avec les informations communiquées, veuillez recommencer."); ?></div>
-					<?php require_once(INSTALL_INCLUDE.DS.'database_form.php'); ?>
+					<?php require_once INSTALL_INCLUDE.DS.'database_form.php'; ?>
 				</div>
 				<div class="box-footer">
 					<button class="btn btn-primary btn-flat pull-right" type="submit"><?php echo _('Tester la connexion à la base de données'); ?></button>

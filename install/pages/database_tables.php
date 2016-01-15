@@ -10,12 +10,12 @@ if(isset($_POST['section']) && !empty($_POST['section'])) {
 	if($httpHost == 'localhost' || $httpHost == '127.0.0.1') { $section = 'localhost';	} else { $section = 'online'; }
 }
 
-require_once(LIBS.DS.'config_magik.php'); //Import de la librairie de gestion des fichiers de configuration
+require_once LIBS.DS.'config_magik.php'; //Import de la librairie de gestion des fichiers de configuration
 $cfg = new ConfigMagik(CONFIGS_FILES.DS.'database.ini', true, true); //Création d'une instance, si le fichier database.ini n'existe pas il sera créé
 $conf = $cfg->keys_values($section);
 
 //On va procéder à l'import
-require_once(INSTALL_FUNCTIONS.DS.'database.php'); //Inclusion des fonctions de paramétrage de la base de données
+require_once INSTALL_FUNCTIONS.DS.'database.php'; //Inclusion des fonctions de paramétrage de la base de données
 $start = 1;
 $foffset = 0;
 $totalqueries = 0;

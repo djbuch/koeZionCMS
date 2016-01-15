@@ -34,8 +34,6 @@
 	define('UPLOAD', WEBROOT.DS.'upload'); 				//Chemin vers le dossier upload
 
 
-
-
 	define('CONFIGS_FILES', ROOT.DS.'configs'.DS.'files'); //Chemin vers le dossier des .ini
 	define('CONFIGS_HOOKS', ROOT.DS.'configs'.DS.'hooks'); //Chemin vers le dossier des hooks
 	define('CONFIGS_PLUGINS', ROOT.DS.'configs'.DS.'plugins'); //Chemin vers le dossier des plugins
@@ -73,7 +71,11 @@ define('KOEZION', CORE.DS.'koeZion'); //Chemin vers les librairies de Koezion
 /////////////////////////////////////////////////
 	
 
-define('INSTALL_FILES', ROOT.DS.'install'.DS.'files'); //Chemin vers le dossier des traductions
+define('INSTALL', ROOT.DS.'install'); //Chemin vers le dossier des traductions
+	define('INSTALL_FILES', INSTALL.DS.'files'); //Chemin vers le dossier des traductions
+	define('INSTALL_FUNCTIONS', INSTALL.DS.'functions'); 	//Chemin vers les fichiers contenants les fonctions
+	define('INSTALL_INCLUDE', INSTALL.DS.'include'); 		//Chemin vers les fichiers include de configuration
+	define('INSTALL_VALIDATE', INSTALL.DS.'validate'); 	//Chemin vers les fichiers de validation
 	
 define('PLUGINS', ROOT.DS.'plugins'); //Chemin vers le dossier des plugins	
 	
@@ -82,6 +84,7 @@ define('TMP', ROOT.DS.'tmp'); //Chemin vers le dossier temporaire
 	define('LOGS', TMP.DS.'logs'); //Chemin vers le dossier logs
 
 define('VENDORS', ROOT.DS.'vendors'); //Chemin vers le dossier vendors
+
 
 ////////////////////////////////////////////////////////////////////////////////////	
 	

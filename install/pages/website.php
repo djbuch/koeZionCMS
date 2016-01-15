@@ -1,5 +1,5 @@
 <?php 
-require_once(INSTALL_FUNCTIONS.DS.'website.php'); //Inclusion des fonctions de paramétrage de la base de données
+require_once INSTALL_FUNCTIONS.DS.'website.php'; //Inclusion des fonctions de paramétrage de la base de données
 $templatesList = init_templates();
 
 $process_website = 0;
@@ -8,7 +8,7 @@ if(isset($_POST) && !empty($_POST)) {
 	
 	$datas = $_POST; //Création d'une variable contenant les données postées
 
-	require_once(INSTALL_VALIDATE.DS.'website.php'); //Inclusion des règles de validation des champs
+	require_once INSTALL_VALIDATE.DS.'website.php'; //Inclusion des règles de validation des champs
 	
 	//Si pas d'erreur de validation
 	if(!isset($formerrors)) {

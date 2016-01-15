@@ -53,7 +53,7 @@ $folders = array(
 		
 	//DOSSIER WEBROOT
 	array(
-		'checkFolder' 	=> WEBROOT_FILES,
+		'checkFolder' 	=> FILES,
 		'txtFolder' 	=> DS.'webroot'.DS.'files',
 		'check'			=> 'chmod'			
 	),
@@ -63,7 +63,7 @@ $folders = array(
 		'check'			=> 'chmod'			
 	),
 	array(
-		'checkFolder' 	=> WEBROOT_UPLOAD,
+		'checkFolder' 	=> UPLOAD,
 		'txtFolder' 	=> DS.'webroot'.DS.'upload',
 		'check'			=> 'chmod'
 	)
@@ -117,13 +117,13 @@ $folders = array(
 		///////////////////////////////////////////////////
 		//   CREATION DES DOSSIERS DANS WEBROOT/UPLOAD   //
 		$foldersToCreate = array(
-				WEBROOT_UPLOAD.DS.'_thumbs',
-				WEBROOT_UPLOAD.DS.'_thumbs'.DS.'Files',
-				WEBROOT_UPLOAD.DS.'_thumbs'.DS.'Flash',
-				WEBROOT_UPLOAD.DS.'_thumbs'.DS.'Images',
-				WEBROOT_UPLOAD.DS.'files',
-				WEBROOT_UPLOAD.DS.'flash',
-				WEBROOT_UPLOAD.DS.'images'
+				UPLOAD.DS.'_thumbs',
+				UPLOAD.DS.'_thumbs'.DS.'Files',
+				UPLOAD.DS.'_thumbs'.DS.'Flash',
+				UPLOAD.DS.'_thumbs'.DS.'Images',
+				UPLOAD.DS.'files',
+				UPLOAD.DS.'flash',
+				UPLOAD.DS.'images'
 		);
 		foreach($foldersToCreate as $folder) { FileAndDir::createPath($folder); }
 		
