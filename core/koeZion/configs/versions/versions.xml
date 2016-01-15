@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version checkpoint="true">
 		<name>Version du 15/01/2016</name>
+		<num>20160115.004</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise en place de la possibilité de réécrire l'ensemble des constantes de base de l'application</task>
+		</tasks>
+	</version>
+	<version checkpoint="true">
+		<name>Version du 15/01/2016</name>
 		<num>20160115.003</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

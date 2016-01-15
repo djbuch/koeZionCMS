@@ -19,15 +19,7 @@
  */
 //$debut = microtime(true);
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//    DEFINITION DU CHEMIN ET CHARGEMENT DE LA LIBRAIRIE CONTENANT L'ENSEMBLE DES CONSTANTES DU SYSTEME    //
-//14/01/2016 - Modification du chargement du fichier des constantes suite à le refonte complète du système de chargement et de stockage des fichiers
-define('DS', 		DIRECTORY_SEPARATOR); 	//Définition du séparateur dans le cas ou l'on est sur windows ou linux
-define('WEBROOT', 	dirname(__FILE__)); 	//Chemin vers le dossier webroot
-define('ROOT', 		dirname(WEBROOT)); 		//Chemin vers le dossier racine du site
-
-require_once(ROOT.DS.'core'.DS.'koeZion'.DS.'system'.DS.'constants.php');
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+require_once 'constants.php';
 
 //01/08/2012 - Rajout d'un test pour savoir si le site est correctement paramétré
 //Si le fichier database n'existe pas cela veut dire que le site n'est pas correctement paramétré
