@@ -43,7 +43,7 @@ Router::connect('recherche', 							'searchs/index');															//Résultat 
 
 ////////////////////////////////////////////////
 //   REGLES ADDITIONNELLES POUR LES PLUGINS   //
-$moreRoutes = CONFIGS.DS.'plugins'.DS.'routes';
+$moreRoutes = CONFIGS_PLUGINS.DS.'routes';
 if(is_dir($moreRoutes)) {
 
 	foreach(FileAndDir::directoryContent($moreRoutes) as $moreRoute) { require_once($moreRoutes.DS.$moreRoute); }

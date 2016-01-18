@@ -36,7 +36,7 @@ class Request {
 		if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') { $protocol = 'https'; }
 		
 		//Mise en place d'un hook pour la récupération des données url et fullUrl car sur certains serveurs (JAG) le fonctionnement diffère
-		$hookRequestFile = CONFIGS.DS.'hooks'.DS.'request'.DS.$_SERVER['SERVER_ADDR'].'.php';
+		$hookRequestFile = CONFIGS_HOOKS.DS.'request'.DS.$_SERVER['SERVER_ADDR'].'.php';
 		if(file_exists($hookRequestFile)) { require_once($hookRequestFile); }
 		else {
 			

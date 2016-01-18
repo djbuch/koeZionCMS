@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version checkpoint="true">
+		<name>Version du 18/01/2016</name>
+		<num>20160118.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Changement de CONFIGS.DS.'plugins' par CONFIGS_PLUGINS</task>
+		</tasks>
+	</version>
+	<version checkpoint="true">
 		<name>Version du 15/01/2016</name>
 		<num>20160115.006</num>
 		<supervisor>KoéZionCMS</supervisor>

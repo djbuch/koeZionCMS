@@ -66,7 +66,7 @@ require_once SYSTEM.DS.'dispatcher.php'; //Chargement du Dispatcher
 
 /////////////////////////////////////////////
 //   FICHIERS BOOTSTRAP POUR LES PLUGINS   //
-$moreBootstraps = CONFIGS.DS.'plugins'.DS.'bootstrap';
+$moreBootstraps = CONFIGS_PLUGINS.DS.'bootstrap';
 if(is_dir($moreBootstraps)) {
 
 	foreach(FileAndDir::directoryContent($moreBootstraps) as $moreBootstrap) { require_once($moreBootstraps.DS.$moreBootstrap); }

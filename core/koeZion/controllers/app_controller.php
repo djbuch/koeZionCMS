@@ -503,7 +503,7 @@ class AppController extends Controller {
 		
 		/////////////////////////////////////////////////////////////////////////////////////////
 		//   REGLES ADDITIONNELLES POUR LA RECUPERATION DES LIENS A GENERER POUR LES PLUGINS   //
-		$moreLinks = CONFIGS.DS.'plugins'.DS.'ckeditor'.DS.'get_links';
+		$moreLinks = CONFIGS_PLUGINS.DS.'ckeditor'.DS.'get_links';
 		if(is_dir($moreLinks)) {
 		
 			foreach(FileAndDir::directoryContent($moreLinks) as $moreLink) { require_once($moreLinks.DS.$moreLink); }

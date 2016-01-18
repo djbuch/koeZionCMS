@@ -21,7 +21,7 @@ foreach($posts as $k => $v) {
 
 /////////////////////////////////////////////////////////////////////////////
 //   REGLES ADDITIONNELLES POUR LA generation DES LIENS POUR LES PLUGINS   //
-$moreLinks = CONFIGS.DS.'plugins'.DS.'ckeditor'.DS.'generate_links';
+$moreLinks = CONFIGS_PLUGINS.DS.'ckeditor'.DS.'generate_links';
 if(is_dir($moreLinks)) {
 
 	foreach(FileAndDir::directoryContent($moreLinks) as $moreLink) { require_once($moreLinks.DS.$moreLink); }

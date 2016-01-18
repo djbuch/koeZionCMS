@@ -64,7 +64,7 @@ $Errorsmessages['UnwantedCrawler']['name'] = _('La valeur de ce champ est de 2 c
 
 ////////////////////////////////////////////
 //   MESSAGES D'ERREURS SUPPLEMENTAIRES   //
-$moreMessages = CONFIGS.DS.'plugins'.DS.'errors_messages';
+$moreMessages = CONFIGS_PLUGINS.DS.'errors_messages';
 if(is_dir($moreMessages)) {
 
 	foreach(FileAndDir::directoryContent($moreMessages) as $moreMessage) {

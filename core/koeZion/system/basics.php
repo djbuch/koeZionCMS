@@ -154,7 +154,7 @@
 	function get_plugins_connectors() {
 
 		$pluginsConnectors = array();
-		$pluginsConnectorsPath = CONFIGS.DS.'plugins'.DS.'connectors';
+		$pluginsConnectorsPath = CONFIGS_PLUGINS.DS.'connectors';
 		if(is_dir($pluginsConnectorsPath)) {
 		
 			foreach(FileAndDir::directoryContent($pluginsConnectorsPath) as $pluginsConnectorsFile) { include($pluginsConnectorsPath.DS.$pluginsConnectorsFile); }			
