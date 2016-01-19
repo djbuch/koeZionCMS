@@ -1,4 +1,12 @@
 ﻿<versions>
+	<version>
+		<name>Version du 19/01/2016</name>
+		<num>20160119.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="SS" type="code">Fix bug explorateur de fichier backoffice</task>
+		</tasks>
+	</version>
 	<version checkpoint="true">
 		<name>Version du 18/01/2016</name>
 		<num>20160118.001</num>
