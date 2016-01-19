@@ -1,10 +1,14 @@
 <?php
+define('DS', 		DIRECTORY_SEPARATOR); 	//Définition du séparateur dans le cas ou l'on est sur windows ou linux
+define('ROOT', dirname(dirname(dirname(dirname(__FILE__))))); 		//Chemin vers le dossier racine du site
+define('WEBROOT', 	ROOT.DS."webroot"); 	//Chemin vers le dossier webroot
+
+require_once WEBROOT.DS.'constants.php';
 
 ////////////////////////////////////////////////////////////////////////////////
 //   CHARGEMENT DES ELEMENTS NECESSAIRES AU BON FONCTIONNEMENT DES SESSIONS   //
+/*
 define('DS', DIRECTORY_SEPARATOR); //Définition du séparateur dans le cas ou l'on est sur windows ou linux
-
-define('ROOT', dirname(dirname(dirname(dirname(__FILE__)))));
 
 define('CONFIGS', ROOT.DS.'configs'); //Chemin vers le dossier config
 
@@ -14,6 +18,7 @@ define('SYSTEM', CORE.DS.'koeZion'.DS.'system'); //Chemin vers les librairies ko
 define('LIBS', CORE.DS.'Libs'); //Chemin vers les librairies diverses
 
 define('TMP', ROOT.DS.'tmp'); //Chemin vers le dossier temporaire
+*/
 
 require_once CAKEPHP.DS.'inflector.php'; //On charge le composant
 require_once CAKEPHP.DS.'set.php'; //On charge le composant
