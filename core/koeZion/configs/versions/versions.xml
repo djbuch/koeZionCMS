@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 19/01/2016</name>
+		<num>20160119.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">View::element : Rajout de l'interface dans le test de récupération d'un hook</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 19/01/2016</name>
 		<num>20160119.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

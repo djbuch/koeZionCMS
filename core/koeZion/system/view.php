@@ -256,6 +256,7 @@ class View extends Object {
  * @version 0.7 - 21/01/2015 by FI - Réorganisation de la fonction pour une gestion plus souple des hooks éléments plugins (BO)
  * @version 0.8 - 26/08/2015 by FI - Modification du chemin des éléments backoffice
  * @version 0.9 - 14/09/2015 by FI - Modification de la gestion des vaiables complémentaires passées à l'élément, on ne globalise plus en les ajoutant à $this->vars
+ * @version 1.0 - 19/01/2016 by FI - Rajout de l'interface dans le test de récupération d'un hook
  */
     public function element($element, $vars = null, $isPlugin = false) {
     	
@@ -265,7 +266,7 @@ class View extends Object {
     		extract($vars); 
     	}    	
     	extract($this->vars);   
-    	    	
+    					
     	/////////////////////
     	// CAS DES PLUGINS //
     	//On est dans le cas d'un plugin si la variable $this->controller->params['pluginFolder'] existe
@@ -298,6 +299,7 @@ class View extends Object {
     	$elementsHooks = $this->load_hooks_files('ELEMENTS', $websiteHooks);
     	
     	if(isset($elementsHooks[$element])) { $element = $elementsHooks[$element]; }
+    	if(isset($elementsHooks[INTERFACE_USED.'/'.$element])) { $element = $elementsHooks[INTERFACE_USED.'/'.$element]; } //On rajoute ce cas car dans le cas ou le backoffice et le frontoffice auraient deux éléments de même nom cela nous permet d'en faire la distinction
     	else if(isset($elementHook) && isset($elementsHooks[$elementHook])) { $element = $elementsHooks[$elementHook]; }
     	////////////////////////////////////////////////////////////
     	
