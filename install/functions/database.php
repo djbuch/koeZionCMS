@@ -1,8 +1,5 @@
-<?php 
-
+<?php
 /**
- * function check_connexion
- * 
  * Cette fonction va permettre d'effectuer un test de connexion à la base de donnée
  *
  * @param	varchar	$host		Adresse du serveur
@@ -37,9 +34,7 @@
 		} else { return false; }
 	}
 
-/**
- * function init_db
- * 
+/** 
  * Cette fonction va permettre à l'initialisation des tables et des données de la base
  *
  * @param	varchar	$db_host		Adresse du serveur

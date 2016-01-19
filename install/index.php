@@ -1,5 +1,5 @@
 <?php 
-require_once('bootstrap.php'); //Fichier chargé de loader les librairies et initialiser les constantes 
+require_once 'bootstrap.php'; //Fichier chargé de loader les librairies et initialiser les constantes 
 
 //Si on récupère la page à afficher dans l'url, par défaut on charge la page de configuration des dossiers
 if(!isset($_GET['step'])) { $step = 'folders'; }
@@ -61,7 +61,7 @@ $stepTitle = array(
 								<div class="col-md-9 right">		
 									<div class="tab-content col-md-12">
 										<div class="tab-pane active">
-											<?php include_once('pages/'.$step.'.php'); //Chargement de la page ?>
+											<?php include_once 'pages/'.$step.'.php'; //Chargement de la page ?>
 										</div>
 									</div>
 								</div>
