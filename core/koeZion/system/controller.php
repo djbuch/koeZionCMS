@@ -66,6 +66,7 @@ class Controller extends Object {
  * @version 0.4 - 07/09/2012 by FI - Chargement systématique du model
  * @version 0.5 - 20/10/2013 by AB - Rajout de la gestion du dossier du plugin
  * @version 0.6 - 04/01/2014 by FI - Mise en place du système de chargement des models supplémentaires
+ * @version 0.7 - 20/01/2016 by FI - Reprise de la gestion du chargement des plugins pour rajouter le dossier de stockage dans le cas d'une réécriture de celui-ci
  */
 	function __construct($request = null, $beforeFilter = true) {
 		
@@ -79,6 +80,7 @@ class Controller extends Object {
 		$modelName = Inflector::singularize($controllerName); //Création du nom du model		
 		if($this->auto_load_model) { $this->load_model($modelName); } //Si la variable de chargement automatique du model est à vrai chargement du model
 		if($this->moreModels) { 
+			
 			foreach($this->moreModels as $modelToLoad) { $this->load_model($modelToLoad); }
 		}	
 		
@@ -115,11 +117,16 @@ class Controller extends Object {
 			$activatePlugins = $this->Plugin->find(array('conditions' => array('online' => 1, 'installed' => 1)));
 			foreach($activatePlugins as $k => $v) {
 				
+				//On recherche un fichier connecteur rattaché au plugin que l'on est en train de traiter
+				if(file_exists(TMP.DS.'rewrite'.DS.'connectors'.DS.$v['code'].'_connectors.php')) { include TMP.DS.'rewrite'.DS.'connectors'.DS.$v['code'].'_connectors.php'; } 
+				else { $pluginPath = PLUGINS; }
+				
 				$pluginName = Inflector::camelize($v['code']);
 				$pluginsList[$pluginName] = array(
 					'controllerClass' => $pluginName.'Controller',
 					'pluginClass' => $pluginName.'Plugin',
-					'code' => $v['code']
+					'code' => $v['code'],
+					'path' => $pluginPath
 				);
 			}
 			
@@ -206,10 +213,10 @@ class Controller extends Object {
 		//GESTION DU CHARGEMENT DES PLUGINS ET DE LEURS INITIALISATION//
 		//On va récupérer la liste des plugins actifs et charger les fichier
 		if(isset($this->plugins) && !empty($this->plugins)) {
-			
+						
 			foreach($this->plugins as $pluginName => $pluginInfos) {
-		
-				$pluginFile = PLUGINS.DS.$pluginInfos['code'].DS.'plugin.php';
+				
+				$pluginFile = $pluginInfos['path'].DS.$pluginInfos['code'].DS.'plugin.php';
 				if(file_exists($pluginFile)) {
 		
 					require_once($pluginFile); //Chargement du fichier

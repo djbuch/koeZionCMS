@@ -54,6 +54,7 @@ class Object {
  * @version 0.5 - 16/07/2015 by FI - Mise en place des hooks modèles
  * @version 0.6 - 22/09/2015 by FI - Rajout de isset($this->request->fullUrl)
  * @version 0.7 - 14/01/2016 by FI - Modification de la variable contenant le chemin d'accès au dossier des modèles
+ * @version 0.8 - 20/01/2016 by FI - Modification de la gestion du dossier de stockage des plugins
  */
 	public function load_model($name, $return = false, $databaseConfigs = null) {
 		
@@ -77,10 +78,11 @@ class Object {
 			if(isset($pluginsConnectors[$pluginUnderscoreName])) {
 					
 				$connectorModel = $pluginsConnectors[$pluginUnderscoreName];
-				$file_path_plugin = PLUGINS.DS.$connectorModel.DS.'models'.DS.$file_name;	
+		
+				$file_path_plugin = $connectorModel['plugin_path'].DS.$connectorModel['plugin_folder'].DS.'models'.DS.$file_name;
 				
 				//Chargement de l'éventuel fichier supplémentaire pour les models
-				$pluginModelBoostrap = PLUGINS.DS.$connectorModel.DS.'model.php';
+				$pluginModelBoostrap = $connectorModel['plugin_path'].DS.$connectorModel['plugin_folder'].DS.'model.php';
 				if(file_exists($pluginModelBoostrap)) { require_once($pluginModelBoostrap); }
 			}
 			//////////////////////////////////////////////		

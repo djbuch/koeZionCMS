@@ -161,7 +161,7 @@ class View extends Object {
 	    	//////////////////////////////////////////////
 	    	//   RECUPERATION DES CONNECTEURS PLUGINS   //
 	    	$pluginsConnectors = get_plugins_connectors();
-	    	if(isset($pluginsConnectors[$params['controllerFileName']])) { $potentialPluginControllerName = Inflector::camelize($pluginsConnectors[$params['controllerFileName']]); }
+	    	if(isset($pluginsConnectors[$params['controllerFileName']])) { $potentialPluginControllerName = Inflector::camelize($pluginsConnectors[$params['controllerFileName']]['plugin_folder']); }
 	    	//////////////////////////////////////////////
 	    		    	
 	    	if(isset($pluginsList[$potentialPluginControllerName])) {
@@ -171,7 +171,7 @@ class View extends Object {
 	    		//Si la variable existe (Elle n'existe que pour le front)
 	    		//Redéfinition du chemin des vues en fonction du template
 	    		if(isset($this->vars['websiteParams'])) {  $view = $alternativeView; } //Le travail est déjà fait plus haut
-	    		else { $view = PLUGINS.DS.$pluginInfos['code'].DS.'views'.DS.$params['controllerFileName'].DS.$this->view.'.php'; }
+	    		else { $view = $pluginsConnectors[$params['controllerFileName']]['plugin_path'].DS.$pluginInfos['code'].DS.'views'.DS.$params['controllerFileName'].DS.$this->view.'.php'; }
 	    	}	 
     	}
 	
@@ -257,6 +257,7 @@ class View extends Object {
  * @version 0.8 - 26/08/2015 by FI - Modification du chemin des éléments backoffice
  * @version 0.9 - 14/09/2015 by FI - Modification de la gestion des vaiables complémentaires passées à l'élément, on ne globalise plus en les ajoutant à $this->vars
  * @version 1.0 - 19/01/2016 by FI - Rajout de l'interface dans le test de récupération d'un hook
+ * @version 1.1 - 20/01/2016 by FI - Gestion des dossiers de stockage des plugins
  */
     public function element($element, $vars = null, $isPlugin = false) {
     	
@@ -266,14 +267,15 @@ class View extends Object {
     		extract($vars); 
     	}    	
     	extract($this->vars);   
-    					
+    					    	
     	/////////////////////
     	// CAS DES PLUGINS //
     	//On est dans le cas d'un plugin si la variable $this->controller->params['pluginFolder'] existe
     	if($isPlugin && isset($this->controller->params['pluginFolder']) && !empty($this->controller->params['pluginFolder'])) { 
     		
+    		$pluginData = $this->controller->plugins[Inflector::camelize($this->controller->params['pluginFolder'])];
     		$elementHook = $this->controller->params['pluginFolder'].'/views/elements/'.$this->controller->params['controllerFileName'].'/'.$element;
-    		$element = PLUGINS.'/'.$this->controller->params['pluginFolder'].'/views/elements/'.$this->controller->params['controllerFileName'].'/'.$element;	
+    		$element = $pluginData['path'].'/'.$this->controller->params['pluginFolder'].'/views/elements/'.$this->controller->params['controllerFileName'].'/'.$element;	
     	} 
     	
     	////////////////////////////////////////////////////////////
@@ -429,13 +431,14 @@ class View extends Object {
 		//   RECUPERATION DES CONNECTEURS PLUGINS   //
 		//Les connecteurs sont utilisés pour la correspondance entre les plugins et les dossiers des plugins
 		$pluginsConnectors = get_plugins_connectors();
+				
 		if(isset($pluginsConnectors[$controllerName])) {
-			
-			$this->request->pluginFolder = $sFolderPlugin = $pluginsConnectors[$controllerName]; //Récupération du dossier du plugin si le controller appellé est dans un connector d'un plugin
-			$controller_path = PLUGINS.DS.$sFolderPlugin.DS.'controllers'.DS.$controllerName.'_controller.php';
+
+			$this->request->pluginFolder = $sFolderPlugin = $pluginsConnectors[$controllerName]['plugin_folder']; //Récupération du dossier du plugin si le controller appellé est dans un connector d'un plugin
+			$controller_path = $pluginsConnectors[$controllerName]['plugin_path'].DS.$sFolderPlugin.DS.'controllers'.DS.$controllerName.'_controller.php';
 			$controller_name = strtolower($controllerName.'_plugin_controller');
 		} else { $controller_name = strtolower($controllerName.'_controller'); }
-		//////////////////////////////////////////////
+		//////////////////////////////////////////////	
 		
 		if(file_exists($controller_path)) { 
 			

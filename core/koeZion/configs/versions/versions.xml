@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 20/01/2016</name>
+		<num>20160120.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Reprise de la gestion de la récupération du dossier de stockage des plugins</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 19/01/2016</name>
 		<num>20160119.002</num>
 		<supervisor>KoéZionCMS</supervisor>

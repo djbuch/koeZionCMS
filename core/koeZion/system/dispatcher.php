@@ -153,10 +153,11 @@ class Dispatcher extends Object {
 		//   RECUPERATION DES CONNECTEURS PLUGINS   //
 		//Les connecteurs sont utilisés pour la correspondance entre les plugins et les dossiers des plugins
 		$pluginsConnectors = get_plugins_connectors();
+			
 		if(isset($pluginsConnectors[$this->request->controller])) {
 			
-			$this->request->pluginFolder = $folderPlugin = $pluginsConnectors[$this->request->controller]; //Récupération du dossier du plugin si le controller appellé est dans un connector d'un plugin
-			$controllerPath = PLUGINS.DS.$folderPlugin.DS.'controllers'.DS.$controllerName.'.php';
+			$this->request->pluginFolder = $folderPlugin = $pluginsConnectors[$this->request->controller]['plugin_folder']; //Récupération du dossier du plugin si le controller appellé est dans un connector d'un plugin
+			$controllerPath = $pluginsConnectors[$this->request->controller]['plugin_path'].DS.$folderPlugin.DS.'controllers'.DS.$controllerName.'.php';
 			$controllerName = strtolower($this->request->controller.'_plugin_controller');
 		}
 		//////////////////////////////////////////////
@@ -190,10 +191,10 @@ class Dispatcher extends Object {
 			
 		} else { 
 
-			if(isset($folderPlugin)) { $message = "Le controller du plugin ".$this->request->controller." n'existe pas"." dans le fichier dispatcher ou n'est pas correctement installé"; }
+			/*if(isset($folderPlugin)) { $message = "Le controller du plugin ".$this->request->controller." n'existe pas"." dans le fichier dispatcher ou n'est pas correctement installé"; }
 			else { $message = "Le controller ".$this->request->controller." n'existe pas"." dans le fichier dispatcher"; }
 			$this->error($message);
-			die();	
+			die();*/	
 		}
 	}	
 		

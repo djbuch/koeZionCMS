@@ -5,7 +5,7 @@
  */
 	function pr($var, $start = null, $end = null, $die = 0) {
 		
-		if(Configure::read('debug') > 0) {			
+		//if(Configure::read('debug') > 0) {			
 			
 			$debug = debug_backtrace();
 			
@@ -31,7 +31,7 @@
 			echo '</div>';
 			
 			if($die) { die(); }
-		}
+		//}
 	}
 
 /**
@@ -151,16 +151,43 @@
 		return $data ;
 	}*/
 	
+/**
+ * Cette fonction permet de récupérer l'ensemble des données de paramétrage des connecteurs de plugin
+ * 
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 20/01/2015 by FI 
+ */	
 	function get_plugins_connectors() {
 
 		$pluginsConnectors = array();
 		$pluginsConnectorsPath = CONFIGS_PLUGINS.DS.'connectors';
 		if(is_dir($pluginsConnectorsPath)) {
 		
-			foreach(FileAndDir::directoryContent($pluginsConnectorsPath) as $pluginsConnectorsFile) { include($pluginsConnectorsPath.DS.$pluginsConnectorsFile); }			
+			foreach(FileAndDir::directoryContent($pluginsConnectorsPath) as $pluginsConnectorsFile) { 
+				
+				//Si le fichier alternatif existe on le charge
+				if(file_exists(TMP.DS.'rewrite'.DS.'connectors'.DS.$pluginsConnectorsFile)) { include(TMP.DS.'rewrite'.DS.'connectors'.DS.$pluginsConnectorsFile); }
+				else { include($pluginsConnectorsPath.DS.$pluginsConnectorsFile); } 
+			}			
 		}
 		
-		return $pluginsConnectors;
+		//On formate le tableau des connecteurs
+		$pluginsConnectorsFormat = array();
+		foreach($pluginsConnectors as $k => $v) {
+			
+			//Si on ne récupère pas de tableau du connecteur cela veut dire qu'il ne faut pas redéfinir le dossier de stockage on le force donc avec PLUGINS
+			if(!is_array($v)) { 
+				
+				$pluginsConnectorsFormat[$k] = array(
+					'plugin_folder' => $v,
+					'plugin_path' => PLUGINS
+				);
+			}
+			else { $pluginsConnectorsFormat[$k] = $v; } //Sinon on récupère les données stockées dans le fichier			
+		}
+		
+		return $pluginsConnectorsFormat;
 	}
 	
 /**
