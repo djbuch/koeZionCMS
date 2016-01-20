@@ -28,7 +28,7 @@
 	//Utile pour modifier le chemin vers le dossier core par exemple...
 	//Par défaut le conseil du jour est de copier EXACTEMENT le code qui se trouve entre les {} du else et de ne modifier que ce dont vous avez besoin.
 	//Ne surtout PAS SUPPRIMER de constante sous peine de voir votre application planter
-	if(file_exists(ROOT.DS.'tmp'.DS.'rewrite'.DS.'constants_rewrite.php')) { require_once ROOT.DS.'tmp'.DS.'rewrite'.DS.'constants_rewrite.php'; }
+	if(file_exists(ROOT.DS.'tmp'.DS.'rewrite'.DS.'constants.php')) { require_once ROOT.DS.'tmp'.DS.'rewrite'.DS.'constants.php'; }
 	else {
 
 		///////////////////////////
