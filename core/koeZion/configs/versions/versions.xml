@@ -1,5 +1,45 @@
 ﻿<versions>
 	<version>
+		<name>Version du 21/01/2016</name>
+		<num>20160121.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Rajout du dossier tmp/rewrite/connectors</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 20/01/2016</name>
+		<num>20160120.003</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Redéfinition du chemin de stockage pour la surcharge des constantes</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 20/01/2016</name>
+		<num>20160120.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Redéfinition du chemin de stockage pour la surcharge des constantes</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 20/01/2016</name>
+		<num>20160120.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Reprise de la gestion de la récupération du dossier de stockage des plugins</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 19/01/2016</name>
+		<num>20160119.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">View::element : Rajout de l'interface dans le test de récupération d'un hook</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 19/01/2016</name>
 		<num>20160119.001</num>
 		<supervisor>KoéZionCMS</supervisor>
