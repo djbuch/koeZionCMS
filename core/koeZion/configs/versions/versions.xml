@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 21/01/2016</name>
+		<num>20160121.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Rajout du dossier tmp/rewrite/connectors</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 20/01/2016</name>
 		<num>20160120.003</num>
 		<supervisor>KoéZionCMS</supervisor>
