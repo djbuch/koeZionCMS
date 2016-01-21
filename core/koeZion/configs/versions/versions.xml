@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 21/01/2016</name>
+		<num>20160121.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Model::only_one_email : rajout de la règle de validation</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 21/01/2016</name>
 		<num>20160121.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

@@ -2206,4 +2206,32 @@ class Model extends Object {
 			FileAndDir::put(TMP.DS.'logs'.DS.'models'.DS.$date.'.log', $traceSql, FILE_APPEND);
 		}
 	}
+	
+//////////////////////////////////////////////////////	
+//				CALLBACK DE VALIDATION				//	
+//////////////////////////////////////////////////////
+	
+/**
+ * Cette fonction permet de contrôler qu'un email n'est pas déjà utilisé
+ * 
+ * @var 	integer $val Valeur du champ
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 21/01/2016 by FI
+ */	
+	public function only_one_email($val) {
+		
+		$modelDatas = $this->datas; //Données postées
+		
+		$conditions = array('email' => $val);
+		if(isset($modelDatas['id'])) {
+			
+			$conditions['id'] = array(
+				'operator' => '!=',
+				'value' => $modelDatas['id']
+			);			
+		}
+		
+		return !$this->findCount($conditions);
+	}
 }
