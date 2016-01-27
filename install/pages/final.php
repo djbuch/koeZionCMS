@@ -1,10 +1,10 @@
 <?php 
 if(isset($_GET['action']) && $_GET['action'] == 'sendmail') {
 	
-	require_once(CAKEPHP.DS.'inflector.php');
-	require_once(KOEZION.DS.'object.php');
-	require_once(KOEZION.DS.'model.php');
-	require_once(MODELS.DS.'website.php');
+	require_once CAKEPHP.DS.'inflector.php';
+	require_once SYSTEM.DS.'object.php';
+	require_once SYSTEM.DS.'model.php';
+	require_once MODELS.DS.'website.php';
 	
 	$message = 'Adresse : ';
 	

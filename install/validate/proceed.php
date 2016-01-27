@@ -1,5 +1,5 @@
 <?php 
-require_once(KOEZION.DS.'validation.php'); //Inclusion de la librairie de validation
+require_once(SYSTEM.DS.'validation.php'); //Inclusion de la librairie de validation
 $validation = new Validation();
 
 foreach($validate as $k => $v) { //On va parcourir tous les champs à valider

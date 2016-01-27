@@ -37,7 +37,7 @@
 			$websiteUrl = Session::read('Backoffice.Websites.details.'.CURRENT_WEBSITE_ID.'.url');
 			
 			require_once(LIBS.DS.'config_magik.php');
-			$cfg = new ConfigMagik(CONFIGS.DS.'files'.DS.'security_code.ini', true, false);
+			$cfg = new ConfigMagik(CONFIGS_FILES.DS.'security_code.ini', true, false);
 			$updateCode = $cfg->keys_values();
 			
 			if(empty($updateCode['security_code'])) {
