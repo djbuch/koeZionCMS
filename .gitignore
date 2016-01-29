@@ -1,5 +1,6 @@
 .buildpath
 .project
+.idea/*
 !empty
 !.htaccess
 _*.*
