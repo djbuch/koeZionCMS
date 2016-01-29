@@ -20,12 +20,12 @@ $cfg = new ConfigMagik(CONFIGS_FILES.DS.'routes.ini', true, false); 	//Création
 $routesConfigs = $cfg->keys_values();										//Récupération des configurations
 
 //On va créer une constante pour stocker la valeur par défaut du préfixe lors de l'ajout d'un post
-define('POST_PREFIX', $routesConfigs['posts_prefix_singular']);
+define('POST_PREFIX', (isset($routesConfigs['posts_prefix_singular']) ? $routesConfigs['posts_prefix_singular'] : ''));
 
 // Définition des différents préfixes de l'application
 // Ici le préfixe backoffice et identifié par le mot renseigné dans le fichiers de configuration .ini
 
-Router::prefix($routesConfigs['backoffice_prefix'], 'backoffice'); //Définition du prefixe backoffice
+if(isset($routesConfigs['backoffice_prefix'])) { Router::prefix($routesConfigs['backoffice_prefix'], 'backoffice'); } //Définition du prefixe backoffice
 
 // Définition des différentes routes de l'application
 // 
@@ -57,7 +57,7 @@ Router::connect(':slug-:id', 							'categories/view/id:([0-9]+)/slug:([a-zA-Z0-
 ///////////////////////////
 //   REGLES BACKOFFICE   //
 Router::connect('connexion', 'users/login'); 																	//Connexion au backoffice
-Router::connect($routesConfigs['backoffice_prefix'], $routesConfigs['backoffice_prefix'].'/dashboard/index'); 	//Accueil backoffice
+if(isset($routesConfigs['backoffice_prefix'])) { Router::connect($routesConfigs['backoffice_prefix'], $routesConfigs['backoffice_prefix'].'/dashboard/index'); } 	//Accueil backoffice
 ///////////////////////////
 
 // Pense bête : 

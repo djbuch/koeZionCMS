@@ -607,11 +607,11 @@ class Set {
 		}
 
 		if (!is_array($path)) {
-			if(!class_exists('String')) {
+			if(!class_exists('Strings')) {
 				//App::import('Core', 'String');
 				require_once(CAKEPHP.DS.'string.php');
 			}
-			$path = String::tokenize($path, '.', '{', '}');
+			$path = Strings::tokenize($path, '.', '{', '}');
 		}
 		$tmp = array();
 
