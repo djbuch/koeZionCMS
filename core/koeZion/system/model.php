@@ -125,6 +125,12 @@ class Model extends Object {
 			$cfg = new ConfigMagik(CONFIGS_FILES.DS.'database.ini', true, true); //Création d'une instance
 			$conf = $cfg->keys_values($section); //Récupération des configurations en fonction du nom de domaine (Ancienne version : $conf = $cfg->keys_values($_SERVER["HTTP_HOST"], 1);)
 		}
+		$conf['source'] = (isset($conf['source']) ? $conf['source'] : null);
+		$conf['host'] = (isset($conf['host']) ? $conf['host'] : null);
+		$conf['database'] = (isset($conf['database']) ? $conf['database'] : null);
+		$conf['login'] = (isset($conf['login']) ? $conf['login'] : null);
+		$conf['password'] = (isset($conf['password']) ? $conf['password'] : null);
+		$conf['prefix'] = (isset($conf['prefix']) ? $conf['prefix'] : null);
 		
 		//$conf['source'] = "mysql";
 		

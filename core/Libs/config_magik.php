@@ -34,7 +34,7 @@ class ConfigMagik{
 	* @param  bool $process_sections TRUE or FALSE to enable or disable sections in your ini-file (enabled by default).
 	* @return void Returns nothing, like any other constructor-method .
 	*/
-	function ConfigMagik( $path=null, $synchronize=false, $process_sections=true){
+	function __construct( $path=null, $synchronize=false, $process_sections=true){
 		// check whether to enable processing-sections or not
 		if ( isset( $process_sections)) $this->PROCESS_SECTIONS = $process_sections;
 		// check whether to enable synchronisation or not
