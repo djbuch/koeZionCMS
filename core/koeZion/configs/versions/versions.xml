@@ -8,6 +8,14 @@
 		</tasks>
 	</version>
 	<version>
+		<name>Version du 27/01/2016</name>
+		<num>20160127.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Correction d'un warning dans le paginator helper</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 21/01/2016</name>
 		<num>20160121.001</num>
 		<supervisor>KoéZionCMS</supervisor>
