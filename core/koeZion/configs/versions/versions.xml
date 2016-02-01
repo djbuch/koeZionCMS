@@ -8,6 +8,14 @@
 		</tasks>
 	</version>
 	<version>
+		<name>Version du 29/01/2016</name>
+		<num>20160129.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="SS" type="code">MAJ gitignore</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 28/01/2016</name>
 		<num>20160128.001</num>
 		<supervisor>KoéZionCMS</supervisor>
