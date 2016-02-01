@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 01/02/2016</name>
+		<num>20160201.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="SS" type="code">Fix bug helpers parent html</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 01/02/2016</name>
 		<num>20160201.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

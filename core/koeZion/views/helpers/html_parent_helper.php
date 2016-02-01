@@ -97,6 +97,7 @@ class HtmlParentHelper extends Helper {
  * @version 0.9 - 06/08/2015 by SS : Correction dédoublonnage du tableau $css et si la valeur $css n'est pas vide
  * @version 1.0 - 14/08/2015 by FI : Mise en place de la gestion du protocole
  * @version 1.1 - 07/09/2015 by FI : Gestion des fichers externes via https
+ * @version 1.2 - 01/02/2016 by SS : Fix bug si $css contient un sous tableau
  */	
 	public function css($css, $inline = false, $merge = true, $minified = false) {	
 		
@@ -108,8 +109,13 @@ class HtmlParentHelper extends Helper {
 				$css = am($css, $this->css); //On récupère les les éventuels CSS qui sont dans la variable de classe
 				$this->css = array(); //On vide le tableau dans le cas ou d'autres insertions seraient prévues
 			}
-			
-			$css = array_unique($css);
+
+			$css1 = array();
+			$css2 = array();
+			foreach($css as $k => $v) { if(is_array($v)) { $css2[] = $v; } else { $css1[] = $v; } }
+			if(!empty($css1)) { $css1 = array_unique($css1); }
+			$css = array();
+			$css = am($css1, $css2);
 			
 			$html = ''; //Code HTML qui sera retourné
 			foreach($css as $k => $v) { //Parcours de l'ensemble des fichiers
@@ -125,10 +131,7 @@ class HtmlParentHelper extends Helper {
 						if(isset($v['rel'])) { $cssRel = $v['rel']; } 
 						if(isset($v['type'])) { $cssType = $v['type']; } 
 						if(isset($v['media'])) { $cssMedia = $v['media']; }					
-					} else {
-						
-						$cssHref = $v;
-					}
+					} else { $cssHref = $v; }
 					
 					
 					//On va vérifier si le css n'est pas externe
