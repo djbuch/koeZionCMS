@@ -65,6 +65,14 @@ require_once SYSTEM.DS.'koezion_plugin.php'; //Classe Plugin
 require_once SYSTEM.DS.'dispatcher.php'; //Chargement du Dispatcher
 
 /////////////////////////////////////////////
+//   FICHIERS CONSTANTS POUR LES PLUGINS   //
+$moreConstants = CONFIGS_PLUGINS.DS.'constants';
+if(is_dir($moreConstants)) {
+
+	foreach(FileAndDir::directoryContent($moreConstants) as $moreConstant) { require_once($moreConstants.DS.$moreConstant); }
+}
+
+/////////////////////////////////////////////
 //   FICHIERS BOOTSTRAP POUR LES PLUGINS   //
 $moreBootstraps = CONFIGS_PLUGINS.DS.'bootstrap';
 if(is_dir($moreBootstraps)) {
