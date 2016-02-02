@@ -1350,7 +1350,7 @@ class Model extends Object {
 				} else if($this->validAllFields) { //Par défaut on n'impose pas la validation de tous les champs
 					
 					if(!isset($v['rule'])) { $v = current($v); } //Dans le cas ou on a plusieurs règles de validation on récupère la première
-					if(Set::check($Errorsmessages, $v['message'])) { $errors[$k] = Set::classicExtract($Errorsmessages, $v['message']); }
+					if(isset($Errorsmessages) && Set::check($Errorsmessages, $v['message'])) { $errors[$k] = Set::classicExtract($Errorsmessages, $v['message']); }
 					else { $errors[$k] = $v['message']; }
 				}
 			}
@@ -2047,7 +2047,7 @@ class Model extends Object {
 		//On injecte le message en cas d'erreur
 		if(!$isValid && !$allowEmpty) {
 		
-			if(Set::check($Errorsmessages, $validationRule['message'])) { $errors[$insertErrorIn] = Set::classicExtract($Errorsmessages, $validationRule['message']); }
+			if(isset($Errorsmessages) && Set::check($Errorsmessages, $validationRule['message'])) { $errors[$insertErrorIn] = Set::classicExtract($Errorsmessages, $validationRule['message']); }
 			else { $errors[$insertErrorIn] = $validationRule['message']; }
 		}
 		

@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 02/02/2016</name>
+		<num>20160202.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="SS" type="code">Fix bugs PHP</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 01/02/2016</name>
 		<num>20160201.002</num>
 		<supervisor>KoéZionCMS</supervisor>

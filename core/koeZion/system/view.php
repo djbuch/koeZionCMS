@@ -156,23 +156,32 @@ class View extends Object {
 	    	//On adopte un comportement par défaut pour le rendu des vues des plugins
 	    	//On va les chercher dans le dossier du plugin, puis dans le dossier views, puis dans le dossier du controlleur
 	    	$pluginsList = $this->controller->plugins;
-	    	$potentialPluginControllerName = Inflector::camelize($params['controllerName']);
-	    	
-	    	//////////////////////////////////////////////
-	    	//   RECUPERATION DES CONNECTEURS PLUGINS   //
-	    	$pluginsConnectors = get_plugins_connectors();
-	    	if(isset($pluginsConnectors[$params['controllerFileName']])) { $potentialPluginControllerName = Inflector::camelize($pluginsConnectors[$params['controllerFileName']]['plugin_folder']); }
-	    	//////////////////////////////////////////////
-	    		    	
-	    	if(isset($pluginsList[$potentialPluginControllerName])) {
-	    		
-	    		$pluginInfos = $pluginsList[$potentialPluginControllerName];    		    		
-	    		    		
-	    		//Si la variable existe (Elle n'existe que pour le front)
-	    		//Redéfinition du chemin des vues en fonction du template
-	    		if(isset($this->vars['websiteParams'])) {  $view = $alternativeView; } //Le travail est déjà fait plus haut
-	    		else { $view = $pluginsConnectors[$params['controllerFileName']]['plugin_path'].DS.$pluginInfos['code'].DS.'views'.DS.$params['controllerFileName'].DS.$this->view.'.php'; }
-	    	}	 
+	    	if(isset($params['controllerName'])) {
+
+				$potentialPluginControllerName = Inflector::camelize($params['controllerName']);
+
+				//////////////////////////////////////////////
+				//   RECUPERATION DES CONNECTEURS PLUGINS   //
+				$pluginsConnectors = get_plugins_connectors();
+				if (isset($pluginsConnectors[$params['controllerFileName']])) {
+					$potentialPluginControllerName = Inflector::camelize($pluginsConnectors[$params['controllerFileName']]['plugin_folder']);
+				}
+				//////////////////////////////////////////////
+
+				if (isset($pluginsList[$potentialPluginControllerName])) {
+
+					$pluginInfos = $pluginsList[$potentialPluginControllerName];
+
+					//Si la variable existe (Elle n'existe que pour le front)
+					//Redéfinition du chemin des vues en fonction du template
+					if (isset($this->vars['websiteParams'])) {
+						$view = $alternativeView;
+					} //Le travail est déjà fait plus haut
+					else {
+						$view = $pluginsConnectors[$params['controllerFileName']]['plugin_path'] . DS . $pluginInfos['code'] . DS . 'views' . DS . $params['controllerFileName'] . DS . $this->view . '.php';
+					}
+				}
+			}
     	}
 	
     	////////////////////////////////////////////////////////
@@ -448,7 +457,8 @@ class View extends Object {
 				$pluginsList = Cache::exists_cache_file(TMP.DS.'cache'.DS.'variables'.DS.'Plugins'.DS, "plugins");
 				$pluginControllerToLoad = Inflector::camelize($sFolderPlugin);
 				if(!isset($pluginsList[$pluginControllerToLoad])) {
-				
+
+					$message = "Le controller du plugin ".$controllerToLoad." n'existe pas"." dans le fichier dispatcher ou n'est pas correctement installé";
 					Session::write('redirectMessage', $message);
 					$this->redirect('home/e404');
 					die();
