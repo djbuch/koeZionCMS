@@ -228,10 +228,9 @@ class View extends Object {
     	if(file_exists($view)) { require_once($view); } //Chargement de la vue
     	else {
     		
-    		pr($view);
-    		/*Session::write('redirectMessage', "View::render : Impossible de charger la vue ".$view);
+    		Session::write('redirectMessage', "View::render : Impossible de charger la vue ".$view);
     		$this->redirect('home/e404');
-    		die();*/
+    		die();
     		
     	}
     	$content_for_layout = ob_get_clean(); //On stocke dans cette variable le contenu de la vue   	
