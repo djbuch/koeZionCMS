@@ -225,7 +225,15 @@ class View extends Object {
     	//if(isset($viewsHooks[$params['controllerVarName'].'/'.$params['action']])) { $view = $viewsHooks[$params['controllerVarName'].'/'.$params['action']]; }
     	    	
     	ob_start(); //On va récupérer dans une variable le contenu de la vue pour l'affichage dans la variable layout_for_content
-    	if(file_exists($view)) require_once($view); //Chargement de la vue
+    	if(file_exists($view)) { require_once($view); } //Chargement de la vue
+    	else {
+    		
+    		pr($view);
+    		/*Session::write('redirectMessage', "View::render : Impossible de charger la vue ".$view);
+    		$this->redirect('home/e404');
+    		die();*/
+    		
+    	}
     	$content_for_layout = ob_get_clean(); //On stocke dans cette variable le contenu de la vue   	
     	
     	///////////////////////////////////////////////////////

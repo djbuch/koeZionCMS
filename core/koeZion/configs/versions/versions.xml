@@ -1,13 +1,20 @@
 ﻿<versions>
 	<version>
 		<name>Version du 05/02/2016</name>
+		<num>20160205.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">View::render : Gestion de l'erreur lorsque la vue n'est pas dispobible</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 05/02/2016</name>
 		<num>20160205.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="FI" type="code">Rajout des fichiers de constantes de plugins dans le bootstrap</task>
 			<task author="FI" type="code">Correction commentaire dans le dispatcher</task>
 			<task author="FI" type="code">Modification de la gestion de l'upload de l'image d'illustration des posts</task>
-		
 		</tasks>
 	</version>
 	<version>
