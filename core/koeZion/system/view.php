@@ -113,6 +113,7 @@ class View extends Object {
  * @version 0.8 - 26/08/2015 by FI - Suppression de la variable $inViewsFolder passée en paramètre et modification du chemin de la vue backoffice 
  * @version 0.9 - 17/09/2015 by FI - Rajout d'un contrôle supplémentaire sur la vue à charger pour vérifier si le fichier demandé n'existe pas dans l'arborescence 
  * @version 1.0 - 07/10/2015 by FI - Rajout d'un contrôle supplémentaire si on indique un chemin de fichier complet
+ * @version 1.1 - 05/02/2016 by FI - Gestion de l'erreur lorsque la vue n'est pas dispobible
  * @todo IMPORTANT essayer de voir pourquoi si on retire le file_exists($view) la fonction export du plugin formulaire ne marche plus!!!
  * @todo Essayer d'améliorer l'ajout de websitebaseurl dans le template car il est inséré juste après la récupération de la vue --> supprimé le 25/06/2013 rajouté directement dans le template
  */    
@@ -226,9 +227,9 @@ class View extends Object {
     	    	
     	ob_start(); //On va récupérer dans une variable le contenu de la vue pour l'affichage dans la variable layout_for_content
     	if(file_exists($view)) { require_once($view); } //Chargement de la vue
-    	else {
+		else {
     		
-    		Session::write('redirectMessage', "View::render : Impossible de charger la vue ".$view);
+    		Session::write('redirectMessage', "View::render : Impossible de charger la vue");
     		$this->redirect('home/e404');
     		die();
     		
