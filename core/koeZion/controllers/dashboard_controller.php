@@ -49,7 +49,7 @@ class DashboardController extends AppController {
 			$cmsMessage = array('Pas de nouveaux messages');
 			try {
 				
-				$cmsMessageTemp = $clientSOAP->__soapCall('get_messages', array('host' => $_SERVER["HTTP_HOST"]), null, null, $output);
+				$cmsMessageTemp = $clientSOAP->__soapCall('get_messages', array('host' => $_SERVER["HTTP_HOST"]));
 								
 				if(!is_soap_fault($cmsMessageTemp)) { $cmsMessage = $cmsMessageTemp; } 
 				else { /*ERREUR*/ }
@@ -299,7 +299,7 @@ class DashboardController extends AppController {
 		$cmsVersion = array('localVersion' => $localVersion, 'remoteVersion' => 'inconnu');
 		try {
 	
-			$cmsVersionTemp = $clientSOAP->__soapCall('get_version', array('file' => 'versions.xml', 'localVersion' => $localVersion), null, null, $output);
+			$cmsVersionTemp = $clientSOAP->__soapCall('get_version', array('file' => 'versions.xml', 'localVersion' => $localVersion));
 			if(!is_soap_fault($cmsVersionTemp)) {
 				$cmsVersion = $cmsVersionTemp;
 			}
@@ -314,7 +314,7 @@ class DashboardController extends AppController {
 		$bddVersion = array('localVersion' => $localVersion, 'remoteVersion' => 'inconnu');
 		try {
 	
-			$bddVersionTemp = $clientSOAP->__soapCall('get_version', array('file' => 'versions_bdd.xml', 'localVersion' => $localVersion), null, null, $output);
+			$bddVersionTemp = $clientSOAP->__soapCall('get_version', array('file' => 'versions_bdd.xml', 'localVersion' => $localVersion));
 			if(!is_soap_fault($bddVersionTemp)) {
 				$bddVersion = $bddVersionTemp;
 			}

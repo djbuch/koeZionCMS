@@ -7,6 +7,23 @@
 			<task author="FI" type="code">Rajout des fichiers de constantes de plugins dans le bootstrap</task>
 			<task author="FI" type="code">Correction commentaire dans le dispatcher</task>
 			<task author="FI" type="code">Modification de la gestion de l'upload de l'image d'illustration des posts</task>
+		
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 02/02/2016</name>
+		<num>20160202.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="SS" type="code">Fix bugs PHP</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 01/02/2016</name>
+		<num>20160201.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="SS" type="code">Fix bug helpers parent html</task>
 		</tasks>
 	</version>
 	<version>
