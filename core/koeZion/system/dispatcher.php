@@ -191,10 +191,10 @@ class Dispatcher extends Object {
 			
 		} else { 
 
-			/*if(isset($folderPlugin)) { $message = "Le controller du plugin ".$this->request->controller." n'existe pas"." dans le fichier dispatcher ou n'est pas correctement installé"; }
+			if(isset($folderPlugin)) { $message = "Le controller du plugin ".$this->request->controller." n'existe pas"." dans le fichier dispatcher ou n'est pas correctement installé"; }
 			else { $message = "Le controller ".$this->request->controller." n'existe pas"." dans le fichier dispatcher"; }
 			$this->error($message);
-			die();*/	
+			die();
 		}
 	}	
 		

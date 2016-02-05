@@ -168,7 +168,8 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
 							if(!isset($formulaires)) { $formulaires = array (2 => _('Formulaire commentaire article')); } 
 							echo $helpers['Form']->input('display_form', _('Formulaire'), array('type' => 'select', 'datas' => $formulaires, 'tooltip' => _("Indiquez le formulaire que vous souhaitez afficher sur la page"), 'firstElementList' => _("Sélectionnez un formulaire")));					
 							echo $helpers['Form']->input('shooting_time', _("Durée de réalisation"), array('tooltip' => _("Indiquez la durée de réalisation de ce qui sera présenté dans cet article")));
-							echo $helpers['Form']->input('img', _('image'), array('type' => 'file', 'class' => 'input-file', 'tooltip' => _("Cliquez sur le bouton pour télécharger votre image d'illustration. Attention : Mode RVB, Résolution 72dpi")));
+							//echo $helpers['Form']->input('img', _('image'), array('type' => 'file', 'class' => 'input-file', 'tooltip' => _("Cliquez sur le bouton pour télécharger votre image d'illustration. Attention : Mode RVB, Résolution 72dpi")));
+							$helpers['Form']->upload_files('illustration', array('label' => _("Image d'illustration")));
 							echo $helpers['Form']->input('publication_start_date', _('Date de publication'), array('wrapperDivClass' => 'form-group no_border_bottom', 'class' => 'form-control datepicker', 'placeholder' => 'dd.mm.yy', 'tooltip' => _("Indiquez la date à laquelle cet article sera publié"))); 
 							?>
 							<div class="row">
