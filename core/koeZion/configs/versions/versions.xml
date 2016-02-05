@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 05/02/2016</name>
+		<num>20160205.003</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise en place de la vue pour la connexion au BO</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 05/02/2016</name>
 		<num>20160205.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

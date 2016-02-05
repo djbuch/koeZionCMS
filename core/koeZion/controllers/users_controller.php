@@ -38,6 +38,7 @@ class UsersController extends AppController {
 	function login() {		
 		
 		$this->layout = WEBROOT.DS.'templates'.DS.BACKOFFICE_TEMPLATE.DS.'views'.DS.'layout'.DS.'connect'; //Définition du layout	
+		$this->view = WEBROOT.DS.'templates'.DS.BACKOFFICE_TEMPLATE.DS.'views'.DS.'users'.DS.'login'; //Définition du layout	
 			
 		if($this->request->data) {
 			
