@@ -1,5 +1,18 @@
 ﻿<versions>
 	<version>
+		<name>Version du 09/02/2016</name>
+		<num>20160209.001</num>
+		<supervisor>KoéZionCMS</supervisor>		
+		<tasks>
+			<task author="FI">			
+				ALTER TABLE `right_buttons` 
+				ADD `display_all_pages` INT NOT NULL AFTER `display_home_page`
+				ADD `display_all_pages_top` INT NOT NULL AFTER `display_all_pages`
+				;
+			</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 05/02/2016</name>
 		<num>20160205.001</num>
 		<supervisor>KoéZionCMS</supervisor>		

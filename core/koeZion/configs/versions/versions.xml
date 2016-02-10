@@ -1,5 +1,21 @@
 ﻿<versions>
 	<version>
+		<name>Version du 10/02/2016</name>
+		<num>20160210.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="bdd">CategoriesController::_get_right_buttons_category : Reprise de la récupération des données suite au rajout de la gestion des boutons sur toutes les pages</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 09/02/2016</name>
+		<num>20160209.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="bdd">Rajout de champs dans la table right_buttons</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 05/02/2016</name>
 		<num>20160205.003</num>
 		<supervisor>KoéZionCMS</supervisor>

@@ -10,7 +10,7 @@ class Validation {
  * @access private
  */
 	var $__pattern = array(
-		'hostname' => '(?:[a-z0-9][-a-z0-9]*\.)*(?:[a-z0-9][-a-z0-9]{0,62})\.(?:(?:[a-z]{2}\.)?[a-z]{2,4}|museum|travel)'
+		'hostname' => '(?:[a-z0-9][-a-z0-9]*\.)*(?:[a-z0-9][-a-z0-9]{0,62})\.(?:(?:[a-z]{2}\.)?[a-z]{2,5}|museum|travel)'
 	);	
 	
 	function __construct($model = null) { $this->model = $model; }

@@ -227,13 +227,13 @@ class View extends Object {
     	    	
     	ob_start(); //On va récupérer dans une variable le contenu de la vue pour l'affichage dans la variable layout_for_content
     	if(file_exists($view)) { require_once($view); } //Chargement de la vue
-		else {
+		/*else {
     		
     		Session::write('redirectMessage', "View::render : Impossible de charger la vue");
     		$this->redirect('home/e404');
     		die();
     		
-    	}
+    	}*/
     	$content_for_layout = ob_get_clean(); //On stocke dans cette variable le contenu de la vue   	
     	
     	///////////////////////////////////////////////////////

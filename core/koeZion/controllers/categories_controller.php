@@ -695,9 +695,10 @@ class CategoriesController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 02/10/2012 by FI
  * @version 0.2 - 24/04/2015 by FI - Gestion de la traduction
+ * @version 0.3 - 10/02/2016 by FI - Reprise de la récupération des données suite au rajout de la gestion des boutons sur toutes les pages
  */		
-	protected function _get_right_buttons_category($datas) {
-					
+	protected function _get_right_buttons_category($datas) {		
+		
 		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS;
 		
 		//On contrôle si le modèle est traduit
@@ -708,24 +709,42 @@ class CategoriesController extends AppController {
 		$rightButtonsCategory = Cache::exists_cache_file($cacheFolder, $cacheFile);
 		
 		if(!$rightButtonsCategory) {
-		
-			$this->CategoriesRightButton->primaryKey = 'category_id'; //Pour éviter les erreurs à l'exécution
-			$rightButtonsConditions = array('category_id' => $datas['category']['id']);
-			$nbRightButtons = $this->CategoriesRightButton->findCount($rightButtonsConditions);
 			
-			if($nbRightButtons) {
-	
-				$this->load_model('RightButton');
-				
-				//récupération des données
-				$rightButtonsList = $this->CategoriesRightButton->find(array('conditions' => $rightButtonsConditions, 'order' => 'order_by ASC'));
-				foreach($rightButtonsList as $k => $rightButton) {
-					
-					$rightButtonsCategory[$rightButton['position']][] = $this->RightButton->findFirst(array('conditions' => array('id' => $rightButton['right_button_id'])));
-				}
-				
-				Cache::create_cache_file($cacheFolder, $cacheFile, $rightButtonsCategory);
-			} else { $rightButtonsCategory = array(); }			
+			//1- Récupération des boutons qui doivent être présents sur toutes les pages
+			$this->load_model('RightButton');
+			$rightsButtonsAllPages = $this->RightButton->find(array(
+				'fields' => array('content', 'display_all_pages_top', 'order_by'),
+				'conditions' => array(
+					'display_all_pages' => 1,
+					'online' => 1
+				),
+				'orderBy' => 'order_by ASC'
+			));
+			foreach($rightsButtonsAllPages as $rightsButtonsAllPage) { $rightButtonsCategory[$rightsButtonsAllPage['display_all_pages_top']][] = array('content' => $rightsButtonsAllPage['content']); }
+			
+			//2- Récupération des boutons de la page en cours de consultation
+			$this->load_model('CategoriesRightButton');
+			$rightsButtonsPages = $this->CategoriesRightButton->find(array(
+				"conditions" => array('category_id' => $datas['category']['id']),
+				"fields" => am(				
+					array(
+						"position" => "KzCategoriesRightButton.position",
+						"order_by" => "KzCategoriesRightButton.order_by"
+					),
+					array("content" => "KzRightButton.content")
+				),
+				"leftJoin" => array(
+					array(
+						"model" => "RightButton",
+						"pivot" => "KzCategoriesRightButton.right_button_id = KzRightButton.id"
+					)
+				),
+				'orderBy' => 'order_by ASC'
+			));
+			foreach($rightsButtonsPages as $rightsButtonsPage) { $rightButtonsCategory[$rightsButtonsPage['position']][] = array('content' => $rightsButtonsPage['content']); }
+			
+			//Mise en cache
+			Cache::create_cache_file($cacheFolder, $cacheFile, $rightButtonsCategory);	
 		}		
 		
 		$datas['rightButtons'] = $rightButtonsCategory;		
