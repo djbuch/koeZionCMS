@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 10/02/2016</name>
+		<num>20160210.003</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="bdd">Reprise du formulaire d'installation utilisé pour la mise en place de la connexion à la base de données</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 10/02/2016</name>
 		<num>20160210.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

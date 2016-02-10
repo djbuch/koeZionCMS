@@ -27,7 +27,7 @@
 	<?php if(isset($formerrors['database']) && !empty($formerrors['database'])) { ?><label class="error"><?php foreach($formerrors['database'] as $rule => $error) { echo $error.'<br />'; } ?></label><?php } ?>
 </div>
 <div class="form-group <?php if(isset($formerrors['port']) && !empty($formerrors['port'])) { echo 'has-error'; } ?>">
-	<label><?php echo ("Database Name"); ?></label>
+	<label><?php echo ("Port"); ?></label>
 	<input type="text" value="<?php echo isset($datas['port']) ? $datas['port'] : '' ?>" name="port" class="form-control" />
 	<?php if(isset($formerrors['port']) && !empty($formerrors['port'])) { ?><label class="error"><?php foreach($formerrors['port'] as $rule => $error) { echo $error.'<br />'; } ?></label><?php } ?>
 </div>
