@@ -35,7 +35,7 @@
 										echo $helpers['Form']->input('localhost.database', _('Nom de la base de données'), array('tooltip' => _("Indiquez ici le nom de la base de données")));			 
 										echo $helpers['Form']->input('localhost.login', _('Identifiant'), array('tooltip' => _("Indiquez ici l'identifiant de connexion à la base de données")));			 
 										echo $helpers['Form']->input('localhost.password', _('Mot de passe'), array('tooltip' => _("indiquez ici le mot de passe de connexion à la base de données"), 'type' => 'password'));			 
-										echo $helpers['Form']->input('localhost.prefix', _('Préfix des tables'), array('tooltip' => _("Si vos tables sont préfixées indiquez ici le préfixe (par exemple blog_)")));	
+										//echo $helpers['Form']->input('localhost.prefix', _('Préfix des tables'), array('tooltip' => _("Si vos tables sont préfixées indiquez ici le préfixe (par exemple blog_)")));	
 										echo $helpers['Form']->input('localhost.port', _('Port'), array('tooltip' => _("Indiquez ici le port de connexion")));	
 										echo $helpers['Form']->input('localhost.source', _('Source'), array('tooltip' => _("Indiquez ici la source par exemple mysql"), "value" => "mysql"));	
 										?>
@@ -50,7 +50,7 @@
 										echo $helpers['Form']->input('online.database', _('Nom de la base de données'), array('tooltip' => _("Indiquez ici le nom de la base de données")));			 
 										echo $helpers['Form']->input('online.login', _('Identifiant'), array('tooltip' => _("Indiquez ici l'identifiant de connexion à la base de données")));			 
 										echo $helpers['Form']->input('online.password', _('Mot de passe'), array('tooltip' => _("indiquez ici le mot de passe de connexion à la base de données"), 'type' => 'password'));			 
-										echo $helpers['Form']->input('online.prefix', _('Préfix des tables'), array('tooltip' => _("Si vos tables sont préfixées indiquez ici le préfixe (par exemple blog_)")));	
+										//echo $helpers['Form']->input('online.prefix', _('Préfix des tables'), array('tooltip' => _("Si vos tables sont préfixées indiquez ici le préfixe (par exemple blog_)")));	
 										echo $helpers['Form']->input('online.port', _('Port'), array('tooltip' => _("Indiquez ici le port de connexion")));		
 										echo $helpers['Form']->input('online.source', _('Source'), array('tooltip' => _("Indiquez ici la source par exemple mysql"), "value" => "mysql")); 
 										?>

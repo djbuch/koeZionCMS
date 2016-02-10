@@ -6,6 +6,11 @@
 	<input type="text" value="<?php echo isset($datas['host']) ? $datas['host'] : 'localhost' ?>" name="host" class="form-control" />
 	<?php if(isset($formerrors['host']) && !empty($formerrors['host'])) { ?><label class="error"><?php foreach($formerrors['host'] as $rule => $error) { echo $error.'<br />'; } ?></label><?php } ?>
 </div>
+<div class="form-group <?php if(isset($formerrors['socket']) && !empty($formerrors['socket'])) { echo 'has-error'; } ?>">
+	<label><?php echo ("Connexion via socket"); ?></label>
+	<input type="text" value="<?php echo isset($datas['socket']) ? $datas['socket'] : '' ?>" name="socket" class="form-control" />
+	<?php if(isset($formerrors['socket']) && !empty($formerrors['socket'])) { ?><label class="error"><?php foreach($formerrors['socket'] as $rule => $error) { echo $error.'<br />'; } ?></label><?php } ?>
+</div>
 <div class="form-group <?php if(isset($formerrors['login']) && !empty($formerrors['login'])) { echo 'has-error'; } ?>">
 	<label><?php echo ("Database Username"); ?></label>
 	<input type="text" value="<?php echo isset($datas['login']) ? $datas['login'] : 'root' ?>" name="login" class="form-control" />
@@ -21,15 +26,13 @@
 	<input type="text" value="<?php echo isset($datas['database']) ? $datas['database'] : 'koezion' ?>" name="database" class="form-control" />
 	<?php if(isset($formerrors['database']) && !empty($formerrors['database'])) { ?><label class="error"><?php foreach($formerrors['database'] as $rule => $error) { echo $error.'<br />'; } ?></label><?php } ?>
 </div>
+<div class="form-group <?php if(isset($formerrors['port']) && !empty($formerrors['port'])) { echo 'has-error'; } ?>">
+	<label><?php echo ("Database Name"); ?></label>
+	<input type="text" value="<?php echo isset($datas['port']) ? $datas['port'] : '' ?>" name="port" class="form-control" />
+	<?php if(isset($formerrors['port']) && !empty($formerrors['port'])) { ?><label class="error"><?php foreach($formerrors['port'] as $rule => $error) { echo $error.'<br />'; } ?></label><?php } ?>
+</div>
 <div class="form-group <?php if(isset($formerrors['source']) && !empty($formerrors['source'])) { echo 'has-error'; } ?>">
 	<label><?php echo ("Database Name"); ?></label>
 	<input type="text" value="<?php echo isset($datas['source']) ? $datas['source'] : 'mysql' ?>" name="source" class="form-control" />
 	<?php if(isset($formerrors['source']) && !empty($formerrors['source'])) { ?><label class="error"><?php foreach($formerrors['source'] as $rule => $error) { echo $error.'<br />'; } ?></label><?php } ?>
 </div>
-<?php /* ?>
-<div class="form-group <?php if(isset($formerrors['prefix']) && !empty($formerrors['prefix'])) { echo 'has-error'; } ?>">
-	<label><?php echo ("Table prefix"); ?></label>
-	<input type="text" value="<?php echo isset($datas['prefix']) ? $datas['prefix'] : '' ?>" name="prefix" class="form-control" />
-	<?php if(isset($formerrors['prefix']) && !empty($formerrors['prefix'])) { ?><label class="error"><?php foreach($formerrors['prefix'] as $rule => $error) { echo $error.'<br />'; } ?></label><?php } ?>
-</div>
-<?php */ ?>	
