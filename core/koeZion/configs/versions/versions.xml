@@ -1,10 +1,18 @@
 ﻿<versions>
 	<version>
+		<name>Version du 22/02/2016</name>
+		<num>20160222.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Rajout d'une fonction de callback dans le modèle principal</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 10/02/2016</name>
 		<num>20160210.007</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FI" type="bdd">Correction versions_bdd.xml</task>
+			<task author="FI" type="code">Correction versions_bdd.xml</task>
 		</tasks>
 	</version>
 	<version>
@@ -12,7 +20,7 @@
 		<num>20160210.006</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FI" type="bdd">Correction problème affichage formulaire connexion au backoffice</task>
+			<task author="FI" type="code">Correction problème affichage formulaire connexion au backoffice</task>
 		</tasks>
 	</version>
 	<version>
@@ -20,7 +28,7 @@
 		<num>20160210.005</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FI" type="bdd">Correction problème affichage formulaire connexion au backoffice</task>
+			<task author="FI" type="code">Correction problème affichage formulaire connexion au backoffice</task>
 		</tasks>
 	</version>
 	<version>
@@ -28,7 +36,7 @@
 		<num>20160210.004</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FI" type="bdd">Reprise du formulaire d'installation utilisé pour la mise en place de la connexion à la base de données</task>
+			<task author="FI" type="code">Reprise du formulaire d'installation utilisé pour la mise en place de la connexion à la base de données</task>
 		</tasks>
 	</version>
 	<version>
@@ -36,7 +44,7 @@
 		<num>20160210.003</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FI" type="bdd">Reprise du formulaire d'installation utilisé pour la mise en place de la connexion à la base de données</task>
+			<task author="FI" type="code">Reprise du formulaire d'installation utilisé pour la mise en place de la connexion à la base de données</task>
 		</tasks>
 	</version>
 	<version>
@@ -44,7 +52,7 @@
 		<num>20160210.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FI" type="bdd">Reprise du formulaire d'installation utilisé pour la mise en place de la connexion à la base de données</task>
+			<task author="FI" type="code">Reprise du formulaire d'installation utilisé pour la mise en place de la connexion à la base de données</task>
 		</tasks>
 	</version>
 	<version>
@@ -52,7 +60,7 @@
 		<num>20160210.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FI" type="bdd">CategoriesController::_get_right_buttons_category : Reprise de la récupération des données suite au rajout de la gestion des boutons sur toutes les pages</task>
+			<task author="FI" type="code">CategoriesController::_get_right_buttons_category : Reprise de la récupération des données suite au rajout de la gestion des boutons sur toutes les pages</task>
 		</tasks>
 	</version>
 	<version>

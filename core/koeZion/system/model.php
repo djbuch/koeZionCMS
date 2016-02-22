@@ -2220,7 +2220,7 @@ class Model extends Object {
 /**
  * Cette fonction permet de contrôler qu'un email n'est pas déjà utilisé
  * 
- * @var 	integer $val Valeur du champ
+ * @var 	varchar $val Valeur du champ à tester
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 21/01/2016 by FI
@@ -2239,5 +2239,21 @@ class Model extends Object {
 		}
 		
 		return !$this->findCount($conditions);
+	}
+	
+/**
+ * Cette fonction permet de contrôler que les mots de passe sont identiques
+ * 
+ * @var 	varchar $val Valeur du champ à tester
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 22/02/2016 by FI
+ */	
+	public function check_password($val) {
+		
+		$modelDatas = $this->datas; //Données postées
+		
+		if(isset($modelDatas['password_confirm'])) { return $modelDatas['password_confirm'] == $val; }
+		else { return true; }		
 	}
 }
