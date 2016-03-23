@@ -1,5 +1,15 @@
 ﻿<versions>
 	<version>
+		<name>Version du 23/03/2016</name>
+		<num>20160323.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">FocusController::_save_assoc_datas_categories_focus_websites : rajout d'un contrôle sur le champ category_id</task>
+			<task author="FI" type="code">SliderController::_save_assoc_datas_categories_sliders_websites : rajout d'un contrôle sur le champ category_id</task>
+			<task author="FI" type="code">Rajout d'un timestamp aléatoire pour la gestion du cache de CkEditor</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 22/02/2016</name>
 		<num>20160222.001</num>
 		<supervisor>KoéZionCMS</supervisor>

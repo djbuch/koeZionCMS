@@ -116,15 +116,18 @@ class FocusController extends AppController {
 					}
 					
 					//Check des catégories dans lesquelles cet élément doit être publié
-					foreach($websiteDatas['category_id'] as $categoryId => $isCheckedCategory) {
+					if(isset($websiteDatas['category_id']) && !empty($websiteDatas['category_id'])) {
 						
-						if($isCheckedCategory) {
+						foreach($websiteDatas['category_id'] as $categoryId => $isCheckedCategory) {
 							
-							$datasToSave[] = array(
-								'category_id' => $categoryId,
-								'focus_id'  => $focusId,
-								'website_id' => $websiteId
-							);
+							if($isCheckedCategory) {
+								
+								$datasToSave[] = array(
+									'category_id' => $categoryId,
+									'focus_id'  => $focusId,
+									'website_id' => $websiteId
+								);
+							}
 						}
 					}
 				}

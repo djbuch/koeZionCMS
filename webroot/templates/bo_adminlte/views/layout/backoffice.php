@@ -72,5 +72,9 @@
 		$helpers['Form']->ckeditor();		
 		include_once(ELEMENTS.DS.'js'.DS.'buttons_right_column.php'); 
 		?>	
+		<script type="text/javascript">
+			// do this before the first CKEDITOR.replace( ... )
+			CKEDITOR.timestamp = Math.random().toString(36).substring(0, 5);
+        </script>
 	</body>
 </html>
