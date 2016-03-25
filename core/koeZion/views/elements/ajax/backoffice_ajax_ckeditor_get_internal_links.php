@@ -5,8 +5,8 @@ $aUrlList = array();
 foreach($categories as $k => $v) { 
 	
 	$aUrlList['[ ==== '._("Pages catégories").' ==== ]'] = ''; 
-	$url = Router::url('categories/view/id:'.$v['id'].'/slug:'.$v['slug']);	
-	if(isset($v['redirect_to']) && !empty($v['redirect_to'])) { $url = Router::url($v['redirect_to']); }
+	$url = Router::url('categories/view/id:'.$v['id'].'/slug:'.$v['slug'], 'html', true, null, true);	
+	if(isset($v['redirect_to']) && !empty($v['redirect_to'])) { $url = Router::url($v['redirect_to'], 'html', true, null, true); }
 	$aUrlList[str_repeat('___', $v['level'] + 1).$v['name']] = $url;
 }
 
@@ -14,8 +14,8 @@ foreach($categories as $k => $v) {
 foreach($posts as $k => $v) {
 
 	$aUrlList['[ ==== '._("Articles").' ==== ]'] = '';
-	$url = Router::url('posts/view/id:'.$v['id'].'/slug:'.$v['slug'].'/prefix:'.$v['prefix']);
-	if(isset($v['redirect_to']) && !empty($v['redirect_to'])) { $url = Router::url($v['redirect_to']); }
+	$url = Router::url('posts/view/id:'.$v['id'].'/slug:'.$v['slug'].'/prefix:'.$v['prefix'], 'html', true, null, true);
+	if(isset($v['redirect_to']) && !empty($v['redirect_to'])) { $url = Router::url($v['redirect_to'], 'html', true, null, true); }
 	$aUrlList['___'.$v['name']] = $url;
 }
 
@@ -61,8 +61,8 @@ foreach($publicationDates as $k => $v) {
 }
 */
 
-$aUrlList["[ ==== "._("Page d'accueil")." ==== ]"] = Router::url('/');
-$aUrlList["[ ==== "._("Newsletter")." ==== ]"] = Router::url('contacts/newsletter');
+$aUrlList["[ ==== "._("Page d'accueil")." ==== ]"] = Router::url('/', 'html', true, null, true);
+$aUrlList["[ ==== "._("Newsletter")." ==== ]"] = Router::url('contacts/newsletter', 'html', true, null, true);
 
 if(!function_exists('json_encode')) {
 

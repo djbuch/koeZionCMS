@@ -267,7 +267,7 @@ class PostsController extends AppController {
 		$parentAdd = parent::backoffice_add(false); //On fait appel à la fonction d'ajout parente
 		
 		if($this->request->data) {
-		
+					
 			if($this->Post->id > 0 && $parentAdd) {		 
 				
 				$this->_save_assoc_datas_posts_categories_websites_and_posts_posts_types($this->Post->id);	

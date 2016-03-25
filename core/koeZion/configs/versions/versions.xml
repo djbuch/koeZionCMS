@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 25/03/2016</name>
+		<num>20160325.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Router::url : correction de la génération du lien dans la version multi site</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 23/03/2016</name>
 		<num>20160323.001</num>
 		<supervisor>KoéZionCMS</supervisor>

@@ -139,14 +139,19 @@ class Router {
 /**
  * Permet de construire une url
  *
- * @param 	varchar 	$url 		Url de la page à atteindre
- * @param 	mixed 	$extension 	Indique si il faut ou non mettre l'extension html (faux si pas d'url)
- * @param 	boolean 	$fullUrl 	Indique si il faut retourner une url complète (avec http et le HOST)
+ * @param 	varchar 	$url 			Url de la page à atteindre
+ * @param 	mixed 		$extension 		Indique si il faut ou non mettre l'extension html (faux si pas d'url)
+ * @param 	boolean 	$fullUrl 		Indique si il faut retourner une url complète (avec http et le HOST)
+ * @param 	boolean 	$protocol 		Permet de force le protocole à utiliser
+ * @param 	boolean 	$forEditorUrls 	Indique s'il s'agit ou non d'urls utilisées par l'éditeur de texte
  * @return 	varchar Url formatée
+ * @access 	public
+ * @author 	koéZionCMS
  * @version 0.1 - 28/05/2015 by FI - Rajout de $protocol
  * @version 0.2 - 14/08/2015 by FI - Mise en place de la récupération du protocol via Router::get_url_protocol
+ * @version 0.3 - 25/03/2016 by FI - Mise en place de la variable $forEditorUrls
  */		
-	static function url($url = '', $extension = 'html', $fullUrl = true, $protocol = null) {
+	static function url($url = '', $extension = 'html', $fullUrl = true, $protocol = null, $forEditorUrls = false) {
 				
 		trim($url, '/');
 		
@@ -191,7 +196,18 @@ class Router {
 				
 		$url = str_replace(BASE_URL, '', $url); //On va supprimer la valeur de BASE_URL dans la variable $url 
 		
-		if($fullUrl) { $url2Return = $protocol.'://'.$_SERVER['HTTP_HOST'].BASE_URL.$url; }
+		if($fullUrl) { 
+			
+			$host = $_SERVER['HTTP_HOST'];
+			if($forEditorUrls && Session::check('Backoffice')) { 
+				
+				$currentWebsiteId 	= Session::read('Backoffice.Websites.current');
+				$website 			= Session::read('Backoffice.Websites.details.'.$currentWebsiteId);
+				$websiteUrl 		= explode('://', $website['url']);
+				if(isset($websiteUrl[1])) { $host = str_replace('/', '', $websiteUrl[1]); }
+			}
+			$url2Return = $protocol.'://'.$host.BASE_URL.$url; 
+		}
 		else { $url2Return = BASE_URL.$url; }
 		
 		return $url2Return;

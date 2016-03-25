@@ -174,44 +174,6 @@ CREATE TABLE IF NOT EXISTS `plugins` (
 
 DROP TABLE IF EXISTS `posts`;
 CREATE TABLE IF NOT EXISTS `posts` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `label` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `short_content` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `content` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `redirect_to` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `prefix` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `shooting_time` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `page_title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `page_description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `page_keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `img_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `img_path` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `title_colonne_droite` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `display_children` int(11) NOT NULL,
-  `display_brothers` int(11) NOT NULL,
-  `display_link` int(11) NOT NULL,
-  `display_form` int(11) NOT NULL,
-  `display_posts_types` int(11) NOT NULL,
-  `is_secure` int(11) NOT NULL,
-  `txt_secure` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `order_by` int(11) NOT NULL,
-  `message_mail` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `publication_start_date` date NOT NULL,
-  `publication_end_date` date NOT NULL,
-  `online` int(11) NOT NULL,
-  `created` datetime DEFAULT NULL,
-  `modified` datetime NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `modified_by` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
-DROP TABLE IF EXISTS `posts`;
-CREATE TABLE IF NOT EXISTS `posts` (
   `id` int(11) NOT NULL,
   `label` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -244,9 +206,10 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `created` datetime DEFAULT NULL,
   `modified` datetime NOT NULL,
   `created_by` int(11) NOT NULL,
-  `modified_by` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  `modified_by` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+ALTER TABLE `posts` ADD PRIMARY KEY (`id`);
+ALTER TABLE `posts` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 DROP TABLE IF EXISTS `posts_comments`;
 CREATE TABLE IF NOT EXISTS `posts_comments` (
