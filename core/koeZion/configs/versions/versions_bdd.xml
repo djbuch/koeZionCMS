@@ -1,6 +1,19 @@
 ﻿<versions>
 	<version>
 		<name>Version du 29/03/2016</name>
+		<num>20160329.002</num>
+		<supervisor>KoéZionCMS</supervisor>		
+		<tasks>
+			<task author="FI">			
+				ALTER TABLE `websites` CHANGE `footer_social` `_footer_social` LONGTEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL;
+				ALTER TABLE `websites` ADD `footer_social` LONGTEXT NOT NULL AFTER `footer_bottom`;
+				UPDATE `websites` SET `footer_social` = `_footer_social`;
+				ALTER TABLE `websites` CHANGE `_footer_social` `footer_centre` LONGTEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL;
+			</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 29/03/2016</name>
 		<num>20160329.001</num>
 		<supervisor>KoéZionCMS</supervisor>		
 		<tasks>

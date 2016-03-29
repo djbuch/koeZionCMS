@@ -411,9 +411,13 @@ CREATE TABLE IF NOT EXISTS `users_websites` (
   PRIMARY KEY (`user_id`,`website_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Structure de la table `websites`
+--
+
 DROP TABLE IF EXISTS `websites`;
 CREATE TABLE IF NOT EXISTS `websites` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `url_alias` longtext COLLATE utf8_unicode_ci NOT NULL,
@@ -459,9 +463,10 @@ CREATE TABLE IF NOT EXISTS `websites` (
   `search_engine_position` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `header_txt` longtext COLLATE utf8_unicode_ci NOT NULL,
   `footer_gauche` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `footer_social` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `footer_centre` longtext COLLATE utf8_unicode_ci NOT NULL,
   `footer_droite` longtext COLLATE utf8_unicode_ci NOT NULL,
   `footer_bottom` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `footer_social` longtext COLLATE utf8_unicode_ci NOT NULL,
   `footer_addthis` longtext COLLATE utf8_unicode_ci NOT NULL,
   `css_hack_file` longtext COLLATE utf8_unicode_ci NOT NULL,
   `js_hack_file` longtext COLLATE utf8_unicode_ci NOT NULL,
@@ -478,6 +483,17 @@ CREATE TABLE IF NOT EXISTS `websites` (
   `modified` datetime NOT NULL,
   `created_by` int(11) NOT NULL,
   `modified_by` int(11) NOT NULL,
-  `template_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `template_id` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Index pour la table `websites`
+--
+ALTER TABLE `websites`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT pour la table `websites`
+--
+ALTER TABLE `websites`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;

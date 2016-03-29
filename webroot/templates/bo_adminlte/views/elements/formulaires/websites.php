@@ -65,6 +65,7 @@
                 			</div>  		
 							<?php 
 							echo $helpers['Form']->input('footer_gauche', _('Colonne de gauche'), array('type' => 'textarea', 'wysiswyg' => true,  'class' => 'xxlarge'));			
+							echo $helpers['Form']->input('footer_centre', _('Colonne centrale'), array('type' => 'textarea', 'wysiswyg' => true,  'class' => 'xxlarge'));			
 							echo $helpers['Form']->input('footer_droite', _('Colonne de droite'), array('type' => 'textarea', 'wysiswyg' => true,  'class' => 'xxlarge'));
 							echo $helpers['Form']->input('footer_bottom', _('Baseline'), array('type' => 'textarea', 'wysiswyg' => true,  'class' => 'xxlarge'));
 							echo $helpers['Form']->input('footer_social', _('Texte social'), array('type' => 'textarea', 'tooltip' => _("Indiquez ici, par exemple, le texte du module social de Facebook. Attention si vous activez cette zone la zone newsletter sera supprimée.")));
