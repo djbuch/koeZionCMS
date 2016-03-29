@@ -250,21 +250,38 @@ CREATE TABLE IF NOT EXISTS `posts_types` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Structure de la table `right_buttons`
+--
+
 DROP TABLE IF EXISTS `right_buttons`;
 CREATE TABLE IF NOT EXISTS `right_buttons` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `content` longtext COLLATE utf8_unicode_ci NOT NULL,
   `display_home_page` int(11) NOT NULL,
+  `display_all_pages` int(11) NOT NULL,
+  `display_all_pages_top` int(11) NOT NULL,
   `order_by` int(11) NOT NULL,
   `online` int(11) NOT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime NOT NULL,
   `created_by` int(11) NOT NULL,
   `modified_by` int(11) NOT NULL,
-  `website_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `website_id` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Index pour la table `right_buttons`
+--
+ALTER TABLE `right_buttons`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT pour la table `right_buttons`
+--
+ALTER TABLE `right_buttons`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 DROP TABLE IF EXISTS `searches`;
 CREATE TABLE IF NOT EXISTS `searches` (
