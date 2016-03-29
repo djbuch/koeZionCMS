@@ -1,6 +1,10 @@
+--
+-- Structure de la table `categories`
+--
+
 DROP TABLE IF EXISTS `categories`;
 CREATE TABLE IF NOT EXISTS `categories` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `content` longtext COLLATE utf8_unicode_ci NOT NULL,
   `redirect_to` longtext COLLATE utf8_unicode_ci NOT NULL,
@@ -9,6 +13,10 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `page_title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `page_description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `page_keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `illustration_1` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `illustration_2` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `subtitle_1` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `subtitle_2` longtext COLLATE utf8_unicode_ci NOT NULL,
   `title_colonne_droite` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `title_children` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `title_brothers` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -34,13 +42,24 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `parent_id` int(11) NOT NULL,
   `redirect_category_id` int(11) NOT NULL,
   `template_id` int(11) NOT NULL,
-  `website_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `online` (`online`),
-  KEY `type` (`type`),
-  KEY `parent_id` (`parent_id`),
-  KEY `type_2` (`type`,`online`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `website_id` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Index pour la table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `online` (`online`),
+  ADD KEY `type` (`type`),
+  ADD KEY `parent_id` (`parent_id`),
+  ADD KEY `type_2` (`type`,`online`);
+
+--
+-- AUTO_INCREMENT pour la table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 DROP TABLE IF EXISTS `categories_focus_websites`;
 CREATE TABLE IF NOT EXISTS `categories_focus_websites` (

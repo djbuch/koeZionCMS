@@ -1,6 +1,16 @@
 ﻿<versions>
 	<version>
 		<name>Version du 29/03/2016</name>
+		<num>20160329.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="bdd">Rajout des champs illustration (1 et 2), subtitle (1 et 2) dans la table categories</task>
+			<task author="FI" type="code">Mise à jour fichier d'installation des tables de la BDD</task>
+			<task author="FI" type="code">Mise à jour du formulaire backoffice pour la gestion des catégories</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 29/03/2016</name>
 		<num>20160329.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

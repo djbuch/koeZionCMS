@@ -76,7 +76,7 @@
 				    		<div class="box-header bg-light-blue">
 								<h4><i class="fa fa-search"></i> <?php echo _("SEO"); ?></h4>                  
                 			</div>	
-				       	 <?php 
+				       	 	<?php 
 							echo $helpers['Form']->input('slug', _('Url'), array('tooltip' => _("Indiquez l'url que vous souhaitez mettre en place. ATTENTION n'utiliser que des caractères autorisés pour l'url (Que des lettres, des chiffres et -)")));
 							echo $helpers['Form']->input('page_title', _('Meta title'), array('tooltip' => _("Titre de la page (70 caractères maximum recommandé, par défaut ce champ aura pour valeur le champ Titre)")));
 							echo $helpers['Form']->input('page_description', _('Meta description'), array('tooltip' => _("Résumé de la page html, 160 caractères maximum recommandé")));
@@ -101,6 +101,12 @@
 							
 							echo $helpers['Form']->upload_files('css_file', array('label' => _("Fichier css"), 'button_value' => _('Sélectionner un fichier CSS'), 'tooltip' => _("Vous pouvez uploader un fichier CSS supplémentaire si besoin. Attention ce fichier ne sera pris en compte que lors de l'affichage de cette page.")));
 							echo $helpers['Form']->upload_files('js_file', array('label' => _("Fichier javascript"), 'button_value' => _('Sélectionner un fichier JS'), 'tooltip' => _("Vous pouvez uploader un fichier JS supplémentaire si besoin. Attention ce fichier ne sera pris en compte que lors de l'affichage de cette page.")));
+							
+							echo $helpers['Form']->upload_files('illustration_1', array('label' => _("Illustration 1"), 'button_value' => _('Sélectionner un fichier CSS'), 'tooltip' => _("Sélectionnez l'image d'illustration (1) de cette page.")));
+							echo $helpers['Form']->upload_files('illustration_2', array('label' => _("Illustration 2"), 'button_value' => _('Sélectionner un fichier CSS'), 'tooltip' => _("Sélectionnez l'image d'illustration (2) de cette page.")));
+							
+							echo $helpers['Form']->input('subtitle_1', _('Sous-titre 1'), array('tooltip' => _("Indiquez le sous-titre 1")));
+							echo $helpers['Form']->input('subtitle_2', _('Sous-titre 2'), array('tooltip' => _("Indiquez le sous-titre 2")));
 							?>
 				        </div>
 				        <div class="tab-pane" id="secure">	
