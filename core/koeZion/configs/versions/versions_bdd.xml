@@ -1,5 +1,20 @@
 ﻿<versions>
 	<version>
+		<name>Version du 30/03/2016</name>
+		<num>20160330.001</num>
+		<supervisor>KoéZionCMS</supervisor>		
+		<tasks>
+			<task author="FI">
+				ALTER TABLE `websites`  
+				ADD `contact_map_activ` INT NOT NULL  AFTER `ga_id`,  
+				ADD `contact_map_page` INT NOT NULL  AFTER `contact_map_activ`,  
+				ADD `contact_map_address` LONGTEXT NOT NULL  AFTER `contact_map_page`,  
+				ADD `contact_map_lat` VARCHAR(255) NOT NULL  AFTER `contact_map_address`,  
+				ADD `contact_map_lng` VARCHAR(255) NOT NULL  AFTER `contact_map_lat`;
+			</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 29/03/2016</name>
 		<num>20160329.002</num>
 		<supervisor>KoéZionCMS</supervisor>		

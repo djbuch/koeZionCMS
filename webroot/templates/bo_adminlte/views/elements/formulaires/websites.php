@@ -13,6 +13,7 @@
 				    	<li><a href="#txtemailscomments" data-toggle="tab"><i class="fa fa-envelope"></i> <?php echo _("Textes/emails formulaire commentaires"); ?></a></li>
 				    	<li><a href="#txtemailsnewsletter" data-toggle="tab"><i class="fa fa-envelope"></i> <?php echo _("Textes/emails formulaire newsletter"); ?></a></li>
 				    	<li><a href="#txtemailsuser" data-toggle="tab"><i class="fa fa-envelope"></i> <?php echo _("Textes/emails nouvel utilisateur"); ?></a></li>
+				    	<li><a href="#contactpage" data-toggle="tab"><i class="fa fa-map-marker"></i> <?php echo _("Page contact"); ?></a></li>
 				    	<li><a href="#seo" data-toggle="tab"><i class="fa fa-search"></i> <?php echo _("SEO"); ?></a></li>
 				    	<li><a href="#options" data-toggle="tab"><i class="fa fa-plug"></i> <?php echo _("Options"); ?></a></li>
 				    	<li><a href="#googleanalytics" data-toggle="tab"><i class="fa fa-line-chart"></i> <?php echo _("Google Analytics"); ?></a></li>
@@ -131,6 +132,18 @@
 							echo $helpers['Form']->input('subject_mail_lost_password_user', _("Sujet de l'email de récupération du mot de passe"), array('tooltip' => _("Indiquez le sujet de l'email")));
 							echo $helpers['Form']->input('txt_mail_lost_password_user', _("Contenu de l'email de récupération du mot de passe"), array('type' => 'textarea', 'wysiswyg' => true, 'tooltip' => _("Indiquez le texte qui sera envoyé par email")));
 							echo $helpers['Form']->input('txt_confirm_lost_password_user', _("Texte affiché après la demande"), array('tooltip' => _("Saisissez le message")));
+							?>
+                		</div>
+				    	<div class="tab-pane" id="contactpage">	
+				    		<div class="box-header bg-light-blue">
+								<h4><i class="fa fa-map-marker"></i> <?php echo _("Page contact"); ?></h4>                  
+                			</div>  	
+							<?php 
+							echo $helpers['Form']->input('contact_map_activ', _('Activer la carte dans la page contact'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour activer la carte")));
+							echo $helpers['Form']->input('contact_map_page', _('Page contact'), array('type' => 'select', 'datas' => $categoriesList, 'firstElementList' => _('Sélectionnez la page contact'), 'tooltip' => _("Indiquez la page contact")));
+							echo $helpers['Form']->input('contact_map_address', _('Adresse'), array('tooltip' => _("Indiquez l'adresse à afficher sur la carte")));
+							echo $helpers['Form']->input('contact_map_lat', _('Latitude'), array('tooltip' => _("Indiquez la latitude")));
+							echo $helpers['Form']->input('contact_map_lng', _('Longitude'), array('tooltip' => _("Indiquez la longitude")));							
 							?>
                 		</div>
 				    	<div class="tab-pane" id="seo">	

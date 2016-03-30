@@ -416,7 +416,7 @@ CREATE TABLE IF NOT EXISTS `users_websites` (
 --
 
 DROP TABLE IF EXISTS `websites`;
-CREATE TABLE IF NOT EXISTS `websites` (
+CREATE TABLE `websites` (
   `id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -460,6 +460,11 @@ CREATE TABLE IF NOT EXISTS `websites` (
   `ga_login` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `ga_password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `ga_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `contact_map_activ` int(11) NOT NULL,
+  `contact_map_page` int(11) NOT NULL,
+  `contact_map_address` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `contact_map_lat` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `contact_map_lng` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `search_engine_position` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `header_txt` longtext COLLATE utf8_unicode_ci NOT NULL,
   `footer_gauche` longtext COLLATE utf8_unicode_ci NOT NULL,

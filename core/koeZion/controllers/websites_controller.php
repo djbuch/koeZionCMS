@@ -171,6 +171,7 @@ class WebsitesController extends AppController {
  * @version 0.1 - 02/05/2012 by FI
  * @version 0.2 - 07/06/2012 by FI - Modification de la gestion des couleurs on travaille maintenant avec des templates
  * @version 0.3 - 17/12/2013 by FI - Modification de la récupération des templates suite à la mise en place de l'ajax dans le formulaire
+ * @version 0.4 - 30/03/2016 by FI - Rajout de la récupération des catégories
  * @todo voir si on peut pas faire autrement que $this->templatesList
  */	
 	protected function _init_datas() {
@@ -203,6 +204,10 @@ class WebsitesController extends AppController {
 		$websiteDatas = Session::read('Backoffice.Websites.details');
 		$currentTemplateId = $websiteDatas[CURRENT_WEBSITE_ID]['template_id'];
 		$this->set('currentTemplateId', $currentTemplateId);
+		
+		$this->load_model('Category');
+		$categoriesList = $this->Category->getTreeList(false); //On récupère les catégories
+		$this->set('categoriesList', $categoriesList); //On les envois à la vue
 	}
 		
 /**

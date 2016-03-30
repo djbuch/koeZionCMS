@@ -1,6 +1,17 @@
 ﻿<versions>
 	<version>
 		<name>Version du 30/03/2016</name>
+		<num>20160330.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="bdd">Rajout des champs contact_address, contact_lat, contact_lng dans la table websites</task>
+			<task author="FI" type="code">Mise à jour fichier d'installation des tables de la BDD</task>
+			<task author="FI" type="code">Mise à jour du formulaire backoffice pour la gestion des sites Internet</task>
+			<task author="FI" type="code">WebsitesController::_init_datas : Rajout de la récupération des catégories</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 30/03/2016</name>
 		<num>20160330.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
