@@ -696,6 +696,7 @@ class CategoriesController extends AppController {
  * @version 0.1 - 02/10/2012 by FI
  * @version 0.2 - 24/04/2015 by FI - Gestion de la traduction
  * @version 0.3 - 10/02/2016 by FI - Reprise de la récupération des données suite au rajout de la gestion des boutons sur toutes les pages
+ * @version 0.4 - 30/03/2016 by FI - Rajout du test sur la variable $rightButtonsCategory
  */		
 	protected function _get_right_buttons_category($datas) {		
 		
@@ -746,6 +747,8 @@ class CategoriesController extends AppController {
 			//Mise en cache
 			Cache::create_cache_file($cacheFolder, $cacheFile, $rightButtonsCategory);	
 		}		
+		
+		if(empty($rightButtonsCategory)) { $rightButtonsCategory = array(); }	
 		
 		$datas['rightButtons'] = $rightButtonsCategory;		
 		return $datas;
