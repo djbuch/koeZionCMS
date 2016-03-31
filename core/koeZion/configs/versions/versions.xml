@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 31/03/2016</name>
+		<num>20160331.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Correction gestion de la traduction dans les formulaire</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 30/03/2016</name>
 		<num>20160330.002</num>
 		<supervisor>KoéZionCMS</supervisor>

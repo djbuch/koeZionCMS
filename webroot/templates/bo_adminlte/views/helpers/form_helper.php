@@ -326,7 +326,7 @@ class FormHelper extends FormParentHelper {
 			foreach($languages as $language) {
 			
 				$languageLabel = $label.' <img src="'.$language['picture'].'" style="float: left;margin-right: 5px;" />';
-				$inputDatas = parent::input($name.'.'.$language['code'], $languageLabel, am($options, array('divRowCss' => 'row_'.$language['code']))); //Appel fonction parente
+				$inputDatas = parent::input($name.'.'.$language['code'], $languageLabel, am($options, array('wrapperDivClass' => 'form-group row_language row_'.$language['code']))); //Appel fonction parente
 				$htmlInput .= $this->_html_input($inputDatas);
 			}
 		
