@@ -191,12 +191,17 @@ CREATE TABLE IF NOT EXISTS `plugins` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Structure de la table `posts`
+--
 DROP TABLE IF EXISTS `posts`;
-CREATE TABLE IF NOT EXISTS `posts` (
+CREATE TABLE `posts` (
   `id` int(11) NOT NULL,
   `label` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `short_content_illustration` longtext COLLATE utf8_unicode_ci NOT NULL,
   `short_content` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `content_illustration` longtext COLLATE utf8_unicode_ci NOT NULL,
   `content` longtext COLLATE utf8_unicode_ci NOT NULL,
   `redirect_to` longtext COLLATE utf8_unicode_ci NOT NULL,
   `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -227,8 +232,18 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `created_by` int(11) NOT NULL,
   `modified_by` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-ALTER TABLE `posts` ADD PRIMARY KEY (`id`);
-ALTER TABLE `posts` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Index pour la table `posts`
+--
+ALTER TABLE `posts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT pour la table `posts`
+--
+ALTER TABLE `posts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 DROP TABLE IF EXISTS `posts_comments`;
 CREATE TABLE IF NOT EXISTS `posts_comments` (

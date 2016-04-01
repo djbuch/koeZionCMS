@@ -1,5 +1,15 @@
 ﻿<versions>
 	<version>
+		<name>Version du 01/04/2016</name>
+		<num>20160401.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="bdd">Rajout des champs short_content_illustration, content_illustration dans la table posts</task>
+			<task author="FI" type="code">Mise à jour fichier d'installation des tables de la BDD</task>
+			<task author="FI" type="code">Mise à jour du formulaire backoffice pour la gestion des articles</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 31/03/2016</name>
 		<num>20160331.001</num>
 		<supervisor>KoéZionCMS</supervisor>

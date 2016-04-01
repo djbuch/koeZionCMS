@@ -10,7 +10,7 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
 					<ul class="nav nav-tabs nav-stacked col-md-12">
 				    	<li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-file-text-o"></i> <?php echo _("Général"); ?></a></li>    	
 						<li><a href="#diffusion" data-toggle="tab"><i class="fa fa-copy"></i> <?php echo _("Diffusion"); ?></a></li>
-				    	<li><a href="#textes" data-toggle="tab"><i class="fa fa-file-word-o"></i> <?php echo _("Descriptifs court et long"); ?></a></li>
+				    	<li><a href="#textes" data-toggle="tab"><i class="fa fa-file-word-o"></i> <?php echo _("Illustrations et descriptifs"); ?></a></li>
 				    	<li><a href="#types" data-toggle="tab"><i class="fa fa-tags"></i> <?php echo _("Types d'article"); ?></a></li>
 				    	<li><a href="#right_column" data-toggle="tab"><i class="fa fa-navicon"></i> <?php echo _("Colonne page"); ?></a></li>
 				    	<li><a href="#buttons" data-toggle="tab"><i class="fa fa-hand-o-right"></i> <?php echo _("Boutons page"); ?></a></li>
@@ -65,10 +65,12 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
                 		</div>
 				    	<div class="tab-pane" id="textes">	
 				    		<div class="box-header bg-light-blue">
-								<h4><i class="fa fa-file-word-o"></i> <?php echo _("Descriptifs court et long"); ?></h4>                  
+								<h4><i class="fa fa-file-word-o"></i> <?php echo _("Illustrations et descriptifs"); ?></h4>                  
                 			</div>                	
 							<?php 
+							echo $helpers['Form']->upload_files('short_content_illustration', array('label' => _("Image d'illustration descriptif court")));
 							echo $helpers['Form']->input('short_content', _('Descriptif court'), array('type' => 'textarea', 'wysiswyg' => true, 'tooltip' => _("Saisissez ici le descriptif court de votre article, n'hésitez pas à utiliser les modèles de pages pour vous aider")));
+							echo $helpers['Form']->upload_files('content_illustration', array('label' => _("Image d'illustration descriptif long")));
 							echo $helpers['Form']->input('content', _('Descriptif long'), array('type' => 'textarea', 'wysiswyg' => true, 'tooltip' => _("Saisissez ici le descriptif long de votre article, n'hésitez pas à utiliser les modèles de pages pour vous aider")));
 							?>		
                 		</div>
@@ -169,7 +171,7 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
 							echo $helpers['Form']->input('display_form', _('Formulaire'), array('type' => 'select', 'datas' => $formulaires, 'tooltip' => _("Indiquez le formulaire que vous souhaitez afficher sur la page"), 'firstElementList' => _("Sélectionnez un formulaire")));					
 							echo $helpers['Form']->input('shooting_time', _("Durée de réalisation"), array('tooltip' => _("Indiquez la durée de réalisation de ce qui sera présenté dans cet article")));
 							//echo $helpers['Form']->input('img', _('image'), array('type' => 'file', 'class' => 'input-file', 'tooltip' => _("Cliquez sur le bouton pour télécharger votre image d'illustration. Attention : Mode RVB, Résolution 72dpi")));
-							echo $helpers['Form']->upload_files('illustration', array('label' => _("Image d'illustration")));
+							//DEPRECATED SINCE 01.04.2016 - echo $helpers['Form']->upload_files('illustration', array('label' => _("Image d'illustration")));
 							echo $helpers['Form']->input('publication_start_date', _('Date de publication'), array('wrapperDivClass' => 'form-group no_border_bottom', 'class' => 'form-control datepicker', 'placeholder' => 'dd.mm.yy', 'tooltip' => _("Indiquez la date à laquelle cet article sera publié"))); 
 							?>
 							<div class="row">

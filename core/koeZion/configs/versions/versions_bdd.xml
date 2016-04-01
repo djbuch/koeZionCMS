@@ -1,5 +1,18 @@
 ﻿<versions>
 	<version>
+		<name>Version du 01/04/2016</name>
+		<num>20160401.001</num>
+		<supervisor>KoéZionCMS</supervisor>		
+		<tasks>
+			<task author="FI">
+				ALTER TABLE `posts` ADD `short_content_illustration` LONGTEXT NOT NULL AFTER `name`;
+				ALTER TABLE `posts` ADD `content_illustration` LONGTEXT NOT NULL AFTER `short_content`;
+				UPDATE `posts` SET `short_content_illustration` = `illustration`;
+				UPDATE `posts` SET `content_illustration` = `illustration`;
+			</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 30/03/2016</name>
 		<num>20160330.001</num>
 		<supervisor>KoéZionCMS</supervisor>		
