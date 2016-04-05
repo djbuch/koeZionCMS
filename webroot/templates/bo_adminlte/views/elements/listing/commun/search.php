@@ -22,8 +22,18 @@ if(isset($this->controller->request->data['Search'])) {
 			<div class="box-body">
 				<div class="col-md-12">
 					<?php 
-					echo $helpers['Form']->input('Search.id', _('Identifiant'));
-					echo $helpers['Form']->input('Search.name', _('Libellé'));
+					if(!isset($searchFields)) {
+						
+						$searchFields = array(
+							'id' => _('Identifiant'),
+							'name' => _('Libellé'),
+						);	
+					}
+					
+					foreach($searchFields as $searchFieldName => $searchFieldLabel) { 
+						
+						echo $helpers['Form']->input('Search.'.$searchFieldName, $searchFieldLabel); 
+					}
 					?>               
 				</div>
 			</div>
