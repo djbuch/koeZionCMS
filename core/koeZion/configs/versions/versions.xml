@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 06/04/2016</name>
+		<num>20160406.006</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise du multi-version CKEditor (3.6.2 et 4.5.7) et CKFinder (2.3 et 3.3)</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 06/04/2016</name>
 		<num>20160406.005</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
