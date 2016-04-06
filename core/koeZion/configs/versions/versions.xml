@@ -1,10 +1,18 @@
 ﻿<versions>
 	<version>
+		<name>Version du 06/04/2016</name>
+		<num>20160406.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise à jour upload de fichier cia CKFinder</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 05/04/2016</name>
 		<num>20160405.004</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FI" type="code">Paramétrages de CkEditor</task>
+			<task author="FI" type="code">Paramétrages de CKEditor</task>
 		</tasks>
 	</version>
 	<version>
@@ -12,7 +20,7 @@
 		<num>20160405.003</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FI" type="code">Paramétrages de CkEditor</task>
+			<task author="FI" type="code">Paramétrages de CKEditor</task>
 		</tasks>
 	</version>
 	<version>
@@ -20,7 +28,7 @@
 		<num>20160405.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FI" type="code">Mise en place de la nouvelle version de CkEditor et CkFinder</task>
+			<task author="FI" type="code">Mise en place de la nouvelle version de CKEditor et CKFinder</task>
 		</tasks>
 	</version>
 	<version>
@@ -28,7 +36,7 @@
 		<num>20160405.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FI" type="code">Suppression version actuelle de CkEditor et CkFinder</task>
+			<task author="FI" type="code">Suppression version actuelle de CKEditor et CKFinder</task>
 		</tasks>
 	</version>
 	<version>
@@ -111,7 +119,7 @@
 		<tasks>
 			<task author="FI" type="code">FocusController::_save_assoc_datas_categories_focus_websites : rajout d'un contrôle sur le champ category_id</task>
 			<task author="FI" type="code">SliderController::_save_assoc_datas_categories_sliders_websites : rajout d'un contrôle sur le champ category_id</task>
-			<task author="FI" type="code">Rajout d'un timestamp aléatoire pour la gestion du cache de CkEditor</task>
+			<task author="FI" type="code">Rajout d'un timestamp aléatoire pour la gestion du cache de CKEditor</task>
 		</tasks>
 	</version>
 	<version>
@@ -3113,7 +3121,7 @@
 		<num>20140328.003</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FI" type="code">Correction chargement CkFinder suite déplacement du dossier de stockage des produits CkEditor et CkFinder</task>
+			<task author="FI" type="code">Correction chargement CKFinder suite déplacement du dossier de stockage des produits CKEditor et CKFinder</task>
 		</tasks>
 	</version>
 	<version>
@@ -3121,7 +3129,7 @@
 		<num>20140328.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FI" type="code">Suite déplacement du dossier de stockage des produits CkEditor et CkFinder</task>
+			<task author="FI" type="code">Suite déplacement du dossier de stockage des produits CKEditor et CKFinder</task>
 		</tasks>
 	</version>
 	<version>
@@ -3129,7 +3137,7 @@
 		<num>20140328.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FI" type="code">Déplacement du dossier de stockage des produits CkEditor et CkFinder</task>
+			<task author="FI" type="code">Déplacement du dossier de stockage des produits CKEditor et CKFinder</task>
 		</tasks>
 	</version>
 	<version>

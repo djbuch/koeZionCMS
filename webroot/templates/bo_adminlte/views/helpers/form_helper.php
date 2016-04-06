@@ -57,14 +57,79 @@ class FormHelper extends FormParentHelper {
 	}
 
 /**
- * Enter description here...
+ * Fonction qui permet de générer un champ d'upload via CKFInder
  *
- * @param unknown_type $input
- * @return unknown
+ * @param 	varchar $field Nom du champ input
+ * @param 	array 	$params Paramètres du champ input
+ * @return 	varchar Code HTML du champ d'upload
  * @version 0.1 - 10/07/2015 by FI - Rajout de txtAfterInput
  * @version 0.2 - 29/09/2015 by FI - Rajout de $params['wrapperDivClass']
- *
+ * @version 0.3 - 06/04/2016 by FI - Modification appel de la popup suite à la mise à jour de CKFinder
  */
+	function upload_files($field, $params = null) {
+		
+		if(!isset($params) || empty($params)) {
+
+			$params['label'] = _("Fichier à importer");
+			$params['tooltip'] = _("Sélectionnez le fichier à importer");
+			$params['button_value'] = _("Sélectionnez le fichier");
+			$params['display_input'] = true;
+			$params['wrapperDivClass'] = 'form-group'; 
+		} else {
+
+			if(!isset($params['label'])) { $params['label'] = _("Fichier à importer"); }
+			if(!isset($params['tooltip'])) { $params['tooltip'] = _("Sélectionnez le fichier à importer"); }
+			if(!isset($params['button_value'])) { $params['button_value'] = _("Sélectionnez le fichier"); }
+			if(!isset($params['display_input'])) { $params['display_input'] = true; }
+			if(!isset($params['wrapperDivClass'])) { $params['wrapperDivClass'] = 'form-group';  }
+		}
+				
+		$inputNameText = $this->_set_input_name($field); //Mise en variable du name de l'input
+		$inputIdText = $this->_set_input_id($inputNameText); //Mise en variable de l'id de l'input
+		
+		ob_start();
+		?>
+		<script>
+		function openPopup<?php echo $inputIdText; ?>() {
+			CKFinder.popup({
+				chooseFiles: true,
+				onInit: function(finder) {
+					finder.on('files:choose', function(evt) {
+						var file = evt.data.files.first();
+						document.getElementById("<?php echo $inputIdText; ?>").value = file.getUrl();
+					});
+					finder.on('file:choose:resizedImage', function(evt) {
+						document.getElementById("<?php echo $inputIdText; ?>").value = evt.data.resizedUrl;
+					});
+				}
+			});
+		}
+     	</script>
+		<div class="<?php echo $params['wrapperDivClass']; ?>">
+			<label>
+				<?php 			
+				echo $params['label'];
+				echo $this->_tooltip($params['tooltip']);				
+				?>
+			</label>
+			<div class="input-group">
+				<?php				
+				if($params['display_input']) { echo $this->input($field, '', array('onlyInput' => true, 'class' => 'form-control')); }
+				?>
+				<span class="input-group-btn"> 
+				<?php 
+				echo $this->input('select_file', $params['button_value'], array('type' => 'button', 'onclick' => 'openPopup'.$inputIdText.'();', 'onlyInput' => true, 'class' => 'btn'));
+				if(isset($params['txtAfterInput'])) { echo $params['txtAfterInput']; }
+				?>
+				</span>
+			</div>
+		</div>
+		<?php
+		return ob_get_clean();		
+	}
+	
+	/*
+	 * ANCIENNE VERSION
 	function upload_files($field, $params = null) {
 
 		if(!isset($params) || empty($params)) {
@@ -130,81 +195,14 @@ class FormHelper extends FormParentHelper {
 		<?php
 		return ob_get_clean();
 	}
-
-
-/**
- * Enter description here...
- *
- * @param unknown_type $input
- * @return unknown
- *
- */
-	/*function upload_files_products() {
-
-		ob_start();
-		?>
-		<script type="text/javascript">
-			function BrowseServer(startupPath, functionData) {
-				// You can use the "CKFinder" class to render CKFinder in a page:
-				var finder = new CKFinder();
-
-				// The path for the installation of CKFinder (default = "/ckfinder/").
-				finder.basePath = '../';
-
-				//Startup path in a form: "Type:/path/to/directory/"
-				finder.startupPath = startupPath;
-
-				// Name of a function which is called when a file is selected in CKFinder.
-				finder.selectActionFunction = SetFileField;
-
-				// Additional data to be passed to the selectActionFunction in a second argument.
-				// We'll use this feature to pass the Id of a field that will be updated.
-				finder.selectActionData = functionData;
-
-				// Launch CKFinder
-				finder.popup();
-			}
-
-			// This is a sample function which is called when a file is selected in CKFinder.
-			function SetFileField(fileUrl, data) { document.getElementById( data["selectActionData"] ).value = fileUrl; }
-		</script>
-		<div class="row">
-			<label>
-				<?php echo _("Fiche technique"); ?>
-				<img original-title="<?php echo _("Sélectionnez le fichier à importer"); ?>" class="tip-w" style="float: left; margin-right: 5px; cursor: pointer;" alt="tooltip" src="<?php echo BASE_URL; ?>/templates/bo_adminlte/img/tooltip.png">
-			</label>
-
-			<div class="rowright">
-				<?php
-				$id = $this->_set_input_id('doc');
-				echo $this->input('select_file', '', array('type' => 'button', 'onclick' => "BrowseServer('Files:/', '".$id."');", 'displayError' => false, 'label' => false, 'div' => false, 'tooltip' => false, 'value' => _("Sélectionnez le fichier")));
-				echo $this->input('doc', '', array('tooltip' => false, 'div' => false, 'label' => false, 'class' => 'upload_file'));
-				?>
-			</div>
-		</div>
-		<div class="row">
-			<label>
-				<?php echo _("Image"); ?>
-				<img original-title="<?php echo _("Sélectionnez le fichier à importer"); ?> class="tip-w" style="float: left; margin-right: 5px; cursor: pointer;" alt="tooltip" src="<?php echo BASE_URL; ?>/template/backoffice/img/tooltip.png">
-			</label>
-
-			<div class="rowright">
-				<?php
-				$id = $this->_set_input_id('img');
-				echo $this->input('select_file', '', array('type' => 'button', 'onclick' => "BrowseServer('Images:/', '".$id."');", 'displayError' => false, 'label' => false, 'div' => false, 'tooltip' => false, 'value' => _("Sélectionnez le fichier")));
-				echo $this->input('img', '', array('tooltip' => false, 'div' => false, 'label' => false, 'class' => 'upload_file'));
-				?>
-			</div>
-		</div>
-		<?php
-		return ob_get_clean();
-	}*/
+	*/
 		
 /**
  * Cette fonction va permettre de créer les checkbox slides
  *
- * @param unknown_type $input
- * @return	varchar Chaine de caractères contenant la balise de fin de formulaire
+ * @param 	varchar $name		Nom de l'input
+ * @param 	array 	$options	Options de l'input
+ * @return	varchar Chaine de caractères contenant le code HTML de l'input
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 11/12/2013 by FI
@@ -231,39 +229,6 @@ class FormHelper extends FormParentHelper {
 		
 		return $html;
 	}
-
-/**
- * A reprendre
- * @param unknown_type $name
- * @param unknown_type $value
- * @return string
- */
-	/*function radiobutton_templates($name, $value, $templateName, $templateLayout, $templateCode, $templateColor) {
-
-		$inputNameText = $this->_set_input_name($name); //Mise en variable du name de l'input
-		$inputIdText = $this->_set_input_id($inputNameText); //Mise en variable de l'id de l'input
-
-		$bddValue = Set::classicExtract($this->view->controller->request->data, $name);
-		if($value == $bddValue) {
-			$checked = 'checked="checked"';
-			$selected = ' class="selected"';
-		} else {
-			$checked = '';
-			$selected = '';
-		}
-
-		$imgFile = WEBROOT.DS.'img'.DS.'backoffice'.DS.'templates'.DS.$templateLayout.DS.$templateCode.DS.'background.png';
-		if(file_exists($imgFile)) { $thumb = '<img src="'.BASE_URL.'/templates/bo_adminlte/img/templates/'.$templateLayout.'/'.$templateCode.'/background.png" />'; } 
-		else if(!empty($templateColor)) { 
-			
-			$firstChar = $templateColor{0};
-			if($firstChar == "#") { $thumb = '<span style="display:block;width:80px;height:72px;padding:0;margin:0 5px;background:'.$templateColor.'">&nbsp</span>'; }
-			else { $thumb = '<img src="'.$templateColor.'" />'; } 
-		}
-		else { $thumb = ''; }
-		
-		return '<p '.$selected.'><input name="'.$inputNameText.'" id="'.$inputIdText.$value.'" value="'.$value.'" type="radio" '.$checked.' /><span>'.$templateName.'<br />'.$thumb.'</span></p>';
-	}*/
 	
 /**
  * 
@@ -377,9 +342,6 @@ class FormHelper extends FormParentHelper {
 			
 			//Cas particulier des checkbox
 			if(in_array($inputDatas['inputOptions']['type'], array("checkbox", "radio"))) {
-
-				
-				//pr($inputDatas);
 				
 				$return .= '<div class="'.$inputDatas['inputOptions']['type'].'">';
 				$return .= $inputDatas['txtBeforeInput'];
