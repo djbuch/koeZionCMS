@@ -33,8 +33,6 @@
 
 		///////////////////////////
 		//    DOSSIER WEBROOT    //
-		define('CKEDITOR', 			WEBROOT.DS.'ck'.DS.'ckeditor');
-		define('CKFINDER', 			WEBROOT.DS.'ck'.DS.'ckfinder');
 		define('CSS', 				WEBROOT.DS.'css');
 		define('FILES', 			WEBROOT.DS.'files');
 		define('IMG', 				WEBROOT.DS.'img');
@@ -115,19 +113,12 @@
 		if($key !== false) $baseUrl .= "/".$v;
 	}
 	define('BASE_URL', $baseUrl); //Chemin relatif vers le coeur de l'application
-	
-////////////////////////////////////////////////////////////////
-//    DEFINITION DES DEUX CONSTANTES DE DECLARATION DU CMS    //
-////////////////////////////////////////////////////////////////
-
-	define('GENERATOR_META', 'koéZion CMS - CMS OPENSOURCE PHP');
-	define('GENERATOR_LINK', '<p id="powered_by" style="position:absolute;width:20px;bottom:5px;right:5px;font-size:8px;margin-bottom:0;height:20px;opacity:.3;z-index:10000"><a href="http://www.koezion-cms.com" title="Propulsé par koéZionCMS - CMS opensource PHP" style="width:20px;height:20px;text-indent:-9999px;display:block;background: url('.BASE_URL.'/img/logo_koezion_mini.png) no-repeat top right transparent;padding: 0;margin: 0;border: none;">Propulsé par koéZionCMS - CMS opensource PHP</a></p>');
 
 //////////////////////////////////////////////////////////////////////////////////////
 //    RECUPERATION DES CONFIGURATIONS DU COEUR POUR TRANSFORMATION EN CONSTANTES    //
 //////////////////////////////////////////////////////////////////////////////////////
 
-	require_once(LIBS.DS.'config_magik.php');
+	require_once(ROOT.DS.'core'.DS.'Libs'.DS.'config_magik.php');
 	$cfg = new ConfigMagik(CONFIGS_FILES.DS.'core.ini', true, false);
 	$coreConfs = $cfg->keys_values();
 	
@@ -136,5 +127,21 @@
 		$coreConfField = strtoupper($coreConfField);
 		if(!defined($coreConfField)) { define($coreConfField, $coreConfValue); }
 	}
-	
 	if(!defined('BACKOFFICE_TEMPLATE')) { define('BACKOFFICE_TEMPLATE', 'bo_godzilla'); }
+	
+//////////////////////////////////////////	
+//    CONSTANTE CKEDITOR ET CKFINDER    //
+//////////////////////////////////////////
+	
+	if(!defined('CKEDITOR_VERSION')) { define('CKEDITOR_VERSION', '3.6.2'); }
+	if(!defined('CKFINDER_VERSION')) { define('CKFINDER_VERSION', '2.3'); }
+	
+	define('CKEDITOR', WEBROOT.DS.'ck'.DS.'editor'.DS.CKEDITOR_VERSION);
+	define('CKFINDER', WEBROOT.DS.'ck'.DS.'finder'.DS.CKFINDER_VERSION);
+	
+////////////////////////////////////////////////////////////////
+//    DEFINITION DES DEUX CONSTANTES DE DECLARATION DU CMS    //
+////////////////////////////////////////////////////////////////
+
+	define('GENERATOR_META', 'koéZion CMS - CMS OPENSOURCE PHP');
+	define('GENERATOR_LINK', '<p id="powered_by" style="position:absolute;width:20px;bottom:5px;right:5px;font-size:8px;margin-bottom:0;height:20px;opacity:.3;z-index:10000"><a href="http://www.koezion-cms.com" title="Propulsé par koéZionCMS - CMS opensource PHP" style="width:20px;height:20px;text-indent:-9999px;display:block;background: url('.BASE_URL.'/img/logo_koezion_mini.png) no-repeat top right transparent;padding: 0;margin: 0;border: none;">Propulsé par koéZionCMS - CMS opensource PHP</a></p>');

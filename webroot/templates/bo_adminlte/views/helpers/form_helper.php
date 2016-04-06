@@ -50,7 +50,7 @@ class FormHelper extends FormParentHelper {
 				else if($inputToolbar == "image") { ?>var ck_<?php echo $inputIdText; ?>_editor = CKEDITOR.replace('<?php echo $inputIdText; ?>', {toolbar:[{name:'document',items:['Source']},{name:'insert',items:['Image', 'Flash', 'Iframe']},{name:'links',items:['Link','Unlink']}]});<?php }
 				else if($inputToolbar == "empty") { ?>var ck_<?php echo $inputIdText; ?>_editor = CKEDITOR.replace('<?php echo $inputIdText; ?>', {toolbar:[{name:'document',items:['Source']}]});<?php }
 				else if($inputToolbar == "onlyHtml") { ?>var ck_<?php echo $inputIdText; ?>_editor = CKEDITOR.replace('<?php echo $inputIdText; ?>', {toolbar:[{name:'document',items:['Source']},{name:'basicstyles',items:['Bold','Italic','Underline','Strike','Subscript','Superscript','RemoveFormat']},{name:'paragraph',items:['NumberedList','BulletedList','-','Outdent','Indent','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock']},{name:'styles',items:['Font','FontSize']},{name:'colors',items:['TextColor','BGColor']}]});<?php }
-				?>CKFinder.setupCKEditor(ck_<?php echo $inputIdText; ?>_editor, '<?php echo Router::url('/ck/ckfinder/', '', false); ?>');<?php				
+				?>CKFinder.setupCKEditor(ck_<?php echo $inputIdText; ?>_editor, '<?php echo Router::url('/ck/finder/'.CKFINDER_VERSION.'/', '', false); ?>');<?php					
 			}
 			?></script><?php
 		}
@@ -88,22 +88,50 @@ class FormHelper extends FormParentHelper {
 		$inputIdText = $this->_set_input_id($inputNameText); //Mise en variable de l'id de l'input
 		
 		ob_start();
-		?>
-		<script>
-		function openPopup<?php echo $inputIdText; ?>() {
-			CKFinder.popup({
-				chooseFiles: true,
-				onInit: function(finder) {
-					finder.on('files:choose', function(evt) {
-						var file = evt.data.files.first();
-						document.getElementById("<?php echo $inputIdText; ?>").value = file.getUrl();
-					});
-					finder.on('file:choose:resizedImage', function(evt) {
-						document.getElementById("<?php echo $inputIdText; ?>").value = evt.data.resizedUrl;
-					});
-				}
-			});
+		
+		?><script><?php 
+		if(CKFINDER_VERSION == '2.3') {
+			
+			?>
+			function openPopup<?php echo $inputIdText; ?>() {
+
+				// You can use the "CKFinder" class to render CKFinder in a page:
+				var finder = new CKFinder();
+				finder.basePath = './js/ckfinder/';	// The path for the installation of CKFinder (default = "/ckfinder/").
+				finder.selectActionFunction = SetFileField<?php echo $inputIdText; ?>;
+				finder.popup();
+
+				// It can also be done in a single line, calling the "static"
+				// popup( basePath, width, height, selectFunction ) function:
+				// CKFinder.popup( '../', null, null, SetFileField ) ;
+				//
+				// The "popup" function can also accept an object as the only argument.
+				// CKFinder.popup( { basePath : '../', selectActionFunction : SetFileField } ) ;
+			}
+
+			// This is a sample function which is called when a file is selected in CKFinder.
+			function SetFileField<?php echo $inputIdText; ?>(fileUrl) { document.getElementById("<?php echo $inputIdText; ?>").value = fileUrl; }			
+			<?php 
+			
+		} else if(CKFINDER_VERSION == '3.3') {
+			?>
+			function openPopup<?php echo $inputIdText; ?>() {
+				CKFinder.popup({
+					chooseFiles: true,
+					onInit: function(finder) {
+						finder.on('files:choose', function(evt) {
+							var file = evt.data.files.first();
+							document.getElementById("<?php echo $inputIdText; ?>").value = file.getUrl();
+						});
+						finder.on('file:choose:resizedImage', function(evt) {
+							document.getElementById("<?php echo $inputIdText; ?>").value = evt.data.resizedUrl;
+						});
+					}
+				});
+			}			
+			<?php
 		}
+		?>		
      	</script>
 		<div class="<?php echo $params['wrapperDivClass']; ?>">
 			<label>
@@ -154,24 +182,7 @@ class FormHelper extends FormParentHelper {
 		ob_start();
 		?>
 		<script type="text/javascript">
-			function BrowseServer<?php echo $inputIdText; ?>() {
-
-				// You can use the "CKFinder" class to render CKFinder in a page:
-				var finder = new CKFinder();
-				finder.basePath = './js/ckfinder/';	// The path for the installation of CKFinder (default = "/ckfinder/").
-				finder.selectActionFunction = SetFileField<?php echo $inputIdText; ?>;
-				finder.popup();
-
-				// It can also be done in a single line, calling the "static"
-				// popup( basePath, width, height, selectFunction ) function:
-				// CKFinder.popup( '../', null, null, SetFileField ) ;
-				//
-				// The "popup" function can also accept an object as the only argument.
-				// CKFinder.popup( { basePath : '../', selectActionFunction : SetFileField } ) ;
-			}
-
-			// This is a sample function which is called when a file is selected in CKFinder.
-			function SetFileField<?php echo $inputIdText; ?>(fileUrl) { document.getElementById("<?php echo $inputIdText; ?>").value = fileUrl; }
+			
 		</script>
 		<div class="<?php echo $params['wrapperDivClass']; ?>">
 			<label>

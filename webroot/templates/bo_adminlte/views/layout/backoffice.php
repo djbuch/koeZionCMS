@@ -62,8 +62,8 @@
 			'bo_adminlte/plugins/slimScroll/jquery.slimscroll.min', /*Slimscroll*/
 			'bo_adminlte/plugins/fastclick/fastclick.min', /*FastClick*/
 			'bo_adminlte/js/app.min', /*AdminLTE App*/	
-			'/../ck/ckeditor/ckeditor', /*Librairie CKEditor*/
-			'/../ck/ckfinder/ckfinder', /*Librairie CKFinder*/
+			'/../ck/editor/'.CKEDITOR_VERSION.'/ckeditor', /*Librairie CKEditor*/
+			'/../ck/finder/'.CKFINDER_VERSION.'/ckfinder', /*Librairie CKFinder*/
 			'bo_adminlte/js/hooks/jquery.alerts', /*jQuery Alerts*/
 			'bo_adminlte/js/hooks/backoffice' /*Hooks Backoffice*/
 		);

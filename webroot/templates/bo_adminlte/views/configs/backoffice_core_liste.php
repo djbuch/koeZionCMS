@@ -15,7 +15,7 @@
 				    		<div class="box-body">
 								<ul class="nav nav-tabs nav-stacked col-md-12">
 							    	<li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-file-text-o"></i> <?php echo _("Général"); ?></a></li>
-							        <li><a href="#ckfinder" data-toggle="tab"><i class="fa fa-file-image-o"></i> <?php echo _("CK Finder"); ?></a></li>
+							        <li><a href="#ckfinder" data-toggle="tab"><i class="fa fa-file-image-o"></i> <?php echo _("CKEditor / CKFinder"); ?></a></li>
 								</ul>
 							</div>
 						</div>
@@ -30,7 +30,7 @@
 											<h4><i class="fa fa-file-text-o"></i> <?php echo _("Général"); ?></h4>                  
 			                			</div>	
 										<?php						
-										echo $helpers['Form']->input('backoffice_template', _('Template de backoffice'), array('type' => 'select', 'datas' => array('bo_adminlte' => 'Godzilla', 'bo_adminlte' => 'Admin LTE'), 'tooltip' => _("Sélectionnez le template BO")));
+										echo $helpers['Form']->input('backoffice_template', _('Template de backoffice'), array('type' => 'select', 'datas' => array('bo_adminlte' => 'Admin LTE', 'bo_godzilla' => 'Godzilla'), 'tooltip' => _("Sélectionnez le template BO")));
 										echo $helpers['Form']->input('check_password_local', _('Tester le mot de passe en local'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour activer le contrôle du mot de passe en local")));
 										echo $helpers['Form']->input('hash_password', _('Crypter les mots de passe utilisateurs'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour activer hashage des mots de passe dans la base de données")));
 										echo $helpers['Form']->input('log_sql', _('Activer le log SQL'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour activer le log des reqêtes SQL effectuées")));
@@ -50,13 +50,29 @@
 							    	</div>
 							    	<div class="tab-pane" id="ckfinder">	
 							    		<div class="box-header bg-light-blue">
-											<h4><i class="fa fa-file-image-o"></i> <?php echo _("CK Finder"); ?></h4>                  
+											<h4><i class="fa fa-file-image-o"></i> <?php echo _("CKEditor / CKFinder"); ?></h4>                  
 			                			</div>		
+			                			<h5 class="form-title"><?php echo _("CKEditor"); ?></h5>
+			                			<?php 
+			                			$ckeditorVersions = array(
+			                				'3.6.2' => _('Version 3.6.2'), 
+			                				'4.5.7' => _('Version 4.5.7')
+			                			); 
+			                			echo $helpers['Form']->input('ckeditor_version', _('Version de CKEditor'), array('type' => 'select', 'datas' => $ckeditorVersions, 'tooltip' => _("Sélectionnez une version")));
+			                			?>
+			                			<h5 class="form-title"><?php echo _("CKFinder"); ?></h5>
 										<?php 
+			                			$ckfinderVersions = array(
+			                				'2.3' => _('Version 2.3'), 
+			                				'3.3' => _('Version 3.3')
+			                			); 
+			                			echo $helpers['Form']->input('ckfinder_version', _('Version de CKFinder'), array('type' => 'select', 'datas' => $ckfinderVersions, 'tooltip' => _("Sélectionnez une version")));			                			 
 										echo $helpers['Form']->input('ckfinder_only_one_folder', _('Dossier de stockage unique'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour n'avoir à gérer qu'un seul dossier de stockage")));
 										echo $helpers['Form']->input('ckfinder_files_type', _("Extensions fichiers autorisées"), array('tooltip' => _("Indiquez ici la liste des extensions de fichiers autorisées séparées par une virgule"), 'value' => '7z,aiff,asf,avi,bmp,csv,doc,docx,fla,flv,gif,gz,gzip,jpeg,jpg,mid,mov,mp3,mp4,mpc,mpeg,mpg,ods,odt,pdf,png,ppt,pptx,pxd,qt,ram,rar,rm,rmi,rmvb,rtf,sdc,sitd,swf,sxc,sxw,tar,tgz,tif,tiff,txt,vsd,wav,wma,wmv,xls,xlsx,zip,kml,css,html,js'));
 										echo $helpers['Form']->input('ckfinder_images_type', _("Extensions images autorisées"), array('tooltip' => _("Indiquez ici la liste des extensions d'images autorisées séparées par une virgule"), 'value' => 'bmp,gif,jpeg,jpg,png'));
 										echo $helpers['Form']->input('ckfinder_flash_type', _("Extensions flash autorisées"), array('tooltip' => _("Indiquez ici la liste des extensions de fichiers flash autorisées séparées par une virgule"), 'value' => 'swf,flv'));
+										echo $helpers['Form']->input('ckfinder_license_name', _("Licence name"), array('tooltip' => _("Indiquez ici le nom de la licence si vous en avez acheté une")));
+										echo $helpers['Form']->input('ckfinder_license_key', _("Licence key"), array('tooltip' => _("Indiquez ici la clée de la licence si vous en avez acheté une")));
 										?>
 							    	</div>
 							    </div>
