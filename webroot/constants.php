@@ -127,7 +127,7 @@
 		$coreConfField = strtoupper($coreConfField);
 		if(!defined($coreConfField)) { define($coreConfField, $coreConfValue); }
 	}
-	if(!defined('BACKOFFICE_TEMPLATE')) { define('BACKOFFICE_TEMPLATE', 'bo_godzilla'); }
+	if(!defined('BACKOFFICE_TEMPLATE')) { define('BACKOFFICE_TEMPLATE', 'bo_adminlte'); }
 	
 //////////////////////////////////////////	
 //    CONSTANTE CKEDITOR ET CKFINDER    //
