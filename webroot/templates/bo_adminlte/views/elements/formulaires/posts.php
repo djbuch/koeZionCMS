@@ -12,10 +12,11 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
 						<li><a href="#diffusion" data-toggle="tab"><i class="fa fa-copy"></i> <?php echo _("Diffusion"); ?></a></li>
 				    	<li><a href="#textes" data-toggle="tab"><i class="fa fa-file-word-o"></i> <?php echo _("Illustrations et descriptifs"); ?></a></li>
 				    	<li><a href="#types" data-toggle="tab"><i class="fa fa-tags"></i> <?php echo _("Types d'article"); ?></a></li>
-				    	<li><a href="#right_column" data-toggle="tab"><i class="fa fa-navicon"></i> <?php echo _("Colonne page"); ?></a></li>
-				    	<li><a href="#buttons" data-toggle="tab"><i class="fa fa-hand-o-right"></i> <?php echo _("Boutons page"); ?></a></li>
+				    	<li><a href="#right_column" data-toggle="tab"><i class="fa fa-navicon"></i> <?php echo _("Colonne latérale"); ?></a></li>
+				    	<li><a href="#buttons" data-toggle="tab"><i class="fa fa-hand-o-right"></i> <?php echo _("Widgets colonne"); ?></a></li>
 				    	<li><a href="#seo" data-toggle="tab"><i class="fa fa-search"></i> <?php echo _("SEO"); ?></a></li>
 				    	<li><a href="#options" data-toggle="tab"><i class="fa fa-plug"></i> <?php echo _("Options"); ?></a></li>	
+				    	<li><a href="#publication" data-toggle="tab"><i class="fa fa-calendar"></i> <?php echo _("Date de publication"); ?></a></li>	
 				        <li><a href="#secure" data-toggle="tab"><i class="fa fa-lock"></i> <?php echo _("Sécuriser l'article"); ?></a></li>			
 						<?php
 						//On ne va afficher ce menu que si le site courant est sécurisé
@@ -41,7 +42,7 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
                 			</div>  
 							<?php 
 							echo $helpers['Form']->input('name', _("Titre de l'article"), array('compulsory' => true, 'tooltip' => _("Indiquez le titre de l'article. Ce champ sera utilisé comme titre de page dans les moteurs de recherche, 70 caractères maximum recommandé")));
-							echo $helpers['Form']->input('dont_change_modified_date', _('Ne pas changer la date de modification'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour ne pas changer automatiquement la date de modification de l'article")));
+							
 							echo $helpers['Form']->input('online', _('En ligne'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour diffuser cet article")));
 							?>	             			
                 		</div>                	
@@ -58,8 +59,8 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
 								$websiteCategories = $this->request('Categories', 'request_tree_list', array('websiteId' => $websiteId));									
 								?><h5 class="form-title"><?php echo _("Site")." ".$websiteName; ?></h5><?php 
 								echo $helpers['Form']->input('CategoriesPostsWebsite.'.$websiteId.'.display', _('Diffuser dans le site').' '.$websiteName, array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour diffuser cet article dans le site".' '.$websiteName)));
-								echo $helpers['Form']->input('CategoriesPostsWebsite.'.$websiteId.'.display_home_page', _("Afficher cet article sur la la page d'accueil du site").' '.$websiteName, array('type' => 'checkbox', 'tooltip' => _("En cochant cette case vous afficherez cet article sur la page d'accueil du site".' '.$websiteName)));
-								echo $helpers['Form']->input('CategoriesPostsWebsite.'.$websiteId.'.category_id', _("Catégorie parente de l'article dans le site").' '.$websiteName, array('type' => 'select', 'datas' => $websiteCategories, 'tooltip' => _("Indiquez la catégorie parente de cet article, c'est à partir de cette catégorie que cet article sera accessible dans le site").' '.$websiteName, 'firstElementList' => _("Sélectionnez une catégorie")));
+								echo $helpers['Form']->input('CategoriesPostsWebsite.'.$websiteId.'.display_home_page', _("Afficher cet article sur la page d'accueil du site").' '.$websiteName, array('type' => 'checkbox', 'tooltip' => _("En cochant cette case vous afficherez cet article sur la page d'accueil du site".' '.$websiteName)));
+								echo $helpers['Form']->input('CategoriesPostsWebsite.'.$websiteId.'.category_id', _("Page parente de l'article dans le site").' '.$websiteName, array('type' => 'select', 'datas' => $websiteCategories, 'tooltip' => _("Indiquez la catégorie parente de cet article, c'est à partir de cette catégorie que cet article sera accessible dans le site").' '.$websiteName, 'firstElementList' => _("Sélectionnez une catégorie")));
 							}
 							?>	
                 		</div>
@@ -78,7 +79,7 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
 				    		<div class="box-header bg-light-blue">
 								<h4><i class="fa fa-tags"></i> <?php echo _("Types d'article"); ?></h4>                  
                 			</div>                
-                			<?php echo $helpers['Form']->input('display_posts_types', _("Afficher les types d'articles dans la colonne de page"), array('type' => 'checkbox', 'tooltip' => _("En cliquant sur cette case les types d'articles seront affichés dans la colonne de droite"))); ?>
+                			<?php echo $helpers['Form']->input('display_posts_types', _("Afficher les types d'articles dans la colonne latérale"), array('type' => 'checkbox', 'tooltip' => _("En cliquant sur cette case les types d'articles seront affichés dans la colonne latérale"))); ?>
 							<label>Type d'article</label>
 							<p class="help-block"><?php echo _("Cochez les types d'article (Plusieurs choix possibles)"); ?></p>
 							<?php if($postsTypes) { ?>
@@ -118,7 +119,7 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
                 		</div>
 				    	<div class="tab-pane" id="right_column">	
 				    		<div class="box-header bg-light-blue">
-								<h4><i class="fa fa-navicon"></i> <?php echo _("Colonne page"); ?></h4>                  
+								<h4><i class="fa fa-navicon"></i> <?php echo _("Colonne latérale"); ?></h4>                  
                 			</div>    
 							<?php
 							echo $helpers['Form']->input('title_colonne_droite', _('Titre colonne'), array('tooltip' => _("Indiquez le titre qui sera affiché dans la colonne")));			
@@ -128,13 +129,13 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
                 		</div>
 				    	<div class="tab-pane" id="buttons">	
 				    		<div class="box-header bg-light-blue">
-								<h4><i class="fa fa-hand-o-right"></i> <?php echo _("Boutons page"); ?></h4>                  
+								<h4><i class="fa fa-hand-o-right"></i> <?php echo _("Widgets colonne"); ?></h4>                  
                 			</div>                			
-							<p><?php echo _("Précisez ici le ou les boutons à rajouter à cet article."); ?></p>
+							<p><?php echo _("Précisez ici le ou les widgets à rajouter à cet article."); ?></p>
 							<div class="input-group">
-								<?php echo $helpers['Form']->input('rightButtonsListId', '', array('type' => 'select', 'datas' => $rightButton, 'onlyInput' => true, 'firstElementList' => _("Sélectionnez un bouton"))); ?>
+								<?php echo $helpers['Form']->input('rightButtonsListId', '', array('type' => 'select', 'datas' => $rightButton, 'onlyInput' => true, 'firstElementList' => _("Sélectionnez un widget"))); ?>
 								<span class="input-group-btn"> 
-									<a id="addRightButton" class="btn btn-default btn-flat btnselect"><span><?php echo _("Rajouter ce bouton"); ?></span></a>
+									<a id="addRightButton" class="btn btn-default btn-flat btnselect"><span><?php echo _("Rajouter ce widget"); ?></span></a>
 								</span>
 							</div>							
 							<?php
@@ -164,14 +165,22 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
 								<h4><i class="fa fa-plug"></i> <?php echo _("Options"); ?></h4>                  
                 			</div>           
 							<?php 
+							echo $helpers['Form']->input('dont_change_modified_date', _('Ne pas changer la date de modification'), array('type' => 'checkbox', 'checked' => 'checked', 'tooltip' => _("Cochez cette case pour ne pas changer automatiquement la date de modification de l'article")));
 							echo $helpers['Form']->input('display_link', _("Afficher un lien sous forme de bouton à la suite de l'article"), array('type' => 'checkbox', 'tooltip' => _("En cochant cette case vous afficherez automatiquement le lien pour se rendre sur le détail de l'article, par défaut le titre de l'article sera également cliquable")));						
 							echo $helpers['Form']->input('redirect_to', _('Url de redirection'), array('tooltip' => _("Remplissez ce champ si souhaitez, à partir de cet article, faire une redirection vers une url de votre choix, il ne vous sera alors pas nécessaire de saisir le descriptif long")));			
 							
 							if(!isset($formulaires)) { $formulaires = array (2 => _('Formulaire commentaire article')); } 
-							echo $helpers['Form']->input('display_form', _('Formulaire'), array('type' => 'select', 'datas' => $formulaires, 'tooltip' => _("Indiquez le formulaire que vous souhaitez afficher sur la page"), 'firstElementList' => _("Sélectionnez un formulaire")));					
+							echo $helpers['Form']->input('display_form', _('Ajouter un formulaire à la page'), array('type' => 'select', 'datas' => $formulaires, 'tooltip' => _("Indiquez le formulaire que vous souhaitez afficher sur la page"), 'firstElementList' => _("Sélectionnez le formulaire à afficher")));					
 							echo $helpers['Form']->input('shooting_time', _("Durée de réalisation"), array('tooltip' => _("Indiquez la durée de réalisation de ce qui sera présenté dans cet article")));
 							//echo $helpers['Form']->input('img', _('image'), array('type' => 'file', 'class' => 'input-file', 'tooltip' => _("Cliquez sur le bouton pour télécharger votre image d'illustration. Attention : Mode RVB, Résolution 72dpi")));
 							//DEPRECATED SINCE 01.04.2016 - echo $helpers['Form']->upload_files('illustration', array('label' => _("Image d'illustration")));
+							?>
+                		</div>
+				    	<div class="tab-pane" id="publication">	
+				    		<div class="box-header bg-light-blue">
+								<h4><i class="fa fa-calendar"></i> <?php echo _("Date de publication"); ?></h4>                  
+                			</div>           
+							<?php 
 							echo $helpers['Form']->input('publication_start_date', _('Date de publication'), array('wrapperDivClass' => 'form-group no_border_bottom', 'class' => 'form-control datepicker', 'placeholder' => 'dd.mm.yy', 'tooltip' => _("Indiquez la date à laquelle cet article sera publié"))); 
 							?>
 							<div class="row">

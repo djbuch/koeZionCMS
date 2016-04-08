@@ -1,6 +1,24 @@
 ﻿<versions>
 	<version>
 		<name>Version du 08/04/2016</name>
+		<num>20160408.004</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Ergonomie backoffice</task>
+			<task author="FI" type="code">ContactsController::backoffice_newsletter : rajout de la fonction</task>
+			<task author="FI" type="code">ModulesController::backoffice_index : Réorganisation des données dans le tableau</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 08/04/2016</name>
+		<num>20160408.003</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification du fichier d'installation database_datas.sql</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 08/04/2016</name>
 		<num>20160408.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

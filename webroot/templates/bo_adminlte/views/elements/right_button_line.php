@@ -10,7 +10,7 @@
         	<?php echo $helpers['Form']->input('right_button_id.'.$rightButtonId.'.top', _("Positionner en haut de la colonne"), array('type' => 'checkbox', 'value' => 1)); ?>
         </div>
         <div class="col-sm-12 col-md-4">
-        	<?php echo $helpers['Form']->input('right_button_id.'.$rightButtonId.'.activate', _("Activer ce bouton"), array('type' => 'checkbox', 'value' => 1)); ?>        
+        	<?php echo $helpers['Form']->input('right_button_id.'.$rightButtonId.'.activate', _("Activer ce widget"), array('type' => 'checkbox', 'value' => 1)); ?>        
         </div>
 	</div>
 </section>

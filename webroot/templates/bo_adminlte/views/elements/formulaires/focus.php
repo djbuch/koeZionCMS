@@ -10,8 +10,8 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
 					<ul class="nav nav-tabs nav-stacked col-md-12">
 				    	<li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-file-text-o"></i> <?php echo _("Général"); ?></a></li>
 						<li><a href="#diffusion" data-toggle="tab"><i class="fa fa-copy"></i> <?php echo _("Diffusion"); ?></a></li>
-				        <li><a href="#details_content" data-toggle="tab"><i class="fa fa-indent"></i> <?php echo _("Contenu détaillé"); ?></a></li>
-				        <li><a href="#brut_content" data-toggle="tab"><i class="fa fa-align-justify"></i> <?php echo _("Contenu brut"); ?></a></li>				        
+				        <li><a href="#details_content" data-toggle="tab"><i class="fa fa-indent"></i> <?php echo _("Contenu"); ?></a></li>
+				        <?php /* ?><li><a href="#brut_content" data-toggle="tab"><i class="fa fa-align-justify"></i> <?php echo _("Contenu brut"); ?></a></li><?php */ ?>				        
 					</ul>
 				</div>
 			</div>
@@ -43,12 +43,12 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
 								$websiteCategories = $this->request('Categories', 'request_tree_list', array('websiteId' => $websiteId));
 								?><h5 class="form-title"><?php echo _("Site")." ".$websiteName; ?></h5><?php
 								echo $helpers['Form']->input('CategoriesFocusWebsite.'.$websiteId.'.display', _('Diffuser dans le site').' '.$websiteName, array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour diffuser ce focus dans le site".' '.$websiteName)));							
-								echo $helpers['Form']->input('CategoriesFocusWebsite.'.$websiteId.'.display_home_page', _("Afficher ce focus sur la la page d'accueil du site").' '.$websiteName, array('type' => 'checkbox', 'tooltip' => _("En cochant cette case vous afficherez ce focus sur la page d'accueil du site".' '.$websiteName)));
+								echo $helpers['Form']->input('CategoriesFocusWebsite.'.$websiteId.'.display_home_page', _("Afficher ce focus sur la page d'accueil du site").' '.$websiteName, array('type' => 'checkbox', 'tooltip' => _("En cochant cette case vous afficherez ce focus sur la page d'accueil du site".' '.$websiteName)));
 								?>
 								<table class="table table-bordered table-hover">
 									<thead>
 										<tr>
-											<th colspan="2"><?php echo _("Rubrique"); ?></th>
+											<th colspan="2"><?php echo _("Afficher ce focus dans une (ou plusieurs) page(s) du site"); ?> <?php echo $websiteName; ?></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -66,7 +66,7 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
                 		</div>
 				        <div class="tab-pane" id="details_content">	
 				    		<div class="box-header bg-light-blue">
-								<h4><i class="fa fa-indent"></i> <?php echo _("Contenu détaillé"); ?></h4>                  
+								<h4><i class="fa fa-indent"></i> <?php echo _("Contenu"); ?></h4>                  
                 			</div>	
 				       		<?php 
 							echo $helpers['Form']->input('details_title', _('Titre'), array('compulsory' => true, 'tooltip' => _("Indiquez le titre qui sera affiché")));
@@ -74,12 +74,14 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
 							echo $helpers['Form']->input('details_content', _('Contenu'), array('type' => 'textarea', 'wysiswyg' => true, 'tooltip' => _("Saisissez ici le contenu de votre focus")));
 							?>
 				        </div>
+				        <?php /* ?>
 				        <div class="tab-pane" id="brut_content">	
 				    		<div class="box-header bg-light-blue">
 								<h4><i class="fa fa-align-justify"></i> <?php echo _("Contenu brut"); ?></h4>                  
                 			</div>	
 				       		<?php echo $helpers['Form']->input('content', _('Contenu brut'), array('type' => 'textarea', 'wysiswyg' => true, 'tooltip' => _("Saisissez ici le contenu brut de votre focus, n'hésitez pas à utiliser le modèle de focus pour vous aider"))); ?>
 				        </div>
+				        <?php */ ?>
 				    </div>
 				</div>
 				<div class="box-footer">

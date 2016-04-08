@@ -5,10 +5,12 @@
 	    		<div class="box-body">
 					<ul class="nav nav-tabs nav-stacked col-md-12">
 				    	<li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-file-text-o"></i> <?php echo _("Général"); ?></a></li>
-				        <li><a href="#right_column" data-toggle="tab"><i class="fa fa-navicon"></i> <?php echo _("Colonne page"); ?></a></li>
-				        <li><a href="#buttons" data-toggle="tab"><i class="fa fa-hand-o-right"></i> <?php echo _("Boutons page"); ?></a></li>
+				        <li><a href="#right_column" data-toggle="tab"><i class="fa fa-navicon"></i> <?php echo _("Colonne latérale"); ?></a></li>
+				        <li><a href="#buttons" data-toggle="tab"><i class="fa fa-hand-o-right"></i> <?php echo _("Widgets colonne"); ?></a></li>
 				        <li><a href="#seo" data-toggle="tab"><i class="fa fa-search"></i> <?php echo _("SEO"); ?></a></li>
 				        <li><a href="#options" data-toggle="tab"><i class="fa fa-plug"></i> <?php echo _("Options"); ?></a></li>
+				        <li><a href="#redirection" data-toggle="tab"><i class="fa fa-share"></i> <?php echo _("Redirection"); ?></a></li>
+				        <li><a href="#cssjs" data-toggle="tab"><i class="fa fa-code"></i> <?php echo _("CSS & JS"); ?></a></li>
 				        <li><a href="#secure" data-toggle="tab"><i class="fa fa-lock"></i> <?php echo _("Sécuriser la page"); ?></a></li>
 						<?php 
 						//On ne va afficher ce menu que si le site courant est sécurisé
@@ -41,7 +43,7 @@
 				    	</div>
 				        <div class="tab-pane" id="right_column">	
 				    		<div class="box-header bg-light-blue">
-								<h4><i class="fa fa-navicon"></i> <?php echo _("Colonne page"); ?></h4>                  
+								<h4><i class="fa fa-navicon"></i> <?php echo _("Colonne latérale"); ?></h4>                  
                 			</div>	
 				        	<?php
 							//echo $helpers['Form']->input('title_colonne_droite', 'Titre colonne de droite', array('tooltip' => "Indiquez le titre qui sera affiché dans la colonne de droite"));			
@@ -53,13 +55,13 @@
 				        </div>
 				        <div class="tab-pane" id="buttons">	
 				    		<div class="box-header bg-light-blue">
-								<h4><i class="fa fa-hand-o-right"></i> <?php echo _("Boutons page"); ?></h4>                  
+								<h4><i class="fa fa-hand-o-right"></i> <?php echo _("Widgets colonne"); ?></h4>                  
                 			</div>	
-					        <p><?php echo _("Précisez ici le ou les boutons à rajouter à cette page"); ?>.</p>
+					        <p><?php echo _("Précisez ici le ou les widgets à rajouter à cette page"); ?>.</p>
 							<div class="input-group">
-								<?php echo $helpers['Form']->input('rightButtonsListId', '', array('type' => 'select', 'datas' => $rightButton, 'onlyInput' => true, 'firstElementList' => _("Sélectionnez un bouton"))); ?>
+								<?php echo $helpers['Form']->input('rightButtonsListId', '', array('type' => 'select', 'datas' => $rightButton, 'onlyInput' => true, 'firstElementList' => _("Sélectionnez un widget"))); ?>
 								<span class="input-group-btn"> 
-									<a id="addRightButton" class="btn btn-default btn-flat btnselect"><span><?php echo _("Rajouter ce bouton"); ?></span></a>
+									<a id="addRightButton" class="btn btn-default btn-flat btnselect"><span><?php echo _("Rajouter ce widget"); ?></span></a>
 								</span>
 							</div>
 							<?php
@@ -87,28 +89,42 @@
 				    		<div class="box-header bg-light-blue">
 								<h4><i class="fa fa-plug"></i> <?php echo _("Options"); ?></h4>                  
                 			</div>	
+				        	<?php
+							echo $helpers['Form']->input('title_posts_list', _('Titre bloc article'), array('tooltip' => _("Indiquez le titre qui sera affiché au dessus de la liste des articles")));			
+							if(!isset($formulaires)) { $formulaires = array (1 => _('Formulaire de contact')); } 
+							echo $helpers['Form']->input('display_form', _('Ajouter un formulaire à la page'), array('type' => 'select', 'datas' => $formulaires, 'tooltip' => _("Indiquez le formulaire que vous souhaitez afficher sur la page"), 'firstElementList' => _("Sélectionnez le formulaire à afficher")));
+
+							?><h5 class="form-title"><?php echo _("Illustrations"); ?></h5><?php 
+							echo $helpers['Form']->upload_files('illustration_1', array('label' => _("Illustration 1"), 'button_value' => _('Sélectionner une image'), 'tooltip' => _("Sélectionnez l'image d'illustration (1) de cette page.")));
+							echo $helpers['Form']->upload_files('illustration_2', array('label' => _("Illustration 2"), 'button_value' => _('Sélectionner une image'), 'tooltip' => _("Sélectionnez l'image d'illustration (2) de cette page.")));
+							
+							?><h5 class="form-title"><?php echo _("Sous-titre"); ?></h5><?php
+							echo $helpers['Form']->input('subtitle_1', _('Sous-titre 1'), array('tooltip' => _("Indiquez le sous-titre 1")));
+							echo $helpers['Form']->input('subtitle_2', _('Sous-titre 2'), array('tooltip' => _("Indiquez le sous-titre 2")));
+							?>
+				        </div>
+				        <div class="tab-pane" id="redirection">	
+				    		<div class="box-header bg-light-blue">
+								<h4><i class="fa fa-share"></i> <?php echo _("Redirection"); ?></h4>                  
+                			</div>	
 				        	<?php 
 							//On va supprimer la catégorie racine
 							$racine = each($categoriesList);
 							unset($categoriesList[$racine['key']]);			
 							$categoriesList[-1] = "[&nbsp;&nbsp;&nbsp;"._("Redirection vers la page d'accueil")."&nbsp;&nbsp;&nbsp;]";
-							echo $helpers['Form']->input('redirect_category_id', _('Rediriger vers'), array('type' => 'select', 'datas' => $categoriesList, 'tooltip' => _("Vous permet de rediriger cette page vers une autre de la liste"), 'firstElementList' => _("Pas de redirection")));			
-							echo $helpers['Form']->input('redirect_to', _('Redirection personnalisée'), array('tooltip' => _("Saisissez l'url de redirection")));
-							
-							echo $helpers['Form']->input('title_posts_list', _('Titre bloc article'), array('tooltip' => _("Indiquez le titre qui sera affiché au dessus de la liste des articles")));			
-							if(!isset($formulaires)) { $formulaires = array (1 => _('Formulaire de contact')); } 
-							echo $helpers['Form']->input('display_form', _('Formulaire'), array('type' => 'select', 'datas' => $formulaires, 'tooltip' => _("Indiquez le formulaire que vous souhaitez afficher sur la page"), 'firstElementList' => _("Sélectionnez un formulaire")));
-							
-							echo $helpers['Form']->upload_files('css_file', array('label' => _("Fichier css"), 'button_value' => _('Sélectionner un fichier CSS'), 'tooltip' => _("Vous pouvez uploader un fichier CSS supplémentaire si besoin. Attention ce fichier ne sera pris en compte que lors de l'affichage de cette page.")));
-							echo $helpers['Form']->upload_files('js_file', array('label' => _("Fichier javascript"), 'button_value' => _('Sélectionner un fichier JS'), 'tooltip' => _("Vous pouvez uploader un fichier JS supplémentaire si besoin. Attention ce fichier ne sera pris en compte que lors de l'affichage de cette page.")));
-							
-							echo $helpers['Form']->upload_files('illustration_1', array('label' => _("Illustration 1"), 'button_value' => _('Sélectionner un fichier CSS'), 'tooltip' => _("Sélectionnez l'image d'illustration (1) de cette page.")));
-							echo $helpers['Form']->upload_files('illustration_2', array('label' => _("Illustration 2"), 'button_value' => _('Sélectionner un fichier CSS'), 'tooltip' => _("Sélectionnez l'image d'illustration (2) de cette page.")));
-							
-							echo $helpers['Form']->input('subtitle_1', _('Sous-titre 1'), array('tooltip' => _("Indiquez le sous-titre 1")));
-							echo $helpers['Form']->input('subtitle_2', _('Sous-titre 2'), array('tooltip' => _("Indiquez le sous-titre 2")));
+							echo $helpers['Form']->input('redirect_category_id', _('Redirection interne'), array('type' => 'select', 'datas' => $categoriesList, 'tooltip' => _("Vous permet de rediriger cette page vers une autre de la liste"), 'firstElementList' => _("Pas de redirection")));			
+							echo $helpers['Form']->input('redirect_to', _('Redirection externe'), array('tooltip' => _("Indiquez ici l'URL de la page à atteindre (http://www.example.com/page1.html)")));
 							?>
 				        </div>
+				    	<div class="tab-pane" id="cssjs">	
+				    		<div class="box-header bg-light-blue">
+								<h4><i class="fa fa-code"></i> <?php echo _("CSS & JS"); ?></h4>                  
+                			</div>  	
+							<?php	
+							echo $helpers['Form']->upload_files('css_file', array('label' => _("Fichier css"), 'button_value' => _('Sélectionner un fichier CSS'), 'tooltip' => _("Vous pouvez uploader un fichier CSS supplémentaire si besoin. Attention ce fichier ne sera pris en compte que lors de l'affichage de cette page.")));
+							echo $helpers['Form']->upload_files('js_file', array('label' => _("Fichier javascript"), 'button_value' => _('Sélectionner un fichier JS'), 'tooltip' => _("Vous pouvez uploader un fichier JS supplémentaire si besoin. Attention ce fichier ne sera pris en compte que lors de l'affichage de cette page.")));
+							?>
+                		</div>
 				        <div class="tab-pane" id="secure">	
 				    		<div class="box-header bg-light-blue">
 								<h4><i class="fa fa-lock"></i> <?php echo _("Sécuriser la page"); ?></h4>                  

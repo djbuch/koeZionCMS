@@ -27,22 +27,26 @@ class ModulesController extends AppController {
  * @version 0.1 - 29/05/2012 by FI
  * @version 0.2 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  * @version 0.3 - 14/10/2015 by FI - Réorganisation du passage de paramètres à la vue
+ * @version 0.4 - 08/04/2016 by FI - Réorganisation des données dans le tableau
  */
 	function backoffice_index($return = false, $fields = null, $order = null, $conditions = null) {
 		
-		$datas = parent::backoffice_index(true, array('id', 'name', 'order_by', 'online', 'modules_type_id'), 'order_by ASC');		
-				
-		$modulesTypes = $this->_init_modules_types(true);
-		//$datas['modulesTypes'] = $modulesTypes;
+		$datas 			= parent::backoffice_index(true, array('id', 'name', 'order_by', 'online', 'modules_type_id'), 'order_by ASC');
+		$modulesTypes 	= $this->_init_modules_types(true);		
+		$modules 		= array();
+		$modulesTMP 	= array();
 		
-		$modules = array();
 		foreach($datas['modules'] as $k => $v) { 
 			
-			if(isset($modulesTypes[$v['modules_type_id']])) { $modules[$modulesTypes[$v['modules_type_id']]][] = $v; }
+			if(isset($modulesTypes[$v['modules_type_id']])) { $modulesTMP[$v['modules_type_id']][] = $v; }
+		}
+				
+		foreach($modulesTypes as $k => $v) {
+			
+			if(isset($modulesTMP[$k])) { $modules[$v] = $modulesTMP[$k]; }
 		}
 		
-		$datas['modules'] = $modules;
-		
+		$datas['modules'] = $modules;		
 		$this->set($datas);
 	}
 	
@@ -105,9 +109,11 @@ class ModulesController extends AppController {
 	protected function _init_modules_types($return = false) {
 		
 		$this->load_model('ModulesType'); //Chargement du modèle des types de modules
-		$modulesTypes = $this->ModulesType->findList(array('conditions' => array('online' => 1))); //On récupère les types de modules		
-		$this->unload_model('ModulesType'); //Déchargement du modèle des types de modules		
-		
+		$modulesTypes = $this->ModulesType->findList(array(
+			'conditions' => array('online' => 1),
+			'orderBy' => 'order_by ASC'
+		)); //On récupère les types de modules		
+		$this->unload_model('ModulesType'); //Déchargement du modèle des types de modules
 		if($return) { return $modulesTypes; }
 		else { $this->set('modulesTypes', $modulesTypes); } //On les envois à la vue
 	}

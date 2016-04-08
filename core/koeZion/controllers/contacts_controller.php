@@ -46,7 +46,7 @@ class ContactsController extends AppController {
 				///////////////////////
 				//   ENVOI DE MAIL   //
 				$mailDatas = array(
-					'subject' => '::Newsletter::',
+					'subject' => $vars['websiteParams']['subject_mail_newsletter'],
 					'to' => $this->request->data['email'],
 					'element' => $emailElement,
 					'vars' => array('messageContent' => $messageContent)
@@ -105,7 +105,30 @@ class ContactsController extends AppController {
  */
 	function backoffice_index($return = false, $fields = null, $order = null, $conditions = null) { 
 		
-		parent::backoffice_index(false, array('id', 'name', 'email', 'online', 'created'), 'created DESC, name ASC'); 
-	}	
+		parent::backoffice_index(
+			false, 
+			array('id', 'name', 'email', 'online', 'created'), 
+			'created DESC, name ASC', 
+			array("cpostal <> ''")
+		); 
+	}
+		
+/**
+ * Cette fonction permet l'affichage de la liste des éléments
+ *
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 09/03/2012 by FI
+ * @version 0.2 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
+ */
+	function backoffice_newsletter($return = false, $fields = null, $order = null, $conditions = null) { 
+		
+		parent::backoffice_index(
+				false,
+				array('id', 'name', 'email', 'online', 'created'),
+				'created DESC, name ASC',
+				array('cpostal' => '')
+		);
+	}
 			
 }

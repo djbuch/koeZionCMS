@@ -10,7 +10,8 @@ $currentWebsiteDatas 	= $websitesSession['details'][$currentWebsiteId]; //Récup
 	    		<div class="box-body">
 					<ul class="nav nav-tabs nav-stacked col-md-12">
 				    	<li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-file-text-o"></i> <?php echo _("Général"); ?></a></li>
-				    	<li><a href="#emails" data-toggle="tab"><i class="fa fa-envelope"></i> <?php echo _("Envoi de mail"); ?></a></li>
+				    	<li><a href="#valid" data-toggle="tab"><i class="fa fa-envelope"></i> <?php echo _("Validation inscription"); ?></a></li>
+				    	<li><a href="#refused" data-toggle="tab"><i class="fa fa-envelope"></i> <?php echo _("Refus inscription"); ?></a></li>
 				    	<li><a href="#websites_users" data-toggle="tab"><i class="fa fa-globe"></i> <?php echo _("Sites accessibles"); ?></a></li>
 					</ul>
 				</div>
@@ -35,17 +36,20 @@ $currentWebsiteDatas 	= $websitesSession['details'][$currentWebsiteId]; //Récup
 							echo $helpers['Form']->input('online', _('Actif'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour valider cet utilisateur")));
 							?>	             			
                 		</div>
-				    	<div class="tab-pane" id="emails">	
+				    	<div class="tab-pane" id="valid">	
 				    		<div class="box-header bg-light-blue">
-								<h4><i class="fa fa-envelope"></i> <?php echo _("Envoi de mail"); ?></h4>                  
-                			</div>
-                			<h5 class="form-title"><?php echo _("Valider l'inscription de cet utilisateur"); ?></h5> 							
+								<h4><i class="fa fa-envelope"></i> <?php echo _("Validation inscription"); ?></h4>                  
+                			</div>						
 							<?php 
 							echo $helpers['Form']->input('is_validated_user', _("Cocher cette case pour valider l'inscription de cet utilisateur"), array('type' => 'checkbox'));
 							echo $helpers['Form']->input('subject_mail_validated_user', _("Sujet de l'email"), array('value' => $currentWebsiteDatas['subject_mail_validated_user']));
 							echo $helpers['Form']->input('txt_mail_validated_user', _("Contenu de l'email"), array('type' => 'textarea', 'wysiswyg' => true, 'value' => $currentWebsiteDatas['txt_mail_validated_user']));
-							?>
-							<h5 class="form-title"><?php echo _("Refuser l'inscription de cet utilisateur"); ?></h5>
+							?>							
+                		</div>
+				    	<div class="tab-pane" id="refused">	
+				    		<div class="box-header bg-light-blue">
+								<h4><i class="fa fa-envelope"></i> <?php echo _("Refus inscription"); ?></h4>                  
+                			</div>
 							<?php 
 							echo $helpers['Form']->input('is_refused_user', _("Cocher cette case pour refuser l'inscription de cet utilisateur"), array('type' => 'checkbox'));
 							echo $helpers['Form']->input('subject_mail_refused_user', _("Sujet de l'email lorsque l'inscription refusée"), array('value' => $currentWebsiteDatas['subject_mail_refused_user']));

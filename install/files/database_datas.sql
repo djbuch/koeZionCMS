@@ -1,23 +1,36 @@
-INSERT INTO `modules` (`id`, `name`, `controller_name`, `action_name`, `icon`, `no_display_in_menu`, `order_by`, `online`, `created`, `modules_type_id`, `plugin_id`) VALUES
-(1, 'Catégories', 'categories', '', '', 0, 3, 1, '2012-11-29 22:58:29', 2, 0),
-(2, 'Sliders', 'sliders', '', '', 0, 4, 1, '2012-11-29 22:58:46', 2, 0),
-(3, 'Focus', 'focus', '', '', 0, 5, 1, '2012-11-29 22:59:01', 2, 0),
-(4, 'Boutons colonne', 'right_buttons', '', '', 0, 6, 1, '2012-11-29 22:59:29', 2, 0),
-(5, 'Articles', 'posts', '', '', 0, 8, 1, '2012-11-29 23:00:13', 4, 0),
-(6, 'Types d''article', 'posts_types', '', '', 0, 9, 1, '2012-11-29 23:00:35', 4, 0),
-(7, 'Commentaires articles', 'posts_comments', '', '', 0, 10, 1, '2012-11-29 23:01:11', 4, 0),
-(8, 'Contacts', 'contacts', '', '', 0, 7, 1, '2012-11-29 23:06:17', 2, 0),
-(9, 'Sites Internet', 'websites', '', '', 0, 0, 1, '2012-11-30 09:27:12', 5, 0),
-(10, 'Utilisateurs', 'users', '', '', 0, 1, 1, '2012-11-30 09:27:32', 5, 0),
-(11, 'Plugins', 'plugins', '', '', 0, 2, 1, '2012-11-30 09:27:47', 6, 0),
-(13, 'Tableau de bord', 'dashboard', '', '', 0, 1, 1, '2013-10-08 00:52:32', 7, 0);
+--
+-- Contenu de la table `modules`
+--
+
+INSERT INTO `modules` (`id`, `name`, `controller_name`, `action_name`, `others_actions`, `prohibited_actions`, `icon`, `no_display_in_menu`, `order_by`, `online`, `created`, `modules_type_id`, `plugin_id`) VALUES
+(1, 'Pages', 'categories', '', '', '', '', 0, 3, 1, '2012-11-29 22:58:29', 2, 0),
+(2, 'Slides', 'sliders', '', '', '', '', 0, 4, 1, '2012-11-29 22:58:46', 2, 0),
+(3, 'Focus', 'focus', '', '', '', '', 0, 5, 1, '2012-11-29 22:59:01', 2, 0),
+(4, 'Widgets colonne', 'right_buttons', '', '', '', '', 0, 6, 1, '2012-11-29 22:59:29', 2, 0),
+(5, 'Articles', 'posts', '', '', '', '', 0, 0, 1, '2012-11-29 23:00:13', 4, 0),
+(6, 'Types d\'article', 'posts_types', '', '', '', '', 0, 1, 1, '2012-11-29 23:00:35', 4, 0),
+(7, 'Commentaires articles', 'posts_comments', '', '', '', '', 0, 2, 1, '2012-11-29 23:01:11', 4, 0),
+(8, 'Contacts', 'contacts', '', '', '', '', 0, 0, 1, '2012-11-29 23:06:17', 10, 0),
+(9, 'Sites Internet', 'websites', '', '', '', '', 0, 0, 1, '2012-11-30 09:27:12', 8, 0),
+(10, 'Utilisateurs', 'users', '', '', '', '', 0, 1, 1, '2012-11-30 09:27:32', 9, 0),
+(11, 'Plugins', 'plugins', '', '', '', '', 0, 2, 1, '2012-11-30 09:27:47', 6, 0),
+(13, 'Tableau de bord', 'dashboard', '', '', '', '', 0, 1, 1, '2013-10-08 00:52:32', 7, 0),
+(14, 'Newsletter', 'contacts', 'newsletter', '', '', '', 0, 1, 1, '2016-04-07 10:46:39', 10, 0),
+(15, 'Paramètres', 'configs', 'posts_liste', '', '', '', 0, 3, 1, '2016-04-07 10:48:57', 4, 0);
+
+--
+-- Contenu de la table `modules_types`
+--
 
 INSERT INTO `modules_types` (`id`, `name`, `icon`, `order_by`, `online`, `created`, `modified`, `modified_by`, `plugin_id`) VALUES
 (7, 'TABLEAU DE BORD', 'fa fa-dashboard', 0, 1, '2012-12-01 06:39:27', '2015-09-15 08:54:33', 1, 0),
 (2, 'CONTENUS', 'fa fa-folder-open', 1, 1, '2012-12-01 06:38:44', '2015-09-15 08:59:51', 1, 0),
 (4, 'ACTUALITES / BLOG', 'fa fa-comments', 2, 1, '2012-12-01 06:39:16', '2015-09-15 09:00:07', 1, 0),
-(6, 'PLUGINS', 'fa fa-plug', 3, 1, '2012-12-03 22:39:48', '2015-09-15 09:00:17', 1, 0),
-(5, 'PARAMETRES', 'fa fa-cogs', 4, 1, '2012-12-01 06:39:27', '2015-09-15 09:00:35', 1, 0);
+(6, 'PLUGINS', 'fa fa-plug', 4, 1, '2012-12-03 22:39:48', '2015-09-15 09:00:17', 1, 0),
+(5, 'PARAMETRES', 'fa fa-cogs', 7, 1, '2012-12-01 06:39:27', '2015-09-15 09:00:35', 1, 0),
+(8, 'SITES INTERNET', 'fa fa-globe', 5, 1, '2016-04-07 10:44:41', '2016-04-07 14:58:15', 1, 0),
+(9, 'UTILISATEURS', 'fa fa-user', 6, 1, '2016-04-07 10:44:49', '2016-04-07 14:57:19', 1, 0),
+(10, 'CONTACTS', 'fa fa-envelope', 3, 1, '2016-04-07 10:45:25', '2016-04-07 14:57:45', 1, 0);
 
 INSERT INTO `users` (`id`, `name`, `second_name`, `login`, `password`, `email`, `online`, `users_group_id`) VALUES
 (1, 'Superadmin', 				'', 'superadmin', 		'superadmin', 		'superadmin@monsite.com', 		1, 1);

@@ -16,6 +16,7 @@
 				    	<li><a href="#contactpage" data-toggle="tab"><i class="fa fa-map-marker"></i> <?php echo _("Page contact"); ?></a></li>
 				    	<li><a href="#seo" data-toggle="tab"><i class="fa fa-search"></i> <?php echo _("SEO"); ?></a></li>
 				    	<li><a href="#options" data-toggle="tab"><i class="fa fa-plug"></i> <?php echo _("Options"); ?></a></li>
+				    	<li><a href="#secure" data-toggle="tab"><i class="fa fa-minus-circle"></i> <?php echo _("Sécurité"); ?></a></li>
 				    	<li><a href="#googleanalytics" data-toggle="tab"><i class="fa fa-line-chart"></i> <?php echo _("Google Analytics"); ?></a></li>
 				    	<li><a href="#connect" data-toggle="tab"><i class="fa fa-lock"></i> <?php echo _("Page de connexion"); ?></a></li>
 				    	<li><a href="#cssjs" data-toggle="tab"><i class="fa fa-code"></i> <?php echo _("CSS & JS"); ?></a></li>
@@ -80,7 +81,7 @@
 							<?php 
 							echo $helpers['Form']->input('txt_slogan', _('Slogan (accueil)'), array('type' => 'textarea', 'wysiswyg' => true,  'tooltip' => _("Indiquez le slogan du site")));
 							echo $helpers['Form']->input('txt_posts', _('Articles (accueil)'), array('type' => 'textarea', 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte de présentation des articles sur la page d'accueil")));
-							echo $helpers['Form']->input('txt_newsletter', _('Page newsletter'), array('type' => 'textarea', 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte de la page newsletter")));
+							
 							//echo $helpers['Form']->input('txt_social', _('Texte social'), array('type' => 'textarea', 'tooltip' => _("")));
 							?>
                 		</div>
@@ -90,6 +91,8 @@
                 			</div>  	
 							<?php 
 							echo $helpers['Form']->input('txt_after_form_contact', _('Mentions après le formulaire'), array('type' => 'textarea', 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte qui sera affiché après le formulaire")));
+							?><h5 class="form-title"><?php echo _("Email de confirmation"); ?></h5><?php
+							echo $helpers['Form']->input('subject_mail_contact', _("Sujet de l'email"), array('tooltip' => _("Indiquez le sujet de l'email")));							
 							echo $helpers['Form']->input('txt_mail_contact', _("Contenu de l'email"), array('type' => 'textarea', 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte qui sera envoyé par email")));
 							?>
                 		</div>
@@ -99,6 +102,8 @@
                 			</div>  	
 							<?php 
 							echo $helpers['Form']->input('txt_after_form_comments', _('Mentions après le formulaire'), array('type' => 'textarea', 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte qui sera affiché après le formulaire")));
+							?><h5 class="form-title"><?php echo _("Email de confirmation"); ?></h5><?php
+							echo $helpers['Form']->input('subject_mail_comments', _("Sujet de l'email"), array('tooltip' => _("Indiquez le sujet de l'email")));							
 							echo $helpers['Form']->input('txt_mail_comments', _("Contenu de l'email"), array('type' => 'textarea', 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte qui sera envoyé par email")));
 							?>
                 		</div>
@@ -107,17 +112,20 @@
 								<h4><i class="fa fa-envelope"></i> <?php echo _("Textes/emails du formulaire d'inscription à la newsletter"); ?></h4>                  
                 			</div>  	
 							<?php
+							echo $helpers['Form']->input('txt_newsletter', _('Texte page newsletter'), array('type' => 'textarea', 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte de la page newsletter")));
 							echo $helpers['Form']->input('txt_after_newsletter', _('Mentions après le formulaire'), array('type' => 'textarea', 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte qui sera affiché après le formulaire")));
+							?><h5 class="form-title"><?php echo _("Email de confirmation"); ?></h5><?php
+							echo $helpers['Form']->input('subject_mail_newsletter', _("Sujet de l'email"), array('tooltip' => _("Indiquez le sujet de l'email")));							
 							echo $helpers['Form']->input('txt_mail_newsletter', _("Contenu de l'email"), array('type' => 'textarea', 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte qui sera envoyé par email")));
 							?>
                 		</div>
 				    	<div class="tab-pane" id="txtemailsuser">	
 				    		<div class="box-header bg-light-blue">
 								<h4><i class="fa fa-envelope"></i> <?php echo _("Textes/emails du formulaire d'inscription d'un nouvel utilisateur"); ?></h4>                  
-                			</div>  	
-							<h5 class="form-title"><?php echo _("Inscription utilisateur"); ?></h5>
+                			</div>
 							<?php
-							//echo $helpers['Form']->input('txt_after_form_user', _('Mentions après le formulaire'), array('type' => 'textarea', 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte qui sera affiché après le formulaire")));
+							echo $helpers['Form']->input('txt_after_form_user', _('Mentions après le formulaire'), array('type' => 'textarea', 'wysiswyg' => true,  'tooltip' => _("Indiquez le texte qui sera affiché après le formulaire")));
+							?><h5 class="form-title"><?php echo _("Inscription utilisateur"); ?></h5><?php
 							echo $helpers['Form']->input('subject_mail_inscription_user', _("Sujet de l'email après l'inscription"), array('tooltip' => _("Indiquez le sujet de l'email")));
 							echo $helpers['Form']->input('txt_mail_inscription_user', _("Contenu de l'email après l'inscription"), array('type' => 'textarea', 'wysiswyg' => true, 'tooltip' => _("Indiquez le texte qui sera envoyé par email")));
 							echo $helpers['Form']->input('txt_confirm_inscription_user', _("Texte affiché après l'inscription"), array('tooltip' => _("Indiquez le sujet de l'email")));
@@ -169,13 +177,20 @@
 								3 => _("Slider Vidéo")
 							);
 							echo $helpers['Form']->input('slider_type', _('Type de slider'), array('type' => 'select', 'datas' => $sliderTypesList));
-							$txtSecure = _('Sécuriser le site. <i>Seuls les utilisateurs enregistrés pourront se connecter.').' <a href="'.Router::url('backoffice/users/index').'">'._("Ajouter un utilisateur").'</a></i>';
-							echo $helpers['Form']->input('secure_activ', $txtSecure, array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour activer la sécurité sur le site")));			
-							$txtLog = _("Logger les utilisateurs").'<i>'._("Attention cette option ne fonctionne que dans le cas de sites sécurisés").".</i>";
-							echo $helpers['Form']->input('log_users_activ', $txtLog, array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour activer le log des utilisateurs. La mise en place de cette option peut ralentir l'affichage des pages")));
-							echo $helpers['Form']->input('moderate_new_users', _("Modérer les nouveaux utilisateurs frontoffice"), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour activer la modération sur les nouveaux utilisateurs frontoffice")));
 							echo $helpers['Form']->upload_files('favicon', array('label' => _("Icône du site")));
 							echo $helpers['Form']->input('hook_filename', _('Nom du fichier hooks'), array('tooltip' => _("Indiquez ici le nom du du fichier hooks, ce nom sera recherché dans les dossiers /configs/hooks/* (Si plusieurs fichiers les séparer par un ;)")));
+							?>                			
+                		</div>
+				    	<div class="tab-pane" id="secure">	
+				    		<div class="box-header bg-light-blue">
+								<h4><i class="fa fa-minus-circle"></i> <?php echo _("Sécurité"); ?></h4>                  
+                			</div>  	
+							<?php 
+							$txtSecure = _('Sécuriser le site').' <i>'._('Seuls les utilisateurs enregistrés pourront se connecter.').' <a href="'.Router::url('backoffice/users/index').'">'._("Ajouter un utilisateur").'</a></i>';
+							echo $helpers['Form']->input('secure_activ', $txtSecure, array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour activer la sécurité sur le site")));			
+							$txtLog = _("Logger les utilisateurs").'. <i>'._("Attention cette option ne fonctionne que dans le cas de sites sécurisés").".</i>";
+							echo $helpers['Form']->input('log_users_activ', $txtLog, array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour activer le log des utilisateurs. La mise en place de cette option peut ralentir l'affichage des pages")));
+							echo $helpers['Form']->input('moderate_new_users', _("Modérer les nouveaux utilisateurs frontoffice"), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour activer la modération sur les nouveaux utilisateurs frontoffice")));
 							?>                			
                 		</div>
 				    	<div class="tab-pane" id="googleanalytics">	

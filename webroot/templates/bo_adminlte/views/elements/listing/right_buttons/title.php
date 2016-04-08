@@ -1,8 +1,8 @@
 <?php 
 $currentAction = $this->controller->request->action;
-if($currentAction == 'index') { $pageTitle = _("Boutons colonne"); } 
-else if($currentAction == 'add') { $pageTitle = _("Ajouter un bouton colonne"); } 
-else if($currentAction == 'edit') { $pageTitle = _("Editer un bouton colonne"); }
+if($currentAction == 'index') { $pageTitle = _("Widgets colonne"); } 
+else if($currentAction == 'add') { $pageTitle = _("Ajouter un widget colonne"); } 
+else if($currentAction == 'edit') { $pageTitle = _("Editer un widget colonne"); }
 ?>
 <section class="content-header">
 	<h1>

@@ -1,8 +1,8 @@
 <?php 
 $currentAction = $this->controller->request->action;
-if($currentAction == 'index') { $pageTitle = _("Sliders"); } 
-else if($currentAction == 'add') { $pageTitle = _("Ajouter un slider"); } 
-else if($currentAction == 'edit') { $pageTitle = _("Editer un slider"); }
+if($currentAction == 'index') { $pageTitle = _("Slides"); } 
+else if($currentAction == 'add') { $pageTitle = _("Ajouter un slide"); } 
+else if($currentAction == 'edit') { $pageTitle = _("Editer un slide"); }
 ?>
 <section class="content-header">
 	<h1>

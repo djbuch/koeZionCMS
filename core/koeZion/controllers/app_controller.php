@@ -1193,7 +1193,7 @@ class AppController extends Controller {
 				///////////////////////
 				//   ENVOI DE MAIL   //
 				$mailDatas = array(
-					'subject' => '::Contact::',
+					'subject' => $vars['websiteParams']['subject_mail_contact'],
 					'to' => $this->request->data['email'],
 					'element' => $emailElement,
 					'vars' => array(
@@ -1277,7 +1277,7 @@ class AppController extends Controller {
     			///////////////////////
     			//   ENVOI DE MAIL   //
     			$mailDatas = array(
-	    			'subject' => '::Commentaire::',
+	    			'subject' => $vars['websiteParams']['subject_mail_comments'],
 	    			'to' => $this->request->data['email'],
 	    			'element' => $emailElement,
 					'vars' => array(
