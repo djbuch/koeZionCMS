@@ -40,6 +40,8 @@ Router::connect('e404', 								'home/e404'); 																//Erreur 404
 Router::connect('newsletter', 							'contacts/newsletter'); 													//Inscription à la newsletter
 Router::connect('rechercher', 							'searchs/rechercher');														//Préparation de l'url pour la recherche
 Router::connect('recherche', 							'searchs/index');															//Résultat de la recherche
+Router::connect('sitemap', 								'sitemaps/sitemap');
+Router::connect('robots', 								'sitemaps/robots');
 
 ////////////////////////////////////////////////
 //   REGLES ADDITIONNELLES POUR LES PLUGINS   //

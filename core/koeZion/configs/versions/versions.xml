@@ -1,6 +1,15 @@
 ﻿<versions>
 	<version>
 		<name>Version du 08/04/2016</name>
+		<num>20160408.007</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="bdd">Rajout du champ robots_file dans la table websites pour gérer le contenu éventuel du fichier robots.txt</task>
+			<task author="FI" type="code">Mise en place en natif du sitemap.xml et du robots.txt</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 08/04/2016</name>
 		<num>20160408.006</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
