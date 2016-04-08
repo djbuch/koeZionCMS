@@ -13,6 +13,7 @@ else if($currentAction == 'edit') { $pageTitle = _("Editer un contact"); }
 	<div class="page_menu" >
   		<?php 
   		if($currentAction == 'index') { echo $helpers['Html']->backoffice_button_title($params['controllerFileName'], 'add', '<i class="fa fa-save"></i>&nbsp;&nbsp;'.strtoupper(_("Ajouter")), null, 'html', 'btn-success btn-xs'); }
+  		if($currentAction == 'newsletter') { echo $helpers['Html']->backoffice_button_title($params['controllerFileName'], 'add', '<i class="fa fa-save"></i>&nbsp;&nbsp;'.strtoupper(_("Ajouter")), null, 'html', 'btn-success btn-xs'); }
   		else { 
   			
   			$requestData = $this->controller->request->data;

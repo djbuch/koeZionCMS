@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 08/04/2016</name>
+		<num>20160408.006</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Correction dans le fichier title.php du contrôleur Contacts</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 08/04/2016</name>
 		<num>20160408.005</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
