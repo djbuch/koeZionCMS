@@ -179,6 +179,7 @@
 							echo $helpers['Form']->input('slider_type', _('Type de slider'), array('type' => 'select', 'datas' => $sliderTypesList));
 							echo $helpers['Form']->upload_files('favicon', array('label' => _("Icône du site")));
 							echo $helpers['Form']->input('hook_filename', _('Nom du fichier hooks'), array('tooltip' => _("Indiquez ici le nom du du fichier hooks, ce nom sera recherché dans les dossiers /configs/hooks/* (Si plusieurs fichiers les séparer par un ;)")));
+							echo $helpers['Form']->input('robots_file', _('Texte fichier robots.txt'), array('type' => 'textarea', 'tooltip' => _("Indiquez ici le texte à afficher dans le fichier robots.txt.")));
 							?>                			
                 		</div>
 				    	<div class="tab-pane" id="secure">	
