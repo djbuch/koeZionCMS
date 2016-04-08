@@ -90,7 +90,7 @@ class WebsitesController extends AppController {
 			$this->_check_cache_configs(); //Modification des données en cache
 			$this->_delete_cache(); //Suppression du cache global
 			$this->_edit_session(); //Edition de la variable de Session
-			$this->redirect('backoffice/websites/index'); //Redirection sur la page d'accueil
+			//$this->redirect('backoffice/websites/index'); //Redirection sur la page d'accueil
 		}
 	}	
 
@@ -252,20 +252,17 @@ class WebsitesController extends AppController {
  */
 	protected function _edit_session() {
 		
-		$backofficeSession = Session::read('Backoffice');
-		$user = $backofficeSession['User'];
-		$usersGroup = $backofficeSession['UsersGroup'];		
-		$userGroupId = $user['users_group_id'];
-		$userRole = $usersGroup['role_id'];
+		$backofficeSession 	= Session::read('Backoffice');
+		$user 				= $backofficeSession['User'];
+		$usersGroup 		= $backofficeSession['UsersGroup'];		
+		$userGroupId 		= $user['users_group_id'];
+		$userRole 			= $usersGroup['role_id'];
 		
-		$websitesListe = array(); //Liste des sites (ID => NAME)
-		$websitesDetails = array(); //Détails des sites
+		$websitesListe 		= array(); //Liste des sites (ID => NAME)
+		$websitesDetails 	= array(); //Détails des sites
 		
-		if($userRole == 1) {
-			
-			$websites = $this->Website->find(); //Récupération des données			
-			
-		} else if($userRole == 2) {
+		if($userRole == 1) { $websites = $this->Website->find(); } 
+		else if($userRole == 2) {
 			
 			//Récupération des sites auxquels l'utilisateurs peut se connecter
 			$this->load_model('UsersGroupsWebsite'); //Chargement du modèle
@@ -279,8 +276,8 @@ class WebsitesController extends AppController {
 		
 		foreach($websites as $k => $v) {
 		
-			$websitesListe[$v['id']] = $v['name'];
-			$websitesDetails[$v['id']] = $v;
+			$websitesListe[$v['id']] 	= $v['name'];
+			$websitesDetails[$v['id']] 	= $v;
 		}
 		
 		//Cas particulier s'il ne reste qu'un seul site il faut réinitialiser le site courant
@@ -303,13 +300,18 @@ class WebsitesController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 07/06/2012 by FI
  * @version 0.2 - 11/04/2014 by FI - Suppression de la requête
+ * @version 0.3 - 08/04/2016 by FI - Mise en place du isset
  */	
 	protected function _update_template($datas) {
 		
-		$templateId = $datas['template_id']; //Récupération de l'identifiant du template		
-		$templateDatas = $this->templatesList[$templateId];
-		$datas['tpl_layout'] = $templateDatas['layout'];
-		$datas['tpl_code'] = $templateDatas['code'];	
+		if(isset($datas['template_id'])) { 
+			
+			$templateId 			= $datas['template_id']; //Récupération de l'identifiant du template		
+			$templateDatas 			= $this->templatesList[$templateId];
+			$datas['tpl_layout'] 	= $templateDatas['layout'];
+			$datas['tpl_code'] 		= $templateDatas['code'];	
+		}
+		
 		return $datas;
 	}
 
@@ -322,21 +324,23 @@ class WebsitesController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 02/08/2012 by FI
  * @version 0.2 - 11/04/2014 by FI - Suppression de la requête
+ * @version 0.3 - 08/04/2016 by FI - Mise en place du isset
  */	
 	protected function _update_txt_mails($datas) {
 			
 		$txtMails = $this->components['Email']->replace_links(
 			array(
-				'txt_mail_contact' => $datas['txt_mail_contact'],
-				'txt_mail_comments' => $datas['txt_mail_comments'],
-				'txt_mail_newsletter' => $datas['txt_mail_newsletter'],				
+				'txt_mail_contact' 		=> isset($datas['txt_mail_contact']) ? $datas['txt_mail_contact'] : '',
+				'txt_mail_comments' 	=> isset($datas['txt_mail_comments']) ? $datas['txt_mail_comments'] : '',
+				'txt_mail_newsletter' 	=> isset($datas['txt_mail_newsletter']) ? $datas['txt_mail_newsletter'] : ''				
 			),
 			$datas['url']
 		); //On fait appel au composant Email pour formater les textes des mails
 		
-		$datas['txt_mail_contact'] = $txtMails['txt_mail_contact']; 
-		$datas['txt_mail_comments'] = $txtMails['txt_mail_comments'];
-		$datas['txt_mail_newsletter'] = $txtMails['txt_mail_newsletter'];
+		$datas['txt_mail_contact'] 		= $txtMails['txt_mail_contact']; 
+		$datas['txt_mail_comments'] 	= $txtMails['txt_mail_comments'];
+		$datas['txt_mail_newsletter'] 	= $txtMails['txt_mail_newsletter'];
+		
 		return $datas;
 	}
     

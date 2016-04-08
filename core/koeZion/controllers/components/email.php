@@ -333,6 +333,7 @@ class EmailComponent extends Component {
  * @version 0.1 - 02/08/2012 by FI
  * @version 0.2 - 06/03/2014 by FI - Rajout de $replacement
  * @version 0.3 - 23/04/2015 by FI - Modification de la gestion du remplacement
+ * @version 0.4 - 08/04/2016 by FI - Mise en place de la gestion de $data sous forme de tableau
  */		
 	function replace_links($datas, $url2Use, $replacement = null) {
 		
@@ -340,44 +341,72 @@ class EmailComponent extends Component {
 				
 		//Modification des données
 		foreach($datas as $field => $data) {
-		
-			$html = str_get_html($data);
-		
-			if(!empty($html)) {
 			
-				//Modification des liens vers les images
-				foreach($html->find('img') as $k => $v) {
-			
-					$scr = $v->src;
-					if(!substr_count($scr, $url2Use) && !substr_count($scr, 'http://')) { 
-						
-						if(!substr_count($url2Use, "http://")) { $v->src = 'http://'.$url2Use.$v->src; } 
-						else { $v->src = $url2Use.$v->src; }
-					}
-				}
-			
-				//Modification des liens
-				foreach($html->find('a') as $k => $v) {
-			
-					$href = $v->href;
-					if(!substr_count($href, "http://")) { 
-						
-						if(!substr_count($url2Use, "http://")) { $v->href = 'http://'.$url2Use.$v->href; } 
-						else { $v->href = $url2Use.$v->href; } 
-					}				
-					//if(!substr_count($href, "http://")) { $v->href = 'http://'.$url2Use.$v->href; }
-				}
+			//Si les données à traiter sont dans un tableau			
+			if(is_array($data)) {
 				
-				$content = $html->outertext;
-				if(isset($replacement)) { 
-										
-					$this->load_component('Text', null, $this->controller);
-					$content = $this->components['Text']->replace_content($content, $replacement);
-				}				
-				$datas[$field] = $content;
-			}
-		}		
+				foreach($data as $dataK => $dataV) {
+					
+					$datas[$field][$dataK] = $this->_format_mail_content($dataV, $url2Use, $replacement = null);
+				}
+			} 
+			
+			//Si les données à traiter sont une chaîne de caractères
+			else { $datas[$field] = $this->_format_mail_content($data, $url2Use, $replacement = null); }
+		}
 		
 		return $datas;
 	}
+	
+/**
+ * Cette fonction est chargée de parser la chaîne de caractères qui sera envoyée dans le corps du message
+ *
+ * @param 	array  	$datas 			Tableau à convertir
+ * @param 	varchar $url2Use 		Url à remplacer dans les liens
+ * @param 	array 	$replacement 	Si renseigné ce tableau permettra d'effectuer les remplacements de chaines
+ * @return 	array	Tableau converti
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 08/04/2016 by FI
+ */	
+	protected function _format_mail_content($data, $url2Use, $replacement = null) {
+			
+		if(!empty($data)) {
+			
+			$html = str_get_html($data);
+		
+			//Modification des liens vers les images
+			foreach($html->find('img') as $k => $v) {
+		
+				$scr = $v->src;
+				if(!substr_count($scr, $url2Use) && !substr_count($scr, 'http://')) { 
+					
+					if(!substr_count($url2Use, "http://")) { $v->src = 'http://'.$url2Use.$v->src; } 
+					else { $v->src = $url2Use.$v->src; }
+				}
+			}
+		
+			//Modification des liens
+			foreach($html->find('a') as $k => $v) {
+		
+				$href = $v->href;
+				if(!substr_count($href, "http://")) { 
+					
+					if(!substr_count($url2Use, "http://")) { $v->href = 'http://'.$url2Use.$v->href; } 
+					else { $v->href = $url2Use.$v->href; } 
+				}				
+				//if(!substr_count($href, "http://")) { $v->href = 'http://'.$url2Use.$v->href; }
+			}
+			
+			$content = $html->outertext;
+			if(isset($replacement)) { 
+									
+				$this->load_component('Text', null, $this->controller);
+				$content = $this->components['Text']->replace_content($content, $replacement);
+			}				
+			return $content;
+		} 
+		
+		else { return $data; }		
+	} 
 }

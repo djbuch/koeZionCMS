@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 08/04/2016</name>
+		<num>20160408.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">EmailComponent::replace_links : modification de la fonction pour la gestion du multilangues</task>
+			<task author="FI" type="code">WebsitesController : modification pour la gestion du multilangues plus amélioration de l'ergonomie du code</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 07/04/2016</name>
 		<num>20160407.001</num>
 		<supervisor>KoéZionCMS</supervisor>
