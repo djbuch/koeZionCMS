@@ -90,7 +90,7 @@ class WebsitesController extends AppController {
 			$this->_check_cache_configs(); //Modification des données en cache
 			$this->_delete_cache(); //Suppression du cache global
 			$this->_edit_session(); //Edition de la variable de Session
-			//$this->redirect('backoffice/websites/index'); //Redirection sur la page d'accueil
+			$this->redirect('backoffice/websites/index'); //Redirection sur la page d'accueil
 		}
 	}	
 

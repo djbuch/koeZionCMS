@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 08/04/2016</name>
+		<num>20160408.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">WebsitesController::backoffice_edit : correction redirection</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 08/04/2016</name>
 		<num>20160408.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
