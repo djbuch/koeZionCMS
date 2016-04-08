@@ -697,14 +697,17 @@ class CategoriesController extends AppController {
  * @version 0.2 - 24/04/2015 by FI - Gestion de la traduction
  * @version 0.3 - 10/02/2016 by FI - Reprise de la récupération des données suite au rajout de la gestion des boutons sur toutes les pages
  * @version 0.4 - 30/03/2016 by FI - Rajout du test sur la variable $rightButtonsCategory
+ * @version 0.5 - 08/04/2016 by FI - Correction pour l'internationnalisation
  */		
 	protected function _get_right_buttons_category($datas) {		
 		
 		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS;
 		
 		//On contrôle si le modèle est traduit
+		$this->load_model('RightButton');
 		$this->load_model('CategoriesRightButton');
-		if($this->CategoriesRightButton->fieldsToTranslate) { $cacheFile = "category_".$datas['category']['id']."_right_buttons".'_'.DEFAULT_LANGUAGE; } 
+		
+		if($this->RightButton->fieldsToTranslate) { $cacheFile = "category_".$datas['category']['id']."_right_buttons".'_'.DEFAULT_LANGUAGE; } 
 		else { $cacheFile = "category_".$datas['category']['id']."_right_buttons"; }
 				
 		$rightButtonsCategory = Cache::exists_cache_file($cacheFolder, $cacheFile);
@@ -712,7 +715,6 @@ class CategoriesController extends AppController {
 		if(!$rightButtonsCategory) {
 			
 			//1- Récupération des boutons qui doivent être présents sur toutes les pages
-			$this->load_model('RightButton');
 			$rightsButtonsAllPages = $this->RightButton->find(array(
 				'fields' => array('content', 'display_all_pages_top', 'order_by'),
 				'conditions' => array(
@@ -724,15 +726,14 @@ class CategoriesController extends AppController {
 			foreach($rightsButtonsAllPages as $rightsButtonsAllPage) { $rightButtonsCategory[$rightsButtonsAllPage['display_all_pages_top']][] = array('content' => $rightsButtonsAllPage['content']); }
 			
 			//2- Récupération des boutons de la page en cours de consultation
-			$this->load_model('CategoriesRightButton');
-			$rightsButtonsPages = $this->CategoriesRightButton->find(array(
+			/*$rightsButtonsPages = $this->CategoriesRightButton->find(array(
 				"conditions" => array('category_id' => $datas['category']['id']),
 				"fields" => am(				
 					array(
 						"position" => "KzCategoriesRightButton.position",
 						"order_by" => "KzCategoriesRightButton.order_by"
 					),
-					array("content" => "KzRightButton.content")
+					array("content" => "KzRightButton.id")
 				),
 				"leftJoin" => array(
 					array(
@@ -741,8 +742,15 @@ class CategoriesController extends AppController {
 					)
 				),
 				'orderBy' => 'order_by ASC'
-			));
-			foreach($rightsButtonsPages as $rightsButtonsPage) { $rightButtonsCategory[$rightsButtonsPage['position']][] = array('content' => $rightsButtonsPage['content']); }
+			));*/
+			
+			$rightsButtonsPages = $this->CategoriesRightButton->find(array("conditions" => array('category_id' => $datas['category']['id'])));
+			
+			foreach($rightsButtonsPages as $rightsButtonsPage) { 
+				
+				$rightButton = $this->RightButton->findFirst(array('conditions' => array('id' => $rightsButtonsPage['right_button_id'])));
+				$rightButtonsCategory[$rightsButtonsPage['position']][] = array('content' => $rightButton['content']); 
+			}
 			
 			//Mise en cache
 			Cache::create_cache_file($cacheFolder, $cacheFile, $rightButtonsCategory);	
