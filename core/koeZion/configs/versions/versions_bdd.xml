@@ -5,10 +5,17 @@
 		<supervisor>KoéZionCMS</supervisor>		
 		<tasks>
 			<task author="FI">
-			INSERT INTO `modules` (`id`, `name`, `controller_name`, `action_name`, `others_actions`, `prohibited_actions`, `icon`, `no_display_in_menu`, `order_by`, `online`, `created`, `modules_type_id`, `plugin_id`) VALUES
-			(NULL, 'Exports', 'exports', '', '', '', '', 0, 0, 1, '2016-04-08 17:50:57', 11, 0);
-			INSERT INTO `modules_types` (`id`, `name`, `icon`, `order_by`, `online`, `created`, `modified`, `modified_by`, `plugin_id`) VALUES
-			(NULL, 'EXPORTS', 'fa fa-download', 3, 1, '2016-04-08 17:50:15', '2016-04-08 17:50:15', 1, 0);
+				INSERT INTO `modules_types` (`id`, `name`, `icon`, `order_by`, `online`, `created`, `modified`, `modified_by`, `plugin_id`) VALUES
+				(NULL, 'EXPORTS', 'fa fa-download', 3, 1, '2016-04-08 17:50:15', '2016-04-08 17:50:15', 1, 0);
+			
+				INSERT INTO `modules` 
+				SET 
+					`name` = 'Exports', 
+					`controller_name` = 'exports', 
+					`order_by` = 1, 
+					`online` = 1, 
+					`created` = CURRENT_TIMESTAMP, 
+					`modules_type_id` = (SELECT `id` FROM `modules_types` WHERE `name` = 'EXPORTS' LIMIT 1);
 			</task>
 		</tasks>	
 	</version>
