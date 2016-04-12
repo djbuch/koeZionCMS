@@ -113,9 +113,14 @@ class CategoriesController extends AppController {
 						
 			//$datas['is_full_page'] = 1; //Par défaut on affichera le détail de la catégorie en pleine page
 
-			$datas['children'] 		= array();
-			$datas['brothers'] 		= array();
-			$datas['postsTypes'] 	= array();
+			$datas['children'] 				= array();
+			$datas['brothers'] 				= array();
+			$datas['titlePostsList'] 		= array();
+			$datas['posts'] 				= array();
+			$datas['postsTypes'] 			= array();			
+			$datas['titlePortfoliosList'] 	= array();
+			$datas['portfolios'] 			= array();
+			$datas['portfoliosTypes'] 		= array();
 			
 			//////////////////////////////////
 			//   RECUPERATION DES ENFANTS   //
