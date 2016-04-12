@@ -20,7 +20,7 @@
 
             <h3 class="control-sidebar-heading"><?php echo ("Gestion des templates"); ?></h3>
             <ul class="control-sidebar-menu">
-              	<li><a href="<?php echo Router::url('backoffice/templates/index'); ?>"><i class="fa fa-picture-o"></i> <?php echo _("Templates"); ?></a></li>
+              	<li><a href="<?php echo Router::url('backoffice/templates/index'); ?>"><i class="fa fa-caret-right"></i> <?php echo _("Templates"); ?></a></li>
 			</ul>         
     	</div>
     	<hr />

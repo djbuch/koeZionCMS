@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 12/04/2016</name>
+		<num>20160412.003</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Ajout du module templates</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 12/04/2016</name>
 		<num>20160412.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
