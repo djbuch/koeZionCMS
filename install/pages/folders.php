@@ -117,19 +117,20 @@ $folders = array(
 		///////////////////////////////////////////////////
 		//   CREATION DES DOSSIERS DANS WEBROOT/UPLOAD   //
 		$foldersToCreate = array(
-				UPLOAD.DS.'_thumbs',
-				UPLOAD.DS.'_thumbs'.DS.'Files',
-				UPLOAD.DS.'_thumbs'.DS.'Flash',
-				UPLOAD.DS.'_thumbs'.DS.'Images',
-				UPLOAD.DS.'files',
-				UPLOAD.DS.'flash',
-				UPLOAD.DS.'images'
+			UPLOAD.DS.'_thumbs',
+			UPLOAD.DS.'_thumbs'.DS.'Files',
+			UPLOAD.DS.'_thumbs'.DS.'Flash',
+			UPLOAD.DS.'_thumbs'.DS.'Images',
+			UPLOAD.DS.'files',
+			UPLOAD.DS.'flash',
+			UPLOAD.DS.'images'
 		);
 		foreach($foldersToCreate as $folder) { FileAndDir::createPath($folder); }
 		
-		FileAndDir::fcopy(INSTALL_FILES.DS.'core.ini', CONFIGS_FILES.DS.'core.ini');
-		FileAndDir::fcopy(INSTALL_FILES.DS.'posts.ini', CONFIGS_FILES.DS.'posts.ini');
-		FileAndDir::fcopy(INSTALL_FILES.DS.'routes.ini', CONFIGS_FILES.DS.'routes.ini');
+		FileAndDir::fcopy(INSTALL_FILES.DS.'core.ini', 			CONFIGS_FILES.DS.'core.ini');
+		FileAndDir::fcopy(INSTALL_FILES.DS.'posts.ini', 		CONFIGS_FILES.DS.'posts.ini');
+		FileAndDir::fcopy(INSTALL_FILES.DS.'portfolios.ini', 	CONFIGS_FILES.DS.'portfolios.ini');
+		FileAndDir::fcopy(INSTALL_FILES.DS.'routes.ini', 		CONFIGS_FILES.DS.'routes.ini');
 						
 		$httpHost = $_SERVER["HTTP_HOST"];
 		if($httpHost == 'localhost' || $httpHost == '127.0.0.1') { $section = 'localhost'; } else { $section = 'online'; }

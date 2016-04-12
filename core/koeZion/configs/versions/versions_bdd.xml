@@ -1,5 +1,191 @@
 ﻿<versions>
 	<version>
+		<name>Version du 12/04/2016</name>
+		<num>20160412.004</num>
+		<supervisor>KoéZionCMS</supervisor>		
+		<tasks>
+			<task author="FI">
+				--
+				-- Structure de la table `portfolios`
+				--
+
+				DROP TABLE IF EXISTS `portfolios`;
+				CREATE TABLE `portfolios` (
+				  `id` int(11) NOT NULL,
+				  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				  `short_content_illustration` longtext COLLATE utf8_unicode_ci NOT NULL,
+				  `short_content` longtext COLLATE utf8_unicode_ci NOT NULL,
+				  `content_illustration` longtext COLLATE utf8_unicode_ci NOT NULL,
+				  `content` longtext COLLATE utf8_unicode_ci NOT NULL,
+				  `prefix` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				  `page_title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				  `page_description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				  `page_keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				  `automatic_scan` int(11) NOT NULL,
+				  `source_folder` longtext COLLATE utf8_unicode_ci NOT NULL,
+				  `order_by` int(11) NOT NULL,
+				  `online` int(11) NOT NULL,
+				  `created` datetime DEFAULT NULL,
+				  `modified` datetime NOT NULL,
+				  `created_by` int(11) NOT NULL,
+				  `modified_by` int(11) NOT NULL,
+				  `category_id` int(11) NOT NULL,
+				  `website_id` int(11) NOT NULL
+				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+				--
+				-- Index pour la table `portfolios`
+				--
+				ALTER TABLE `portfolios`
+				  ADD PRIMARY KEY (`id`);
+
+				--
+				-- AUTO_INCREMENT pour la table `portfolios`
+				--
+				ALTER TABLE `portfolios`
+				  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+				  
+				--
+				-- Structure de la table `portfolios_elements`
+				--
+
+				DROP TABLE IF EXISTS `portfolios_elements`;
+				CREATE TABLE `portfolios_elements` (
+				  `id` int(11) NOT NULL,
+				  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				  `description_line_1` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				  `description_line_2` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				  `description_line_3` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				  `description_line_4` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				  `link` longtext COLLATE utf8_unicode_ci NOT NULL,
+				  `link_text` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				  `illustration` longtext COLLATE utf8_unicode_ci NOT NULL,
+				  `online` int(11) NOT NULL,
+				  `created` datetime DEFAULT NULL,
+				  `modified` datetime NOT NULL,
+				  `created_by` int(11) NOT NULL,
+				  `modified_by` int(11) NOT NULL,
+				  `portfolio_id` int(11) NOT NULL,
+				  `website_id` int(11) NOT NULL
+				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+				--
+				-- Index pour la table `portfolios_elements`
+				--
+				ALTER TABLE `portfolios_elements`
+				  ADD PRIMARY KEY (`id`);
+
+				--
+				-- AUTO_INCREMENT pour la table `portfolios_elements`
+				--
+				ALTER TABLE `portfolios_elements`
+				  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+				--
+				-- Structure de la table `portfolios_types`
+				--
+
+				DROP TABLE IF EXISTS `portfolios_types`;
+				CREATE TABLE `portfolios_types` (
+				  `id` int(11) NOT NULL,
+				  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				  `order_by` int(11) NOT NULL,
+				  `online` int(11) NOT NULL,
+				  `created` datetime DEFAULT NULL,
+				  `modified` datetime NOT NULL,
+				  `modified_by` int(11) NOT NULL
+				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+				--
+				-- Index pour la table `portfolios_types`
+				--
+				ALTER TABLE `portfolios_types`
+				  ADD PRIMARY KEY (`id`);
+
+				--
+				-- AUTO_INCREMENT pour la table `portfolios_types`
+				--
+				ALTER TABLE `portfolios_types`
+				  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;  
+			</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 12/04/2016</name>
+		<num>20160412.003</num>
+		<supervisor>KoéZionCMS</supervisor>		
+		<tasks>
+			<task author="FI">
+				INSERT INTO `modules` 
+				SET 
+					`name` = 'Paramètres', 
+					`controller_name` = 'configs', 
+					`action_name` = 'portfolios_liste', 
+					`order_by` = 4, 
+					`online` = 1, 
+					`created` = CURRENT_TIMESTAMP, 
+					`modules_type_id` = (SELECT `id` FROM `modules_types` WHERE `name` = 'PORTFOLIOS' LIMIT 1);
+			</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 12/04/2016</name>
+		<num>20160412.002</num>
+		<supervisor>KoéZionCMS</supervisor>		
+		<tasks>
+			<task author="FI">
+				ALTER TABLE `categories` ADD `title_portfolios_list` VARCHAR(255) NOT NULL AFTER `title_posts_list`;
+			</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 12/04/2016</name>
+		<num>20160412.001</num>
+		<supervisor>KoéZionCMS</supervisor>		
+		<tasks>
+			<task author="FI">
+				INSERT INTO `modules` 
+				SET 
+					`name` = 'Types de portfolios', 
+					`controller_name` = 'portfolios_types', 
+					`order_by` = 3, 
+					`online` = 1, 
+					`created` = CURRENT_TIMESTAMP, 
+					`modules_type_id` = (SELECT `id` FROM `modules_types` WHERE `name` = 'PORTFOLIOS' LIMIT 1);
+			</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 11/04/2016</name>
+		<num>20160411.001</num>
+		<supervisor>KoéZionCMS</supervisor>		
+		<tasks>
+			<task author="FI">
+				INSERT INTO `modules_types` (`id`, `name`, `icon`, `order_by`, `online`, `created`, `modified`, `modified_by`, `plugin_id`) VALUES
+				(NULL, 'PORTFOLIOS', 'fa fa-picture-o', 3, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 0);
+			
+				INSERT INTO `modules` 
+				SET 
+					`name` = 'Portfolios', 
+					`controller_name` = 'portfolios', 
+					`order_by` = 1, 
+					`online` = 1, 
+					`created` = CURRENT_TIMESTAMP, 
+					`modules_type_id` = (SELECT `id` FROM `modules_types` WHERE `name` = 'PORTFOLIOS' LIMIT 1);
+					
+				INSERT INTO `modules` 
+				SET 
+					`name` = 'Eléments de portfolios', 
+					`controller_name` = 'portfolios_elements', 
+					`order_by` = 2, 
+					`online` = 1, 
+					`created` = CURRENT_TIMESTAMP, 
+					`modules_type_id` = (SELECT `id` FROM `modules_types` WHERE `name` = 'PORTFOLIOS' LIMIT 1);
+			</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 08/04/2016</name>
 		<num>20160408.002</num>
 		<supervisor>KoéZionCMS</supervisor>		

@@ -32,7 +32,8 @@ if(isset($this->controller->request->data['Search'])) {
 					
 					foreach($searchFields as $searchFieldName => $searchFieldLabel) { 
 						
-						echo $helpers['Form']->input('Search.'.$searchFieldName, $searchFieldLabel); 
+						if(is_int($searchFieldName)) { echo $searchFieldLabel; }
+						else { echo $helpers['Form']->input('Search.'.$searchFieldName, $searchFieldLabel); } 
 					}
 					?>               
 				</div>

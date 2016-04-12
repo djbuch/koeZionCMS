@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 12/04/2016</name>
+		<num>20160412.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="bdd">Ajout du module portfolios</task>
+			<task author="FI" type="code">Ajout du module portfolios</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 11/04/2016</name>
 		<num>20160411.001</num>
 		<supervisor>KoéZionCMS</supervisor>

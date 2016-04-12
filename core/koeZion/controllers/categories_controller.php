@@ -43,6 +43,7 @@ class CategoriesController extends AppController {
  * @version 1.5 - 02/10/2012 by FI - Mise en place d'un slider pour les catégories, Mise en place de la possibilité de changer le template des pages
  * @version 1.6 - 05/11/2012 by FI - Mise en fonction privée de la récupération de la catégorie ainsi que la récupération des articles associés pour pouvoir l'utiliser dans le flux rss
  * @version 1.7 - 09/12/2015 by FI - Gestion de la récupération des sliders et des focus
+ * @version 1.8 - 12/04/2016 by FI - Mise en place de la fonction _check_secure et de la récupération des portfolios
  */	
 	public function view($id, $slug) {
 	
@@ -107,97 +108,14 @@ class CategoriesController extends AppController {
 		$isAuthCategory = Session::read('Frontoffice.User');
 		
 		//Si la page est sécurisée il va falloir vérifier si l'utilisateur ne s'est pas déjà connecté
-		if(isset($datas['category']['is_secure']) && $datas['category']['is_secure'] && !$isAuthCategory) {
-			
-			///////////////////////////////
-			//   GESTION DU FORMULAIRE   //
-			if(isset($this->request->data['formulaire_secure'])) { //Si le formulaire de contact est posté
-			
-				$data = $this->request->data; //Mise en variable des données postées					
-				if(defined('HASH_PASSWORD') && HASH_PASSWORD) { $data['password'] = sha1($data['password']); } //Cryptage du mot de passe
-			
-				//Récupération du login et du mot de passe dans des variables
-				$postLogin = $data['login'];
-				$postPassword = $data['password'];
-				
-				//Récupération de l'utilisateur
-				$this->load_model('User');
-				$user = $this->User->findFirst(array('conditions' => array('login' => $postLogin)));				
-								
-				//Si on récupère un utilisateur
-				if(!empty($user)) {					
-					
-					//Récupération des données de l'utilisateur dans des variables
-					$bddPassword = $user['password'];
-					$bddRole = $user['role'];
-					$bddOnline = $user['online'];
-					
-					//On va contrôler que le mot de passe saisi soit identique à celui en base de données
-					if($postPassword == $bddPassword) {
-					
-						//Ensuite on contrôle que cet utilisateur à bien le droit de se connecter au backoffice
-						if($bddOnline) {
-					
-							if($bddRole == 'user') {
-					
-								//Récupération des sites auxquels l'utilisateurs peut se connecter
-								$this->load_model('UsersGroupsWebsite'); //Chargement du modèle
-								$usersGroupsWebsites = $this->UsersGroupsWebsite->find(array('conditions' => array('users_group_id' => $user['users_group_id'])));
-					
-								//On check qu'il y ait au moins un site
-								if(count($usersGroupsWebsites) > 0) {
-					
-									//On récupère la liste des sites dans un tableau
-									$usersGroupsWebsitesList = array();
-									foreach($usersGroupsWebsites as $k => $v) { $usersGroupsWebsitesList[] = $v['website_id']; }
-					
-									if(in_array(CURRENT_WEBSITE_ID, $usersGroupsWebsitesList)) { 
-					
-										Session::write('Frontoffice.Category.'.$datas['category']['id'].'.isAuth', true);
-										$this->redirect("categories/view/id:$id/slug:".$datas['category']['slug'], 301);
-									} else { //Gestion des erreurs					
-					
-										$message = '<p class="error">Vous ne disposez pas des droits nécessaires pour accéder à cette page (CAS 2)</p>';
-										$this->set('message', $message);
-									}
-								} else { //Gestion des erreurs					
-					
-									$message = '<p class="error">Vous ne disposez pas des droits nécessaires pour accéder à cette page (CAS 1)</p>';
-									$this->set('message', $message); 
-								}
-							} else { //Gestion des erreurs					
-					
-								$message = '<p class="error">Désolé mais votre typologie ne vous donne pas accès à cette page</p>';
-								$this->set('message', $message);								
-							}
-						} else { //Gestion des erreurs					
-					
-							$message = '<p class="error">Désolé mais votre accès n\'est pas autorisé</p>';
-							$this->set('message', $message); 
-						}					
-					} else { //Gestion des erreurs					
-					
-						$message = '<p class="error">Désolé mais le mot de passe ne concorde pas</p>';
-						$this->set('message', $message); 
-					}
-				} else { //Gestion des erreurs					
-					
-					$message = '<p class="error">Désolé aucun utilisateur n\'a été trouvé</p>';
-					$this->set('message', $message);					
-				}
-			}
-			//////////////////////////////////////////			
-			
-			$this->set($datas); //On fait passer les données à la vue
-			$this->view = 'not_auth';
-			
-		} else {
+		if(isset($datas['category']['is_secure']) && $datas['category']['is_secure'] && !$isAuthCategory) { $this->_check_secure($datas); } 
+		else {
 						
 			//$datas['is_full_page'] = 1; //Par défaut on affichera le détail de la catégorie en pleine page
 
-			$datas['children'] = array();
-			$datas['brothers'] = array();
-			$datas['postsTypes'] = array();
+			$datas['children'] 		= array();
+			$datas['brothers'] 		= array();
+			$datas['postsTypes'] 	= array();
 			
 			//////////////////////////////////
 			//   RECUPERATION DES ENFANTS   //
@@ -210,6 +128,10 @@ class CategoriesController extends AppController {
 			//////////////////////////////
 			//   GESTION DES ARTICLES   //
 			$datas = $this->_get_posts_category($datas);
+			
+			////////////////////////////////
+			//   GESTION DES PORTFOLIOS   //
+			if(!isset($datas['posts']) || (isset($datas['posts']) && empty($datas['posts']))) { $datas = $this->_get_portfolios_category($datas); }
 			
 			//////////////////////////////
 			//   GESTION DES BOUTONS   //
@@ -576,6 +498,101 @@ class CategoriesController extends AppController {
 			$this->request->data['right_button_id'][$v['right_button_id']]['top'] = $v['position']; 
 			$this->request->data['right_button_id'][$v['right_button_id']]['activate'] = 1; 
 		}
+	}
+	
+/**
+ * Cette fonction permet de vérifier les données lorsque la page est sécurisée
+ *
+ * @param	array $datas Données de la catégorie
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 12/04/2016 by FI
+ */	
+	protected function _check_secure($datas) {
+		
+		///////////////////////////////
+		//   GESTION DU FORMULAIRE   //
+		if(isset($this->request->data['formulaire_secure'])) { //Si le formulaire de contact est posté
+		
+			$data = $this->request->data; //Mise en variable des données postées					
+			if(defined('HASH_PASSWORD') && HASH_PASSWORD) { $data['password'] = sha1($data['password']); } //Cryptage du mot de passe
+		
+			//Récupération du login et du mot de passe dans des variables
+			$postLogin = $data['login'];
+			$postPassword = $data['password'];
+			
+			//Récupération de l'utilisateur
+			$this->load_model('User');
+			$user = $this->User->findFirst(array('conditions' => array('login' => $postLogin)));				
+							
+			//Si on récupère un utilisateur
+			if(!empty($user)) {					
+				
+				//Récupération des données de l'utilisateur dans des variables
+				$bddPassword = $user['password'];
+				$bddRole = $user['role'];
+				$bddOnline = $user['online'];
+				
+				//On va contrôler que le mot de passe saisi soit identique à celui en base de données
+				if($postPassword == $bddPassword) {
+				
+					//Ensuite on contrôle que cet utilisateur à bien le droit de se connecter au backoffice
+					if($bddOnline) {
+				
+						if($bddRole == 'user') {
+				
+							//Récupération des sites auxquels l'utilisateurs peut se connecter
+							$this->load_model('UsersGroupsWebsite'); //Chargement du modèle
+							$usersGroupsWebsites = $this->UsersGroupsWebsite->find(array('conditions' => array('users_group_id' => $user['users_group_id'])));
+				
+							//On check qu'il y ait au moins un site
+							if(count($usersGroupsWebsites) > 0) {
+				
+								//On récupère la liste des sites dans un tableau
+								$usersGroupsWebsitesList = array();
+								foreach($usersGroupsWebsites as $k => $v) { $usersGroupsWebsitesList[] = $v['website_id']; }
+				
+								if(in_array(CURRENT_WEBSITE_ID, $usersGroupsWebsitesList)) { 
+				
+									Session::write('Frontoffice.Category.'.$datas['category']['id'].'.isAuth', true);
+									$this->redirect("categories/view/id:$id/slug:".$datas['category']['slug']);
+									
+								} else { //Gestion des erreurs					
+				
+									$message = '<p class="error">Vous ne disposez pas des droits nécessaires pour accéder à cette page (CAS 2)</p>';
+									$this->set('message', $message);
+								}
+							} else { //Gestion des erreurs					
+				
+								$message = '<p class="error">Vous ne disposez pas des droits nécessaires pour accéder à cette page (CAS 1)</p>';
+								$this->set('message', $message); 
+							}
+						} else { //Gestion des erreurs					
+				
+							$message = '<p class="error">Désolé mais votre typologie ne vous donne pas accès à cette page</p>';
+							$this->set('message', $message);								
+						}
+					} else { //Gestion des erreurs					
+				
+						$message = '<p class="error">Désolé mais votre accès n\'est pas autorisé</p>';
+						$this->set('message', $message); 
+					}					
+				} else { //Gestion des erreurs					
+				
+					$message = '<p class="error">Désolé mais le mot de passe ne concorde pas</p>';
+					$this->set('message', $message); 
+				}
+			} else { //Gestion des erreurs					
+				
+				$message = '<p class="error">Désolé aucun utilisateur n\'a été trouvé</p>';
+				$this->set('message', $message);					
+			}
+		}
+		//////////////////////////////////////////			
+		
+		$this->set($datas); //On fait passer les données à la vue
+		$this->view = 'not_auth';
+		
 	}
 	
 /**

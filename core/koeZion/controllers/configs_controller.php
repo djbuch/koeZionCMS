@@ -91,6 +91,15 @@ class ConfigsController extends AppController {
 	function backoffice_posts_liste() { $this->_proceed_datas_ini(CONFIGS_FILES.DS.'posts.ini', 'backoffice/configs/posts_liste'); }
 	
 /**
+ * Cette fonction va permettre l'affichage des configurations des portfolios
+ *
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 12/04/2016 by FI
+ */
+	function backoffice_portfolios_liste() { $this->_proceed_datas_ini(CONFIGS_FILES.DS.'portfolios.ini', 'backoffice/configs/portfolios_liste'); }
+	
+/**
  * Cette fonction va permettre l'affichage du code de sécurité utilisé pour les taches planifiées
  *
  * @access 	public

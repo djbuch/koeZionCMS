@@ -3,7 +3,7 @@
 --
 
 DROP TABLE IF EXISTS `categories`;
-CREATE TABLE IF NOT EXISTS `categories` (
+CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `content` longtext COLLATE utf8_unicode_ci NOT NULL,
@@ -21,6 +21,8 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `title_children` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `title_brothers` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `title_posts_list` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `title_portfolios_list` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `title_portfolios_types_list` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `type` int(11) NOT NULL,
   `secondary_type` int(11) NOT NULL,
   `display_form` int(11) NOT NULL,
@@ -190,6 +192,110 @@ CREATE TABLE IF NOT EXISTS `plugins` (
   `modified_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Structure de la table `portfolios`
+--
+
+DROP TABLE IF EXISTS `portfolios`;
+CREATE TABLE `portfolios` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `short_content_illustration` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `short_content` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `content_illustration` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `content` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `prefix` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `page_title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `page_description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `page_keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `automatic_scan` int(11) NOT NULL,
+  `source_folder` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `order_by` int(11) NOT NULL,
+  `online` int(11) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `website_id` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Index pour la table `portfolios`
+--
+ALTER TABLE `portfolios`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT pour la table `portfolios`
+--
+ALTER TABLE `portfolios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  
+--
+-- Structure de la table `portfolios_elements`
+--
+
+DROP TABLE IF EXISTS `portfolios_elements`;
+CREATE TABLE `portfolios_elements` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description_line_1` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description_line_2` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description_line_3` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description_line_4` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `link` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `link_text` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `illustration` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `online` int(11) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `portfolio_id` int(11) NOT NULL,
+  `website_id` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Index pour la table `portfolios_elements`
+--
+ALTER TABLE `portfolios_elements`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT pour la table `portfolios_elements`
+--
+ALTER TABLE `portfolios_elements`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Structure de la table `portfolios_types`
+--
+
+DROP TABLE IF EXISTS `portfolios_types`;
+CREATE TABLE `portfolios_types` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `order_by` int(11) NOT NULL,
+  `online` int(11) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime NOT NULL,
+  `modified_by` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Index pour la table `portfolios_types`
+--
+ALTER TABLE `portfolios_types`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT pour la table `portfolios_types`
+--
+ALTER TABLE `portfolios_types`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;  
 
 --
 -- Structure de la table `posts`

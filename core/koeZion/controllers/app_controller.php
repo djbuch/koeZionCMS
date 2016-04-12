@@ -755,6 +755,75 @@ class AppController extends Controller {
 
 		return $datas;
 	}
+
+/**
+ * Cette fonction permet la récupération des portfolios liés à la catégorie courante
+ *
+ * @param 	array 	$datas 		Tableau des données à passer à la vue
+ * @param 	boolean $setLimit 	Indique si il faut mettre en place une limite lors de la recherche
+ * @return	array	Tableau de données à passer à la vue 
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 12/04/2016 by FI
+ */		
+	protected function _get_portfolios_category($datas, $setLimit = true) {
+
+		//Récupération des portfolios
+		$this->load_model('Portfolio');
+		$portfoliosQuery = $portfoliosCountQuery = array(
+			'conditions' => array(
+				'online' => 1, 
+				'category_id' => $datas['category']['id']
+			)		
+		);
+		$allPortfolios = $this->Portfolio->find($portfoliosCountQuery);
+		
+		if(count($allPortfolios) > 0) {
+		
+			//////////////////////////////////////////////////////
+			//   RECUPERATION DES CONFIGURATIONS DES ARTICLES   //
+			require_once(LIBS.DS.'config_magik.php'); 										//Import de la librairie de gestion des fichiers de configuration des portfolios
+			$cfg = new ConfigMagik(CONFIGS_FILES.DS.'portfolios.ini', false, false); 		//Création d'une instance
+			$portfoliosConfigs = $cfg->keys_values();										//Récupération des configurations
+			//////////////////////////////////////////////////////
+					
+			//Récupération des types de portfolios
+			$this->load_model('PortfoliosType');
+			$datas['portfoliosTypes'] = $this->PortfoliosType->get_for_front($datas['category']['id']);
+		
+			//Construction des paramètres de la requête		
+			if($setLimit) { $portfoliosQuery['limit'] = $this->pager['limit'].', '.$this->pager['elementsPerPage']; }
+			$portfoliosQuery['order'] = 'modified DESC';
+					
+			$portfoliosQuery['moreConditions'] = ''; //Par défaut pas de conditions de recherche complémentaire
+		
+			$datas['titlePortfoliosList'] = $datas['category']['title_portfolios_list'];
+		
+			//////////////////////////////////////////////////////////////////////////
+			///  GESTION DES EVENTUELS PARAMETRES PASSES EN GET PAR L'UTILISATEUR   //
+			$filterPortfolios = $this->_filter_portfolios($datas['portfoliosTypes'], $portfoliosConfigs['search']);
+			if(isset($filterPortfolios['moreConditions'])) {
+		
+				$portfoliosQuery['moreConditions'] = $portfoliosCountQuery['moreConditions'] = $filterPortfolios['moreConditions'];
+				unset($filterPortfolios['moreConditions']);
+			}
+		
+			$datas = am($datas, $filterPortfolios);
+			//////////////////////////////////////////////////////////////////////////
+		
+			$datas['portfolios'] = $this->Portfolio->find($portfoliosQuery); //Récupération des articles
+		
+			//On va compter le nombre d'élement de la catégorie
+			//On compte deux fois le nombre de portfolio une fois en totalité une fois en rajoutant si il est renseigné le type d'article
+			//Car si on ne faisait pas cela on avait toujours la zone d'affichage des catégories qui s'affichaient lorsqu'on affichait les frères
+			//même si il n'y avait pas de portfolio
+						
+			$this->pager['totalElements'] 	= count($this->Portfolio->find($portfoliosCountQuery)); //On va compter le nombre d'élement
+			$this->pager['totalPages'] 		= ceil($this->pager['totalElements'] / $this->pager['elementsPerPage']); //On va compter le nombre de page
+		}
+
+		return $datas;
+	}
     
 /**
  * Cette fonction permet de récupérer les articles à afficher sur le frontoffice (Dans les contrôleurs Categories et Posts)
@@ -834,7 +903,7 @@ class AppController extends Controller {
     			}
     		}
     	
-    		$return['libellePage'] = 'Articles de la catégorie : '.implode(', ', $libellePage); //Construction du titre de la page
+    		$return['libellePage'] = _('Articles de la catégorie').' : '.implode(', ', $libellePage); //Construction du titre de la page
     	
     		//Si l'internaute à cliqué sur un rédacteur
     	} else if(isset($this->request->data['writer']) && is_numeric($this->request->data['writer'])) {
@@ -844,7 +913,7 @@ class AppController extends Controller {
     		//On va récupérer le libellé de l'utilisateur pour le stocker dans le libellé de la page
     		$this->load_model('User');
     		$user = $this->User->findFirst(array('conditions' => array('id' => $this->request->data['writer'])));
-    		$return['libellePage'] = "Articles rédigés par ".$user['name'];
+    		$return['libellePage'] = _("Articles rédigés par")." ".$user['name'];
     		$this->unload_model('User');
     	
     		//Si l'internaute à cliqué sur une date
@@ -855,7 +924,112 @@ class AppController extends Controller {
     	
     			$return['moreConditions'] = 'YEAR(modified) = '.$date[0].' AND MONTH(modified) = '.$date[1];
     			$displayDate = $this->components['Text']->date_sql_to_human($this->request->data['date'].'-00');
-    			$return['libellePage'] = "Articles rédigés en ".$displayDate['txt'];
+    			$return['libellePage'] = _("Articles rédigés en")." ".$displayDate['txt'];
+    		}
+    	}
+    	
+    	return $return;
+    }
+    
+/**
+ * Cette fonction permet de récupérer les portfolios à afficher sur le frontoffice
+ *
+ * @param 	array 	$portfoliosTypes Liste des types de portfolios
+ * @param 	varchar $searchType Type de recherche
+ * @return 	array 	Configuration de la recherche
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 12/04/2016 by FI
+ */          
+    protected function _filter_portfolios($portfoliosTypes, $searchType) {
+    	
+    	$return = array();
+    	
+    	//Si l'internaute à cliqué sur un type d'article (ou plusieurs)
+    	if(isset($this->request->data['typeportfolio']) && !empty($this->request->data['typeportfolio'])) {
+    	
+    		/////////////////////////////////////////////
+    		//   MISE EN PLACE DE LA REQUETE STRICTE   //
+    		if($searchType == 'stricte') {
+    	
+    			$this->load_model('CategoriesPortfoliosPortfoliosType');
+    			$typePortfolio = explode(',', $this->request->data['typeportfolio']); //Récupération des types de portfolio passés en GET
+    	
+    			$tableAliasBase = 'KzCategoriesPortfoliosPortfoliosType'; //Définition de la base des alias
+    			$sql =  'SELECT DISTINCT '.$tableAliasBase.'.portfolio_id '; //Construction de la requête
+    			$sql .= 'FROM categories_portfolios_portfolios_types AS '.$tableAliasBase.' '; //Construction de la requête
+    	
+    			//Parcours de tous les types de portfolios passés en GET pour mettre en place les INNER JOIN
+    			foreach($typePortfolio as $k => $v) {
+    	
+    				$tableAlias = $tableAliasBase.$k; //Définition de l'alias de la table
+    				$sql .= 'INNER JOIN categories_portfolios_portfolios_types AS '.$tableAlias.' ON '.$tableAliasBase.'.portfolio_id = '.$tableAlias.'.portfolio_id '; //Construction de la requête
+    			}
+    	
+    			$sql .= 'WHERE 1 '; //Construction de la requête
+    	
+    			//Parcours de tous les types de portfolios passés en GET pour mettre en place les conditions de récupération
+    			foreach($typePortfolio as $k => $v) {
+    	
+    				$tableAlias = $tableAliasBase.$k; //Définition de l'alias de la table
+    				$sql .= ' AND '.$tableAlias.'.portfolios_type_id = '.$v; //Construction de la requête
+    			}
+    	
+    	
+    			$result = $this->CategoriesPortfoliosPortfoliosType->query($sql, true);
+    			$portfoliosIdIn = array();
+    			foreach($result as $k => $v) { $portfoliosIdIn[] = $v['portfolio_id']; }
+    	
+    			if(count($portfoliosIdIn)) { $return['moreConditions'] = 'KzPortfolio.id IN ('.implode(',', $portfoliosIdIn).')'; }
+    			else { $return['moreConditions'] = 'KzPortfolio.id IN (0)'; }
+    	
+    			///////////////////////////////////////////
+    			//   MISE EN PLACE DE LA REQUETE LARGE   //
+    		} else if($searchType == 'large') {
+    	
+    			//Construction de la requête de recherche
+    			$return['moreConditions'] = 'KzPortfolio.id IN (SELECT portfolio_id FROM categories_portfolios_portfolios_types WHERE portfolios_type_id';
+    			if(is_numeric($this->request->data['typeportfolio'])) { $return['moreConditions'] .= ' = '.$this->request->data['typeportfolio']; } //Si un seul type
+    			else { $return['moreConditions'] .= ' IN ('.$this->request->data['typeportfolio'].')'; }	//Si plusieurs types
+    			$return['moreConditions'] .= ')';
+    		}
+    	
+    		$typeportfolio = $this->request->data['typeportfolio']; //Récupération des types passés en GET
+    		$libellePage = ''; //Par défaut le libellé de la page est vide
+    	
+    		//Parcours des types de portfolios
+    		foreach($portfoliosTypes as $columnTitle => $portfoliosTypesValues) {
+    	
+    			$typePortfolio = explode(',', $typeportfolio); //On transforme les types de portfolios en tableau
+    			foreach($portfoliosTypesValues as $k => $v) { //On parcours les types de portfolio
+    	
+    				//On stocke le libellé du type de portfolio si celui-ci est passé en paramètre
+    				if(in_array($k, $typePortfolio)) { $libellePage[] = $v; }
+    			}
+    		}
+    	
+    		$return['libellePage'] = _('Portfolios de la catégorie').' : '.implode(', ', $libellePage); //Construction du titre de la page
+    	
+    		//Si l'internaute à cliqué sur un rédacteur
+    	} else if(isset($this->request->data['writer']) && is_numeric($this->request->data['writer'])) {
+    	
+    		$return['moreConditions'] = 'modified_by = '.$this->request->data['writer'];
+    	
+    		//On va récupérer le libellé de l'utilisateur pour le stocker dans le libellé de la page
+    		$this->load_model('User');
+    		$user = $this->User->findFirst(array('conditions' => array('id' => $this->request->data['writer'])));
+    		$return['libellePage'] = _("Portfolios réalisé par")." ".$user['name'];
+    		$this->unload_model('User');
+    	
+    		//Si l'internaute à cliqué sur une date
+    	} else if(isset($this->request->data['date']) && !empty($this->request->data['date'])) {
+    	
+    		$date = explode('-', $this->request->data['date']); //Récupération des données sur la date
+    		if(isset($date[0]) && is_numeric($date[0]) && isset($date[1]) && is_numeric($date[1])) {
+    	
+    			$return['moreConditions'] = 'YEAR(modified) = '.$date[0].' AND MONTH(modified) = '.$date[1];
+    			$displayDate = $this->components['Text']->date_sql_to_human($this->request->data['date'].'-00');
+    			$return['libellePage'] = _("Portfolios réalisé en")." ".$displayDate['txt'];
     		}
     	}
     	

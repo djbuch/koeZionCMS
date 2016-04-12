@@ -90,7 +90,8 @@
 								<h4><i class="fa fa-plug"></i> <?php echo _("Options"); ?></h4>                  
                 			</div>	
 				        	<?php
-							echo $helpers['Form']->input('title_posts_list', _('Titre bloc article'), array('tooltip' => _("Indiquez le titre qui sera affiché au dessus de la liste des articles")));			
+							echo $helpers['Form']->input('title_posts_list', _('Titre bloc articles'), array('tooltip' => _("Indiquez le titre qui sera affiché au dessus de la liste des articles")));			
+							echo $helpers['Form']->input('title_portfolios_list', _('Titre bloc portfolios'), array('tooltip' => _("Indiquez le titre qui sera affiché au dessus de la liste des portfolios")));			
 							if(!isset($formulaires)) { $formulaires = array (1 => _('Formulaire de contact')); } 
 							echo $helpers['Form']->input('display_form', _('Ajouter un formulaire à la page'), array('type' => 'select', 'datas' => $formulaires, 'tooltip' => _("Indiquez le formulaire que vous souhaitez afficher sur la page"), 'firstElementList' => _("Sélectionnez le formulaire à afficher")));
 
