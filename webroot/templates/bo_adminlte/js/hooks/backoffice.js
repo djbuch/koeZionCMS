@@ -8,8 +8,11 @@ $(document).ready(function() {
     	var checkbox = $(this).parents('table').find(':checkbox');    	
         checkbox.attr('checked', this.checked);
     });	
-    
-    $('[data-toggle="popover"]').popover({'trigger': 'hover'});
+		
+	$('[data-toggle="popover"]').livequery(function() { 	
+
+		$(this).popover({'trigger': 'hover'});
+	});
    
     // ALERTS SUR LES BOUTONS DE SUPPRESSION EN MODE LISTE
 	$(".deleteBox").each(function() { //Pour chaque éléments de la classe deleteBox

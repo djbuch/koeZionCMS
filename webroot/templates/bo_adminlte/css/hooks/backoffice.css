@@ -135,3 +135,6 @@ h5.form-title.disabled_margin_top{margin-top: 15px!important;}
 .info-box.info-box_verticale .info-box-content{float: left;margin-left: 0;width: 100%;}
 .info-box.info-box_verticale .info-box-content .info-box-text,
 .info-box.info-box_verticale .info-box-content .info-box-number{text-align: center;}
+
+section.row.list{margin-top: 20px;}
+section.row.list .box{box-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);}

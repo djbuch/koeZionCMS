@@ -68,9 +68,9 @@
 			'bo_adminlte/js/hooks/backoffice' /*Hooks Backoffice*/
 		);
 		echo $helpers['Html']->js($js);
+		include_once(ELEMENTS.DS.'js'.DS.'buttons_right_column.php'); 
 		
 		$helpers['Form']->ckeditor();		
-		include_once(ELEMENTS.DS.'js'.DS.'buttons_right_column.php'); 
 		?>	
 		<script type="text/javascript">
 			// do this before the first CKEDITOR.replace( ... )

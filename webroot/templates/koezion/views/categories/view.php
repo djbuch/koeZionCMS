@@ -51,7 +51,7 @@ if(isset($googleMapAPI) && $mapPosition == 'topPage') { $this->element(PLUGINS.D
 		
 		if($category['display_form']) {
 			
-			if(isset($formPlugin)) { $this->element(PLUGINS.DS.'formulaires/views/elements/formulaires/frontoffice/formulaire'); }
+			if(isset($formPlugin)) { $this->element(PLUGINS.DS.'forms_generator/views/elements/formulaires/frontoffice/formulaire'); }
 			else { $this->element('formulaires/formulaire_contact'); } 
 		}	
 		
@@ -70,7 +70,7 @@ if(isset($googleMapAPI) && $mapPosition == 'topPage') { $this->element(PLUGINS.D
 				
 				if($category['display_form']) { 
 			
-					if(isset($formPlugin)) { $this->element(PLUGINS.DS.'formulaires/views/elements/formulaires/frontoffice/formulaire'); }
+					if(isset($formPlugin)) { $this->element(PLUGINS.DS.'forms_generator/views/elements/formulaires/frontoffice/formulaire'); }
 					else { $this->element('formulaires/formulaire_contact'); } 
 				}
 				?>

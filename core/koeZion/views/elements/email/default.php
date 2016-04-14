@@ -7,6 +7,9 @@
 		<?php } ?>
 	</head>
 	<body>
-		<?php echo $messageContent; ?>
+		<?php 
+		echo $messageContent; 
+		if(isset($messageComplement) && !empty($messageComplement)) { echo $messageComplement; }
+		?>
 	</body>
 </html>

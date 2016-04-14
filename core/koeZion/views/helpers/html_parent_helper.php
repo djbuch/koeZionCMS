@@ -229,6 +229,7 @@ class HtmlParentHelper extends Helper {
  * @version 1.0 - 14/08/2015 by FI : Mise en place de la gestion du protocole
  * @version 1.1 - 07/09/2015 by FI : Gestion des fichers externes via https
  * @version 1.2 - 23/09/2015 by FI : Gestion de l'ajout de fichiers JS via PHP
+ * @version 1.3 - 13/04/2016 by FI : Reprise gestion de l'ajout de fichiers JS via PHP pour gérer des fichier qui ne se trouvent pas dans le dossier webroot
  */	
 	public function js($js, $inline = false, $merge = true, $minified = false) {
 		
@@ -271,18 +272,22 @@ class HtmlParentHelper extends Helper {
 								$jsFile = '/templates/'.$v;						
 							break;
 						}
-						
-						//if(!substr_count($v, '.js')) { $jsFile.='.js'; } //On teste si l'extension n'est pas déjà renseignée sinon on la rajoute
-						$jsPath = Router::webroot($jsFile); //On génère le chemin vers le fichier
 																		
 						//On teste si la navigation courante est en HTTPS
 						if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') { $protocol = 'https'; } 
-						else { $protocol = 'http'; }
-
-						//Génération du lien vers le fichier JS
-						if(substr_count($jsPath, '.php')) { $jsPath = WEBROOT.str_replace('/', DS, $jsPath); }
-						else if(!substr_count($jsPath, '.js')) { $jsPath = Router::url($jsPath, 'js', true, $protocol); }
-						else { $jsPath = Router::url($jsPath, '', true, $protocol); }
+						else { $protocol = 'http'; }						
+						
+						//if(!substr_count($v, '.js')) { $jsFile.='.js'; } //On teste si l'extension n'est pas déjà renseignée sinon on la rajoute
+						if(file_exists($jsFile)) { $jsPath = $jsFile; }
+						else { //On génère le chemin vers le fichier
+							 
+							$jsPath = Router::webroot($jsFile); 
+						
+							//Génération du lien vers le fichier JS
+							if(substr_count($jsPath, '.php')) { $jsPath = WEBROOT.str_replace('/', DS, $jsPath); }
+							else if(!substr_count($jsPath, '.js')) { $jsPath = Router::url($jsPath, 'js', true, $protocol); }
+							else { $jsPath = Router::url($jsPath, '', true, $protocol); }
+						}
 					}				
 					
 					//On contrôle si il faut charger d'éventuels paramètres au fichier courant
