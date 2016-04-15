@@ -24,10 +24,6 @@ class Template extends Model {
 		'version' => array(
 			'rule' => array('minLength', 2),
 			'message' => 'Template.version'
-		),
-		'code' => array(
-			'rule' => array('minLength', 2),
-			'message' => 'Template.code'
 		)
 	);	
 }

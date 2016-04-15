@@ -65,10 +65,10 @@ $Errorsmessages['Plugin']['code'] 						= _('La valeur de ce champ est de 5 cara
 
 $Errorsmessages['Module']['name'] 						= $atLeast2Chars;
 $Errorsmessages['Module']['controller_name'] 			= $atLeast2Chars;
+
 $Errorsmessages['Template']['name'] 					= $atLeast2Chars;
 $Errorsmessages['Template']['layout'] 					= $atLeast2Chars;
 $Errorsmessages['Template']['version'] 					= $atLeast2Chars;
-$Errorsmessages['Template']['code'] 					= $atLeast2Chars;
 
 $Errorsmessages['UnwantedCrawler']['name'] 				= $atLeast2Chars;
 

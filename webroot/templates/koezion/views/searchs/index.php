@@ -1,4 +1,4 @@
-<?php 
+<?php
 $this->element('breadcrumbs'); 
 $title_for_layout = _("Résultats de votre recherche sur le terme : ").$q;
 $description_for_layout = _("Résultats de votre recherche sur le terme : ").$q;

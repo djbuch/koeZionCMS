@@ -1,4 +1,4 @@
-<?php 
+<?php
 foreach($posts as $k => $v) { 
 
 	$url = Router::url('posts/view/id:'.$v['id'].'/slug:'.$v['slug'].'/prefix:'.$v['prefix'], 'html', true);
