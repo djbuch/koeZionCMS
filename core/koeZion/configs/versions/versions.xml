@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 15/04/2016</name>
+		<num>20160415.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Déplacement des fichiers utilisés par l'éditeur de texte dans le dossier configs du template</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 15/04/2016</name>
 		<num>20160415.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

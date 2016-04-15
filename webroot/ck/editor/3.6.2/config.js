@@ -64,7 +64,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
     /////////////////////////////////////////////////////////////////////////
 
 	$.post(sUrl + 'home/ajax_get_baseurl.html', function(baseUrlJsEditor) { 
-	
+
+		CKEDITOR.tplImgBasePath = baseUrlJsEditor['img'];
 		CKEDITOR.config.stylesSet = 'default:' + baseUrlJsEditor['js'] + 'default_styles.js';
 		CKEDITOR.config.templates_files = [baseUrlJsEditor['js'] + 'default_templates.js']; 
 	}, 'json');

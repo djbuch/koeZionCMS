@@ -10,7 +10,7 @@
 };*/
 CKEDITOR.editorConfig = function(config)
 {
-	config.language = 'fr'; //Langue de l'éditeur
+	config.language = 'fr'; //Langue de l'ï¿½diteur
 	config.autoParagraph = false;	
 	
 		//config.basicEntities = false;
@@ -20,12 +20,12 @@ CKEDITOR.editorConfig = function(config)
 		//config.htmlEncodeOutput = false;
 		//config.entities_processNumerical = false;
 	
-	config.templates_replaceContent = false; //Indique lors de la sélection de templates si il faut remplacer le contenu actuel
-	config.extraPlugins = 'internpage,syntaxhighlight'; //Mise en place d'un plugin supplémentaire
+	config.templates_replaceContent = false; //Indique lors de la sï¿½lection de templates si il faut remplacer le contenu actuel
+	config.extraPlugins = 'internpage,syntaxhighlight'; //Mise en place d'un plugin supplï¿½mentaire
 	//config.extraPlugins = 'geshi'; //Ajout du plugin Geshi
 	//config.extraPlugins[] = 'syntaxhighlight';
 	
-	//Définition de la barre de menu
+	//Dï¿½finition de la barre de menu
 	config.toolbar_App =
 	[
 	    { name: 'document',    items : [ 'Source','Templates'] },
@@ -57,12 +57,12 @@ CKEDITOR.editorConfig = function(config)
 		"&euro;", "&lsquo;", "&rsquo;", "&ldquo;", "&rdquo;", "&ndash;", "&mdash;", "&iexcl;", "&cent;", "&pound;", "&curren;", "&yen;", "&brvbar;", "&sect;", "&uml;", "&copy;", "&ordf;", "&laquo;", "&not;", "&reg;", "&macr;", "&deg;", "&sup2;", "&sup3;", "&acute;", "&micro;", "&para;", "&middot;", "&cedil;", "&sup1;", "&ordm;", "&raquo;", "&frac14;", "&frac12;", "&frac34;", "&iquest;", "&Agrave;", "&Aacute;", "&Acirc;", "&Atilde;", "&Auml;", "&Aring;", "&AElig;", "&Ccedil;", "&Egrave;", "&Eacute;", "&Ecirc;", "&Euml;", "&Igrave;", "&Iacute;", "&Icirc;", "&Iuml;", "&ETH;", "&Ntilde;", "&Ograve;", "&Oacute;", "&Ocirc;", "&Otilde;", "&Ouml;", "&times;", "&Oslash;", "&Ugrave;", "&Uacute;", "&Ucirc;", "&Uuml;", "&Yacute;", "&THORN;", "&szlig;", "&agrave;", "&aacute;", "&acirc;", "&atilde;", "&auml;", "&aring;", "&aelig;", "&ccedil;", "&egrave;", "&eacute;", "&ecirc;", "&euml;", "&igrave;", "&iacute;", "&icirc;", "&iuml;", "&eth;", "&ntilde;", "&ograve;", "&oacute;", "&ocirc;", "&otilde;", "&ouml;", "&divide;", "&oslash;", "&ugrave;", "&uacute;", "&ucirc;", "&uuml;", "&yacute;", "&thorn;", "&yuml;", "&OElig;", "&oelig;", "&#372;", "&#374", "&#373", "&#375;", "&sbquo;", "&#8219;", "&bdquo;", "&hellip;", "&trade;", "&#9658;", "&bull;", "&rarr;", "&rArr;", "&hArr;", "&diams;", "&asymp;"
 	];
 	
-	//Changement des tailles de polices de caractère
+	//Changement des tailles de polices de caractï¿½re
 	config.fontSize_sizes = '8/8px;9/9px;10/10px;11/11px;12/12px;13/13px;14/14px;15/15px;16/16px;17/17px;18/18px;19/19px;20/20px;21/21px;22/22px;23/23px;24/24px;25/25px;';
 	
-	//Insertion des css utilisés
+	//Insertion des css utilisï¿½s
 	/////////////////////////////////////////////////////////////////////////
-    //   Récupération des chemins de bases des js et css du site courant   //	
+    //   Rï¿½cupï¿½ration des chemins de bases des js et css du site courant   //	
     var sHref = window.location.href;
 	var iSubStringPosition = sHref.indexOf('adm/', 0) + 4;
 	var sUrl = sHref.substr(0, iSubStringPosition);
@@ -71,6 +71,7 @@ CKEDITOR.editorConfig = function(config)
 
 	$.post(sUrl + 'home/ajax_get_baseurl.html', function(baseUrlJsEditor) { 
 	
+		config.tplImgBasePath = baseUrlJsEditor['img'];
 		config.stylesSet = 'default:' + baseUrlJsEditor['js'] + 'default_styles.js';
 		config.templates_files = [baseUrlJsEditor['js'] + 'default_templates.js']; 
 	}, 'json');
