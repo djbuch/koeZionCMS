@@ -4,8 +4,8 @@
 	'js' => $baseUrl."/templates/".$websiteLayout."/js/editor/",	
 );*/
 $baseUrlUrls = array(
-	'img' => $baseUrl."/templates/".$websiteLayout."/configs/editor/img/",
-	'js' => $baseUrl."/templates/".$websiteLayout."/configs/editor/js/",	
+	'img' => $baseUrl."/templates/".$websiteLayout."/ck/img/",
+	'js' => $baseUrl."/templates/".$websiteLayout."/ck/js/",	
 );
 
 if(!function_exists('json_encode')) {
