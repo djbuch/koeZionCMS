@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 18/04/2016</name>
+		<num>20160418.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Correction gestion du cache et de la traduction</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 15/04/2016</name>
 		<num>20160415.003</num>
 		<supervisor>KoéZionCMS</supervisor>

@@ -720,17 +720,18 @@ class CategoriesController extends AppController {
  * @version 0.3 - 10/02/2016 by FI - Reprise de la récupération des données suite au rajout de la gestion des boutons sur toutes les pages
  * @version 0.4 - 30/03/2016 by FI - Rajout du test sur la variable $rightButtonsCategory
  * @version 0.5 - 08/04/2016 by FI - Correction pour l'internationnalisation
+ * @version 0.6 - 18/04/2016 by FI - Déplacement des fichiers de traduction dans le dossier de la langue si celle-ci est définie
  */		
 	protected function _get_right_buttons_category($datas) {		
 		
 		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS;
+		$cacheFile 		= "category_".$datas['category']['id']."_right_buttons";
 		
 		//On contrôle si le modèle est traduit
+		//Si c'est le cas on va récupérer les fichiers de cache dans un dossier spécifique à la langue
 		$this->load_model('RightButton');
-		$this->load_model('CategoriesRightButton');
-		
-		if($this->RightButton->fieldsToTranslate) { $cacheFile = "category_".$datas['category']['id']."_right_buttons".'_'.DEFAULT_LANGUAGE; } 
-		else { $cacheFile = "category_".$datas['category']['id']."_right_buttons"; }
+		$this->load_model('CategoriesRightButton');		
+		if($this->RightButton->fieldsToTranslate) { $cacheFolder .= DEFAULT_LANGUAGE.DS; } 
 				
 		$rightButtonsCategory = Cache::exists_cache_file($cacheFolder, $cacheFile);
 		
@@ -795,6 +796,7 @@ class CategoriesController extends AppController {
  * @version 0.2 - 20/03/2014 by FI - Modification formatage du tableau
  * @version 0.3 - 08/04/2014 by FI - Gestion des pages volantes
  * @version 0.4 - 24/04/2015 by FI - Gestion de la traduction
+ * @version 0.5 - 18/04/2016 by FI - Déplacement des fichiers de traduction dans le dossier de la langue si celle-ci est définie
  */	
 	protected function _get_children_category($datas) {
 		
@@ -803,10 +805,11 @@ class CategoriesController extends AppController {
 		if($datas['category']['display_children']) { //Si on doit récupérer les enfants			
 			
 			$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS;
+			$cacheFile 		= "category_".$datas['category']['id']."_children";
 			
 			//On contrôle si le modèle est traduit
-			if($this->Category->fieldsToTranslate) { $cacheFile = "category_".$datas['category']['id']."_children".'_'.DEFAULT_LANGUAGE; } 
-			else { $cacheFile = "category_".$datas['category']['id']."_children"; }
+			//Si c'est le cas on va récupérer les fichiers de cache dans un dossier spécifique à la langue
+			if($this->Category->fieldsToTranslate) { $cacheFolder .= DEFAULT_LANGUAGE.DS; } 
 						
 			$childrenCategory = Cache::exists_cache_file($cacheFolder, $cacheFile);
 			
@@ -838,6 +841,7 @@ class CategoriesController extends AppController {
  * @version 0.2 - 20/03/2014 by FI - Modification formatage du tableau
  * @version 0.3 - 08/04/2014 by FI - Gestion des pages volantes
  * @version 0.4 - 24/04/2015 by FI - Gestion de la traduction
+ * @version 0.5 - 18/04/2016 by FI - Déplacement des fichiers de traduction dans le dossier de la langue si celle-ci est définie
  */	
 	protected function _get_brothers_category($datas) {
 						
@@ -846,10 +850,11 @@ class CategoriesController extends AppController {
 		if($datas['category']['display_brothers']) { //Si on doit récupérer les frères		
 			
 			$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS;
+			$cacheFile 		= "category_".$datas['category']['id']."_brothers";
 			
 			//On contrôle si le modèle est traduit
-			if($this->Category->fieldsToTranslate) { $cacheFile = "category_".$datas['category']['id']."_brothers".'_'.DEFAULT_LANGUAGE; } 
-			else { $cacheFile = "category_".$datas['category']['id']."_brothers"; }
+			//Si c'est le cas on va récupérer les fichiers de cache dans un dossier spécifique à la langue
+			if($this->Category->fieldsToTranslate) { $cacheFolder .= DEFAULT_LANGUAGE.DS; }
 			
 			$brothersCategory = Cache::exists_cache_file($cacheFolder, $cacheFile);
 			

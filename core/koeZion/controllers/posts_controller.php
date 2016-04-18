@@ -391,15 +391,17 @@ class PostsController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 21/06/2013 by FI
  * @version 0.2 - 24/04/2015 by FI - Gestion de la traduction
+ * @version 0.3 - 18/04/2016 by FI - Déplacement des fichiers de traduction dans le dossier de la langue si celle-ci est définie
  */		
 	protected function _get_right_buttons_posts($datas) {
 					
 		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS;
+		$cacheFile 		= "post_".$datas['post']['id']."_right_buttons";
  
 		//On contrôle si le modèle est traduit
+		//Si c'est le cas on va récupérer les fichiers de cache dans un dossier spécifique à la langue
 		$this->load_model('PostsRightButton');
-		if($this->PostsRightButton->fieldsToTranslate) { $cacheFile = "post_".$datas['post']['id']."_right_buttons".'_'.DEFAULT_LANGUAGE; } 
-		else { $cacheFile = "post_".$datas['post']['id']."_right_buttons"; }
+		if($this->PostsRightButton->fieldsToTranslate) { $cacheFolder .= DEFAULT_LANGUAGE.DS; } 
 		
 		$rightButtonsPost = Cache::exists_cache_file($cacheFolder, $cacheFile);
 		
@@ -457,6 +459,7 @@ class PostsController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 21/06/2013 by FI
  * @version 0.2 - 24/04/2015 by FI - Gestion de la traduction
+ * @version 0.3 - 18/04/2016 by FI - Déplacement des fichiers de traduction dans le dossier de la langue si celle-ci est définie
  */	
 	protected function _get_children_category($datas) {
 		
@@ -465,10 +468,11 @@ class PostsController extends AppController {
 		if($datas['post']['display_children']) { //Si on doit récupérer les enfants			
 			
 			$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS;
- 
+			$cacheFile 		= "post_".$datas['post']['id']."_children";
+			
 			//On contrôle si le modèle est traduit
-			if($this->Category->fieldsToTranslate) { $cacheFile = "post_".$datas['post']['id']."_children".'_'.DEFAULT_LANGUAGE; } 
-			else { $cacheFile = "post_".$datas['post']['id']."_children"; }
+			//Si c'est le cas on va récupérer les fichiers de cache dans un dossier spécifique à la langue
+			if($this->Category->fieldsToTranslate) { $cacheFolder .= DEFAULT_LANGUAGE.DS; }
 			
 			$childrenCategory = Cache::exists_cache_file($cacheFolder, $cacheFile);
 			
@@ -497,6 +501,7 @@ class PostsController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 21/06/2013 by FI
  * @version 0.2 - 24/04/2015 by FI - Gestion de la traduction
+ * @version 0.3 - 18/04/2016 by FI - Déplacement des fichiers de traduction dans le dossier de la langue si celle-ci est définie
  */	
 	protected function _get_brothers_category($datas) {
 						
@@ -505,10 +510,11 @@ class PostsController extends AppController {
 		if($datas['post']['display_brothers']) { //Si on doit récupérer les frères		
 			
 			$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS;
+			$cacheFile 		= "post_".$datas['post']['id']."_brothers";
  
 			//On contrôle si le modèle est traduit
-			if($this->Category->fieldsToTranslate) { $cacheFile = "post_".$datas['post']['id']."_brothers".'_'.DEFAULT_LANGUAGE; } 
-			else { $cacheFile = "post_".$datas['post']['id']."_brothers"; }
+			//Si c'est le cas on va récupérer les fichiers de cache dans un dossier spécifique à la langue
+			if($this->Category->fieldsToTranslate) { $cacheFolder .= DEFAULT_LANGUAGE.DS; }
 						
 			$brothersCategory = Cache::exists_cache_file($cacheFolder, $cacheFile);
 			

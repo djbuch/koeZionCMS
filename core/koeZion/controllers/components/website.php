@@ -28,6 +28,7 @@ class WebsiteComponent extends Component {
  * @version 0.5 - 21/05/2014 by FI - Mise en place d'un passage de paramètre dans la fonction pour pouvoir changer le host du site
  * @version 0.6 - 23/04/2015 by FI - Rajout de la condition OR dans la récupération du site courant afin de traiter également les alias d'url
  * @version 0.7 - 24/04/2015 by FI - Gestion de la traduction
+ * @version 0.8 - 18/04/2016 by FI - Déplacement des fichiers de traduction dans le dossier de la langue si celle-ci est définie
  */
 	public function get_website_datas($hackWsHost = null) {
 				
@@ -40,11 +41,12 @@ class WebsiteComponent extends Component {
 		$httpHost = (isset($hackWsHost) && !empty($hackWsHost)) ? $hackWsHost : $_SERVER["HTTP_HOST"]; //Récupération de l'url		
 				
 		$cacheFolder 	= TMP.DS.'cache'.DS.'variables'.DS.'Websites'.DS;
+		$cacheFile 		= $httpHost;
  
 		//On contrôle si le modèle est traduit
+		//Si c'est le cas on va récupérer les fichiers de cache dans un dossier spécifique à la langue
 		$this->load_model('Website'); //Chargement du modèle
-		if($this->Website->fieldsToTranslate) { $cacheFile = $httpHost.'_'.DEFAULT_LANGUAGE; } 
-		else { $cacheFile = $httpHost; }
+		if($this->Website->fieldsToTranslate) { $cacheFolder .= DEFAULT_LANGUAGE.DS; }
 		
 		$website = Cache::exists_cache_file($cacheFolder, $cacheFile);
 	
