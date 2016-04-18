@@ -835,17 +835,20 @@ class PostsController extends AppController {
  */  
 	protected function _init_caching($params = null) {	
 		
+		$cachingPath = TMP.DS.'cache'.DS.'variables'.DS.'Posts';
+		if($this->Post->fieldsToTranslate) { $cachingPath .= DS.DEFAULT_LANGUAGE; }
+		
 		$this->cachingFiles = array(		
-			TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS."home_page_website_".CURRENT_WEBSITE_ID.'.cache',
-			TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS."website_".CURRENT_WEBSITE_ID.'.cache'
+			$cachingPath.DS."home_page_website_".CURRENT_WEBSITE_ID.'.cache',
+			$cachingPath.DS."website_".CURRENT_WEBSITE_ID.'.cache'
 		);
 		
 		if(isset($this->request->data['id']) && !empty($this->request->data['id'])) {
 			
 			$this->cachingFiles = array(
-				TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS."post_".$this->request->data['id'].'_brothers.cache',
-				TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS."post_".$this->request->data['id'].'_children.cache',
-				TMP.DS.'cache'.DS.'variables'.DS.'Posts'.DS."post_".$this->request->data['id'].'_right_buttons.cache'
+				$cachingPath.DS."post_".$this->request->data['id'].'_brothers.cache',
+				$cachingPath.DS."post_".$this->request->data['id'].'_children.cache',
+				$cachingPath.DS."post_".$this->request->data['id'].'_right_buttons.cache'
 			);
 		}
 	}

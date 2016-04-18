@@ -883,20 +883,24 @@ class CategoriesController extends AppController {
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 20/12/2012 by FI
+ * @version 0.2 - 18/04/2016 by FI - Gestion du cache et de la traduction
  */  
 	protected function _init_caching($params = null) {
 		
+		$cachingPath = TMP.DS.'cache'.DS.'variables'.DS.'Categories';
+		if($this->Category->fieldsToTranslate) { $cachingPath .= DS.DEFAULT_LANGUAGE; }
+		
 		$cachingFiles = array(		
-			TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."website_menu_".CURRENT_WEBSITE_ID.'.cache'
+			$cachingPath.DS."website_menu_".CURRENT_WEBSITE_ID.'.cache'
 		);
 		
 		//Dans le cas d'une edition
 		if(isset($params['identifier'])) {
 			
-			$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$params['identifier'].'.cache';
-			$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$params['identifier'].'_brothers.cache';
-			$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$params['identifier'].'_children.cache';
-			$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$params['identifier'].'_right_buttons.cache';
+			$cachingFiles[] = $cachingPath.DS."category_".$params['identifier'].'.cache';
+			$cachingFiles[] = $cachingPath.DS."category_".$params['identifier'].'_brothers.cache';
+			$cachingFiles[] = $cachingPath.DS."category_".$params['identifier'].'_children.cache';
+			$cachingFiles[] = $cachingPath.DS."category_".$params['identifier'].'_right_buttons.cache';
 		
 			//Récuparation du path
 			$path = $this->Category->getPath($params['identifier']);
@@ -904,10 +908,10 @@ class CategoriesController extends AppController {
 				
 				if($v['id'] != $params['identifier']) {
 				
-					$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$v['id'].'.cache';
-					$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$v['id'].'_brothers.cache';
-					$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$v['id'].'_children.cache';
-					$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$v['id'].'_right_buttons.cache';
+					$cachingFiles[] = $cachingPath.DS."category_".$v['id'].'.cache';
+					$cachingFiles[] = $cachingPath.DS."category_".$v['id'].'_brothers.cache';
+					$cachingFiles[] = $cachingPath.DS."category_".$v['id'].'_children.cache';
+					$cachingFiles[] = $cachingPath.DS."category_".$v['id'].'_right_buttons.cache';
 				}			
 			}
 		
@@ -917,10 +921,10 @@ class CategoriesController extends AppController {
 				
 				if($v['id'] != $params['identifier']) {
 				
-					$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$v['id'].'.cache';
-					$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$v['id'].'_brothers.cache';
-					$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$v['id'].'_children.cache';
-					$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$v['id'].'_right_buttons.cache';
+					$cachingFiles[] = $cachingPath.DS."category_".$v['id'].'.cache';
+					$cachingFiles[] = $cachingPath.DS."category_".$v['id'].'_brothers.cache';
+					$cachingFiles[] = $cachingPath.DS."category_".$v['id'].'_children.cache';
+					$cachingFiles[] = $cachingPath.DS."category_".$v['id'].'_right_buttons.cache';
 				}
 			}
 			
@@ -929,10 +933,10 @@ class CategoriesController extends AppController {
 			
 			if(isset($this->request->data) && !empty($this->request->data)) {
 				
-				$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$this->request->data['parent_id'].'.cache';
-				$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$this->request->data['parent_id'].'_brothers.cache';
-				$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$this->request->data['parent_id'].'_children.cache';
-				$cachingFiles[] = TMP.DS.'cache'.DS.'variables'.DS.'Categories'.DS."category_".$this->request->data['parent_id'].'_right_buttons.cache';
+				$cachingFiles[] = $cachingPath.DS."category_".$this->request->data['parent_id'].'.cache';
+				$cachingFiles[] = $cachingPath.DS."category_".$this->request->data['parent_id'].'_brothers.cache';
+				$cachingFiles[] = $cachingPath.DS."category_".$this->request->data['parent_id'].'_children.cache';
+				$cachingFiles[] = $cachingPath.DS."category_".$this->request->data['parent_id'].'_right_buttons.cache';
 			}
 		}
 		

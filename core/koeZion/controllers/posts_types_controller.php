@@ -95,9 +95,12 @@ class PostsTypesController extends AppController {
  */  
 	protected function _init_caching($params = null) {	
 		
+		$cachingPath = TMP.DS.'cache'.DS.'variables'.DS.'PostsTypes';
+		if($this->PostsType->fieldsToTranslate) { $cachingPath .= DS.DEFAULT_LANGUAGE; }
+		
 		$this->cachingFiles = array(		
-			TMP.DS.'cache'.DS.'variables'.DS.'PostsTypes'.DS."home_page_website_".CURRENT_WEBSITE_ID.'.cache',
-			TMP.DS.'cache'.DS.'variables'.DS.'PostsTypes'.DS."website_".CURRENT_WEBSITE_ID.'.cache'
+			$cachingPath.DS."home_page_website_".CURRENT_WEBSITE_ID.'.cache',
+			$cachingPath.DS."website_".CURRENT_WEBSITE_ID.'.cache'
 		);		
 	}	
 }

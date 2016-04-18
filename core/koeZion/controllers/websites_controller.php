@@ -351,12 +351,17 @@ class WebsitesController extends AppController {
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 20/12/2012 by FI
+ * @version 0.2 - 18/04/2016 by FI - Gestion du cache et de la traduction
  */  
 	protected function _init_caching($params = null) {		
 		
+		$cachingPath = TMP.DS.'cache'.DS.'variables'.DS.'Websites';
+		if($this->Website->fieldsToTranslate) { $cachingPath .= DS.DEFAULT_LANGUAGE; }
+		
 		$this->cachingFiles = array(		
-			//TMP.DS.'cache'.DS.'variables'.DS.'Websites'.DS.$_SERVER["HTTP_HOST"].'.cache'
-			TMP.DS.'cache'.DS.'variables'.DS.'Websites'
-		);		
+			//$cachingPath.DS.$_SERVER["HTTP_HOST"].'.cache',
+			$cachingPath
+			
+		);
 	}
 }

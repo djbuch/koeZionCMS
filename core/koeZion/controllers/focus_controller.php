@@ -149,8 +149,12 @@ class FocusController extends AppController {
  * @version 0.2 - 09/12/2015 by FI - Rajout de la gestion de la publication dans les pages
  */  
 	protected function _init_caching($params = null) {	
+	
+		$indexBase 		= 'website_'.CURRENT_WEBSITE_ID.'_';
+		$cachingPath 	= TMP.DS.'cache'.DS.'variables'.DS.'Sliders';
+		if($this->Focus->fieldsToTranslate) { $cachingPath .= DS.DEFAULT_LANGUAGE; }
 		
-		$this->cachingFiles['website_'.CURRENT_WEBSITE_ID.'_0'] = TMP.DS.'cache'.DS.'variables'.DS.'Focus'.DS.'website_'.CURRENT_WEBSITE_ID.'_0.cache';
+		$this->cachingFiles[$indexBase.'0'] = $cachingPath.DS.'website_'.CURRENT_WEBSITE_ID.'_0.cache';
 		
 		if(isset($this->request->data['CategoriesFocusWebsite']) && !empty($this->request->data['CategoriesFocusWebsite'])) {
 			
@@ -160,7 +164,7 @@ class FocusController extends AppController {
 					
 					foreach($websiteDatas['category_id'] as $categoryId => $isChecked) {
 		
-						$this->cachingFiles['website_'.CURRENT_WEBSITE_ID.'_'.$categoryId] = TMP.DS.'cache'.DS.'variables'.DS.'Focus'.DS.'website_'.CURRENT_WEBSITE_ID.'_'.$categoryId.'.cache';
+						$this->cachingFiles[$indexBase.$categoryId] = $cachingPath.DS.'website_'.CURRENT_WEBSITE_ID.'_'.$categoryId.'.cache';
 					}
 				}
 			}
