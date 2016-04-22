@@ -60,7 +60,8 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
 								?><h5 class="form-title"><?php echo _("Site")." ".$websiteName; ?></h5><?php 
 								echo $helpers['Form']->input('CategoriesPostsWebsite.'.$websiteId.'.display', _('Diffuser dans le site').' '.$websiteName, array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour diffuser cet article dans le site".' '.$websiteName)));
 								echo $helpers['Form']->input('CategoriesPostsWebsite.'.$websiteId.'.display_home_page', _("Afficher cet article sur la page d'accueil du site").' '.$websiteName, array('type' => 'checkbox', 'tooltip' => _("En cochant cette case vous afficherez cet article sur la page d'accueil du site".' '.$websiteName)));
-								echo $helpers['Form']->input('CategoriesPostsWebsite.'.$websiteId.'.category_id', _("Page parente de l'article dans le site").' '.$websiteName, array('type' => 'select', 'datas' => $websiteCategories, 'tooltip' => _("Indiquez la catégorie parente de cet article, c'est à partir de cette catégorie que cet article sera accessible dans le site").' '.$websiteName, 'firstElementList' => _("Sélectionnez une catégorie")));
+								
+								if($websiteCategories) { echo $helpers['Form']->input('CategoriesPostsWebsite.'.$websiteId.'.category_id', _("Page parente de l'article dans le site").' '.$websiteName, array('type' => 'select', 'datas' => $websiteCategories, 'tooltip' => _("Indiquez la catégorie parente de cet article, c'est à partir de cette catégorie que cet article sera accessible dans le site").' '.$websiteName, 'firstElementList' => _("Sélectionnez une catégorie"))); }
 							}
 							?>	
                 		</div>
@@ -165,7 +166,9 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
 								<h4><i class="fa fa-plug"></i> <?php echo _("Options"); ?></h4>                  
                 			</div>           
 							<?php 
-							echo $helpers['Form']->input('dont_change_modified_date', _('Ne pas changer la date de modification'), array('type' => 'checkbox', 'checked' => 'checked', 'tooltip' => _("Cochez cette case pour ne pas changer automatiquement la date de modification de l'article")));
+							$checked = '';
+							if($params['action'] == 'edit') { $checked = 'checked'; }
+							echo $helpers['Form']->input('dont_change_modified_date', _('Ne pas changer la date de modification'), array('type' => 'checkbox', 'checked' => $checked, 'tooltip' => _("Cochez cette case pour ne pas changer automatiquement la date de modification de l'article")));
 							echo $helpers['Form']->input('display_link', _("Afficher un lien sous forme de bouton à la suite de l'article"), array('type' => 'checkbox', 'tooltip' => _("En cochant cette case vous afficherez automatiquement le lien pour se rendre sur le détail de l'article, par défaut le titre de l'article sera également cliquable")));						
 							echo $helpers['Form']->input('redirect_to', _('Url de redirection'), array('tooltip' => _("Remplissez ce champ si souhaitez, à partir de cet article, faire une redirection vers une url de votre choix, il ne vous sera alors pas nécessaire de saisir le descriptif long")));			
 							
