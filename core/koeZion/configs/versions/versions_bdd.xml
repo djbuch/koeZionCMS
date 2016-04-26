@@ -1,5 +1,21 @@
 ﻿<versions>
 	<version>
+		<name>Version du 26/04/2016</name>
+		<num>20160426.001</num>
+		<supervisor>KoéZionCMS</supervisor>		
+		<tasks>
+			<task author="FI">
+				DROP TABLE IF EXISTS `categories_portfolios_portfolios_types`;
+				CREATE TABLE IF NOT EXISTS `categories_portfolios_portfolios_types` (
+  				`category_id` int(11) NOT NULL,
+  				`portfolio_id` int(11) NOT NULL,
+  				`portfolios_type_id` int(11) NOT NULL,
+  				PRIMARY KEY (`category_id`,`portfolio_id`,`portfolios_type_id`)
+				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+			</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 12/04/2016</name>
 		<num>20160412.004</num>
 		<supervisor>KoéZionCMS</supervisor>		

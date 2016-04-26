@@ -1,10 +1,12 @@
+-- --------------------------------------------------------
+
 --
 -- Structure de la table `categories`
 --
 
 DROP TABLE IF EXISTS `categories`;
-CREATE TABLE `categories` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `content` longtext COLLATE utf8_unicode_ci NOT NULL,
   `redirect_to` longtext COLLATE utf8_unicode_ci NOT NULL,
@@ -44,24 +46,19 @@ CREATE TABLE `categories` (
   `parent_id` int(11) NOT NULL,
   `redirect_category_id` int(11) NOT NULL,
   `template_id` int(11) NOT NULL,
-  `website_id` int(11) NOT NULL
+  `website_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `online` (`online`),
+  KEY `type` (`type`),
+  KEY `parent_id` (`parent_id`),
+  KEY `type_2` (`type`,`online`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Index pour la table `categories`
---
-ALTER TABLE `categories`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `online` (`online`),
-  ADD KEY `type` (`type`),
-  ADD KEY `parent_id` (`parent_id`),
-  ADD KEY `type_2` (`type`,`online`);
+-- --------------------------------------------------------
 
 --
--- AUTO_INCREMENT pour la table `categories`
+-- Structure de la table `categories_focus_websites`
 --
-ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 DROP TABLE IF EXISTS `categories_focus_websites`;
 CREATE TABLE IF NOT EXISTS `categories_focus_websites` (
@@ -70,6 +67,26 @@ CREATE TABLE IF NOT EXISTS `categories_focus_websites` (
   `website_id` int(11) NOT NULL,
   PRIMARY KEY (`category_id`,`focus_id`,`website_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `categories_portfolios_portfolios_types`
+--
+
+DROP TABLE IF EXISTS `categories_portfolios_portfolios_types`;
+CREATE TABLE IF NOT EXISTS `categories_portfolios_portfolios_types` (
+  `category_id` int(11) NOT NULL,
+  `portfolio_id` int(11) NOT NULL,
+  `portfolios_type_id` int(11) NOT NULL,
+  PRIMARY KEY (`category_id`,`portfolio_id`,`portfolios_type_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `categories_posts_posts_types`
+--
 
 DROP TABLE IF EXISTS `categories_posts_posts_types`;
 CREATE TABLE IF NOT EXISTS `categories_posts_posts_types` (
@@ -80,6 +97,12 @@ CREATE TABLE IF NOT EXISTS `categories_posts_posts_types` (
   PRIMARY KEY (`category_id`,`post_id`,`posts_type_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `categories_posts_websites`
+--
+
 DROP TABLE IF EXISTS `categories_posts_websites`;
 CREATE TABLE IF NOT EXISTS `categories_posts_websites` (
   `category_id` int(11) NOT NULL,
@@ -88,6 +111,12 @@ CREATE TABLE IF NOT EXISTS `categories_posts_websites` (
   `display_home_page` int(11) NOT NULL,
   PRIMARY KEY (`category_id`,`post_id`,`website_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `categories_right_buttons`
+--
 
 DROP TABLE IF EXISTS `categories_right_buttons`;
 CREATE TABLE IF NOT EXISTS `categories_right_buttons` (
@@ -98,6 +127,12 @@ CREATE TABLE IF NOT EXISTS `categories_right_buttons` (
   PRIMARY KEY (`category_id`,`right_button_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `categories_sliders_websites`
+--
+
 DROP TABLE IF EXISTS `categories_sliders_websites`;
 CREATE TABLE IF NOT EXISTS `categories_sliders_websites` (
   `category_id` int(11) NOT NULL,
@@ -106,13 +141,25 @@ CREATE TABLE IF NOT EXISTS `categories_sliders_websites` (
   PRIMARY KEY (`category_id`,`slider_id`,`website_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `configs`
+--
+
 DROP TABLE IF EXISTS `configs`;
 CREATE TABLE IF NOT EXISTS `configs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `value` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8; 
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `contacts`
+--
 
 DROP TABLE IF EXISTS `contacts`;
 CREATE TABLE IF NOT EXISTS `contacts` (
@@ -127,7 +174,13 @@ CREATE TABLE IF NOT EXISTS `contacts` (
   `created` datetime NOT NULL,
   `website_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `focus`
+--
 
 DROP TABLE IF EXISTS `focus`;
 CREATE TABLE IF NOT EXISTS `focus` (
@@ -143,7 +196,13 @@ CREATE TABLE IF NOT EXISTS `focus` (
   `online` int(11) NOT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `modules`
+--
 
 DROP TABLE IF EXISTS `modules`;
 CREATE TABLE IF NOT EXISTS `modules` (
@@ -161,7 +220,13 @@ CREATE TABLE IF NOT EXISTS `modules` (
   `modules_type_id` int(11) NOT NULL,
   `plugin_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `modules_types`
+--
 
 DROP TABLE IF EXISTS `modules_types`;
 CREATE TABLE IF NOT EXISTS `modules_types` (
@@ -175,7 +240,13 @@ CREATE TABLE IF NOT EXISTS `modules_types` (
   `modified_by` int(11) NOT NULL,
   `plugin_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `plugins`
+--
 
 DROP TABLE IF EXISTS `plugins`;
 CREATE TABLE IF NOT EXISTS `plugins` (
@@ -191,15 +262,17 @@ CREATE TABLE IF NOT EXISTS `plugins` (
   `created_by` int(11) NOT NULL,
   `modified_by` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `portfolios`
 --
 
 DROP TABLE IF EXISTS `portfolios`;
-CREATE TABLE `portfolios` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `portfolios` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `short_content_illustration` longtext COLLATE utf8_unicode_ci NOT NULL,
   `short_content` longtext COLLATE utf8_unicode_ci NOT NULL,
@@ -219,28 +292,19 @@ CREATE TABLE `portfolios` (
   `created_by` int(11) NOT NULL,
   `modified_by` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
-  `website_id` int(11) NOT NULL
+  `website_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Index pour la table `portfolios`
---
-ALTER TABLE `portfolios`
-  ADD PRIMARY KEY (`id`);
+-- --------------------------------------------------------
 
---
--- AUTO_INCREMENT pour la table `portfolios`
---
-ALTER TABLE `portfolios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-  
 --
 -- Structure de la table `portfolios_elements`
 --
 
 DROP TABLE IF EXISTS `portfolios_elements`;
-CREATE TABLE `portfolios_elements` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `portfolios_elements` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `description_line_1` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `description_line_2` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -255,54 +319,37 @@ CREATE TABLE `portfolios_elements` (
   `created_by` int(11) NOT NULL,
   `modified_by` int(11) NOT NULL,
   `portfolio_id` int(11) NOT NULL,
-  `website_id` int(11) NOT NULL
+  `website_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Index pour la table `portfolios_elements`
---
-ALTER TABLE `portfolios_elements`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT pour la table `portfolios_elements`
---
-ALTER TABLE `portfolios_elements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `portfolios_types`
 --
 
 DROP TABLE IF EXISTS `portfolios_types`;
-CREATE TABLE `portfolios_types` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `portfolios_types` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `order_by` int(11) NOT NULL,
   `online` int(11) NOT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime NOT NULL,
-  `modified_by` int(11) NOT NULL
+  `modified_by` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Index pour la table `portfolios_types`
---
-ALTER TABLE `portfolios_types`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT pour la table `portfolios_types`
---
-ALTER TABLE `portfolios_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;  
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `posts`
 --
+
 DROP TABLE IF EXISTS `posts`;
-CREATE TABLE `posts` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `posts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `label` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `short_content_illustration` longtext COLLATE utf8_unicode_ci NOT NULL,
@@ -336,20 +383,15 @@ CREATE TABLE `posts` (
   `created` datetime DEFAULT NULL,
   `modified` datetime NOT NULL,
   `created_by` int(11) NOT NULL,
-  `modified_by` int(11) NOT NULL
+  `modified_by` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Index pour la table `posts`
---
-ALTER TABLE `posts`
-  ADD PRIMARY KEY (`id`);
+-- --------------------------------------------------------
 
 --
--- AUTO_INCREMENT pour la table `posts`
+-- Structure de la table `posts_comments`
 --
-ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 DROP TABLE IF EXISTS `posts_comments`;
 CREATE TABLE IF NOT EXISTS `posts_comments` (
@@ -365,7 +407,13 @@ CREATE TABLE IF NOT EXISTS `posts_comments` (
   `post_id` int(11) NOT NULL,
   `website_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `posts_right_buttons`
+--
 
 DROP TABLE IF EXISTS `posts_right_buttons`;
 CREATE TABLE IF NOT EXISTS `posts_right_buttons` (
@@ -375,6 +423,12 @@ CREATE TABLE IF NOT EXISTS `posts_right_buttons` (
   `order_by` int(11) NOT NULL,
   PRIMARY KEY (`post_id`,`right_button_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `posts_types`
+--
 
 DROP TABLE IF EXISTS `posts_types`;
 CREATE TABLE IF NOT EXISTS `posts_types` (
@@ -386,9 +440,39 @@ CREATE TABLE IF NOT EXISTS `posts_types` (
   `created` datetime DEFAULT NULL,
   `modified` datetime NOT NULL,
   `modified_by` int(11) NOT NULL,
-  `website_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `ps_category`
+--
+
+DROP TABLE IF EXISTS `ps_category`;
+CREATE TABLE IF NOT EXISTS `ps_category` (
+  `id_category` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_parent` int(10) UNSIGNED NOT NULL,
+  `id_shop_default` int(10) UNSIGNED NOT NULL DEFAULT '1',
+  `level_depth` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `nleft` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `nright` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `active` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
+  `date_add` datetime NOT NULL,
+  `date_upd` datetime NOT NULL,
+  `position` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `is_root_category` tinyint(1) NOT NULL DEFAULT '0',
+  `active_soft` int(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id_category`),
+  KEY `category_parent` (`id_parent`),
+  KEY `nleftright` (`nleft`,`nright`),
+  KEY `nleftrightactive` (`nleft`,`nright`,`active`),
+  KEY `level_depth` (`level_depth`),
+  KEY `nright` (`nright`),
+  KEY `nleft` (`nleft`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `right_buttons`
@@ -396,7 +480,7 @@ CREATE TABLE IF NOT EXISTS `posts_types` (
 
 DROP TABLE IF EXISTS `right_buttons`;
 CREATE TABLE IF NOT EXISTS `right_buttons` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `content` longtext COLLATE utf8_unicode_ci NOT NULL,
   `display_home_page` int(11) NOT NULL,
@@ -408,20 +492,15 @@ CREATE TABLE IF NOT EXISTS `right_buttons` (
   `modified` datetime NOT NULL,
   `created_by` int(11) NOT NULL,
   `modified_by` int(11) NOT NULL,
-  `website_id` int(11) NOT NULL
+  `website_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Index pour la table `right_buttons`
---
-ALTER TABLE `right_buttons`
-  ADD PRIMARY KEY (`id`);
+-- --------------------------------------------------------
 
 --
--- AUTO_INCREMENT pour la table `right_buttons`
+-- Structure de la table `searches`
 --
-ALTER TABLE `right_buttons`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 DROP TABLE IF EXISTS `searches`;
 CREATE TABLE IF NOT EXISTS `searches` (
@@ -435,9 +514,14 @@ CREATE TABLE IF NOT EXISTS `searches` (
   `modified` datetime DEFAULT NULL,
   `model_id` int(11) NOT NULL,
   `website_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  FULLTEXT KEY `data` (`datas`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `sliders`
+--
 
 DROP TABLE IF EXISTS `sliders`;
 CREATE TABLE IF NOT EXISTS `sliders` (
@@ -451,7 +535,13 @@ CREATE TABLE IF NOT EXISTS `sliders` (
   `online` int(11) NOT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `templates`
+--
 
 DROP TABLE IF EXISTS `templates`;
 CREATE TABLE IF NOT EXISTS `templates` (
@@ -465,7 +555,13 @@ CREATE TABLE IF NOT EXISTS `templates` (
   `online` int(11) NOT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `unwanted_crawlers`
+--
 
 DROP TABLE IF EXISTS `unwanted_crawlers`;
 CREATE TABLE IF NOT EXISTS `unwanted_crawlers` (
@@ -476,7 +572,13 @@ CREATE TABLE IF NOT EXISTS `unwanted_crawlers` (
   `online` int(11) NOT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `users`
+--
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
@@ -491,12 +593,19 @@ CREATE TABLE IF NOT EXISTS `users` (
   `modified` datetime NOT NULL,
   `users_group_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `users_groups`
+--
 
 DROP TABLE IF EXISTS `users_groups`;
 CREATE TABLE IF NOT EXISTS `users_groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `default_home` text COLLATE utf8_unicode_ci NOT NULL,
   `online` int(11) NOT NULL,
   `is_deletable` int(11) NOT NULL DEFAULT '1',
   `created` datetime DEFAULT NULL,
@@ -505,7 +614,13 @@ CREATE TABLE IF NOT EXISTS `users_groups` (
   `modified_by` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `users_groups_websites`
+--
 
 DROP TABLE IF EXISTS `users_groups_websites`;
 CREATE TABLE IF NOT EXISTS `users_groups_websites` (
@@ -513,6 +628,12 @@ CREATE TABLE IF NOT EXISTS `users_groups_websites` (
   `website_id` int(11) NOT NULL,
   PRIMARY KEY (`users_group_id`,`website_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `users_logs`
+--
 
 DROP TABLE IF EXISTS `users_logs`;
 CREATE TABLE IF NOT EXISTS `users_logs` (
@@ -523,7 +644,13 @@ CREATE TABLE IF NOT EXISTS `users_logs` (
   `user_id` int(11) NOT NULL,
   `website_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `users_websites`
+--
 
 DROP TABLE IF EXISTS `users_websites`;
 CREATE TABLE IF NOT EXISTS `users_websites` (
@@ -532,13 +659,15 @@ CREATE TABLE IF NOT EXISTS `users_websites` (
   PRIMARY KEY (`user_id`,`website_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+-- --------------------------------------------------------
+
 --
 -- Structure de la table `websites`
 --
 
 DROP TABLE IF EXISTS `websites`;
-CREATE TABLE `websites` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `websites` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `url_alias` longtext COLLATE utf8_unicode_ci NOT NULL,
@@ -610,17 +739,15 @@ CREATE TABLE `websites` (
   `modified` datetime NOT NULL,
   `created_by` int(11) NOT NULL,
   `modified_by` int(11) NOT NULL,
-  `template_id` int(11) NOT NULL
+  `template_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Index pour la table `websites`
+-- Index pour les tables exportées
 --
-ALTER TABLE `websites`
-  ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT pour la table `websites`
+-- Index pour la table `searches`
 --
-ALTER TABLE `websites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `searches` ADD FULLTEXT KEY `data` (`datas`);

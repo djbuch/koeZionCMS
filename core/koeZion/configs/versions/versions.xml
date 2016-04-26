@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 26/04/2016</name>
+		<num>20160426.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="bdd">Mise à jour du fichier versions_bdd.xml</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 25/04/2016</name>
 		<num>20160425.001</num>
 		<supervisor>KoéZionCMS</supervisor>
