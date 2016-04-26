@@ -44,6 +44,7 @@ class CategoriesController extends AppController {
  * @version 1.6 - 05/11/2012 by FI - Mise en fonction privée de la récupération de la catégorie ainsi que la récupération des articles associés pour pouvoir l'utiliser dans le flux rss
  * @version 1.7 - 09/12/2015 by FI - Gestion de la récupération des sliders et des focus
  * @version 1.8 - 12/04/2016 by FI - Mise en place de la fonction _check_secure et de la récupération des portfolios
+ * @version 1.8 - 25/04/2016 by FI - Mise en place de l'utilisation du composant User
  */	
 	public function view($id, $slug) {
 	
@@ -108,7 +109,14 @@ class CategoriesController extends AppController {
 		$isAuthCategory = Session::read('Frontoffice.User');
 		
 		//Si la page est sécurisée il va falloir vérifier si l'utilisateur ne s'est pas déjà connecté
-		if(isset($datas['category']['is_secure']) && $datas['category']['is_secure'] && !$isAuthCategory) { $this->_check_secure($datas); } 
+		if(isset($datas['category']['is_secure']) && $datas['category']['is_secure'] && !$isAuthCategory) { 
+
+			//$this->_check_secure($datas);
+			$this->components['User']->frontoffice_login($this->request->data, $datas);
+			
+			$this->set($datas); //On fait passer les données à la vue
+			$this->view = 'not_auth'; 
+		} 
 		else {
 						
 			//$datas['is_full_page'] = 1; //Par défaut on affichera le détail de la catégorie en pleine page
@@ -512,8 +520,9 @@ class CategoriesController extends AppController {
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 12/04/2016 by FI
+ * @version 0.2 - 25/04/2016 by FI - Suppression de cette fonction pour l'utilisation du Composant User 
  */	
-	protected function _check_secure($datas) {
+	/*protected function _check_secure($datas) {
 		
 		///////////////////////////////
 		//   GESTION DU FORMULAIRE   //
@@ -598,7 +607,7 @@ class CategoriesController extends AppController {
 		$this->set($datas); //On fait passer les données à la vue
 		$this->view = 'not_auth';
 		
-	}
+	}*/
 	
 /**
  * Cette fonction permet de vérifier si il faut envoyer un mail aux différents utilisateurs du site (uniquement dans le cas ou celui-ci est sécurisé)

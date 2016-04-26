@@ -1,5 +1,23 @@
 ﻿<versions>
 	<version>
+		<name>Version du 25/04/2016</name>
+		<num>20160425.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">PostsController::publish : Mise en place $this->render</task>
+			<task author="FI" type="code">CategoriesController::view : Mise en place de l'utilisation du composant User</task>
+			<task author="FI" type="code">PostsController::rss : Mise en place $this->render</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 22/04/2016</name>
+		<num>20160422.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification du fichier de version</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 22/04/2016</name>
 		<num>20160422.001</num>
 		<supervisor>KoéZionCMS</supervisor>

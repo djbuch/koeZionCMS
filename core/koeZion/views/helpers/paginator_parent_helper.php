@@ -34,7 +34,7 @@ class PaginatorParentHelper extends Helper {
 			'lastElementClass' => 'last',
 			'suivElementClass' => 'suiv',
 			'linkElementClass' => '',
-			'linkSelectElementClass' => 'superbutton select'
+			'linkSelectElementClass' => 'active'
 		);
 		$options = array_merge($defaultOptions, $options); //Génération du tableau d'options utilisé dans la fonction
 				

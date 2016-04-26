@@ -17,22 +17,27 @@ INSERT INTO `modules` (`id`, `name`, `controller_name`, `action_name`, `others_a
 (13, 'Tableau de bord', 'dashboard', '', '', '', '', 0, 1, 1, '2013-10-08 00:52:32', 7, 0),
 (14, 'Newsletter', 'contacts', 'newsletter', '', '', '', 0, 1, 1, '2016-04-07 10:46:39', 10, 0),
 (15, 'Paramètres', 'configs', 'posts_liste', '', '', '', 0, 3, 1, '2016-04-07 10:48:57', 4, 0),
-(16, 'Exports', 'exports', '', '', '', '', 0, 0, 1, '2016-04-08 17:50:57', 11, 0);
+(16, 'Exports', 'exports', '', '', '', '', 0, 0, 1, '2016-04-08 17:50:57', 11, 0),
+(17, 'Portfolios', 'portfolios', '', '', '', '', 0, 1, 1, '2016-04-11 16:51:28', 12, 0),
+(18, 'Eléments de portfolios', 'portfolios_elements', '', '', '', '', 0, 2, 1, '2016-04-11 16:51:28', 12, 0),
+(19, 'Types de portfolios', 'portfolios_types', '', '', '', '', 0, 3, 1, '2016-04-12 15:08:48', 12, 0),
+(20, 'Paramètres', 'configs', 'portfolios_liste', '', '', '', 0, 4, 1, '2016-04-12 18:28:45', 12, 0);
 
 --
 -- Contenu de la table `modules_types`
 --
-
 INSERT INTO `modules_types` (`id`, `name`, `icon`, `order_by`, `online`, `created`, `modified`, `modified_by`, `plugin_id`) VALUES
 (7, 'TABLEAU DE BORD', 'fa fa-dashboard', 0, 1, '2012-12-01 06:39:27', '2015-09-15 08:54:33', 1, 0),
 (2, 'CONTENUS', 'fa fa-folder-open', 1, 1, '2012-12-01 06:38:44', '2015-09-15 08:59:51', 1, 0),
 (4, 'ACTUALITES / BLOG', 'fa fa-comments', 2, 1, '2012-12-01 06:39:16', '2015-09-15 09:00:07', 1, 0),
-(6, 'PLUGINS', 'fa fa-plug', 5, 1, '2012-12-03 22:39:48', '2015-09-15 09:00:17', 1, 0),
-(5, 'PARAMETRES', 'fa fa-cogs', 8, 1, '2012-12-01 06:39:27', '2015-09-15 09:00:35', 1, 0),
-(8, 'SITES INTERNET', 'fa fa-globe', 6, 1, '2016-04-07 10:44:41', '2016-04-07 14:58:15', 1, 0),
-(9, 'UTILISATEURS', 'fa fa-user', 7, 1, '2016-04-07 10:44:49', '2016-04-07 14:57:19', 1, 0),
+(6, 'PLUGINS', 'fa fa-plug', 7, 1, '2012-12-03 22:39:48', '2015-09-15 09:00:17', 1, 0),
+(5, 'PARAMETRES', 'fa fa-cogs', 10, 1, '2012-12-01 06:39:27', '2015-09-15 09:00:35', 1, 0),
+(8, 'SITES INTERNET', 'fa fa-globe', 8, 1, '2016-04-07 10:44:41', '2016-04-07 14:58:15', 1, 0),
+(9, 'UTILISATEURS', 'fa fa-user', 9, 1, '2016-04-07 10:44:49', '2016-04-07 14:57:19', 1, 0),
 (10, 'CONTACTS', 'fa fa-envelope', 3, 1, '2016-04-07 10:45:25', '2016-04-07 14:57:45', 1, 0),
-(11, 'EXPORTS', 'fa fa-download', 4, 1, '2016-04-08 17:50:15', '2016-04-08 17:50:15', 1, 0);
+(11, 'EXPORTS', 'fa fa-download', 6, 1, '2016-04-08 17:50:15', '2016-04-08 17:50:15', 1, 0),
+(12, 'PORTFOLIOS', 'fa fa-picture-o', 4, 1, '2016-04-11 17:50:15', '2016-04-11 17:50:15', 1, 0),
+(13, 'EXPORTS', 'fa fa-download', 5, 1, '2016-04-11 16:52:52', '2016-04-11 16:52:52', 1, 0);
 
 INSERT INTO `users` (`id`, `name`, `second_name`, `login`, `password`, `email`, `online`, `users_group_id`) VALUES
 (1, 'Superadmin', 				'', 'superadmin', 		'superadmin', 		'superadmin@monsite.com', 		1, 1);

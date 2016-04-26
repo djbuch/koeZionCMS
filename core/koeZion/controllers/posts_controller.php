@@ -143,6 +143,7 @@ class PostsController extends AppController {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 25/10/2012 by FI
+ * @version 0.2 - 25/04/2016 by FI - Mise en place $this->render
  */	
 	public function publish() {
 		
@@ -174,6 +175,8 @@ class PostsController extends AppController {
 			$this->set('update_message', "Le code d'export n'a pu être vérifié");
 			
 		}
+		
+		$this->render('/posts/publish');
 	}
 	
 /**
@@ -185,6 +188,7 @@ class PostsController extends AppController {
  * @author	koéZionCMS
  * @version 0.1 - 05/11/2012 by FI 
  * @version 0.2 - 30/10/2014 by FI - Déplacement de cette fonction du contrôleur Categories 
+ * @version 0.3 - 25/04/2016 by FI - Déplacement de la vue dans le coeur 
  * @see http://baptiste-wicht.developpez.com/tutoriels/php/rss/ : Pour l'exemple de la structure du fichier ainsi que les différents paramètres possibles
  * @see http://www.craym.eu/tutoriels/developpement/flux_RSS.html : A lire plus complet que le précédent
  * @see http://curul2.free.fr/style.php?feed= ; Pour rajouter un css au flux
@@ -197,6 +201,8 @@ class PostsController extends AppController {
 		$datas = $this->_get_posts_category($datas, false);		
 		
 		$this->set($datas);
+		
+		$this->render('/posts/rss');
 	}
 	
 /**
