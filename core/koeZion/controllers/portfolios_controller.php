@@ -14,6 +14,61 @@
  * @link        http://www.koezion-cms.com
  */
 class PortfoliosController extends AppController {
+			    
+//////////////////////////////////////////////////////////////////////////////////////////
+//										FRONTOFFICE										//
+//////////////////////////////////////////////////////////////////////////////////////////	
+	
+/**
+ * Cette fonction permet l'affichage d'un portfolio
+ *
+ * @param 	integer $id 		Identifiant du portfolio à afficher
+ * @param 	varchar $slug 		Url de la page
+ * @param 	varchar $prefix 	Préfixe de la page
+ * @access	public
+ * @author	koéZionCMS
+ * @version 0.1 - 26/04/2012 by FI 
+ */	
+	public function view($id, $slug, $prefix = null) {
+		
+		//Conditions de recherche
+		$conditions = array('conditions' => array('online' => 1, 'id' => $id));
+		$datas['portfolio'] = $this->Portfolio->findFirst($conditions); //On récupère le premier élément
+		
+        //Si il est vide on affiche la page d'erreur
+		if(empty($datas['portfolio'])) { 
+			
+			Session::write('redirectMessage', "Désolé le portfolio n'existe plus");
+			$this->redirect('home/e404'); 
+		}
+
+		//Si le slug est différent de celui en base de données on va renvoyer sur la bonne page		
+		if($slug != $datas['portfolio']['slug']) { $this->redirect("portfolios/view/id:".$id."/slug:".$datas['portfolio']['slug'], 301); }
+        
+        //////////////////////////////////////
+		//   RECUPERATION DU FIL D'ARIANE   //
+		$this->load_model('Category'); //Chargement du modèle
+		$datas['breadcrumbs'] = $this->Category->getPath($datas['portfolio']['category_id']);
+		$datas['category'] = $this->Category->findFirst(array('conditions' => array('id' => $datas['portfolio']['category_id']))); //Récupération des données de la catégorie parente
+		
+		$datas['breadcrumbsPortfolio'][] = array(
+			'id' => $datas['portfolio']['id'],
+			'slug' => $datas['portfolio']['slug'],
+			'name' => $datas['portfolio']['name'],
+			'prefix' => $datas['portfolio']['prefix']
+		);
+		//////////////////////////////////////
+		
+		if(!$datas['portfolio']['automatic_scan']) {
+			
+			$this->load_model('PortfoliosElement');
+			$portfoliosElements = $this->PortfoliosElement->find(array('conditions' => array('online' => 1)));
+			$datas['portfoliosElements'] = $portfoliosElements;
+			
+		}
+		
+		$this->set($datas);
+	}
 
 /**
  * Cette fonction permet le listing des éléments
