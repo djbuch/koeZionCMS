@@ -31,6 +31,111 @@ class PluginsController extends AppController {
 	}
 	
 /**
+ * Cette fonction permet l'ajout d'un élément
+ * Elle permet la création des différents dossiers et fichier de base
+ * Cette fonction ne procède pas à l'insertion en base de données 
+ *
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 06/05/2016 by FI
+ */	
+	public function backoffice_add($redirect = true, $forceInsert = false) { 
+	
+		//Si des données sont postées
+		if($this->request->data) {
+			
+			//Si elles sont valides
+			if($this->Plugin->validates($this->request->data)) {
+				
+				$pluginCode 		= strtolower(Inflector::slug($this->request->data['code']));
+				$pluginClassName	= Inflector::camelize($pluginCode);
+				$pluginName 		= $this->request->data['name'];
+				$pluginDescription 	= $this->request->data['description'];
+				$pluginAuthor 		= $this->request->data['author'];
+				$pluginBasePath 	= PLUGINS.DS.$pluginCode;
+				
+				
+				/////////////////////////////////
+				//    CREATION DES DOSSIERS    //
+					$fordersToCreate = array(
+						$pluginBasePath,
+						$pluginBasePath.DS.'controllers',
+						$pluginBasePath.DS.'controllers'.DS.'components',
+						$pluginBasePath.DS.'install',
+						$pluginBasePath.DS.'models',
+						$pluginBasePath.DS.'models'.DS.'behaviors',
+						$pluginBasePath.DS.'versions',
+						$pluginBasePath.DS.'views',
+						$pluginBasePath.DS.'views'.DS.'elements',
+						$pluginBasePath.DS.'views'.DS.'helpers'				
+					);
+					foreach($fordersToCreate as $forderToCreate) { FileAndDir::createPath($forderToCreate); }
+				
+				/////////////////////////////////
+				//    CREATION DES FICHIERS    //
+					FileAndDir::put($pluginBasePath.DS.'description.xml', '');
+				
+					//////////////////////////////
+					//    FICHIER PLUGIN.PHP    //
+						//Lecture du fichier de base
+						$pluginPhpContent = FileAndDir::get(KOEZION.DS.'files'.DS.'plugins'.DS.'plugin.php');
+						
+						//Remplacement des données
+						$pluginPhpContent = str_replace('[PLUGIN_CLASS_NAME]', $pluginClassName, $pluginPhpContent);
+						$pluginPhpContent = str_replace('[DATE]', date('d/m/Y'), $pluginPhpContent);
+						$pluginPhpContent = str_replace('[AUTHOR]', $pluginAuthor, $pluginPhpContent);
+						
+						//Ecriture dans le fichier de destination
+						FileAndDir::put($pluginBasePath.DS.'plugin.php', $pluginPhpContent);
+				
+					///////////////////////////////////
+					//    FICHIER DESCRIPTION.XML    //
+						//Lecture du fichier de base
+						$descriptionXmlContent = FileAndDir::get(KOEZION.DS.'files'.DS.'plugins'.DS.'description.xml');
+						
+						//Remplacement des données
+						$descriptionXmlContent = str_replace('[CODE]', $pluginCode, $descriptionXmlContent);
+						$descriptionXmlContent = str_replace('[NAME]', $pluginName, $descriptionXmlContent);
+						$descriptionXmlContent = str_replace('[DESCRIPTION]', $pluginDescription, $descriptionXmlContent);
+						$descriptionXmlContent = str_replace('[AUTHOR]', $pluginAuthor, $descriptionXmlContent);
+						
+						//Ecriture dans le fichier de destination
+						FileAndDir::put($pluginBasePath.DS.'description.xml', $descriptionXmlContent);
+					
+					////////////////////////////////
+					//    FICHIER VERSIONS.XML    //
+						//Lecture du fichier de base
+						$versionsXmlContent = FileAndDir::get(KOEZION.DS.'files'.DS.'plugins'.DS.'versions.xml');
+						
+						//Remplacement des données
+						$versionsXmlContent = str_replace('[DATE]', date('d/m/Y'), $versionsXmlContent);
+						$versionsXmlContent = str_replace('[NUM]', date('Ymd'), $versionsXmlContent);
+						$versionsXmlContent = str_replace('[SUPERVISOR]', $pluginAuthor, $versionsXmlContent);
+						
+						//Ecriture dans le fichier de destination
+						FileAndDir::put($pluginBasePath.DS.'versions'.DS.'versions.xml', $versionsXmlContent);
+					
+					////////////////////////////////////
+					//    FICHIER VERSIONS_BDD.XML    //
+						//Lecture du fichier de base
+						$versionsBddXmlContent = FileAndDir::get(KOEZION.DS.'files'.DS.'plugins'.DS.'versions_bdd.xml');
+						
+						//Remplacement des données
+						$versionsBddXmlContent = str_replace('[DATE]', date('d/m/Y'), $versionsBddXmlContent);
+						$versionsBddXmlContent = str_replace('[NUM]', date('Ymd'), $versionsBddXmlContent);
+						$versionsBddXmlContent = str_replace('[SUPERVISOR]', $pluginAuthor, $versionsBddXmlContent);
+						
+						//Ecriture dans le fichier de destination
+						FileAndDir::put($pluginBasePath.DS.'versions'.DS.'versions_bdd.xml', $versionsBddXmlContent);
+						
+				$this->redirect('backoffice/plugins/index');						
+			}
+		}
+		
+		
+	}	
+	
+/**
  * Cette fonction permet l'édition d'un élément
  *
  * @param 	integer $id Identifiant de l'élément à modifier
@@ -339,13 +444,14 @@ class PluginsController extends AppController {
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 17/01/2012 by FI
+ * @version 0.2 - 06/05/2015 by FI - Rajout du contrôle $pluginDirectory[0] != '_'
  */	
 	protected function _check_plugins() {
 		
 		$pluginsDirectoryContent = FileAndDir::directoryContent(PLUGINS);
 		foreach($pluginsDirectoryContent as $pluginDirectory) {
 
-			if(is_dir(PLUGINS.DS.$pluginDirectory) && $pluginDirectory != "_") {
+			if(is_dir(PLUGINS.DS.$pluginDirectory) && $pluginDirectory != "_" && $pluginDirectory[0] != '_') {
 		
 				if(file_exists(PLUGINS.DS.$pluginDirectory.DS.'description.xml')) {
 			

@@ -1,0 +1,10 @@
+﻿<versions>
+	<version>
+		<name>Version du [DATE]</name>
+		<num>[NUM].001</num>
+		<supervisor>[SUPERVISOR]</supervisor>
+		<tasks>
+			<task author="FI">Initialisation de ce fichier</task>
+		</tasks>	
+	</version>
+</versions>

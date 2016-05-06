@@ -10,22 +10,24 @@ class Plugin extends Model {
  * @var 	array
  * @access 	public
  * @author 	koéZionCMS
- * @version 0.1 - 31/08/2012 by FI
+ * @version 0.1 - 06/05/2016 by FI
  */
 	var $validate = array(
+		'code' => array(
+			'rule' => array('minLength', 5),
+			'message' => 'Plugin.code'
+		),
 		'name' => array(
-			'rule1' => array(
-				'rule' => array('minLength', 5),
-				'message' => 'Plugin.code'
-			),
-			'rule2' => array(
-				'rule' => array('maxLength', 5),
-				'message' => 'Plugin.code'
-			)
+			'rule' => array('minLength', 5),
+			'message' => 'Plugin.code'
 		),
 		'description' => array(
 			'rule' => array('minLength', 2),
-			'message' => 'Plugin.name'
+			'message' => 'Plugin.description'
+		),
+		'author' => array(
+			'rule' => array('minLength', 2),
+			'message' => 'Plugin.author'
 		)
 	);
 }

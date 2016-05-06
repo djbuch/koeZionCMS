@@ -1,6 +1,7 @@
 <?php
 $atLeast2Chars = _('La valeur de ce champ est de 2 caractères minimum.');
 $atLeast3Chars = _('La valeur de ce champ est de 3 caractères minimum.');
+$atLeast5Chars = _('La valeur de ce champ est de 5 caractères minimum.');
 
 $Errorsmessages['Category']['parent_id'] 				= _('Une catégorie ne peut être son propre parent.');
 $Errorsmessages['Category']['name'] 					= $atLeast2Chars;
@@ -60,8 +61,10 @@ $Errorsmessages['UsersGroup']['role_id'] 				= _('Vous devez sélectionner une v
 
 ////////////////
 //   DIVERS   //
-$Errorsmessages['Plugin']['name'] 						= $atLeast2Chars;
-$Errorsmessages['Plugin']['code'] 						= _('La valeur de ce champ est de 5 caractères exactement.');
+$Errorsmessages['Plugin']['code'] 						= $atLeast5Chars;
+$Errorsmessages['Plugin']['name'] 						= $atLeast5Chars;
+$Errorsmessages['Plugin']['description'] 				= $atLeast2Chars;
+$Errorsmessages['Plugin']['author'] 					= $atLeast2Chars;
 
 $Errorsmessages['Module']['name'] 						= $atLeast2Chars;
 $Errorsmessages['Module']['controller_name'] 			= $atLeast2Chars;
