@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 06/05/2016</name>
+		<num>20160506.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Rajout de la fonction d'ajout de la structure du dossier d'un plugin</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 06/05/2016</name>
 		<num>20160506.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
