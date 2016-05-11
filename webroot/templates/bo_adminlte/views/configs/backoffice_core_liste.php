@@ -30,7 +30,7 @@
 											<h4><i class="fa fa-file-text-o"></i> <?php echo _("Général"); ?></h4>                  
 			                			</div>	
 										<?php						
-										echo $helpers['Form']->input('backoffice_template', _('Template de backoffice'), array('type' => 'select', 'datas' => array('bo_adminlte' => 'Admin LTE', 'bo_godzilla' => 'Godzilla'), 'tooltip' => _("Sélectionnez le template BO")));
+										echo $helpers['Form']->input('backoffice_template', _('Template de backoffice'), array('type' => 'select', 'datas' => array('bo_adminlte' => 'Admin LTE'), 'tooltip' => _("Sélectionnez le template BO")));
 										echo $helpers['Form']->input('check_password_local', _('Tester le mot de passe en local'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour activer le contrôle du mot de passe en local")));
 										echo $helpers['Form']->input('hash_password', _('Crypter les mots de passe utilisateurs'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour activer hashage des mots de passe dans la base de données")));
 										echo $helpers['Form']->input('log_sql', _('Activer le log SQL'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour activer le log des reqêtes SQL effectuées")));
