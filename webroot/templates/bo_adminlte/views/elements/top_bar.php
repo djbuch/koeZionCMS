@@ -40,6 +40,14 @@
 					<?php 
 				} 
 				
+				?>
+				<li>
+					<a href="<?php echo Router::url('backoffice/configs/ckfinder_file_explorer'); ?>" target="_blank">
+						<i class="fa fa-picture-o"></i> <?php echo _('Explorateur de fichiers'); ?>
+					</a>
+				</li>
+				<?php 
+				
 				///////////////////////////////
 				//    GESTION MULTI-SITES    //
 				$websites 		= Session::read('Backoffice.Websites');

@@ -7,6 +7,7 @@
 			echo $helpers['Form']->input('version', _('Version'), array('compulsory' => true, 'tooltip' => _("Indiquez la version de ce layout (Basic, Extended; etc...)")));
 			echo $helpers['Form']->input('code', _('Code'),	array('tooltip' => _("Indiquez la déclinaison de ce layout (Par exemple une couleur)")));
 			echo $helpers['Form']->upload_files('color', array('label' => _("Thumb template (80x72px)")));
+			echo $helpers['Form']->upload_files('editor_css_file', array('label' => _("Fichier css du template")));
 			echo $helpers['Form']->input('online', _('En ligne'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour diffuser ce template")));
 			?>
 		</div>

@@ -1,5 +1,73 @@
 ﻿<versions>
 	<version>
+		<name>Version du 11/05/2016</name>
+		<num>20160511.001</num>
+		<supervisor>KoéZionCMS</supervisor>		
+		<tasks>
+			<task author="FI">
+				ALTER TABLE `categories` ADD `js_script` LONGTEXT NOT NULL AFTER `js_file`;
+			</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 10/05/2016</name>
+		<num>20160510.002</num>
+		<supervisor>KoéZionCMS</supervisor>		
+		<tasks>
+			<task author="FI">
+				ALTER TABLE `templates` ADD `editor_css_file` LONGTEXT NOT NULL AFTER `picture`;
+			</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 10/05/2016</name>
+		<num>20160510.001</num>
+		<supervisor>KoéZionCMS</supervisor>		
+		<tasks>
+			<task author="FI">
+				--
+				-- Structure de la table `ckeditor_styles`
+				--
+
+				DROP TABLE IF EXISTS `ckeditor_styles`;
+				CREATE TABLE IF NOT EXISTS `ckeditor_styles` (
+				  `id` int(11) NOT NULL AUTO_INCREMENT,
+				  `layout` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				  `element` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				  `class` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				  `styles` longtext COLLATE utf8_unicode_ci NOT NULL,
+				  `online` int(11) NOT NULL,
+				  PRIMARY KEY (`id`)
+				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+			</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 09/05/2016</name>
+		<num>20160509.001</num>
+		<supervisor>KoéZionCMS</supervisor>		
+		<tasks>
+			<task author="FI">
+				--
+				-- Structure de la table `ckeditor_templates`
+				--
+
+				DROP TABLE IF EXISTS `ckeditor_templates`;
+				CREATE TABLE IF NOT EXISTS `ckeditor_templates` (
+				  `id` int(11) NOT NULL AUTO_INCREMENT,
+				  `layout` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+				  `illustration` longtext COLLATE utf8_unicode_ci NOT NULL,
+				  `description` longtext COLLATE utf8_unicode_ci NOT NULL,
+				  `html` longtext COLLATE utf8_unicode_ci NOT NULL,
+				  `online` int(11) NOT NULL,
+				  PRIMARY KEY (`id`)
+				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+			</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 26/04/2016</name>
 		<num>20160426.001</num>
 		<supervisor>KoéZionCMS</supervisor>		

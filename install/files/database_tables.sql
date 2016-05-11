@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `tpl_code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `css_file` longtext COLLATE utf8_unicode_ci NOT NULL,
   `js_file` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `js_script` longtext COLLATE utf8_unicode_ci NOT NULL,
   `publication_start_date` date NOT NULL,
   `publication_end_date` date NOT NULL,
   `online` int(11) NOT NULL,
@@ -139,6 +140,42 @@ CREATE TABLE IF NOT EXISTS `categories_sliders_websites` (
   `slider_id` int(11) NOT NULL,
   `website_id` int(11) NOT NULL,
   PRIMARY KEY (`category_id`,`slider_id`,`website_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `ckeditor_styles`
+--
+
+DROP TABLE IF EXISTS `ckeditor_styles`;
+CREATE TABLE IF NOT EXISTS `ckeditor_styles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `layout` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `element` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `class` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `styles` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `online` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `ckeditor_templates`
+--
+
+DROP TABLE IF EXISTS `ckeditor_templates`;
+CREATE TABLE IF NOT EXISTS `ckeditor_templates` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `layout` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `illustration` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `description` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `html` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `online` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -552,6 +589,7 @@ CREATE TABLE IF NOT EXISTS `templates` (
   `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `color` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `picture` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `editor_css_file` longtext COLLATE utf8_unicode_ci NOT NULL,
   `online` int(11) NOT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)

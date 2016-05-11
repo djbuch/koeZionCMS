@@ -1,0 +1,1 @@
+<?php $this->element('listing/commun/tfoot_display'); ?>

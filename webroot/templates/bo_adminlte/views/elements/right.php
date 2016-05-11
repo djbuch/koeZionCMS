@@ -21,6 +21,12 @@
             <h3 class="control-sidebar-heading"><?php echo ("Gestion des templates"); ?></h3>
             <ul class="control-sidebar-menu">
               	<li><a href="<?php echo Router::url('backoffice/templates/index'); ?>"><i class="fa fa-caret-right"></i> <?php echo _("Templates"); ?></a></li>
+			</ul>
+			
+			<h3 class="control-sidebar-heading"><?php echo ("Editeur de texte"); ?></h3>
+            <ul class="control-sidebar-menu">
+              	<li><a href="<?php echo Router::url('backoffice/ckeditor_templates/index'); ?>"><i class="fa fa-caret-right"></i> <?php echo _("Gestion des modèles de page"); ?></a></li>
+              	<li><a href="<?php echo Router::url('backoffice/ckeditor_styles/index'); ?>"><i class="fa fa-caret-right"></i> <?php echo _("Gestion des styles"); ?></a></li>
 			</ul>         
     	</div>
     	<hr />

@@ -122,8 +122,10 @@
 								<h4><i class="fa fa-code"></i> <?php echo _("CSS & JS"); ?></h4>                  
                 			</div>  	
 							<?php	
-							echo $helpers['Form']->upload_files('css_file', array('label' => _("Fichier css"), 'button_value' => _('Sélectionner un fichier CSS'), 'tooltip' => _("Vous pouvez uploader un fichier CSS supplémentaire si besoin. Attention ce fichier ne sera pris en compte que lors de l'affichage de cette page.")));
-							echo $helpers['Form']->upload_files('js_file', array('label' => _("Fichier javascript"), 'button_value' => _('Sélectionner un fichier JS'), 'tooltip' => _("Vous pouvez uploader un fichier JS supplémentaire si besoin. Attention ce fichier ne sera pris en compte que lors de l'affichage de cette page.")));
+							echo $helpers['Form']->upload_files('css_file', array('label' => _("Fichier css"), 'button_value' => _('Sélectionner un fichier CSS'), 'tooltip' => _("Vous pouvez uploader un fichier CSS supplémentaire si besoin. Attention ce fichier ne sera pris en compte que lors de l'affichage de cette page")));
+							echo $helpers['Form']->upload_files('js_file', array('label' => _("Fichier javascript"), 'button_value' => _('Sélectionner un fichier JS'), 'tooltip' => _("Vous pouvez uploader un fichier JS supplémentaire si besoin. Attention ce fichier ne sera pris en compte que lors de l'affichage de cette page")));
+							echo $helpers['Form']->input('js_script', _("Script JS"), array('type' => 'textarea', 'tooltip' => _("Indiquez ici le script JS à insérer dans la page"), 'rows' => 15));
+							
 							?>
                 		</div>
 				        <div class="tab-pane" id="secure">	

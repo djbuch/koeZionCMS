@@ -9,6 +9,14 @@ $Errorsmessages['Category']['slug']['rule1'] 			= $atLeast3Chars;
 $Errorsmessages['Category']['slug']['rule2'] 			= _('Il y a des caractères non autorisés dans ce champ.');
 $Errorsmessages['Category']['redirect_category_id'] 	= _('Une catégorie ne peut pas être redirigée vers elle même.');
 
+$Errorsmessages['CkeditorStyle']['layout'] 				= _('Vous devez sélectionner un layout.');
+$Errorsmessages['CkeditorStyle']['name'] 				= $atLeast2Chars;
+$Errorsmessages['CkeditorStyle']['element'] 			= _('Ce champ ne peut être vide.');
+
+$Errorsmessages['CkeditorTemplate']['layout'] 			= _('Vous devez sélectionner un layout.');
+$Errorsmessages['CkeditorTemplate']['name'] 			= $atLeast2Chars;
+$Errorsmessages['CkeditorTemplate']['html'] 			= $atLeast2Chars;
+
 $Errorsmessages['Slider']['name'] 						= $atLeast2Chars;
 
 $Errorsmessages['Focus']['name'] 						= $atLeast2Chars;

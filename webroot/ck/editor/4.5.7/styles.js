@@ -12,7 +12,6 @@
 // If you don't have plugins that depend on this file, you can simply ignore it.
 // Otherwise it is strongly recommended to customize this file to match your
 // website requirements and design properly.
-
 CKEDITOR.stylesSet.add( 'default', [
 	/* Block Styles */
 
@@ -108,4 +107,3 @@ CKEDITOR.stylesSet.add( 'default', [
 	{ name: 'Borderless Table',		element: 'table',	styles: { 'border-style': 'hidden', 'background-color': '#E6E6FA' } },
 	{ name: 'Square Bulleted List',	element: 'ul',		styles: { 'list-style-type': 'square' } }
 ] );
-

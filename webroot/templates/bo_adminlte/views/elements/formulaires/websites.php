@@ -66,10 +66,10 @@
 								<h4><i class="fa fa-arrow-down"></i> <?php echo _("Footer"); ?></h4>                  
                 			</div>  		
 							<?php 
-							echo $helpers['Form']->input('footer_gauche', _('Colonne de gauche'), array('type' => 'textarea', 'wysiswyg' => true,  'class' => 'xxlarge'));			
-							echo $helpers['Form']->input('footer_centre', _('Colonne centrale'), array('type' => 'textarea', 'wysiswyg' => true,  'class' => 'xxlarge'));			
-							echo $helpers['Form']->input('footer_droite', _('Colonne de droite'), array('type' => 'textarea', 'wysiswyg' => true,  'class' => 'xxlarge'));
-							echo $helpers['Form']->input('footer_bottom', _('Baseline'), array('type' => 'textarea', 'wysiswyg' => true,  'class' => 'xxlarge'));
+							echo $helpers['Form']->input('footer_gauche', _('Colonne de gauche'), array('type' => 'textarea', 'wysiswyg' => true));			
+							echo $helpers['Form']->input('footer_centre', _('Colonne centrale'), array('type' => 'textarea', 'wysiswyg' => true));			
+							echo $helpers['Form']->input('footer_droite', _('Colonne de droite'), array('type' => 'textarea', 'wysiswyg' => true));
+							echo $helpers['Form']->input('footer_bottom', _('Baseline'), array('type' => 'textarea', 'wysiswyg' => true));
 							echo $helpers['Form']->input('footer_social', _('Texte social'), array('type' => 'textarea', 'tooltip' => _("Indiquez ici, par exemple, le texte du module social de Facebook. Attention si vous activez cette zone la zone newsletter sera supprimée.")));
 							echo $helpers['Form']->input('footer_addthis', _('Module AddThis'), array('type' => 'textarea', 'tooltip' => _("Indiquez ici le code pour le module AddThis.")));
 							?>
@@ -212,7 +212,7 @@
 							<?php 
 							echo $helpers['Form']->upload_files('connect_background', array('label' => _("Image de fond")));
 							echo $helpers['Form']->input('connect_logo', _('Logo'), array('type' => 'textarea', 'toolbar' => 'image', 'wysiswyg' => true,  'tooltip' => _("Sélectionnez votre logo à l'aide de l'explorateur de fichier")));
-							echo $helpers['Form']->input('connect_text', _('Texte'), array('type' => 'textarea', 'wysiswyg' => true,  'class' => 'xxlarge'));	
+							echo $helpers['Form']->input('connect_text', _('Texte'), array('type' => 'textarea', 'wysiswyg' => true));	
 							echo $helpers['Form']->upload_files('connect_css_file', array('label' => _("Ficher CSS complémentaire")));		
 							echo $helpers['Form']->upload_files('connect_js_file', array('label' => _("Ficher JS complémentaire")));		
 							?>

@@ -1,5 +1,19 @@
 ﻿<versions>
 	<version>
+		<name>Version du 11/05/2016</name>
+		<num>20160511.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Mise en place du module permettant la gestion dynamique des modèles de page de l'éditeur de texte</task>
+			<task author="FI" type="code">Mise en place du module permettant la gestion dynamique des styles de l'éditeur de texte</task>
+			<task author="FI" type="bdd">Rajout des tables qui permettent la gestion des modèles de page et des styles</task>
+			<task author="FI" type="bdd">Rajout du champs js_script dans la table categories</task>
+			<task author="FI" type="code">Modification des fichiers de configurations des différentes versions de l'éditeur de texte pour gérer les modèles et styles dynamiques</task>
+			<task author="FI" type="code">Modification de la gestion des templates pour gérer les styles à rajouter dans l'éditeur de texte</task>
+			<task author="FI" type="bdd">Rajout du champs editor_css_file dans la table templates</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 06/05/2016</name>
 		<num>20160506.002</num>
 		<supervisor>KoéZionCMS</supervisor>

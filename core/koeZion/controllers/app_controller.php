@@ -535,17 +535,19 @@ class AppController extends Controller {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 18/01/2013 by FI
+ * @version 0.2 - 10/05/2016 by FI - Dynamisation de la récupération des données
  */
 	public function backoffice_ajax_get_css_editor() {
 	
 		$this->layout 		= 'ajax'; //Définition du layout à utiliser		
 		$currentWebsiteId 	= Session::read("Backoffice.Websites.current");
-		$websiteLayout 		= Session::read("Backoffice.Websites.details.".$currentWebsiteId.".tpl_layout");
-		$websiteLayoutCode 	= Session::read("Backoffice.Websites.details.".$currentWebsiteId.".tpl_code");
 		
-		$this->set('baseUrl', BASE_URL);
-		$this->set('websiteLayout', $websiteLayout);
-		$this->set('websiteLayoutCode', $websiteLayoutCode);
+		//Récupération des données du template
+		$this->load_model('Template');
+		$templateId = Session::read("Backoffice.Websites.details.".$currentWebsiteId.".template_id");
+		$template 	= $this->Template->findFirst(array('conditions' => array('id' => $templateId)));
+		
+		$this->set('template', $template);
 		$this->render('/elements/ajax/backoffice_ajax_get_css_editor');
 	}
 	
@@ -563,10 +565,11 @@ class AppController extends Controller {
 		$websiteLayout 		= Session::read("Backoffice.Websites.details.".$currentWebsiteId.".tpl_layout");
 		$websiteLayoutCode 	= Session::read("Backoffice.Websites.details.".$currentWebsiteId.".tpl_code");
 		
-		$this->set('baseUrl', BASE_URL);
-		$this->set('websiteLayout', $websiteLayout);
+		$this->set('baseUrl', 			BASE_URL);
+		$this->set('websiteLayout', 	$websiteLayout);
+		$this->set('websiteLayoutCode', $websiteLayoutCode);
 		$this->render('/elements/ajax/backoffice_ajax_get_baseurl');
-	}		
+	}
     
 /**
  * Cette fonction permet la mise à jour du champ order_by dans la base de données

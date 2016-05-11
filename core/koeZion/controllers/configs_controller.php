@@ -31,7 +31,7 @@ class ConfigsController extends AppController {
  * @version 0.1 - 02/03/2012 by FI
  * @version 0.2 - 18/04/2012 by FI - Modification de la procédure de gestion des configurations de la base de données, maintenant uniquement deux configurations locale et production
  */
-	function backoffice_database_liste() { 
+	public function backoffice_database_liste() { 
 		
 		//Import de la librairie de gestion des fichiers de configuration
 		require_once(LIBS.DS.'config_magik.php');
@@ -62,7 +62,7 @@ class ConfigsController extends AppController {
  * @version 0.1 - 02/03/2012 by FI
  * @version 0.2 - 18/04/2012 by FI - Passage des traitements dans une fonction privée pour mutualiser
  */
-	function backoffice_mailer_liste() { 
+	public function backoffice_mailer_liste() { 
 		
 		$currentWebsite = Session::read('Backoffice.Websites.current'); //Site courant
 		$websitesList = Session::read('Backoffice.Websites.details'); //Liste des sites
@@ -78,7 +78,7 @@ class ConfigsController extends AppController {
  * @version 0.1 - 02/03/2012 by FI
  * @version 0.2 - 18/04/2012 by FI - Passage des traitements dans une fonction privée pour mutualiser
  */
-	function backoffice_router_liste() { $this->_proceed_datas_ini(CONFIGS_FILES.DS.'routes.ini', 'backoffice/configs/router_liste'); }
+	public function backoffice_router_liste() { $this->_proceed_datas_ini(CONFIGS_FILES.DS.'routes.ini', 'backoffice/configs/router_liste'); }
 
 /**
  * Cette fonction va permettre l'affichage des configurations des posts
@@ -88,7 +88,7 @@ class ConfigsController extends AppController {
  * @version 0.1 - 22/03/2012 by FI
  * @version 0.2 - 18/04/2012 by FI - Passage des traitements dans une fonction privée pour mutualiser
  */
-	function backoffice_posts_liste() { $this->_proceed_datas_ini(CONFIGS_FILES.DS.'posts.ini', 'backoffice/configs/posts_liste'); }
+	public function backoffice_posts_liste() { $this->_proceed_datas_ini(CONFIGS_FILES.DS.'posts.ini', 'backoffice/configs/posts_liste'); }
 	
 /**
  * Cette fonction va permettre l'affichage des configurations des portfolios
@@ -97,7 +97,7 @@ class ConfigsController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 12/04/2016 by FI
  */
-	function backoffice_portfolios_liste() { $this->_proceed_datas_ini(CONFIGS_FILES.DS.'portfolios.ini', 'backoffice/configs/portfolios_liste'); }
+	public function backoffice_portfolios_liste() { $this->_proceed_datas_ini(CONFIGS_FILES.DS.'portfolios.ini', 'backoffice/configs/portfolios_liste'); }
 	
 /**
  * Cette fonction va permettre l'affichage du code de sécurité utilisé pour les taches planifiées
@@ -106,7 +106,7 @@ class ConfigsController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 10/09/2012 by FI
  */
-	function backoffice_security_code_liste() { $this->_proceed_datas_ini(CONFIGS_FILES.DS.'security_code.ini', 'backoffice/configs/security_code_liste'); }	
+	public function backoffice_security_code_liste() { $this->_proceed_datas_ini(CONFIGS_FILES.DS.'security_code.ini', 'backoffice/configs/security_code_liste'); }	
 	
 /**
  * Cette fonction va permettre l'affichage des paramétrages du coeur de KoéZionCMS
@@ -115,7 +115,7 @@ class ConfigsController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 12/11/2013 by FI
  */
-	function backoffice_core_liste() { $this->_proceed_datas_ini(CONFIGS_FILES.DS.'core.ini', 'backoffice/configs/core_liste'); }	
+	public function backoffice_core_liste() { $this->_proceed_datas_ini(CONFIGS_FILES.DS.'core.ini', 'backoffice/configs/core_liste'); }	
 
 /**
  * Cette fonction va permettre de supprimer les fichiers de cache
@@ -124,7 +124,7 @@ class ConfigsController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 07/01/2013 by FI
  */
-	function backoffice_delete_cache() {
+	public function backoffice_delete_cache() {
 		
 		Cache::delete_cache_directory(TMP.DS.'cache'.DS);
 		Session::setFlash("Cache supprimé"); //Message de confirmation
@@ -138,7 +138,7 @@ class ConfigsController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 23/01/2013 by FI
  */
-	function backoffice_delete_cache_result() {}
+	public function backoffice_delete_cache_result() {}
 	
 /**
  * Cette fonction permet l'affichage de phpinfo
@@ -147,7 +147,19 @@ class ConfigsController extends AppController {
  * @author	koéZionCMS
  * @version 0.1 - 19/10/2013 by FI
  */
-	function backoffice_phpinfo() {}	
+	public function backoffice_phpinfo() {}
+
+/**
+ * Cette fonction permet l'affichage de l'explorateur de fichier de ckFinder
+ *
+ * @access	public
+ * @author	koéZionCMS
+ * @version 0.1 - 09/05/2016 by FI
+ */	
+	public function backoffice_ckfinder_file_explorer() {
+		
+		$this->layout = 'empty';
+	}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //										FONCTIONS PRIVEES										//
@@ -162,7 +174,7 @@ class ConfigsController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 18/04/2012 by FI
  */
-	function _proceed_datas_ini($file, $redirect, $section = null, $websiteUrl = null) {
+	protected function _proceed_datas_ini($file, $redirect, $section = null, $websiteUrl = null) {
 	
 		require_once(LIBS.DS.'config_magik.php'); //Import de la librairie de gestion des fichiers de configuration
 		

@@ -21,8 +21,7 @@ class [PLUGIN_CLASS_NAME]Plugin extends KoeZionPlugin {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - [DATE] by [AUTHOR]
- */
-	
+ */	
 	function __construct() {
 		
 		$this->path = dirname(__FILE__);		
@@ -33,7 +32,8 @@ class [PLUGIN_CLASS_NAME]Plugin extends KoeZionPlugin {
 			array(
 				'sourcePath' => $sourcePath,
 				'destinationPath' => DESTINATION_PATH,
-				'sourceName' => SOURCE_NAME
+				'sourceName' => SOURCE_NAME,
+				//'destinationName' => DESTINATION_NAME //Optionnal
 			),
 			array(
 				'sourcePath' => $sourcePath.DS.FOLDER_TO_COPY,
