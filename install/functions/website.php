@@ -83,7 +83,7 @@ function save_website($datas) {
 			'slug' => 'racine-site-'.$websiteModel->id,
 			'online' => 1,
 			'redirect_category_id' => 0,
-			'display_contact_form' => 0,
+			'display_form' => 0,
 			'website_id' => $websiteModel->id
 		);
 		$categoryModel->save($categorie);

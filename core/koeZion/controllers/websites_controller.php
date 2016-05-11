@@ -234,8 +234,7 @@ class WebsitesController extends AppController {
 			'page_description' => '',
 			'page_keywords' => '',
 			'redirect_category_id' => 0,
-			'display_contact_form' => 0,
-			'page_password' => '',
+			'display_form' => 0,
 			'txt_secure' => '',
 			'website_id' => $this->Website->id
 		);

@@ -75,13 +75,13 @@ CKEDITOR.editorConfig = function(config)
 	
 	///////////////////////////////////////////////////
 	//    RECUPERATION DES FICHIERS CSS A CHARGER    //
-		config.contentsCss = get_css_editor();
+		config.contentsCss = $( "body" ).data( "etcf" );
 
 	/////////////////////////////////////////////////////////////////////
 	//    RECUPERATION DES STYLES PAR DEFAUT ET DES MODELES DE PAGE    //
-		var jsFilePath 			= get_js_file_path();	
-		config.stylesSet 		= 'default:' + jsFilePath + 'default_styles.js';	
-		config.templates_files 	= [jsFilePath + 'default_templates.js'];  
+		//var jsFilePath 			= get_js_file_path();	
+		config.stylesSet 		= 'default:' + $( "body" ).data( "ejfp" ) + 'default_styles.js';	
+		config.templates_files 	= [$( "body" ).data( "ejfp" ) + 'default_templates.js'];
 					
 	///////////////////////////////////////////////
 	//    DEFINITION DES COULEURS DISPONIBLES    //
@@ -94,36 +94,3 @@ CKEDITOR.editorConfig = function(config)
 			'0FF,00F,EE82EE,A9A9A9,FFA07A,FFA500,FFFF00,00FF00,AFEEEE,ADD8E6,' +
 			'DDA0DD,D3D3D3,FFF0F5,FAEBD7,FFFFE0,F0FFF0,F0FFFF,F0F8FF,E6E6FA,FFF';
 };
-
-function get_css_editor() {
-	
-	$.ajax({                       
-        type:   'POST',             
-        url:    get_url() + 'home/ajax_get_css_editor.html',      
-        async:  false,              
-        dataType: 'json', 
-        success: function(cssEditor) { retour = cssEditor; }
-    });
-	return retour;
-}
-	
-function get_js_file_path() {
-	
-	$.ajax({                       
-        type:   'POST',             
-        url:    get_url() + 'home/ajax_get_baseurl.html',      
-        async:  false,              
-        dataType: 'json', 
-        success: function(jsFilePath) { retour = jsFilePath; }
-    });
-	return retour;
-}
-
-function get_url() {
-
-	var href 				= window.location.href;
-	var subStringPosition 	= href.indexOf('adm/', 0) + 4;
-	var url 				= href.substr(0, subStringPosition);
-	
-	return url;
-}

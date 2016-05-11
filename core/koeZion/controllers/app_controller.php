@@ -40,6 +40,7 @@ class AppController extends Controller {
  * @version 0.4 - 14/06/2012 by FI - Rajout d'un contrôle nécessaire si aucun site n'est retrouné on affiche le formulaire de connexion
  * @version 0.5 - 02/04/2015 by FI - Mise en place automatisation de la traduction dans les fonctions ADD et EDIT
  * @version 0.6 - 22/04/2015 by FI - Correction pour tester l'existence de la constante CURRENT_WEBSITE_ID
+ * @version 0.7 - 11/05/2016 by FI - Rajout du passage des données editorTemplateCssFile et editorJsFilePath pour alléger les traitements relatifs à l'affichage de l'éditeur de texte
  * @see Controller::beforeFilter()
  * @todo améliorer la récupération des configs...
  * @todo améliorer la récupération du menu général pour le moment une mise en cache qui me semble améliorable...
@@ -87,6 +88,20 @@ class AppController extends Controller {
 			$this->load_model('PostsComment');
 			$nbPostsComments = $this->PostsComment->findCount(array('online' => 0));
 			$this->set('nbPostsComments', $nbPostsComments);
+			
+			
+			
+			//Récupération des données du template
+			$this->load_model('Template');
+			$templateId = Session::read("Backoffice.Websites.details.".CURRENT_WEBSITE_ID.".template_id");
+			$template 	= $this->Template->findFirst(array('conditions' => array('id' => $templateId)));
+						
+			$this->set('editorTemplateCssFile', $template['editor_css_file']);
+			
+			$websiteLayout 		= Session::read("Backoffice.Websites.details.".CURRENT_WEBSITE_ID.".tpl_layout");
+			$websiteLayoutCode 	= Session::read("Backoffice.Websites.details.".CURRENT_WEBSITE_ID.".tpl_code");
+			
+			$this->set('editorJsFilePath', BASE_URL."/files/ck/".$websiteLayout."/");
 						
 			/*
 			//SUPPRIME LE 02/04/2015 car cela pose des problème lors de la récupération des données pour les listes déroulantes
@@ -527,48 +542,6 @@ class AppController extends Controller {
 		$this->set('publicationDates', $publicationDates);*/
 		
 		$this->render('/elements/ajax/backoffice_ajax_ckeditor_get_internal_links');
-	}
-	
-/**
- * Cette fonction est utilisée par l'éditeur de texte pour récupérer le chemin de base des css de l'application
- *
- * @access 	public
- * @author 	koéZionCMS
- * @version 0.1 - 18/01/2013 by FI
- * @version 0.2 - 10/05/2016 by FI - Dynamisation de la récupération des données
- */
-	public function backoffice_ajax_get_css_editor() {
-	
-		$this->layout 		= 'ajax'; //Définition du layout à utiliser		
-		$currentWebsiteId 	= Session::read("Backoffice.Websites.current");
-		
-		//Récupération des données du template
-		$this->load_model('Template');
-		$templateId = Session::read("Backoffice.Websites.details.".$currentWebsiteId.".template_id");
-		$template 	= $this->Template->findFirst(array('conditions' => array('id' => $templateId)));
-		
-		$this->set('template', $template);
-		$this->render('/elements/ajax/backoffice_ajax_get_css_editor');
-	}
-	
-/**
- * Cette fonction est utilisée par l'éditeur de texte pour récupérer le chemin de base de l'application
- *
- * @access 	public
- * @author 	koéZionCMS
- * @version 0.1 - 18/01/2013 by FI
- */
-	public function backoffice_ajax_get_baseurl() {
-	
-		$this->layout 		= 'ajax'; //Définition du layout à utiliser				
-		$currentWebsiteId 	= Session::read("Backoffice.Websites.current");
-		$websiteLayout 		= Session::read("Backoffice.Websites.details.".$currentWebsiteId.".tpl_layout");
-		$websiteLayoutCode 	= Session::read("Backoffice.Websites.details.".$currentWebsiteId.".tpl_code");
-		
-		$this->set('baseUrl', 			BASE_URL);
-		$this->set('websiteLayout', 	$websiteLayout);
-		$this->set('websiteLayoutCode', $websiteLayoutCode);
-		$this->render('/elements/ajax/backoffice_ajax_get_baseurl');
 	}
     
 /**

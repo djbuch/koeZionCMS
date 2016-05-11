@@ -31,7 +31,11 @@
 	        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	    <![endif]-->
 	</head>
-	<body data-baseurl="<?php echo BASE_URL; ?>" class="hold-transition skin-blue sidebar-mini"><?php /*sidebar-collapse */ ?>
+	<body 
+		class="hold-transition skin-blue sidebar-mini" 
+		data-etcf="<?php echo $editorTemplateCssFile; ?>" <?php //Chemin du fichier contenant les CSS à intégrer à l'éditeur ?> 
+		data-ejfp="<?php echo $editorJsFilePath; ?>" <?php //Chemin vers le dossier de stockage des fichiers de templates de page et de styles ?>
+	>	
     	<div class="wrapper">
 			<?php $this->element('top_bar'); ?>
 			<?php $this->element('left'); ?>

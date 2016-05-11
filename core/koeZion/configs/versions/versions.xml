@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 11/05/2016</name>
+		<num>20160511.003</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Suppression des fonctions AJAX utilisées dans le fichier configs.js des éditeurs de texte car le délais d'affichage était beaucoup trop long, rajout de ces données dans le body directement</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 11/05/2016</name>
 		<num>20160511.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
