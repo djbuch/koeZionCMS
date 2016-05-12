@@ -1,6 +1,16 @@
 ﻿<versions>
 	<version>
 		<name>Version du 12/05/2016</name>
+		<num>20160512.003</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification installation</task>
+			<task author="FI" type="code">Reprise gestion des Helpers</task>
+			<task author="FI" type="code">Gestion affichage message erreur si pas de layout en frontoffice</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 12/05/2016</name>
 		<num>20160512.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
