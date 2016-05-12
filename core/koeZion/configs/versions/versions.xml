@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 12/05/2016</name>
+		<num>20160512.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Nettoyage de fichiers</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 11/05/2016</name>
 		<num>20160511.003</num>
 		<supervisor>KoéZionCMS</supervisor>
