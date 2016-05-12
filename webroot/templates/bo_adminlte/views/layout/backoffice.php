@@ -33,6 +33,7 @@
 	</head>
 	<body 
 		class="hold-transition skin-blue sidebar-mini" 
+		data-baseurl="<?php echo BASE_URL; ?>" 
 		data-etcf="<?php echo $editorTemplateCssFile; ?>" <?php //Chemin du fichier contenant les CSS à intégrer à l'éditeur ?> 
 		data-ejfp="<?php echo $editorJsFilePath; ?>" <?php //Chemin vers le dossier de stockage des fichiers de templates de page et de styles ?>
 	>	

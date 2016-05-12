@@ -1,6 +1,6 @@
 <?php 
 require_once INSTALL_FUNCTIONS.DS.'website.php'; //Inclusion des fonctions de paramétrage de la base de données
-$templatesList = init_templates();
+//$templatesList = init_templates();
 
 $process_website = 0;
 //Si les données sont postées

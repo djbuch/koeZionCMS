@@ -22,7 +22,7 @@ function load_lib() {
  * @author 	koéZionCMS
  * @version 0.1 - 15/01/2016 by FI
  */
-function init_templates() {
+/*function init_templates() {
 	
 	load_lib();
 	
@@ -33,7 +33,7 @@ function init_templates() {
 	$templateList 		= array();
 	foreach($templateListTMP as $k => $v) { $templateList[$v['id']] = $v; }
 	return $templateList;	
-}
+}*/
 
 /**
  * Cette fonction est chargée de sauvegarde les données du site Internet
@@ -46,7 +46,7 @@ function init_templates() {
  */
 function save_website($datas) {
 	
-	global $templatesList;
+	//global $templatesList;
 	
 	load_lib();
 	
@@ -55,7 +55,7 @@ function save_website($datas) {
 		require_once MODELS.DS.'website.php';
 		
 		$websiteModel 						= new Website();	
-		$templateId 						= $datas['template_id'];
+		//$templateId 						= $datas['template_id'];
 		$template 							= $templatesList[$templateId];
 		$datas['tpl_layout'] 				= $template['layout'];
 		$datas['tpl_code'] 					= $template['code'];

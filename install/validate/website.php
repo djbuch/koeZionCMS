@@ -8,11 +8,11 @@ $validate = array(
 	'url' => array(
 			'rule' => array('url', true),
 			'message' => 'Vous devez indiquer une url valide'
-	),
+	)/*,
 	'template_id' => array(
 			'rule' => 'notEmpty',
 			'message' => 'Vous devez sélectionner un template'
-	)
+	)*/
 );
 
 require_once(INSTALL_VALIDATE.DS.'proceed.php');
