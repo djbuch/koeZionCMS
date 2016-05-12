@@ -34,115 +34,87 @@ class UsersController extends AppController {
  * @version 1.2 - 14/09/2015 by FI - Correction gestion de la variable $checkPasswordLocal
  * @version 1.3 - 05/10/2015 by FI - Rajout de defined(HASH_PASSWORD)
  * @version 1.4 - 12/10/2015 by FI - Rajout du contrôle de la valeur de HASH_PASSWORD
+ * @version 1.5 - 12/05/2016 by FI - Définition des helpers à utiliser
  */
 	function login() {		
 		
-		$this->layout = WEBROOT.DS.'templates'.DS.BACKOFFICE_TEMPLATE.DS.'views'.DS.'layout'.DS.'connect'; //Définition du layout
-			
-		if($this->request->data) {
-			
-			$data = $this->request->data; //Mise en variable des données postées	
-					
-			if(defined('HASH_PASSWORD') && HASH_PASSWORD) { $data['password'] = sha1($data['password']); } //Cryptage du mot de passe
-			
-			//Récupération du login et du mot de passe dans des variables
-			$postLogin = $data['login'];
-			$postPassword = $data['password'];
-			
-			//Récupération de l'utilisateur
-			$user = $this->User->findFirst(array('conditions' => array('login' => $postLogin)));
-			
-			//Si on récupère un utilisateur
-			if(!empty($user)) { 
-				
-				//Récupération des données de l'utilisateur dans des variables
-				$bddPassword = $user['password'];
-				$bddOnline = $user['online'];
-				
-				//En local on peut éviter la saisie des mots de passe
-				$httpHost = $_SERVER["HTTP_HOST"];
-				$checkPassword = true; //Par défaut on check le password
-				if(!defined('CHECK_PASSWORD_LOCAL')) { $checkPasswordLocal = 0; } else { $checkPasswordLocal = CHECK_PASSWORD_LOCAL; } //Petit contrôle au cas ou le paramètre de cette conf ne soit pas renseigné
-				if(($httpHost == 'localhost' || $httpHost == '127.0.0.1') && !$checkPasswordLocal) { $checkPassword = false; }
-				
-				$passwordOk = true; //Par défaut la password est bon
-				if($checkPassword) { $passwordOk = ($postPassword == $bddPassword); } //Sauf, éventuellement, si on souhaite le contrôle
-				
-				//On va contrôler que le mot de passe saisi soit identique à celui en base de données
-				if($passwordOk) {
-				
-					//Ensuite on contrôle que cet utilisateur à bien le droit de se connecter au backoffice
-					if($bddOnline) { 
-						
-						//Récupération du groupe de cet utilisateur pour en connaître le role
-						//1 --> ADMINISTRATEUR BACKOFFICE (SUPERADMIN)
-						//2 --> UTILISATEUR BACKOFFICE (ADMINISTRATEUR DE SITE, REDACTEURS, ETC...)
-						//3 --> UTILISATEUR FRONTOFFICE (UTILISATEUR INTRANET, CLIENT, PAGE PRIVEES)
-						$this->load_model('UsersGroup');
-						$usersGroup = $this->UsersGroup->findFirst(array('conditions' => array('id' => $user['users_group_id'])));
-						$bddRole = $usersGroup['role_id'];
-											
-						//Mise en place de la récupération dynamique de la route pour l'interface d'administration
-						require_once(LIBS.DS.'config_magik.php'); 									//Import de la librairie de gestion des fichiers de configuration
-						$cfg = new ConfigMagik(CONFIGS_FILES.DS.'routes.ini', true, false); 	//Création d'une instance
-						$routesConfigs = $cfg->keys_values();										//Récupération des configurations
-						
-						//ADMINISTRATEUR BACKOFFICE//
-						if($bddRole == 1) {
-							
-							$session = array(
-								'User' => $user,
-								'UsersGroup' => $usersGroup,
-								'Websites' => $this->_init_websites_datas()
-							);				
+		/////////////////////////////////////////////
+		//    DEFINITION DES HELPERS A UTILISER    //
+			$this->helpers = array(
+				array(
+					'helper_name' => 'Html',
+					'helper_path' => WEBROOT.DS.'templates'.DS.BACKOFFICE_TEMPLATE.DS.'views'.DS.'helpers'
+				)
+			);
 
-							//GESTION DU PLUGIN ACLS//
-							$session = $this->_check_acls_plugin($user, $session);
-								
-							//GESTION DU PLUGIN LOCALIZATION//
-							$session = $this->_check_localization_plugin($session);					
-							
-							//////////////////////////////////////////
-							//    DEFINITION DE L'URL DE LA HOME    // 
-							if(isset($usersGroup['default_home']) && !empty($usersGroup['default_home'])) { $redirectUrl = $usersGroup['default_home']; }
-							else if(isset($coreConfs['backoffice_home_page']) && !empty($coreConfs['backoffice_home_page'])) { $redirectUrl = $coreConfs['backoffice_home_page']; }
-							else { $redirectUrl = $routesConfigs['backoffice_prefix']; } 
-							
-							Session::write('Backoffice', $session); //On insère dans la variable de session les données de l'utilisateur
-							$this->redirect($redirectUrl); //On redirige vers la page d'accueil du backoffice													
+		///////////////////////////////////////////
+		//    DEFINITION DU LAJOUT A UTILISER    //
+			$this->layout = WEBROOT.DS.'templates'.DS.BACKOFFICE_TEMPLATE.DS.'views'.DS.'layout'.DS.'connect';
+			
+		///////////////////////////////////////
+		//    SI DES DONNEES SONT POSTEES    //			
+			if($this->request->data) {
+				
+				$data = $this->request->data; //Mise en variable des données postées	
 						
-						//UTILISATEUR BACKOFFICE//
-						} else if($bddRole == 2) {
+				if(defined('HASH_PASSWORD') && HASH_PASSWORD) { $data['password'] = sha1($data['password']); } //Cryptage du mot de passe
+				
+				//Récupération du login et du mot de passe dans des variables
+				$postLogin = $data['login'];
+				$postPassword = $data['password'];
+				
+				//Récupération de l'utilisateur
+				$user = $this->User->findFirst(array('conditions' => array('login' => $postLogin)));
+				
+				//Si on récupère un utilisateur
+				if(!empty($user)) { 
+					
+					//Récupération des données de l'utilisateur dans des variables
+					$bddPassword = $user['password'];
+					$bddOnline = $user['online'];
+					
+					//En local on peut éviter la saisie des mots de passe
+					$httpHost = $_SERVER["HTTP_HOST"];
+					$checkPassword = true; //Par défaut on check le password
+					if(!defined('CHECK_PASSWORD_LOCAL')) { $checkPasswordLocal = 0; } else { $checkPasswordLocal = CHECK_PASSWORD_LOCAL; } //Petit contrôle au cas ou le paramètre de cette conf ne soit pas renseigné
+					if(($httpHost == 'localhost' || $httpHost == '127.0.0.1') && !$checkPasswordLocal) { $checkPassword = false; }
+					
+					$passwordOk = true; //Par défaut la password est bon
+					if($checkPassword) { $passwordOk = ($postPassword == $bddPassword); } //Sauf, éventuellement, si on souhaite le contrôle
+					
+					//On va contrôler que le mot de passe saisi soit identique à celui en base de données
+					if($passwordOk) {
+					
+						//Ensuite on contrôle que cet utilisateur à bien le droit de se connecter au backoffice
+						if($bddOnline) { 
 							
-							//Récupération des sites auxquels l'utilisateurs peut se connecter Via son groupe
-							$this->load_model('UsersGroupsWebsite'); //Chargement du modèle
-							$usersGroupsWebsites = $this->UsersGroupsWebsite->find(array('conditions' => array('users_group_id' => $user['users_group_id'])));
-														
-							//Récupération des sites auxquels l'utilisateurs peut se connecter Via l'utilisateur
-							$this->load_model('UsersWebsite'); //Chargement du modèle
-							$usersWebsites = $this->UsersWebsite->find(array('conditions' => array('user_id' => $user['id'])));
+							//Récupération du groupe de cet utilisateur pour en connaître le role
+							//1 --> ADMINISTRATEUR BACKOFFICE (SUPERADMIN)
+							//2 --> UTILISATEUR BACKOFFICE (ADMINISTRATEUR DE SITE, REDACTEURS, ETC...)
+							//3 --> UTILISATEUR FRONTOFFICE (UTILISATEUR INTRANET, CLIENT, PAGE PRIVEES)
+							$this->load_model('UsersGroup');
+							$usersGroup = $this->UsersGroup->findFirst(array('conditions' => array('id' => $user['users_group_id'])));
+							$bddRole = $usersGroup['role_id'];
+												
+							//Mise en place de la récupération dynamique de la route pour l'interface d'administration
+							require_once(LIBS.DS.'config_magik.php'); 									//Import de la librairie de gestion des fichiers de configuration
+							$cfg = new ConfigMagik(CONFIGS_FILES.DS.'routes.ini', true, false); 	//Création d'une instance
+							$routesConfigs = $cfg->keys_values();										//Récupération des configurations
 							
-							$websitesList = array();
-							foreach($usersGroupsWebsites as $k => $v) { $websitesList[] = $v['website_id']; }
-							foreach($usersWebsites as $k => $v) { $websitesList[] = $v['website_id']; }
-							
-							//On check qu'il y ait au moins un site
-							if(count($websitesList) > 0) {
+							//ADMINISTRATEUR BACKOFFICE//
+							if($bddRole == 1) {
 								
-								//$usersGroupsWebsitesList = array();
-								//foreach($usersGroupsWebsites as $k => $v) { $usersGroupsWebsitesList[] = $v['website_id']; } 	
-																
 								$session = array(
 									'User' => $user,
 									'UsersGroup' => $usersGroup,
-									'Websites' => $this->_init_websites_datas(array('conditions' => 'id IN ('.implode(',', $websitesList).')'))
-								);		
+									'Websites' => $this->_init_websites_datas()
+								);				
 
 								//GESTION DU PLUGIN ACLS//
 								$session = $this->_check_acls_plugin($user, $session);
 									
 								//GESTION DU PLUGIN LOCALIZATION//
-								$session = $this->_check_localization_plugin($session);										
+								$session = $this->_check_localization_plugin($session);					
 								
 								//////////////////////////////////////////
 								//    DEFINITION DE L'URL DE LA HOME    // 
@@ -151,53 +123,95 @@ class UsersController extends AppController {
 								else { $redirectUrl = $routesConfigs['backoffice_prefix']; } 
 								
 								Session::write('Backoffice', $session); //On insère dans la variable de session les données de l'utilisateur
-								$this->redirect($redirectUrl); //On redirige vers la page d'accueil du backoffice					
+								$this->redirect($redirectUrl); //On redirige vers la page d'accueil du backoffice													
+							
+							//UTILISATEUR BACKOFFICE//
+							} else if($bddRole == 2) {
 								
-							} else { Session::setFlash(_("Désolé mais votre accès au backoffice n'est pas autorisé (Aucun site administrable)"), 'error'); } //Sinon on génère le message d'erreur			
-							
-						//UTILISATEUR FRONTOFFICE//
-						} else if($bddRole == 3) {
-							
-							//Récupération des sites auxquels l'utilisateurs peut se connecter via son groupe
-							$this->load_model('UsersGroupsWebsite'); //Chargement du modèle
-							$usersGroupsWebsites = $this->UsersGroupsWebsite->find(array('conditions' => array('users_group_id' => $user['users_group_id'])));
-														
-							//Récupération des sites auxquels l'utilisateurs peut se connecter via l'utilisateur
-							$this->load_model('UsersWebsite'); //Chargement du modèle
-							$usersWebsites = $this->UsersWebsite->find(array('conditions' => array('user_id' => $user['id'])));
-							
-							$websitesList = array();
-							foreach($usersGroupsWebsites as $k => $v) { $websitesList[] = $v['website_id']; }
-							foreach($usersWebsites as $k => $v) { $websitesList[] = $v['website_id']; }
-							
-							//On check qu'il y ait au moins un site
-							if(count($websitesList) > 0) {
-							
-								//On récupère la liste des sites dans un tableau
-								//$usersGroupsWebsitesList = array();
-								//foreach($usersGroupsWebsites as $k => $v) { $usersGroupsWebsitesList[] = $v['website_id']; }
+								//Récupération des sites auxquels l'utilisateurs peut se connecter Via son groupe
+								$this->load_model('UsersGroupsWebsite'); //Chargement du modèle
+								$usersGroupsWebsites = $this->UsersGroupsWebsite->find(array('conditions' => array('users_group_id' => $user['users_group_id'])));
+															
+								//Récupération des sites auxquels l'utilisateurs peut se connecter Via l'utilisateur
+								$this->load_model('UsersWebsite'); //Chargement du modèle
+								$usersWebsites = $this->UsersWebsite->find(array('conditions' => array('user_id' => $user['id'])));
 								
-								$websiteDatas = $this->components['Website']->get_website_datas(); //Récupération des données du site courant
+								$websitesList = array();
+								foreach($usersGroupsWebsites as $k => $v) { $websitesList[] = $v['website_id']; }
+								foreach($usersWebsites as $k => $v) { $websitesList[] = $v['website_id']; }
 								
-								if(!in_array(CURRENT_WEBSITE_ID, $websitesList)) { Session::setFlash(_("Désolé mais vous ne pouvez pas accéder à ce site"), 'error'); }
-								else { 
+								//On check qu'il y ait au moins un site
+								if(count($websitesList) > 0) {
 									
+									//$usersGroupsWebsitesList = array();
+									//foreach($usersGroupsWebsites as $k => $v) { $usersGroupsWebsitesList[] = $v['website_id']; } 	
+																	
 									$session = array(
 										'User' => $user,
 										'UsersGroup' => $usersGroup,
-										'AuthWebsites' => $websitesList
-									);
-									Session::write('Frontoffice', $session); //On insère dans la variable de session les données de l'utilisateur
-									$this->redirect('/'); //On redirige vers la page d'accueil du site
-								}						
-							} else { Session::setFlash(_("Vous ne disposez pas des droits nécessaires pour accéder à ce site"), 'error'); } //Sinon on génère le message d'erreur													
-						}
-					} else { Session::setFlash(_("Désolé mais votre accès au backoffice n'est pas autorisé"), 'error'); } //Sinon on génère le message d'erreur
-				} else { Session::setFlash(_("Désolé mais le mot de passe ne concorde pas"), 'error'); } //Sinon on génère le message d'erreur
-			} else { Session::setFlash(_("Désolé aucun utilisateur n'a été trouvé"), 'error'); } //Sinon on génère le message d'erreur				
-			
-			$this->request->data['password'] = ''; //On vide le mot de passe
-		}
+										'Websites' => $this->_init_websites_datas(array('conditions' => 'id IN ('.implode(',', $websitesList).')'))
+									);		
+
+									//GESTION DU PLUGIN ACLS//
+									$session = $this->_check_acls_plugin($user, $session);
+										
+									//GESTION DU PLUGIN LOCALIZATION//
+									$session = $this->_check_localization_plugin($session);										
+									
+									//////////////////////////////////////////
+									//    DEFINITION DE L'URL DE LA HOME    // 
+									if(isset($usersGroup['default_home']) && !empty($usersGroup['default_home'])) { $redirectUrl = $usersGroup['default_home']; }
+									else if(isset($coreConfs['backoffice_home_page']) && !empty($coreConfs['backoffice_home_page'])) { $redirectUrl = $coreConfs['backoffice_home_page']; }
+									else { $redirectUrl = $routesConfigs['backoffice_prefix']; } 
+									
+									Session::write('Backoffice', $session); //On insère dans la variable de session les données de l'utilisateur
+									$this->redirect($redirectUrl); //On redirige vers la page d'accueil du backoffice					
+									
+								} else { Session::setFlash(_("Désolé mais votre accès au backoffice n'est pas autorisé (Aucun site administrable)"), 'error'); } //Sinon on génère le message d'erreur			
+								
+							//UTILISATEUR FRONTOFFICE//
+							} else if($bddRole == 3) {
+								
+								//Récupération des sites auxquels l'utilisateurs peut se connecter via son groupe
+								$this->load_model('UsersGroupsWebsite'); //Chargement du modèle
+								$usersGroupsWebsites = $this->UsersGroupsWebsite->find(array('conditions' => array('users_group_id' => $user['users_group_id'])));
+															
+								//Récupération des sites auxquels l'utilisateurs peut se connecter via l'utilisateur
+								$this->load_model('UsersWebsite'); //Chargement du modèle
+								$usersWebsites = $this->UsersWebsite->find(array('conditions' => array('user_id' => $user['id'])));
+								
+								$websitesList = array();
+								foreach($usersGroupsWebsites as $k => $v) { $websitesList[] = $v['website_id']; }
+								foreach($usersWebsites as $k => $v) { $websitesList[] = $v['website_id']; }
+								
+								//On check qu'il y ait au moins un site
+								if(count($websitesList) > 0) {
+								
+									//On récupère la liste des sites dans un tableau
+									//$usersGroupsWebsitesList = array();
+									//foreach($usersGroupsWebsites as $k => $v) { $usersGroupsWebsitesList[] = $v['website_id']; }
+									
+									$websiteDatas = $this->components['Website']->get_website_datas(); //Récupération des données du site courant
+									
+									if(!in_array(CURRENT_WEBSITE_ID, $websitesList)) { Session::setFlash(_("Désolé mais vous ne pouvez pas accéder à ce site"), 'error'); }
+									else { 
+										
+										$session = array(
+											'User' => $user,
+											'UsersGroup' => $usersGroup,
+											'AuthWebsites' => $websitesList
+										);
+										Session::write('Frontoffice', $session); //On insère dans la variable de session les données de l'utilisateur
+										$this->redirect('/'); //On redirige vers la page d'accueil du site
+									}						
+								} else { Session::setFlash(_("Vous ne disposez pas des droits nécessaires pour accéder à ce site"), 'error'); } //Sinon on génère le message d'erreur													
+							}
+						} else { Session::setFlash(_("Désolé mais votre accès au backoffice n'est pas autorisé"), 'error'); } //Sinon on génère le message d'erreur
+					} else { Session::setFlash(_("Désolé mais le mot de passe ne concorde pas"), 'error'); } //Sinon on génère le message d'erreur
+				} else { Session::setFlash(_("Désolé aucun utilisateur n'a été trouvé"), 'error'); } //Sinon on génère le message d'erreur				
+				
+				$this->request->data['password'] = ''; //On vide le mot de passe
+			}
 	}
 	
 /**

@@ -51,7 +51,34 @@ class Controller extends Object {
 	
 	var $view = false;
 	
-	var $params = array(); //Liste des paramètres du controlleur (name, modelName)
+	var $params = array(); //Liste des paramètres du controlleur (name, modelName)	
+	
+/**
+ * Tableau contenant la liste des helpers à charger
+ * Il est en effet possible selon le contrôleur souhaité possible de charger des helpers spécifiques (Cf UsersController::login)
+ *
+ * Cette variable peut être soit un tableau simple soit un tableau multidimentionnel
+ *
+ * Tableau simple : 
+ * var $helpers = array('Html', 'Form', 'Etc...');
+ *
+ * Tableau multidimentionnel : 
+ * var $helpers = array(
+ * 		array(
+ * 			'helper_name' => 'Html',
+ * 			'helper_path' => PATH_TO_FILE
+ * 		)
+ * 		...
+ * );
+ * 
+ * @var 	array (false par défaut)
+ * @access 	public
+ * @author 	KoéZionCMS
+ * @version 0.1 - 21/05/2012 by FI
+ * @version 0.2 - 22/12/2013 by FI - Par défaut aucun helper commun
+ * @version 0.3 - 12/05/2016 by FI - On déplace cette variable de l'objet View car il était impossible de faire appel à cette variable du fait que l'objet vue n'était pas directement accessible dans le code et qu'aucune distinction ne pouvait se faire
+ */	
+	var $helpers = false;	
 	
 /**
  * Constructeur de la classe Controller

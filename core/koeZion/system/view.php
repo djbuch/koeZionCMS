@@ -10,18 +10,6 @@ class View extends Object {
 	var $view = false; //Vue à charger
 	
 /**
- * Tableau contenant la liste des helpers à charger
- * Helpers communs aux templates backoffice et au frontoffice sans modification particulière
- *
- * @var 	array (false par défaut)
- * @access 	public
- * @author 	KoéZionCMS
- * @version 0.1 - 21/05/2012 by FI
- * @version 0.2 - 22/12/2013 by FI - PAr défaut aucun helper commun
- */	
-	var $helpers = false;	
-	
-/**
  * Constructeur de la classe
  *
  * @param 	varchar $view 			Nom de la vue à charger
@@ -33,29 +21,47 @@ class View extends Object {
  * @version 0.2 - 05/06/2013 by FI - Modification de la gestion des Helpers, par défaut on charge de façon distincte les helpers du backoffice et du frontoffice pour plus de souplesse dans la gestion des templates
  * @version 0.3 - 07/07/2014 by FI - Rajout de $this->request = new stdClass(); pour corriger l'erreur suivante Warning: Creating default object from empty value in /core/Koezion/view.php on line 342 
  * @version 0.4 - 08/01/2015 by FI - Mise en place des hooks pour les helpers 
+ * @version 0.5 - 12/05/2016 by FI - On récupère les Helpers additionnels depuis le contrôleur avec $controller->helpers
  */	
 	public function __construct($view, $controller) {
 		
-		$this->view = $view;
-		$this->controller = $controller;
-		$this->layout = $controller->layout;
-		$this->vars = $controller->get('vars');
-		$this->vars['components'] = $controller->components;	
-		$this->params = $controller->params;
-		$this->request = new stdClass();
+		$this->view 				= $view;
+		$this->controller 			= $controller;
+		$this->layout 				= $controller->layout;
+		$this->vars 				= $controller->get('vars');
+		$this->vars['components'] 	= $controller->components;	
+		$this->params 				= $controller->params;
+		$this->request 				= new stdClass();
 		
 		//Si on a des helpers à charger
 		//Il s'agit ici de helpers commun à l'ensemble des templates backoffice et frontoffice uniquement
 		//S'il s'agit de helpers spécifiques il faut mettre les fichiers dans les dossiers correspondants
-		if($this->helpers) {
-			
-			foreach($this->helpers as $k => $v) {
+		if($controller->helpers) {
+						
+			foreach($controller->helpers as $k => $v) {
 	
-				$helper = low($v);
-				require_once HELPERS.DS.$helper.'_helper.php';
-				unset($this->helpers[$k]);
-				$helperObjectName = $v.'Helper';	
-				$this->vars['helpers'][$v] = new $helperObjectName($this);
+				//Si c'est un tableau
+				if(is_array($v)) {
+				
+					$helper 	= low($v['helper_name']);
+					$helperPath = $v['helper_path'];
+					
+					require_once $helperPath.DS.$helper.'_helper.php';
+					unset($this->helpers[$v['helper_name']]);
+					
+					$helperObjectName 							= $v['helper_name'].'Helper';	
+					$this->vars['helpers'][$v['helper_name']] 	= new $helperObjectName($this);
+					
+				} 
+				//Sinon on va chercher dans le dossier des helpers
+				else {
+				
+					$helper = low($v);
+					require_once HELPERS.DS.$helper.'_helper.php';
+					unset($this->helpers[$v]);
+					$helperObjectName = $v.'Helper';	
+					$this->vars['helpers'][$v] = new $helperObjectName($this);
+				}
 			}
 		}
 		
@@ -114,6 +120,7 @@ class View extends Object {
  * @version 0.9 - 17/09/2015 by FI - Rajout d'un contrôle supplémentaire sur la vue à charger pour vérifier si le fichier demandé n'existe pas dans l'arborescence 
  * @version 1.0 - 07/10/2015 by FI - Rajout d'un contrôle supplémentaire si on indique un chemin de fichier complet
  * @version 1.1 - 05/02/2016 by FI - Gestion de l'erreur lorsque la vue n'est pas dispobible
+ * @version 1.2 - 12/05/2016 by FI - Affichage du message d'erreur lorsque le layout n'est pas sélectionné
  * @todo IMPORTANT essayer de voir pourquoi si on retire le file_exists($view) la fonction export du plugin formulaire ne marche plus!!!
  * @todo Essayer d'améliorer l'ajout de websitebaseurl dans le template car il est inséré juste après la récupération de la vue --> supprimé le 25/06/2013 rajouté directement dans le template
  */    
@@ -247,7 +254,19 @@ class View extends Object {
 	    	if($alternativeLayoutFolder) { require_once $this->layout.'.php'; }
 	    	else if(defined('FRONTOFFICE_VIEWS') && file_exists(FRONTOFFICE_VIEWS.DS.'layout'.DS.$this->layout.'.php')) { require FRONTOFFICE_VIEWS.DS.'layout'.DS.$this->layout.'.php'; } //Chemin d'un élément d'un layout
 	    	else if(defined('BACKOFFICE_VIEWS') && file_exists(BACKOFFICE_VIEWS.DS.'layout'.DS.$this->layout.'.php')) { require BACKOFFICE_VIEWS.DS.'layout'.DS.$this->layout.'.php'; } //Chemin d'un élément d'un layout
-	    	else { require_once VIEWS.DS.'layout'.DS.$this->layout.'.php'; } //On fait l'inclusion du layout par défaut et on affiche la variable dedans
+	    	else if(file_exists(VIEWS.DS.'layout'.DS.$this->layout.'.php')) { require_once VIEWS.DS.'layout'.DS.$this->layout.'.php'; } //On fait l'inclusion du layout par défaut et on affiche la variable dedans
+			else {
+			
+				$message = '<div style="background-color:#EBEBEB;border:1px dashed black;padding:10px;position:absolute;top:50%;left:50%;width:300px;height:190px;margin-left:-150px;margin-top:-95px;">';
+					$message .= '<p style="text-align:justify;line-height:20px;">';
+						$message .= _("VOUS N'AVEZ PAS DEFINI DE LAYOUT POUR VOTRE SITE INTERNET VEUILLEZ VOUS CONNECTER AU BACKOFFICE ET COMPLETER LES INFORMATIONS DANS LE MODULE SITES INTERNET.");
+					$message .= '</p>';
+					$message .= '<p style="text-align:center;">';
+						$message .= '<a href="'.Router::url("/connexion").'">'._("ME CONNECTER AU BACKOFFICE").'</a>';
+					$message .= '</p>';
+				$message .= '</div>';
+				die($message);			
+			}
     	}
     	$this->rendered = true; //On indique que la vue est rendue   	
     }
