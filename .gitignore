@@ -33,7 +33,6 @@ webroot/css/plugins/*
 webroot/files/*
 webroot/img/plugins/*
 webroot/js/plugins/*
-webroot/upload/*
 webroot/plugins/*
 webroot/templates/*
 !webroot/templates/koezion
