@@ -1,6 +1,16 @@
 ﻿<versions>
 	<version>
 		<name>Version du 12/05/2016</name>
+		<num>20160512.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Nettoyage de fichiers : suppression du template koezion</task>
+			<task author="FI" type="code">Correction dans le layout pour rajouter data-baseurl qui avait disparu</task>
+			<task author="FI" type="code">Modification installation</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 12/05/2016</name>
 		<num>20160512.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
