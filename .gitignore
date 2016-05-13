@@ -34,7 +34,6 @@ webroot/files/*
 webroot/img/plugins/*
 webroot/js/plugins/*
 webroot/upload/*
-!webroot/upload/_thumbs/empty
 !webroot/upload/_thumbs/Files/empty
 !webroot/upload/_thumbs/Flash/empty
 !webroot/upload/_thumbs/Images/empty
@@ -43,5 +42,6 @@ webroot/upload/*
 !webroot/upload/images/empty
 webroot/plugins/*
 webroot/templates/*
-!webroot/templates/koezion
 !webroot/templates/bo_adminlte
+#Gestion des fichiers par defaut pour le plugin et le template koezion
+!webroot/templates/koezion
