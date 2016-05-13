@@ -1,0 +1,6 @@
+﻿<plugin>
+	<code>tpl_koezion</code>
+	<name>Template koéZion</name>
+	<description>Gestion de la configuration du template koéZion</description>
+	<author>koéZionCMS</author>
+</plugin>

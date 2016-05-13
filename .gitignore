@@ -18,9 +18,9 @@ configs/hooks/files/
 configs/hooks/helpers/*.php
 configs/hooks/layouts/*.php
 configs/hooks/views/*.php
-/configs/plugins/*
-!/configs/plugins/empty
-/plugins/
+configs/plugins/*/*
+!configs/plugins/empty
+/plugins/*
 tmp/backup_bdd/*.sql
 tmp/upload/*
 tmp/sessions/*
@@ -33,7 +33,10 @@ webroot/css/plugins/*
 webroot/files/*
 webroot/img/plugins/*
 webroot/js/plugins/*
-webroot/upload/*
+webroot/upload/.ckfinder/
+webroot/upload/files/*
+webroot/upload/flash/*
+webroot/upload/images/*
 !webroot/upload/_thumbs/Files/empty
 !webroot/upload/_thumbs/Flash/empty
 !webroot/upload/_thumbs/Images/empty
@@ -42,6 +45,12 @@ webroot/upload/*
 !webroot/upload/images/empty
 webroot/plugins/*
 webroot/templates/*
-!webroot/templates/bo_adminlte
-#Gestion des fichiers par defaut pour le plugin et le template koezion
 !webroot/templates/koezion
+!webroot/templates/bo_adminlte
+
+######################################
+#   GESTION DU PLUGIN TPL KOEZION    #
+!configs/plugins/connectors/tpl_koezion_connectors.php
+!/plugins/tpl_koezion/
+!webroot/upload/files/koezion_theme_base.css
+!webroot/upload/files/koezion_theme_base.js

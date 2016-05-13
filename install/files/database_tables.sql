@@ -789,3 +789,20 @@ CREATE TABLE IF NOT EXISTS `websites` (
 -- Index pour la table `searches`
 --
 ALTER TABLE `searches` ADD FULLTEXT KEY `data` (`datas`);
+
+--
+-- TABLE DU PLUGIN DE GESTION DU TEMPLATE
+--
+
+DROP TABLE IF EXISTS `plugin_tpl_koezion_configs`;
+CREATE TABLE IF NOT EXISTS `plugin_tpl_koezion_configs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `field` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `value` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

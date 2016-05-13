@@ -1,0 +1,10 @@
+﻿<versions>
+	<version>
+		<name>Version du 06/05/2016</name>
+		<num>20160506.001</num>
+		<supervisor>koéZionCMS</supervisor>
+		<tasks>
+			<task author="koéZionCMS">Initialisation de ce fichier</task>
+		</tasks>	
+	</version>
+</versions>

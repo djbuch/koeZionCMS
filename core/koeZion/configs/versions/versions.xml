@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 13/05/2016</name>
+		<num>20160513.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Rajout du template koéZion et du plugin associé</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 13/05/2016</name>
 		<num>20160513.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

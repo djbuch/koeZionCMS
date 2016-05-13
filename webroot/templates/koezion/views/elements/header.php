@@ -15,14 +15,17 @@
 					<?php 
 					if(!isset($breadcrumbs)) $breadcrumbs = array();
 					$helpers['Nav']->generate_menu($menuGeneral, $breadcrumbs);
-					
-					///////////////////////////////
-					//    MOTEUR DE RECHERCHE    //
-					echo $helpers['Form']->create(array('id' => 'Search', 'action' => Router::url('searchs/rechercher'), 'method' => 'post', 'class' => 'form navbar-form navbar-right', 'role' => "search"));
-					echo $helpers['Form']->input('q', _('Rechercher'), array('label' => false, 'placeholder' => _('Rechercher')));
+									
+					if($this->request('BootstrapKoezionConfigs', 'get_config', array('SEARCH_ENGINE', 'activate'))) {
+						
+						///////////////////////////////
+						//    MOTEUR DE RECHERCHE    //
+						echo $helpers['Form']->create(array('id' => 'Search', 'action' => Router::url('searchs/rechercher'), 'method' => 'post', 'class' => 'form navbar-form navbar-right', 'role' => "search"));
+						echo $helpers['Form']->input('q', _('Rechercher'), array('label' => false, 'placeholder' => _('Rechercher')));
+						?><button type="submit" class="btn btn-default"><?php echo _("OK"); ?></button><?php 
+						echo $helpers['Form']->end(); 
+					}	
 					?>
-					<button type="submit" class="btn btn-default"><?php echo _("OK"); ?></button>
-					<?php echo $helpers['Form']->end(); ?>
 				</div>
 			</div>    	
     	</div>

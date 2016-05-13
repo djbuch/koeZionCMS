@@ -73,3 +73,25 @@ INSERT INTO `unwanted_crawlers` (`id`, `name`, `url`, `ip`, `online`, `created`)
 (21, 'HOW TO EARN QUICK MONEY', 'how-to-earn-quick-money', '', 1, '2015-08-21 11:38:02'),
 (22, 'GW EC', 'gw-ec', '', 1, '2015-08-21 11:38:50'),
 (23, 'SEMALT', 'semalt', '', 1, '2015-08-21 11:38:50');
+
+--
+-- GESTION DES DONNEES DU TEMPLATE
+--
+INSERT INTO `plugins` (`id`, `code`, `name`, `description`, `author`, `online`, `installed`, `created`, `modified`, `created_by`, `modified_by`) VALUES
+(1, 'tpl_koezion', 'Template koéZion', 'Gestion de la configuration du template koéZion', 'koéZionCMS', 1, 1, '2016-05-13 17:07:47', '2016-05-13 17:07:58', 1, 1);
+
+INSERT INTO `templates` 
+	(`id`, `name`, `layout`, `version`, `code`, `color`, `picture`, `online`, `created`) 
+	VALUES
+	(NULL, 'Template koéZion', 'koezion', 'Basic', '', '', '', 1, CURRENT_TIMESTAMP);
+
+INSERT INTO `modules` 
+SET
+    `name` = 'Template koéZion', 
+    `controller_name` = 'tpl_koezion_configs', 
+    `action_name` = 'manage', 
+    `order_by` = 1, 
+    `online` = 1, 
+    `created` = CURRENT_TIMESTAMP, 
+    `modules_type_id` = (SELECT `id` FROM `modules_types` WHERE `name` = 'PLUGINS' LIMIT 1), 
+    `plugin_id` = (SELECT `id` FROM `plugins` WHERE `code` = 'tpl_koezion' LIMIT 1);		
