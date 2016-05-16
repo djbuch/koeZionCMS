@@ -5,7 +5,7 @@ $actionName 	= $this->controller->params['action'];
 if($controllerName == 'Contacts' && $actionName == 'newsletter') { $this->element('slogan'); }
 else {
 
-	if($this->request('BootstrapKoezionConfigs', 'get_config', array('NEWSLETTER', 'activate'))) {
+	if($this->request('TplKoezionConfigs', 'get_config', array('NEWSLETTER', 'activate'))) {
 	
 		?>
 		<section class="newsletter_element">

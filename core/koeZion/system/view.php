@@ -484,11 +484,18 @@ class View extends Object {
 				$pluginsList = Cache::exists_cache_file(TMP.DS.'cache'.DS.'variables'.DS.'Plugins'.DS, "plugins");
 				$pluginControllerToLoad = Inflector::camelize($sFolderPlugin);
 				if(!isset($pluginsList[$pluginControllerToLoad])) {
-
-					$message = "Le controller du plugin ".$controllerToLoad." n'existe pas"." dans le fichier dispatcher ou n'est pas correctement installé";
+					
+					$message = '<div style="background-color:#EBEBEB;border:1px dashed black;padding:10px;position:absolute;top:50%;left:50%;width:300px;height:190px;margin-left:-150px;margin-top:-95px;">';
+						$message .= '<p style="text-align:justify;line-height:20px;">';
+							$message .= "Le controller du plugin ".$controllerToLoad." n'existe pas"." dans le fichier dispatcher ou n'est pas correctement installé";
+						$message .= '</p>';						
+					$message .= '</div>';
+					die($message);	
+					
+					/*$message = "Le controller du plugin ".$controllerToLoad." n'existe pas"." dans le fichier dispatcher ou n'est pas correctement installé";					
 					Session::write('redirectMessage', $message);
 					$this->redirect('home/e404');
-					die();
+					die();*/
 				}
 				
 				$pluginControllerBoostrap = PLUGINS.DS.$sFolderPlugin.DS.'controller.php';
@@ -500,11 +507,21 @@ class View extends Object {
 			
 		} else { 
 
-			if(isset($sFolderPlugin)) { $message = "Le controller du plugin ".$controllerToLoad." n'existe pas"." dans le fichier dispatcher ou n'est pas correctement installé"; }
-			else { $message = "Le controller ".$controllerToLoad." n'existe pas"." dans le fichier dispatcher"; }
+			$message = '<div style="background-color:#EBEBEB;border:1px dashed black;padding:10px;position:absolute;top:50%;left:50%;width:300px;height:190px;margin-left:-150px;margin-top:-95px;">';
+				$message .= '<p style="text-align:justify;line-height:20px;">';
+			
+					if(isset($sFolderPlugin)) { $message .= "Le controller du plugin ".$controllerToLoad." n'existe pas"." dans le fichier dispatcher ou n'est pas correctement installé"; }
+					else { $message .= "Le controller ".$controllerToLoad." n'existe pas"." dans le fichier dispatcher"; }		
+	
+				$message .= '</p>';						
+			$message .= '</div>';
+			die($message);
+			
+			/*if(isset($sFolderPlugin)) { $message = "Le controller du plugin ".$controllerToLoad." n'existe pas"." dans le fichier dispatcher ou n'est pas correctement installé"; }
+			else { $message = "Le controller ".$controllerToLoad." n'existe pas"." dans le fichier dispatcher"; }						
 			Session::write('redirectMessage', $message);			
 			$this->redirect('home/e404');
-			die();
+			die();*/
 		}
 	}
 }

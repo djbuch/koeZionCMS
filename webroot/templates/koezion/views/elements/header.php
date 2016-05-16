@@ -16,7 +16,7 @@
 					if(!isset($breadcrumbs)) $breadcrumbs = array();
 					$helpers['Nav']->generate_menu($menuGeneral, $breadcrumbs);
 									
-					if($this->request('BootstrapKoezionConfigs', 'get_config', array('SEARCH_ENGINE', 'activate'))) {
+					if($this->request('TplKoezionConfigs', 'get_config', array('SEARCH_ENGINE', 'activate'))) {
 						
 						///////////////////////////////
 						//    MOTEUR DE RECHERCHE    //

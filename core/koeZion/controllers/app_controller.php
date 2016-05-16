@@ -41,6 +41,7 @@ class AppController extends Controller {
  * @version 0.5 - 02/04/2015 by FI - Mise en place automatisation de la traduction dans les fonctions ADD et EDIT
  * @version 0.6 - 22/04/2015 by FI - Correction pour tester l'existence de la constante CURRENT_WEBSITE_ID
  * @version 0.7 - 11/05/2016 by FI - Rajout du passage des données editorTemplateCssFile et editorJsFilePath pour alléger les traitements relatifs à l'affichage de l'éditeur de texte
+ * @version 0.8 - 16/05/2016 by FI - Redéfinition du chemin d'accès aux template lorsque qu'il s'agit de la connexion au backoffice
  * @see Controller::beforeFilter()
  * @todo améliorer la récupération des configs...
  * @todo améliorer la récupération du menu général pour le moment une mise en cache qui me semble améliorable...
@@ -160,11 +161,19 @@ class AppController extends Controller {
 				//////////////////////////////////////////////////////////
 				//   MISE EN CACHE DE LA RECUPERATION DU MENU GENERAL   //
 				$datas['menuGeneral'] = $this->_get_website_menu($datas['websiteParams']['id']);				
-				//////////////////////////////////////////////////////////				
+				//////////////////////////////////////////////////////////	
+				
+				//ON VA DEFINIR LA CONSTANTE D'ACCES AUX VUES DU TEMPLATE//
+				define('FRONTOFFICE_VIEWS', WEBROOT.DS.'templates'.DS.$datas['websiteParams']['tpl_layout'].DS.'views');
+			} 
+			
+			//Cas particulier de la vue de connexion au backoffice
+			else { 
+				
+				//ON VA DEFINIR LA CONSTANTE D'ACCES AUX VUES DU TEMPLATE//
+				define('FRONTOFFICE_VIEWS', WEBROOT.DS.'templates'.DS.'bo_adminlte'.DS.'views'); 
 			}
 			
-			//ON VA DEFINIR LA CONSTANTE D'ACCES AUX VUES DU TEMPLATE//
-			define('FRONTOFFICE_VIEWS', WEBROOT.DS.'templates'.DS.$datas['websiteParams']['tpl_layout'].DS.'views');
 			$this->set($datas);
 		}		
 		

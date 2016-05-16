@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 16/05/2016</name>
+		<num>20160516.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Correction bug page de connexion au backoffice + erreur de redirection fonction View::request</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 13/05/2016</name>
 		<num>20160513.002</num>
 		<supervisor>KoéZionCMS</supervisor>
