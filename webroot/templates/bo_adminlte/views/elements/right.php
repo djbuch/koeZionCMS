@@ -27,7 +27,12 @@
             <ul class="control-sidebar-menu">
               	<li><a href="<?php echo Router::url('backoffice/ckeditor_templates/index'); ?>"><i class="fa fa-caret-right"></i> <?php echo _("Gestion des modèles de page"); ?></a></li>
               	<li><a href="<?php echo Router::url('backoffice/ckeditor_styles/index'); ?>"><i class="fa fa-caret-right"></i> <?php echo _("Gestion des styles"); ?></a></li>
-			</ul>         
+			</ul>      
+			
+			<h3 class="control-sidebar-heading"><?php echo ("Divers"); ?></h3>
+            <ul class="control-sidebar-menu">
+              	<li><a href="<?php echo Router::url('backoffice/configs/icons'); ?>"><i class="fa fa-caret-right"></i> <?php echo _("Icônes"); ?></a></li>
+			</ul>    
     	</div>
     	<hr />
 		<div class="tab-content">

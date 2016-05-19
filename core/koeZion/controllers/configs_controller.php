@@ -160,6 +160,15 @@ class ConfigsController extends AppController {
 		
 		$this->layout = 'empty';
 	}
+	
+/**
+ * Cette fonction va permettre l'affichage des icones disponibles
+ *
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 19/05/2016 by FI
+ */
+	public function backoffice_icons() {}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //										FONCTIONS PRIVEES										//
