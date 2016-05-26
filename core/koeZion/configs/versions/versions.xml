@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 26/05/2016</name>
+		<num>20160526.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Modification de la structure du fichier source plugin.php utilisé lors de l'ajout d'une nouvelle structure de plugin</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 19/05/2016</name>
 		<num>20160519.001</num>
 		<supervisor>KoéZionCMS</supervisor>

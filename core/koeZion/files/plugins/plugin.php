@@ -46,7 +46,35 @@ class [PLUGIN_CLASS_NAME]Plugin extends KoeZionPlugin {
 	}
 	
 /**
- * Cette fonction permet l'initialisation des données frontoffice
+ * Cette fonction est lancée avant l'appel d'une fonction frontoffice
+ *
+ * @access 	private
+ * @author 	koéZionCMS
+ * @version 0.1 - [DATE] by [AUTHOR]
+ */
+	function beforeFilter_frontoffice($controller, $datas = null) {
+		
+		$controllerName = $controller->params['controllerName']; //Contrôleur courant
+		$actionName 	= $controller->params['action']; //Action courante
+		$vars 			= $controller->get('vars'); //Liste des variables passées
+	}	
+	
+/**
+ * Cette fonction est lancée avant l'appel d'une fonction backoffice
+ *
+ * @access 	private
+ * @author 	koéZionCMS
+ * @version 0.1 - [DATE] by [AUTHOR]
+ */
+	function beforeFilter_backoffice($controller, $datas = null) {
+		
+		$controllerName = $controller->params['controllerName']; //Contrôleur courant
+		$actionName 	= $controller->params['action']; //Action courante
+		$vars 			= $controller->get('vars'); //Liste des variables passées
+	}
+	
+/**
+ * Cette fonction est lancée avant le rendu d'une vue frontoffice
  *
  * @access 	private
  * @author 	koéZionCMS
@@ -60,7 +88,7 @@ class [PLUGIN_CLASS_NAME]Plugin extends KoeZionPlugin {
 	}	
 	
 /**
- * Cette fonction permet l'initialisation des données backoffice
+ * Cette fonction est lancée avant le rendu d'une vue backoffice
  *
  * @access 	private
  * @author 	koéZionCMS
