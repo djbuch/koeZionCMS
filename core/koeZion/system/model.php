@@ -913,8 +913,8 @@ class Model extends Object {
 							$alias 			= $orderV[0][0];
 							$field 			= $orderV[0][1];
 							$direction 		= $orderV[1];
-							//$orderBy[$orderK] = '`'.$alias.'`.`'.$field.'` '.$direction; 
-							$orderBy[$orderK] = '`'.$field.'` '.$direction;
+							$orderBy[$orderK] = '`'.$alias.'`.`'.$field.'` '.$direction; 
+							//$orderBy[$orderK] = '`'.$field.'` '.$direction;
 						}
 					}
 					$sql .= "\n".'ORDER BY '.implode(', ', $orderBy).' ';
