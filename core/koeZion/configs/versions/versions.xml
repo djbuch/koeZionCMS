@@ -1,11 +1,28 @@
 ﻿<versions>
 	<version>
+		<name>Version du 27/05/2016</name>
+		<num>20160527.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Correction fichier de versions</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 27/05/2016</name>
+		<num>20160527.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Corrections gestion orderBy dans la fonction Model::find</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 26/05/2016</name>
 		<num>20160526.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
 			<task author="FI" type="code">Corrections fichier d'installation</task>
 		</tasks>
+	</version>
 	<version>
 		<name>Version du 26/05/2016</name>
 		<num>20160526.001</num>
