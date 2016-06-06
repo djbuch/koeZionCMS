@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 06/06/2016</name>
+		<num>20160606.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Corrections mineures de bugs</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 27/05/2016</name>
 		<num>20160527.003</num>
 		<supervisor>KoéZionCMS</supervisor>

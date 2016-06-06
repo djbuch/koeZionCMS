@@ -73,6 +73,11 @@ h6{font-weight: 700;}
     background-color: #dff0d8;
     border-color: #d6e9c6;
 }
+label.error{
+	color: #a94442;
+	font-weight: normal;
+	font-size: 11px;
+}
 
 /***********************************/
 /*    PAGE HEADER & PAGE FOOTER    */
@@ -139,6 +144,7 @@ a.btn{
 	text-transform: uppercase;
 	text-decoration: none;
 	letter-spacing: 2px;
+	white-space: normal;
     
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
@@ -217,8 +223,9 @@ a.btn:focus{
 	letter-spacing: 1px;
 	color: #777;
 	border: 1px solid rgba(0,0,0, .1);
-    padding-left: 7px;
-    padding-right: 7px;
+    /*padding-left: 7px;
+    padding-right: 7px;*/
+    padding: 4px;
     
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
@@ -373,7 +380,7 @@ a.btn:focus{
     color: #aaa;
 }
 
-.form button[type=submit] {float: right;}
+.form button:not(.no_float)[type=submit] {float: right;}
 .form .newsletter_input button[type=submit] {float: none;}
 .form .legacy {margin-top: 10px;}
 
@@ -504,8 +511,6 @@ a.btn:focus{
     box-shadow: none;
 }
 header .logo img{
-	height: 45px!important; 
-	width: auto!important;
 	margin-top: 5px; 
 	margin-left: 5px;
 	margin-right: 40px;

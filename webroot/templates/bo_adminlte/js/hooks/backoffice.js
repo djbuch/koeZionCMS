@@ -84,11 +84,14 @@ $(document).ready(function() {
 		$(this).css('width', width);		
 	});
 	
-    $('.datepicker').daterangepicker({
-        singleDatePicker: true,
-        showDropdowns: true,
-       	format: "DD.MM.YYYY"
-    });    
+    $('.datepicker').livequery(function() { 	
+
+		$(this).daterangepicker({
+			singleDatePicker: true,
+			showDropdowns: true,
+			format: "DD.MM.YYYY"
+		});
+	});    
 
 	$("#InputFilterTemplate").change(function() {
 	

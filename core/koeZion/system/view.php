@@ -294,15 +294,19 @@ class View extends Object {
  * @version 0.9 - 14/09/2015 by FI - Modification de la gestion des vaiables complémentaires passées à l'élément, on ne globalise plus en les ajoutant à $this->vars
  * @version 1.0 - 19/01/2016 by FI - Rajout de l'interface dans le test de récupération d'un hook
  * @version 1.1 - 20/01/2016 by FI - Gestion des dossiers de stockage des plugins
+ * @version 1.2 - 31/05/2016 by FI - Rajout de $extractVars
  */
-    public function element($element, $vars = null, $isPlugin = false) {
+    public function element($element, $vars = null, $isPlugin = false, $extractVars = false) {
     	
     	if(isset($vars) && !empty($vars)) { 
     		
-    		//foreach($vars as $k => $v) { $this->vars[$k] = $v; }
-    		extract($vars); 
+    		if($extractVars) { extract($vars); }
+    		else {
+    			
+    			foreach($vars as $k => $v) { $this->vars[$k] = $v; }
+    		}
     	}    	
-    	extract($this->vars);   
+    	extract($this->vars);  
     					    	
     	/////////////////////
     	// CAS DES PLUGINS //
