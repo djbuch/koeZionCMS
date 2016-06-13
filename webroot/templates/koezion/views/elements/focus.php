@@ -4,8 +4,9 @@
 			<div class="row">			
 				<?php 
 				$cpt = 1;
-				if(count($focus) == 3) { $focusCss = 'col-lg-4'; $cptLimit = 3; }
-				else if(count($focus) == 4) { $focusCss = 'col-lg-3'; $cptLimit = 4; }
+				if(count($focus) % 3 == 0) { $focusCss = 'col-lg-4'; $cptLimit = 3; }
+				else if(count($focus) % 4 == 0) { $focusCss = 'col-lg-3'; $cptLimit = 4; }
+				else { $focusCss = 'col-lg-3'; $cptLimit = 4; }
 				foreach($focus as $v) {
 					?>
 					<div class="item <?php echo $focusCss; ?>">

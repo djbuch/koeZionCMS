@@ -15,16 +15,20 @@ class NavHelper extends Helper {
 				foreach($categories as $k => $v) {
 						
 					$isActive = '';
-					if(!empty($v['redirect_to'])) { 
+					if(!empty($v['redirect_to'])) {  
 						
-						//On teste s'il s'agit d'une url interne ou externe
-						if(substr_count($v['redirect_to'], 'http://', 0, 7)) { $url = $v['redirect_to']; }
-						else {
+						$url = '';
+						if($v['redirect_to'] != '#') {
 						
-							$url = Router::url($v['redirect_to']);
-							$shortUrl = str_replace(BASE_URL, '', $url); //On supprime le BASE_URL avant la comparaison
-							if($v['level'] == 1 && $shortUrl == $this->view->controller->request->url) { $isActive = ' active'; }
-						}
+							//On teste s'il s'agit d'une url interne ou externe
+							if(strlen($v['redirect_to']) > 7 && substr_count($v['redirect_to'], 'http://', 0, 7)) { $url = $v['redirect_to']; }
+							else {
+							
+								$url = Router::url($v['redirect_to']);
+								$shortUrl = str_replace(BASE_URL, '', $url); //On supprime le BASE_URL avant la comparaison
+								if($v['level'] == 1 && $shortUrl == $this->view->controller->request->url) { $isActive = ' active'; }
+							}
+						}						
 						
 					} else { 
 						

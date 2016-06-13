@@ -72,7 +72,7 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
 								<h4><i class="fa fa-indent"></i> <?php echo _("Contenu"); ?></h4>                  
                 			</div>	
 				       		<?php 
-							echo $helpers['Form']->input('details_title', _('Titre'), array('compulsory' => true, 'tooltip' => _("Indiquez le titre qui sera affiché")));
+							echo $helpers['Form']->input('details_title', _('Titre'), array('tooltip' => _("Indiquez le titre qui sera affiché")));
 							echo $helpers['Form']->upload_files('details_img', array('label' => _("Image ou icône")));
 							echo $helpers['Form']->input('details_content', _('Contenu'), array('type' => 'textarea', 'wysiswyg' => true, 'tooltip' => _("Saisissez ici le contenu de votre focus")));
 							?>
