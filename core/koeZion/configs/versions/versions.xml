@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 13/06/2016</name>
+		<num>20160613.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="code">Corrections fichier d'installation : database_datas.sql</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 13/06/2016</name>
 		<num>20160613.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>

@@ -36,8 +36,7 @@ INSERT INTO `modules_types` (`id`, `name`, `icon`, `order_by`, `online`, `create
 (9, 'UTILISATEURS', 'fa fa-user', 9, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 0),
 (10, 'CONTACTS', 'fa fa-envelope', 3, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 0),
 (11, 'EXPORTS', 'fa fa-download', 6, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 0),
-(12, 'PORTFOLIOS', 'fa fa-picture-o', 4, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 0),
-(13, 'EXPORTS', 'fa fa-download', 5, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 0);
+(12, 'PORTFOLIOS', 'fa fa-picture-o', 4, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 0);
 
 INSERT INTO `users` (`id`, `name`, `second_name`, `login`, `password`, `email`, `online`, `users_group_id`) VALUES
 (1, 'Superadmin', 				'', 'superadmin', 		'superadmin', 		'superadmin@monsite.com', 		1, 1);
