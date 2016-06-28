@@ -249,6 +249,7 @@ class FormHelper extends FormParentHelper {
  * @version 25/03/2015 by FI - Correction de la gestion du champ traduit pour tester l'exitence d'un model
  * @version 30/03/2015 by FI - Correction du test sur le champ traduit pour prendre en compte les noms de champs utilisants la notation.
  * @version 25/09/2015 by FI - Rajout de wrapperDivInput et de wrapperDivInputClass
+ * @version 27/06/2015 by FI - Ajustement CSS traduction pour les cases à cocher et les radios boutons
  * 
  * @see FormHelper::input()
  */	
@@ -301,7 +302,10 @@ class FormHelper extends FormParentHelper {
 			
 			foreach($languages as $language) {
 			
-				$languageLabel = $label.' <img src="'.$language['picture'].'" style="float: left;margin-right: 5px;" />';
+				if(isset($options['type']) && in_array($options['type'], array("checkbox", "radio"))) { $style = 'margin-right: 5px;'; } 
+				else { $style = 'float: left;margin-right: 5px;'; }
+				
+				$languageLabel = $label.' <img src="'.$language['picture'].'" style="'.$style.'" />';
 				$inputDatas = parent::input($name.'.'.$language['code'], $languageLabel, am($options, array('wrapperDivClass' => 'form-group row_language row_'.$language['code']))); //Appel fonction parente
 				$htmlInput .= $this->_html_input($inputDatas);
 			}

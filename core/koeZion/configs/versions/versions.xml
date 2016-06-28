@@ -1,5 +1,18 @@
 ﻿<versions>
 	<version>
+		<name>Version du 28/06/2016</name>
+		<num>20160628.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FI" type="bdd">Corrections fichier versions_bdd.xml</task>
+			<task author="FI" type="code">Websites::_init_category : mise en place du contrôle sur la variable createDefaultCategory</task>
+			<task author="FI" type="code">Website : rajout de la variable createDefaultCategory</task>
+			<task author="FI" type="code">basics.php : rajout d'une classe sur l'élément pr, backoffice.css : rajout de la classe associée à l'élément pr</task>
+			<task author="FI" type="code">Model::_get_query_conditions : Rajout lors de la traduction du bon alias de table</task>
+			<task author="FI" type="code">Correction affichage des langues pour les radios et les cases à cocher</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 13/06/2016</name>
 		<num>20160613.002</num>
 		<supervisor>KoéZionCMS</supervisor>

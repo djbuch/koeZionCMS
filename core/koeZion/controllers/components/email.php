@@ -18,16 +18,16 @@
  */
 class EmailComponent extends Component {
 
-	var $mailer = false;
-	var $exceptions = false;
+	var 	$mailer 			= false;
+	var 	$exceptions 		= false;
 	
-	private $smtpHost = ''; 
-	private $smtpPort = '';
-	private $smtpUserName = '';
-	private $smtpPassword = '';
+	private $smtpHost 			= ''; 
+	private $smtpPort 			= '';
+	private $smtpUserName 		= '';
+	private $smtpPassword 		= '';
 
-	private $mailSetFromEmail = '';
-	private $mailSetFromName = '';
+	private $mailSetFromEmail 	= '';
+	private $mailSetFromName 	= '';
 		
 /**
  * Constructeur de la classe
@@ -60,13 +60,12 @@ class EmailComponent extends Component {
 				
 		require_once SWIFTMAILER.DS.'swift_required.php'; //Inclusion de la librairie d'envoi de mails
 		
-		
 		//Si les paramètres sont bien renseignés
 		if(
-				!empty($this->smtpHost) &&
-				!empty($this->smtpPort) &&
-				!empty($this->smtpUserName) &&
-				!empty($this->smtpPassword)
+			!empty($this->smtpHost) &&
+			!empty($this->smtpPort) &&
+			!empty($this->smtpUserName) &&
+			!empty($this->smtpPassword)
 		) {
 			
 			//////////////////////
@@ -96,7 +95,6 @@ class EmailComponent extends Component {
 					->setPassword($this->smtpPassword); //Mot de passe
 			
 				$this->mailer = Swift_Mailer::newInstance($transport); //Création d'une nouvelle instance de mail
-				
 			}
 		}
 	}
@@ -225,10 +223,10 @@ class EmailComponent extends Component {
 		
 		if($this->mailer) {
 			
-			$subject = isset($datas['subject']) ? $datas['subject'] : '[subject]'; 
-			$from = array($this->mailSetFromEmail => $this->mailSetFromName);
-			$mailContent = isset($datas['mailContent']) ? $datas['mailContent'] : '[mailContent]'; 
-			$mailType = isset($datas['mailType']) ? $datas['mailType'] : 'text/html'; 
+			$subject 		= isset($datas['subject']) ? $datas['subject'] : '[subject]'; 
+			$from 			= array($this->mailSetFromEmail => $this->mailSetFromName);
+			$mailContent 	= isset($datas['mailContent']) ? $datas['mailContent'] : '[mailContent]'; 
+			$mailType 		= isset($datas['mailType']) ? $datas['mailType'] : 'text/html'; 
 			
 			///////////////////////////////
 			//    CREATION DU MESSAGE    //

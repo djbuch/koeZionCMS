@@ -4,6 +4,8 @@
  */
 class Website extends Model {
 	
+	public $createDefaultCategory = true; //Indique si il faut ou non créer la catégorie racine du site lors de sa création
+	
 /**
  * Tableau contenant l'ensemble des champs à valider
  *

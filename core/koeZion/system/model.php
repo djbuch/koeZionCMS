@@ -4,22 +4,23 @@
  */
 class Model extends Object {   
     
-	static $connections = array();
+	static $connections 			= array();
     
-	public $conf = 'localhost'; //Paramètres de connexion par défaut
-	public $table = false; //Nom de la table	
+	public $conf 					= 'localhost'; //Paramètres de connexion par défaut
+	public $table 					= false; //Nom de la table	
+	public $primaryKey 				= 'id';  //Valeur par défaut de la clé primaire (Peut être un chaîne de caractère ou un tableau dans le cas de clés composées par exemple array('key1', 'key2'))
+	public $errors 					= array(); //Par défaut pas d'erreurs
+	public $trace_sql 				= false; //Permet d'afficher la requête exécutée cf fonction find
+	public $shema 					= array(); //Shéma de la table
+	public $queryExecutionResult 	= false; //indique si la requete de save s'est bien passée 
+	public $refererUrl 				= ''; //Cette variable va contenir l'url de la page appelante
+	public $manageWebsiteId 		= true; //Permet d'éviter de prendre en compte la recherche basée sur le champ website_id ainsi que l'insertion automatique de ce champ	
+	public $manageActivateField 	= true; //Permet d'éviter de prendre en compte la recherche basée sur le champ activate ainsi que l'insertion automatique de ce champ	
+	public $alias 					= false; //Alias de la table
+	public $validAllFields 			= false; //Indique si il faut ou non valider l'ensemble des champs de la table ou uniquement ceux envoyés
+	
 	public $db; //Variable contenant la connexion à la base de données
-	public $primaryKey = 'id';  //Valeur par défaut de la clé primaire (Peut être un chaîne de caractère ou un tableau dans le cas de clés composées par exemple array('key1', 'key2'))
 	public $id; //Variable qui va contenir la valeur de la clé primaire après isert ou update
-	public $errors = array(); //Par défaut pas d'erreurs
-	public $trace_sql = false; //Permet d'afficher la requête exécutée cf fonction find
-	public $shema = array(); //Shéma de la table
-	public $queryExecutionResult = false; //indique si la requete de save s'est bien passée 
-	public $refererUrl = ''; //Cette variable va contenir l'url de la page appelante
-	public $manageWebsiteId = true; //Permet d'éviter de prendre en compte la recherche basée sur le champ website_id ainsi que l'insertion automatique de ce champ	
-	public $manageActivateField = true; //Permet d'éviter de prendre en compte la recherche basée sur le champ activate ainsi que l'insertion automatique de ce champ	
-	public $alias = false; //Alias de la table
-	public $validAllFields = false; //Indique si il faut ou non valider l'ensemble des champs de la table ou uniquement ceux envoyés
 	
 /**
  * Tableau contenant l'ensemble des models à tester lors de la suppression
@@ -1959,6 +1960,7 @@ class Model extends Object {
  * @author 	koéZionCMS
  * @version 0.1 - 02/04/2014 by FI
  * @version 0.2 - 16/12/2014 by FI - Mise en place de la gestion de l'opérateur
+ * @version 0.3 - 28/06/2016 by FI - Rajout lors de la traduction du bon alias de table
  */   
     protected function _get_query_conditions($cond, $field, $value) {
     	
@@ -1970,7 +1972,15 @@ class Model extends Object {
     	//auquel cas on ne le rajoute pas
     	//$k = $this->alias.".".$k;
     	$fieldExplode = explode('.', $field);
-    	if(count($fieldExplode) == 1) { $field = $this->alias.".".$fieldExplode[0]; }
+    	if(count($fieldExplode) == 1) { 
+    		
+    		if(
+    			isset($this->fieldsToTranslate) && 
+    			!empty($this->fieldsToTranslate) && 
+    			in_array($fieldExplode[0], $this->fieldsToTranslate)
+    		) { $field = '`'.$this->alias.'I18n`.`'.$fieldExplode[0].'`'; } 
+    		else { $field = '`'.$this->alias.'`.`'.$fieldExplode[0].'`'; } 
+    	}
     	
     	if(is_array($value)) { 
     		

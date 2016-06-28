@@ -216,29 +216,33 @@ class WebsitesController extends AppController {
  * @access 	protected 
  * @author 	koéZionCMS
  * @version 0.1 - 02/05/2012 by FI
+ * @version 0.1 - 24/06/2016 by FI - Rajout du contrôle sur $this->Website->createDefaultCategory
  */	
 	protected function _init_category() {
 		
-		////////////////////////////////////////////////////////
-		//   INITIALISATION DE LA CATEGORIE PARENTE DU SITE   //
-		$this->load_model('Category');
-		$categorie = array(
-			'parent_id' => 0,
-			'type' => 3,
-			'name' => 'Racine Site '.$this->Website->id,
-			'slug' => 'racine-site-'.$this->Website->id,
-			'content' => '',
-			'online' => 1,
-			'display_brothers' => 0,
-			'title_brothers' => '',
-			'page_description' => '',
-			'page_keywords' => '',
-			'redirect_category_id' => 0,
-			'display_form' => 0,
-			'txt_secure' => '',
-			'website_id' => $this->Website->id
-		);
-		$this->Category->save($categorie);		
+		if($this->Website->createDefaultCategory) {
+		
+			////////////////////////////////////////////////////////
+			//   INITIALISATION DE LA CATEGORIE PARENTE DU SITE   //
+			$this->load_model('Category');
+			$categorie = array(
+				'parent_id' => 0,
+				'type' => 3,
+				'name' => 'Racine Site '.$this->Website->id,
+				'slug' => 'racine-site-'.$this->Website->id,
+				'content' => '',
+				'online' => 1,
+				'display_brothers' => 0,
+				'title_brothers' => '',
+				'page_description' => '',
+				'page_keywords' => '',
+				'redirect_category_id' => 0,
+				'display_form' => 0,
+				'txt_secure' => '',
+				'website_id' => $this->Website->id
+			);
+			$this->Category->save($categorie);		
+		}
 	}
 
 /**

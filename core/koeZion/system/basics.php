@@ -9,7 +9,7 @@
 			
 			$debug = debug_backtrace();
 			
-			echo '<div style="background-color: #EBEBEB; border: 1px dashed black; padding: 10px;">';
+			echo '<div id="pr_element" style="background-color: #EBEBEB; border: 1px dashed black; padding: 10px;">';
 			
 				echo '<pre style="background-color:#F0F0F0;border:1px solid #E3E3E3;color:#606362;font-size:12px;padding:10px;">';		
 					print_r('[FILE] : '.$debug[0]['file']."\n");
