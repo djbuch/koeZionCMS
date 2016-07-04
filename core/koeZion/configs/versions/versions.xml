@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 04/07/2016</name>
+		<num>20160704.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="SS" type="code">Ajout de la détection du site courant lorsqu'on se connecte au backoffice</task>
+			<task author="SS" type="code">Ajout d'un bouton créer une page fille depuis une page parente dans le module page</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 28/06/2016</name>
 		<num>20160628.001</num>
 		<supervisor>KoéZionCMS</supervisor>

@@ -7,7 +7,7 @@
 		<th><?php echo _("Libellé"); ?></th>
 		<?php /* ?><th class="text-center xxs"><?php echo _("Lft"); ?></th></th>
 		<th class="text-center xxs"><?php echo _("Rgt"); ?></th></th><?php */ ?>
-		<th class="text-center l"><?php echo _("Actions"); ?></th>
+		<th class="text-center xl"><?php echo _("Actions"); ?></th>
 		<th class="text-center xxs"><input type="checkbox" class="checkall" /></th>
 	</tr>
 </thead>

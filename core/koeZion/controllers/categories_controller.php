@@ -249,12 +249,14 @@ class CategoriesController extends AppController {
  * @version 0.1 - 17/01/2012 by FI
  * @version 0.2 - 02/10/2012 by FI - Gestion de la personnalisation des templetes par pages
  * @version 0.3 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
+ * @version 0.4 - 08/06/2016 by SS - Ajout de l'id parent dans les arguments
  */	
-	public function backoffice_add($redirect = true, $forceInsert = false) {
+	public function backoffice_add($parentId = null, $redirect = true, $forceInsert = false) {
 		
 		$this->_init_datas();
 		
 		$parentAdd = parent::backoffice_add(false); //On fait appel à la fonction d'ajout parente
+		if(isset($parentId) && is_numeric($parentId)) { $this->request->data['parent_id'] = $parentId; }
 		if($parentAdd) { 
 			
 			//$this->_update_template($this->Category->id, $this->request->data['template_id']);

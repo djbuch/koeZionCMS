@@ -29,6 +29,7 @@
 			<td class="actions text-center">				
 				<?php echo $helpers['Html']->backoffice_move2prev_picto($params['controllerFileName'], $v['id']); ?>			
 				<?php echo $helpers['Html']->backoffice_move2next_picto($params['controllerFileName'], $v['id']); ?>
+				<?php echo $helpers['Html']->backoffice_picto($params['controllerFileName'], 'add', '/templates/bo_adminlte/img/thumb-add.png', $v['id']); ?>
 				<?php echo $helpers['Html']->backoffice_edit_picto($params['controllerFileName'], $v['id']); ?>			
 				<?php echo $helpers['Html']->backoffice_delete_picto($params['controllerFileName'], $v['id']); ?>			
 			</td>

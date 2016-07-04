@@ -421,25 +421,28 @@ class UsersController extends AppController {
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 11/07/2012 by FI
+ * @version 0.2 - 08/06/2016 by SS - Ajout de la détection du site courant lorqu'on se connecte au backoffice
  */
 	protected function _init_websites_datas($parametres = null) {
-	
+
 		$this->load_model('Website'); //Chargement du modèle
 		$websites = $this->Website->find($parametres); //Récupération des données
-		
+
 		$websitesListe = array(); //Liste des sites (ID => NAME)							
 		$websitesDetails = array(); //Détails des sites
-		
-		foreach($websites as $k => $v) { 
-			
+		$websitesCurrent = array(); //Site courant
+
+		foreach($websites as $k => $v) {
+
 			$websitesListe[$v['id']] = $v['name'];
 			$websitesDetails[$v['id']] = $v;
+			if(preg_match('/'.$_SERVER['SERVER_NAME'].'/', $v['url'])) { $websitesCurrent[$v['id']] = $v['name']; }
 		}
-		
+
 		return array(
 			'liste' => $websitesListe,
 			'details' => $websitesDetails,
-			'current' => current(array_keys($websitesListe))
+			'current' => (!empty($websitesCurrent) ? current(array_keys($websitesCurrent)) : current(array_keys($websitesListe)))
 		);
 	}	
 
