@@ -25,7 +25,8 @@ CKEDITOR.editorConfig = function(config)
 		
 	///////////////////////////////////////////////
 	//    CONFIGURATION DES PLUGINS A CHARGER    //
-		config.extraPlugins = 'internpage,syntaxhighlight'; //Mise en place d'un plugin supplémentaire
+		config.extraPlugins = 'internpage,syntaxhighlight,video'; //Mise en place d'un plugin supplémentaire
+		config.allowedContent = true;﻿
 	
 	//////////////////////////////////////////
 	//    DEFINITION DE LA BARRE DE MENU    //
@@ -38,7 +39,7 @@ CKEDITOR.editorConfig = function(config)
 			{ name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
 			{ name: 'paragraph',   items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ] },
 			{ name: 'links',       items : [ 'Link','Unlink','Anchor' ] },
-			{ name: 'insert',      items : [ 'Image','Flash','Iframe','Table','HorizontalRule','SpecialChar','Code' ] },
+			{ name: 'insert',      items : [ 'Image','Flash','Iframe','Table','HorizontalRule','SpecialChar','Code','Video' ] },
 			'/',
 			{ name: 'styles',      items : [ 'Styles','Format','Font','FontSize' ] },
 			{ name: 'colors',      items : [ 'TextColor','BGColor' ] },

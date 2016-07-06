@@ -345,12 +345,12 @@ class EmailComponent extends Component {
 				
 				foreach($data as $dataK => $dataV) {
 					
-					$datas[$field][$dataK] = $this->_format_mail_content($dataV, $url2Use, $replacement = null);
+					$datas[$field][$dataK] = $this->_format_mail_content($dataV, $url2Use, $replacement);
 				}
 			} 
 			
 			//Si les données à traiter sont une chaîne de caractères
-			else { $datas[$field] = $this->_format_mail_content($data, $url2Use, $replacement = null); }
+			else { $datas[$field] = $this->_format_mail_content($data, $url2Use, $replacement); }
 		}
 		
 		return $datas;

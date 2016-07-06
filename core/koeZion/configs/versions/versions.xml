@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 06/07/2016</name>
+		<num>20160706.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FF" type="code">Rajout du plugin vidéo dans CkEditor</task>
+			<task author="FF" type="code">EmailComponent::replace_links : Correction passage de paramètres à la fonction _format_mail_content</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 04/07/2016</name>
 		<num>20160704.001</num>
 		<supervisor>KoéZionCMS</supervisor>
