@@ -1,5 +1,15 @@
 ﻿<versions>
 	<version>
+		<name>Version du 19/07/2016</name>
+		<num>20160719.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FF" type="code">Rajout du composant Datas</task>
+			<task author="FF" type="code">CategoriesController::_get_right_buttons_category : déplacement de la fonction dans le composant Datas</task>
+			<task author="FF" type="code">Controller::$components : rajout du chargement du composant Datas</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 06/07/2016</name>
 		<num>20160706.001</num>
 		<supervisor>KoéZionCMS</supervisor>
