@@ -1367,6 +1367,16 @@ class Model extends Object {
 	
 /**
  * Cette fonction est en charge de l'upload des fichiers sur le serveur et de mettre à jour les champs de la base de données de la ligne concernée
+ * 
+ * Par exemple :
+ * var $files_to_upload = array(
+ * 	'file1' => array(
+ * 		'bdd' => true,
+ * 		'resize' => array(
+ * 			'width' => 1024
+ * 		)
+ * 	)
+ * );
  *
  * @param 	array 	$datas Données à sauvegarder
  * @param 	integer $id	   Identifiant de l'élément
@@ -1376,11 +1386,14 @@ class Model extends Object {
  * @version 0.1 - 28/12/2011
  * @version 0.2 - 10/02/2014 - Reprise de la fonction dans le cas ou l'upload de fichiers en front soit nécessaire
  * @version 0.3 - 10/07/2015 - Reprise de la gestion de la génération des données dans le cas if(isset($v['path']) && $v['path'])
+ * @version 0.4 - 22/07/2016 - Mise en place du processus de retaille de la largeur des images
+ * @todo Améliorer le processus de retaille des images pour le rendre plus performant
  */	
 	public function upload_files($datas, $id) {
 		
 		require_once(BEHAVIORS.DS.'upload.php');		
 		foreach($this->files_to_upload as $k => $v) {
+			
 			
 			if(isset($datas[$k])) {
 				
@@ -1399,7 +1412,7 @@ class Model extends Object {
 					} else {
 						 
 						$filePath = WEBROOT.DS."upload".DS.get_class($this).DS.$id; 
-						$filePathBdd = BASE_URL."/upload/".DS.get_class($this).'/'.$id; 
+						$filePathBdd = BASE_URL."/upload/".get_class($this).'/'.$id; 
 						
 					}
 					
@@ -1425,6 +1438,48 @@ class Model extends Object {
 							
 						WHERE ".$primaryKey." = ".$id;
 						$this->query($sql);
+					}
+					
+					//Retaille des photos
+					if(isset($v['resize'])) {
+											
+						$maxWidth = isset($v['resize']['width']) ? $v['resize']['width'] : 1024; 
+												
+						//On récupère l'extension
+						$ext 		= explode('.', $fileName);
+						$ext 		= end($ext);
+						$ext 		= strtolower($ext);
+						$filePath 	= $filePath.DS.$fileName;
+						$info 		= getimagesize($filePath);
+						
+						$source = null;
+						//On créé l'image source à partir de l'extension
+						switch($ext) {
+						
+							case 'jpg' : $source = imagecreatefromjpeg($filePath);
+							break;
+						
+							case 'jpeg' : $source = imagecreatefromjpeg($filePath);
+							break;
+						
+							case 'png' : $source = imagecreatefrompng($filePath);
+							break;
+						}
+						
+						//On récupère la largeur
+						$width = ($info[0] > $maxWidth ? $maxWidth : $info[0]);
+						
+						//On récupère le ratio
+						$ratio = ($info[0] > $maxWidth ? ($info[0] / $width) : 1);
+						
+						//On créé une image vide à la bonne largeur / hauteur
+						$new = imagecreatetruecolor($width, ($info[1] / $ratio));
+						
+						//On copie l'image d'origine dans l'image créé et on la retaille à la bonne largeur / hauteur
+						imagecopyresized($new, $source, 0, 0, 0, 0, $width, ($info[1] / $ratio), $info[0], $info[1]);
+						
+						//On créé l'image JPG et on l'enregistre dans le dossier temporaire des fichiers retaillés
+						imagejpeg($new, $filePath, 100);
 					}
 					
 					$handle->Clean();
