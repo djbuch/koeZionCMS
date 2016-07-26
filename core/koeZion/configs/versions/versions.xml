@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 26/07/2016</name>
+		<num>20160726.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FF" type="code">HtmlParentHelper::css : Gestion des extensions php dans les CSS</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 22/07/2016</name>
 		<num>20160722.001</num>
 		<supervisor>KoéZionCMS</supervisor>

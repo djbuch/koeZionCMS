@@ -98,6 +98,7 @@ class HtmlParentHelper extends Helper {
  * @version 1.0 - 14/08/2015 by FI : Mise en place de la gestion du protocole
  * @version 1.1 - 07/09/2015 by FI : Gestion des fichers externes via https
  * @version 1.2 - 01/02/2016 by SS : Fix bug si $css contient un sous tableau
+ * @version 1.3 - 26/07/2016 by FF : Gestion des extensions php dans les CSS
  */	
 	public function css($css, $inline = false, $merge = true, $minified = false) {	
 		
@@ -156,20 +157,32 @@ class HtmlParentHelper extends Helper {
 							default: //Front						
 								$cssFile = '/templates/'.$cssHref;						
 							break;
-						}						
-						
-						//if(!substr_count($cssHref, '.css')) { $cssFile.='.css'; }	//On teste si l'extension n'est pas déjà renseignée sinon on la rajoute
-						$cssPath = Router::webroot($cssFile); //On génère le chemin vers le fichier
-						
+						}
+																		
 						//On teste si la navigation courante est en HTTPS
 						if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') { $protocol = 'https'; } 
-						else { $protocol = 'http'; }
-
-						//Génération du lien vers le fichier CSS
-						if(!substr_count($cssPath, '.css')) { $cssPath = Router::url($cssPath, 'css', true, $protocol); }
-						else { $cssPath = Router::url($cssPath, '', true, $protocol); }
+						else { $protocol = 'http'; }						
+						
+						if(file_exists($cssFile)) { $cssPath = $cssFile; }
+						else { //On génère le chemin vers le fichier
+							 
+							$cssPath = Router::webroot($cssFile); 
+						
+							//Génération du lien vers le fichier JS
+							if(substr_count($cssPath, '.php')) { $cssPath = WEBROOT.str_replace('/', DS, $cssPath); }
+							else if(!substr_count($cssPath, '.css')) { $cssPath = Router::url($cssPath, 'css', true, $protocol); }
+							else { $cssPath = Router::url($cssPath, '', true, $protocol); }
+						}
 					}
-					$html .= "\t\t".'<link href="'.$cssPath.'" rel="'.$cssRel.'" type="'.$cssType.'" media="'.$cssMedia.'" />'."\n"; //On génère la balise de chargement
+					
+					//Chargement des fichiers JS via PHP
+					if(substr_count($cssPath, '.php')) {
+					
+						ob_start();
+						include_once $cssPath;
+						$html .= ob_get_clean();
+					} 
+					else { $html .= "\t\t".'<link href="'.$cssPath.'" rel="'.$cssRel.'" type="'.$cssType.'" media="'.$cssMedia.'" />'."\n"; } //On génère la balise de chargement 
 				}						
 			}
 			
