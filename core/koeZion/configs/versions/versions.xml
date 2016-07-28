@@ -1,5 +1,16 @@
 ﻿<versions>
 	<version>
+		<name>Version du 28/07/2016</name>
+		<num>20160728.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FF" type="bdd">Modification de la structure de la table websites</task>
+			<task author="FF" type="code">AppController::_get_posts_category : Mise en place de l'utilisation de la fonction _get_posts_configs() pour la récupération des configurations sur l'affichage des articles</task>
+			<task author="FF" type="code">AppController::_get_posts : Mise en place de l'utilisation de la fonction _get_posts_configs() pour la récupération des configurations sur l'affichage des articles</task>
+			<task author="FF" type="code">Suppression de l'ancienne version de récupération des configurations des articles via le fichier ini</task>			
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 26/07/2016</name>
 		<num>20160726.001</num>
 		<supervisor>KoéZionCMS</supervisor>

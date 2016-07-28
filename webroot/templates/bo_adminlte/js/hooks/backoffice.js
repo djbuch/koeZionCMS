@@ -108,4 +108,17 @@ $(document).ready(function() {
 			$("#tpl .templates_table").replaceWith(datas); //On rajoute une nouvelle ligne
 		});			
 	});	
+	
+	//Diffusion d'un article sur tous les sites
+	$("#btnDisplayPostAllWebsites").click(function() {
+		
+		if($(this).hasClass('check_all')) { 
+			$('.display_on_website').attr('checked', 'checked');
+			$(this).removeClass('check_all').addClass('uncheck_all');
+		} else if($(this).hasClass('uncheck_all')) { 			
+			$('.display_on_website').attr('checked', false);
+			$(this).removeClass('uncheck_all').addClass('check_all');			
+		}
+		return false;
+	});
 });

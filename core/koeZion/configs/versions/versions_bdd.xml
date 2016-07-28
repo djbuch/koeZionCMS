@@ -1,5 +1,30 @@
 ﻿<versions>
 	<version>
+		<name>Version du 28/07/2016</name>
+		<num>20160728.002</num>
+		<supervisor>KoéZionCMS</supervisor>		
+		<tasks>
+			<task author="FI">
+				DELETE FROM `modules` WHERE `controller_name` = 'configs' AND `action_name` = 'posts_liste';
+			</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 28/07/2016</name>
+		<num>20160728.001</num>
+		<supervisor>KoéZionCMS</supervisor>		
+		<tasks>
+			<task author="FI">
+				ALTER TABLE `websites`  
+					ADD `posts_search` VARCHAR(255) NOT NULL COMMENT 'Type de recherche : large ou stricte'  AFTER `contact_map_lng`,  
+					ADD `posts_order` VARCHAR(255) NOT NULL COMMENT 'Tri par défaut : created, modified ou order_by'  AFTER `posts_search`,  
+					ADD `posts_home_page_default` INT NOT NULL COMMENT 'Indique si il faut poster par défaut les articles sur la home page' AFTER `posts_order`,
+					ADD `posts_home_page_limit` INT NOT NULL COMMENT 'Nombre limite d\'article sur la home page'  AFTER `posts_home_page_default`,  
+					ADD `posts_default_page` INT NOT NULL COMMENT 'Identifiant de la page blog par défaut'  AFTER `posts_home_page_limit`;
+			</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 20/06/2016</name>
 		<num>20160620.001</num>
 		<supervisor>KoéZionCMS</supervisor>		

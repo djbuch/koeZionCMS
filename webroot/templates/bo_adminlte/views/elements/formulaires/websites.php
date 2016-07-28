@@ -14,6 +14,7 @@
 				    	<li><a href="#txtemailsnewsletter" data-toggle="tab"><i class="fa fa-envelope"></i> <?php echo _("Textes/emails formulaire newsletter"); ?></a></li>
 				    	<li><a href="#txtemailsuser" data-toggle="tab"><i class="fa fa-envelope"></i> <?php echo _("Textes/emails nouvel utilisateur"); ?></a></li>
 				    	<li><a href="#contactpage" data-toggle="tab"><i class="fa fa-map-marker"></i> <?php echo _("Page contact"); ?></a></li>
+				    	<li><a href="#postsconfigs" data-toggle="tab"><i class="fa fa-comments"></i> <?php echo _("Configurations articles"); ?></a></li>
 				    	<li><a href="#seo" data-toggle="tab"><i class="fa fa-search"></i> <?php echo _("SEO"); ?></a></li>
 				    	<li><a href="#options" data-toggle="tab"><i class="fa fa-plug"></i> <?php echo _("Options"); ?></a></li>
 				    	<li><a href="#secure" data-toggle="tab"><i class="fa fa-minus-circle"></i> <?php echo _("Sécurité"); ?></a></li>
@@ -152,6 +153,27 @@
 							echo $helpers['Form']->input('contact_map_address', _('Adresse'), array('tooltip' => _("Indiquez l'adresse à afficher sur la carte")));
 							echo $helpers['Form']->input('contact_map_lat', _('Latitude'), array('tooltip' => _("Indiquez la latitude")));
 							echo $helpers['Form']->input('contact_map_lng', _('Longitude'), array('tooltip' => _("Indiquez la longitude")));							
+							?>
+                		</div>
+				    	<div class="tab-pane" id="postsconfigs">	
+				    		<div class="box-header bg-light-blue">
+								<h4><i class="fa fa-comments"></i> <?php echo _("Configurations articles"); ?></h4>                  
+                			</div>  	
+							<?php 
+							echo $helpers['Form']->input('posts_default_page', _('Page articles par défaut'), array('type' => 'select', 'datas' => $categoriesList, 'firstElementList' => _('Sélectionnez la page articles par défaut'), 'tooltip' => _("Indiquez la page articles par défaut")));										 
+							$typeSearch = array(
+								'large' => _("Recherche large (Affiche les articles ayant au moins une correspondance avec un type d'article sélectionné)"),
+								'stricte' => _("Recherche stricte (Affiche les articles ayant toutes les correspondances avec les types d'articles sélectionnés)")
+							);
+							echo $helpers['Form']->input('posts_search', _('Type de recherche'), array('type' => 'select', 'datas' => $typeSearch, 'tooltip' => _("Sélectionnez le type de recherche associée aux types d'articles pour l'affichage des articles")));			
+							$orderType = array(						
+								'created' => _("La date de création"),
+								'modified' => _("La date de modification"),
+								'order_by' => _("Le rang")
+							);
+							echo $helpers['Form']->input('posts_order', _('Trier par'), array('type' => 'select', 'datas' => $orderType, 'tooltip' => _("Indiquer le tri à mettre en place pour l'affichage des articles dans les pages")));
+							echo $helpers['Form']->input('posts_home_page_default', _('Diffuser par défaut sur la home page'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour diffuser cet article par défaut sur la home page")));
+							echo $helpers['Form']->input('posts_home_page_limit', _('Limite articles home page'), array('tooltip' => _("Indiquez ici le nombre d'articles maximum à récupérer sur la page d'accueil")));														
 							?>
                 		</div>
 				    	<div class="tab-pane" id="seo">	

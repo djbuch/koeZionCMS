@@ -16,7 +16,6 @@ INSERT INTO `modules` (`id`, `name`, `controller_name`, `action_name`, `others_a
 (11, 'Plugins', 'plugins', '', '', '', '', 0, 2, 1, CURRENT_TIMESTAMP, 6, 0),
 (13, 'Tableau de bord', 'dashboard', '', '', '', '', 0, 1, 1, CURRENT_TIMESTAMP, 7, 0),
 (14, 'Newsletter', 'contacts', 'newsletter', '', '', '', 0, 1, 1, CURRENT_TIMESTAMP, 10, 0),
-(15, 'Paramètres', 'configs', 'posts_liste', '', '', '', 0, 3, 1, CURRENT_TIMESTAMP, 4, 0),
 (16, 'Exports', 'exports', '', '', '', '', 0, 0, 1, CURRENT_TIMESTAMP, 11, 0),
 (17, 'Portfolios', 'portfolios', '', '', '', '', 0, 1, 1, CURRENT_TIMESTAMP, 12, 0),
 (18, 'Eléments de portfolios', 'portfolios_elements', '', '', '', '', 0, 2, 1, CURRENT_TIMESTAMP, 12, 0),

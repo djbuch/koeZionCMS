@@ -651,9 +651,10 @@ class AppController extends Controller {
  * @version 0.3 - 30/10/2014 by FI - Déplacement de cette fonction de Categories
  * @version 0.4 - 01/12/2015 by FI - Reprise de la requête de récupération des données suite à la mise en place de la multi publication
  * @version 0.5 - 11/12/2015 by FI - Problème lors du comptage des éléments, rajout de la variable $postsCountQuery
+ * @version 0.6 - 28/07/2016 by FI - Mise en place de l'utilisation de la fonction _get_posts_configs() pour la récupération des configurations sur l'affichage des articles
  */		
 	protected function _get_posts_category($datas, $setLimit = true) {
-
+		
 		//Récupération des articles
 		$this->load_model('Post');
 		$postsQuery = $postsCountQuery = array(
@@ -694,11 +695,12 @@ class AppController extends Controller {
 		
 			//////////////////////////////////////////////////////
 			//   RECUPERATION DES CONFIGURATIONS DES ARTICLES   //
-			require_once(LIBS.DS.'config_magik.php'); 										//Import de la librairie de gestion des fichiers de configuration des posts
+			$postsConfigs = $this->_get_posts_configs();
+			/*require_once(LIBS.DS.'config_magik.php'); 								//Import de la librairie de gestion des fichiers de configuration des posts
 			$cfg = new ConfigMagik(CONFIGS_FILES.DS.'posts.ini', false, false); 		//Création d'une instance
-			$postsConfigs = $cfg->keys_values();											//Récupération des configurations
+			$postsConfigs = $cfg->keys_values();										//Récupération des configurations*/
 			//////////////////////////////////////////////////////
-		
+			
 			$datas['displayPosts'] = true;
 		
 			//Récupération des types d'articles
@@ -1151,6 +1153,7 @@ class AppController extends Controller {
  * @version 0.1 - 27/06/2014 by FI
  * @version 0.2 - 24/04/2015 by FI - Gestion de la traduction
  * @version 0.3 - 18/04/2016 by FI - Déplacement des fichiers de traduction dans le dossier de la langue si celle-ci est définie
+ * @version 0.4 - 28/07/2016 by FI - Mise en place de l'utilisation de la fonction _get_posts_configs() pour la récupération des configurations sur l'affichage des articles 
  */	
 	protected function _get_posts() {
 		
@@ -1166,9 +1169,10 @@ class AppController extends Controller {
 		
 			//////////////////////////////////////////////////////
 			//   RECUPERATION DES CONFIGURATIONS DES ARTICLES   //
-			require_once(LIBS.DS.'config_magik.php'); 									//Import de la librairie de gestion des fichiers de configuration des posts
+			$postsConfigs = $this->_get_posts_configs();
+			/*require_once(LIBS.DS.'config_magik.php'); 								//Import de la librairie de gestion des fichiers de configuration des posts
 			$cfg = new ConfigMagik(CONFIGS_FILES.DS.'posts.ini', false, false); 		//Création d'une instance
-			$postsConfigs = $cfg->keys_values();										//Récupération des configurations
+			$postsConfigs = $cfg->keys_values();										//Récupération des configurations*/
 			//////////////////////////////////////////////////////
 						
 			$conditions = array(
@@ -1204,6 +1208,28 @@ class AppController extends Controller {
 		}
 		
 		return $posts;
+	}
+	
+/**
+ * Cette fonction permet de récupérer les configurations d'affichage des articles
+ *
+ * @return	array Liste des configurations d'affichage des articles
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 28/07/2016 by FI
+ */		
+	protected function _get_posts_configs() {
+		
+		$vars 			= $this->get('vars');
+		$websiteParams 	= $vars['websiteParams'];
+		$postsConfigs = array(
+			'search' 				=> $websiteParams['posts_search'], 	
+			'order' 				=> $websiteParams['posts_order'], 	
+			'home_page_limit' 		=> $websiteParams['posts_home_page_limit'], 	
+			'home_page_default' 	=> $websiteParams['posts_home_page_default'], 	
+			'default_page' 			=> $websiteParams['posts_default_page'] 	
+		);
+		return $postsConfigs;
 	}
 	
 /**

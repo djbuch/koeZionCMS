@@ -88,7 +88,7 @@ class ConfigsController extends AppController {
  * @version 0.1 - 22/03/2012 by FI
  * @version 0.2 - 18/04/2012 by FI - Passage des traitements dans une fonction privée pour mutualiser
  */
-	public function backoffice_posts_liste() { $this->_proceed_datas_ini(CONFIGS_FILES.DS.'posts.ini', 'backoffice/configs/posts_liste'); }
+	//public function backoffice_posts_liste() { $this->_proceed_datas_ini(CONFIGS_FILES.DS.'posts.ini', 'backoffice/configs/posts_liste'); }
 	
 /**
  * Cette fonction va permettre l'affichage des configurations des portfolios
