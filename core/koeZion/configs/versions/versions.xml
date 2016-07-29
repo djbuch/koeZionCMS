@@ -1,5 +1,16 @@
 ﻿<versions>
 	<version>
+		<name>Version du 29/07/2016</name>
+		<num>20160729.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FF" type="code">Reprise de la fonction d'ajout et d'édition d'un site qui à la mise en place des configurations des articles</task>			
+			<task author="FF" type="code">Mise en place de la configuration de la publication automatique des slides et des focus</task>			
+			<task author="FF" type="bdd">Modification de la table websites</task>			
+			<task author="FF" type="code">Modification du fichier d'installation contenant la structure de la BDD websites</task>			
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 28/07/2016</name>
 		<num>20160728.001</num>
 		<supervisor>KoéZionCMS</supervisor>

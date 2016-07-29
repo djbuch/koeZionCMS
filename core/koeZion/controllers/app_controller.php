@@ -1227,7 +1227,8 @@ class AppController extends Controller {
 			'order' 				=> $websiteParams['posts_order'], 	
 			'home_page_limit' 		=> $websiteParams['posts_home_page_limit'], 	
 			'home_page_default' 	=> $websiteParams['posts_home_page_default'], 	
-			'default_page' 			=> $websiteParams['posts_default_page'] 	
+			'default_page' 			=> $websiteParams['posts_default_page'],
+			'display_by_default' 	=> $websiteParams['posts_display_by_default']
 		);
 		return $postsConfigs;
 	}

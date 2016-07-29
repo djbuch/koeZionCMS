@@ -32,7 +32,8 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
 				    	</div>   	
 				    	<div class="tab-pane" id="diffusion">	
 				    		<div class="box-header bg-light-blue">
-								<h4><i class="fa fa-copy"></i> <?php echo _("Diffusion"); ?></h4>                  
+								<h4 class="pull-left"><i class="fa fa-copy"></i> <?php echo _("Diffusion"); ?></h4>            
+								<a id="btnDisplayPostAllWebsites" class="btn btn-flat btn-default btn-xs pull-right check_all" href="#"><i class="fa fa-list-ul"></i> <?php echo _("Diffuser cet focus sur tous les sites"); ?></a>      
                 			</div>               
                 			<div class="callout callout-info">
 			                	<p><?php echo _('Pour diffuser ce focus dans un ou plusieurs sites cochez la ou les cases correspondantes')?>.</p>
@@ -42,8 +43,8 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
 								
 								$websiteCategories = $this->request('Categories', 'request_tree_list', array('websiteId' => $websiteId));
 								?><h5 class="form-title"><?php echo _("Site")." ".$websiteName; ?></h5><?php
-								echo $helpers['Form']->input('CategoriesFocusWebsite.'.$websiteId.'.display', _('Diffuser dans le site').' '.$websiteName, array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour diffuser ce focus dans le site".' '.$websiteName)));							
-								echo $helpers['Form']->input('CategoriesFocusWebsite.'.$websiteId.'.display_home_page', _("Afficher ce focus sur la page d'accueil du site").' '.$websiteName, array('type' => 'checkbox', 'tooltip' => _("En cochant cette case vous afficherez ce focus sur la page d'accueil du site".' '.$websiteName)));
+								echo $helpers['Form']->input('CategoriesFocusWebsite.'.$websiteId.'.display', _('Diffuser dans le site').' '.$websiteName, array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour diffuser ce focus dans le site").' '.$websiteName, 'class' => 'display_on_website', 'checked' => $websitesSession['details'][$websiteId]['focus_display_by_default']));							
+								echo $helpers['Form']->input('CategoriesFocusWebsite.'.$websiteId.'.display_home_page', _("Afficher ce focus sur la page d'accueil du site").' '.$websiteName, array('type' => 'checkbox', 'tooltip' => _("En cochant cette case vous afficherez ce focus sur la page d'accueil du site").' '.$websiteName, 'checked' => $websitesSession['details'][$websiteId]['focus_home_page_default']));
 								
 								if($websiteCategories) {
 									?>

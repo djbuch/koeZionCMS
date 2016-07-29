@@ -1,5 +1,41 @@
 ﻿<versions>
 	<version>
+		<name>Version du 29/07/2016</name>
+		<num>20160729.003</num>
+		<supervisor>KoéZionCMS</supervisor>		
+		<tasks>
+			<task author="FI">
+				ALTER TABLE `websites`  
+					ADD `slide_display_by_default` INT NOT NULL COMMENT 'Indique si il faut poster par défaut les slides sur la home page'  AFTER `posts_display_by_default`,  
+					ADD `slide_home_page_default` INT NOT NULL COMMENT 'Indique si il faut (ou non) afficher, par défaut, les slides dans ce site'  AFTER `slide_display_by_default`,  
+					ADD `focus_display_by_default` INT NOT NULL COMMENT 'Indique si il faut poster par défaut les focus sur la home page'  AFTER `slide_home_page_default`,  
+					ADD `focus_home_page_default` INT NOT NULL COMMENT 'Indique si il faut (ou non) afficher, par défaut, les focus dans ce site'  AFTER `focus_display_by_default`;
+			</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 29/07/2016</name>
+		<num>20160729.002</num>
+		<supervisor>KoéZionCMS</supervisor>		
+		<tasks>
+			<task author="FI">
+				ALTER TABLE `websites`
+  					DROP `search_engine_position`,
+  					DROP `slider_type`;
+			</task>
+		</tasks>	
+	</version>
+	<version>
+		<name>Version du 29/07/2016</name>
+		<num>20160729.001</num>
+		<supervisor>KoéZionCMS</supervisor>		
+		<tasks>
+			<task author="FI">
+				ALTER TABLE `websites`  ADD `posts_display_by_default` INT NOT NULL COMMENT 'Indique si il faut (ou non) afficher, par défaut, les articles dans ce site'  AFTER `posts_default_page`;
+			</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 28/07/2016</name>
 		<num>20160728.002</num>
 		<supervisor>KoéZionCMS</supervisor>		

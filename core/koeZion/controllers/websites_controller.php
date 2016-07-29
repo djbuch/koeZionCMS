@@ -31,10 +31,9 @@ class WebsitesController extends AppController {
  * @version 0.4 - 11/04/2014 by FI - Reprise de la fonction pour alléger le nombre de requêtes
  * @version 0.5 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  * @version 0.6 - 02/04/2015 by FI - Modification de la gestion globale de la fonction, rajout de l'utilisation de la fonction parente afin de pouvoir utiliser la gestion de la traduction
+ * @version 0.7 - 29/07/2017 by FI - Déplacement de la fonction _init_datas() à la fin de la fonction 
  */
 	function backoffice_add($redirect = false, $forceInsert = false) {
-				
-		$this->_init_datas(); //Initialisation des données
 		
 		//Si des données sont postées on va effectuer la modification de certaines données à sauvegarder
 		if($this->request->data) {
@@ -54,6 +53,8 @@ class WebsitesController extends AppController {
 			$this->redirect('backoffice/websites/index'); //Redirection sur la page d'accueil
 			
 		}
+				
+		$this->_init_datas(); //Initialisation des données
 	}	
 	
 /**
@@ -68,10 +69,9 @@ class WebsitesController extends AppController {
  * @version 0.4 - 11/04/2014 by FI - Reprise de la fonction pour alléger le nombre de requêtes
  * @version 0.5 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  * @version 0.6 - 02/04/2015 by FI - Modification de la gestion globale de la fonction, rajout de l'utilisation de la fonction parente afin de pouvoir utiliser la gestion de la traduction
+ * @version 0.7 - 29/07/2017 by FI - Déplacement de la fonction _init_datas() à la fin de la fonction 
  */
 	function backoffice_edit($id, $redirect = false) {
-		
-		$this->_init_datas(); //Initialisation des données
 	
 		//Si des données sont postées on va effectuer la modification de certaines données à sauvegarder	
 		if($this->request->data) {
@@ -92,6 +92,8 @@ class WebsitesController extends AppController {
 			$this->_edit_session(); //Edition de la variable de Session
 			$this->redirect('backoffice/websites/index'); //Redirection sur la page d'accueil
 		}
+		
+		$this->_init_datas(); //Initialisation des données
 	}	
 
 /**
@@ -172,6 +174,7 @@ class WebsitesController extends AppController {
  * @version 0.2 - 07/06/2012 by FI - Modification de la gestion des couleurs on travaille maintenant avec des templates
  * @version 0.3 - 17/12/2013 by FI - Modification de la récupération des templates suite à la mise en place de l'ajax dans le formulaire
  * @version 0.4 - 30/03/2016 by FI - Rajout de la récupération des catégories
+ * @version 0.5 - 29/07/2016 by FI - Récupération des catégories que lorsque le existe déjà, sinon il est impossible de pouvoir récupérer des catégories
  * @todo voir si on peut pas faire autrement que $this->templatesList
  */	
 	protected function _init_datas() {
@@ -205,9 +208,13 @@ class WebsitesController extends AppController {
 		$currentTemplateId = $websiteDatas[CURRENT_WEBSITE_ID]['template_id'];
 		$this->set('currentTemplateId', $currentTemplateId);
 		
-		$this->load_model('Category');
-		$categoriesList = $this->Category->getTreeList(false); //On récupère les catégories
-		$this->set('categoriesList', $categoriesList); //On les envois à la vue
+		if(isset($this->request->data) && !empty($this->request->data)) {
+			
+			$this->load_model('Category');
+			$this->Category->manageWebsiteId = false; //On désactive la gestion automatique de la récupération par l'identifiant du site pour pouvoir le surcharger par le site en cours de modification
+			$categoriesList = $this->Category->getTreeList(false, array('conditions' => array('website_id' => $this->request->data['id']))); //On récupère les catégories
+			$this->set('categoriesList', $categoriesList); //On les envois à la vue
+		}
 	}
 		
 /**

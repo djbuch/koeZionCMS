@@ -15,6 +15,8 @@
 				    	<li><a href="#txtemailsuser" data-toggle="tab"><i class="fa fa-envelope"></i> <?php echo _("Textes/emails nouvel utilisateur"); ?></a></li>
 				    	<li><a href="#contactpage" data-toggle="tab"><i class="fa fa-map-marker"></i> <?php echo _("Page contact"); ?></a></li>
 				    	<li><a href="#postsconfigs" data-toggle="tab"><i class="fa fa-comments"></i> <?php echo _("Configurations articles"); ?></a></li>
+				    	<li><a href="#slidesconfigs" data-toggle="tab"><i class="fa fa-exchange"></i> <?php echo _("Configurations slides"); ?></a></li>
+				    	<li><a href="#focusconfigs" data-toggle="tab"><i class="fa fa-plus-square-o"></i> <?php echo _("Configurations focus"); ?></a></li>
 				    	<li><a href="#seo" data-toggle="tab"><i class="fa fa-search"></i> <?php echo _("SEO"); ?></a></li>
 				    	<li><a href="#options" data-toggle="tab"><i class="fa fa-plug"></i> <?php echo _("Options"); ?></a></li>
 				    	<li><a href="#secure" data-toggle="tab"><i class="fa fa-minus-circle"></i> <?php echo _("Sécurité"); ?></a></li>
@@ -159,8 +161,17 @@
 				    		<div class="box-header bg-light-blue">
 								<h4><i class="fa fa-comments"></i> <?php echo _("Configurations articles"); ?></h4>                  
                 			</div>  	
-							<?php 
-							echo $helpers['Form']->input('posts_default_page', _('Page articles par défaut'), array('type' => 'select', 'datas' => $categoriesList, 'firstElementList' => _('Sélectionnez la page articles par défaut'), 'tooltip' => _("Indiquez la page articles par défaut")));										 
+							<?php
+							echo $helpers['Form']->input('posts_display_by_default', _('Afficher par défaut dans ce site'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour indiquer si il faut (ou non) afficher, par défaut, les articles dans ce site")));
+							if(isset($categoriesList)) { 
+								$datas = $categoriesList;
+								$firstElementList = _('Sélectionnez la page articles par défaut');
+							} else {
+								$datas = array();
+								$firstElementList = _("Vous pourrez sélectionner la page articles par défaut une fois que l'arborescence du site sera créée");
+							}
+							echo $helpers['Form']->input('posts_default_page', _('Page articles par défaut'), array('type' => 'select', 'datas' => $datas, 'firstElementList' => $firstElementList, 'tooltip' => _("Indiquez la page articles par défaut")));
+							
 							$typeSearch = array(
 								'large' => _("Recherche large (Affiche les articles ayant au moins une correspondance avec un type d'article sélectionné)"),
 								'stricte' => _("Recherche stricte (Affiche les articles ayant toutes les correspondances avec les types d'articles sélectionnés)")
@@ -174,6 +185,24 @@
 							echo $helpers['Form']->input('posts_order', _('Trier par'), array('type' => 'select', 'datas' => $orderType, 'tooltip' => _("Indiquer le tri à mettre en place pour l'affichage des articles dans les pages")));
 							echo $helpers['Form']->input('posts_home_page_default', _('Diffuser par défaut sur la home page'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour diffuser cet article par défaut sur la home page")));
 							echo $helpers['Form']->input('posts_home_page_limit', _('Limite articles home page'), array('tooltip' => _("Indiquez ici le nombre d'articles maximum à récupérer sur la page d'accueil")));														
+							?>
+                		</div>
+				    	<div class="tab-pane" id="slidesconfigs">	
+				    		<div class="box-header bg-light-blue">
+								<h4><i class="fa fa-exchange"></i> <?php echo _("Configurations slides"); ?></h4>                  
+                			</div>  	
+							<?php
+							echo $helpers['Form']->input('slide_display_by_default', _('Afficher par défaut dans ce site'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour indiquer si il faut (ou non) afficher, par défaut, les slides dans ce site")));
+							echo $helpers['Form']->input('slide_home_page_default', _('Diffuser par défaut sur la home page'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour diffuser ce slide par défaut sur la home page")));
+							?>
+                		</div>
+				    	<div class="tab-pane" id="focusconfigs">	
+				    		<div class="box-header bg-light-blue">
+								<h4><i class="fa fa-plus-square-o"></i> <?php echo _("Configurations focus"); ?></h4>                  
+                			</div>  	
+							<?php
+							echo $helpers['Form']->input('focus_display_by_default', _('Afficher par défaut dans ce site'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour indiquer si il faut (ou non) afficher, par défaut, les focus dans ce site")));
+							echo $helpers['Form']->input('focus_home_page_default', _('Diffuser par défaut sur la home page'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour diffuser ce focus par défaut sur la home page")));
 							?>
                 		</div>
 				    	<div class="tab-pane" id="seo">	
@@ -190,15 +219,7 @@
 				    		<div class="box-header bg-light-blue">
 								<h4><i class="fa fa-plug"></i> <?php echo _("Options"); ?></h4>                  
                 			</div>  	
-							<?php 
-							$positionList = array('header' => _("Dans le header"), 'menu' => _("Dans le menu"));
-							echo $helpers['Form']->input('search_engine_position', _('Position du moteur de recherche'), array('type' => 'select', 'datas' => $positionList, 'firstElementList' => _("Pas de moteur de recherche")));			
-							$sliderTypesList = array(
-								1 => _("Slider simple"), 
-								2 => _("Slider 3D"), 
-								3 => _("Slider Vidéo")
-							);
-							echo $helpers['Form']->input('slider_type', _('Type de slider'), array('type' => 'select', 'datas' => $sliderTypesList));
+							<?php
 							echo $helpers['Form']->upload_files('favicon', array('label' => _("Icône du site")));
 							echo $helpers['Form']->input('hook_filename', _('Nom du fichier hooks'), array('tooltip' => _("Indiquez ici le nom du du fichier hooks, ce nom sera recherché dans les dossiers /configs/hooks/* (Si plusieurs fichiers les séparer par un ;)")));
 							echo $helpers['Form']->input('robots_file', _('Texte fichier robots.txt'), array('type' => 'textarea', 'tooltip' => _("Indiquez ici le texte à afficher dans le fichier robots.txt.")));
@@ -221,10 +242,10 @@
 								<h4><i class="fa fa-line-chart"></i> <?php echo _("Google Analytics"); ?></h4>                  
                 			</div>  	
 							<?php 
-							echo $helpers['Form']->input('ga_login', _('Google analytics Login'), array('tooltip' => _("Indiquez ici votre identifiant de connexion à Google Analytics")));
-							echo $helpers['Form']->input('ga_password', _('Google analytics Password'), array('tooltip' => _("Indiquez ici votre mot de passe de connexion à Google Analytics")));
-							echo $helpers['Form']->input('ga_id', _('Google analytics ID'), array('tooltip' => _("Indiquez ici l'ID du profil Google Analytics (Disponible les paramètres du profil)")));
-							echo $helpers['Form']->input('ga_code', _('Code Google Analytics'), array('type' => 'textarea', 'tooltip' => _("Indiquez ici le code de suivi Google Analytics")));			
+							//echo $helpers['Form']->input('ga_login', _('Google analytics Login'), array('tooltip' => _("Indiquez ici votre identifiant de connexion à Google Analytics")));
+							//echo $helpers['Form']->input('ga_password', _('Google analytics Password'), array('tooltip' => _("Indiquez ici votre mot de passe de connexion à Google Analytics")));
+							//echo $helpers['Form']->input('ga_id', _('Google analytics ID'), array('tooltip' => _("Indiquez ici l'ID du profil Google Analytics (Disponible les paramètres du profil)")));
+							echo $helpers['Form']->input('ga_code', _('Code Google Analytics'), array('type' => 'textarea', 'tooltip' => _("Indiquez ici le code de suivi Google Analytics"), 'rows' => 20, 'cols' => 30));			
 							?>
                 		</div>
 				    	<div class="tab-pane" id="connect">	
