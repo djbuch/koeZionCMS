@@ -168,8 +168,10 @@ $currentWebsite 	= $websitesSession['current']; //Récupération du site courant
                 			</div>           
 							<?php 
 							$checked = '';
-							if($params['action'] == 'edit') { $checked = 'checked'; }
-							echo $helpers['Form']->input('dont_change_modified_date', _('Ne pas changer la date de modification'), array('type' => 'checkbox', 'checked' => $checked, 'tooltip' => _("Cochez cette case pour ne pas changer automatiquement la date de modification de l'article")));
+							if($params['action'] == 'edit') { 
+								$checked = 'checked'; 
+								echo $helpers['Form']->input('dont_change_modified_date', _('Ne pas changer la date de modification'), array('type' => 'checkbox', 'checked' => $checked, 'tooltip' => _("Cochez cette case pour ne pas changer automatiquement la date de modification de l'article")));
+							}							
 							echo $helpers['Form']->input('display_link', _("Afficher un lien sous forme de bouton à la suite de l'article"), array('type' => 'checkbox', 'tooltip' => _("En cochant cette case vous afficherez automatiquement le lien pour se rendre sur le détail de l'article, par défaut le titre de l'article sera également cliquable")));						
 							echo $helpers['Form']->input('redirect_to', _('Url de redirection'), array('tooltip' => _("Remplissez ce champ si souhaitez, à partir de cet article, faire une redirection vers une url de votre choix, il ne vous sera alors pas nécessaire de saisir le descriptif long")));			
 							

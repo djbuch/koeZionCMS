@@ -1625,6 +1625,7 @@ class Model extends Object {
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 26/08/2012 by FI
+ * @version 0.2 - 02/08/2016 by FI - Mise en place de contrôles sur les champs
  */
 	public function make_search_index($datasToSave, $id, $action) {
 		
@@ -1663,8 +1664,12 @@ class Model extends Object {
 			///////////////////////
 			//Génération de l'url//
 			$url = $urlParams['url'];
+			if(is_array($id)) { $id = current($id); };
 			$url = str_replace(':id', $id, $url);
-			foreach($urlParams['params'] as $v) { $url = str_replace(':'.$v, $datasToSave[':'.$v], $url); }
+			foreach($urlParams['params'] as $v) { 
+			
+				if(isset($datasToSave[':'.$v])) { $url = str_replace(':'.$v, $datasToSave[':'.$v], $url); }
+			}
 			$url = Router::url($url);
 			
 			//En cas de mise à jour on supprime l'ancienne valeur
@@ -1672,7 +1677,7 @@ class Model extends Object {
 			
 			///////////////////////////////////////
 			//Sauvegarde des données de recherche//
-			if($datasToSave[':online'] == 1) {
+			if(isset($datasToSave[':online']) && $datasToSave[':online'] == 1) {
 				
 				$searchDatas = array(
 					'model' => get_class($this),
