@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 04/08/2016</name>
+		<num>20160804.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="FF" type="code">PostsController::_save_assoc_datas_posts_categories_websites_and_posts_posts_types : Rajout d'un contrôle lors de l'ajout automatique des types d'articles</task>			
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 03/08/2016</name>
 		<num>20160803.001</num>
 		<supervisor>KoéZionCMS</supervisor>

@@ -648,6 +648,7 @@ class PostsController extends AppController {
  * @access 	protected
  * @author 	koéZionCMS
  * @version 0.1 - 30/11/2015 by FI
+ * @version 0.2 - 04/08/2016 by FI - Rajout d'un contrôle lors de l'ajout automatique des types d'articles
  */	
 	protected function _save_assoc_datas_posts_categories_websites_and_posts_posts_types($postId, $deleteAssoc = false) {
 		
@@ -677,7 +678,7 @@ class PostsController extends AppController {
 					
 					///////////////////////////////////////////////////
 					//    GESTION DE L'AJOUT DES TYPES D'ARTICLES    //
-					if(isset($this->request->data['posts_type_id']))  {
+					if(isset($this->request->data['posts_type_id']) && !empty($websiteDatas['category_id']))  {
 			
 						$postsTypes = $this->request->data['posts_type_id'];
 						foreach($postsTypes as $postsTypeId => $isPostsTypeChecked) {
