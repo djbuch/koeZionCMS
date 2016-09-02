@@ -1217,21 +1217,24 @@ class AppController extends Controller {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 28/07/2016 by FI
+ * @version 0.2 - 02/09/2016 by SS - Rajout de valeurs par défaut
  */		
-	protected function _get_posts_configs() {
-		
-		$vars 			= $this->get('vars');
-		$websiteParams 	= $vars['websiteParams'];
-		$postsConfigs = array(
-			'search' 				=> $websiteParams['posts_search'], 	
-			'order' 				=> $websiteParams['posts_order'], 	
-			'home_page_limit' 		=> $websiteParams['posts_home_page_limit'], 	
-			'home_page_default' 	=> $websiteParams['posts_home_page_default'], 	
-			'default_page' 			=> $websiteParams['posts_default_page'],
-			'display_by_default' 	=> $websiteParams['posts_display_by_default']
-		);
-		return $postsConfigs;
-	}
+protected function _get_posts_configs() {
+   
+   $vars       		= $this->get('vars');
+   $websiteParams   = $vars['websiteParams'];
+   $postsConfigs 	= array(
+      'search'            	=> (!empty($websiteParams['posts_search']) 				? $websiteParams['posts_search'] 				: 'large'),
+      'order'            	=> (!empty($websiteParams['posts_order']) 				? $websiteParams['posts_order'] 				: 'created'),
+      'home_page_limit'     => (!empty($websiteParams['posts_home_page_limit']) 	? $websiteParams['posts_home_page_limit'] 		: 10),
+      'home_page_default'   => (!empty($websiteParams['posts_home_page_default']) 	? $websiteParams['posts_home_page_default'] 	: 0),
+      'default_page'        => (!empty($websiteParams['posts_default_page']) 		? $websiteParams['posts_default_page'] 			: 0),
+      'display_by_default'  => (!empty($websiteParams['posts_display_by_default']) 	? $websiteParams['posts_display_by_default'] 	: 0)
+   );
+   return $postsConfigs;
+}
+
+	
 	
 /**
  * Cette fonction permet de récupérer les types d'articles

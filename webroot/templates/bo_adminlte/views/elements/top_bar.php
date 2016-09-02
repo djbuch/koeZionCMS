@@ -42,6 +42,11 @@
 				
 				?>
 				<li>
+					<a href="<?php echo Router::url('backoffice/configs/delete_cache'); ?>">
+						<i class="fa fa-refresh"></i> <?php echo _("Supprimer le cache"); ?>
+					</a>
+				</li>
+				<li>
 					<a href="<?php echo Router::url('backoffice/configs/ckfinder_file_explorer'); ?>" target="_blank">
 						<i class="fa fa-picture-o"></i> <?php echo _('Explorateur de fichiers'); ?>
 					</a>

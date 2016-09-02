@@ -897,6 +897,7 @@ class simple_html_dom {
     // prepare HTML data and init everything
     protected function prepare($str, $lowercase=true, $stripRN=true, $defaultBRText=DEFAULT_BR_TEXT) {
         $this->clear();
+        if(is_array($str)) { $str = current($str); }
 
         // set the length of content before we do anything to it.
         $this->size = strlen($str);
@@ -962,7 +963,7 @@ class simple_html_dom {
             if (!empty($el))
             {
                 $fullvalue = $el->content;
-                if (is_object($debugObject)) {$debugObject->debugLog(2, 'meta content-type tag found' . $fullValue);}
+                if (is_object($debugObject)) {$debugObject->debugLog(2, 'meta content-type tag found' . $fullvalue);}
 
                 if (!empty($fullvalue))
                 {

@@ -1,10 +1,21 @@
 ﻿<versions>
 	<version>
+		<name>Version du 02/09/2016</name>
+		<num>20160902.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>
+			<task author="SS" type="code">Gestion des magic quotes si version PHP antérieur à 5.3.0</task>			
+			<task author="SS" type="code">Correction librairie simple_html_dom</task>			
+			<task author="FI" type="code">Rajout du bouton vider le cache dans le header</task>			
+			<task author="FI" type="code">Correction gestion du cache pour les focus</task>			
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 04/08/2016</name>
 		<num>20160804.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FF" type="code">PostsController::_save_assoc_datas_posts_categories_websites_and_posts_posts_types : Rajout d'un contrôle lors de l'ajout automatique des types d'articles</task>			
+			<task author="FI" type="code">PostsController::_save_assoc_datas_posts_categories_websites_and_posts_posts_types : Rajout d'un contrôle lors de l'ajout automatique des types d'articles</task>			
 		</tasks>
 	</version>
 	<version>
@@ -12,7 +23,7 @@
 		<num>20160803.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FF" type="code">Corrections mineures</task>			
+			<task author="FI" type="code">Corrections mineures</task>			
 		</tasks>
 	</version>
 	<version>
@@ -20,10 +31,10 @@
 		<num>20160729.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FF" type="code">Reprise de la fonction d'ajout et d'édition d'un site qui à la mise en place des configurations des articles</task>			
-			<task author="FF" type="code">Mise en place de la configuration de la publication automatique des slides et des focus</task>			
-			<task author="FF" type="bdd">Modification de la table websites</task>			
-			<task author="FF" type="code">Modification du fichier d'installation contenant la structure de la BDD websites</task>			
+			<task author="FI" type="code">Reprise de la fonction d'ajout et d'édition d'un site qui à la mise en place des configurations des articles</task>			
+			<task author="FI" type="code">Mise en place de la configuration de la publication automatique des slides et des focus</task>			
+			<task author="FI" type="bdd">Modification de la table websites</task>			
+			<task author="FI" type="code">Modification du fichier d'installation contenant la structure de la BDD websites</task>			
 		</tasks>
 	</version>
 	<version>
@@ -31,10 +42,10 @@
 		<num>20160728.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FF" type="bdd">Modification de la structure de la table websites</task>
-			<task author="FF" type="code">AppController::_get_posts_category : Mise en place de l'utilisation de la fonction _get_posts_configs() pour la récupération des configurations sur l'affichage des articles</task>
-			<task author="FF" type="code">AppController::_get_posts : Mise en place de l'utilisation de la fonction _get_posts_configs() pour la récupération des configurations sur l'affichage des articles</task>
-			<task author="FF" type="code">Suppression de l'ancienne version de récupération des configurations des articles via le fichier ini</task>			
+			<task author="FI" type="bdd">Modification de la structure de la table websites</task>
+			<task author="FI" type="code">AppController::_get_posts_category : Mise en place de l'utilisation de la fonction _get_posts_configs() pour la récupération des configurations sur l'affichage des articles</task>
+			<task author="FI" type="code">AppController::_get_posts : Mise en place de l'utilisation de la fonction _get_posts_configs() pour la récupération des configurations sur l'affichage des articles</task>
+			<task author="FI" type="code">Suppression de l'ancienne version de récupération des configurations des articles via le fichier ini</task>			
 		</tasks>
 	</version>
 	<version>
@@ -42,7 +53,7 @@
 		<num>20160726.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FF" type="code">HtmlParentHelper::css : Gestion des extensions php dans les CSS</task>
+			<task author="FI" type="code">HtmlParentHelper::css : Gestion des extensions php dans les CSS</task>
 		</tasks>
 	</version>
 	<version>
@@ -50,7 +61,7 @@
 		<num>20160722.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FF" type="code">Model::upload_files : Mise en place du processus de retaille de la largeur des images</task>
+			<task author="FI" type="code">Model::upload_files : Mise en place du processus de retaille de la largeur des images</task>
 		</tasks>
 	</version>
 	<version>
@@ -58,9 +69,9 @@
 		<num>20160719.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FF" type="code">Rajout du composant Datas</task>
-			<task author="FF" type="code">CategoriesController::_get_right_buttons_category : déplacement de la fonction dans le composant Datas</task>
-			<task author="FF" type="code">Controller::$components : rajout du chargement du composant Datas</task>
+			<task author="FI" type="code">Rajout du composant Datas</task>
+			<task author="FI" type="code">CategoriesController::_get_right_buttons_category : déplacement de la fonction dans le composant Datas</task>
+			<task author="FI" type="code">Controller::$components : rajout du chargement du composant Datas</task>
 		</tasks>
 	</version>
 	<version>
@@ -68,8 +79,8 @@
 		<num>20160706.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>
-			<task author="FF" type="code">Rajout du plugin vidéo dans CkEditor</task>
-			<task author="FF" type="code">EmailComponent::replace_links : Correction passage de paramètres à la fonction _format_mail_content</task>
+			<task author="FI" type="code">Rajout du plugin vidéo dans CkEditor</task>
+			<task author="FI" type="code">EmailComponent::replace_links : Correction passage de paramètres à la fonction _format_mail_content</task>
 		</tasks>
 	</version>
 	<version>

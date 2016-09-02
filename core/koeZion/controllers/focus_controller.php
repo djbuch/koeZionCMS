@@ -147,11 +147,12 @@ class FocusController extends AppController {
  * @author 	koéZionCMS
  * @version 0.1 - 20/12/2012 by FI
  * @version 0.2 - 09/12/2015 by FI - Rajout de la gestion de la publication dans les pages
+ * @version 0.3 - 02/09/2016 by FI - Correction du dossier de stockage des focus
  */  
 	protected function _init_caching($params = null) {	
 	
 		$indexBase 		= 'website_'.CURRENT_WEBSITE_ID.'_';
-		$cachingPath 	= TMP.DS.'cache'.DS.'variables'.DS.'Sliders';
+		$cachingPath 	= TMP.DS.'cache'.DS.'variables'.DS.'Focus';
 		if($this->Focus->fieldsToTranslate) { $cachingPath .= DS.DEFAULT_LANGUAGE; }
 		
 		$this->cachingFiles[$indexBase.'0'] = $cachingPath.DS.'website_'.CURRENT_WEBSITE_ID.'_0.cache';

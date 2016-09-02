@@ -33,7 +33,29 @@ ini_set('error_log', $logFile); //Définition du chemin du fichier de logs
 
 //Activer / Désactiver la compression ZLIB
 $zlibOutputCompression = isset($coreConfs['outpout_compression']) && $coreConfs['outpout_compression'] == '1' ? "On" : "Off";
-ini_set("zlib.output_compression", $zlibOutputCompression); 
+ini_set("zlib.output_compression", $zlibOutputCompression);
+
+/////////////////////////////////////////////////////
+//   SUPPRESSION DES MAGIC QUOTES SI PHP < 5.3.0   //
+//http://php.net/manual/fr/security.magicquotes.php
+if(get_magic_quotes_gpc()) {
+
+	$process = array(&$_GET, &$_POST, &$_COOKIE, &$_REQUEST);
+	while(list($key, $val) = each($process)) {
+
+		foreach($val as $k => $v) {
+
+			unset($process[$key][$k]);
+			if(is_array($v)) {
+
+				$process[$key][stripslashes($k)] = $v;
+				$process[] = &$process[$key][stripslashes($k)];
+			} 
+			else { $process[$key][stripslashes($k)] = stripslashes($v); }
+		}
+	}
+	unset($process);
+}
 
 ///////////////////////////////////////////////////////////////////
 //    MISE EN PLACE DES LIENS VERS LES DIFFERENTES LIBRAIRIES    //

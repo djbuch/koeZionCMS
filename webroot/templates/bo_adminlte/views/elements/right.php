@@ -8,7 +8,6 @@
               <li><a href="<?php echo Router::url('backoffice/configs/mailer_liste'); ?>"><i class="fa fa-caret-right"></i> <?php echo _("Envoi de mails"); ?></a></li>
               <li><a href="<?php echo Router::url('backoffice/configs/router_liste'); ?>"><i class="fa fa-caret-right"></i> <?php echo _("Gestion des routes"); ?></a></li>
               <li><a href="<?php echo Router::url('backoffice/configs/security_code_liste'); ?>"><i class="fa fa-caret-right"></i> <?php echo _("Code sécurité tâches CRON"); ?></a></li>
-              <li><a href="<?php echo Router::url('backoffice/configs/delete_cache'); ?>"><i class="fa fa-caret-right"></i> <?php echo _("Supprimer le cache"); ?></a></li>
               <li><a href="<?php echo Router::url('backoffice/configs/phpinfo'); ?>"><i class="fa fa-caret-right"></i> <?php echo _("PHPINFO"); ?></a></li>              
             </ul>
 
