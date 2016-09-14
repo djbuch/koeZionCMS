@@ -32,8 +32,11 @@ class WebsitesController extends AppController {
  * @version 0.5 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  * @version 0.6 - 02/04/2015 by FI - Modification de la gestion globale de la fonction, rajout de l'utilisation de la fonction parente afin de pouvoir utiliser la gestion de la traduction
  * @version 0.7 - 29/07/2017 by FI - Déplacement de la fonction _init_datas() à la fin de la fonction 
+ * @version 0.8 - 14/09/2017 by FI - Déplacement de la fonction _init_datas() au début de la fonction...  
  */
 	function backoffice_add($redirect = false, $forceInsert = false) {
+	
+		$this->_init_datas(); //Initialisation des données
 		
 		//Si des données sont postées on va effectuer la modification de certaines données à sauvegarder
 		if($this->request->data) {
@@ -51,10 +54,7 @@ class WebsitesController extends AppController {
 			$this->_delete_cache(); //Suppression du cache global
 			$this->_edit_session(); //Edition de la variable de Session
 			$this->redirect('backoffice/websites/index'); //Redirection sur la page d'accueil
-			
-		}
-				
-		$this->_init_datas(); //Initialisation des données
+		}		
 	}	
 	
 /**
@@ -70,12 +70,15 @@ class WebsitesController extends AppController {
  * @version 0.5 - 03/10/2014 by FI - Correction erreur surcharge de la fonction, rajout de tous les paramètres
  * @version 0.6 - 02/04/2015 by FI - Modification de la gestion globale de la fonction, rajout de l'utilisation de la fonction parente afin de pouvoir utiliser la gestion de la traduction
  * @version 0.7 - 29/07/2017 by FI - Déplacement de la fonction _init_datas() à la fin de la fonction 
+ * @version 0.8 - 14/09/2017 by FI - Déplacement de la fonction _init_datas() au début de la fonction...
  */
 	function backoffice_edit($id, $redirect = false) {
-	
+		
+		$this->_init_datas(); //Initialisation des données
+		
 		//Si des données sont postées on va effectuer la modification de certaines données à sauvegarder	
 		if($this->request->data) {
-		
+			
 			//Mise à jour des informations
 			$this->request->data = $this->_update_template($this->request->data);
 			$this->request->data = $this->_update_txt_mails($this->request->data);
@@ -90,10 +93,8 @@ class WebsitesController extends AppController {
 			$this->_check_cache_configs(); //Modification des données en cache
 			$this->_delete_cache(); //Suppression du cache global
 			$this->_edit_session(); //Edition de la variable de Session
-			$this->redirect('backoffice/websites/index'); //Redirection sur la page d'accueil
+			//$this->redirect('backoffice/websites/index'); //Redirection sur la page d'accueil
 		}
-		
-		$this->_init_datas(); //Initialisation des données
 	}	
 
 /**
@@ -316,7 +317,11 @@ class WebsitesController extends AppController {
 		
 		if(isset($datas['template_id'])) { 
 			
-			$templateId 			= $datas['template_id']; //Récupération de l'identifiant du template		
+			$templateId 			= $datas['template_id']; //Récupération de l'identifiant du template
+
+			
+			pr($this->templatesList);
+			
 			$templateDatas 			= $this->templatesList[$templateId];
 			$datas['tpl_layout'] 	= $templateDatas['layout'];
 			$datas['tpl_code'] 		= $templateDatas['code'];	
