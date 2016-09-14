@@ -1,5 +1,16 @@
 ﻿<versions>
 	<version>
+		<name>Version du 14/09/2016</name>
+		<num>20160914.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>			
+			<task author="FI" type="code">UsersController::login : Modifications suite au changement de structure de la table users</task>			
+			<task author="FI" type="bdd">Modification de la structure de la table users</task>			
+			<task author="FI" type="code">Modification des fichiers d'installation</task>
+			<task author="FI" type="code">WebsiteComponent::get_website_datas : Correction récupération des données du site Internet rajout de http:// dans $websiteConditions car cela posait problème sur des adresses du type a-b.domaine.com et b.domaine.com (l'une étant une sous partie de l'autre)</task>			
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 02/09/2016</name>
 		<num>20160902.001</num>
 		<supervisor>KoéZionCMS</supervisor>
