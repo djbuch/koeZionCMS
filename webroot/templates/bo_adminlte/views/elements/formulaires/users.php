@@ -28,11 +28,11 @@ $currentWebsiteDatas 	= $websitesSession['details'][$currentWebsiteId]; //Récup
                 			</div> 							
 							<?php 			
 							echo $helpers['Form']->input('users_group_id', _("Groupe d'utilisateurs"), array('compulsory' => true, 'type' => 'select', 'datas' => $usersGroupList, 'firstElementList' => _("Sélectionnez un groupe"), 'tooltip' => _("Indiquez le groupe de cet utilisateur")));			
-							echo $helpers['Form']->input('name', _('Nom'), array('compulsory' => true, 'tooltip' => _("Indiquez le nom de l'utilisateur")));
-							echo $helpers['Form']->input('second_name', _('Complément nom'), array('tooltip' => _("Indiquez un complément pour le nom de l'utilisateur")));
-							echo $helpers['Form']->input('login', _('Identifiant'), array('compulsory' => true, 'tooltip' => _("Indiquez l'identifiant de l'utilisateur (Généralement un email)")));
+							echo $helpers['Form']->input('lastname', _('Nom'), array('compulsory' => true, 'tooltip' => _("Indiquez le nom de l'utilisateur")));
+							echo $helpers['Form']->input('firstname', _('Prénom'), array('tooltip' => _("Indiquez le prénom de l'utilisateur")));
+							echo $helpers['Form']->input('email', _('Email de contact (Login)'), array('compulsory' => true, 'tooltip' => _("Indiquez l'email de contact de cet utilisateur (peut être identique au login si celui-ci est un email)")));
 							echo $helpers['Form']->input('password', _('Mot de passe'), array('compulsory' => true, 'tooltip' => _("Indiquez le mot de passe de l'utilisateur"), 'type' => 'password'));
-							echo $helpers['Form']->input('email', _('Email de contact'), array('compulsory' => true, 'tooltip' => _("Indiquez l'email de contact de cet utilisateur (peut être identique au login si celui-ci est un email)")));
+							echo $helpers['Form']->input('mobile', _('Téléphone mobile'), array('tooltip' => _("Indiquez le téléphone mobile de l'utilisateur")));
 							echo $helpers['Form']->input('online', _('Actif'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour valider cet utilisateur")));
 							?>	             			
                 		</div>

@@ -592,14 +592,20 @@ CREATE TABLE IF NOT EXISTS `unwanted_crawlers` (
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `second_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `login` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `lastname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `firstname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `phone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `mobile` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `date_of_birth` date NOT NULL,
+  `facebook_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `facebook_link` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `facebook_locale` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `online` int(11) NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
+  `customers_type_id` int(11) NOT NULL,
   `users_group_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

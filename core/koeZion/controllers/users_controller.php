@@ -35,6 +35,7 @@ class UsersController extends AppController {
  * @version 1.3 - 05/10/2015 by FI - Rajout de defined(HASH_PASSWORD)
  * @version 1.4 - 12/10/2015 by FI - Rajout du contrôle de la valeur de HASH_PASSWORD
  * @version 1.5 - 12/05/2016 by FI - Définition des helpers à utiliser
+ * @version 1.6 - 14/09/2016 by FI - Modifications suite au changement de structure de la table users
  */
 	function login() {		
 		
@@ -60,22 +61,22 @@ class UsersController extends AppController {
 				if(defined('HASH_PASSWORD') && HASH_PASSWORD) { $data['password'] = sha1($data['password']); } //Cryptage du mot de passe
 				
 				//Récupération du login et du mot de passe dans des variables
-				$postLogin = $data['login'];
-				$postPassword = $data['password'];
+				$postLogin 		= $data['login'];
+				$postPassword 	= $data['password'];
 				
 				//Récupération de l'utilisateur
-				$user = $this->User->findFirst(array('conditions' => array('login' => $postLogin)));
+				$user = $this->User->findFirst(array('conditions' => array('email' => $postLogin)));
 				
 				//Si on récupère un utilisateur
 				if(!empty($user)) { 
 					
 					//Récupération des données de l'utilisateur dans des variables
-					$bddPassword = $user['password'];
-					$bddOnline = $user['online'];
+					$bddPassword 	= $user['password'];
+					$bddOnline 		= $user['online'];
 					
 					//En local on peut éviter la saisie des mots de passe
-					$httpHost = $_SERVER["HTTP_HOST"];
-					$checkPassword = true; //Par défaut on check le password
+					$httpHost 		= $_SERVER["HTTP_HOST"];
+					$checkPassword 	= true; //Par défaut on check le password
 					if(!defined('CHECK_PASSWORD_LOCAL')) { $checkPasswordLocal = 0; } else { $checkPasswordLocal = CHECK_PASSWORD_LOCAL; } //Petit contrôle au cas ou le paramètre de cette conf ne soit pas renseigné
 					if(($httpHost == 'localhost' || $httpHost == '127.0.0.1') && !$checkPasswordLocal) { $checkPassword = false; }
 					
@@ -198,6 +199,7 @@ class UsersController extends AppController {
 										
 										$session = array(
 											'User' => $user,
+											'Customer' => $user,
 											'UsersGroup' => $usersGroup,
 											'AuthWebsites' => $websitesList
 										);
@@ -270,7 +272,7 @@ class UsersController extends AppController {
  */	
 	function backoffice_index($return = false, $fields = null, $order = null, $conditions = null) { 
 		
-		parent::backoffice_index(false, array('id', 'name', 'second_name', 'online', 'users_group_id')); 
+		parent::backoffice_index(false, array('id', 'lastname', 'firstname', 'online', 'users_group_id')); 
 	}
 	
 /**

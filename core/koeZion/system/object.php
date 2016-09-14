@@ -55,6 +55,7 @@ class Object {
  * @version 0.6 - 22/09/2015 by FI - Rajout de isset($this->request->fullUrl)
  * @version 0.7 - 14/01/2016 by FI - Modification de la variable contenant le chemin d'accès au dossier des modèles
  * @version 0.8 - 20/01/2016 by FI - Modification de la gestion du dossier de stockage des plugins
+ * @version 0.9 - 13/09/2016 by FI - Rajout d'un else à if(!isset($this->$name))
  */
 	public function load_model($name, $return = false, $databaseConfigs = null) {
 		
@@ -114,6 +115,9 @@ class Object {
 			
 			if($return) { return new $name($modelParams, $databaseConfigs); }
 			else { $this->$name = new $name($modelParams, $databaseConfigs); } //Création d'un objet Model de type $name que l'on va instancier dans la classe
+		} else {
+			
+			if($return) { return $this->$name; }
 		}
 	}
 	

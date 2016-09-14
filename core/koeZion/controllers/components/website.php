@@ -29,6 +29,7 @@ class WebsiteComponent extends Component {
  * @version 0.6 - 23/04/2015 by FI - Rajout de la condition OR dans la récupération du site courant afin de traiter également les alias d'url
  * @version 0.7 - 24/04/2015 by FI - Gestion de la traduction
  * @version 0.8 - 18/04/2016 by FI - Déplacement des fichiers de traduction dans le dossier de la langue si celle-ci est définie
+ * @version 0.9 - 05/09/2016 by FI - Correction récupération des données du site Internet rajout de http:// dans $websiteConditions car cela posait problème sur des adresses du type a-b.domaine.com et b.domaine.com (l'une étant une sous partie de l'autre)
  */
 	public function get_website_datas($hackWsHost = null) {
 				
@@ -75,8 +76,8 @@ class WebsiteComponent extends Component {
 					//On récupère les sites dont l'url ou un alias est égal à $httpHost
 					$websiteConditions = array('conditions' => array(
 						'OR' => array(
-							"url LIKE '%".$httpHost."%'",
-							"url_alias LIKE '%".$httpHost."%'",
+							"url LIKE '%http://".$httpHost."%'",
+							"url_alias LIKE '%http://".$httpHost."%'",
 						),
 						'online' => 1
 					)); 

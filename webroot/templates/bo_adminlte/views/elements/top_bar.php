@@ -3,7 +3,7 @@
     	<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
         	<span class="sr-only">Toggle navigation</span>
 		</a>
-		<p class="welcome"><?php echo _("Bonjour"); ?> <?php echo Session::read("Backoffice.User.name"); ?></p>
+		<p class="welcome"><?php echo _("Bonjour"); ?> <?php echo Session::read("Backoffice.User.lastname"); ?> <?php echo Session::read("Backoffice.User.firstname"); ?></p>
 		<?php 
 		//////////////////////////////////////
 		//    GESTION DE LA LOCALISATION    //

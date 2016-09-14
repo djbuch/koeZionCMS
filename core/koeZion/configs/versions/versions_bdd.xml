@@ -1,5 +1,32 @@
 ﻿<versions>
 	<version>
+		<name>Version du 14/09/2016</name>
+		<num>20160914.001</num>
+		<supervisor>KoéZionCMS</supervisor>		
+		<tasks>
+			<task author="FI">
+				ALTER TABLE `users` CHANGE `name` `lastname` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL;
+				ALTER TABLE `users` CHANGE `second_name` `firstname` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL;
+				ALTER TABLE `users` ADD `phone` VARCHAR(255) NOT NULL AFTER `firstname`;
+				ALTER TABLE `users` ADD `mobile` VARCHAR(255) NOT NULL AFTER `phone`;
+				ALTER TABLE `users` DROP `email`;
+				ALTER TABLE `users` CHANGE `login` `email` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL;
+				ALTER TABLE `users` 
+					ADD `date_of_birth` DATE NOT NULL AFTER `password`, 
+					ADD `facebook_id` VARCHAR(255) NOT NULL AFTER `date_of_birth`, 
+					ADD `facebook_link` VARCHAR(255) NOT NULL AFTER `facebook_id`, 
+					ADD `facebook_locale` VARCHAR(255) NOT NULL AFTER `facebook_link`;
+				ALTER TABLE `users` 
+					ADD `created_by` INT NOT NULL AFTER `modified`, 
+					ADD `modified_by` INT NOT NULL AFTER `created_by`, 
+					ADD `customers_type_id` INT NOT NULL AFTER `modified_by`;
+				ALTER TABLE `users`
+				  DROP `created_by`,
+				  DROP `modified_by`;
+			</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 29/07/2016</name>
 		<num>20160729.003</num>
 		<supervisor>KoéZionCMS</supervisor>		
