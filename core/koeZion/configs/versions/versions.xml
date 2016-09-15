@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 15/09/2016</name>
+		<num>20160915.004</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>			
+			<task author="FI" type="code">Websites::backoffice_edit : correction redirection qui était commentée</task>		
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 15/09/2016</name>
 		<num>20160915.003</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>			
