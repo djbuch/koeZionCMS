@@ -1,6 +1,15 @@
 ﻿<versions>
 	<version>
 		<name>Version du 15/09/2016</name>
+		<num>20160915.003</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>			
+			<task author="FI" type="code">Object : suppression de la fonction redirect pour la faire passer dans le fichier basic.php</task>		
+			<task author="FI" type="code">basics.php : rajout de la fonction redirect (issues anciennement du fichier object.php)</task>		
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 15/09/2016</name>
 		<num>20160915.002</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>			

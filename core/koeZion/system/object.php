@@ -55,7 +55,6 @@ class Object {
  * @version 0.6 - 22/09/2015 by FI - Rajout de isset($this->request->fullUrl)
  * @version 0.7 - 14/01/2016 by FI - Modification de la variable contenant le chemin d'accès au dossier des modèles
  * @version 0.8 - 20/01/2016 by FI - Modification de la gestion du dossier de stockage des plugins
- * @version 0.9 - 13/09/2016 by FI - Rajout d'un else à if(!isset($this->$name))
  */
 	public function load_model($name, $return = false, $databaseConfigs = null) {
 		
@@ -118,7 +117,7 @@ class Object {
 		} else {
 			
 			if($return) { return $this->$name; }
-		}
+		}		
 	}
 	
 /**
@@ -249,10 +248,12 @@ class Object {
  * @version 0.4 - 29/03/2014 - Déplacement de cette fonction de la classe Controller vers la classe Object
  * @version 0.5 - 24/02/2015 - Rajout de la variable $external
  * @version 0.6 - 13/08/2015 - Test sur l'url pour savoir si il y a https:// dedans 
+ * @deprecated since 15/09/2016 by FI - Déplacée dans le fichier basics.php ne plus utiliser $this->redirect mais directement redirect
  */
 	public function redirect($url, $code = null, $params = null, $external = false) {
 		 
-		//Code de redirection possibles
+		redirect($url, $code, $params, $external);		
+		/*//Code de redirection possibles
 		$http_codes = array(
 			100 => 'Continue',
 			101 => 'Switching Protocols',
@@ -304,6 +305,6 @@ class Object {
 		if(isset($params)) {$url .= '?'.$params; }
 		header("Location: ".$url);
 		
-		die(); //Pour éviter que l'exécution de la fonction ne continue
+		die(); //Pour éviter que l'exécution de la fonction ne continue*/
 	}	
 }
