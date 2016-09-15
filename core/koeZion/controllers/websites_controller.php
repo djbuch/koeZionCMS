@@ -317,11 +317,7 @@ class WebsitesController extends AppController {
 		
 		if(isset($datas['template_id'])) { 
 			
-			$templateId 			= $datas['template_id']; //Récupération de l'identifiant du template
-
-			
-			pr($this->templatesList);
-			
+			$templateId 			= $datas['template_id']; //Récupération de l'identifiant du template			
 			$templateDatas 			= $this->templatesList[$templateId];
 			$datas['tpl_layout'] 	= $templateDatas['layout'];
 			$datas['tpl_code'] 		= $templateDatas['code'];	
