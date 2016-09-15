@@ -151,7 +151,8 @@
                 			</div>  	
 							<?php 
 							echo $helpers['Form']->input('contact_map_activ', _('Activer la carte dans la page contact'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour activer la carte")));
-							echo $helpers['Form']->input('contact_map_page', _('Page contact'), array('type' => 'select', 'datas' => $categoriesList, 'firstElementList' => _('Sélectionnez la page contact'), 'tooltip' => _("Indiquez la page contact")));
+							if(isset($categoriesList)) { echo $helpers['Form']->input('contact_map_page', _('Page contact'), array('type' => 'select', 'datas' => $categoriesList, 'firstElementList' => _('Sélectionnez la page contact'), 'tooltip' => _("Indiquez la page contact"))); } 
+							else { echo _("Vous pourrez sélectionner la page contact une fois que l'arborescence aura été créée.")."<br /><br />"; }
 							echo $helpers['Form']->input('contact_map_address', _('Adresse'), array('tooltip' => _("Indiquez l'adresse à afficher sur la carte")));
 							echo $helpers['Form']->input('contact_map_lat', _('Latitude'), array('tooltip' => _("Indiquez la latitude")));
 							echo $helpers['Form']->input('contact_map_lng', _('Longitude'), array('tooltip' => _("Indiquez la longitude")));							
