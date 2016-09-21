@@ -326,6 +326,69 @@ class UsersController extends AppController {
 	}
 	
 /**
+ * Cette fonction permet l'import de nouveaux utilisateurs
+ *
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 21/09/2016 by FI
+ */
+	function backoffice_import() {
+		
+		if($this->request->data) {
+			
+			//Pas de limite de temps d'exécution et augmentation de la mémoire
+			set_time_limit(0);	
+			ini_set("memory_limit","256M");
+			
+			//Chargement du composant Import
+			$this->load_component('Import');
+			$ImportComponent = $this->components['Import'];
+						
+			$handle = $ImportComponent->open_file($this->request->data['users_file']); //On ouvre le fichier
+					
+			if($handle !== FALSE) { //Pointeur vers le fichier csv
+								
+				$delimiter 	= ";";
+				$line 		= 1;
+				$errors = array();
+				while(($datas = fgetcsv($handle, 3000, $delimiter)) !== FALSE) { //Lecture du fichier
+				
+					//Récupération des données formatés et rajout de nouveaux champs
+					$user 						= $ImportComponent->format_datas($datas);					
+					$user['online'] 			= 1;					
+					$user['users_group_id'] 	= $this->request->data['users_group_id'];					
+					if(empty($user['password'])) { $user['password'] = $this->components['Text']->random_code(); }
+					
+					//Si elles sont valides
+					if($this->User->validates($user)) { 
+						
+						$this->User->save($user);
+						$this->_save_assoc_datas($this->User->id, true);						
+					} 
+					else { $errors[] = _("Erreur ligne")." ".$line." : ".implode(', ', $this->User->errors); }
+					$line++;
+				}
+				fclose($handle);
+
+				//Si on a eu des erreurs
+				if($errors) { 
+					
+					$this->request->data = false;
+					$message = _("L'import est terminé, mais des erreurs se sont produites"." :<br />".implode('<br />', $errors));
+					Session::setFlash($message, 'error'); 
+				} else { 
+					
+					$this->request->data = false;
+					Session::setFlash(_("L'import est terminé")); 
+				}
+			}
+		}
+		
+		$this->_init_websites();
+		$this->_init_users_groups();
+	}
+	
+/**
  * Cette fonction permet la suppression d'un élément
  * Lors de la suppression d'un utilisateur on va également supprimer l'association entre les utilisateur et les sites Internet
  *

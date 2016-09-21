@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 21/09/2016</name>
+		<num>20160921.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>			
+			<task author="FI" type="code">Users::backoffice_import : Rajout d'une fonctionnalité d'import des utilisateurs par fichier CSV</task>		
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 15/09/2016</name>
 		<num>20160915.004</num>
 		<supervisor>KoéZionCMS</supervisor>

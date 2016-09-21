@@ -31,6 +31,7 @@ tmp/sessions/*
 !/views/elements/hooks/empty
 webroot/css/plugins/*
 webroot/files/*
+!webroot/files/users.csv
 webroot/img/plugins/*
 webroot/js/plugins/*
 webroot/upload/.ckfinder/

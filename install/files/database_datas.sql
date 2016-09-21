@@ -34,11 +34,11 @@ INSERT INTO `modules_types` (`id`, `name`, `icon`, `order_by`, `online`, `create
 (8, 'SITES INTERNET', 'fa fa-globe', 8, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 0),
 (9, 'UTILISATEURS', 'fa fa-user', 9, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 0),
 (10, 'CONTACTS', 'fa fa-envelope', 3, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 0),
-(11, 'EXPORTS', 'fa fa-download', 6, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 0),
+(11, 'EXPORTS', 'fa fa-upload', 6, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 0),
 (12, 'PORTFOLIOS', 'fa fa-picture-o', 4, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 0);
 
-INSERT INTO `users` (`id`, `lastname`, `firstname`, `phone`, `mobile`, `email`, `password`, `date_of_birth`, `facebook_id`, `facebook_link`, `facebook_locale`, `online`, `created`, `modified`, `customers_type_id`, `users_group_id`) VALUES
-(1, 'Superadmin', '', '', '', 'superadmin', 'superadmin', '0000-00-00', '', '', '', 1, '0000-00-00 00:00:00', '2016-06-06 16:56:45', 0, 1);
+INSERT INTO `users` (`id`, `lastname`, `firstname`, `phone`, `mobile`, `email`, `password`, `date_of_birth`, `facebook_id`, `facebook_link`, `facebook_locale`, `activate_price_ranges`, `low_price`, `high_price`, `filter_by_price`, `online`, `created`, `modified`, `customers_type_id`, `users_group_id`) VALUES
+(1, 'Administrateur', 'général', '0123456789', '0123456789', 'superadmin@monsite.com', 'superadmin', '0000-00-00', '', '', '', 0, 0, 0, '', 1, '2016-09-21 16:00:00', '2016-09-21 16:00:00', 0, 1);
 
 INSERT INTO `users_groups` (`id`, `name`, `online`, `is_deletable`, `created`, `modified`, `created_by`, `modified_by`, `role_id`) VALUES
 (1, 'Super administrateur', 	1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 1, 1),

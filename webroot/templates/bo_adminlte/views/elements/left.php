@@ -67,7 +67,7 @@ $currentUrl 		= $currentController.'/'.$currentAction;
 								$moduleActions 		= get_menu_actions($moduleController, $moduleAction, $subMenus['others_actions'], $subMenus['prohibited_actions']);
 								$moduleLiClass 		= '';
 								if(in_array($currentUrl, $moduleActions)) { $moduleLiClass = ' class="active"'; }								
-								?><li<?php echo $moduleLiClass; ?>><a href="<?php echo Router::url('backoffice/'.$moduleController.'/'.$moduleAction); ?>"><i class="fa fa-angle-right"></i> <span><?php echo $subMenus['name']; ?></span></a></li><?php	
+								?><li<?php echo $moduleLiClass; ?>><a href="<?php echo Router::url('backoffice/'.$moduleController.'/'.$moduleAction); ?>"><?php /* ?><i class="fa fa-angle-right"></i> <?php */ ?><span><?php echo $subMenus['name']; ?></span></a></li><?php	
 							}
 						}
 					}

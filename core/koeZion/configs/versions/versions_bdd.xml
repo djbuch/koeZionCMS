@@ -1,5 +1,27 @@
 ﻿<versions>
 	<version>
+		<name>Version du 21/09/2016</name>
+		<num>20160921.001</num>
+		<supervisor>KoéZionCMS</supervisor>		
+		<tasks>
+			<task author="FI">
+				ALTER TABLE `users_groups` 
+				ADD `low_price` FLOAT NOT NULL AFTER `default_home`, 
+				ADD `high_price` FLOAT NOT NULL AFTER `low_price`;
+				
+				ALTER TABLE `users` 
+					ADD `low_price` FLOAT NOT NULL AFTER `facebook_locale`, 
+					ADD `high_price` FLOAT NOT NULL AFTER `low_price`;
+					
+				ALTER TABLE `users_groups` ADD `activate_price_ranges` INT NOT NULL AFTER `default_home`;
+				ALTER TABLE `users` ADD `activate_price_ranges` INT NOT NULL AFTER `facebook_locale`;
+
+				ALTER TABLE `users_groups` ADD `filter_by_price` VARCHAR(255) NOT NULL AFTER `high_price`;
+				ALTER TABLE `users` ADD `filter_by_price` VARCHAR(255) NOT NULL AFTER `high_price`;
+			</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 14/09/2016</name>
 		<num>20160914.001</num>
 		<supervisor>KoéZionCMS</supervisor>		

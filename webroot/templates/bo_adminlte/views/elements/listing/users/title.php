@@ -13,6 +13,7 @@ else if($currentAction == 'edit') { $pageTitle = _("Editer un utilisateur"); }
   		<?php 
   		if($currentAction == 'index') { 
   			
+  			echo $helpers['Html']->backoffice_button_title($params['controllerFileName'], 'import', '<i class="fa fa-download"></i>&nbsp;&nbsp;'._("Importer des utilisateurs"));
   			echo $helpers['Html']->backoffice_button_title('users_groups', 'index', '<i class="fa fa-group"></i>&nbsp;&nbsp;'._("Gérer les groupes d'utilisateurs"));
   			echo $helpers['Html']->backoffice_button_title($params['controllerFileName'], 'add', '<i class="fa fa-save"></i>&nbsp;&nbsp;'.strtoupper(_("Ajouter")), null, 'html', 'btn-success btn-xs'); 
   		}
