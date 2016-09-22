@@ -2,6 +2,62 @@
 class DateComponent extends Component {
 
 /**
+ * Cette fonction permet de transformer une date FR en date SQL et inversement
+ * 
+ * @param 	varchar $mode 	Mode de transformation FR --> SQL ou SQL --> FR
+ * @param 	varchar $field 	Champ à tester
+ * @param 	array 	$datas 	Si renseigné le test se fera dans cette variable au lieu de $this->request->data 
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 25/10/2012 by FI
+ * @version 0.2 - 03/11/2013 by FI - Déplacée du contrôleur posts vers le contrôleur app
+ * @version 0.3 - 10/11/2013 by FI - Modification de la fonction pour qu'elle prenne en compte les tableaux avec des index multiples
+ * @version 0.4 - 09/12/2013 by FI - Modification du champ et du tableau à tester
+ * @version 0.5 - 22/09/2016 by FI - Déplacée depuis AppController
+ */		
+	public function transform_date($mode, $field, $datas) {
+		
+		$this->load_component('Text');
+		
+		if($mode == 'fr2Sql') {
+			
+			//Transformation de la date FR en date SQL
+			if(!empty($field)) {
+			
+				$date = Set::classicExtract($datas, $field);
+				if(!empty($date) && $date != 'dd.mm.yy') {
+					
+					$dateArray = $this->components['Text']->date_human_to_array($date);
+					$datas = Set::insert($datas, $field, $dateArray['a'].'-'.$dateArray['m'].'-'.$dateArray['j']);
+					
+				} else {
+					
+					$datas = Set::insert($datas, $field, '');
+				}
+			}
+		} else if($mode == 'sql2Fr') {
+			
+			//Transformation de la date SQL en date FR
+			if(!empty($field)) {
+			
+				$date = Set::classicExtract($datas, $field);
+				if($date != '') {
+					
+					$dateArray = $this->components['Text']->date_human_to_array($date, '-', 'i');
+					$datas = Set::insert($datas, $field, $dateArray[2].'.'.$dateArray[1].'.'.$dateArray[0]);
+					
+				} else {
+					
+					$datas = Set::insert($datas, $field, 'dd.mm.yy');
+					
+				}
+			}
+		}
+					
+		return $datas;
+	}
+
+/**
  * Cette fonction retourne le nombre de jours entre deux dates
  *
  * @param 	varchar $date1 Date au format YYYY-MM-DD

@@ -1,5 +1,14 @@
 ﻿<versions>
 	<version>
+		<name>Version du 22/09/2016</name>
+		<num>20160922.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>			
+			<task author="FI" type="code">AppController::_transform_date : Déplacement de la fonction dans le composant Date</task>		
+			<task author="FI" type="code">DateComponent::transform_date : Rajout de cette fonction</task>		
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 21/09/2016</name>
 		<num>20160921.001</num>
 		<supervisor>KoéZionCMS</supervisor>

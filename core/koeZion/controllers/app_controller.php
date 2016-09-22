@@ -1677,13 +1677,16 @@ protected function _get_posts_configs() {
  * @version 0.2 - 03/11/2013 by FI - Déplacée du contrôleur posts vers le contrôleur app
  * @version 0.3 - 10/11/2013 by FI - Modification de la fonction pour qu'elle prenne en compte les tableaux avec des index multiples
  * @version 0.4 - 09/12/2013 by FI - Modification du champ et du tableau à tester
+ * @version 0.5 - 22/09/2016 by FI - Déplacement de cette fonction dans le composant Date
+ * @deprecated Since 22/09/2019 by FI - Utiliser la fonction transdorm_date du composant Date
  */		
 	protected function _transform_date($mode, $field, $datas = null) {
 		
 		if(!isset($datas)) { $datasToCheck = $this->request->data; }
 		else { $datasToCheck = $datas; }
 		
-		if($datasToCheck) {
+		return $this->components['Date']->transform_date($mode, $field, $datasToCheck);
+		/*if($datasToCheck) {
 			
 			if($mode == 'fr2Sql') {
 				
@@ -1722,6 +1725,6 @@ protected function _get_posts_configs() {
 		}
 
 		if(!isset($datas)) { $this->request->data = $datasToCheck; }
-		else { return $datasToCheck; } 
+		else { return $datasToCheck; } */
 	}
 }
