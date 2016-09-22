@@ -14,10 +14,11 @@ class DateComponent extends Component {
  * @version 0.3 - 10/11/2013 by FI - Modification de la fonction pour qu'elle prenne en compte les tableaux avec des index multiples
  * @version 0.4 - 09/12/2013 by FI - Modification du champ et du tableau à tester
  * @version 0.5 - 22/09/2016 by FI - Déplacée depuis AppController
+ * @version 0.6 - 22/09/2016 by FI - Modification chargement composant Text
  */		
 	public function transform_date($mode, $field, $datas) {
 		
-		$this->load_component('Text');
+		$textComponent = $this->load_component('Text', null, null, true);
 		
 		if($mode == 'fr2Sql') {
 			
@@ -27,7 +28,7 @@ class DateComponent extends Component {
 				$date = Set::classicExtract($datas, $field);
 				if(!empty($date) && $date != 'dd.mm.yy') {
 					
-					$dateArray = $this->components['Text']->date_human_to_array($date);
+					$dateArray = $textComponent->date_human_to_array($date);
 					$datas = Set::insert($datas, $field, $dateArray['a'].'-'.$dateArray['m'].'-'.$dateArray['j']);
 					
 				} else {
@@ -43,7 +44,7 @@ class DateComponent extends Component {
 				$date = Set::classicExtract($datas, $field);
 				if($date != '') {
 					
-					$dateArray = $this->components['Text']->date_human_to_array($date, '-', 'i');
+					$dateArray = $textComponent->date_human_to_array($date, '-', 'i');
 					$datas = Set::insert($datas, $field, $dateArray[2].'.'.$dateArray[1].'.'.$dateArray[0]);
 					
 				} else {

@@ -153,8 +153,9 @@ class Object {
  * @author	koéZionCMS
  * @version 0.1 - 25/01/2011 by FI
  * @version 0.2 - 16/07/2015 by FI - Mise en place des hooks composants
+ * @version 0.3 - 22/09/2016 by FI - Rajout de la variable $return
  */	
-	public function load_component($component, $path = null, $componentController = null) {	
+	public function load_component($component, $path = null, $componentController = null, $return = false) {	
 
 		//Test pour vérifier si le composant à charder n'est pas celui d'un plugin
 		//Si c'est le cas $component sera du type : 'P/ecommerce/Cart'
@@ -182,7 +183,9 @@ class Object {
 		require_once $componentPathFile; //Inclusion du fichier
 		if(isset($componentController)) { $controller = $componentController; } else { $controller = $this; }
 		
-		$this->components[$component] = new $componentObjectName($controller); //Et on insère l'objet
+		$componentObject = new $componentObjectName($controller);
+		if($return) { return $componentObject; } 
+		else { $this->components[$component] = $componentObject; }
 	}	
 
 /**

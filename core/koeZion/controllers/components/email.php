@@ -366,6 +366,7 @@ class EmailComponent extends Component {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 08/04/2016 by FI
+ * @version 0.2 - 22/09/2016 by FI - Modification chargement composant Text
  */	
 	protected function _format_mail_content($data, $url2Use, $replacement = null) {
 			
@@ -399,8 +400,8 @@ class EmailComponent extends Component {
 			$content = $html->outertext;
 			if(isset($replacement)) { 
 									
-				$this->load_component('Text', null, $this->controller);
-				$content = $this->components['Text']->replace_content($content, $replacement);
+				$textComponent = $this->load_component('Text', null, $this->controller, true);
+				$content = $textComponent->replace_content($content, $replacement);
 			}				
 			return $content;
 		} 

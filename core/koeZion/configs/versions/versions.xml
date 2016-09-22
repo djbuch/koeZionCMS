@@ -1,6 +1,16 @@
 ﻿<versions>
 	<version>
 		<name>Version du 22/09/2016</name>
+		<num>20160922.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>			
+			<task author="FI" type="code">Object::load_component : Rajout de la variable $return</task>
+			<task author="FI" type="code">DateComponent::transform_date : Modification appel fonction load_component</task>
+			<task author="FI" type="code">EmailComponent::_format_mail_content : Modification appel fonction load_component</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 22/09/2016</name>
 		<num>20160922.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>			
