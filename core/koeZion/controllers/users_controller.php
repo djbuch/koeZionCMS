@@ -192,7 +192,7 @@ class UsersController extends AppController {
 									//$usersGroupsWebsitesList = array();
 									//foreach($usersGroupsWebsites as $k => $v) { $usersGroupsWebsitesList[] = $v['website_id']; }
 									
-									$websiteDatas = $this->components['Website']->get_website_datas(); //Récupération des données du site courant
+									//$websiteDatas = get_website_datas(); //Récupération des données du site courant
 									
 									if(!in_array(CURRENT_WEBSITE_ID, $websitesList)) { Session::setFlash(_("Désolé mais vous ne pouvez pas accéder à ce site"), 'error'); }
 									else { 
@@ -435,7 +435,7 @@ class UsersController extends AppController {
 		
 		if(isset($this->request->data['date']) && !empty($this->request->data['date']) && $this->request->data['date'] != 'dd.mm.yy') {
 			
-			$searchDate = $this->components['Text']->date_human_to_array($this->request->data['date']);
+			$searchDate = $this->components['Date']->date_human_to_array($this->request->data['date']);
 			$usersLogsConditions['moreConditions'] = 'YEAR(date) = '.$searchDate['a'].' AND MONTH(date) = '.$searchDate['m'].' AND DAY(date) = '.$searchDate['j'];			
 		}		
 		

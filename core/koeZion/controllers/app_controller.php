@@ -47,7 +47,7 @@ class AppController extends Controller {
  * @todo améliorer la récupération du menu général pour le moment une mise en cache qui me semble améliorable...
  */	
 	public function beforeFilter() {
-		
+				
 		parent::beforeFilter();
 				
     	$prefix = isset($this->request->prefix) ? $this->request->prefix : ''; //Récupération du préfixe
@@ -89,9 +89,7 @@ class AppController extends Controller {
 			$this->load_model('PostsComment');
 			$nbPostsComments = $this->PostsComment->findCount(array('online' => 0));
 			$this->set('nbPostsComments', $nbPostsComments);
-			
-			
-			
+						
 			//Récupération des données du template
 			$this->load_model('Template');
 			$templateId = Session::read("Backoffice.Websites.details.".CURRENT_WEBSITE_ID.".template_id");
@@ -137,7 +135,7 @@ class AppController extends Controller {
 			//////////////////////////////////////////////////
 			//   RECUPERATION DES DONNEES DU SITE COURANT   //
 			//$datas['websiteParams'] = $this->_get_website_datas();
-			$ws = $this->components['Website']->get_website_datas();
+			$ws = get_website_datas();
 			$datas['websiteParams'] = $ws['website'];			
 			$this->layout = $ws['layout'];
 			
@@ -146,7 +144,7 @@ class AppController extends Controller {
 				
 				//Si aucun site trouvé on affiche la connexion
 				//$datas['websiteParams'] = $this->_get_website_datas();
-				//$ws = $this->components['Website']->get_website_datas();
+				//$ws = get_website_datas();
 				//$datas['websiteParams'] = $ws['website'];			
 				//$this->layout = $ws['layout'];
 					
@@ -912,7 +910,7 @@ class AppController extends Controller {
     		if(isset($date[0]) && is_numeric($date[0]) && isset($date[1]) && is_numeric($date[1])) {
     	
     			$return['moreConditions'] = 'YEAR(modified) = '.$date[0].' AND MONTH(modified) = '.$date[1];
-    			$displayDate = $this->components['Text']->date_sql_to_human($this->request->data['date'].'-00');
+    			$displayDate = $this->components['Date']->date_sql_to_human($this->request->data['date'].'-00');
     			$return['libellePage'] = _("Articles rédigés en")." ".$displayDate['txt'];
     		}
     	}
@@ -1017,7 +1015,7 @@ class AppController extends Controller {
     		if(isset($date[0]) && is_numeric($date[0]) && isset($date[1]) && is_numeric($date[1])) {
     	
     			$return['moreConditions'] = 'YEAR(modified) = '.$date[0].' AND MONTH(modified) = '.$date[1];
-    			$displayDate = $this->components['Text']->date_sql_to_human($this->request->data['date'].'-00');
+    			$displayDate = $this->components['Date']->date_sql_to_human($this->request->data['date'].'-00');
     			$return['libellePage'] = _("Portfolios réalisé en")." ".$displayDate['txt'];
     		}
     	}
@@ -1678,53 +1676,11 @@ protected function _get_posts_configs() {
  * @version 0.3 - 10/11/2013 by FI - Modification de la fonction pour qu'elle prenne en compte les tableaux avec des index multiples
  * @version 0.4 - 09/12/2013 by FI - Modification du champ et du tableau à tester
  * @version 0.5 - 22/09/2016 by FI - Déplacement de cette fonction dans le composant Date
- * @deprecated Since 22/09/2019 by FI - Utiliser la fonction transdorm_date du composant Date
+ * @version 0.6 - 23/09/2016 by FI - Modification de la fonction précédente pour assurer la continuité de service
  */		
 	protected function _transform_date($mode, $field, $datas = null) {
 		
-		if(!isset($datas)) { $datasToCheck = $this->request->data; }
-		else { $datasToCheck = $datas; }
-		
-		return $this->components['Date']->transform_date($mode, $field, $datasToCheck);
-		/*if($datasToCheck) {
-			
-			if($mode == 'fr2Sql') {
-				
-				//Transformation de la date FR en date SQL
-				if(!empty($field)) {
-				
-					$date = Set::classicExtract($datasToCheck, $field);
-					if(!empty($date) && $date != 'dd.mm.yy') {
-						
-						$dateArray = $this->components['Text']->date_human_to_array($date);
-						$datasToCheck = Set::insert($datasToCheck, $field, $dateArray['a'].'-'.$dateArray['m'].'-'.$dateArray['j']);
-						
-					} else {
-						
-						$datasToCheck = Set::insert($datasToCheck, $field, '');
-					}
-				}
-			} else if($mode == 'sql2Fr') {
-				
-				//Transformation de la date SQL en date FR
-				if(!empty($field)) {
-				
-					$date = Set::classicExtract($datasToCheck, $field);
-					if($date != '') {
-						
-						$dateArray = $this->components['Text']->date_human_to_array($date, '-', 'i');
-						$datasToCheck = Set::insert($datasToCheck, $field, $dateArray[2].'.'.$dateArray[1].'.'.$dateArray[0]);
-						
-					} else {
-						
-						$datasToCheck = Set::insert($datasToCheck, $field, 'dd.mm.yy');
-						
-					}
-				}
-			}
-		}
-
-		if(!isset($datas)) { $this->request->data = $datasToCheck; }
-		else { return $datasToCheck; } */
+		if(!isset($datas)) { $this->request->data = $this->components['Date']->transform_date($mode, $field, $this->request->data); }
+		else { return $this->components['Date']->transform_date($mode, $field, $datas); }
 	}
 }

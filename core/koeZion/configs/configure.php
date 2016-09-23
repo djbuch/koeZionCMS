@@ -67,6 +67,7 @@ class Configure {
  *
  * @param 	varchar $librairie 	Chemin vers le fichier à importer
  * @param 	varchar $ext	 	Extension du fichier (php par défaut)
+ * @param 	varchar $type	 	Type d'inclusion (require_once, include_once, etc...)
  * @access 	static
  * @author 	koéZionCMS
  * @version 0.1 - 16/05/2012 by FI

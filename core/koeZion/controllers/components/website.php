@@ -30,8 +30,9 @@ class WebsiteComponent extends Component {
  * @version 0.7 - 24/04/2015 by FI - Gestion de la traduction
  * @version 0.8 - 18/04/2016 by FI - Déplacement des fichiers de traduction dans le dossier de la langue si celle-ci est définie
  * @version 0.9 - 05/09/2016 by FI - Correction récupération des données du site Internet rajout de http:// dans $websiteConditions car cela posait problème sur des adresses du type a-b.domaine.com et b.domaine.com (l'une étant une sous partie de l'autre)
+ * @deprecated since 23/09/2016 by FI - Cette fonction est maintenant passée dans le fichier basics.php
  */
-	public function get_website_datas($hackWsHost = null) {
+	/*public function get_website_datas($hackWsHost = null) {
 				
 		//Si un hack du host est passé dans l'url on le stocke dans la variable de session
 		if(isset($_GET['hack_ws_host'])) { Session::write('Frontoffice.hack_ws_host', $_GET['hack_ws_host']); }
@@ -95,5 +96,5 @@ class WebsiteComponent extends Component {
 			'layout' => 	$website['tpl_layout'],
 			'website' =>	$website 	
 		);
-	}
+	}*/
 }

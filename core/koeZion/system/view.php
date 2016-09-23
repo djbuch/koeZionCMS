@@ -96,8 +96,7 @@ class View extends Object {
 		}		
 		
 		$this->rendered = false;		
-    }    
-    
+    }
     
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //										FONCTIONS PUBLIQUES										//

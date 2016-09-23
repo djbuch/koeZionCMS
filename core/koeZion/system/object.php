@@ -55,6 +55,7 @@ class Object {
  * @version 0.6 - 22/09/2015 by FI - Rajout de isset($this->request->fullUrl)
  * @version 0.7 - 14/01/2016 by FI - Modification de la variable contenant le chemin d'accès au dossier des modèles
  * @version 0.8 - 20/01/2016 by FI - Modification de la gestion du dossier de stockage des plugins
+ * @version 0.9 - 23/09/2016 by FI - Rajout de la récupération des données du site pour la gestion des hooks
  */
 	public function load_model($name, $return = false, $databaseConfigs = null) {
 		
@@ -92,7 +93,8 @@ class Object {
 						
 			/////////////////////////////////////////////////////////////////
 			//    VERIFICATION SI UN HOOK EST DISPONIBLE POUR LE MODELE    //
-			$modelsHooks = $this->load_hooks_files('MODELS');
+			$ws 			= get_website_datas(); //On récupère les données du site courant pour vérifier si des modèles sont à charger
+			$modelsHooks 	= $this->load_hooks_files('MODELS', $ws['website']);
 			if(isset($modelsHooks[$name])) { $file_path = $modelsHooks[$name]; }
 			
 			//On va tester l'existence de ce fichier
@@ -154,6 +156,7 @@ class Object {
  * @version 0.1 - 25/01/2011 by FI
  * @version 0.2 - 16/07/2015 by FI - Mise en place des hooks composants
  * @version 0.3 - 22/09/2016 by FI - Rajout de la variable $return
+ * @version 0.4 - 23/09/2016 by FI - Rajout de la récupération des données du site pour la gestion des hooks
  */	
 	public function load_component($component, $path = null, $componentController = null, $return = false) {	
 
@@ -177,7 +180,8 @@ class Object {
 		
 		/////////////////////////////////////////////////////////////////
 		//    VERIFICATION SI UN HOOK EST DISPONIBLE POUR LE MODELE    //
-		$componentsHooks = $this->load_hooks_files('COMPONENTS');		
+		$ws 				= get_website_datas(); //On récupère les données du site courant pour vérifier si des modèles sont à charger
+		$componentsHooks 	= $this->load_hooks_files('COMPONENTS', $ws['website']);		
 		if(isset($componentsHooks[$componentObjectName])) { $componentPathFile = $componentsHooks[$componentObjectName]; }		
 		
 		require_once $componentPathFile; //Inclusion du fichier

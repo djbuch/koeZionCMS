@@ -213,11 +213,11 @@ class DashboardController extends AppController {
 		if($this->request->data && !empty($this->request->data)) {			
 			
 			//On contrôle que les champs soient bien remplis sinon on leur affecte une valeur par défaut
-			if(!empty($this->request->data['start']) && $this->request->data['start'] != 'dd.mm.yy') { $dateStartUs = $this->components['Text']->date_human_to_array($this->request->data['start'], '.', 'us'); } 
-			else { $dateStartUs = $this->components['Text']->get_first_day_of_month(date('m'), date('Y')); }
+			if(!empty($this->request->data['start']) && $this->request->data['start'] != 'dd.mm.yy') { $dateStartUs = $this->components['Date']->date_human_to_array($this->request->data['start'], '.', 'us'); } 
+			else { $dateStartUs = $this->components['Date']->get_first_day_of_month(date('m'), date('Y')); }
 			
-			if(!empty($this->request->data['end']) && $this->request->data['end'] != 'dd.mm.yy') { $dateEndUs = $this->components['Text']->date_human_to_array($this->request->data['end'], '.', 'us'); } 
-			else { $dateEndUs = $this->components['Text']->get_last_day_of_month(date('m'), date('Y')); }
+			if(!empty($this->request->data['end']) && $this->request->data['end'] != 'dd.mm.yy') { $dateEndUs = $this->components['Date']->date_human_to_array($this->request->data['end'], '.', 'us'); } 
+			else { $dateEndUs = $this->components['Date']->get_last_day_of_month(date('m'), date('Y')); }
 			
 			//On contrôle que la date de fin ne soit pas antérieure à la date de début
 			//auquel la date de fin sera égale à la date de début
@@ -239,8 +239,8 @@ class DashboardController extends AppController {
 		} else {
 			
 			//Par défaut on prend le mois en cours
-			$dateStartUs = $this->components['Text']->get_first_day_of_month(date('m'), date('Y'));
-			$dateEndUs = $this->components['Text']->get_last_day_of_month(date('m'), date('Y'));
+			$dateStartUs = $this->components['Date']->get_first_day_of_month(date('m'), date('Y'));
+			$dateEndUs = $this->components['Date']->get_last_day_of_month(date('m'), date('Y'));
 			
 			//parametres par défaut
 			$datesParams = array(
@@ -248,8 +248,8 @@ class DashboardController extends AppController {
 				'date_fin' => $dateEndUs
 			);
 			
-			$this->request->data['start'] = $this->components['Text']->date_human_to_array($dateStartUs, '-', 'fr');
-			$this->request->data['end'] = $this->components['Text']->date_human_to_array($dateEndUs, '-', 'fr');
+			$this->request->data['start'] = $this->components['Date']->date_human_to_array($dateStartUs, '-', 'fr');
+			$this->request->data['end'] = $this->components['Date']->date_human_to_array($dateEndUs, '-', 'fr');
 		}
 		////////////////////////////////////////////////////////
 		

@@ -141,6 +141,7 @@ class Dispatcher extends Object {
  * @version 0.4 - 12/04/2014 by FI - Suppression de _plugin dans le nom d'un controller de plugin 
  * @version 0.5 - 12/04/2014 by FI - Annulation suppression de _plugin dans le nom d'un controller de plugin car un plugin peut potentiellement avoir le même nom qu'un controller existant 
  * @version 0.6 - 16/07/2015 by FI - Mise en place des hooks controllers  
+ * @version 0.7 - 23/09/2016 by FI - Rajout de la récupération des données du site pour la gestion des hooks
  */
 	public function load_controller_file($controllerToLoad = null) {
 		
@@ -164,7 +165,8 @@ class Dispatcher extends Object {
 		
 		/////////////////////////////////////////////////////////////////////
 		//    VERIFICATION SI UN HOOK EST DISPONIBLE POUR LE CONTROLEUR    //
-		$controllersHooks 			= $this->load_hooks_files('CONTROLLERS');
+		$ws 						= get_website_datas(); //On récupère les données du site courant pour vérifier si des modèles sont à charger
+		$controllersHooks 			= $this->load_hooks_files('CONTROLLERS', $ws['website']);
 		$camelizedControllerName 	= Inflector::camelize($controllerName);		
 		if(isset($controllersHooks[$camelizedControllerName])) { $controllerPath = $controllersHooks[$camelizedControllerName]; }
 	

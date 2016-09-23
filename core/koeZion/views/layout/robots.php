@@ -5,5 +5,7 @@ else {
 	
 	echo 'User-agent: *'."\n";
 	echo 'Disallow: /upload/'."\n";
+	echo 'Disallow: /adm/'."\n";
+	echo 'Disallow: /connexion.html'."\n";
 	echo 'Sitemap : http://'.$_SERVER["HTTP_HOST"].BASE_URL.'/sitemaps.xml'."\n";
 }

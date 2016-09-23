@@ -1,5 +1,16 @@
 ﻿<versions>
 	<version>
+		<name>Version du 23/09/2016</name>
+		<num>20160923.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>			
+			<task author="FI" type="code">Passage de toutes les fonctions en rapport avec la gestion des dates du composant Text vers le composant Date</task>
+			<task author="FI" type="code">Passage de la fonction get_website_datas du composant Website vers le fichier basics.php</task>
+			<task author="FI" type="code">Reprise de la gestion des hooks (Modèles, composants et contrôleurs) pour y intégrer la prise en charge des données du site Internet courant</task>
+			<task author="FI" type="code">Légère correction du fichier robots.txt</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 22/09/2016</name>
 		<num>20160922.002</num>
 		<supervisor>KoéZionCMS</supervisor>
