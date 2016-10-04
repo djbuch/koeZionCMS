@@ -267,7 +267,10 @@
                 			</div>  	
 							<?php	
 							echo $helpers['Form']->upload_files('css_hack_file', array('label' => _("Ficher CSS complémentaire")));		
+							echo $helpers['Form']->input('scan_css_hack_file_folder', _('Scanner le dossier pour charger les fichiers CSS'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour charger l'ensemble des fichiers contenu dans le dossier")));
+							
 							echo $helpers['Form']->upload_files('js_hack_file', array('label' => _("Ficher JS complémentaire")));
+							echo $helpers['Form']->input('scan_js_hack_file_folder', _('Scanner le dossier pour charger les fichiers JS'), array('type' => 'checkbox', 'tooltip' => _("Cochez cette case pour charger l'ensemble des fichiers contenu dans le dossier")));
 							?>
                 		</div>
                 	</div>

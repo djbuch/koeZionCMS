@@ -341,6 +341,21 @@ class FileAndDir {
 		return $out;
 	}
 	
+/**
+ * Cette fonction permet de récupérer l'extension d'un fichier
+ * 
+ * @param 	varchar $file Fichier à tester
+ * @return 	varchar Extension du fichier
+ * @access	static
+ * @author	koéZionCMS
+ * @version 0.1 - 04/10/2016 by FI
+ */		
+	static function get_file_extension($file) {
+		
+		$info = new SplFileInfo($file);
+		return $info->getExtension();
+	}
+	
 //////////////////////////////////////////	
 //				NOT USEFULL				//	
 //////////////////////////////////////////

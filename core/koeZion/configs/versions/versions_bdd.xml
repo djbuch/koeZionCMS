@@ -1,5 +1,16 @@
 ﻿<versions>
 	<version>
+		<name>Version du 04/10/2016</name>
+		<num>20161004.001</num>
+		<supervisor>KoéZionCMS</supervisor>		
+		<tasks>
+			<task author="FI">
+				ALTER TABLE `websites` ADD `scan_css_hack_file_folder` INT NOT NULL AFTER `css_hack_file`;
+				ALTER TABLE `websites` ADD `scan_js_hack_file_folder` INT NOT NULL AFTER `js_hack_file`;
+			</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 21/09/2016</name>
 		<num>20160921.001</num>
 		<supervisor>KoéZionCMS</supervisor>		

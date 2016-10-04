@@ -192,6 +192,34 @@ class HtmlParentHelper extends Helper {
 	}
 	
 /**
+ * Fonction permettant de scanner un dossier et de renvoyer son contenu sous forme de tableau
+ * 
+ * @param 	varchar $folderToCheck chemin du dossier à scanner
+ * @return 	array 	Tableau contenant les différents fichiers à charger
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 04/10/2016 by FI
+ */	
+	public function scan_css_folder($folderToCheck, $availableExtentions = array('css', 'php')) {
+		
+		return $this->_scan_forlder($folderToCheck, $availableExtentions);
+	}
+	
+/**
+ * Fonction permettant de scanner un dossier et de renvoyer son contenu sous forme de tableau
+ * 
+ * @param 	varchar $folderToCheck chemin du dossier à scanner
+ * @return 	array 	Tableau contenant les différents fichiers à charger
+ * @access 	public
+ * @author 	koéZionCMS
+ * @version 0.1 - 04/10/2016 by FI
+ */	
+	public function scan_js_folder($folderToCheck, $availableExtentions = array('js', 'php')) {
+		
+		return $this->_scan_forlder($folderToCheck, $availableExtentions);
+	}
+	
+/**
  * Cette fonction permet le chargement des fichiers javascript utilisés dans le CMS (Front et Back)
  * 
  * --> pour envoyer des variables depuis PHP aux fichier JS procéder comme suit
@@ -430,4 +458,46 @@ class HtmlParentHelper extends Helper {
         if(!empty($code) && !in_array($_SERVER["HTTP_HOST"], array('localhost', '127.0.0.1'))) { return $code; }
         else { return ''; }
     }
+    
+/////////////////////////////////////////    
+//          FONCTIONS PRIVEES          //
+/////////////////////////////////////////
+	
+/**
+ * Fonction permettant de scanner un dossier et de renvoyer son contenu sous forme de tableau
+ * 
+ * @param 	varchar $folderToCheck chemin du dossier à scanner
+ * @return 	array 	Tableau contenant les différents fichiers à charger
+ * @access 	protected
+ * @author 	koéZionCMS
+ * @version 0.1 - 04/10/2016 by FI
+ */	
+	protected function _scan_forlder($folderToCheck, $availableExtentions) {
+
+		//Mise en forme du chemin vers le dossier en vue du scan de celui-ci
+		$folder 				= dirname($folderToCheck);
+		$folder 				= str_replace(BASE_URL.'/webroot', '', $folder);
+		$folder 				= str_replace('/', DS, $folder);
+		$directoryContentTMP 	= FileAndDir::directoryContent(WEBROOT.$folder);
+		
+		//Parcours des fichiers
+		$directoryContent = array();
+		foreach($directoryContentTMP as $file) {
+			
+			//Si on est sur un fichier et pas un dossier
+			if(!is_dir(WEBROOT.$folder.DS.$file)) {
+			
+				//Récupération des test de l'extension
+				$fileEntension = FileAndDir::get_file_extension($file);
+				if(in_array($fileEntension, $availableExtentions)) {
+								
+					//Affectation du tableau de retour
+					$folder = str_replace(DS, '/', $folder);
+					$filePath = str_replace('//', '/', BASE_URL.'/'.$folder.'/'.$file);
+					$directoryContent[] = 'F/'.$filePath;
+				}
+			}
+		}
+		return $directoryContent;
+    } 
 }

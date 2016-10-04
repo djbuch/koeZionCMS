@@ -19,9 +19,18 @@
 			$websiteParams['tpl_layout'].'/assets/bootstrap-3.3.6-dist/css/bootstrap',
 			$websiteParams['tpl_layout'].'/assets/bootstrap-3.3.6-dist/css/bootstrap-theme',
 			$websiteParams['tpl_layout'].'/assets/smartmenus-1.0.0/addons/bootstrap/jquery.smartmenus.bootstrap',
-			$websiteParams['tpl_layout'].'/css/all'
+			$websiteParams['tpl_layout'].'/css/default_theme'
 		);			
-		if(!empty($websiteParams['css_hack_file'])) { $css[] = 'F/'.$websiteParams['css_hack_file']; } //Chargement des CSS complémentaires		
+		
+		//Chargement des CSS complémentaires
+		if(!empty($websiteParams['css_hack_file'])) { 
+			
+			//Scan du dossier
+			if($websiteParams['scan_css_hack_file_folder']) { $css = am($css, $helpers['Html']->scan_css_folder($websiteParams['css_hack_file'])); } 
+			
+			//Chargement direct
+			else { $css[] = 'F/'.$websiteParams['css_hack_file']; } 
+		} 	
 		echo $helpers['Html']->css($css);			
 		?>
     </head>
@@ -49,9 +58,18 @@
 			$websiteParams['tpl_layout'].'/assets/gmap3',
 			$websiteParams['tpl_layout'].'/assets/masonry.pkgd.min',
 			$websiteParams['tpl_layout'].'/assets/imagesloaded.pkgd.min',
-			$websiteParams['tpl_layout'].'/js/all'
+			$websiteParams['tpl_layout'].'/js/default_theme'
 		);
-		if(!empty($websiteParams['js_hack_file'])) { $js[] = 'F/'.$websiteParams['js_hack_file']; } //Chargement des JS complémentaires
+		
+		//Chargement des JS complémentaires
+		if(!empty($websiteParams['js_hack_file'])) { 
+			
+			//Scan du dossier
+			if($websiteParams['scan_js_hack_file_folder']) { $js = am($js, $helpers['Html']->scan_js_folder($websiteParams['js_hack_file'])); } 
+			
+			//Chargement direct
+			else { $js[] = 'F/'.$websiteParams['js_hack_file']; }	
+		}
 		echo $helpers['Html']->js($js);		
 		echo $helpers['Html']->analytics($websiteParams['ga_code']); 
 		?>  
