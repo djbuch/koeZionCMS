@@ -1379,8 +1379,8 @@ protected function _get_posts_configs() {
 				$messageContent = $vars['websiteParams']['txt_mail_contact'];				
 				$tplLayout = $vars['websiteParams']['tpl_layout'];
 				
-				if(defined('FRONTOFFICE_VIEWS')) { $emailElement = FRONTOFFICE_VIEWS.DS.'elements'.DS.'email'.DS.'contact'; }
-				else { $emailElement = ELEMENTS.DS.'email'.DS.'default'; }
+				if(defined('FRONTOFFICE_VIEWS')) { $emailElement = FRONTOFFICE_VIEWS.DS.'elements'.DS.'emails'.DS.'contact'; }
+				else { $emailElement = ELEMENTS.DS.'emails'.DS.'default'; }
 				
 				$this->request->data = Sanitize::clean($this->request->data, array('remove_html' => true)); //Petit nettoyage des données avant envoi et insertion
 				
@@ -1463,8 +1463,8 @@ protected function _get_posts_configs() {
     			$messageContent = $vars['websiteParams']['txt_mail_comments'];				
 				$tplLayout = $vars['websiteParams']['tpl_layout'];
 				
-				if(defined('FRONTOFFICE_VIEWS')) { $emailElement = FRONTOFFICE_VIEWS.DS.'elements'.DS.'email'.DS.'commentaire'; } 
-				else { $emailElement = ELEMENTS.DS.'email'.DS.'default'; }
+				if(defined('FRONTOFFICE_VIEWS')) { $emailElement = FRONTOFFICE_VIEWS.DS.'elements'.DS.'emails'.DS.'commentaire'; } 
+				else { $emailElement = ELEMENTS.DS.'emails'.DS.'default'; }
 				
 				$this->request->data = Sanitize::clean($this->request->data, array('remove_html' => true)); //Petit nettoyage des données avant envoi et insertion
     			

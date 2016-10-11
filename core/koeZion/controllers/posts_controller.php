@@ -821,7 +821,7 @@ class PostsController extends AppController {
 						$mailDatas = array(
 							'subject' => '::Mise à jour article::',
 							'to' => $v['email'],
-							'element' => 'frontoffice/email/mise_a_jour_article',
+							'element' => 'frontoffice/emails/mise_a_jour_article',
 							'vars' => array('messageContent' => $txtMails['message_mail'])
 						);
 						$emailC->send($mailDatas, $this); //On fait appel au composant email

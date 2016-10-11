@@ -1,6 +1,14 @@
 ﻿<versions>
 	<version>
 		<name>Version du 11/10/2016</name>
+		<num>20161011.002</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>			
+			<task author="FI" type="code">Modification gestion stockage éléments email</task>
+		</tasks>
+	</version>
+	<version>
+		<name>Version du 11/10/2016</name>
 		<num>20161011.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>			

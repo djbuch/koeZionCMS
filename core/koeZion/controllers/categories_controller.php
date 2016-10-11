@@ -657,7 +657,7 @@ class CategoriesController extends AppController {
 						$mailDatas = array(
 							'subject' => '::Mise à jour catégorie::',
 							'to' => $v['email'],
-							'element' => 'frontoffice/email/mise_a_jour_categorie',
+							'element' => 'frontoffice/emails/mise_a_jour_categorie',
 							'vars' => array('messageContent' => $txtMails['message_mail'])
 						);
 						$emailC->send($mailDatas, $this); //On fait appel au composant email
