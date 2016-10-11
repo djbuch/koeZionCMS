@@ -592,6 +592,8 @@ CREATE TABLE IF NOT EXISTS `unwanted_crawlers` (
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `company_role` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `lastname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `firstname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `phone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,

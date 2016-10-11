@@ -1,5 +1,17 @@
 ﻿<versions>
 	<version>
+		<name>Version du 11/10/2016</name>
+		<num>20161011.001</num>
+		<supervisor>KoéZionCMS</supervisor>		
+		<tasks>
+			<task author="FI">
+				ALTER TABLE `users` 
+					ADD `company_name` VARCHAR(255) NOT NULL AFTER `id`, 
+					ADD `company_role` VARCHAR(255) NOT NULL AFTER `company_name`;
+			</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 04/10/2016</name>
 		<num>20161004.001</num>
 		<supervisor>KoéZionCMS</supervisor>		
