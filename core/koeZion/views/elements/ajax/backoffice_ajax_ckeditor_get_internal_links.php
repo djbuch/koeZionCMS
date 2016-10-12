@@ -55,7 +55,7 @@ foreach($writers as $k => $v) {
 //Réorganisation de la liste des dates de publication
 foreach($publicationDates as $k => $v) {
 	
-	$postDate = $this->vars['components']['Text']->date_sql_to_human($v['publication_date']);
+	$postDate = $this->vars['components']['Date']->date_sql_to_human($v['publication_date']);
 	$aUrlList["[ ==== "._("Dates de publication")." ==== ]"] = '';
 	$aUrlList['___'.$postDate['txt']] = Router::url('posts/listing').'?date='.$postDate['sql'];
 }

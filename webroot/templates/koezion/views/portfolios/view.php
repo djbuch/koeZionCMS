@@ -37,7 +37,7 @@ echo $helpers['Html']->js($js, true);
 			$categoryLink 		= $this->request('Categories', 'get_category_link', array($category['id']));
 			$categoryName 		= $categoryLink['name'];
 			$portfolioBaseRoute = Router::url('categories/view/id:'.$categoryLink['id'].'/slug:'.$categoryLink['slug']);
-			$portfolioDate 		= $this->vars['components']['Text']->date_sql_to_human($portfolio['modified']);
+			$portfolioDate 		= $this->vars['components']['Date']->date_sql_to_human($portfolio['modified']);
 			$writer 			= $this->request('Users', 'get_user_libelle', array($portfolio['created_by']));
 			$inTypes 			= $this->request('PortfoliosTypes', 'get_portfolios_types', array($portfolio['id']));
 			?>

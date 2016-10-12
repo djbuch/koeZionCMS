@@ -1,5 +1,19 @@
 ﻿<versions>
 	<version>
+		<name>Version du 12/10/2016</name>
+		<num>20161012.001</num>
+		<supervisor>KoéZionCMS</supervisor>		
+		<tasks>
+			<task author="FI">
+				ALTER TABLE `configs` ADD `field` VARCHAR(255) NOT NULL AFTER `code`;
+				ALTER TABLE `configs` 
+					ADD `created` DATETIME NOT NULL AFTER `value`, 
+					ADD `modified` DATETIME NOT NULL AFTER `created`, 
+					ADD `website_id` INT NOT NULL AFTER `modified`;
+			</task>
+		</tasks>	
+	</version>
+	<version>
 		<name>Version du 11/10/2016</name>
 		<num>20161011.001</num>
 		<supervisor>KoéZionCMS</supervisor>		

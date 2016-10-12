@@ -29,7 +29,7 @@
 						<?php 
 						foreach($usersLogs as $k => $v): 
 						
-							$date = $this->vars['components']['Text']->date_sql_to_human($v['date']);						
+							$date = $this->vars['components']['Date']->date_sql_to_human($v['date']);						
 							?>
 							<tr>
 								<td class="text-center"><?php echo $v['id']; ?></td>

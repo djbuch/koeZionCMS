@@ -31,7 +31,7 @@ if(isset($portfolios) && count($portfolios) > 0) {
 					}	
 					
 					$writer 	= $this->request('Users', 'get_user_libelle', array($portfolio['created_by'])); 
-					$portfolioDate 	= $this->vars['components']['Text']->date_sql_to_human($portfolio['modified']);
+					$portfolioDate 	= $this->vars['components']['Date']->date_sql_to_human($portfolio['modified']);
 					$inTypes 	= $this->request('PortfoliosTypes', 'get_portfolios_types', array($portfolio['id']));					
 					?>
 					<div class="masonry_item col-xs-12 col-md-6">

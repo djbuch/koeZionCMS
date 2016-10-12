@@ -3,7 +3,7 @@ $contentPage 	= $this->vars['components']['Text']->format_content_text($post['co
 $categoryLink 	= $this->request('Categories', 'get_category_link', array($category['id']));
 $categoryName 	= $categoryLink['name'];
 $postBaseRoute 	= Router::url('categories/view/id:'.$categoryLink['id'].'/slug:'.$categoryLink['slug']);
-$postDate 		= $this->vars['components']['Text']->date_sql_to_human($post['modified']);
+$postDate 		= $this->vars['components']['Date']->date_sql_to_human($post['modified']);
 $writer 		= $this->request('Users', 'get_user_libelle', array($post['created_by']));
 $inTypes 		= $this->request('PostsTypes', 'get_posts_types', array($post['id']));
 ?>

@@ -26,7 +26,7 @@ if(isset($posts) && count($posts) > 0) {
 					}	
 					
 					$writer 	= $this->request('Users', 'get_user_libelle', array($post['created_by'])); 
-					$postDate 	= $this->vars['components']['Text']->date_sql_to_human($post['modified']);
+					$postDate 	= $this->vars['components']['Date']->date_sql_to_human($post['modified']);
 					$inTypes 	= $this->request('PostsTypes', 'get_posts_types', array($post['id']));					
 					?>
 					<div class="masonry_item <?php echo $postClass; ?>">

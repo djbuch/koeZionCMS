@@ -10,7 +10,7 @@
 				<?php 
 				foreach($postsComments as $k => $v) { 
 				
-					$commentDate = $this->vars['components']['Text']->date_sql_to_human($v['created']);
+					$commentDate = $this->vars['components']['Date']->date_sql_to_human($v['created']);
 					?>
 					<li class="comment_item">
 			           	<div class="comment_item_data">

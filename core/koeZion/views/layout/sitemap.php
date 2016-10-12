@@ -74,7 +74,7 @@ foreach($sitemaps as $type => $values) {
 			
 			foreach($values as $k => $publicationDate) {
 			
-				$postDate = $this->vars['components']['Text']->date_sql_to_human($publicationDate['publication_date']);				
+				$postDate = $this->vars['components']['Date']->date_sql_to_human($publicationDate['publication_date']);				
 				echo '<url>'."\n";
 				echo "\t".'<loc>http://'.$_SERVER["HTTP_HOST"].Router::url('posts/listing').'?date='.$postDate['sql'].'</loc>'."\n";
 				//<lastmod>date de mise en place de la page au format année-mois-jour</lastmod>

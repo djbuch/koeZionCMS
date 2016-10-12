@@ -291,48 +291,45 @@ class DashboardController extends AppController {
  * @access public
  * @author koéZionCMS
  * @version 0.1 - 16/09/2015 by FI
+ * @version 0.2 - 12/10/2016 by FI - Modification de la récupération des données en base suite à l'évolution de la table configs
  */
 	protected function _get_versions($clientSOAP) {		
 		
-		//Version Code
-		$localVersion = $this->_check_local_version('versions.xml');
-		$cmsVersion = array('localVersion' => $localVersion, 'remoteVersion' => 'inconnu');
-		try {
+		////////////////////////
+		//    CODE VERSION    //
+			$localVersion 	= $this->_check_local_version('versions.xml');
+			$cmsVersion 	= array('localVersion' => $localVersion, 'remoteVersion' => 'inconnu');
+			try {
+		
+				$cmsVersionTemp = $clientSOAP->__soapCall('get_version', array('file' => 'versions.xml', 'localVersion' => $localVersion));
+				if(!is_soap_fault($cmsVersionTemp)) { $cmsVersion = $cmsVersionTemp; }
+		
+			} 
+			catch(SoapFault $soapFault) { $this->set('soapErrorMessage', $soapFault); }
+			$this->set('cmsVersion', $cmsVersion);
 	
-			$cmsVersionTemp = $clientSOAP->__soapCall('get_version', array('file' => 'versions.xml', 'localVersion' => $localVersion));
-			if(!is_soap_fault($cmsVersionTemp)) {
-				$cmsVersion = $cmsVersionTemp;
+		///////////////////////
+		//    BDD VERSION    //
+			$localVersion 	= $this->_check_local_version('versions_bdd.xml');
+			$bddVersion 	= array('localVersion' => $localVersion, 'remoteVersion' => 'inconnu');
+			try {
+		
+				$bddVersionTemp = $clientSOAP->__soapCall('get_version', array('file' => 'versions_bdd.xml', 'localVersion' => $localVersion));
+				if(!is_soap_fault($bddVersionTemp)) { $bddVersion = $bddVersionTemp; }
+		
+			} 
+			catch(SoapFault $soapFault) { $this->set('soapErrorMessage', $soapFault); }
+		
+			//Récupération de la dernière version connue de la base de données
+			$this->load_model('Config');
+			$this->Config->manageWebsiteId 	= false; //On désactive la récupération par identifiant de site car la configuration de la BDD est la même pour tous les sites enregistrés
+			$lastKnowVersionBdd 			= $this->Config->findFirst(array('conditions' => array('code' => 'KOEZION', 'field' => 'numVersion')));
+			if(!empty($lastKnowVersionBdd) && isset($lastKnowVersionBdd['value']) && !empty($lastKnowVersionBdd['value'])) {
+		
+				if($bddVersion['localVersion'] < $lastKnowVersionBdd['value']) { $bddVersion['localVersion'] = $lastKnowVersionBdd['value']; }
 			}
-	
-		} catch(SoapFault $soapFault) {
-			$this->set('soapErrorMessage', $soapFault);
-		}
-		$this->set('cmsVersion', $cmsVersion);
-	
-		//Version BDD
-		$localVersion = $this->_check_local_version('versions_bdd.xml');
-		$bddVersion = array('localVersion' => $localVersion, 'remoteVersion' => 'inconnu');
-		try {
-	
-			$bddVersionTemp = $clientSOAP->__soapCall('get_version', array('file' => 'versions_bdd.xml', 'localVersion' => $localVersion));
-			if(!is_soap_fault($bddVersionTemp)) {
-				$bddVersion = $bddVersionTemp;
-			}
-	
-		} catch(SoapFault $soapFault) {
-			$this->set('soapErrorMessage', $soapFault);
-		}
-	
-		//Récupération de la dernière version connue de la base de données
-		$this->load_model('Config');
-		$lastKnowVersionBdd = $this->Config->findFirst(array('conditions' => array('code' => 'numVersion')));
-		if(!empty($lastKnowVersionBdd) && isset($lastKnowVersionBdd['value']) && !empty($lastKnowVersionBdd['value'])) {
-	
-			if($bddVersion['localVersion'] < $lastKnowVersionBdd['value']) {
-				$bddVersion['localVersion'] = $lastKnowVersionBdd['value'];
-			}
-		}
-		$this->set('bddVersion', $bddVersion);
+			
+			$this->set('bddVersion', $bddVersion);
 	}
 	
 /** 
@@ -345,8 +342,8 @@ class DashboardController extends AppController {
  */
 	protected function _check_local_version($file) {
 		
-		$localBddXML = simplexml_load_file(CONFIGS_VERSIONS.DS.$file);
-		$localVersion = (float)$localBddXML->version[0]->num;
+		$localBddXML 	= simplexml_load_file(CONFIGS_VERSIONS.DS.$file);
+		$localVersion 	= (float)$localBddXML->version[0]->num;
 		return $localVersion;
 	}
 }
