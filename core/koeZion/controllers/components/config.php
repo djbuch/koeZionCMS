@@ -52,7 +52,6 @@ class ConfigComponent extends Component {
 			$conditions = array();
 			if(isset($code)) { $conditions = array('conditions' => array('code' => $code)); }
 			$configs = $model->find($conditions);
-			pr($configs);
 			foreach($configs as $v) { $datas[$v['code']][$v['field']] = $v['value']; }
 		}
 		
