@@ -65,6 +65,8 @@ class DashboardController extends AppController {
  * @access	public
  * @author	koéZionCMS
  * @version 0.1 - 27/09/2013 by FI
+ * @version 0.2 - 13/10/2016 by FI - Rajout de la suppression des anciennes valeurs dans la table configs
+ * @todo le 13/10/2017 --> Suppression des requêtes delete 
  */
 	function backoffice_version() {
 		
@@ -74,6 +76,12 @@ class DashboardController extends AppController {
 		if(isset($this->request->data['update_bdd']) && $this->request->data['update_bdd']) {
 						
 			$sql = Session::read('Update.sql'); //Récupération des données
+			$sql .= "
+			DELETE FROM `configs` WHERE `code` = 'numVersion';
+			DELETE FROM `configs` WHERE `code` = 'nameVersion';
+			DELETE FROM `configs` WHERE `code` = 'supervisorVersion';
+			";
+			
 			Session::delete('Update.sql'); //Suppression des données 
 			$this->load_model('Config');
 			$this->Config->query($sql);
@@ -292,6 +300,7 @@ class DashboardController extends AppController {
  * @author koéZionCMS
  * @version 0.1 - 16/09/2015 by FI
  * @version 0.2 - 12/10/2016 by FI - Modification de la récupération des données en base suite à l'évolution de la table configs
+ * @version 0.3 - 13/10/2016 by FI - Suppression de la gestion de la version BDD dans la table configs
  */
 	protected function _get_versions($clientSOAP) {		
 		
@@ -320,6 +329,9 @@ class DashboardController extends AppController {
 			} 
 			catch(SoapFault $soapFault) { $this->set('soapErrorMessage', $soapFault); }
 		
+			/*
+			SUPPRESSION DE LA RECUPERATION PAR LA BASE DE DONNEES
+			UNIFORMISATION DU FONCTIONNEMENT AVEC LA GESTION DE LA VERSION DU CMS
 			//Récupération de la dernière version connue de la base de données
 			$this->load_model('Config');
 			$this->Config->manageWebsiteId 	= false; //On désactive la récupération par identifiant de site car la configuration de la BDD est la même pour tous les sites enregistrés
@@ -327,7 +339,7 @@ class DashboardController extends AppController {
 			if(!empty($lastKnowVersionBdd) && isset($lastKnowVersionBdd['value']) && !empty($lastKnowVersionBdd['value'])) {
 		
 				if($bddVersion['localVersion'] < $lastKnowVersionBdd['value']) { $bddVersion['localVersion'] = $lastKnowVersionBdd['value']; }
-			}
+			}*/
 			
 			$this->set('bddVersion', $bddVersion);
 	}

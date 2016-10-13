@@ -1,10 +1,18 @@
 ﻿<versions>
 	<version>
+		<name>Version du 13/10/2016</name>
+		<num>20161013.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>			
+			<task author="FI" type="code">Suppression de la gestion de la version de la base de données dans la table configs</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 12/10/2016</name>
 		<num>20161012.001</num>
 		<supervisor>KoéZionCMS</supervisor>
 		<tasks>			
-			<task author="FI" type="code">Amélioration de la table config</task>
+			<task author="FI" type="code">Amélioration de la table configs</task>
 			<task author="FI" type="code">Correction utilisation composant Date</task>
 		</tasks>
 	</version>

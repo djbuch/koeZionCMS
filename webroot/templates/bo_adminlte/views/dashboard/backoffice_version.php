@@ -86,12 +86,12 @@ $currentWebsite = Session::read('Backoffice.Websites.current');
 								echo $update."\n"; 
 							} 
 														
-							echo "DELETE FROM `configs` WHERE `code` = 'KOEZION';"."\n";
+							/*echo "DELETE FROM `configs` WHERE `code` = 'KOEZION';"."\n";
 							echo "INSERT INTO `configs` (`id`, `code`, `field`, `value`, `created`, `modified`, `website_id`)
 							VALUES
 							(NULL, 'KOEZION', 'numVersion', '".$bddVersion['remoteVersion']."', NOW(), NOW(), 0),
 							(NULL, 'KOEZION', 'nameVersion', '".$bddVersion['remoteName']."', NOW(), NOW(), 0),
-							(NULL, 'KOEZION', 'supervisorVersion', '".$bddVersion['remoteSupervisor']."', NOW(), NOW(), 0);"."\n";	
+							(NULL, 'KOEZION', 'supervisorVersion', '".$bddVersion['remoteSupervisor']."', NOW(), NOW(), 0);"."\n";*/	
 							$updateSql = ob_get_clean();
 							echo $updateSql;
 							Session::write('Update.sql', $updateSql);
