@@ -39,7 +39,8 @@ class Controller extends Object {
  * @access 	public
  * @author 	koéZionCMS
  * @version 0.1 - 24/09/2015 by FI
- * @version 0.2 - 19/07/2017 by FI - Rajout du composant Datas
+ * @version 0.2 - 19/07/2016 by FI - Rajout du composant Datas
+ * @version 0.3 - 13/10/2016 by FI - Rajout du composant Config
  */
 	var $components = array(
 		'Database',
@@ -48,7 +49,8 @@ class Controller extends Object {
 		'Text',
 		'User',
 		'Website',
-		'Datas'
+		'Datas',
+		'Config'
 	);
 	
 	var $view = false;
