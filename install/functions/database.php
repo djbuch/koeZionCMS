@@ -13,20 +13,20 @@
  */	
 	function check_connexion($host, $login, $password, $database) {
 		
-		$dbconnection = @mysql_connect($host, $login, $password); //Connexion au serveur mysql
+		$dbconnection = @mysqli_connect($host, $login, $password); //Connexion au serveur mysql
 		if($dbconnection) { //Si la connexion s'est correctement déroulée
 		
 			//Vérification de l'existence de la bdd
-			//$result = mysql_query("SHOW DATABASES", $dbconnection);
-			//while($ligne = mysql_fetch_row($result)) { //Parcours des BDD
+			//$result = mysqli_query("SHOW DATABASES", $dbconnection);
+			//while($ligne = mysqli_fetch_row($result)) { //Parcours des BDD
 		
 				//$exists = false; //Par défaut elle n'existe pas
 				//if($ligne[0] == $database) { $exists = true; } //Si on la trouve dans la liste on change le booleen
 		
 				//Si elle n'existe pas on va la créer
-				//if(!$exists) { @mysql_query("CREATE DATABASE ".$database, $dbconnection); }
+				//if(!$exists) { @mysqli_query("CREATE DATABASE ".$database, $dbconnection); }
 		
-				$db = mysql_select_db($database);
+				$db = mysqli_select_db($database);
 				$bBddConnect = $dbconnection && $db; //Booléen qui va contrôler que la connexion et la sélection de la base se sont bien déroulées
 				if(!$bBddConnect) { $dbconnection = false; } //Si tout ne s'est pas correctement déroulé on initialise le booléen à faux
 				return $dbconnection; //On retourne le booléen
@@ -104,7 +104,7 @@
 		}
 		
 		//Check if mysql extension is available
-		if(count($aErrors) == 0 && !function_exists('mysql_connect')) { 
+		if(count($aErrors) == 0 && !function_exists('mysqli_connect')) { 
 		
 			$aErrors[] = "There is no mySQL extension available in your PHP installation. Sorry!";
 		}
@@ -122,10 +122,10 @@
 		if(count($aErrors) == 0) { $dbconnection = check_connexion($db_host, $db_username, $db_password, $db_name); }
 		else { $dbconnection = false; }
 		
-		if(!$dbconnection) $aErrors[] = "Database connection failed due to ".utf8_encode(mysql_error());
+		if(!$dbconnection) $aErrors[] = "Database connection failed due to ".utf8_encode(mysqli_error());
 
 		//set charset
-		if(count($aErrors) == 0 && $db_connection_charset !== '') @mysql_query("SET NAMES $db_connection_charset", $dbconnection);
+		if(count($aErrors) == 0 && $db_connection_charset !== '') @mysqli_query("SET NAMES $db_connection_charset", $dbconnection);
 		
 		//Open the file
 		if(count($aErrors) == 0 && isset($start)) { 
@@ -289,10 +289,10 @@
 						//DIAGNOSTIC
 						//echo ("<p>Query: ".trim(nl2br(htmlentities($query)))."</p>\n");
 						
-						if(!mysql_query($query, $dbconnection)) { 
+						if(!mysqli_query($query, $dbconnection)) { 
 							
 							$aErrors[] = array(
-								'message' => "Error at the line $linenumber: ". trim($dumpline)." - MySQL: ".mysql_error(),
+								'message' => "Error at the line $linenumber: ". trim($dumpline)." - MySQL: ".mysqli_error(),
 								'query' => "Query: ".trim(nl2br(htmlentities($query)))
 							);
 							break;
@@ -425,7 +425,7 @@
 			); 
 		}
 		
-		if ($dbconnection) mysql_close($dbconnection);
+		if ($dbconnection) mysqli_close($dbconnection);
 		if ($file && !$gzipmode) fclose($file);
 		else if ($file && $gzipmode) gzclose($file);
 		

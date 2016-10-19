@@ -1,5 +1,13 @@
 ﻿<versions>
 	<version>
+		<name>Version du 19/10/2016</name>
+		<num>20161019.001</num>
+		<supervisor>KoéZionCMS</supervisor>
+		<tasks>			
+			<task author="FI" type="code">Changement mysql_ en mysqli_ dans le processus d'installation pour PHP7</task>
+		</tasks>
+	</version>
+	<version>
 		<name>Version du 13/10/2016</name>
 		<num>20161013.003</num>
 		<supervisor>KoéZionCMS</supervisor>
