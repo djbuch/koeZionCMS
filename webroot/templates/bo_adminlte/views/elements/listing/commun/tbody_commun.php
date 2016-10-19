@@ -1,6 +1,6 @@
 <tbody>
 	<?php 
-	foreach($$params['controllerVarName'] as $k => $v) { 
+	foreach(${$params['controllerVarName']} as $k => $v) { 
 			
 		if(!isset($displayedName)) { $displayedNameTxt = $v['name']; }
 		else {

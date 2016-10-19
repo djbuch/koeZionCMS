@@ -1,5 +1,5 @@
 <tbody>
-	<?php foreach($$params['controllerVarName'] as $k => $v): ?>
+	<?php foreach(${$params['controllerVarName']} as $k => $v): ?>
 		<tr>
 			<td class="text-center"><?php echo $v['id']; ?></td>
 			<td class="text-center">

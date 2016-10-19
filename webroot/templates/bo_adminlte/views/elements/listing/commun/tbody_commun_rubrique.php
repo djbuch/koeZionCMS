@@ -1,4 +1,4 @@
-<?php foreach($$params['controllerVarName'] as $rubrique => $rubriqueDatas): ?>
+<?php foreach(${$params['controllerVarName']} as $rubrique => $rubriqueDatas): ?>
 	<tbody class="list_elements">
 		<tr class="table_line_title">
 			<th colspan="6">

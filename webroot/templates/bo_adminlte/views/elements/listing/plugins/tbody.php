@@ -1,4 +1,4 @@
-<?php foreach($$params['controllerVarName'] as $k => $v): ?>
+<?php foreach(${$params['controllerVarName']} as $k => $v): ?>
 	<tr>			
 		<td class="text-center"><?php echo $v['id']; ?></td>
 		<td class="text-center"><?php echo $helpers['Html']->backoffice_statut_link($params['controllerFileName'], $v['id'], $v['online']); ?></td>
