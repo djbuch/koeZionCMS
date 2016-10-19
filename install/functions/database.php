@@ -26,7 +26,7 @@
 				//Si elle n'existe pas on va la créer
 				//if(!$exists) { @mysqli_query("CREATE DATABASE ".$database, $dbconnection); }
 		
-				$db = mysqli_select_db($database);
+				$db = mysqli_select_db($dbconnection, $database);
 				$bBddConnect = $dbconnection && $db; //Booléen qui va contrôler que la connexion et la sélection de la base se sont bien déroulées
 				if(!$bBddConnect) { $dbconnection = false; } //Si tout ne s'est pas correctement déroulé on initialise le booléen à faux
 				return $dbconnection; //On retourne le booléen
