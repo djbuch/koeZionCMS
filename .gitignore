@@ -55,3 +55,4 @@ webroot/templates/*
 !/plugins/tpl_koezion/
 !webroot/upload/files/koezion_theme_base.css
 !webroot/upload/files/koezion_theme_base.js
+**.DS_Store
